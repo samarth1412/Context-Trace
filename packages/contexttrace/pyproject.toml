@@ -16,6 +16,9 @@ dependencies = [
 langchain = [
     "langchain-core>=0.2",
 ]
+llamaindex = [
+    "llama-index-core>=0.10",
+]
 test = [
     "pytest>=8.0",
 ]

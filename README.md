@@ -139,6 +139,25 @@ result = chain.invoke(
 
 The callback captures chain input, retrieved documents, selected context, final output, token usage when available, callback metadata, and latency. See `examples/langchain_rag.py`.
 
+LlamaIndex callback tracing:
+
+```python
+from contexttrace import ContextTraceLlamaIndexCallbackHandler
+from llama_index.core import Settings
+from llama_index.core.callbacks import CallbackManager
+
+handler = ContextTraceLlamaIndexCallbackHandler(
+    api_key="ctx_test",
+    project="support-rag",
+    trace_metadata={"pipeline": "llamaindex-rag"},
+)
+
+Settings.callback_manager = CallbackManager([handler])
+response = query_engine.query("What is the refund policy?")
+```
+
+The adapter captures query events, retrieved nodes, final response text, source nodes, metadata, and latency. See `examples/llamaindex_rag.py`.
+
 ## Dashboard Setup
 
 The v1 dashboard lives in `apps/web` and uses Next.js, TypeScript, Tailwind, and shadcn-style components. It reads from the FastAPI backend when these env vars are present, otherwise it falls back to mock data:
