@@ -27,6 +27,14 @@ class VectorStore(Protocol):
     ) -> List[VectorRecord]:
         ...
 
+    async def list_records(
+        self,
+        *,
+        filters: Optional[Dict[str, Any]] = None,
+        limit: int = 1000,
+    ) -> List[VectorRecord]:
+        ...
+
 
 class InMemoryVectorStore:
     def __init__(self) -> None:
@@ -59,6 +67,21 @@ class InMemoryVectorStore:
             )
             for score, payload in scored[:limit]
         ]
+
+    async def list_records(
+        self,
+        *,
+        filters: Optional[Dict[str, Any]] = None,
+        limit: int = 1000,
+    ) -> List[VectorRecord]:
+        records = []
+        for _, payload in self.records:
+            if filters and any(payload.get(key) != value for key, value in filters.items()):
+                continue
+            records.append(_payload_to_record(payload, score=0.0))
+            if len(records) >= limit:
+                break
+        return records
 
 
 class QdrantVectorStore:
@@ -105,16 +128,7 @@ class QdrantVectorStore:
         limit: int,
         filters: Optional[Dict[str, Any]] = None,
     ) -> List[VectorRecord]:
-        query_filter = None
-        if filters:
-            from qdrant_client.models import FieldCondition, Filter, MatchValue
-
-            query_filter = Filter(
-                must=[
-                    FieldCondition(key=key, match=MatchValue(value=value))
-                    for key, value in filters.items()
-                ]
-            )
+        query_filter = _qdrant_filter(filters)
         results = self.client.search(
             collection_name=self.collection,
             query_vector=vector,
@@ -135,6 +149,33 @@ class QdrantVectorStore:
             )
         return records
 
+    async def list_records(
+        self,
+        *,
+        filters: Optional[Dict[str, Any]] = None,
+        limit: int = 1000,
+    ) -> List[VectorRecord]:
+        query_filter = _qdrant_filter(filters)
+        records: List[VectorRecord] = []
+        offset = None
+
+        while len(records) < limit:
+            points, offset = self.client.scroll(
+                collection_name=self.collection,
+                scroll_filter=query_filter,
+                limit=min(256, limit - len(records)),
+                offset=offset,
+                with_payload=True,
+                with_vectors=False,
+            )
+            for point in points:
+                payload = point.payload or {}
+                records.append(_payload_to_record(payload, score=0.0))
+            if offset is None:
+                break
+
+        return records
+
 
 def _cosine(left: List[float], right: List[float]) -> float:
     numerator = sum(a * b for a, b in zip(left, right))
@@ -144,3 +185,27 @@ def _cosine(left: List[float], right: List[float]) -> float:
     if not denominator:
         return 0.0
     return numerator / denominator
+
+
+def _payload_to_record(payload: Dict[str, Any], *, score: float) -> VectorRecord:
+    return VectorRecord(
+        chunk_id=payload["chunk_id"],
+        content=payload["content"],
+        source=payload.get("source"),
+        metadata=payload.get("metadata") or {},
+        score=score,
+    )
+
+
+def _qdrant_filter(filters: Optional[Dict[str, Any]]) -> Any:
+    if not filters:
+        return None
+
+    from qdrant_client.models import FieldCondition, Filter, MatchValue
+
+    return Filter(
+        must=[
+            FieldCondition(key=key, match=MatchValue(value=value))
+            for key, value in filters.items()
+        ]
+    )

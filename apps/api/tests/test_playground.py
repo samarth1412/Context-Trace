@@ -92,3 +92,55 @@ def test_playground_upload_query_and_trace_creation(client, auth_headers):
     assert trace["project"] == "playground"
     assert trace["chunks"][0]["selected"] is True
     assert trace["citation_checks"][0]["support_status"] == "directly_supported"
+
+
+def test_playground_compare_runs_selected_retrieval_strategies(client, auth_headers):
+    vector_store = InMemoryVectorStore()
+    client.app.dependency_overrides[get_vector_store] = lambda: vector_store
+    client.app.dependency_overrides[get_embedding_provider] = lambda: HashEmbeddingProvider(
+        dimensions=32
+    )
+    client.app.dependency_overrides[get_answer_provider] = lambda: MockAnswerProvider()
+
+    upload = client.post(
+        "/v1/playground/documents",
+        headers=auth_headers,
+        files={
+            "file": (
+                "refund-policy.md",
+                (
+                    b"Refunds are available within 30 days for eligible orders. "
+                    b"Shipping windows depend on destination."
+                ),
+                "text/markdown",
+            )
+        },
+    )
+    assert upload.status_code == 201
+
+    response = client.post(
+        "/v1/playground/compare",
+        headers=auth_headers,
+        json={
+            "query": "Refunds available within 30 days",
+            "top_k": 1,
+            "strategies": ["dense_top_k", "bm25_top_k", "hybrid", "hybrid_rerank"],
+        },
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert [result["strategy"] for result in body["results"]] == [
+        "dense_top_k",
+        "bm25_top_k",
+        "hybrid",
+        "hybrid_rerank",
+    ]
+    assert all(result["trace_id"] for result in body["results"])
+    assert all(result["metrics"]["citation_support"] == 1.0 for result in body["results"])
+    assert all(result["metrics"]["unsupported_claim_rate"] == 0.0 for result in body["results"])
+    assert all(
+        result["metrics"]["failure_type"] == "no_failure_detected"
+        for result in body["results"]
+    )
+    assert all(result["metrics"]["latency_ms"] >= 0 for result in body["results"])

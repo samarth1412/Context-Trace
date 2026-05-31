@@ -1,6 +1,7 @@
 import { AppShell } from "@/components/dashboard/app-shell";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { QueryConsole } from "@/components/playground/query-console";
+import { StrategyComparison } from "@/components/playground/strategy-comparison";
 import { ButtonLink } from "@/components/ui/button";
 
 export default function PlaygroundPage() {
@@ -13,7 +14,10 @@ export default function PlaygroundPage() {
       <div className="mb-4">
         <ButtonLink href="/playground/upload">Upload Documents</ButtonLink>
       </div>
-      <QueryConsole />
+      <div className="grid gap-4">
+        <QueryConsole />
+        <StrategyComparison />
+      </div>
     </AppShell>
   );
 }

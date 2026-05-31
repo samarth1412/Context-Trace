@@ -11,6 +11,11 @@ from app.judge import LLMJudgeProvider
 from app.models import User
 from app.playground.documents import DocumentParser, TokenAwareChunker
 from app.playground.providers import AnswerProvider, EmbeddingProvider, GeneratedAnswer
+from app.playground.retrieval import (
+    STRATEGY_DENSE_TOP_K,
+    RetrievalRequestContext,
+    get_retrieval_strategy,
+)
 from app.playground.vector_store import VectorRecord, VectorStore
 from app.schemas import (
     AnswerRequest,
@@ -18,11 +23,16 @@ from app.schemas import (
     CitationPayload,
     CitationsRequest,
     ContextRequest,
+    PlaygroundCompareRequest,
+    PlaygroundCompareResponse,
     PlaygroundChunk,
+    PlaygroundComparisonMetrics,
+    PlaygroundComparisonResult,
     PlaygroundDocumentUploadResponse,
     PlaygroundQueryRequest,
     PlaygroundQueryResponse,
     RetrievalRequest,
+    RetrievalStrategyName,
     TraceStartRequest,
 )
 from app.services.errors import BadRequestError
@@ -107,67 +117,105 @@ class PlaygroundService:
         )
 
     async def query(self, request: PlaygroundQueryRequest) -> PlaygroundQueryResponse:
+        result = await self._run_strategy(
+            query=request.query,
+            top_k=request.top_k,
+            strategy_name=STRATEGY_DENSE_TOP_K,
+            project=request.project,
+            metadata=request.metadata,
+            mode="playground",
+            query_vector=None,
+        )
+        return PlaygroundQueryResponse(
+            answer=result.answer,
+            trace_id=result.trace_id,
+            retrieved_chunks=result.retrieved_chunks,
+            citations=result.citations,
+            evaluation=result.evaluation,
+        )
+
+    async def compare(self, request: PlaygroundCompareRequest) -> PlaygroundCompareResponse:
+        strategies = [strategy.value for strategy in request.strategies]
+        if not strategies:
+            raise BadRequestError("At least one retrieval strategy is required.")
+
+        query_vector = (await self.embedding_provider.embed_texts([request.query]))[0]
+        results = []
+        for strategy_name in strategies:
+            results.append(
+                await self._run_strategy(
+                    query=request.query,
+                    top_k=request.top_k,
+                    strategy_name=strategy_name,
+                    project=request.project,
+                    metadata=request.metadata,
+                    mode="playground_compare",
+                    query_vector=query_vector,
+                )
+            )
+
+        return PlaygroundCompareResponse(query=request.query, results=results)
+
+    async def _run_strategy(
+        self,
+        *,
+        query: str,
+        top_k: int,
+        strategy_name: str,
+        project: Optional[str],
+        metadata: Dict[str, Any],
+        mode: str,
+        query_vector: Optional[List[float]],
+    ) -> PlaygroundComparisonResult:
         if self.answer_provider is None or self.judge_provider is None:
-            raise RuntimeError("Playground query requires answer and judge providers.")
+            raise RuntimeError("Playground strategy runs require answer and judge providers.")
 
         started_at = time.perf_counter()
-        query_embedding = (await self.embedding_provider.embed_texts([request.query]))[0]
-        retrieved = await self.vector_store.search(
-            vector=query_embedding,
-            limit=request.top_k,
-            filters={"user_id": self.user.id},
+        if query_vector is None:
+            query_vector = (await self.embedding_provider.embed_texts([query]))[0]
+
+        try:
+            strategy = get_retrieval_strategy(strategy_name)
+        except ValueError as exc:
+            raise BadRequestError(str(exc)) from exc
+
+        retrieved = await strategy.retrieve(
+            vector_store=self.vector_store,
+            context=RetrievalRequestContext(
+                query=query,
+                query_vector=query_vector,
+                top_k=top_k,
+                filters={"user_id": self.user.id},
+            ),
         )
         chunk_payloads = [self._record_to_chunk_payload(record) for record in retrieved]
         answer = await self.answer_provider.generate_answer(
-            query=request.query,
+            query=query,
             chunks=[self._chunk_payload_to_provider_dict(chunk) for chunk in chunk_payloads],
         )
 
-        trace_service = TraceService(self.db, self.user)
-        trace_metadata = {
-            **request.metadata,
-            "mode": "playground",
-            "retrieved_count": len(chunk_payloads),
-        }
-        trace = trace_service.start_trace(
-            TraceStartRequest(
-                project=request.project or self.settings.playground_project,
-                query=request.query,
-                metadata=trace_metadata,
-            )
-        )
-
-        trace_service.log_retrieval(
-            trace.trace_id,
-            RetrievalRequest(
-                retriever_name="contexttrace-playground",
-                chunks=chunk_payloads,
-                metadata={"vector_store": self.settings.playground_vector_store},
-            ),
-        )
-        trace_service.log_context(
-            trace.trace_id,
-            ContextRequest(chunks=chunk_payloads, metadata={"selection": "top_k"}),
-        )
         answer_text = answer.answer or "I do not have enough indexed context to answer this question."
-        trace_service.log_answer(
-            trace.trace_id,
-            AnswerRequest(
-                answer=answer_text,
-                model=answer.model,
-                usage=answer.usage,
-                metadata={
-                    **answer.metadata,
-                    "latency_ms": round((time.perf_counter() - started_at) * 1000, 2),
-                },
-            ),
+        trace_service = TraceService(self.db, self.user)
+        trace = self._create_trace_for_strategy(
+            trace_service=trace_service,
+            query=query,
+            project=project,
+            metadata=metadata,
+            mode=mode,
+            strategy_name=strategy_name,
+            chunk_payloads=chunk_payloads,
+            answer=answer,
+            answer_text=answer_text,
+            latency_ms=round((time.perf_counter() - started_at) * 1000, 2),
         )
 
         citations = self._citation_payloads(answer, chunk_payloads)
         trace_service.log_citations(trace.trace_id, CitationsRequest(citations=citations))
         evaluation = await trace_service.evaluate_trace(trace.trace_id, self.judge_provider)
+        latency_ms = round((time.perf_counter() - started_at) * 1000, 2)
 
-        return PlaygroundQueryResponse(
+        return PlaygroundComparisonResult(
+            strategy=RetrievalStrategyName(strategy_name),
             answer=answer_text,
             trace_id=trace.trace_id,
             retrieved_chunks=[self._record_to_response_chunk(record) for record in retrieved],
@@ -178,8 +226,71 @@ class PlaygroundService:
                 }
                 for citation in citations
             ],
+            metrics=PlaygroundComparisonMetrics(
+                citation_support=self._citation_support(evaluation.citation_checks),
+                unsupported_claim_rate=self._unsupported_claim_rate(evaluation.citation_checks),
+                failure_type=evaluation.failure.failure_type.value,
+                token_usage=answer.usage,
+                latency_ms=latency_ms,
+            ),
             evaluation=evaluation,
         )
+
+    def _create_trace_for_strategy(
+        self,
+        *,
+        trace_service: TraceService,
+        query: str,
+        project: Optional[str],
+        metadata: Dict[str, Any],
+        mode: str,
+        strategy_name: str,
+        chunk_payloads: List[ChunkPayload],
+        answer: GeneratedAnswer,
+        answer_text: str,
+        latency_ms: float,
+    ):
+        trace_metadata = {
+            **metadata,
+            "mode": mode,
+            "retrieval_strategy": strategy_name,
+            "retrieved_count": len(chunk_payloads),
+        }
+        trace = trace_service.start_trace(
+            TraceStartRequest(
+                project=project or self.settings.playground_project,
+                query=query,
+                metadata=trace_metadata,
+            )
+        )
+        trace_service.log_retrieval(
+            trace.trace_id,
+            RetrievalRequest(
+                retriever_name="contexttrace-playground-%s" % strategy_name,
+                chunks=chunk_payloads,
+                metadata={
+                    "vector_store": self.settings.playground_vector_store,
+                    "strategy": strategy_name,
+                },
+            ),
+        )
+        trace_service.log_context(
+            trace.trace_id,
+            ContextRequest(
+                chunks=chunk_payloads,
+                metadata={"selection": "top_k", "strategy": strategy_name},
+            ),
+        )
+        trace_service.log_answer(
+            trace.trace_id,
+            AnswerRequest(
+                answer=answer_text,
+                model=answer.model,
+                usage=answer.usage,
+                metadata={**answer.metadata, "latency_ms": latency_ms},
+            ),
+        )
+        return trace
 
     def _record_to_chunk_payload(self, record: VectorRecord) -> ChunkPayload:
         return ChunkPayload(
@@ -224,3 +335,21 @@ class PlaygroundService:
                 continue
             citations.append(CitationPayload(claim=claim, source_chunk_id=source_chunk_id))
         return citations
+
+    def _citation_support(self, citation_checks: list) -> float:
+        if not citation_checks:
+            return 0.0
+        return round(
+            sum(check.support_score for check in citation_checks) / len(citation_checks),
+            3,
+        )
+
+    def _unsupported_claim_rate(self, citation_checks: list) -> float:
+        if not citation_checks:
+            return 1.0
+        unsupported = [
+            check
+            for check in citation_checks
+            if check.verdict.value in {"unsupported", "contradicted", "not_enough_info"}
+        ]
+        return round(len(unsupported) / len(citation_checks), 3)

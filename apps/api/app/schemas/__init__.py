@@ -27,10 +27,15 @@ from app.schemas.evals import (
     WorstTrace,
 )
 from app.schemas.playground import (
+    PlaygroundCompareRequest,
+    PlaygroundCompareResponse,
+    PlaygroundComparisonMetrics,
+    PlaygroundComparisonResult,
     PlaygroundChunk,
     PlaygroundDocumentUploadResponse,
     PlaygroundQueryRequest,
     PlaygroundQueryResponse,
+    RetrievalStrategyName,
 )
 
 __all__ = [
@@ -59,7 +64,12 @@ __all__ = [
     "EvalSetSummary",
     "WorstTrace",
     "PlaygroundChunk",
+    "PlaygroundCompareRequest",
+    "PlaygroundCompareResponse",
+    "PlaygroundComparisonMetrics",
+    "PlaygroundComparisonResult",
     "PlaygroundDocumentUploadResponse",
     "PlaygroundQueryRequest",
     "PlaygroundQueryResponse",
+    "RetrievalStrategyName",
 ]

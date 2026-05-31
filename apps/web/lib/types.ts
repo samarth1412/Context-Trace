@@ -138,3 +138,31 @@ export type PlaygroundDocumentUploadResponse = {
   filename: string;
   chunk_count: number;
 };
+
+export type RetrievalStrategyName = "dense_top_k" | "bm25_top_k" | "hybrid" | "hybrid_rerank";
+
+export type PlaygroundComparisonMetrics = {
+  citation_support: number;
+  unsupported_claim_rate: number;
+  failure_type: FailureType;
+  token_usage: Record<string, unknown>;
+  latency_ms: number;
+};
+
+export type PlaygroundComparisonResult = {
+  strategy: RetrievalStrategyName;
+  trace_id: string;
+  answer: string;
+  retrieved_chunks: PlaygroundChunk[];
+  citations: Array<{
+    claim: string;
+    source_chunk_id: string;
+  }>;
+  metrics: PlaygroundComparisonMetrics;
+  evaluation: TraceEvaluation;
+};
+
+export type PlaygroundCompareResponse = {
+  query: string;
+  results: PlaygroundComparisonResult[];
+};

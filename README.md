@@ -177,7 +177,7 @@ npm install
 npm run dev
 ```
 
-The dashboard includes `/playground` for hosted queries and `/playground/upload` for document indexing. Client-side playground calls use:
+The dashboard includes `/playground` for hosted queries, strategy comparison, and `/playground/upload` for document indexing. Client-side playground calls use:
 
 ```env
 NEXT_PUBLIC_CONTEXTTRACE_API_URL=http://localhost:8000
@@ -200,6 +200,15 @@ Use an OpenAI-compatible provider for hosted answer generation and embeddings:
 CONTEXTTRACE_EMBEDDING_PROVIDER=openai_compatible
 CONTEXTTRACE_ANSWER_PROVIDER=openai_compatible
 CONTEXTTRACE_OPENAI_COMPATIBLE_API_KEY=...
+```
+
+The comparison endpoint runs selected retrieval strategies against the same query, creates a trace and evaluation for each strategy, and returns citation support, unsupported claim rate, failure type, token usage, and latency:
+
+```text
+dense_top_k
+bm25_top_k
+hybrid
+hybrid_rerank
 ```
 
 ## Judge Provider
@@ -241,6 +250,7 @@ POST /v1/eval-sets/{id}/runs
 GET  /v1/eval-sets/{id}/summary
 POST /v1/playground/documents
 POST /v1/playground/query
+POST /v1/playground/compare
 ```
 
 Authenticate with either:

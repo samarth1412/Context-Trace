@@ -17,6 +17,8 @@ from app.models import User
 from app.playground.providers import AnswerProvider, EmbeddingProvider
 from app.playground.vector_store import VectorStore
 from app.schemas import (
+    PlaygroundCompareRequest,
+    PlaygroundCompareResponse,
     PlaygroundDocumentUploadResponse,
     PlaygroundQueryRequest,
     PlaygroundQueryResponse,
@@ -69,3 +71,25 @@ async def query_playground(
         vector_store=vector_store,
         judge_provider=judge_provider,
     ).query(request)
+
+
+@router.post("/compare", response_model=PlaygroundCompareResponse)
+async def compare_playground_strategies(
+    request: PlaygroundCompareRequest,
+    db: Annotated[Session, Depends(get_db)],
+    user: Annotated[User, Depends(get_current_user)],
+    settings: Annotated[Settings, Depends(get_settings)],
+    embedding_provider: Annotated[EmbeddingProvider, Depends(get_embedding_provider)],
+    answer_provider: Annotated[AnswerProvider, Depends(get_answer_provider)],
+    vector_store: Annotated[VectorStore, Depends(get_vector_store)],
+    judge_provider: Annotated[LLMJudgeProvider, Depends(get_llm_judge_provider)],
+) -> PlaygroundCompareResponse:
+    return await PlaygroundService(
+        db=db,
+        user=user,
+        settings=settings,
+        embedding_provider=embedding_provider,
+        answer_provider=answer_provider,
+        vector_store=vector_store,
+        judge_provider=judge_provider,
+    ).compare(request)
