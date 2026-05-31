@@ -25,6 +25,8 @@ class FakeTransport:
                 "failure_type_distribution": {"no_failure_detected": 1},
                 "worst_traces": [],
             }
+        if path.endswith("/agent-events"):
+            return {"trace_id": "trace_123", "event_id": "agent_event_123", "accepted": 1}
         if path == "/v1/projects/project_123/external-endpoints":
             return {"id": "endpoint_123", **payload}
         if path == "/v1/external-endpoints/endpoint_123/test":
@@ -116,6 +118,20 @@ class FakeTransport:
                     "support_status": "directly_supported",
                     "support_score": 0.98,
                     "rationale": "The source says refunds are available within 30 days.",
+                }
+            ],
+            "agent_events": [
+                {
+                    "id": "agent_event_123",
+                    "trace_id": "trace_123",
+                    "event_type": "tool_call",
+                    "name": "policy_search",
+                    "input_json": {"query": "refund policy"},
+                    "output_json": {},
+                    "metadata_json": {},
+                    "latency_ms": 12.5,
+                    "error_message": None,
+                    "created_at": "2026-05-31T12:00:00Z",
                 }
             ],
             "evaluation": {
@@ -267,6 +283,57 @@ def test_sdk_eval_set_methods_post_expected_payloads():
         "Can the answer cite refund evidence?"
     )
     assert transport.calls[-1] == ("POST", "/v1/eval-sets/eval_123/runs", {})
+
+
+def test_sdk_agent_event_methods_post_expected_payloads():
+    transport = FakeTransport()
+    ct = ContextTrace(api_key="ctx_test", project="support-rag", transport=transport)
+
+    with ct.trace(query="Resolve the refund ticket.") as trace:
+        planner = trace.log_planner_step(
+            "plan_refund_lookup",
+            input_json={"query": "Resolve the refund ticket."},
+            output_json={"next": "policy_search"},
+            latency_ms=8.0,
+        )
+        trace.log_tool_call(
+            "policy_search",
+            input_json={"query": "refund policy"},
+            metadata={"tool_type": "retriever"},
+        )
+        trace.log_tool_result(
+            "policy_search",
+            output_json={"matches": 3},
+            latency_ms=30.0,
+        )
+        trace.log_memory_read(output_json={"customer_tier": "pro"})
+        trace.log_memory_write(input_json={"ticket_id": "ticket_123"})
+        trace.log_agent_error("Policy search timed out.", name="policy_search")
+
+    assert planner["event_id"] == "agent_event_123"
+    assert transport.calls[1] == (
+        "POST",
+        "/v1/traces/trace_123/agent-events",
+        {
+            "event_type": "planner_step",
+            "name": "plan_refund_lookup",
+            "input_json": {"query": "Resolve the refund ticket."},
+            "output_json": {"next": "policy_search"},
+            "metadata_json": {},
+            "latency_ms": 8.0,
+            "error_message": None,
+        },
+    )
+    event_types = [call[2]["event_type"] for call in transport.calls[1:]]
+    assert event_types == [
+        "planner_step",
+        "tool_call",
+        "tool_result",
+        "memory_read",
+        "memory_write",
+        "error",
+    ]
+    assert transport.calls[-1][2]["error_message"] == "Policy search timed out."
 
 
 def test_sdk_external_rag_endpoint_methods_post_expected_payloads():

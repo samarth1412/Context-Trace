@@ -86,6 +86,61 @@ def test_trace_lifecycle_logs_and_fetches_trace(client, auth_headers):
     assert fetched_body["chunks"][0]["selected"] is True
 
 
+def test_agent_events_are_logged_listed_and_included_in_trace(client, auth_headers):
+    start = client.post(
+        "/v1/traces/start",
+        headers=auth_headers,
+        json={
+            "project": "agent-support",
+            "query": "Resolve the refund ticket.",
+            "metadata": {"trace_kind": "agent"},
+        },
+    )
+    assert start.status_code == 201
+    trace_id = start.json()["trace_id"]
+
+    planner = client.post(
+        f"/v1/traces/{trace_id}/agent-events",
+        headers=auth_headers,
+        json={
+            "event_type": "planner_step",
+            "name": "plan_refund_lookup",
+            "input_json": {"query": "Resolve the refund ticket."},
+            "output_json": {"next": "lookup_policy"},
+            "metadata_json": {"agent": "support-agent"},
+            "latency_ms": 12.5,
+        },
+    )
+    assert planner.status_code == 200
+    assert planner.json()["accepted"] == 1
+
+    error = client.post(
+        f"/v1/traces/{trace_id}/agent-events",
+        headers=auth_headers,
+        json={
+            "event_type": "error",
+            "name": "lookup_policy",
+            "input_json": {"tool": "policy_search"},
+            "output_json": {},
+            "metadata_json": {"failure_label": "tool_error"},
+            "latency_ms": 42,
+            "error_message": "Policy search timed out.",
+        },
+    )
+    assert error.status_code == 200
+
+    listed = client.get(f"/v1/traces/{trace_id}/agent-events", headers=auth_headers)
+    assert listed.status_code == 200
+    events = listed.json()["events"]
+    assert [event["event_type"] for event in events] == ["planner_step", "error"]
+    assert events[0]["output_json"] == {"next": "lookup_policy"}
+    assert events[1]["error_message"] == "Policy search timed out."
+
+    fetched = client.get(f"/v1/traces/{trace_id}", headers=auth_headers)
+    assert fetched.status_code == 200
+    assert fetched.json()["agent_events"][1]["metadata_json"]["failure_label"] == "tool_error"
+
+
 def test_evaluate_supported_citation_retries_invalid_json_once(
     client,
     auth_headers,

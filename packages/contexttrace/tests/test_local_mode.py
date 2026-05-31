@@ -86,3 +86,25 @@ def test_batch_upload_replays_local_traces(tmp_path):
     assert target.calls[0][1] == "/v1/traces/start"
     assert target.calls[1][1] == "/v1/traces/remote_trace_1/retrieval"
     assert target.calls[-1][1] == "/v1/traces/remote_trace_1/citations"
+
+
+def test_local_mode_stores_agent_events(tmp_path):
+    ct = ContextTrace(
+        mode="local",
+        project="agent-support",
+        local_store_dir=str(tmp_path / "store"),
+    )
+
+    with ct.trace(query="Resolve the refund ticket.") as trace:
+        trace.log_planner_step("plan_refund_lookup", output_json={"next": "policy_search"})
+        trace.log_tool_call("policy_search", input_json={"query": "refund policy"})
+        trace.log_agent_error("Policy search timed out.", name="policy_search")
+        events = trace.list_agent_events()
+        fetched = trace.fetch()
+
+    assert [event["event_type"] for event in events["events"]] == [
+        "planner_step",
+        "tool_call",
+        "error",
+    ]
+    assert fetched["agent_events"][-1]["error_message"] == "Policy search timed out."

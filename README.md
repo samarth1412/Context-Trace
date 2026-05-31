@@ -137,6 +137,8 @@ docs/assets/playground-placeholder.png
 - `examples/custom_rag.py`
 - `examples/langchain_rag.py`
 - `examples/llamaindex_rag.py`
+- `examples/agent_trace.py`
+- `examples/langgraph_agent_trace.py`
 - `examples/local_report.py`
 - `examples/batch_eval.py`
 - `examples/contexttrace-rag-eval-workflow.yml`
@@ -195,6 +197,8 @@ POST /v1/traces/{trace_id}/retrieval
 POST /v1/traces/{trace_id}/context
 POST /v1/traces/{trace_id}/answer
 POST /v1/traces/{trace_id}/citations
+POST /v1/traces/{trace_id}/agent-events
+GET  /v1/traces/{trace_id}/agent-events
 POST /v1/traces/{trace_id}/evaluate
 GET  /v1/traces/{trace_id}
 POST /v1/eval-sets

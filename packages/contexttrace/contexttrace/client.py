@@ -319,6 +319,144 @@ class TraceSession:
     def log_citations(self, citations: Iterable[dict[str, Any]]) -> dict[str, Any]:
         return self._post("citations", {"citations": list(citations)})
 
+    def log_agent_event(
+        self,
+        *,
+        event_type: str,
+        name: str | None = None,
+        input_json: Any | None = None,
+        output_json: Any | None = None,
+        metadata: dict[str, Any] | None = None,
+        latency_ms: float | None = None,
+        error_message: str | None = None,
+    ) -> dict[str, Any]:
+        return self._post(
+            "agent-events",
+            _agent_event_payload(
+                event_type=event_type,
+                name=name,
+                input_json=input_json,
+                output_json=output_json,
+                metadata=metadata,
+                latency_ms=latency_ms,
+                error_message=error_message,
+            ),
+        )
+
+    def log_tool_call(
+        self,
+        name: str,
+        *,
+        input_json: Any | None = None,
+        metadata: dict[str, Any] | None = None,
+        latency_ms: float | None = None,
+    ) -> dict[str, Any]:
+        return self.log_agent_event(
+            event_type="tool_call",
+            name=name,
+            input_json=input_json,
+            metadata=metadata,
+            latency_ms=latency_ms,
+        )
+
+    def log_tool_result(
+        self,
+        name: str,
+        *,
+        output_json: Any | None = None,
+        input_json: Any | None = None,
+        metadata: dict[str, Any] | None = None,
+        latency_ms: float | None = None,
+        error_message: str | None = None,
+    ) -> dict[str, Any]:
+        return self.log_agent_event(
+            event_type="tool_result",
+            name=name,
+            input_json=input_json,
+            output_json=output_json,
+            metadata=metadata,
+            latency_ms=latency_ms,
+            error_message=error_message,
+        )
+
+    def log_memory_read(
+        self,
+        name: str = "memory_read",
+        *,
+        input_json: Any | None = None,
+        output_json: Any | None = None,
+        metadata: dict[str, Any] | None = None,
+        latency_ms: float | None = None,
+    ) -> dict[str, Any]:
+        return self.log_agent_event(
+            event_type="memory_read",
+            name=name,
+            input_json=input_json,
+            output_json=output_json,
+            metadata=metadata,
+            latency_ms=latency_ms,
+        )
+
+    def log_memory_write(
+        self,
+        name: str = "memory_write",
+        *,
+        input_json: Any | None = None,
+        output_json: Any | None = None,
+        metadata: dict[str, Any] | None = None,
+        latency_ms: float | None = None,
+    ) -> dict[str, Any]:
+        return self.log_agent_event(
+            event_type="memory_write",
+            name=name,
+            input_json=input_json,
+            output_json=output_json,
+            metadata=metadata,
+            latency_ms=latency_ms,
+        )
+
+    def log_planner_step(
+        self,
+        name: str,
+        *,
+        input_json: Any | None = None,
+        output_json: Any | None = None,
+        metadata: dict[str, Any] | None = None,
+        latency_ms: float | None = None,
+    ) -> dict[str, Any]:
+        return self.log_agent_event(
+            event_type="planner_step",
+            name=name,
+            input_json=input_json,
+            output_json=output_json,
+            metadata=metadata,
+            latency_ms=latency_ms,
+        )
+
+    def log_agent_error(
+        self,
+        error_message: str,
+        *,
+        name: str = "agent_error",
+        input_json: Any | None = None,
+        output_json: Any | None = None,
+        metadata: dict[str, Any] | None = None,
+        latency_ms: float | None = None,
+    ) -> dict[str, Any]:
+        return self.log_agent_event(
+            event_type="error",
+            name=name,
+            input_json=input_json,
+            output_json=output_json,
+            metadata=metadata,
+            latency_ms=latency_ms,
+            error_message=error_message,
+        )
+
+    def list_agent_events(self) -> dict[str, Any]:
+        self._require_started()
+        return self._transport.get(f"/v1/traces/{self.trace_id}/agent-events")
+
     def evaluate(self) -> dict[str, Any]:
         return self._post("evaluate", {})
 
@@ -572,6 +710,144 @@ class AsyncTraceSession:
     async def log_citations(self, citations: Iterable[dict[str, Any]]) -> dict[str, Any]:
         return await self._post("citations", {"citations": list(citations)})
 
+    async def log_agent_event(
+        self,
+        *,
+        event_type: str,
+        name: str | None = None,
+        input_json: Any | None = None,
+        output_json: Any | None = None,
+        metadata: dict[str, Any] | None = None,
+        latency_ms: float | None = None,
+        error_message: str | None = None,
+    ) -> dict[str, Any]:
+        return await self._post(
+            "agent-events",
+            _agent_event_payload(
+                event_type=event_type,
+                name=name,
+                input_json=input_json,
+                output_json=output_json,
+                metadata=metadata,
+                latency_ms=latency_ms,
+                error_message=error_message,
+            ),
+        )
+
+    async def log_tool_call(
+        self,
+        name: str,
+        *,
+        input_json: Any | None = None,
+        metadata: dict[str, Any] | None = None,
+        latency_ms: float | None = None,
+    ) -> dict[str, Any]:
+        return await self.log_agent_event(
+            event_type="tool_call",
+            name=name,
+            input_json=input_json,
+            metadata=metadata,
+            latency_ms=latency_ms,
+        )
+
+    async def log_tool_result(
+        self,
+        name: str,
+        *,
+        output_json: Any | None = None,
+        input_json: Any | None = None,
+        metadata: dict[str, Any] | None = None,
+        latency_ms: float | None = None,
+        error_message: str | None = None,
+    ) -> dict[str, Any]:
+        return await self.log_agent_event(
+            event_type="tool_result",
+            name=name,
+            input_json=input_json,
+            output_json=output_json,
+            metadata=metadata,
+            latency_ms=latency_ms,
+            error_message=error_message,
+        )
+
+    async def log_memory_read(
+        self,
+        name: str = "memory_read",
+        *,
+        input_json: Any | None = None,
+        output_json: Any | None = None,
+        metadata: dict[str, Any] | None = None,
+        latency_ms: float | None = None,
+    ) -> dict[str, Any]:
+        return await self.log_agent_event(
+            event_type="memory_read",
+            name=name,
+            input_json=input_json,
+            output_json=output_json,
+            metadata=metadata,
+            latency_ms=latency_ms,
+        )
+
+    async def log_memory_write(
+        self,
+        name: str = "memory_write",
+        *,
+        input_json: Any | None = None,
+        output_json: Any | None = None,
+        metadata: dict[str, Any] | None = None,
+        latency_ms: float | None = None,
+    ) -> dict[str, Any]:
+        return await self.log_agent_event(
+            event_type="memory_write",
+            name=name,
+            input_json=input_json,
+            output_json=output_json,
+            metadata=metadata,
+            latency_ms=latency_ms,
+        )
+
+    async def log_planner_step(
+        self,
+        name: str,
+        *,
+        input_json: Any | None = None,
+        output_json: Any | None = None,
+        metadata: dict[str, Any] | None = None,
+        latency_ms: float | None = None,
+    ) -> dict[str, Any]:
+        return await self.log_agent_event(
+            event_type="planner_step",
+            name=name,
+            input_json=input_json,
+            output_json=output_json,
+            metadata=metadata,
+            latency_ms=latency_ms,
+        )
+
+    async def log_agent_error(
+        self,
+        error_message: str,
+        *,
+        name: str = "agent_error",
+        input_json: Any | None = None,
+        output_json: Any | None = None,
+        metadata: dict[str, Any] | None = None,
+        latency_ms: float | None = None,
+    ) -> dict[str, Any]:
+        return await self.log_agent_event(
+            event_type="error",
+            name=name,
+            input_json=input_json,
+            output_json=output_json,
+            metadata=metadata,
+            latency_ms=latency_ms,
+            error_message=error_message,
+        )
+
+    async def list_agent_events(self) -> dict[str, Any]:
+        self._require_started()
+        return await self._transport.get(f"/v1/traces/{self.trace_id}/agent-events")
+
     async def evaluate(self) -> dict[str, Any]:
         return await self._post("evaluate", {})
 
@@ -670,6 +946,27 @@ def _normalize_eval_question(question: Any) -> dict[str, Any]:
     }
 
 
+def _agent_event_payload(
+    *,
+    event_type: str,
+    name: str | None,
+    input_json: Any | None,
+    output_json: Any | None,
+    metadata: dict[str, Any] | None,
+    latency_ms: float | None,
+    error_message: str | None,
+) -> dict[str, Any]:
+    return {
+        "event_type": event_type,
+        "name": name,
+        "input_json": input_json if input_json is not None else {},
+        "output_json": output_json if output_json is not None else {},
+        "metadata_json": metadata or {},
+        "latency_ms": latency_ms,
+        "error_message": error_message,
+    }
+
+
 def _replay_trace(trace: dict[str, Any], *, transport: Transport, project: str) -> dict[str, Any]:
     started = transport.post(
         "/v1/traces/start",
@@ -716,6 +1013,20 @@ def _replay_trace(trace: dict[str, Any], *, transport: Transport, project: str) 
     ]
     if citations:
         transport.post(f"/v1/traces/{remote_trace_id}/citations", {"citations": citations})
+
+    for event in trace.get("agent_events") or []:
+        transport.post(
+            f"/v1/traces/{remote_trace_id}/agent-events",
+            {
+                "event_type": event.get("event_type"),
+                "name": event.get("name"),
+                "input_json": event.get("input_json") or {},
+                "output_json": event.get("output_json") or {},
+                "metadata_json": event.get("metadata_json") or {},
+                "latency_ms": event.get("latency_ms"),
+                "error_message": event.get("error_message"),
+            },
+        )
 
     return {"local_trace_id": trace.get("id"), "trace_id": remote_trace_id}
 

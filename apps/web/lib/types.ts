@@ -10,6 +10,12 @@ export type FailureType =
   | "over_compression"
   | "should_have_abstained"
   | "query_needs_decomposition"
+  | "wrong_tool_used"
+  | "tool_error"
+  | "stale_memory_used"
+  | "missing_memory"
+  | "excessive_tool_calls"
+  | "agent_loop_detected"
   | "unknown";
 
 export type Severity = "none" | "low" | "medium" | "high";
@@ -76,6 +82,30 @@ export type ContextPolicyMetadata = {
   dropped_chunk_ids?: string[];
 };
 
+export type AgentEventType =
+  | "planner_step"
+  | "tool_call"
+  | "tool_result"
+  | "retrieval"
+  | "memory_read"
+  | "memory_write"
+  | "human_approval"
+  | "final_answer"
+  | "error";
+
+export type AgentEvent = {
+  id: string;
+  trace_id: string;
+  event_type: AgentEventType;
+  name?: string | null;
+  input_json?: unknown;
+  output_json?: unknown;
+  metadata_json?: Record<string, unknown>;
+  latency_ms?: number | null;
+  error_message?: string | null;
+  created_at: string;
+};
+
 export type TraceDetail = {
   id: string;
   project_id: string;
@@ -86,6 +116,7 @@ export type TraceDetail = {
   chunks: TraceChunk[];
   answer?: TraceAnswer | null;
   citation_checks: CitationCheck[];
+  agent_events?: AgentEvent[];
   evaluation?: TraceEvaluation | null;
   created_at: string;
   updated_at: string;

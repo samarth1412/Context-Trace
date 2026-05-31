@@ -8,6 +8,9 @@ from app.judge import LLMJudgeProvider
 from app.models import User
 from app.schemas import (
     AnswerRequest,
+    AgentEventRequest,
+    AgentEventResponse,
+    AgentEventsResponse,
     CitationsRequest,
     ContextRequest,
     EvaluationResponse,
@@ -69,6 +72,25 @@ def log_citations(
     user: Annotated[User, Depends(get_current_user)],
 ) -> TraceEventResponse:
     return TraceService(db, user).log_citations(trace_id, request)
+
+
+@router.post("/{trace_id}/agent-events", response_model=AgentEventResponse)
+def log_agent_event(
+    trace_id: str,
+    request: AgentEventRequest,
+    db: Annotated[Session, Depends(get_db)],
+    user: Annotated[User, Depends(get_current_user)],
+) -> AgentEventResponse:
+    return TraceService(db, user).log_agent_event(trace_id, request)
+
+
+@router.get("/{trace_id}/agent-events", response_model=AgentEventsResponse)
+def list_agent_events(
+    trace_id: str,
+    db: Annotated[Session, Depends(get_db)],
+    user: Annotated[User, Depends(get_current_user)],
+) -> AgentEventsResponse:
+    return TraceService(db, user).list_agent_events(trace_id)
 
 
 @router.post("/{trace_id}/evaluate", response_model=EvaluationResponse)

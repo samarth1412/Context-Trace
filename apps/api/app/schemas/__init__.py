@@ -1,6 +1,10 @@
 from app.schemas.traces import (
     AnswerRead,
     AnswerRequest,
+    AgentEventRead,
+    AgentEventRequest,
+    AgentEventResponse,
+    AgentEventsResponse,
     ChunkPayload,
     ChunkRead,
     CitationCheckRead,
@@ -52,6 +56,10 @@ from app.schemas.playground import (
 __all__ = [
     "AnswerRead",
     "AnswerRequest",
+    "AgentEventRead",
+    "AgentEventRequest",
+    "AgentEventResponse",
+    "AgentEventsResponse",
     "ChunkPayload",
     "ChunkRead",
     "CitationCheckRead",

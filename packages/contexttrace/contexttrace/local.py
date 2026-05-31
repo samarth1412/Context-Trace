@@ -31,6 +31,7 @@ class LocalStore:
             "chunks": [],
             "answer": None,
             "citation_checks": [],
+            "agent_events": [],
             "evaluation": None,
             "created_at": now,
             "updated_at": now,
@@ -140,6 +141,23 @@ class LocalTransport:
             trace["status"] = "citations_logged"
             self.store.save_trace(trace)
             return {"trace_id": trace_id, "accepted": len(trace["citation_checks"])}
+        if action == "agent-events":
+            event = {
+                "id": _new_id("local_agent_event"),
+                "trace_id": trace_id,
+                "event_type": payload["event_type"],
+                "name": payload.get("name"),
+                "input_json": payload.get("input_json") if payload.get("input_json") is not None else {},
+                "output_json": payload.get("output_json") if payload.get("output_json") is not None else {},
+                "metadata_json": payload.get("metadata_json") or {},
+                "latency_ms": payload.get("latency_ms"),
+                "error_message": payload.get("error_message"),
+                "created_at": _now(),
+            }
+            trace.setdefault("agent_events", []).append(event)
+            trace["status"] = "agent_event_logged"
+            self.store.save_trace(trace)
+            return {"trace_id": trace_id, "event_id": event["id"], "accepted": 1}
         if action == "evaluate":
             evaluation = _evaluate_trace(trace)
             trace["evaluation"] = evaluation
@@ -169,6 +187,10 @@ class LocalTransport:
             if trace is None:
                 raise ContextTraceLocalError("No local traces found.")
             return trace
+        parts = path.strip("/").split("/")
+        if len(parts) == 4 and parts[:2] == ["v1", "traces"] and parts[3] == "agent-events":
+            trace = self.store.get_trace(parts[2])
+            return {"trace_id": parts[2], "events": trace.get("agent_events") or []}
         if path.startswith("/v1/traces/"):
             trace_id = path.rsplit("/", 1)[-1]
             return self.store.get_trace(trace_id)

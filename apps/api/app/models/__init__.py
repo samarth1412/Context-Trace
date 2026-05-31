@@ -1,5 +1,6 @@
 from app.models.entities import (
     Answer,
+    AgentEvent,
     Chunk,
     CitationCheck,
     EvalQuestion,
@@ -11,11 +12,13 @@ from app.models.entities import (
     Trace,
     User,
 )
-from app.models.enums import FailureType, Severity, SupportStatus
+from app.models.enums import AgentEventType, FailureType, Severity, SupportStatus
 from app.models.enums import CitationVerdict
 
 __all__ = [
     "Answer",
+    "AgentEvent",
+    "AgentEventType",
     "Chunk",
     "CitationCheck",
     "CitationVerdict",

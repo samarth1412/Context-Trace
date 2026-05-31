@@ -82,6 +82,26 @@ Logs the generated answer, model name, token usage, and metadata such as latency
 
 Logs answer claims and their cited source chunk IDs.
 
+## Agent Events
+
+Agent tracing is intentionally lightweight in v1. Use agent events to add a chronological timeline to the same trace used for RAG evidence.
+
+```python
+with ct.trace(query="Resolve the refund ticket.") as trace:
+    trace.log_planner_step(
+        "plan_refund_lookup",
+        input_json={"query": "Resolve the refund ticket."},
+        output_json={"next": "policy_search"},
+    )
+    trace.log_tool_call("policy_search", input_json={"query": "refund policy"})
+    trace.log_tool_result("policy_search", output_json={"matches": 3}, latency_ms=42)
+    trace.log_memory_read("customer_profile", output_json={"tier": "pro"})
+    trace.log_memory_write("ticket_summary", input_json={"status": "answered"})
+    trace.log_agent_error("Policy search timed out.", name="policy_search")
+```
+
+Supported event types are `planner_step`, `tool_call`, `tool_result`, `retrieval`, `memory_read`, `memory_write`, `human_approval`, `final_answer`, and `error`.
+
 ### `TraceSession.evaluate()`
 
 Runs citation verification and failure analysis. The result includes citation checks and a failure diagnosis.

@@ -70,6 +70,42 @@ The query requires multiple retrieval steps or sub-questions.
 
 Suggested action: decompose the query and trace each sub-step.
 
+### `wrong_tool_used`
+
+An agent selected a tool that was not appropriate for the user request or current state.
+
+Suggested action: tighten tool descriptions, add planner checks, or gate tool selection with policy rules.
+
+### `tool_error`
+
+An agent tool call failed or returned an unusable result.
+
+Suggested action: add tool retries, typed tool errors, and fallback tools where appropriate.
+
+### `stale_memory_used`
+
+The agent relied on memory that was outdated for the current user or task.
+
+Suggested action: add memory freshness metadata and prefer current source-of-truth retrieval.
+
+### `missing_memory`
+
+The agent needed prior state or user memory that was not available.
+
+Suggested action: log memory reads and writes, then verify required memory keys before planning.
+
+### `excessive_tool_calls`
+
+The agent used more tool calls than needed for the task.
+
+Suggested action: add tool budget limits and planner stopping rules.
+
+### `agent_loop_detected`
+
+The agent repeated planning or tool-use steps without making progress.
+
+Suggested action: detect repeated event sequences and force escalation, abstention, or human approval.
+
 ### `unknown`
 
 The judge could not confidently classify the issue or returned invalid structured output after retry.

@@ -1,11 +1,12 @@
 from __future__ import annotations
 
+from datetime import datetime
 from typing import List, Optional
 
 from sqlalchemy import Boolean, Float, ForeignKey, Integer, JSON, String, Text, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.db.base import Base, TimestampMixin, new_uuid
+from app.db.base import Base, TimestampMixin, new_uuid, utc_now
 from app.models.enums import FailureType, Severity, SupportStatus
 
 
@@ -59,6 +60,11 @@ class Trace(Base, TimestampMixin):
         back_populates="trace",
         cascade="all, delete-orphan",
     )
+    agent_events: Mapped[List["AgentEvent"]] = relationship(
+        back_populates="trace",
+        cascade="all, delete-orphan",
+        order_by="AgentEvent.created_at",
+    )
     chunks: Mapped[List["Chunk"]] = relationship(
         back_populates="trace",
         cascade="all, delete-orphan",
@@ -90,6 +96,23 @@ class RetrievalEvent(Base, TimestampMixin):
     event_metadata: Mapped[dict] = mapped_column("metadata", JSON, default=dict, nullable=False)
 
     trace: Mapped[Trace] = relationship(back_populates="retrieval_events")
+
+
+class AgentEvent(Base):
+    __tablename__ = "agent_events"
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_uuid)
+    trace_id: Mapped[str] = mapped_column(ForeignKey("traces.id"), nullable=False)
+    event_type: Mapped[str] = mapped_column(String(50), nullable=False)
+    name: Mapped[Optional[str]] = mapped_column(String(200), nullable=True)
+    input_json: Mapped[dict] = mapped_column(JSON, default=dict, nullable=False)
+    output_json: Mapped[dict] = mapped_column(JSON, default=dict, nullable=False)
+    metadata_json: Mapped[dict] = mapped_column(JSON, default=dict, nullable=False)
+    latency_ms: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    error_message: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(default=utc_now, nullable=False)
+
+    trace: Mapped[Trace] = relationship(back_populates="agent_events")
 
 
 class Chunk(Base, TimestampMixin):

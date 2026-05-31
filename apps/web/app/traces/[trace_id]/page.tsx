@@ -1,4 +1,5 @@
 import { AppShell } from "@/components/dashboard/app-shell";
+import { AgentTimeline } from "@/components/dashboard/agent-timeline";
 import { ChunkList } from "@/components/dashboard/chunk-list";
 import { CitationCards } from "@/components/dashboard/citation-cards";
 import { FailureCard } from "@/components/dashboard/failure-card";
@@ -54,6 +55,7 @@ export default async function TraceDetailPage({
           </CardHeader>
           <p className="whitespace-pre-wrap text-sm">{trace.data.answer?.answer ?? "No answer logged."}</p>
         </Card>
+        <AgentTimeline events={trace.data.agent_events ?? []} />
         <PolicyCard policy={policy} />
         <FailureCard failure={trace.data.evaluation?.failure} />
         <CitationCards checks={checks} />

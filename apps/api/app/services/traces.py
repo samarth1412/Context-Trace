@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.models import (
     Answer,
+    AgentEvent,
     Chunk,
     CitationCheck,
     FailureReport,
@@ -17,6 +18,10 @@ from app.models import (
 from app.schemas import (
     AnswerRead,
     AnswerRequest,
+    AgentEventRead,
+    AgentEventRequest,
+    AgentEventResponse,
+    AgentEventsResponse,
     ChunkPayload,
     ChunkRead,
     CitationCheckRead,
@@ -144,6 +149,36 @@ class TraceService:
 
     def get_trace(self, trace_id: str) -> TraceRead:
         return self._trace_read(self._get_trace(trace_id))
+
+    def log_agent_event(self, trace_id: str, request: AgentEventRequest) -> AgentEventResponse:
+        trace = self._get_trace(trace_id)
+        event = AgentEvent(
+            trace_id=trace.id,
+            event_type=request.event_type.value,
+            name=request.name,
+            input_json=request.input_json,
+            output_json=request.output_json,
+            metadata_json=request.metadata_json,
+            latency_ms=request.latency_ms,
+            error_message=request.error_message,
+        )
+        self.db.add(event)
+        trace.status = "agent_event_logged"
+        self.db.commit()
+        self.db.refresh(event)
+        return AgentEventResponse(trace_id=trace.id, event_id=event.id, accepted=1)
+
+    def list_agent_events(self, trace_id: str) -> AgentEventsResponse:
+        trace = self._get_trace(trace_id)
+        events = self.db.scalars(
+            select(AgentEvent)
+            .where(AgentEvent.trace_id == trace.id)
+            .order_by(AgentEvent.created_at)
+        ).all()
+        return AgentEventsResponse(
+            trace_id=trace.id,
+            events=[self._agent_event_read(event) for event in events],
+        )
 
     async def evaluate_trace(
         self,
@@ -308,9 +343,24 @@ class TraceService:
                 )
                 for check in trace.citation_checks
             ],
+            agent_events=[self._agent_event_read(event) for event in trace.agent_events],
             evaluation=self._evaluation_response(trace) if trace.failure_report else None,
             created_at=trace.created_at,
             updated_at=trace.updated_at,
+        )
+
+    def _agent_event_read(self, event: AgentEvent) -> AgentEventRead:
+        return AgentEventRead(
+            id=event.id,
+            trace_id=event.trace_id,
+            event_type=event.event_type,
+            name=event.name,
+            input_json=event.input_json,
+            output_json=event.output_json,
+            metadata_json=event.metadata_json or {},
+            latency_ms=event.latency_ms,
+            error_message=event.error_message,
+            created_at=event.created_at,
         )
 
     def _evaluation_response(self, trace: Trace) -> EvaluationResponse:

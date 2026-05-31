@@ -64,6 +64,44 @@ export const mockTraces: TraceDetail[] = [
         rationale: "The source explicitly states the 30-day refund window."
       }
     ],
+    agent_events: [
+      {
+        id: "agent_event_1",
+        trace_id: "trace_refund_supported",
+        event_type: "planner_step",
+        name: "plan_refund_lookup",
+        input_json: { query: "What is the refund policy?" },
+        output_json: { next: "retrieve_refund_policy" },
+        metadata_json: { agent: "support-agent" },
+        latency_ms: 18,
+        error_message: null,
+        created_at: "2026-05-31T12:00:00Z"
+      },
+      {
+        id: "agent_event_2",
+        trace_id: "trace_refund_supported",
+        event_type: "tool_call",
+        name: "policy_search",
+        input_json: { query: "refund policy" },
+        output_json: {},
+        metadata_json: { tool_type: "retriever" },
+        latency_ms: 44,
+        error_message: null,
+        created_at: "2026-05-31T12:00:00Z"
+      },
+      {
+        id: "agent_event_3",
+        trace_id: "trace_refund_supported",
+        event_type: "tool_result",
+        name: "policy_search",
+        input_json: {},
+        output_json: { match_count: 2 },
+        metadata_json: {},
+        latency_ms: 22,
+        error_message: null,
+        created_at: "2026-05-31T12:00:01Z"
+      }
+    ],
     evaluation: {
       citation_checks: [
         {

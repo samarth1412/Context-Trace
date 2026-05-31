@@ -5,7 +5,7 @@ from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from app.models.enums import CitationVerdict, FailureType, Severity, SupportStatus
+from app.models.enums import AgentEventType, CitationVerdict, FailureType, Severity, SupportStatus
 
 
 class APIModel(BaseModel):
@@ -63,6 +63,40 @@ class CitationsRequest(APIModel):
 class TraceEventResponse(APIModel):
     trace_id: str
     accepted: int
+
+
+class AgentEventRequest(APIModel):
+    event_type: AgentEventType
+    name: Optional[str] = None
+    input_json: Any = Field(default_factory=dict)
+    output_json: Any = Field(default_factory=dict)
+    metadata_json: Dict[str, Any] = Field(default_factory=dict)
+    latency_ms: Optional[float] = Field(default=None, ge=0.0)
+    error_message: Optional[str] = None
+
+
+class AgentEventResponse(APIModel):
+    trace_id: str
+    event_id: str
+    accepted: int
+
+
+class AgentEventRead(APIModel):
+    id: str
+    trace_id: str
+    event_type: AgentEventType
+    name: Optional[str] = None
+    input_json: Any = Field(default_factory=dict)
+    output_json: Any = Field(default_factory=dict)
+    metadata_json: Dict[str, Any] = Field(default_factory=dict)
+    latency_ms: Optional[float] = None
+    error_message: Optional[str] = None
+    created_at: datetime
+
+
+class AgentEventsResponse(APIModel):
+    trace_id: str
+    events: List[AgentEventRead] = Field(default_factory=list)
 
 
 class EvaluatedCitationCheck(APIModel):
@@ -123,6 +157,7 @@ class TraceRead(APIModel):
     chunks: List[ChunkRead] = Field(default_factory=list)
     answer: Optional[AnswerRead] = None
     citation_checks: List[CitationCheckRead] = Field(default_factory=list)
+    agent_events: List[AgentEventRead] = Field(default_factory=list)
     evaluation: Optional[EvaluationResponse] = None
     created_at: datetime
     updated_at: datetime
