@@ -1,0 +1,31 @@
+name: ContextTrace RAG Eval
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  rag-eval:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install ContextTrace SDK
+        run: pip install -e packages/contexttrace
+
+      - name: Run ContextTrace RAG evaluation
+        env:
+          CONTEXTTRACE_API_KEY: ${{ secrets.CONTEXTTRACE_API_KEY }}
+          CONTEXTTRACE_BASE_URL: ${{ vars.CONTEXTTRACE_BASE_URL }}
+          CONTEXTTRACE_PROJECT: ci-rag-eval
+        run: |
+          contexttrace eval \
+            --dataset evals/questions.json \
+            --endpoint "${{ vars.RAG_QUERY_ENDPOINT }}" \
+            --min-citation-support 0.80 \
+            --max-unsupported-claim-rate 0.10 \
+            --max-failure-rate 0.05

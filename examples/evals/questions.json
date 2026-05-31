@@ -1,0 +1,19 @@
+{
+  "questions": [
+    {
+      "id": "refund_policy",
+      "question": "What is the refund policy?",
+      "expected_answer": "Refunds are available within the documented eligibility window.",
+      "metadata": {
+        "category": "support_policy"
+      }
+    },
+    {
+      "id": "final_sale_refunds",
+      "question": "Can final-sale items be refunded?",
+      "metadata": {
+        "category": "support_policy"
+      }
+    }
+  ]
+}

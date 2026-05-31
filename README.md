@@ -159,6 +159,21 @@ response = query_engine.query("What is the refund policy?")
 
 The adapter captures query events, retrieved nodes, final response text, source nodes, metadata, and latency. See `examples/llamaindex_rag.py`.
 
+## CI RAG Evaluation
+
+The SDK installs a `contexttrace` CLI. Use it in CI to run a JSON eval dataset against an existing RAG endpoint and fail the job when reliability thresholds are missed:
+
+```bash
+contexttrace eval \
+  --dataset evals/questions.json \
+  --endpoint https://my-rag-api.com/query \
+  --min-citation-support 0.80 \
+  --max-unsupported-claim-rate 0.10 \
+  --max-failure-rate 0.05
+```
+
+The CLI calls the endpoint for each question, logs traces to the ContextTrace backend, runs evaluation, writes `contexttrace-eval-summary.md`, and appends the same markdown to `$GITHUB_STEP_SUMMARY` when running in GitHub Actions. See `examples/contexttrace-rag-eval-workflow.yml` and `examples/evals/questions.json`.
+
 ## Dashboard Setup
 
 The v1 dashboard lives in `apps/web` and uses Next.js, TypeScript, Tailwind, and shadcn-style components. It reads from the FastAPI backend when these env vars are present, otherwise it falls back to mock data:
