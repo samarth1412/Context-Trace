@@ -1,0 +1,115 @@
+export type FailureType =
+  | "no_failure_detected"
+  | "retrieval_miss"
+  | "low_relevance_context"
+  | "citation_mismatch"
+  | "unsupported_answer"
+  | "contradicted_answer"
+  | "conflicting_sources"
+  | "bad_chunking"
+  | "over_compression"
+  | "should_have_abstained"
+  | "query_needs_decomposition"
+  | "unknown";
+
+export type Severity = "none" | "low" | "medium" | "high";
+
+export type CitationVerdict =
+  | "pending"
+  | "directly_supported"
+  | "partially_supported"
+  | "unsupported"
+  | "contradicted"
+  | "not_enough_info";
+
+export type TraceChunk = {
+  id: string;
+  chunk_id: string;
+  content: string;
+  source?: string | null;
+  metadata?: Record<string, unknown>;
+  relevance_score?: number | null;
+  position: number;
+  selected: boolean;
+};
+
+export type TraceAnswer = {
+  id: string;
+  answer: string;
+  model?: string | null;
+  usage?: Record<string, number>;
+  metadata?: Record<string, unknown>;
+};
+
+export type CitationCheck = {
+  id?: string;
+  claim: string;
+  source_chunk_id: string;
+  support_status?: CitationVerdict;
+  verdict?: CitationVerdict;
+  support_score?: number | null;
+  rationale?: string | null;
+  reason?: string | null;
+};
+
+export type FailurePayload = {
+  failure_type: FailureType;
+  severity: Severity;
+  root_cause: string;
+  suggested_fix: string;
+};
+
+export type TraceEvaluation = {
+  citation_checks: CitationCheck[];
+  failure: FailurePayload;
+};
+
+export type TraceDetail = {
+  id: string;
+  project_id: string;
+  project: string;
+  query: string;
+  metadata?: Record<string, unknown>;
+  status: string;
+  chunks: TraceChunk[];
+  answer?: TraceAnswer | null;
+  citation_checks: CitationCheck[];
+  evaluation?: TraceEvaluation | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type TraceSummary = {
+  id: string;
+  query: string;
+  status: string;
+  failure_type: FailureType;
+  severity: Severity;
+  citation_support: number;
+  unsupported_claim_rate: number;
+  updated_at: string;
+};
+
+export type EvalSummary = {
+  eval_set_id: string;
+  name: string;
+  total_questions: number;
+  linked_trace_count: number;
+  evaluated_trace_count: number;
+  unevaluated_trace_count: number;
+  avg_citation_support: number;
+  unsupported_claim_rate: number;
+  failure_type_distribution: Record<string, number>;
+  worst_traces: Array<{
+    trace_id: string;
+    question_id: string;
+    question: string;
+    failure_type: FailureType;
+    severity: Severity;
+    citation_support: number;
+    unsupported_claim_rate: number;
+    root_cause: string;
+  }>;
+};
+
+export type DataSource = "backend" | "mock";

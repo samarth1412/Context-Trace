@@ -120,6 +120,24 @@ ct.add_eval_questions(
 summary = ct.evaluate_existing_traces(eval_set["eval_set_id"])
 ```
 
+## Dashboard Setup
+
+The v1 dashboard lives in `apps/web` and uses Next.js, TypeScript, Tailwind, and shadcn-style components. It reads from the FastAPI backend when these env vars are present, otherwise it falls back to mock data:
+
+```env
+CONTEXTTRACE_API_URL=http://localhost:8000
+CONTEXTTRACE_API_KEY=ctx_test
+CONTEXTTRACE_EVAL_SET_ID=eval_set_id
+```
+
+Run locally:
+
+```bash
+cd apps/web
+npm install
+npm run dev
+```
+
 ## Judge Provider
 
 Local development defaults to the mock judge provider. To use an OpenAI-compatible provider:
