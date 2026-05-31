@@ -3,6 +3,7 @@ from __future__ import annotations
 from types import TracebackType
 from typing import Any, Iterable
 
+from contexttrace.report import ReportGenerator
 from contexttrace.transport import HttpTransport, Transport
 
 
@@ -128,6 +129,10 @@ class TraceSession:
 
     def evaluate(self) -> dict[str, Any]:
         return self._post("evaluate", {})
+
+    def export_report(self, *, path: str = "report.html") -> str:
+        trace = self.fetch()
+        return ReportGenerator().generate(trace, path=path)
 
     def fetch(self) -> dict[str, Any]:
         self._require_started()
