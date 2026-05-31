@@ -4,8 +4,10 @@ import { CitationCards } from "@/components/dashboard/citation-cards";
 import { FailureCard } from "@/components/dashboard/failure-card";
 import { MetricCard } from "@/components/dashboard/metric-card";
 import { PageHeader } from "@/components/dashboard/page-header";
+import { PolicyCard } from "@/components/dashboard/policy-card";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { getTraceDetail } from "@/lib/api";
+import type { ContextPolicyMetadata } from "@/lib/types";
 import { formatPercent } from "@/lib/utils";
 
 export default async function TraceDetailPage({
@@ -19,6 +21,11 @@ export default async function TraceDetailPage({
   const avgSupport =
     checks.reduce((sum, check) => sum + (check.support_score ?? 0), 0) / Math.max(checks.length, 1);
   const selected = trace.data.chunks.filter((chunk) => chunk.selected);
+  const policy = readContextPolicy(trace.data.metadata);
+  const droppedChunkIds = new Set(policy?.dropped_chunk_ids ?? []);
+  const dropped = trace.data.chunks.filter(
+    (chunk) => !chunk.selected || droppedChunkIds.has(chunk.chunk_id)
+  );
   const usage = trace.data.answer?.usage ?? {};
 
   return (
@@ -47,11 +54,21 @@ export default async function TraceDetailPage({
           </CardHeader>
           <p className="whitespace-pre-wrap text-sm">{trace.data.answer?.answer ?? "No answer logged."}</p>
         </Card>
+        <PolicyCard policy={policy} />
         <FailureCard failure={trace.data.evaluation?.failure} />
         <CitationCards checks={checks} />
         <ChunkList title="Selected Context" chunks={selected} />
+        <ChunkList title="Dropped Chunks" chunks={dropped} />
         <ChunkList title="Retrieved Chunks" chunks={trace.data.chunks} />
       </div>
     </AppShell>
   );
+}
+
+function readContextPolicy(metadata?: Record<string, unknown>): ContextPolicyMetadata | null {
+  const value = metadata?.context_policy;
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return null;
+  }
+  return value as ContextPolicyMetadata;
 }

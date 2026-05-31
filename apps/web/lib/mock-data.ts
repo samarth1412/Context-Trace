@@ -6,7 +6,20 @@ export const mockTraces: TraceDetail[] = [
     project_id: "project_support",
     project: "support-rag",
     query: "What is the refund policy?",
-    metadata: { latency_ms: 842 },
+    metadata: {
+      latency_ms: 842,
+      context_policy: {
+        query_class: "fact_specific",
+        query_class_reason: "The query asks for a specific answerable fact.",
+        selected_policy: "dense_top_k",
+        reason: "A specific query with strong retrieval confidence can use dense top-k.",
+        retrieval_confidence: 0.91,
+        retrieval_strategy: "dense_top_k",
+        token_budget: 1200,
+        selected_chunk_ids: ["chunk_12"],
+        dropped_chunk_ids: ["chunk_13"]
+      }
+    },
     status: "evaluated",
     chunks: [
       {

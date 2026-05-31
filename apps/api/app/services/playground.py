@@ -10,6 +10,14 @@ from app.core.config import Settings
 from app.judge import LLMJudgeProvider
 from app.models import User
 from app.playground.documents import DocumentParser, TokenAwareChunker
+from app.playground.policy import (
+    POLICY_ABSTAIN_LOW_CONFIDENCE,
+    POLICY_COMPRESSED_CONTEXT,
+    PolicyDecision,
+    PolicySelector,
+    QueryClassification,
+    QueryClassifier,
+)
 from app.playground.providers import AnswerProvider, EmbeddingProvider, GeneratedAnswer
 from app.playground.retrieval import (
     STRATEGY_DENSE_TOP_K,
@@ -125,6 +133,7 @@ class PlaygroundService:
             metadata=request.metadata,
             mode="playground",
             query_vector=None,
+            use_policy_runtime=True,
         )
         return PlaygroundQueryResponse(
             answer=result.answer,
@@ -151,6 +160,7 @@ class PlaygroundService:
                     metadata=request.metadata,
                     mode="playground_compare",
                     query_vector=query_vector,
+                    use_policy_runtime=False,
                 )
             )
 
@@ -166,6 +176,7 @@ class PlaygroundService:
         metadata: Dict[str, Any],
         mode: str,
         query_vector: Optional[List[float]],
+        use_policy_runtime: bool,
     ) -> PlaygroundComparisonResult:
         if self.answer_provider is None or self.judge_provider is None:
             raise RuntimeError("Playground strategy runs require answer and judge providers.")
@@ -174,8 +185,17 @@ class PlaygroundService:
         if query_vector is None:
             query_vector = (await self.embedding_provider.embed_texts([query]))[0]
 
+        classification, policy_decision, retrieval_confidence = await self._select_policy(
+            query=query,
+            query_vector=query_vector,
+            requested_strategy_name=strategy_name,
+            use_policy_runtime=use_policy_runtime,
+        )
+        effective_strategy_name = policy_decision.retrieval_strategy or STRATEGY_DENSE_TOP_K
+        candidate_top_k = self._candidate_top_k(top_k, policy_decision.selected_policy)
+
         try:
-            strategy = get_retrieval_strategy(strategy_name)
+            strategy = get_retrieval_strategy(effective_strategy_name)
         except ValueError as exc:
             raise BadRequestError(str(exc)) from exc
 
@@ -184,15 +204,35 @@ class PlaygroundService:
             context=RetrievalRequestContext(
                 query=query,
                 query_vector=query_vector,
-                top_k=top_k,
+                top_k=candidate_top_k,
                 filters={"user_id": self.user.id},
             ),
         )
-        chunk_payloads = [self._record_to_chunk_payload(record) for record in retrieved]
-        answer = await self.answer_provider.generate_answer(
-            query=query,
-            chunks=[self._chunk_payload_to_provider_dict(chunk) for chunk in chunk_payloads],
+        selected_chunks, dropped_chunk_ids = self._select_context_chunks(
+            records=retrieved,
+            top_k=top_k,
+            policy_decision=policy_decision,
         )
+        selected_chunk_payloads = [
+            self._record_to_chunk_payload(record) for record in selected_chunks
+        ]
+        retrieved_chunk_payloads = [self._record_to_chunk_payload(record) for record in retrieved]
+
+        if policy_decision.selected_policy == POLICY_ABSTAIN_LOW_CONFIDENCE:
+            answer = GeneratedAnswer(
+                answer="I do not have enough retrieved evidence to answer this question reliably.",
+                citations=[],
+                model="context-policy-runtime",
+                metadata={"provider": "context_policy_runtime"},
+            )
+        else:
+            answer = await self.answer_provider.generate_answer(
+                query=query,
+                chunks=[
+                    self._chunk_payload_to_provider_dict(chunk)
+                    for chunk in selected_chunk_payloads
+                ],
+            )
 
         answer_text = answer.answer or "I do not have enough indexed context to answer this question."
         trace_service = TraceService(self.db, self.user)
@@ -203,13 +243,19 @@ class PlaygroundService:
             metadata=metadata,
             mode=mode,
             strategy_name=strategy_name,
-            chunk_payloads=chunk_payloads,
+            effective_strategy_name=effective_strategy_name,
+            retrieved_chunk_payloads=retrieved_chunk_payloads,
+            selected_chunk_payloads=selected_chunk_payloads,
             answer=answer,
             answer_text=answer_text,
             latency_ms=round((time.perf_counter() - started_at) * 1000, 2),
+            classification=classification,
+            policy_decision=policy_decision,
+            retrieval_confidence=retrieval_confidence,
+            dropped_chunk_ids=dropped_chunk_ids,
         )
 
-        citations = self._citation_payloads(answer, chunk_payloads)
+        citations = self._citation_payloads(answer, selected_chunk_payloads)
         trace_service.log_citations(trace.trace_id, CitationsRequest(citations=citations))
         evaluation = await trace_service.evaluate_trace(trace.trace_id, self.judge_provider)
         latency_ms = round((time.perf_counter() - started_at) * 1000, 2)
@@ -245,16 +291,37 @@ class PlaygroundService:
         metadata: Dict[str, Any],
         mode: str,
         strategy_name: str,
-        chunk_payloads: List[ChunkPayload],
+        effective_strategy_name: str,
+        retrieved_chunk_payloads: List[ChunkPayload],
+        selected_chunk_payloads: List[ChunkPayload],
         answer: GeneratedAnswer,
         answer_text: str,
         latency_ms: float,
+        classification: QueryClassification,
+        policy_decision: PolicyDecision,
+        retrieval_confidence: float,
+        dropped_chunk_ids: List[str],
     ):
+        selected_chunk_ids = [
+            chunk.chunk_id for chunk in selected_chunk_payloads if chunk.chunk_id is not None
+        ]
         trace_metadata = {
             **metadata,
             "mode": mode,
             "retrieval_strategy": strategy_name,
-            "retrieved_count": len(chunk_payloads),
+            "effective_retrieval_strategy": effective_strategy_name,
+            "retrieved_count": len(retrieved_chunk_payloads),
+            "context_policy": {
+                "query_class": classification.query_class,
+                "query_class_reason": classification.reason,
+                "selected_policy": policy_decision.selected_policy,
+                "reason": policy_decision.reason,
+                "retrieval_confidence": retrieval_confidence,
+                "retrieval_strategy": effective_strategy_name,
+                "token_budget": policy_decision.token_budget,
+                "selected_chunk_ids": selected_chunk_ids,
+                "dropped_chunk_ids": dropped_chunk_ids,
+            },
         }
         trace = trace_service.start_trace(
             TraceStartRequest(
@@ -267,18 +334,23 @@ class PlaygroundService:
             trace.trace_id,
             RetrievalRequest(
                 retriever_name="contexttrace-playground-%s" % strategy_name,
-                chunks=chunk_payloads,
+                chunks=retrieved_chunk_payloads,
                 metadata={
                     "vector_store": self.settings.playground_vector_store,
                     "strategy": strategy_name,
+                    "effective_strategy": effective_strategy_name,
                 },
             ),
         )
         trace_service.log_context(
             trace.trace_id,
             ContextRequest(
-                chunks=chunk_payloads,
-                metadata={"selection": "top_k", "strategy": strategy_name},
+                chunks=selected_chunk_payloads,
+                metadata={
+                    "selection": "context_policy",
+                    "strategy": strategy_name,
+                    "policy": policy_decision.selected_policy,
+                },
             ),
         )
         trace_service.log_answer(
@@ -291,6 +363,135 @@ class PlaygroundService:
             ),
         )
         return trace
+
+    async def _select_policy(
+        self,
+        *,
+        query: str,
+        query_vector: List[float],
+        requested_strategy_name: str,
+        use_policy_runtime: bool,
+    ) -> tuple:
+        if not use_policy_runtime:
+            return (
+                QueryClassification(
+                    query_class="manual_strategy",
+                    reason="The retrieval strategy was selected explicitly for comparison.",
+                ),
+                PolicyDecision(
+                    selected_policy=requested_strategy_name,
+                    retrieval_strategy=requested_strategy_name,
+                    reason="Manual retrieval strategy comparison.",
+                    token_budget=1600,
+                ),
+                1.0,
+            )
+
+        initial_records = await get_retrieval_strategy(STRATEGY_DENSE_TOP_K).retrieve(
+            vector_store=self.vector_store,
+            context=RetrievalRequestContext(
+                query=query,
+                query_vector=query_vector,
+                top_k=5,
+                filters={"user_id": self.user.id},
+            ),
+        )
+        retrieval_confidence = self._retrieval_confidence(initial_records, query=query)
+        classification = QueryClassifier().classify(query)
+        policy_decision = PolicySelector().select(
+            classification=classification,
+            retrieval_confidence=retrieval_confidence,
+        )
+        return classification, policy_decision, retrieval_confidence
+
+    def _retrieval_confidence(self, records: List[VectorRecord], *, query: str) -> float:
+        if not records:
+            return 0.0
+        best_score = max(record.score for record in records)
+        query_terms = self._normalized_terms(query)
+        lexical_confidence = 0.0
+        if query_terms:
+            lexical_confidence = max(
+                (
+                    len(query_terms & self._normalized_terms(record.content))
+                    / max(len(query_terms), 1)
+                    for record in records
+                ),
+                default=0.0,
+            )
+        return round(max(0.0, min(max(best_score, lexical_confidence), 1.0)), 3)
+
+    def _normalized_terms(self, text: str) -> set:
+        return {
+            token.rstrip("s")
+            for token in text.lower().replace("?", " ").replace(".", " ").split()
+            if len(token.rstrip("s")) > 2
+        }
+
+    def _candidate_top_k(self, top_k: int, selected_policy: str) -> int:
+        if selected_policy == POLICY_COMPRESSED_CONTEXT:
+            return max(top_k * 3, top_k + 6)
+        if selected_policy == POLICY_ABSTAIN_LOW_CONFIDENCE:
+            return max(top_k, 3)
+        return max(top_k * 2, top_k + 3)
+
+    def _select_context_chunks(
+        self,
+        *,
+        records: List[VectorRecord],
+        top_k: int,
+        policy_decision: PolicyDecision,
+    ) -> tuple:
+        if policy_decision.selected_policy == POLICY_ABSTAIN_LOW_CONFIDENCE:
+            return [], [record.chunk_id for record in records]
+
+        if policy_decision.selected_policy == POLICY_COMPRESSED_CONTEXT:
+            selected = self._compressed_records(
+                records[: max(top_k * 2, top_k)],
+                token_budget=policy_decision.token_budget,
+            )
+            selected_original_ids = {
+                record.metadata.get("original_chunk_id", record.chunk_id) for record in selected
+            }
+            dropped = [
+                record.chunk_id for record in records if record.chunk_id not in selected_original_ids
+            ]
+            return selected, dropped
+
+        selected = records[:top_k]
+        dropped = [record.chunk_id for record in records[top_k:]]
+        return selected, dropped
+
+    def _compressed_records(
+        self,
+        records: List[VectorRecord],
+        *,
+        token_budget: int,
+    ) -> List[VectorRecord]:
+        if not records or token_budget <= 0:
+            return []
+        tokens_per_chunk = max(32, token_budget // len(records))
+        compressed = []
+        for record in records:
+            tokens = record.content.split()
+            content = " ".join(tokens[:tokens_per_chunk])
+            metadata = {
+                **record.metadata,
+                "compressed": True,
+                "original_chunk_id": record.chunk_id,
+                "original_token_count": len(tokens),
+                "token_budget": tokens_per_chunk,
+            }
+            compressed.append(
+                VectorRecord(
+                    chunk_id="%s_compressed" % record.chunk_id,
+                    content=content,
+                    source=record.source,
+                    metadata=metadata,
+                    score=record.score,
+                )
+            )
+        return compressed
 
     def _record_to_chunk_payload(self, record: VectorRecord) -> ChunkPayload:
         return ChunkPayload(

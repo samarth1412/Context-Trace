@@ -64,6 +64,18 @@ export type TraceEvaluation = {
   failure: FailurePayload;
 };
 
+export type ContextPolicyMetadata = {
+  query_class?: string;
+  query_class_reason?: string;
+  selected_policy?: string;
+  reason?: string;
+  retrieval_confidence?: number;
+  retrieval_strategy?: string;
+  token_budget?: number;
+  selected_chunk_ids?: string[];
+  dropped_chunk_ids?: string[];
+};
+
 export type TraceDetail = {
   id: string;
   project_id: string;
