@@ -120,6 +120,25 @@ ct.add_eval_questions(
 summary = ct.evaluate_existing_traces(eval_set["eval_set_id"])
 ```
 
+LangChain callback tracing:
+
+```python
+from contexttrace import ContextTraceCallbackHandler
+
+handler = ContextTraceCallbackHandler(
+    api_key="ctx_test",
+    project="support-rag",
+    trace_metadata={"pipeline": "langchain-rag"},
+)
+
+result = chain.invoke(
+    {"query": "What is the refund policy?"},
+    config={"callbacks": [handler]},
+)
+```
+
+The callback captures chain input, retrieved documents, selected context, final output, token usage when available, callback metadata, and latency. See `examples/langchain_rag.py`.
+
 ## Dashboard Setup
 
 The v1 dashboard lives in `apps/web` and uses Next.js, TypeScript, Tailwind, and shadcn-style components. It reads from the FastAPI backend when these env vars are present, otherwise it falls back to mock data:
