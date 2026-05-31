@@ -1,0 +1,8 @@
+{
+  "rag_definition": ["rag_retrieval"],
+  "hybrid_retrieval": ["rag_retrieval"],
+  "citation_support": ["evaluation_methods"],
+  "attention_not_citation": ["transformers_attention"],
+  "vector_tuning": ["vector_databases"]
+}
+

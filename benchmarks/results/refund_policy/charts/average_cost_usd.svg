@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="420" viewBox="0 0 920 420" role="img" aria-label="Average Cost USD">
+  <style>
+    .bg { fill: #ffffff; }
+    .title { font: 700 22px Inter, Arial, sans-serif; fill: #111827; }
+    .label { font: 600 13px Inter, Arial, sans-serif; fill: #374151; }
+    .value { font: 600 13px Inter, Arial, sans-serif; fill: #111827; }
+    .axis { stroke: #d1d5db; stroke-width: 1; }
+    .bar { fill: #2458d3; }
+  </style>
+  <rect class="bg" width="100%" height="100%"/>
+  <text x="24" y="30" class="title">Average Cost USD</text>
+  <line x1="180" y1="44" x2="180" y2="388" class="axis"/>
+  
+            <text x="24" y="75" class="label">dense_top_k</text>
+            <rect x="180" y="52" width="414" height="34" rx="4" class="bar"/>
+            <text x="606" y="75" class="value">$0.000160</text>
+            
+
+            <text x="24" y="131" class="label">bm25_top_k</text>
+            <rect x="180" y="108" width="398" height="34" rx="4" class="bar"/>
+            <text x="590" y="131" class="value">$0.000154</text>
+            
+
+            <text x="24" y="187" class="label">hybrid</text>
+            <rect x="180" y="164" width="486" height="34" rx="4" class="bar"/>
+            <text x="678" y="187" class="value">$0.000188</text>
+            
+
+            <text x="24" y="243" class="label">hybrid_rerank</text>
+            <rect x="180" y="220" width="582" height="34" rx="4" class="bar"/>
+            <text x="774" y="243" class="value">$0.000225</text>
+            
+
+            <text x="24" y="299" class="label">corrective_rag</text>
+            <rect x="180" y="276" width="644" height="34" rx="4" class="bar"/>
+            <text x="836" y="299" class="value">$0.000249</text>
+            
+
+            <text x="24" y="355" class="label">contexttrace_adaptive</text>
+            <rect x="180" y="332" width="650" height="34" rx="4" class="bar"/>
+            <text x="842" y="355" class="value">$0.000251</text>
+            
+</svg>

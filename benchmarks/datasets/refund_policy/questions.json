@@ -1,0 +1,19 @@
+[
+  {
+    "id": "refund_window",
+    "question": "How long after purchase can a customer request a refund?"
+  },
+  {
+    "id": "refund_processing",
+    "question": "How long does payment processing take after a refund is approved?"
+  },
+  {
+    "id": "final_sale_refunds",
+    "question": "Can final sale items be refunded?"
+  },
+  {
+    "id": "damaged_item_requirements",
+    "question": "What does support require for a damaged item refund review?"
+  }
+]
+

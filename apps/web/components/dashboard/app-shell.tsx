@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Activity, FileText, LayoutDashboard, ListChecks, Plug, Search } from "lucide-react";
+import { Activity, BarChart3, FileText, LayoutDashboard, ListChecks, Plug, Search } from "lucide-react";
 import Link from "next/link";
 
 const navItems = [
@@ -7,6 +7,7 @@ const navItems = [
   { href: "/traces", label: "Traces", icon: Activity },
   { href: "/playground", label: "Playground", icon: Search },
   { href: "/rag-api", label: "RAG APIs", icon: Plug },
+  { href: "/benchmarks", label: "Benchmarks", icon: BarChart3 },
   { href: "/reports", label: "Reports", icon: FileText }
 ];
 

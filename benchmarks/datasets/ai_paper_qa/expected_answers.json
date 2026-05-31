@@ -1,0 +1,8 @@
+{
+  "rag_definition": "RAG retrieves external passages and conditions the generator on that evidence before answering.",
+  "hybrid_retrieval": "Hybrid retrieval combines lexical ranking and dense vector search to improve retrieval quality, often followed by reranking for precision.",
+  "citation_support": "Citation support checks whether each answer claim is grounded in the cited passage.",
+  "attention_not_citation": "No. Attention weights do not prove that a generated claim is supported by an external source.",
+  "vector_tuning": "Index choice, chunk size, embedding model, and metadata filters can change retrieval recall and latency."
+}
+

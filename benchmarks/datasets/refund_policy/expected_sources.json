@@ -1,0 +1,7 @@
+{
+  "refund_window": ["refund_policy"],
+  "refund_processing": ["refund_policy"],
+  "final_sale_refunds": ["refund_policy"],
+  "damaged_item_requirements": ["refund_policy", "support_channels"]
+}
+

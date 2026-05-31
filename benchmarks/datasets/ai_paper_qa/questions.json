@@ -1,0 +1,23 @@
+[
+  {
+    "id": "rag_definition",
+    "question": "What does retrieval-augmented generation do before producing an answer?"
+  },
+  {
+    "id": "hybrid_retrieval",
+    "question": "Why combine lexical ranking with dense vector search?"
+  },
+  {
+    "id": "citation_support",
+    "question": "What does citation support check in a RAG evaluation?"
+  },
+  {
+    "id": "attention_not_citation",
+    "question": "Do attention weights prove that a generated claim is supported by a source?"
+  },
+  {
+    "id": "vector_tuning",
+    "question": "Which vector database choices can change retrieval recall and latency?"
+  }
+]
+

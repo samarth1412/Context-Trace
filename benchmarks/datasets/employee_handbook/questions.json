@@ -1,0 +1,19 @@
+[
+  {
+    "id": "remote_days",
+    "question": "How many days per week can employees work remotely?"
+  },
+  {
+    "id": "pto_rollover",
+    "question": "How many unused PTO days can roll over into the next year?"
+  },
+  {
+    "id": "expense_deadline",
+    "question": "When must employees submit expenses?"
+  },
+  {
+    "id": "lost_device",
+    "question": "How quickly should a lost company laptop be reported?"
+  }
+]
+

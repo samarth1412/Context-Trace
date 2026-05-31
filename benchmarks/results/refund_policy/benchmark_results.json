@@ -1,0 +1,779 @@
+{
+  "dataset": "refund_policy",
+  "generated_at": "reproducible-local-run",
+  "strategies": [
+    "dense_top_k",
+    "bm25_top_k",
+    "hybrid",
+    "hybrid_rerank",
+    "corrective_rag",
+    "contexttrace_adaptive"
+  ],
+  "summary": {
+    "dense_top_k": {
+      "citation_support": 0.766,
+      "unsupported_claim_rate": 0.234,
+      "failure_rate": 1.0,
+      "retrieval_miss_rate": 0.0,
+      "average_tokens": 200.5,
+      "average_latency_ms": 368.7,
+      "average_cost_usd": 0.00016
+    },
+    "bm25_top_k": {
+      "citation_support": 0.802,
+      "unsupported_claim_rate": 0.214,
+      "failure_rate": 0.25,
+      "retrieval_miss_rate": 0.0,
+      "average_tokens": 193.2,
+      "average_latency_ms": 315.7,
+      "average_cost_usd": 0.000154
+    },
+    "hybrid": {
+      "citation_support": 0.837,
+      "unsupported_claim_rate": 0.163,
+      "failure_rate": 0.0,
+      "retrieval_miss_rate": 0.0,
+      "average_tokens": 234.5,
+      "average_latency_ms": 441.0,
+      "average_cost_usd": 0.000188
+    },
+    "hybrid_rerank": {
+      "citation_support": 0.888,
+      "unsupported_claim_rate": 0.092,
+      "failure_rate": 0.0,
+      "retrieval_miss_rate": 0.0,
+      "average_tokens": 231.0,
+      "average_latency_ms": 539.5,
+      "average_cost_usd": 0.000225
+    },
+    "corrective_rag": {
+      "citation_support": 0.864,
+      "unsupported_claim_rate": 0.136,
+      "failure_rate": 0.0,
+      "retrieval_miss_rate": 0.0,
+      "average_tokens": 273.2,
+      "average_latency_ms": 735.3,
+      "average_cost_usd": 0.000249
+    },
+    "contexttrace_adaptive": {
+      "citation_support": 0.914,
+      "unsupported_claim_rate": 0.058,
+      "failure_rate": 0.0,
+      "retrieval_miss_rate": 0.0,
+      "average_tokens": 251.2,
+      "average_latency_ms": 636.0,
+      "average_cost_usd": 0.000251
+    }
+  },
+  "ranked_strategies": [
+    {
+      "strategy": "contexttrace_adaptive",
+      "citation_support": 0.914,
+      "unsupported_claim_rate": 0.058,
+      "failure_rate": 0.0,
+      "retrieval_miss_rate": 0.0,
+      "average_tokens": 251.2,
+      "average_latency_ms": 636.0,
+      "average_cost_usd": 0.000251
+    },
+    {
+      "strategy": "hybrid_rerank",
+      "citation_support": 0.888,
+      "unsupported_claim_rate": 0.092,
+      "failure_rate": 0.0,
+      "retrieval_miss_rate": 0.0,
+      "average_tokens": 231.0,
+      "average_latency_ms": 539.5,
+      "average_cost_usd": 0.000225
+    },
+    {
+      "strategy": "corrective_rag",
+      "citation_support": 0.864,
+      "unsupported_claim_rate": 0.136,
+      "failure_rate": 0.0,
+      "retrieval_miss_rate": 0.0,
+      "average_tokens": 273.2,
+      "average_latency_ms": 735.3,
+      "average_cost_usd": 0.000249
+    },
+    {
+      "strategy": "hybrid",
+      "citation_support": 0.837,
+      "unsupported_claim_rate": 0.163,
+      "failure_rate": 0.0,
+      "retrieval_miss_rate": 0.0,
+      "average_tokens": 234.5,
+      "average_latency_ms": 441.0,
+      "average_cost_usd": 0.000188
+    },
+    {
+      "strategy": "bm25_top_k",
+      "citation_support": 0.802,
+      "unsupported_claim_rate": 0.214,
+      "failure_rate": 0.25,
+      "retrieval_miss_rate": 0.0,
+      "average_tokens": 193.2,
+      "average_latency_ms": 315.7,
+      "average_cost_usd": 0.000154
+    },
+    {
+      "strategy": "dense_top_k",
+      "citation_support": 0.766,
+      "unsupported_claim_rate": 0.234,
+      "failure_rate": 1.0,
+      "retrieval_miss_rate": 0.0,
+      "average_tokens": 200.5,
+      "average_latency_ms": 368.7,
+      "average_cost_usd": 0.00016
+    }
+  ],
+  "question_results": [
+    {
+      "strategy": "dense_top_k",
+      "question_id": "refund_window",
+      "question": "How long after purchase can a customer request a refund?",
+      "retrieved_chunk_ids": [
+        "refund_policy#chunk_0",
+        "refund_policy#chunk_2",
+        "refund_policy#chunk_1"
+      ],
+      "retrieved_source_ids": [
+        "refund_policy"
+      ],
+      "expected_source_ids": [
+        "refund_policy"
+      ],
+      "citation_support": 0.767,
+      "unsupported_claim_rate": 0.233,
+      "retrieval_miss": false,
+      "failure": true,
+      "failure_type": "no_failure_detected",
+      "tokens": 204,
+      "latency_ms": 359.7,
+      "cost_usd": 0.000163
+    },
+    {
+      "strategy": "dense_top_k",
+      "question_id": "refund_processing",
+      "question": "How long does payment processing take after a refund is approved?",
+      "retrieved_chunk_ids": [
+        "refund_policy#chunk_1",
+        "refund_policy#chunk_0",
+        "refund_policy#chunk_2"
+      ],
+      "retrieved_source_ids": [
+        "refund_policy"
+      ],
+      "expected_source_ids": [
+        "refund_policy"
+      ],
+      "citation_support": 0.763,
+      "unsupported_claim_rate": 0.237,
+      "retrieval_miss": false,
+      "failure": true,
+      "failure_type": "no_failure_detected",
+      "tokens": 209,
+      "latency_ms": 368.8,
+      "cost_usd": 0.000167
+    },
+    {
+      "strategy": "dense_top_k",
+      "question_id": "final_sale_refunds",
+      "question": "Can final sale items be refunded?",
+      "retrieved_chunk_ids": [
+        "refund_policy#chunk_2",
+        "shipping_policy#chunk_1",
+        "refund_policy#chunk_0"
+      ],
+      "retrieved_source_ids": [
+        "refund_policy",
+        "shipping_policy"
+      ],
+      "expected_source_ids": [
+        "refund_policy"
+      ],
+      "citation_support": 0.77,
+      "unsupported_claim_rate": 0.23,
+      "retrieval_miss": false,
+      "failure": true,
+      "failure_type": "no_failure_detected",
+      "tokens": 190,
+      "latency_ms": 367.8,
+      "cost_usd": 0.000152
+    },
+    {
+      "strategy": "dense_top_k",
+      "question_id": "damaged_item_requirements",
+      "question": "What does support require for a damaged item refund review?",
+      "retrieved_chunk_ids": [
+        "support_channels#chunk_1",
+        "refund_policy#chunk_1",
+        "refund_policy#chunk_2"
+      ],
+      "retrieved_source_ids": [
+        "refund_policy",
+        "support_channels"
+      ],
+      "expected_source_ids": [
+        "refund_policy",
+        "support_channels"
+      ],
+      "citation_support": 0.763,
+      "unsupported_claim_rate": 0.237,
+      "retrieval_miss": false,
+      "failure": true,
+      "failure_type": "no_failure_detected",
+      "tokens": 199,
+      "latency_ms": 378.6,
+      "cost_usd": 0.000159
+    },
+    {
+      "strategy": "bm25_top_k",
+      "question_id": "refund_window",
+      "question": "How long after purchase can a customer request a refund?",
+      "retrieved_chunk_ids": [
+        "refund_policy#chunk_0",
+        "refund_policy#chunk_1",
+        "refund_policy#chunk_2"
+      ],
+      "retrieved_source_ids": [
+        "refund_policy"
+      ],
+      "expected_source_ids": [
+        "refund_policy"
+      ],
+      "citation_support": 0.822,
+      "unsupported_claim_rate": 0.192,
+      "retrieval_miss": false,
+      "failure": false,
+      "failure_type": "no_failure_detected",
+      "tokens": 198,
+      "latency_ms": 307.2,
+      "cost_usd": 0.000158
+    },
+    {
+      "strategy": "bm25_top_k",
+      "question_id": "refund_processing",
+      "question": "How long does payment processing take after a refund is approved?",
+      "retrieved_chunk_ids": [
+        "refund_policy#chunk_0",
+        "refund_policy#chunk_1",
+        "shipping_policy#chunk_0"
+      ],
+      "retrieved_source_ids": [
+        "refund_policy",
+        "shipping_policy"
+      ],
+      "expected_source_ids": [
+        "refund_policy"
+      ],
+      "citation_support": 0.798,
+      "unsupported_claim_rate": 0.218,
+      "retrieval_miss": false,
+      "failure": false,
+      "failure_type": "no_failure_detected",
+      "tokens": 201,
+      "latency_ms": 315.4,
+      "cost_usd": 0.000161
+    },
+    {
+      "strategy": "bm25_top_k",
+      "question_id": "final_sale_refunds",
+      "question": "Can final sale items be refunded?",
+      "retrieved_chunk_ids": [
+        "refund_policy#chunk_2",
+        "shipping_policy#chunk_1",
+        "refund_policy#chunk_0"
+      ],
+      "retrieved_source_ids": [
+        "refund_policy",
+        "shipping_policy"
+      ],
+      "expected_source_ids": [
+        "refund_policy"
+      ],
+      "citation_support": 0.781,
+      "unsupported_claim_rate": 0.237,
+      "retrieval_miss": false,
+      "failure": true,
+      "failure_type": "no_failure_detected",
+      "tokens": 185,
+      "latency_ms": 315.7,
+      "cost_usd": 0.000148
+    },
+    {
+      "strategy": "bm25_top_k",
+      "question_id": "damaged_item_requirements",
+      "question": "What does support require for a damaged item refund review?",
+      "retrieved_chunk_ids": [
+        "support_channels#chunk_1",
+        "support_channels#chunk_0",
+        "refund_policy#chunk_2"
+      ],
+      "retrieved_source_ids": [
+        "refund_policy",
+        "support_channels"
+      ],
+      "expected_source_ids": [
+        "refund_policy",
+        "support_channels"
+      ],
+      "citation_support": 0.805,
+      "unsupported_claim_rate": 0.211,
+      "retrieval_miss": false,
+      "failure": false,
+      "failure_type": "no_failure_detected",
+      "tokens": 189,
+      "latency_ms": 324.4,
+      "cost_usd": 0.000151
+    },
+    {
+      "strategy": "hybrid",
+      "question_id": "refund_window",
+      "question": "How long after purchase can a customer request a refund?",
+      "retrieved_chunk_ids": [
+        "refund_policy#chunk_0",
+        "refund_policy#chunk_2",
+        "refund_policy#chunk_1",
+        "support_channels#chunk_0"
+      ],
+      "retrieved_source_ids": [
+        "refund_policy",
+        "support_channels"
+      ],
+      "expected_source_ids": [
+        "refund_policy"
+      ],
+      "citation_support": 0.849,
+      "unsupported_claim_rate": 0.151,
+      "retrieval_miss": false,
+      "failure": false,
+      "failure_type": "no_failure_detected",
+      "tokens": 238,
+      "latency_ms": 432.0,
+      "cost_usd": 0.00019
+    },
+    {
+      "strategy": "hybrid",
+      "question_id": "refund_processing",
+      "question": "How long does payment processing take after a refund is approved?",
+      "retrieved_chunk_ids": [
+        "refund_policy#chunk_1",
+        "refund_policy#chunk_0",
+        "shipping_policy#chunk_0",
+        "refund_policy#chunk_2"
+      ],
+      "retrieved_source_ids": [
+        "refund_policy",
+        "shipping_policy"
+      ],
+      "expected_source_ids": [
+        "refund_policy"
+      ],
+      "citation_support": 0.832,
+      "unsupported_claim_rate": 0.168,
+      "retrieval_miss": false,
+      "failure": false,
+      "failure_type": "no_failure_detected",
+      "tokens": 240,
+      "latency_ms": 439.8,
+      "cost_usd": 0.000192
+    },
+    {
+      "strategy": "hybrid",
+      "question_id": "final_sale_refunds",
+      "question": "Can final sale items be refunded?",
+      "retrieved_chunk_ids": [
+        "refund_policy#chunk_2",
+        "shipping_policy#chunk_1",
+        "refund_policy#chunk_0",
+        "refund_policy#chunk_1"
+      ],
+      "retrieved_source_ids": [
+        "refund_policy",
+        "shipping_policy"
+      ],
+      "expected_source_ids": [
+        "refund_policy"
+      ],
+      "citation_support": 0.826,
+      "unsupported_claim_rate": 0.174,
+      "retrieval_miss": false,
+      "failure": false,
+      "failure_type": "no_failure_detected",
+      "tokens": 228,
+      "latency_ms": 441.8,
+      "cost_usd": 0.000182
+    },
+    {
+      "strategy": "hybrid",
+      "question_id": "damaged_item_requirements",
+      "question": "What does support require for a damaged item refund review?",
+      "retrieved_chunk_ids": [
+        "support_channels#chunk_1",
+        "support_channels#chunk_0",
+        "refund_policy#chunk_2",
+        "refund_policy#chunk_1"
+      ],
+      "retrieved_source_ids": [
+        "refund_policy",
+        "support_channels"
+      ],
+      "expected_source_ids": [
+        "refund_policy",
+        "support_channels"
+      ],
+      "citation_support": 0.842,
+      "unsupported_claim_rate": 0.158,
+      "retrieval_miss": false,
+      "failure": false,
+      "failure_type": "no_failure_detected",
+      "tokens": 232,
+      "latency_ms": 450.4,
+      "cost_usd": 0.000186
+    },
+    {
+      "strategy": "hybrid_rerank",
+      "question_id": "refund_window",
+      "question": "How long after purchase can a customer request a refund?",
+      "retrieved_chunk_ids": [
+        "refund_policy#chunk_0",
+        "refund_policy#chunk_2",
+        "refund_policy#chunk_1",
+        "support_channels#chunk_0"
+      ],
+      "retrieved_source_ids": [
+        "refund_policy",
+        "support_channels"
+      ],
+      "expected_source_ids": [
+        "refund_policy"
+      ],
+      "citation_support": 0.901,
+      "unsupported_claim_rate": 0.081,
+      "retrieval_miss": false,
+      "failure": false,
+      "failure_type": "no_failure_detected",
+      "tokens": 234,
+      "latency_ms": 530.3,
+      "cost_usd": 0.000227
+    },
+    {
+      "strategy": "hybrid_rerank",
+      "question_id": "refund_processing",
+      "question": "How long does payment processing take after a refund is approved?",
+      "retrieved_chunk_ids": [
+        "refund_policy#chunk_1",
+        "refund_policy#chunk_0",
+        "refund_policy#chunk_2",
+        "shipping_policy#chunk_0"
+      ],
+      "retrieved_source_ids": [
+        "refund_policy",
+        "shipping_policy"
+      ],
+      "expected_source_ids": [
+        "refund_policy"
+      ],
+      "citation_support": 0.884,
+      "unsupported_claim_rate": 0.095,
+      "retrieval_miss": false,
+      "failure": false,
+      "failure_type": "no_failure_detected",
+      "tokens": 237,
+      "latency_ms": 538.5,
+      "cost_usd": 0.00023
+    },
+    {
+      "strategy": "hybrid_rerank",
+      "question_id": "final_sale_refunds",
+      "question": "Can final sale items be refunded?",
+      "retrieved_chunk_ids": [
+        "refund_policy#chunk_2",
+        "shipping_policy#chunk_1",
+        "refund_policy#chunk_0",
+        "refund_policy#chunk_1"
+      ],
+      "retrieved_source_ids": [
+        "refund_policy",
+        "shipping_policy"
+      ],
+      "expected_source_ids": [
+        "refund_policy"
+      ],
+      "citation_support": 0.87,
+      "unsupported_claim_rate": 0.107,
+      "retrieval_miss": false,
+      "failure": false,
+      "failure_type": "no_failure_detected",
+      "tokens": 225,
+      "latency_ms": 540.5,
+      "cost_usd": 0.00022
+    },
+    {
+      "strategy": "hybrid_rerank",
+      "question_id": "damaged_item_requirements",
+      "question": "What does support require for a damaged item refund review?",
+      "retrieved_chunk_ids": [
+        "support_channels#chunk_1",
+        "support_channels#chunk_0",
+        "refund_policy#chunk_2",
+        "refund_policy#chunk_1"
+      ],
+      "retrieved_source_ids": [
+        "refund_policy",
+        "support_channels"
+      ],
+      "expected_source_ids": [
+        "refund_policy",
+        "support_channels"
+      ],
+      "citation_support": 0.896,
+      "unsupported_claim_rate": 0.085,
+      "retrieval_miss": false,
+      "failure": false,
+      "failure_type": "no_failure_detected",
+      "tokens": 228,
+      "latency_ms": 548.8,
+      "cost_usd": 0.000222
+    },
+    {
+      "strategy": "corrective_rag",
+      "question_id": "refund_window",
+      "question": "How long after purchase can a customer request a refund?",
+      "retrieved_chunk_ids": [
+        "refund_policy#chunk_0",
+        "refund_policy#chunk_2",
+        "refund_policy#chunk_1",
+        "support_channels#chunk_0",
+        "shipping_policy#chunk_0"
+      ],
+      "retrieved_source_ids": [
+        "refund_policy",
+        "shipping_policy",
+        "support_channels"
+      ],
+      "expected_source_ids": [
+        "refund_policy"
+      ],
+      "citation_support": 0.875,
+      "unsupported_claim_rate": 0.125,
+      "retrieval_miss": false,
+      "failure": false,
+      "failure_type": "no_failure_detected",
+      "tokens": 274,
+      "latency_ms": 725.1,
+      "cost_usd": 0.000249
+    },
+    {
+      "strategy": "corrective_rag",
+      "question_id": "refund_processing",
+      "question": "How long does payment processing take after a refund is approved?",
+      "retrieved_chunk_ids": [
+        "refund_policy#chunk_1",
+        "refund_policy#chunk_0",
+        "refund_policy#chunk_2",
+        "shipping_policy#chunk_0",
+        "support_channels#chunk_0"
+      ],
+      "retrieved_source_ids": [
+        "refund_policy",
+        "shipping_policy",
+        "support_channels"
+      ],
+      "expected_source_ids": [
+        "refund_policy"
+      ],
+      "citation_support": 0.861,
+      "unsupported_claim_rate": 0.139,
+      "retrieval_miss": false,
+      "failure": false,
+      "failure_type": "no_failure_detected",
+      "tokens": 279,
+      "latency_ms": 734.2,
+      "cost_usd": 0.000253
+    },
+    {
+      "strategy": "corrective_rag",
+      "question_id": "final_sale_refunds",
+      "question": "Can final sale items be refunded?",
+      "retrieved_chunk_ids": [
+        "refund_policy#chunk_2",
+        "shipping_policy#chunk_1",
+        "refund_policy#chunk_0",
+        "refund_policy#chunk_1",
+        "shipping_policy#chunk_0"
+      ],
+      "retrieved_source_ids": [
+        "refund_policy",
+        "shipping_policy"
+      ],
+      "expected_source_ids": [
+        "refund_policy"
+      ],
+      "citation_support": 0.847,
+      "unsupported_claim_rate": 0.153,
+      "retrieval_miss": false,
+      "failure": false,
+      "failure_type": "no_failure_detected",
+      "tokens": 265,
+      "latency_ms": 735.3,
+      "cost_usd": 0.000242
+    },
+    {
+      "strategy": "corrective_rag",
+      "question_id": "damaged_item_requirements",
+      "question": "What does support require for a damaged item refund review?",
+      "retrieved_chunk_ids": [
+        "support_channels#chunk_1",
+        "support_channels#chunk_0",
+        "refund_policy#chunk_2",
+        "refund_policy#chunk_1",
+        "refund_policy#chunk_0"
+      ],
+      "retrieved_source_ids": [
+        "refund_policy",
+        "support_channels"
+      ],
+      "expected_source_ids": [
+        "refund_policy",
+        "support_channels"
+      ],
+      "citation_support": 0.872,
+      "unsupported_claim_rate": 0.128,
+      "retrieval_miss": false,
+      "failure": false,
+      "failure_type": "no_failure_detected",
+      "tokens": 275,
+      "latency_ms": 746.5,
+      "cost_usd": 0.00025
+    },
+    {
+      "strategy": "contexttrace_adaptive",
+      "question_id": "refund_window",
+      "question": "How long after purchase can a customer request a refund?",
+      "retrieved_chunk_ids": [
+        "refund_policy#chunk_0",
+        "refund_policy#chunk_2",
+        "refund_policy#chunk_1",
+        "support_channels#chunk_0",
+        "shipping_policy#chunk_0"
+      ],
+      "retrieved_source_ids": [
+        "refund_policy",
+        "shipping_policy",
+        "support_channels"
+      ],
+      "expected_source_ids": [
+        "refund_policy"
+      ],
+      "citation_support": 0.927,
+      "unsupported_claim_rate": 0.05,
+      "retrieval_miss": false,
+      "failure": false,
+      "failure_type": "no_failure_detected",
+      "tokens": 252,
+      "latency_ms": 625.8,
+      "cost_usd": 0.000252
+    },
+    {
+      "strategy": "contexttrace_adaptive",
+      "question_id": "refund_processing",
+      "question": "How long does payment processing take after a refund is approved?",
+      "retrieved_chunk_ids": [
+        "refund_policy#chunk_1",
+        "refund_policy#chunk_0",
+        "refund_policy#chunk_2",
+        "shipping_policy#chunk_0",
+        "support_channels#chunk_0"
+      ],
+      "retrieved_source_ids": [
+        "refund_policy",
+        "shipping_policy",
+        "support_channels"
+      ],
+      "expected_source_ids": [
+        "refund_policy"
+      ],
+      "citation_support": 0.911,
+      "unsupported_claim_rate": 0.061,
+      "retrieval_miss": false,
+      "failure": false,
+      "failure_type": "no_failure_detected",
+      "tokens": 257,
+      "latency_ms": 634.9,
+      "cost_usd": 0.000256
+    },
+    {
+      "strategy": "contexttrace_adaptive",
+      "question_id": "final_sale_refunds",
+      "question": "Can final sale items be refunded?",
+      "retrieved_chunk_ids": [
+        "refund_policy#chunk_2",
+        "shipping_policy#chunk_1",
+        "refund_policy#chunk_0",
+        "refund_policy#chunk_1",
+        "shipping_policy#chunk_0"
+      ],
+      "retrieved_source_ids": [
+        "refund_policy",
+        "shipping_policy"
+      ],
+      "expected_source_ids": [
+        "refund_policy"
+      ],
+      "citation_support": 0.896,
+      "unsupported_claim_rate": 0.071,
+      "retrieval_miss": false,
+      "failure": false,
+      "failure_type": "no_failure_detected",
+      "tokens": 243,
+      "latency_ms": 636.1,
+      "cost_usd": 0.000244
+    },
+    {
+      "strategy": "contexttrace_adaptive",
+      "question_id": "damaged_item_requirements",
+      "question": "What does support require for a damaged item refund review?",
+      "retrieved_chunk_ids": [
+        "support_channels#chunk_1",
+        "support_channels#chunk_0",
+        "refund_policy#chunk_2",
+        "refund_policy#chunk_1",
+        "refund_policy#chunk_0"
+      ],
+      "retrieved_source_ids": [
+        "refund_policy",
+        "support_channels"
+      ],
+      "expected_source_ids": [
+        "refund_policy",
+        "support_channels"
+      ],
+      "citation_support": 0.923,
+      "unsupported_claim_rate": 0.052,
+      "retrieval_miss": false,
+      "failure": false,
+      "failure_type": "no_failure_detected",
+      "tokens": 253,
+      "latency_ms": 647.3,
+      "cost_usd": 0.000252
+    }
+  ],
+  "charts": {
+    "citation_support": "benchmarks/results/refund_policy/charts/citation_support.svg",
+    "failure_rate": "benchmarks/results/refund_policy/charts/failure_rate.svg",
+    "average_cost_usd": "benchmarks/results/refund_policy/charts/average_cost_usd.svg"
+  },
+  "notes": [
+    "contexttrace_adaptive produced the highest citation support, but it is not always the cheapest path.",
+    "bm25_top_k had the lowest average cost, with lower reliability on evidence-sensitive questions.",
+    "bm25_top_k had the lowest latency, which can matter for interactive support workflows.",
+    "Retrieval miss rate is reported separately because citation support alone can hide missed-evidence failures."
+  ],
+  "website_charts": {
+    "citation_support": "/benchmarks/refund_policy/citation_support.svg",
+    "failure_rate": "/benchmarks/refund_policy/failure_rate.svg",
+    "average_cost_usd": "/benchmarks/refund_policy/average_cost_usd.svg"
+  }
+}

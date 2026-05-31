@@ -21,6 +21,7 @@ apps/web                  Next.js dashboard and playground
 packages/contexttrace     Python SDK package
 docs/                     Developer documentation
 examples/                 SDK, integration, report, eval, and workflow examples
+benchmarks/               Reproducible public benchmark pipeline and datasets
 docker-compose.yml        Local PostgreSQL and Qdrant
 ```
 
@@ -129,8 +130,19 @@ docs/assets/playground-placeholder.png
 - [Failure Taxonomy](docs/failure_taxonomy.md)
 - [Citation Verification](docs/citation_verification.md)
 - [Bring Your Own RAG API](docs/bring-your-own-rag-api.md)
+- [Benchmarks](docs/benchmarks.md)
 - [LangChain Integration](docs/langchain.md)
 - [LlamaIndex Integration](docs/llamaindex.md)
+
+## Public Benchmarks
+
+Generate reproducible strategy comparisons for the website and blog:
+
+```bash
+python benchmarks/run_benchmark.py --dataset datasets/refund_policy
+```
+
+Outputs are written to `benchmarks/results/refund_policy/` and exported to the dashboard benchmark page at `/benchmarks`.
 
 ## Examples
 
