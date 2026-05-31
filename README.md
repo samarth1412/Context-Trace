@@ -51,6 +51,13 @@ cd packages/contexttrace
 pip install -e ".[test]"
 ```
 
+For a packaged install:
+
+```bash
+pip install contexttrace
+contexttrace init
+```
+
 Install and run the dashboard:
 
 ```bash
@@ -61,11 +68,34 @@ npm run dev
 
 The local API defaults to `http://localhost:8000` with API key `ctx_test`.
 
+## CLI Quickstart
+
+`contexttrace init` creates `contexttrace.yaml` in local mode and a `.contexttrace` trace store. Local mode does not require the backend and can export reports directly from stored trace JSON.
+
+```bash
+contexttrace init
+contexttrace config show
+contexttrace trace list
+contexttrace report --last --output report.html
+```
+
+CI or regression evals can read `eval_endpoint` from `contexttrace.yaml` or `CONTEXTTRACE_EVAL_ENDPOINT`:
+
+```bash
+contexttrace eval --dataset evals/questions.json
+```
+
+You can also pass the RAG endpoint directly:
+
+```bash
+contexttrace eval --dataset evals/questions.json --endpoint https://my-rag-api.com/query
+```
+
 ## 10-Line Quickstart
 
 ```python
 from contexttrace import ContextTrace
-ct = ContextTrace(api_key="ctx_test", project="support-rag")
+ct = ContextTrace(mode="local", project="support-rag")
 with ct.trace(query="What is the refund policy?") as trace:
     chunks = retriever.search("What is the refund policy?")
     trace.log_retrieval(chunks)
@@ -74,6 +104,12 @@ with ct.trace(query="What is the refund policy?") as trace:
     trace.log_answer(answer, model="gpt-4.1-mini", usage={"total_tokens": 1200})
     trace.log_citations([{"claim": "Refunds are available within 30 days.", "source_chunk_id": "chunk_12"}])
     result = trace.evaluate()
+```
+
+Hosted mode uses the same SDK surface:
+
+```python
+ct = ContextTrace(api_key="ctx_test", project="support-rag", base_url="http://localhost:8000")
 ```
 
 ## Dashboard Screenshots

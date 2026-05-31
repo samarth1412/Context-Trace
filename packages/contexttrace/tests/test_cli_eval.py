@@ -203,3 +203,38 @@ def test_cli_eval_command_invokes_runner(monkeypatch, tmp_path):
     assert exit_code == 0
     assert calls[0]["dataset_path"] == str(dataset)
     assert calls[0]["endpoint_headers"] == {"X-Test": "1"}
+
+
+def test_cli_eval_command_uses_config_endpoint(monkeypatch, tmp_path):
+    dataset = tmp_path / "questions.json"
+    dataset.write_text('["What is the refund policy?"]', encoding="utf-8")
+    config = tmp_path / "contexttrace.yaml"
+    config.write_text(
+        "\n".join(
+            [
+                "mode: local",
+                "project: cli-eval",
+                "eval_endpoint: https://rag.example/query",
+                "local_store_dir: store",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    calls = []
+
+    class Summary:
+        failed = False
+        markdown = "# Summary\n"
+
+    def fake_run_evaluation(**kwargs):
+        calls.append(kwargs)
+        return Summary()
+
+    monkeypatch.setattr("contexttrace.cli.run_evaluation", fake_run_evaluation)
+    monkeypatch.chdir(tmp_path)
+
+    exit_code = main(["--config", str(config), "eval", "--dataset", str(dataset)])
+
+    assert exit_code == 0
+    assert calls[0]["endpoint"] == "https://rag.example/query"
+    assert calls[0]["project"] == "cli-eval"

@@ -22,12 +22,20 @@ cd packages/contexttrace
 pip install -e ".[test]"
 ```
 
+For local-only usage without the backend:
+
+```bash
+contexttrace init
+```
+
+This creates `contexttrace.yaml` in local mode and stores traces under `.contexttrace`.
+
 ## 3. Trace A RAG Request
 
 ```python
 from contexttrace import ContextTrace
 
-ct = ContextTrace(api_key="ctx_test", project="support-rag")
+ct = ContextTrace(mode="local", project="support-rag")
 
 with ct.trace(query="What is the refund policy?") as trace:
     chunks = retriever.search("What is the refund policy?")
@@ -37,6 +45,12 @@ with ct.trace(query="What is the refund policy?") as trace:
     trace.log_answer(answer, model="gpt-4.1-mini", usage={"total_tokens": 1200})
     trace.log_citations([{"claim": "Refunds are available within 30 days.", "source_chunk_id": "chunk_12"}])
     result = trace.evaluate()
+```
+
+Use hosted mode with the same trace lifecycle:
+
+```python
+ct = ContextTrace(api_key="ctx_test", project="support-rag", base_url="http://localhost:8000")
 ```
 
 ## 4. Open The Dashboard
@@ -56,6 +70,13 @@ trace.export_report(path="report.html")
 ```
 
 Reports include the query, retrieved chunks, selected context, answer, citations, support verdicts, failure diagnosis, token usage, and latency metadata.
+
+From the CLI:
+
+```bash
+contexttrace trace list
+contexttrace report --last --output report.html
+```
 
 ## Data Shape
 

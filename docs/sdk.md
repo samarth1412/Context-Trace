@@ -27,6 +27,26 @@ ct = ContextTrace(
 )
 ```
 
+Configuration precedence is:
+
+1. Direct constructor arguments
+2. Environment variables such as `CONTEXTTRACE_API_KEY`, `CONTEXTTRACE_PROJECT`, `CONTEXTTRACE_BASE_URL`, and `CONTEXTTRACE_MODE`
+3. `contexttrace.yaml`
+4. SDK defaults
+
+Local mode stores traces as JSON files and can generate reports without the backend:
+
+```python
+ct = ContextTrace(mode="local", project="support-rag")
+```
+
+The CLI can create a starter config:
+
+```bash
+contexttrace init
+contexttrace config show
+```
+
 ## Trace Lifecycle
 
 ```python
@@ -74,6 +94,28 @@ Fetches the complete trace.
 
 Writes a local HTML report from the fetched trace.
 
+### `ContextTrace.list_traces(limit=20)`
+
+Lists recent traces when the active transport supports trace listing, including local mode.
+
+### `ContextTrace.upload_traces(...)`
+
+Uploads stored local traces to a hosted ContextTrace backend by replaying trace events.
+
+## Async SDK
+
+```python
+from contexttrace import AsyncContextTrace
+
+ct = AsyncContextTrace(mode="local", project="support-rag")
+
+async with ct.trace(query="What is the refund policy?") as trace:
+    await trace.log_retrieval(chunks)
+    await trace.log_context(chunks[:5])
+    await trace.log_answer(answer)
+    result = await trace.evaluate()
+```
+
 ## Batch Evaluation
 
 Batch eval sets assume traces already exist and are linked to eval questions.
@@ -104,8 +146,18 @@ contexttrace eval \
   --max-failure-rate 0.05
 ```
 
+The endpoint can also be stored as `eval_endpoint` in `contexttrace.yaml` or `CONTEXTTRACE_EVAL_ENDPOINT`.
 The CLI calls your endpoint for each question, logs traces, evaluates them, writes a markdown summary, and exits non-zero when thresholds fail.
+
+Other local CLI commands:
+
+```bash
+contexttrace trace list
+contexttrace report --last --output report.html
+```
 
 ## Error Handling
 
-The SDK raises `httpx.HTTPStatusError` for backend request failures. Wrap the trace lifecycle in your own retry or logging policy if your production pipeline needs fault tolerance around observability calls.
+Hosted HTTP calls use timeouts and transient-error retries. Backend request failures raise `ContextTraceHTTPError` with the request method, URL, status, and response detail when available.
+
+Enable SDK debug logging with `ContextTrace(debug=True)` or `CONTEXTTRACE_DEBUG=true`.
