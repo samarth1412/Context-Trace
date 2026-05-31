@@ -1,0 +1,146 @@
+# ContextTrace
+
+ContextTrace is an SDK-first RAG reliability/debugging layer. The current backend and SDK support trace logging, citation verification, and failure analysis through an injectable LLM judge provider.
+
+## Repository Layout
+
+```text
+apps/api                  FastAPI backend
+packages/contexttrace     Python SDK package
+docker-compose.yml        Local PostgreSQL
+pytest.ini                Test discovery and local import paths
+```
+
+## Local Setup
+
+### 1. Start PostgreSQL
+
+```bash
+docker compose up -d postgres
+```
+
+### 2. Configure the API
+
+```bash
+cp .env.example .env
+```
+
+The default development API key is `ctx_test`.
+
+### 3. Install API dependencies
+
+```bash
+cd apps/api
+python -m venv .venv
+.venv\Scripts\activate
+pip install -e ".[test]"
+```
+
+### 4. Run migrations
+
+```bash
+alembic upgrade head
+```
+
+### 5. Run the API
+
+```bash
+uvicorn app.main:app --reload
+```
+
+The API will be available at `http://localhost:8000`.
+
+## SDK Setup
+
+```bash
+cd packages/contexttrace
+python -m venv .venv
+.venv\Scripts\activate
+pip install -e ".[test]"
+```
+
+Example:
+
+```python
+from contexttrace import ContextTrace
+
+ct = ContextTrace(
+    api_key="ctx_test",
+    project="support-rag",
+    base_url="http://localhost:8000",
+)
+
+with ct.trace(query="What is the refund policy?") as trace:
+    chunks = retriever.search("What is the refund policy?")
+    trace.log_retrieval(chunks)
+
+    selected = chunks[:5]
+    trace.log_context(selected)
+
+    answer = llm.generate("What is the refund policy?", selected)
+    trace.log_answer(
+        answer,
+        model="gpt-4.1-mini",
+        usage={
+            "prompt_tokens": 1000,
+            "completion_tokens": 200,
+            "total_tokens": 1200,
+        },
+    )
+
+    trace.log_citations([
+        {
+            "claim": "Refunds are available within 30 days.",
+            "source_chunk_id": "chunk_12",
+        }
+    ])
+
+    result = trace.evaluate()
+```
+
+## Judge Provider
+
+Local development defaults to the mock judge provider. To use an OpenAI-compatible provider:
+
+```env
+CONTEXTTRACE_JUDGE_PROVIDER=openai_compatible
+CONTEXTTRACE_OPENAI_COMPATIBLE_BASE_URL=https://api.openai.com/v1
+CONTEXTTRACE_OPENAI_COMPATIBLE_API_KEY=...
+CONTEXTTRACE_OPENAI_COMPATIBLE_MODEL=gpt-4.1-mini
+```
+
+The verifier and analyzer parse structured JSON, retry once on invalid JSON, and fall back to safe failure states if validation still fails.
+
+## Tests
+
+From the repository root:
+
+```bash
+pytest
+```
+
+The backend tests use SQLite in memory and a mock judge provider. The SDK tests use a fake transport and do not require the API server.
+
+## Main API Endpoints
+
+```text
+POST /v1/traces/start
+POST /v1/traces/{trace_id}/retrieval
+POST /v1/traces/{trace_id}/context
+POST /v1/traces/{trace_id}/answer
+POST /v1/traces/{trace_id}/citations
+POST /v1/traces/{trace_id}/evaluate
+GET  /v1/traces/{trace_id}
+```
+
+Authenticate with either:
+
+```text
+Authorization: Bearer ctx_test
+```
+
+or:
+
+```text
+X-API-Key: ctx_test
+```
