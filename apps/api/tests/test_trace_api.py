@@ -234,6 +234,109 @@ def test_invalid_failure_json_falls_back_to_unknown(client, auth_headers, judge_
     assert response.json()["failure"]["failure_type"] == "unknown"
 
 
+def test_eval_set_summary_aggregates_existing_traces(client, auth_headers, judge_provider):
+    good_trace_id = _create_evaluable_trace(client, auth_headers)
+    judge_provider.citation_responses.append(
+        {
+            "verdict": "directly_supported",
+            "support_score": 0.95,
+            "reason": "The source directly supports the claim.",
+        }
+    )
+    judge_provider.failure_responses.append(_failure("no_failure_detected", "none"))
+    assert client.post(
+        f"/v1/traces/{good_trace_id}/evaluate",
+        headers=auth_headers,
+        json={},
+    ).status_code == 200
+
+    mismatch_trace_id = _create_evaluable_trace(
+        client,
+        auth_headers,
+        claim="Refunds are processed in two days.",
+    )
+    judge_provider.citation_responses.append(
+        {
+            "verdict": "unsupported",
+            "support_score": 0.4,
+            "reason": "The source does not support the processing-time claim.",
+        }
+    )
+    judge_provider.failure_responses.append(_failure("citation_mismatch", "medium"))
+    assert client.post(
+        f"/v1/traces/{mismatch_trace_id}/evaluate",
+        headers=auth_headers,
+        json={},
+    ).status_code == 200
+
+    unsupported_trace_id = _create_evaluable_trace(client, auth_headers, citations=[])
+    judge_provider.failure_responses.append(_failure("unsupported_answer", "high"))
+    assert client.post(
+        f"/v1/traces/{unsupported_trace_id}/evaluate",
+        headers=auth_headers,
+        json={},
+    ).status_code == 200
+
+    eval_set = client.post(
+        "/v1/eval-sets",
+        headers=auth_headers,
+        json={"name": "refund-policy-regression"},
+    )
+    assert eval_set.status_code == 201
+    eval_set_id = eval_set.json()["eval_set_id"]
+
+    questions = client.post(
+        f"/v1/eval-sets/{eval_set_id}/questions",
+        headers=auth_headers,
+        json={
+            "questions": [
+                {
+                    "question": "What is the refund policy?",
+                    "trace_id": good_trace_id,
+                },
+                {
+                    "question": "How fast are refunds processed?",
+                    "trace_id": mismatch_trace_id,
+                },
+                {
+                    "question": "What unsupported claim did the answer make?",
+                    "trace_id": unsupported_trace_id,
+                },
+            ]
+        },
+    )
+    assert questions.status_code == 200
+    assert questions.json()["accepted"] == 3
+
+    run = client.post(
+        f"/v1/eval-sets/{eval_set_id}/runs",
+        headers=auth_headers,
+        json={},
+    )
+    assert run.status_code == 200
+    summary = run.json()
+    assert summary["total_questions"] == 3
+    assert summary["linked_trace_count"] == 3
+    assert summary["evaluated_trace_count"] == 3
+    assert summary["unevaluated_trace_count"] == 0
+    assert summary["avg_citation_support"] == 0.45
+    assert summary["unsupported_claim_rate"] == 0.667
+    assert summary["failure_type_distribution"] == {
+        "no_failure_detected": 1,
+        "citation_mismatch": 1,
+        "unsupported_answer": 1,
+    }
+    assert summary["worst_traces"][0]["trace_id"] == unsupported_trace_id
+    assert summary["worst_traces"][0]["severity"] == "high"
+
+    fetched_summary = client.get(
+        f"/v1/eval-sets/{eval_set_id}/summary",
+        headers=auth_headers,
+    )
+    assert fetched_summary.status_code == 200
+    assert fetched_summary.json() == summary
+
+
 def test_auth_required(client):
     response = client.post(
         "/v1/traces/start",

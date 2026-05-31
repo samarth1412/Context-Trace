@@ -20,6 +20,10 @@ class User(Base, TimestampMixin):
         back_populates="user",
         cascade="all, delete-orphan",
     )
+    eval_sets: Mapped[List["EvalSet"]] = relationship(
+        back_populates="user",
+        cascade="all, delete-orphan",
+    )
 
 
 class Project(Base, TimestampMixin):
@@ -70,6 +74,7 @@ class Trace(Base, TimestampMixin):
         cascade="all, delete-orphan",
         uselist=False,
     )
+    eval_questions: Mapped[List["EvalQuestion"]] = relationship(back_populates="trace")
 
 
 class RetrievalEvent(Base, TimestampMixin):
@@ -153,3 +158,35 @@ class FailureReport(Base, TimestampMixin):
     report_metadata: Mapped[dict] = mapped_column("metadata", JSON, default=dict, nullable=False)
 
     trace: Mapped[Trace] = relationship(back_populates="failure_report")
+
+
+class EvalSet(Base, TimestampMixin):
+    __tablename__ = "eval_sets"
+    __table_args__ = (UniqueConstraint("user_id", "name", name="uq_eval_sets_user_name"),)
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_uuid)
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), nullable=False)
+    name: Mapped[str] = mapped_column(String(200), nullable=False)
+    eval_metadata: Mapped[dict] = mapped_column("metadata", JSON, default=dict, nullable=False)
+
+    user: Mapped[User] = relationship(back_populates="eval_sets")
+    questions: Mapped[List["EvalQuestion"]] = relationship(
+        back_populates="eval_set",
+        cascade="all, delete-orphan",
+        order_by="EvalQuestion.position",
+    )
+
+
+class EvalQuestion(Base, TimestampMixin):
+    __tablename__ = "eval_questions"
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_uuid)
+    eval_set_id: Mapped[str] = mapped_column(ForeignKey("eval_sets.id"), nullable=False)
+    trace_id: Mapped[Optional[str]] = mapped_column(ForeignKey("traces.id"), nullable=True)
+    question: Mapped[str] = mapped_column(Text, nullable=False)
+    expected_answer: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    position: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    question_metadata: Mapped[dict] = mapped_column("metadata", JSON, default=dict, nullable=False)
+
+    eval_set: Mapped[EvalSet] = relationship(back_populates="questions")
+    trace: Mapped[Optional[Trace]] = relationship(back_populates="eval_questions")

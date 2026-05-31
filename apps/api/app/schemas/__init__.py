@@ -16,6 +16,16 @@ from app.schemas.traces import (
     TraceStartRequest,
     TraceStartResponse,
 )
+from app.schemas.evals import (
+    EvalQuestionPayload,
+    EvalQuestionRead,
+    EvalQuestionsRequest,
+    EvalQuestionsResponse,
+    EvalSetCreateRequest,
+    EvalSetResponse,
+    EvalSetSummary,
+    WorstTrace,
+)
 
 __all__ = [
     "AnswerRead",
@@ -34,4 +44,12 @@ __all__ = [
     "TraceRead",
     "TraceStartRequest",
     "TraceStartResponse",
+    "EvalQuestionPayload",
+    "EvalQuestionRead",
+    "EvalQuestionsRequest",
+    "EvalQuestionsResponse",
+    "EvalSetCreateRequest",
+    "EvalSetResponse",
+    "EvalSetSummary",
+    "WorstTrace",
 ]

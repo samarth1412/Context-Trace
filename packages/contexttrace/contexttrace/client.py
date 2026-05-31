@@ -32,6 +32,33 @@ class ContextTrace:
             metadata=metadata or {},
         )
 
+    def create_eval_set(
+        self,
+        name: str,
+        *,
+        metadata: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        return self._transport.post(
+            "/v1/eval-sets",
+            {
+                "name": name,
+                "metadata": metadata or {},
+            },
+        )
+
+    def add_eval_questions(
+        self,
+        eval_set_id: str,
+        questions: Iterable[Any],
+    ) -> dict[str, Any]:
+        return self._transport.post(
+            f"/v1/eval-sets/{eval_set_id}/questions",
+            {"questions": [_normalize_eval_question(question) for question in questions]},
+        )
+
+    def evaluate_existing_traces(self, eval_set_id: str) -> dict[str, Any]:
+        return self._transport.post(f"/v1/eval-sets/{eval_set_id}/runs", {})
+
     def close(self) -> None:
         close = getattr(self._transport, "close", None)
         if close:
@@ -182,4 +209,28 @@ def _normalize_chunk(chunk: Any) -> dict[str, Any]:
         "source": source,
         "metadata": metadata,
         "relevance_score": relevance_score,
+    }
+
+
+def _normalize_eval_question(question: Any) -> dict[str, Any]:
+    if isinstance(question, str):
+        return {
+            "question": question,
+            "trace_id": None,
+            "expected_answer": None,
+            "metadata": {},
+        }
+
+    if not isinstance(question, dict):
+        raise ValueError("Eval questions must be strings or dictionaries.")
+
+    text = question.get("question") or question.get("query")
+    if not text:
+        raise ValueError("Each eval question must include question or query.")
+
+    return {
+        "question": str(text),
+        "trace_id": question.get("trace_id"),
+        "expected_answer": question.get("expected_answer"),
+        "metadata": question.get("metadata") or {},
     }

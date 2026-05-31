@@ -9,6 +9,22 @@ class FakeTransport:
         self.calls.append(("POST", path, payload or {}))
         if path == "/v1/traces/start":
             return {"trace_id": "trace_123", "project_id": "project_123"}
+        if path == "/v1/eval-sets":
+            return {"eval_set_id": "eval_123", "name": payload["name"]}
+        if path.endswith("/questions"):
+            return {
+                "eval_set_id": "eval_123",
+                "accepted": len(payload["questions"]),
+                "questions": payload["questions"],
+            }
+        if path.endswith("/runs"):
+            return {
+                "eval_set_id": "eval_123",
+                "avg_citation_support": 0.9,
+                "unsupported_claim_rate": 0.1,
+                "failure_type_distribution": {"no_failure_detected": 1},
+                "worst_traces": [],
+            }
         if path.endswith("/evaluate"):
             return {
                 "citation_checks": [
@@ -195,3 +211,37 @@ def test_trace_export_report_creates_html_with_required_sections(tmp_path):
     assert "1200" in html
     assert "842" in html
     assert transport.calls[-1] == ("GET", "/v1/traces/trace_123", {})
+
+
+def test_sdk_eval_set_methods_post_expected_payloads():
+    transport = FakeTransport()
+    ct = ContextTrace(api_key="ctx_test", project="support-rag", transport=transport)
+
+    eval_set = ct.create_eval_set("refund-policy-regression")
+    questions = ct.add_eval_questions(
+        eval_set["eval_set_id"],
+        [
+            {
+                "query": "What is the refund policy?",
+                "trace_id": "trace_123",
+                "expected_answer": "Refunds are available within 30 days.",
+            },
+            "Can the answer cite refund evidence?",
+        ],
+    )
+    summary = ct.evaluate_existing_traces(eval_set["eval_set_id"])
+
+    assert eval_set["eval_set_id"] == "eval_123"
+    assert questions["accepted"] == 2
+    assert summary["avg_citation_support"] == 0.9
+    assert transport.calls[-3] == (
+        "POST",
+        "/v1/eval-sets",
+        {"name": "refund-policy-regression", "metadata": {}},
+    )
+    assert transport.calls[-2][1] == "/v1/eval-sets/eval_123/questions"
+    assert transport.calls[-2][2]["questions"][0]["question"] == "What is the refund policy?"
+    assert transport.calls[-2][2]["questions"][1]["question"] == (
+        "Can the answer cite refund evidence?"
+    )
+    assert transport.calls[-1] == ("POST", "/v1/eval-sets/eval_123/runs", {})
