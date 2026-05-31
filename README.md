@@ -6,17 +6,18 @@ ContextTrace is an SDK-first RAG reliability/debugging layer. The current backen
 
 ```text
 apps/api                  FastAPI backend
+apps/web                  Next.js dashboard and playground
 packages/contexttrace     Python SDK package
-docker-compose.yml        Local PostgreSQL
+docker-compose.yml        Local PostgreSQL and Qdrant
 pytest.ini                Test discovery and local import paths
 ```
 
 ## Local Setup
 
-### 1. Start PostgreSQL
+### 1. Start PostgreSQL and Qdrant
 
 ```bash
-docker compose up -d postgres
+docker compose up -d postgres qdrant
 ```
 
 ### 2. Configure the API
@@ -176,6 +177,31 @@ npm install
 npm run dev
 ```
 
+The dashboard includes `/playground` for hosted queries and `/playground/upload` for document indexing. Client-side playground calls use:
+
+```env
+NEXT_PUBLIC_CONTEXTTRACE_API_URL=http://localhost:8000
+```
+
+## Hosted Playground
+
+The playground accepts PDF, TXT, and Markdown uploads, chunks documents with token-aware overlap, embeds chunks through the configured embedding provider, and stores vectors in the configured vector store. Local `.env.example` is set up for Qdrant:
+
+```env
+CONTEXTTRACE_EMBEDDING_PROVIDER=hash
+CONTEXTTRACE_ANSWER_PROVIDER=mock
+CONTEXTTRACE_PLAYGROUND_VECTOR_STORE=qdrant
+CONTEXTTRACE_QDRANT_URL=http://localhost:6333
+```
+
+Use an OpenAI-compatible provider for hosted answer generation and embeddings:
+
+```env
+CONTEXTTRACE_EMBEDDING_PROVIDER=openai_compatible
+CONTEXTTRACE_ANSWER_PROVIDER=openai_compatible
+CONTEXTTRACE_OPENAI_COMPATIBLE_API_KEY=...
+```
+
 ## Judge Provider
 
 Local development defaults to the mock judge provider. To use an OpenAI-compatible provider:
@@ -213,6 +239,8 @@ POST /v1/eval-sets
 POST /v1/eval-sets/{id}/questions
 POST /v1/eval-sets/{id}/runs
 GET  /v1/eval-sets/{id}/summary
+POST /v1/playground/documents
+POST /v1/playground/query
 ```
 
 Authenticate with either:

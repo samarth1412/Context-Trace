@@ -1,10 +1,11 @@
 import type { ReactNode } from "react";
-import { Activity, FileText, LayoutDashboard, ListChecks } from "lucide-react";
+import { Activity, FileText, LayoutDashboard, ListChecks, Search } from "lucide-react";
 import Link from "next/link";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/traces", label: "Traces", icon: Activity },
+  { href: "/playground", label: "Playground", icon: Search },
   { href: "/reports", label: "Reports", icon: FileText }
 ];
 

@@ -113,3 +113,28 @@ export type EvalSummary = {
 };
 
 export type DataSource = "backend" | "mock";
+
+export type PlaygroundChunk = {
+  chunk_id: string;
+  content: string;
+  source?: string | null;
+  score: number;
+  metadata?: Record<string, unknown>;
+};
+
+export type PlaygroundQueryResponse = {
+  answer: string;
+  trace_id: string;
+  retrieved_chunks: PlaygroundChunk[];
+  citations: Array<{
+    claim: string;
+    source_chunk_id: string;
+  }>;
+  evaluation: TraceEvaluation;
+};
+
+export type PlaygroundDocumentUploadResponse = {
+  document_id: string;
+  filename: string;
+  chunk_count: number;
+};

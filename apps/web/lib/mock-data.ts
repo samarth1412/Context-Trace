@@ -1,4 +1,4 @@
-import type { EvalSummary, TraceDetail, TraceSummary } from "@/lib/types";
+import type { CitationCheck, EvalSummary, TraceDetail, TraceSummary } from "@/lib/types";
 
 export const mockTraces: TraceDetail[] = [
   {
@@ -199,15 +199,23 @@ export const mockTraceSummaries: TraceSummary[] = mockTraces.map((trace) => ({
   status: trace.status,
   failure_type: trace.evaluation?.failure.failure_type ?? "unknown",
   severity: trace.evaluation?.failure.severity ?? "medium",
-  citation_support:
-    trace.evaluation?.citation_checks.reduce((sum, check) => sum + (check.support_score ?? 0), 0) /
-      Math.max(trace.evaluation?.citation_checks.length ?? 1, 1) || 0,
-  unsupported_claim_rate:
-    (trace.evaluation?.citation_checks.filter((check) =>
-      ["unsupported", "contradicted", "not_enough_info"].includes(check.verdict ?? "pending")
-    ).length ?? 0) / Math.max(trace.evaluation?.citation_checks.length ?? 1, 1),
+  citation_support: averageCitationSupport(trace.evaluation?.citation_checks ?? []),
+  unsupported_claim_rate: unsupportedClaimRate(trace.evaluation?.citation_checks ?? []),
   updated_at: trace.updated_at
 }));
+
+function averageCitationSupport(checks: CitationCheck[]) {
+  if (checks.length === 0) return 0;
+  return checks.reduce((sum, check) => sum + (check.support_score ?? 0), 0) / checks.length;
+}
+
+function unsupportedClaimRate(checks: CitationCheck[]) {
+  if (checks.length === 0) return 0;
+  const unsupported = checks.filter((check) =>
+    ["unsupported", "contradicted", "not_enough_info"].includes(check.verdict ?? "pending")
+  );
+  return unsupported.length / checks.length;
+}
 
 export const mockEvalSummary: EvalSummary = {
   eval_set_id: "eval_refund_policy",

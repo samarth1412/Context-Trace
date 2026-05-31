@@ -26,6 +26,12 @@ from app.schemas.evals import (
     EvalSetSummary,
     WorstTrace,
 )
+from app.schemas.playground import (
+    PlaygroundChunk,
+    PlaygroundDocumentUploadResponse,
+    PlaygroundQueryRequest,
+    PlaygroundQueryResponse,
+)
 
 __all__ = [
     "AnswerRead",
@@ -52,4 +58,8 @@ __all__ = [
     "EvalSetResponse",
     "EvalSetSummary",
     "WorstTrace",
+    "PlaygroundChunk",
+    "PlaygroundDocumentUploadResponse",
+    "PlaygroundQueryRequest",
+    "PlaygroundQueryResponse",
 ]
