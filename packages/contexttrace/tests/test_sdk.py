@@ -25,6 +25,28 @@ class FakeTransport:
                 "failure_type_distribution": {"no_failure_detected": 1},
                 "worst_traces": [],
             }
+        if path == "/v1/projects/project_123/external-endpoints":
+            return {"id": "endpoint_123", **payload}
+        if path == "/v1/external-endpoints/endpoint_123/test":
+            return {
+                "endpoint_id": "endpoint_123",
+                "trace_id": "trace_123",
+                "mapped": {
+                    "answer": "Refunds are available within 30 days.",
+                    "retrieved_chunks": [],
+                    "citations": [],
+                    "usage": {},
+                    "model": None,
+                    "raw_response": {},
+                },
+            }
+        if path == "/v1/external-endpoints/endpoint_123/run-eval":
+            return {
+                "endpoint_id": "endpoint_123",
+                "eval_set_id": payload["eval_set_id"],
+                "traces": [],
+                "summary": {"evaluated_trace_count": 1},
+            }
         if path.endswith("/evaluate"):
             return {
                 "citation_checks": [
@@ -245,3 +267,57 @@ def test_sdk_eval_set_methods_post_expected_payloads():
         "Can the answer cite refund evidence?"
     )
     assert transport.calls[-1] == ("POST", "/v1/eval-sets/eval_123/runs", {})
+
+
+def test_sdk_external_rag_endpoint_methods_post_expected_payloads():
+    transport = FakeTransport()
+    ct = ContextTrace(api_key="ctx_test", project="support-rag", transport=transport)
+
+    endpoint = ct.register_rag_endpoint(
+        project_id="project_123",
+        name="support-api",
+        url="https://rag.example/query",
+        headers={"Authorization": "Bearer token"},
+        body_template={"question": "{{query}}"},
+        response_mapping={
+            "answer": "$.answer",
+            "citations": "$.sources",
+            "retrieved_chunks": "$.contexts",
+        },
+    )
+    test = ct.test_rag_endpoint(
+        endpoint["id"],
+        query="What is the refund policy?",
+        metadata={"tenant": "support"},
+    )
+    run = ct.evaluate_rag_endpoint(endpoint["id"], eval_set_id="eval_123")
+
+    assert endpoint["id"] == "endpoint_123"
+    assert test["trace_id"] == "trace_123"
+    assert run["summary"]["evaluated_trace_count"] == 1
+    assert transport.calls[-3] == (
+        "POST",
+        "/v1/projects/project_123/external-endpoints",
+        {
+            "name": "support-api",
+            "url": "https://rag.example/query",
+            "method": "POST",
+            "headers": {"Authorization": "Bearer token"},
+            "body_template": {"question": "{{query}}"},
+            "response_mapping": {
+                "answer": "$.answer",
+                "citations": "$.sources",
+                "retrieved_chunks": "$.contexts",
+            },
+        },
+    )
+    assert transport.calls[-2] == (
+        "POST",
+        "/v1/external-endpoints/endpoint_123/test",
+        {"query": "What is the refund policy?", "metadata": {"tenant": "support"}},
+    )
+    assert transport.calls[-1] == (
+        "POST",
+        "/v1/external-endpoints/endpoint_123/run-eval",
+        {"eval_set_id": "eval_123"},
+    )

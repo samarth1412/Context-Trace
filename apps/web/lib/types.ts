@@ -178,3 +178,38 @@ export type PlaygroundCompareResponse = {
   query: string;
   results: PlaygroundComparisonResult[];
 };
+
+export type ExternalEndpointResponse = {
+  id: string;
+  project_id: string;
+  name: string;
+  url: string;
+  method: "GET" | "POST";
+  headers: Record<string, string>;
+  body_template: Record<string, unknown>;
+  response_mapping: Record<string, string>;
+  created_at: string;
+};
+
+export type ExternalEndpointTestResponse = {
+  endpoint_id: string;
+  trace_id: string;
+  mapped: {
+    raw_response: Record<string, unknown>;
+    answer: string;
+    retrieved_chunks: Array<{
+      chunk_id?: string | null;
+      content: string;
+      source?: string | null;
+      metadata?: Record<string, unknown>;
+      relevance_score?: number | null;
+    }>;
+    citations: Array<{
+      claim: string;
+      source_chunk_id: string;
+      metadata?: Record<string, unknown>;
+    }>;
+    usage: Record<string, unknown>;
+    model?: string | null;
+  };
+};

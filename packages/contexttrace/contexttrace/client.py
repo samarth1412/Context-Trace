@@ -95,6 +95,60 @@ class ContextTrace:
     def evaluate_existing_traces(self, eval_set_id: str) -> dict[str, Any]:
         return self._transport.post(f"/v1/eval-sets/{eval_set_id}/runs", {})
 
+    def register_rag_endpoint(
+        self,
+        *,
+        project_id: str,
+        name: str,
+        url: str,
+        method: str = "POST",
+        headers: Optional[dict[str, str]] = None,
+        body_template: Optional[dict[str, Any]] = None,
+        response_mapping: Optional[dict[str, str]] = None,
+    ) -> dict[str, Any]:
+        return self._transport.post(
+            f"/v1/projects/{project_id}/external-endpoints",
+            {
+                "name": name,
+                "url": url,
+                "method": method,
+                "headers": headers or {},
+                "body_template": body_template or {"question": "{{query}}"},
+                "response_mapping": response_mapping
+                or {
+                    "answer": "$.answer",
+                    "citations": "$.citations",
+                    "retrieved_chunks": "$.retrieved_chunks",
+                },
+            },
+        )
+
+    def test_rag_endpoint(
+        self,
+        endpoint_id: str,
+        *,
+        query: str,
+        metadata: Optional[dict[str, Any]] = None,
+    ) -> dict[str, Any]:
+        return self._transport.post(
+            f"/v1/external-endpoints/{endpoint_id}/test",
+            {
+                "query": query,
+                "metadata": metadata or {},
+            },
+        )
+
+    def evaluate_rag_endpoint(
+        self,
+        endpoint_id: str,
+        *,
+        eval_set_id: str,
+    ) -> dict[str, Any]:
+        return self._transport.post(
+            f"/v1/external-endpoints/{endpoint_id}/run-eval",
+            {"eval_set_id": eval_set_id},
+        )
+
     def list_traces(self, *, limit: int = 20) -> list[dict[str, Any]]:
         response = self._transport.get(f"/v1/traces?limit={limit}")
         traces = response.get("traces") or []
@@ -366,6 +420,60 @@ class AsyncContextTrace:
 
     async def evaluate_existing_traces(self, eval_set_id: str) -> dict[str, Any]:
         return await self._transport.post(f"/v1/eval-sets/{eval_set_id}/runs", {})
+
+    async def register_rag_endpoint(
+        self,
+        *,
+        project_id: str,
+        name: str,
+        url: str,
+        method: str = "POST",
+        headers: Optional[dict[str, str]] = None,
+        body_template: Optional[dict[str, Any]] = None,
+        response_mapping: Optional[dict[str, str]] = None,
+    ) -> dict[str, Any]:
+        return await self._transport.post(
+            f"/v1/projects/{project_id}/external-endpoints",
+            {
+                "name": name,
+                "url": url,
+                "method": method,
+                "headers": headers or {},
+                "body_template": body_template or {"question": "{{query}}"},
+                "response_mapping": response_mapping
+                or {
+                    "answer": "$.answer",
+                    "citations": "$.citations",
+                    "retrieved_chunks": "$.retrieved_chunks",
+                },
+            },
+        )
+
+    async def test_rag_endpoint(
+        self,
+        endpoint_id: str,
+        *,
+        query: str,
+        metadata: Optional[dict[str, Any]] = None,
+    ) -> dict[str, Any]:
+        return await self._transport.post(
+            f"/v1/external-endpoints/{endpoint_id}/test",
+            {
+                "query": query,
+                "metadata": metadata or {},
+            },
+        )
+
+    async def evaluate_rag_endpoint(
+        self,
+        endpoint_id: str,
+        *,
+        eval_set_id: str,
+    ) -> dict[str, Any]:
+        return await self._transport.post(
+            f"/v1/external-endpoints/{endpoint_id}/run-eval",
+            {"eval_set_id": eval_set_id},
+        )
 
     async def close(self) -> None:
         close = getattr(self._transport, "close", None)

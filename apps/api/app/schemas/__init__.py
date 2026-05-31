@@ -26,6 +26,17 @@ from app.schemas.evals import (
     EvalSetSummary,
     WorstTrace,
 )
+from app.schemas.external_endpoints import (
+    ExternalEndpointConfig,
+    ExternalEndpointCreateRequest,
+    ExternalEndpointEvalTrace,
+    ExternalEndpointResponse,
+    ExternalEndpointRunEvalRequest,
+    ExternalEndpointRunEvalResponse,
+    ExternalEndpointTestRequest,
+    ExternalEndpointTestResponse,
+    MappedExternalResponse,
+)
 from app.schemas.playground import (
     PlaygroundCompareRequest,
     PlaygroundCompareResponse,
@@ -62,6 +73,15 @@ __all__ = [
     "EvalSetCreateRequest",
     "EvalSetResponse",
     "EvalSetSummary",
+    "ExternalEndpointConfig",
+    "ExternalEndpointCreateRequest",
+    "ExternalEndpointEvalTrace",
+    "ExternalEndpointResponse",
+    "ExternalEndpointRunEvalRequest",
+    "ExternalEndpointRunEvalResponse",
+    "ExternalEndpointTestRequest",
+    "ExternalEndpointTestResponse",
+    "MappedExternalResponse",
     "WorstTrace",
     "PlaygroundChunk",
     "PlaygroundCompareRequest",

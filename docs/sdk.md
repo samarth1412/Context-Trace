@@ -135,6 +135,29 @@ ct.add_eval_questions(
 summary = ct.evaluate_existing_traces(eval_set["eval_set_id"])
 ```
 
+## Bring Your Own RAG API
+
+Register an existing RAG endpoint and let ContextTrace send test or eval questions without installing the SDK in that app.
+
+```python
+endpoint = ct.register_rag_endpoint(
+    project_id="project_id",
+    name="support-api",
+    url="https://my-rag-app.com/query",
+    body_template={"question": "{{query}}"},
+    response_mapping={
+        "answer": "$.answer",
+        "citations": "$.sources",
+        "retrieved_chunks": "$.contexts",
+    },
+)
+
+test = ct.test_rag_endpoint(endpoint["id"], query="What is the refund policy?")
+run = ct.evaluate_rag_endpoint(endpoint["id"], eval_set_id="eval_set_id")
+```
+
+See [Bring Your Own RAG API](bring-your-own-rag-api.md) for response mapping details.
+
 ## CI Evaluation CLI
 
 ```bash

@@ -39,6 +39,10 @@ class Project(Base, TimestampMixin):
         back_populates="project",
         cascade="all, delete-orphan",
     )
+    external_rag_endpoints: Mapped[List["ExternalRAGEndpoint"]] = relationship(
+        back_populates="project",
+        cascade="all, delete-orphan",
+    )
 
 
 class Trace(Base, TimestampMixin):
@@ -190,3 +194,19 @@ class EvalQuestion(Base, TimestampMixin):
 
     eval_set: Mapped[EvalSet] = relationship(back_populates="questions")
     trace: Mapped[Optional[Trace]] = relationship(back_populates="eval_questions")
+
+
+class ExternalRAGEndpoint(Base, TimestampMixin):
+    __tablename__ = "external_rag_endpoints"
+    __table_args__ = (UniqueConstraint("project_id", "name", name="uq_external_rag_endpoints_project_name"),)
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_uuid)
+    project_id: Mapped[str] = mapped_column(ForeignKey("projects.id"), nullable=False)
+    name: Mapped[str] = mapped_column(String(200), nullable=False)
+    url: Mapped[str] = mapped_column(Text, nullable=False)
+    method: Mapped[str] = mapped_column(String(10), default="POST", nullable=False)
+    headers_json: Mapped[dict] = mapped_column(JSON, default=dict, nullable=False)
+    body_template_json: Mapped[dict] = mapped_column(JSON, default=dict, nullable=False)
+    response_mapping_json: Mapped[dict] = mapped_column(JSON, default=dict, nullable=False)
+
+    project: Mapped[Project] = relationship(back_populates="external_rag_endpoints")

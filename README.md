@@ -128,6 +128,7 @@ docs/assets/playground-placeholder.png
 - [SDK Usage](docs/sdk.md)
 - [Failure Taxonomy](docs/failure_taxonomy.md)
 - [Citation Verification](docs/citation_verification.md)
+- [Bring Your Own RAG API](docs/bring-your-own-rag-api.md)
 - [LangChain Integration](docs/langchain.md)
 - [LlamaIndex Integration](docs/llamaindex.md)
 
@@ -200,6 +201,9 @@ POST /v1/eval-sets
 POST /v1/eval-sets/{id}/questions
 POST /v1/eval-sets/{id}/runs
 GET  /v1/eval-sets/{id}/summary
+POST /v1/projects/{project_id}/external-endpoints
+POST /v1/external-endpoints/{id}/test
+POST /v1/external-endpoints/{id}/run-eval
 POST /v1/playground/documents
 POST /v1/playground/query
 POST /v1/playground/compare
