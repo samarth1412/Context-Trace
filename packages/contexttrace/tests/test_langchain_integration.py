@@ -149,3 +149,55 @@ def test_callback_can_start_from_retriever_query_and_limit_context():
     assert transport.calls[0][2]["query"] == "Who can refund?"
     assert transport.calls[2][1] == "/v1/traces/trace_langchain/context"
     assert len(transport.calls[2][2]["chunks"]) == 1
+
+
+def test_callback_logs_citations_and_tool_events():
+    transport = FakeTransport()
+    client = ContextTrace(api_key="ctx_test", project="support-rag", transport=transport)
+    handler = ContextTraceCallbackHandler(client=client)
+
+    handler.on_chain_start({"name": "AgentExecutor"}, {"query": "Find refund policy"})
+    handler.on_tool_start({"name": "policy_search"}, "refund policy", run_id="tool_1")
+    handler.on_tool_end({"matches": 2}, run_id="tool_1")
+    handler.on_chain_end(
+        {
+            "answer": "Refunds are available within 30 days.",
+            "citations": [
+                {
+                    "claim": "Refunds are available within 30 days.",
+                    "source_chunk_id": "chunk_12",
+                }
+            ],
+        }
+    )
+
+    event_calls = [call for call in transport.calls if call[1].endswith("/agent-events")]
+    assert event_calls[0][2]["event_type"] == "tool_call"
+    assert event_calls[1][2]["event_type"] == "tool_result"
+    assert transport.calls[-1][1] == "/v1/traces/trace_langchain/citations"
+    assert transport.calls[-1][2]["citations"][0]["source_chunk_id"] == "chunk_12"
+
+
+def test_callback_supports_custom_extractors_and_document_converter():
+    transport = FakeTransport()
+    client = ContextTrace(api_key="ctx_test", project="support-rag", transport=transport)
+    handler = ContextTraceCallbackHandler(
+        client=client,
+        query_extractor=lambda inputs: inputs["messages"][-1]["content"],
+        answer_extractor=lambda outputs: outputs["final"]["text"],
+        document_converter=lambda document, index: {
+            "chunk_id": f"custom_{index}",
+            "content": document.page_content,
+            "source": document.metadata["source"],
+            "metadata": document.metadata,
+            "relevance_score": 1.0,
+        },
+    )
+
+    handler.on_chain_start({"name": "CustomChain"}, {"messages": [{"content": "Custom query?"}]})
+    handler.on_retriever_end([MockDocument("Custom context.", metadata={"source": "custom.md"})])
+    handler.on_chain_end({"final": {"text": "Custom answer."}})
+
+    assert transport.calls[0][2]["query"] == "Custom query?"
+    assert transport.calls[1][2]["chunks"][0]["chunk_id"] == "custom_0"
+    assert transport.calls[3][2]["answer"] == "Custom answer."

@@ -6,8 +6,11 @@ from contexttrace.errors import (
     ContextTraceHTTPError,
     ContextTraceLocalError,
 )
+from contexttrace.integrations.fastapi import ContextTraceFastAPIMiddleware
 from contexttrace.integrations.langchain import ContextTraceCallbackHandler
+from contexttrace.integrations.langgraph import ContextTraceLangGraphTracer
 from contexttrace.integrations.llamaindex import ContextTraceLlamaIndexCallbackHandler
+from contexttrace.integrations.opentelemetry import OpenTelemetryExporter, export_contexttrace_trace
 from contexttrace.report import ReportGenerator
 
 __all__ = [
@@ -17,8 +20,12 @@ __all__ = [
     "ContextTraceConfigError",
     "ContextTraceCallbackHandler",
     "ContextTraceError",
+    "ContextTraceFastAPIMiddleware",
     "ContextTraceHTTPError",
     "ContextTraceLocalError",
+    "ContextTraceLangGraphTracer",
     "ContextTraceLlamaIndexCallbackHandler",
+    "OpenTelemetryExporter",
     "ReportGenerator",
+    "export_contexttrace_trace",
 ]

@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import time
-from typing import Any, Iterable, Optional
+from collections.abc import Iterable as RuntimeIterable
+from typing import Any, Callable, Dict, Iterable, Optional
 
 from contexttrace.client import ContextTrace
 
@@ -9,6 +10,13 @@ try:
     from langchain_core.callbacks import BaseCallbackHandler
 except Exception:  # pragma: no cover - exercised when langchain is not installed
     BaseCallbackHandler = object  # type: ignore[assignment]
+
+
+QueryExtractor = Callable[[Any], Optional[str]]
+AnswerExtractor = Callable[[Any], Optional[str]]
+CitationExtractor = Callable[[Any], Iterable[Dict[str, Any]]]
+DocumentConverter = Callable[[Any, int], Dict[str, Any]]
+MetadataExtractor = Callable[[Any, Dict[str, Any]], Dict[str, Any]]
 
 
 class ContextTraceCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
@@ -21,6 +29,12 @@ class ContextTraceCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
         client: Optional[ContextTrace] = None,
         trace_metadata: Optional[dict[str, Any]] = None,
         selected_context_limit: Optional[int] = None,
+        query_extractor: Optional[QueryExtractor] = None,
+        answer_extractor: Optional[AnswerExtractor] = None,
+        citation_extractor: Optional[CitationExtractor] = None,
+        document_converter: Optional[DocumentConverter] = None,
+        metadata_extractor: Optional[MetadataExtractor] = None,
+        log_agent_events: bool = True,
     ) -> None:
         if client is None:
             if not api_key:
@@ -32,13 +46,22 @@ class ContextTraceCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
         self.client = client
         self.trace_metadata = trace_metadata or {}
         self.selected_context_limit = selected_context_limit
+        self.query_extractor = query_extractor or _extract_query
+        self.answer_extractor = answer_extractor or _extract_answer
+        self.citation_extractor = citation_extractor or _extract_citations
+        self.document_converter = document_converter or langchain_document_to_chunk
+        self.metadata_extractor = metadata_extractor
+        self.log_agent_events = log_agent_events
         self.trace = None
         self.query: Optional[str] = None
         self.retrieved_chunks: list[dict[str, Any]] = []
         self.start_time: Optional[float] = None
+        self.retriever_start_time: Optional[float] = None
         self.llm_model: Optional[str] = None
         self.llm_usage: dict[str, Any] = {}
         self.answer_logged = False
+        self._tool_start_times: dict[str, float] = {}
+        self._tool_names: dict[str, str] = {}
 
     def on_chain_start(
         self,
@@ -46,7 +69,7 @@ class ContextTraceCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
         inputs: Any,
         **kwargs: Any,
     ) -> None:
-        query = _extract_query(inputs)
+        query = self.query_extractor(inputs)
         if query:
             self._ensure_trace(
                 query=query,
@@ -60,6 +83,7 @@ class ContextTraceCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
         query: str,
         **kwargs: Any,
     ) -> None:
+        self.retriever_start_time = time.perf_counter()
         self._ensure_trace(
             query=query,
             event="retriever_start",
@@ -67,7 +91,7 @@ class ContextTraceCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
         )
 
     def on_retriever_end(self, documents: Iterable[Any], **kwargs: Any) -> None:
-        chunks = [langchain_document_to_chunk(document, index) for index, document in enumerate(documents)]
+        chunks = [self.document_converter(document, index) for index, document in enumerate(documents)]
         self.retrieved_chunks = chunks
 
         if self.trace is None:
@@ -83,7 +107,10 @@ class ContextTraceCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
         self.trace.log_retrieval(
             chunks,
             retriever_name=_serialized_name(kwargs.get("serialized")) or "langchain_retriever",
-            metadata=_event_metadata(None, kwargs),
+            metadata={
+                **_event_metadata(None, kwargs),
+                "latency_ms": _elapsed_ms(self.retriever_start_time),
+            },
         )
         selected = chunks[: self.selected_context_limit] if self.selected_context_limit else chunks
         self.trace.log_context(
@@ -94,12 +121,24 @@ class ContextTraceCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
             },
         )
 
+    def on_llm_start(self, serialized: dict[str, Any], prompts: list[str], **kwargs: Any) -> None:
+        model = _serialized_name(serialized)
+        if model:
+            self.llm_model = model
+        if self.trace is None:
+            query = self.query or (prompts[0] if prompts else "unknown query")
+            self._ensure_trace(
+                query=query,
+                event="llm_start",
+                metadata=_event_metadata(serialized, kwargs),
+            )
+
     def on_llm_end(self, response: Any, **kwargs: Any) -> None:
         self.llm_usage = _extract_token_usage(response)
-        self.llm_model = _extract_model(response)
+        self.llm_model = _extract_model(response) or self.llm_model
 
     def on_chain_end(self, outputs: Any, **kwargs: Any) -> None:
-        answer = _extract_answer(outputs)
+        answer = self.answer_extractor(outputs)
         if not answer:
             return
 
@@ -117,14 +156,30 @@ class ContextTraceCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
             answer,
             model=self.llm_model,
             usage=self.llm_usage,
-            metadata={
+            metadata=self._merge_metadata(
+                outputs,
+                {
                 "latency_ms": self._latency_ms(),
                 "langchain_output_keys": list(outputs.keys()) if isinstance(outputs, dict) else [],
-            },
+                },
+            ),
         )
+        citations = list(self.citation_extractor(outputs))
+        if citations:
+            self.trace.log_citations(citations)
         self.answer_logged = True
 
     def on_chain_error(self, error: BaseException, **kwargs: Any) -> None:
+        if self.trace is not None and self.log_agent_events:
+            self.trace.log_agent_error(
+                str(error),
+                name="langchain_chain_error",
+                metadata={
+                    "error_type": error.__class__.__name__,
+                    **_event_metadata(None, kwargs),
+                },
+                latency_ms=self._latency_ms(),
+            )
         if self.trace is not None and not self.answer_logged:
             self.trace.log_answer(
                 "LangChain run failed before producing an answer.",
@@ -135,6 +190,54 @@ class ContextTraceCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
                 },
             )
             self.answer_logged = True
+
+    def on_tool_start(self, serialized: dict[str, Any], input_str: str, **kwargs: Any) -> None:
+        if not self.log_agent_events:
+            return
+        if self.trace is None:
+            self._ensure_trace(
+                query=self.query or input_str or "unknown query",
+                event="tool_start",
+                metadata=_event_metadata(serialized, kwargs),
+            )
+        if self.trace is None:
+            return
+        run_id = str(kwargs.get("run_id") or _serialized_name(serialized) or input_str)
+        tool_name = _serialized_name(serialized) or kwargs.get("name") or "langchain_tool"
+        self._tool_start_times[run_id] = time.perf_counter()
+        self._tool_names[run_id] = str(tool_name)
+        self.trace.log_tool_call(
+            str(tool_name),
+            input_json={"input": input_str},
+            metadata=_event_metadata(serialized, kwargs),
+        )
+
+    def on_tool_end(self, output: Any, **kwargs: Any) -> None:
+        if not self.log_agent_events or self.trace is None:
+            return
+        run_id = str(kwargs.get("run_id") or "langchain_tool")
+        tool_name = self._tool_names.get(run_id) or kwargs.get("name") or "langchain_tool"
+        self.trace.log_tool_result(
+            str(tool_name),
+            output_json=_json_safe(output),
+            metadata=_event_metadata(None, kwargs),
+            latency_ms=_elapsed_ms(self._tool_start_times.get(run_id)),
+        )
+
+    def on_tool_error(self, error: BaseException, **kwargs: Any) -> None:
+        if not self.log_agent_events or self.trace is None:
+            return
+        run_id = str(kwargs.get("run_id") or "langchain_tool")
+        tool_name = self._tool_names.get(run_id) or kwargs.get("name") or "langchain_tool"
+        self.trace.log_agent_error(
+            str(error),
+            name=str(tool_name),
+            metadata={
+                "error_type": error.__class__.__name__,
+                **_event_metadata(None, kwargs),
+            },
+            latency_ms=_elapsed_ms(self._tool_start_times.get(run_id)),
+        )
 
     def _ensure_trace(
         self,
@@ -162,6 +265,16 @@ class ContextTraceCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
         if self.start_time is None:
             return 0
         return int((time.perf_counter() - self.start_time) * 1000)
+
+    def _merge_metadata(self, source: Any, base: dict[str, Any]) -> dict[str, Any]:
+        if not self.metadata_extractor:
+            return base
+        extracted = self.metadata_extractor(source, base)
+        if not extracted:
+            return base
+        merged = dict(base)
+        merged.update(extracted)
+        return merged
 
 
 def langchain_document_to_chunk(document: Any, index: int = 0) -> dict[str, Any]:
@@ -238,6 +351,23 @@ def _extract_answer(outputs: Any) -> Optional[str]:
     return None
 
 
+def _extract_citations(outputs: Any) -> Iterable[dict[str, Any]]:
+    if not isinstance(outputs, dict):
+        return []
+    raw = outputs.get("citations") or outputs.get("citation_checks") or []
+    if not isinstance(raw, RuntimeIterable) or isinstance(raw, (str, bytes)):
+        return []
+    citations = []
+    for citation in raw:
+        if not isinstance(citation, dict):
+            continue
+        claim = citation.get("claim")
+        source_chunk_id = citation.get("source_chunk_id") or citation.get("chunk_id") or citation.get("source")
+        if claim and source_chunk_id:
+            citations.append({"claim": str(claim), "source_chunk_id": str(source_chunk_id)})
+    return citations
+
+
 def _extract_token_usage(response: Any) -> dict[str, Any]:
     llm_output = getattr(response, "llm_output", None) or {}
     if isinstance(llm_output, dict):
@@ -254,6 +384,22 @@ def _extract_model(response: Any) -> Optional[str]:
         if isinstance(model, str):
             return model
     return None
+
+
+def _elapsed_ms(start_time: Optional[float]) -> Optional[int]:
+    if start_time is None:
+        return None
+    return int((time.perf_counter() - start_time) * 1000)
+
+
+def _json_safe(value: Any) -> Any:
+    if value is None or isinstance(value, (str, int, float, bool)):
+        return value
+    if isinstance(value, dict):
+        return {str(key): _json_safe(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple, set)):
+        return [_json_safe(item) for item in value]
+    return str(value)
 
 
 def _event_metadata(serialized: Any, kwargs: dict[str, Any]) -> dict[str, Any]:

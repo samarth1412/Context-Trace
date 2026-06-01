@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import time
-from typing import Any, Iterable, Optional
+from typing import Any, Callable, Dict, Iterable, Optional
 
 from contexttrace.client import ContextTrace
 
@@ -9,6 +9,11 @@ try:
     from llama_index.core.callbacks.base_handler import BaseCallbackHandler
 except Exception:  # pragma: no cover - exercised when llama-index-core is not installed
     BaseCallbackHandler = object  # type: ignore[assignment]
+
+
+QueryExtractor = Callable[[Any], Optional[str]]
+ResponseExtractor = Callable[[Any], Optional[str]]
+NodeConverter = Callable[[Any, int], Dict[str, Any]]
 
 
 class ContextTraceLlamaIndexCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
@@ -20,6 +25,10 @@ class ContextTraceLlamaIndexCallbackHandler(BaseCallbackHandler):  # type: ignor
         base_url: str = "http://localhost:8000",
         client: Optional[ContextTrace] = None,
         trace_metadata: Optional[dict[str, Any]] = None,
+        selected_context_limit: Optional[int] = None,
+        query_extractor: Optional[QueryExtractor] = None,
+        response_extractor: Optional[ResponseExtractor] = None,
+        node_converter: Optional[NodeConverter] = None,
     ) -> None:
         try:
             super().__init__(event_starts_to_ignore=[], event_ends_to_ignore=[])
@@ -41,9 +50,14 @@ class ContextTraceLlamaIndexCallbackHandler(BaseCallbackHandler):  # type: ignor
 
         self.client = client
         self.trace_metadata = trace_metadata or {}
+        self.selected_context_limit = selected_context_limit
+        self.query_extractor = query_extractor or _extract_query
+        self.response_extractor = response_extractor or _extract_response_text
+        self.node_converter = node_converter or llamaindex_node_to_chunk
         self.trace = None
         self.query: Optional[str] = None
         self.start_time: Optional[float] = None
+        self.retrieve_start_time: Optional[float] = None
         self.retrieved_chunks: list[dict[str, Any]] = []
         self.source_chunks: list[dict[str, Any]] = []
         self.answer_logged = False
@@ -67,13 +81,15 @@ class ContextTraceLlamaIndexCallbackHandler(BaseCallbackHandler):  # type: ignor
         **kwargs: Any,
     ) -> str:
         if _event_matches(event_type, "query"):
-            query = _extract_query(payload)
+            query = self.query_extractor(payload)
             if query:
                 self._ensure_trace(
                     query=query,
                     event="query_start",
                     metadata=_event_metadata(event_type, payload, event_id, parent_id, kwargs),
                 )
+        if _event_matches(event_type, "retrieve", "retriever"):
+            self.retrieve_start_time = time.perf_counter()
         return event_id
 
     def on_event_end(
@@ -124,7 +140,7 @@ class ContextTraceLlamaIndexCallbackHandler(BaseCallbackHandler):  # type: ignor
         self._log_response(response, metadata=metadata)
 
     def _log_retrieved_nodes(self, nodes: Iterable[Any], *, metadata: dict[str, Any]) -> None:
-        chunks = [llamaindex_node_to_chunk(node, index) for index, node in enumerate(nodes or [])]
+        chunks = [self.node_converter(node, index) for index, node in enumerate(nodes or [])]
         self.retrieved_chunks = chunks
 
         if self.trace is None:
@@ -140,20 +156,23 @@ class ContextTraceLlamaIndexCallbackHandler(BaseCallbackHandler):  # type: ignor
         self.trace.log_retrieval(
             chunks,
             retriever_name="llamaindex_retriever",
-            metadata=metadata,
+            metadata={
+                **metadata,
+                "latency_ms": _elapsed_ms(self.retrieve_start_time),
+            },
         )
 
     def _log_response(self, response: Any, *, metadata: dict[str, Any]) -> None:
-        answer = _extract_response_text(response)
+        answer = self.response_extractor(response)
         source_nodes = _extract_source_nodes(response)
         source_chunks = [
-            llamaindex_node_to_chunk(node, index) for index, node in enumerate(source_nodes)
+            self.node_converter(node, index) for index, node in enumerate(source_nodes)
         ]
         self.source_chunks = source_chunks
 
         if self.trace is None:
             self._ensure_trace(
-                query=self.query or _extract_query(response) or "unknown query",
+                query=self.query or self.query_extractor(response) or "unknown query",
                 event="response_end",
                 metadata=metadata,
             )
@@ -162,6 +181,8 @@ class ContextTraceLlamaIndexCallbackHandler(BaseCallbackHandler):  # type: ignor
             return
 
         selected_chunks = source_chunks or self.retrieved_chunks
+        if self.selected_context_limit:
+            selected_chunks = selected_chunks[: self.selected_context_limit]
         if selected_chunks:
             self.trace.log_context(
                 selected_chunks,
@@ -365,6 +386,12 @@ def _extract_source_nodes(response: Any) -> list[Any]:
     if nodes is None:
         nodes = getattr(response, "source_nodes_with_scores", None)
     return list(nodes or [])
+
+
+def _elapsed_ms(start_time: Optional[float]) -> Optional[int]:
+    if start_time is None:
+        return None
+    return int((time.perf_counter() - start_time) * 1000)
 
 
 def _event_metadata(

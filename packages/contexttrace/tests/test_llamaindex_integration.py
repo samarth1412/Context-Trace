@@ -178,3 +178,34 @@ def test_llamaindex_adapter_manual_methods_work_without_callback_manager():
     assert transport.calls[1][1] == "/v1/traces/trace_llamaindex/retrieval"
     assert transport.calls[2][1] == "/v1/traces/trace_llamaindex/context"
     assert transport.calls[3][1] == "/v1/traces/trace_llamaindex/answer"
+
+
+def test_llamaindex_callback_supports_custom_extractors_and_context_limit():
+    transport = FakeTransport()
+    client = ContextTrace(api_key="ctx_test", project="support-rag", transport=transport)
+    handler = ContextTraceLlamaIndexCallbackHandler(
+        client=client,
+        selected_context_limit=1,
+        query_extractor=lambda payload: payload["messages"][-1],
+        response_extractor=lambda response: response["final_text"],
+        node_converter=lambda node, index: {
+            "chunk_id": f"node_{index}",
+            "content": node.node.get_content(),
+            "source": node.node.metadata.get("source"),
+            "metadata": node.node.metadata,
+            "relevance_score": node.score,
+        },
+    )
+    nodes = [
+        MockNodeWithScore(MockNode("First source.", metadata={"source": "a.md"}), 0.9),
+        MockNodeWithScore(MockNode("Second source.", metadata={"source": "b.md"}), 0.8),
+    ]
+
+    handler.on_event_start("query", {"messages": ["Custom query?"]})
+    handler.on_event_end("retrieve", {"nodes": nodes})
+    handler.trace_response({"final_text": "Custom answer.", "source_nodes": nodes})
+
+    assert transport.calls[0][2]["query"] == "Custom query?"
+    assert transport.calls[1][2]["chunks"][0]["chunk_id"] == "node_0"
+    assert len(transport.calls[2][2]["chunks"]) == 1
+    assert transport.calls[3][2]["answer"] == "Custom answer."

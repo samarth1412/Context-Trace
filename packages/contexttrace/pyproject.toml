@@ -22,6 +22,22 @@ langchain = [
 llamaindex = [
     "llama-index-core>=0.10",
 ]
+fastapi = [
+    "fastapi>=0.110",
+]
+langgraph = [
+    "langgraph>=0.2",
+]
+opentelemetry = [
+    "opentelemetry-api>=1.24",
+]
+integrations = [
+    "fastapi>=0.110",
+    "langchain-core>=0.2",
+    "langgraph>=0.2",
+    "llama-index-core>=0.10",
+    "opentelemetry-api>=1.24",
+]
 test = [
     "pytest>=8.0",
 ]

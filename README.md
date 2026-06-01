@@ -131,8 +131,10 @@ docs/assets/playground-placeholder.png
 - [Citation Verification](docs/citation_verification.md)
 - [Bring Your Own RAG API](docs/bring-your-own-rag-api.md)
 - [Benchmarks](docs/benchmarks.md)
-- [LangChain Integration](docs/langchain.md)
-- [LlamaIndex Integration](docs/llamaindex.md)
+- [LangChain Integration](docs/integrations/langchain.md)
+- [LlamaIndex Integration](docs/integrations/llamaindex.md)
+- [FastAPI Middleware](docs/integrations/fastapi.md)
+- [LangGraph Beta](docs/integrations/langgraph.md)
 
 ## Public Benchmarks
 
