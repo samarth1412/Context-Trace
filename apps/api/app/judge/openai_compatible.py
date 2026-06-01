@@ -34,7 +34,6 @@ class OpenAICompatibleJudgeProvider:
                     ],
                     "temperature": 0,
                     "response_format": {"type": "json_object"},
-                    "metadata": {"contexttrace_task": task},
                 },
             )
             response.raise_for_status()

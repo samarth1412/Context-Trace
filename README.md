@@ -224,11 +224,6 @@ contexttrace viewer
 
 The local viewer reads from `.contexttrace/contexttrace.db` and serves pages at `http://localhost:8765`.
 
-## Example Report
-
-![ContextTrace local report](docs/assets/contexttrace-report.png)
-
-Screenshots and GIFs should show terminal output, citation verdicts, and failure diagnosis so users can understand the debugging workflow without reading the code.
 
 ## CLI Commands
 
@@ -320,14 +315,6 @@ examples                SDK and endpoint examples
 - ContextTrace is diagnostic, not a guarantee of correctness.
 - LLM-judge outputs should be reviewed for high-stakes workflows.
 - ContextTrace complements existing eval and observability tools; it does not replace them.
-
-## Roadmap
-
-- richer local viewer
-- more demo datasets
-- stronger agent trace diagnostics
-- more judge provider adapters
-- optional remote API mode later
 
 ## Try It
 
