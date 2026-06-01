@@ -17,9 +17,11 @@ from app.schemas.traces import (
     RetrievalRequest,
     TraceEventResponse,
     TraceRead,
+    TraceSummary,
     TraceStartRequest,
     TraceStartResponse,
 )
+from app.schemas.reliability import ReliabilityScore
 from app.schemas.evals import (
     EvalQuestionPayload,
     EvalQuestionRead,
@@ -76,8 +78,10 @@ __all__ = [
     "RetrievalRequest",
     "TraceEventResponse",
     "TraceRead",
+    "TraceSummary",
     "TraceStartRequest",
     "TraceStartResponse",
+    "ReliabilityScore",
     "EvalQuestionPayload",
     "EvalQuestionRead",
     "EvalQuestionsRequest",

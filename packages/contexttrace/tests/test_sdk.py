@@ -241,6 +241,9 @@ def test_trace_export_report_creates_html_with_required_sections(tmp_path):
     assert "Citation Checks" in html
     assert "directly_supported" in html
     assert "Failure Analysis" in html
+    assert "Reliability Score" in html
+    assert "Raw Metrics" in html
+    assert "Component Scores" in html
     assert "no_failure_detected" in html
     assert "Severity" in html
     assert "Root Cause" in html

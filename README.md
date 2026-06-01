@@ -11,6 +11,7 @@ It is not a LangSmith clone and not a RAG chatbot. The core product surface is e
 - Answers, citations, token usage, and latency
 - Citation support verdicts
 - RAG failure type, severity, root cause, and suggested fix
+- Practical reliability score with strengths, weaknesses, and recommendations
 - Context policy decisions and retrieval strategy comparisons
 
 ## Repository Layout
@@ -128,6 +129,7 @@ docs/assets/playground-placeholder.png
 - [Quickstart](docs/quickstart.md)
 - [SDK Usage](docs/sdk.md)
 - [Failure Taxonomy](docs/failure_taxonomy.md)
+- [Reliability Score](docs/reliability_score.md)
 - [Citation Verification](docs/citation_verification.md)
 - [Bring Your Own RAG API](docs/bring-your-own-rag-api.md)
 - [Benchmarks](docs/benchmarks.md)

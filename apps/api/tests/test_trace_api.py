@@ -272,11 +272,19 @@ def test_evaluate_no_failure_detected(client, auth_headers, judge_provider):
     response = client.post(f"/v1/traces/{trace_id}/evaluate", headers=auth_headers, json={})
 
     assert response.status_code == 200
-    assert response.json()["failure"]["failure_type"] == "no_failure_detected"
+    body = response.json()
+    assert body["failure"]["failure_type"] == "no_failure_detected"
+    assert body["scores"]["citation_support"] == 0.99
+    assert body["reliability"]["score"] >= 90
 
     fetched = client.get(f"/v1/traces/{trace_id}", headers=auth_headers)
     assert fetched.status_code == 200
     assert fetched.json()["evaluation"]["failure"]["failure_type"] == "no_failure_detected"
+    assert fetched.json()["evaluation"]["reliability"]["grade"] == "A"
+
+    traces = client.get("/v1/traces", headers=auth_headers)
+    assert traces.status_code == 200
+    assert traces.json()[0]["reliability"]["score"] >= 90
 
 
 def test_invalid_failure_json_falls_back_to_unknown(client, auth_headers, judge_provider):
@@ -376,6 +384,9 @@ def test_eval_set_summary_aggregates_existing_traces(client, auth_headers, judge
     assert summary["unevaluated_trace_count"] == 0
     assert summary["avg_citation_support"] == 0.45
     assert summary["unsupported_claim_rate"] == 0.667
+    assert summary["failure_rate"] == 0.667
+    assert summary["reliability"]["score"] < 60
+    assert summary["reliability"]["weaknesses"]
     assert summary["failure_type_distribution"] == {
         "no_failure_detected": 1,
         "citation_mismatch": 1,

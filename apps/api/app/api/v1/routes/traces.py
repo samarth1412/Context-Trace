@@ -1,3 +1,5 @@
+from typing import List
+
 from typing_extensions import Annotated
 
 from fastapi import APIRouter, Depends
@@ -17,6 +19,7 @@ from app.schemas import (
     RetrievalRequest,
     TraceEventResponse,
     TraceRead,
+    TraceSummary,
     TraceStartRequest,
     TraceStartResponse,
 )
@@ -32,6 +35,15 @@ def start_trace(
     user: Annotated[User, Depends(get_current_user)],
 ) -> TraceStartResponse:
     return TraceService(db, user).start_trace(request)
+
+
+@router.get("", response_model=List[TraceSummary])
+def list_traces(
+    db: Annotated[Session, Depends(get_db)],
+    user: Annotated[User, Depends(get_current_user)],
+    limit: int = 50,
+) -> List[TraceSummary]:
+    return TraceService(db, user).list_traces(limit=limit)
 
 
 @router.post("/{trace_id}/retrieval", response_model=TraceEventResponse)

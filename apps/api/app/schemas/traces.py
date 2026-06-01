@@ -6,6 +6,7 @@ from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, ConfigDict, Field
 
 from app.models.enums import AgentEventType, CitationVerdict, FailureType, Severity, SupportStatus
+from app.schemas.reliability import ReliabilityScore
 
 
 class APIModel(BaseModel):
@@ -115,6 +116,8 @@ class FailurePayload(APIModel):
 
 
 class EvaluationResponse(APIModel):
+    scores: Dict[str, float] = Field(default_factory=dict)
+    reliability: ReliabilityScore
     citation_checks: List[EvaluatedCitationCheck] = Field(default_factory=list)
     failure: FailurePayload
 
@@ -160,4 +163,16 @@ class TraceRead(APIModel):
     agent_events: List[AgentEventRead] = Field(default_factory=list)
     evaluation: Optional[EvaluationResponse] = None
     created_at: datetime
+    updated_at: datetime
+
+
+class TraceSummary(APIModel):
+    id: str
+    query: str
+    status: str
+    failure_type: FailureType
+    severity: Severity
+    citation_support: float = Field(ge=0.0, le=1.0)
+    unsupported_claim_rate: float = Field(ge=0.0, le=1.0)
+    reliability: ReliabilityScore
     updated_at: datetime

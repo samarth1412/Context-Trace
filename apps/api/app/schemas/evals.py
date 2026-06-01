@@ -6,6 +6,7 @@ from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, ConfigDict, Field
 
 from app.models.enums import FailureType, Severity
+from app.schemas.reliability import ReliabilityScore
 
 
 class APIModel(BaseModel):
@@ -70,5 +71,7 @@ class EvalSetSummary(APIModel):
     unevaluated_trace_count: int
     avg_citation_support: float = Field(ge=0.0, le=1.0)
     unsupported_claim_rate: float = Field(ge=0.0, le=1.0)
+    failure_rate: float = Field(ge=0.0, le=1.0)
+    reliability: ReliabilityScore
     failure_type_distribution: Dict[str, int] = Field(default_factory=dict)
     worst_traces: List[WorstTrace] = Field(default_factory=list)

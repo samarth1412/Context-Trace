@@ -10,6 +10,7 @@ from typing import Any, Callable, Dict, Iterable, Optional
 import httpx
 
 from contexttrace.client import ContextTrace
+from contexttrace.reliability import ReliabilityScorer
 
 UNSUPPORTED_VERDICTS = {"unsupported", "contradicted", "not_enough_info"}
 NO_FAILURE = "no_failure_detected"
@@ -77,6 +78,14 @@ class EvalRunSummary:
             if result.error or result.failure_type != NO_FAILURE
         ]
         return round(len(failures) / len(self.results), 3)
+
+    @property
+    def reliability(self) -> dict[str, Any]:
+        return ReliabilityScorer().score(
+            citation_support=self.avg_citation_support,
+            unsupported_claim_rate=self.unsupported_claim_rate,
+            failure_rate=self.failure_rate,
+        ).to_dict()
 
     @property
     def failed(self) -> bool:
@@ -181,10 +190,20 @@ def call_rag_endpoint(
 
 def render_markdown_summary(summary: EvalRunSummary) -> str:
     status = "failed" if summary.failed else "passed"
+    reliability = summary.reliability
     lines = [
         "# ContextTrace RAG Evaluation",
         "",
         f"Status: **{status}**",
+        "",
+        "## Reliability Score",
+        "",
+        f"Score: **{reliability['score']} ({reliability['grade']})**",
+        "",
+        "This is a practical diagnostic score. It summarizes the available reliability metrics, but the raw metrics below remain the source of truth.",
+        "",
+        "Recommendations:",
+        *["- %s" % item for item in reliability["recommendations"]],
         "",
         "| Metric | Value | Threshold |",
         "| --- | ---: | ---: |",

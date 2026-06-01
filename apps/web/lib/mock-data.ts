@@ -103,6 +103,27 @@ export const mockTraces: TraceDetail[] = [
       }
     ],
     evaluation: {
+      scores: {
+        citation_support: 0.98,
+        unsupported_claim_rate: 0
+      },
+      reliability: {
+        score: 98,
+        grade: "A",
+        strengths: [
+          "Citations are usually supported by the cited evidence.",
+          "Unsupported claims are uncommon in this evaluation."
+        ],
+        weaknesses: [],
+        recommendations: ["Keep monitoring this score alongside the raw reliability metrics."],
+        components: {
+          citation_support: 98,
+          unsupported_claim_rate: 100,
+          failure_rate: 100,
+          retrieval_quality: 91,
+          token_efficiency: 100
+        }
+      },
       citation_checks: [
         {
           claim: "Refunds are available within 30 days.",
@@ -163,6 +184,31 @@ export const mockTraces: TraceDetail[] = [
       }
     ],
     evaluation: {
+      scores: {
+        citation_support: 0.1,
+        unsupported_claim_rate: 1
+      },
+      reliability: {
+        score: 24,
+        grade: "F",
+        strengths: ["Retrieved or selected context has strong relevance signals."],
+        weaknesses: [
+          "Citation support is weak across evaluated claims.",
+          "Unsupported claims appear frequently.",
+          "A meaningful share of traces produced classified failures."
+        ],
+        recommendations: [
+          "Add claim-level citation checks before returning answers.",
+          "Constrain generation to selected evidence and add abstention rules."
+        ],
+        components: {
+          citation_support: 10,
+          unsupported_claim_rate: 0,
+          failure_rate: 0,
+          retrieval_quality: 87,
+          token_efficiency: 100
+        }
+      },
       citation_checks: [
         {
           claim: "Refunds are processed in two days.",
@@ -223,6 +269,31 @@ export const mockTraces: TraceDetail[] = [
       }
     ],
     evaluation: {
+      scores: {
+        citation_support: 0,
+        unsupported_claim_rate: 1
+      },
+      reliability: {
+        score: 21,
+        grade: "F",
+        strengths: ["Retrieved or selected context has strong relevance signals."],
+        weaknesses: [
+          "Citation support is weak across evaluated claims.",
+          "Unsupported claims appear frequently.",
+          "A meaningful share of traces produced classified failures."
+        ],
+        recommendations: [
+          "Add claim-level citation checks before returning answers.",
+          "Add contradiction checks and force abstention when evidence conflicts with the answer."
+        ],
+        components: {
+          citation_support: 0,
+          unsupported_claim_rate: 0,
+          failure_rate: 0,
+          retrieval_quality: 96,
+          token_efficiency: 100
+        }
+      },
       citation_checks: [
         {
           claim: "Final-sale items can be refunded within 30 days.",
@@ -252,6 +323,7 @@ export const mockTraceSummaries: TraceSummary[] = mockTraces.map((trace) => ({
   severity: trace.evaluation?.failure.severity ?? "medium",
   citation_support: averageCitationSupport(trace.evaluation?.citation_checks ?? []),
   unsupported_claim_rate: unsupportedClaimRate(trace.evaluation?.citation_checks ?? []),
+  reliability: trace.evaluation?.reliability ?? fallbackReliability(),
   updated_at: trace.updated_at
 }));
 
@@ -277,6 +349,27 @@ export const mockEvalSummary: EvalSummary = {
   unevaluated_trace_count: 0,
   avg_citation_support: 0.36,
   unsupported_claim_rate: 0.67,
+  failure_rate: 0.667,
+  reliability: {
+    score: 35,
+    grade: "F",
+    strengths: [],
+    weaknesses: [
+      "Citation support is weak across evaluated claims.",
+      "Unsupported claims appear frequently.",
+      "A meaningful share of traces produced classified failures."
+    ],
+    recommendations: [
+      "Add claim-level citation checks before returning answers.",
+      "Constrain generation to selected evidence and add abstention rules.",
+      "Prioritize the most common failure type before tuning prompts."
+    ],
+    components: {
+      citation_support: 36,
+      unsupported_claim_rate: 33,
+      failure_rate: 33
+    }
+  },
   failure_type_distribution: {
     no_failure_detected: 1,
     citation_mismatch: 1,
@@ -305,3 +398,14 @@ export const mockEvalSummary: EvalSummary = {
     }
   ]
 };
+
+function fallbackReliability() {
+  return {
+    score: 0,
+    grade: "F",
+    strengths: [],
+    weaknesses: ["No evaluation metrics are available yet."],
+    recommendations: ["Run citation verification before using the reliability score."],
+    components: {}
+  };
+}

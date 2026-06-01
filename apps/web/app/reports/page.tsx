@@ -18,7 +18,12 @@ export default async function ReportsPage() {
         source={summary.source}
         error={summary.error}
       />
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-4">
+        <MetricCard
+          label="Reliability Score"
+          value={`${summary.data.reliability.score} (${summary.data.reliability.grade})`}
+          detail="Diagnostic, not a scientific benchmark"
+        />
         <MetricCard
           label="Average Citation Support"
           value={formatPercent(summary.data.avg_citation_support)}
@@ -33,6 +38,11 @@ export default async function ReportsPage() {
           label="Evaluated Traces"
           value={String(summary.data.evaluated_trace_count)}
           detail={`${summary.data.unevaluated_trace_count} unevaluated`}
+        />
+        <MetricCard
+          label="Failure Rate"
+          value={formatPercent(summary.data.failure_rate)}
+          detail="Classified failures"
         />
       </div>
 

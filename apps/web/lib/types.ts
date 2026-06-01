@@ -65,7 +65,18 @@ export type FailurePayload = {
   suggested_fix: string;
 };
 
+export type ReliabilityScore = {
+  score: number;
+  grade: string;
+  strengths: string[];
+  weaknesses: string[];
+  recommendations: string[];
+  components: Record<string, number>;
+};
+
 export type TraceEvaluation = {
+  scores?: Record<string, number>;
+  reliability: ReliabilityScore;
   citation_checks: CitationCheck[];
   failure: FailurePayload;
 };
@@ -130,6 +141,7 @@ export type TraceSummary = {
   severity: Severity;
   citation_support: number;
   unsupported_claim_rate: number;
+  reliability: ReliabilityScore;
   updated_at: string;
 };
 
@@ -142,6 +154,8 @@ export type EvalSummary = {
   unevaluated_trace_count: number;
   avg_citation_support: number;
   unsupported_claim_rate: number;
+  failure_rate: number;
+  reliability: ReliabilityScore;
   failure_type_distribution: Record<string, number>;
   worst_traces: Array<{
     trace_id: string;

@@ -132,3 +132,5 @@ Use severity to prioritize remediation. A high severity `contradicted_answer` us
 `unsupported_claim_rate` is the share of citations labeled `unsupported`, `contradicted`, or `not_enough_info`.
 
 `failure_type` and `severity` come from the failure analyzer.
+
+`reliability` is a practical diagnostic score that combines available metrics for triage. It does not replace the fields above. See [Reliability Score](reliability_score.md).

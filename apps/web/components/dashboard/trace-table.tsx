@@ -16,6 +16,7 @@ export function TraceTable({ traces }: { traces: TraceSummary[] }) {
             <tr className="border-b text-left text-xs uppercase text-muted-foreground">
               <th className="py-2 pr-4 font-medium">Trace</th>
               <th className="py-2 pr-4 font-medium">Failure</th>
+              <th className="py-2 pr-4 font-medium">Score</th>
               <th className="py-2 pr-4 font-medium">Severity</th>
               <th className="py-2 pr-4 font-medium">Citation Support</th>
               <th className="py-2 pr-4 font-medium">Unsupported Claims</th>
@@ -32,6 +33,9 @@ export function TraceTable({ traces }: { traces: TraceSummary[] }) {
                   <div className="mt-1 text-xs text-muted-foreground">{trace.id}</div>
                 </td>
                 <td className="py-3 pr-4">{trace.failure_type}</td>
+                <td className="py-3 pr-4">
+                  {trace.reliability.score} ({trace.reliability.grade})
+                </td>
                 <td className="py-3 pr-4">
                   <SeverityBadge severity={trace.severity} />
                 </td>

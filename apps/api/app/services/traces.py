@@ -35,12 +35,14 @@ from app.schemas import (
     TraceRead,
     TraceStartRequest,
     TraceStartResponse,
+    TraceSummary,
 )
 from app.judge import LLMJudgeProvider
 from app.models import CitationVerdict, FailureType, Severity
 from app.services.citation_verifier import CitationVerificationResult, CitationVerifier
 from app.services.errors import InvalidTraceState, NotFoundError
 from app.services.failure_analyzer import FailureAnalyzer
+from app.services.reliability_scorer import ReliabilityScorer
 
 
 class TraceService:
@@ -150,6 +152,17 @@ class TraceService:
     def get_trace(self, trace_id: str) -> TraceRead:
         return self._trace_read(self._get_trace(trace_id))
 
+    def list_traces(self, *, limit: int = 50) -> list[TraceSummary]:
+        limit = max(1, min(limit, 200))
+        traces = self.db.scalars(
+            select(Trace)
+            .join(Project)
+            .where(Project.user_id == self.user.id)
+            .order_by(Trace.updated_at.desc())
+            .limit(limit)
+        ).all()
+        return [self._trace_summary(trace) for trace in traces]
+
     def log_agent_event(self, trace_id: str, request: AgentEventRequest) -> AgentEventResponse:
         trace = self._get_trace(trace_id)
         event = AgentEvent(
@@ -234,6 +247,14 @@ class TraceService:
         )
 
         scores = self._score_summary(evaluated_checks)
+        reliability = ReliabilityScorer().score_trace(
+            scores=scores,
+            failure_type=failure.failure_type.value,
+            chunks=[self._chunk_to_dict(chunk) for chunk in trace.chunks],
+            usage=trace.answer.usage if trace.answer else {},
+        ).to_dict()
+        scores["reliability_score"] = reliability["score"]
+        scores["reliability_grade"] = reliability["grade"]
         if trace.failure_report is None:
             trace.failure_report = FailureReport(
                 trace_id=trace.id,
@@ -242,7 +263,7 @@ class TraceService:
                 root_cause=failure.root_cause,
                 suggested_fix=failure.suggested_fix,
                 scores=scores,
-                report_metadata={},
+                report_metadata={"reliability": reliability},
             )
         else:
             trace.failure_report.failure_type = failure.failure_type.value
@@ -250,7 +271,7 @@ class TraceService:
             trace.failure_report.root_cause = failure.root_cause
             trace.failure_report.suggested_fix = failure.suggested_fix
             trace.failure_report.scores = scores
-            trace.failure_report.report_metadata = {}
+            trace.failure_report.report_metadata = {"reliability": reliability}
 
         trace.status = "evaluated"
         self.db.commit()
@@ -349,6 +370,26 @@ class TraceService:
             updated_at=trace.updated_at,
         )
 
+    def _trace_summary(self, trace: Trace) -> TraceSummary:
+        report = trace.failure_report
+        scores = report.scores if report else {}
+        failure_type = report.failure_type if report else FailureType.UNKNOWN.value
+        severity = report.severity if report else Severity.MEDIUM.value
+        citation_support = self._metric(scores, "citation_support")
+        unsupported_claim_rate = self._metric(scores, "unsupported_claim_rate")
+        reliability = self._reliability_from_report(trace)
+        return TraceSummary(
+            id=trace.id,
+            query=trace.query,
+            status=trace.status,
+            failure_type=failure_type,
+            severity=severity,
+            citation_support=citation_support,
+            unsupported_claim_rate=unsupported_claim_rate,
+            reliability=reliability,
+            updated_at=trace.updated_at,
+        )
+
     def _agent_event_read(self, event: AgentEvent) -> AgentEventRead:
         return AgentEventRead(
             id=event.id,
@@ -366,7 +407,17 @@ class TraceService:
     def _evaluation_response(self, trace: Trace) -> EvaluationResponse:
         report = trace.failure_report
         if report is None:
+            scores = {
+                "citation_support": 0.0,
+                "unsupported_claim_rate": 1.0,
+            }
             return EvaluationResponse(
+                scores=scores,
+                reliability=ReliabilityScorer().score(
+                    citation_support=0.0,
+                    unsupported_claim_rate=1.0,
+                    failure_rate=1.0,
+                ).to_dict(),
                 citation_checks=[],
                 failure=FailurePayload(
                     failure_type=FailureType.UNKNOWN,
@@ -376,7 +427,14 @@ class TraceService:
                 ),
             )
 
+        scores = {
+            key: value
+            for key, value in (report.scores or {}).items()
+            if isinstance(value, (int, float)) and not key.startswith("reliability_")
+        }
         return EvaluationResponse(
+            scores=scores,
+            reliability=self._reliability_from_report(trace),
             citation_checks=[
                 EvaluatedCitationCheck(
                     claim=check.claim,
@@ -395,6 +453,32 @@ class TraceService:
                 suggested_fix=report.suggested_fix,
             ),
         )
+
+    def _reliability_from_report(self, trace: Trace):
+        report = trace.failure_report
+        if report is None:
+            return ReliabilityScorer().score(
+                citation_support=0.0,
+                unsupported_claim_rate=1.0,
+                failure_rate=1.0,
+            ).to_dict()
+
+        reliability = (report.report_metadata or {}).get("reliability")
+        if isinstance(reliability, dict):
+            return reliability
+
+        return ReliabilityScorer().score_trace(
+            scores=report.scores or {},
+            failure_type=report.failure_type,
+            chunks=[self._chunk_to_dict(chunk) for chunk in trace.chunks],
+            usage=trace.answer.usage if trace.answer else {},
+        ).to_dict()
+
+    def _metric(self, scores: dict, key: str) -> float:
+        try:
+            return max(0.0, min(1.0, float((scores or {}).get(key, 0.0))))
+        except (TypeError, ValueError):
+            return 0.0
 
     def _chunk_to_dict(self, chunk: Chunk) -> dict:
         return {

@@ -22,7 +22,12 @@ export default async function DashboardPage() {
         error={traces.error ?? evalSummary.error}
       />
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-4">
+        <MetricCard
+          label="Reliability Score"
+          value={`${evalSummary.data.reliability.score} (${evalSummary.data.reliability.grade})`}
+          detail="Practical diagnostic score"
+        />
         <MetricCard
           label="Average Citation Support"
           value={formatPercent(evalSummary.data.avg_citation_support)}

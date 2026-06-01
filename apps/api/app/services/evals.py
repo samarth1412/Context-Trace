@@ -17,6 +17,7 @@ from app.schemas import (
     WorstTrace,
 )
 from app.services.errors import NotFoundError
+from app.services.reliability_scorer import ReliabilityScorer
 
 
 class EvalSetService:
@@ -140,6 +141,7 @@ def aggregate_eval_set(eval_set: EvalSet) -> EvalSetSummary:
     citation_support_values: List[float] = []
     unsupported_values: List[float] = []
     worst_candidates: List[WorstTrace] = []
+    failure_count = 0
 
     for question in evaluated_questions:
         trace = question.trace
@@ -150,6 +152,8 @@ def aggregate_eval_set(eval_set: EvalSet) -> EvalSetSummary:
         failure_distribution[report.failure_type] = (
             failure_distribution.get(report.failure_type, 0) + 1
         )
+        if report.failure_type != FailureType.NO_FAILURE_DETECTED.value:
+            failure_count += 1
         citation_support = _score(report, "citation_support")
         unsupported_claim_rate = _score(report, "unsupported_claim_rate")
         citation_support_values.append(citation_support)
@@ -169,6 +173,10 @@ def aggregate_eval_set(eval_set: EvalSet) -> EvalSetSummary:
 
     worst_candidates.sort(key=_worst_trace_sort_key)
 
+    avg_citation_support = _average(citation_support_values)
+    unsupported_claim_rate = _average(unsupported_values)
+    failure_rate = _average_rate(failure_count, len(evaluated_questions))
+
     return EvalSetSummary(
         eval_set_id=eval_set.id,
         name=eval_set.name,
@@ -176,8 +184,14 @@ def aggregate_eval_set(eval_set: EvalSet) -> EvalSetSummary:
         linked_trace_count=len(linked_questions),
         evaluated_trace_count=len(evaluated_questions),
         unevaluated_trace_count=len(linked_questions) - len(evaluated_questions),
-        avg_citation_support=_average(citation_support_values),
-        unsupported_claim_rate=_average(unsupported_values),
+        avg_citation_support=avg_citation_support,
+        unsupported_claim_rate=unsupported_claim_rate,
+        failure_rate=failure_rate,
+        reliability=ReliabilityScorer().score(
+            citation_support=avg_citation_support,
+            unsupported_claim_rate=unsupported_claim_rate,
+            failure_rate=failure_rate,
+        ).to_dict(),
         failure_type_distribution=failure_distribution,
         worst_traces=worst_candidates[:5],
     )
@@ -195,6 +209,12 @@ def _average(values: List[float]) -> float:
     if not values:
         return 0.0
     return round(sum(values) / len(values), 3)
+
+
+def _average_rate(count: int, total: int) -> float:
+    if total <= 0:
+        return 0.0
+    return round(count / total, 3)
 
 
 def _worst_trace_sort_key(trace: WorstTrace) -> tuple:

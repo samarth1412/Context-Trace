@@ -4,6 +4,8 @@ from html import escape
 from pathlib import Path
 from typing import Any, Iterable
 
+from contexttrace.reliability import ReliabilityScorer
+
 
 class ReportGenerator:
     def generate(self, trace: dict[str, Any], *, path: str = "report.html") -> str:
@@ -19,7 +21,14 @@ class ReportGenerator:
         chunks = trace.get("chunks") or []
         selected_chunks = [chunk for chunk in chunks if chunk.get("selected")]
         citation_checks = _citation_checks(trace)
-        failure = (trace.get("evaluation") or {}).get("failure") or {}
+        evaluation = trace.get("evaluation") or {}
+        failure = evaluation.get("failure") or {}
+        scores = evaluation.get("scores") or _score_summary(citation_checks)
+        reliability = (
+            evaluation.get("reliability")
+            if isinstance(evaluation.get("reliability"), dict)
+            else ReliabilityScorer().score_trace(trace).to_dict()
+        )
         usage = answer.get("usage") or {}
         latency = _first_present(
             metadata,
@@ -39,6 +48,13 @@ class ReportGenerator:
             generated_at=escape(_string(trace.get("updated_at") or trace.get("created_at"))),
             token_usage=_render_kv(usage) if usage else "<p class=\"muted\">No token usage logged.</p>",
             latency=escape(_string(latency)) if latency is not None else "Not logged",
+            reliability_score=escape(_string(reliability.get("score", 0))),
+            reliability_grade=escape(_string(reliability.get("grade", "F"))),
+            reliability_strengths=_render_list(reliability.get("strengths") or []),
+            reliability_weaknesses=_render_list(reliability.get("weaknesses") or []),
+            reliability_recommendations=_render_list(reliability.get("recommendations") or []),
+            reliability_components=_render_kv(reliability.get("components") or {}),
+            reliability_scores=_render_kv(scores) if scores else "<p class=\"muted\">No raw scores available.</p>",
             retrieved_chunks=_render_chunks(chunks),
             selected_context=_render_chunks(selected_chunks),
             citation_checks=_render_citation_checks(citation_checks),
@@ -137,6 +153,29 @@ def _render_kv(values: dict[str, Any]) -> str:
     return "<dl class=\"metrics\">%s</dl>" % "\n".join(rows)
 
 
+def _render_list(values: Iterable[Any]) -> str:
+    items = ["<li>%s</li>" % escape(_string(value)) for value in values]
+    if not items:
+        return "<p class=\"muted\">None recorded.</p>"
+    return "<ul>%s</ul>" % "\n".join(items)
+
+
+def _score_summary(checks: list[dict[str, Any]]) -> dict[str, float]:
+    if not checks:
+        return {}
+    support_scores = [float(check.get("support_score") or 0.0) for check in checks]
+    unsupported = [
+        check
+        for check in checks
+        if (check.get("verdict") or check.get("support_status"))
+        in {"unsupported", "contradicted", "not_enough_info"}
+    ]
+    return {
+        "citation_support": round(sum(support_scores) / len(support_scores), 3),
+        "unsupported_claim_rate": round(len(unsupported) / len(checks), 3),
+    }
+
+
 def _first_present(*dicts: dict[str, Any], keys: Iterable[str]) -> Any:
     for values in dicts:
         for key in keys:
@@ -210,7 +249,7 @@ HTML_TEMPLATE = """<!doctype html>
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       margin-top: 18px;
     }}
-    .summary div, .item {{
+    .summary > div, .item {{
       border: 1px solid var(--line);
       border-radius: 8px;
       padding: 12px;
@@ -286,6 +325,10 @@ HTML_TEMPLATE = """<!doctype html>
       <p class="muted">Generated from trace data {generated_at}</p>
       <div class="summary">
         <div>
+          <div class="label">Reliability Score</div>
+          <div class="value">{reliability_score} ({reliability_grade})</div>
+        </div>
+        <div>
           <div class="label">Failure Type</div>
           <div class="value">{failure_type}</div>
         </div>
@@ -299,6 +342,29 @@ HTML_TEMPLATE = """<!doctype html>
         </div>
       </div>
     </header>
+
+    <section>
+      <h2>Reliability Score</h2>
+      <p class="muted">A practical diagnostic score for comparing traces. It summarizes available metrics but does not replace the raw measurements below.</p>
+      <div class="grid">
+        <div>
+          <h3>Strengths</h3>
+          {reliability_strengths}
+        </div>
+        <div>
+          <h3>Weaknesses</h3>
+          {reliability_weaknesses}
+        </div>
+        <div>
+          <h3>Recommendations</h3>
+          {reliability_recommendations}
+        </div>
+      </div>
+      <h3>Component Scores</h3>
+      {reliability_components}
+      <h3>Raw Metrics</h3>
+      {reliability_scores}
+    </section>
 
     <section>
       <h2>Query</h2>

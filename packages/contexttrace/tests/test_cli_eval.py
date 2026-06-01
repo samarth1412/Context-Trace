@@ -106,8 +106,11 @@ def test_cli_eval_runner_sends_traces_and_writes_summary(tmp_path):
     assert summary.avg_citation_support == 0.95
     assert summary.unsupported_claim_rate == 0.0
     assert summary.failure_rate == 0.0
+    assert summary.reliability["grade"] == "A"
     assert summary_path.exists()
-    assert "ContextTrace RAG Evaluation" in summary_path.read_text(encoding="utf-8")
+    summary_markdown = summary_path.read_text(encoding="utf-8")
+    assert "ContextTrace RAG Evaluation" in summary_markdown
+    assert "Reliability Score" in summary_markdown
     assert endpoint_calls == [("https://rag.example/query", "What is the refund policy?", {"X-Test": "1"})]
     assert transport.calls[0][1] == "/v1/traces/start"
     assert transport.calls[-1][1] == "/v1/traces/trace_1/evaluate"
@@ -169,6 +172,7 @@ def test_cli_eval_runner_fails_when_thresholds_are_violated(tmp_path):
     assert summary.avg_citation_support == 0.1
     assert summary.unsupported_claim_rate == 1.0
     assert summary.failure_rate == 1.0
+    assert summary.reliability["grade"] == "F"
 
 
 def test_cli_eval_command_invokes_runner(monkeypatch, tmp_path):

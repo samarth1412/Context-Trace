@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any, Optional
 
 from contexttrace.errors import ContextTraceLocalError
+from contexttrace.reliability import ReliabilityScorer
 
 logger = logging.getLogger("contexttrace")
 
@@ -256,7 +257,20 @@ def _evaluate_trace(trace: dict[str, Any]) -> dict[str, Any]:
     unsupported = [check for check in evaluated if check["verdict"] != "directly_supported"]
     failure_type = "no_failure_detected" if not unsupported else "unsupported_answer"
     severity = "none" if failure_type == "no_failure_detected" else "medium"
+    scores = _score_summary(evaluated)
+    reliability = ReliabilityScorer().score_trace(
+        {
+            **trace,
+            "evaluation": {
+                "scores": scores,
+                "failure": {"failure_type": failure_type},
+                "citation_checks": evaluated,
+            },
+        }
+    ).to_dict()
     return {
+        "scores": scores,
+        "reliability": reliability,
         "citation_checks": evaluated,
         "failure": {
             "failure_type": failure_type,
@@ -264,6 +278,24 @@ def _evaluate_trace(trace: dict[str, Any]) -> dict[str, Any]:
             "root_cause": "Local lexical evaluation completed.",
             "suggested_fix": "Use hosted judge evaluation for model-based citation analysis.",
         },
+    }
+
+
+def _score_summary(evaluated_checks: list[dict[str, Any]]) -> dict[str, float]:
+    if not evaluated_checks:
+        return {
+            "citation_support": 0.0,
+            "unsupported_claim_rate": 1.0,
+        }
+    support_scores = [float(check.get("support_score") or 0.0) for check in evaluated_checks]
+    unsupported = [
+        check
+        for check in evaluated_checks
+        if check.get("verdict") in {"unsupported", "contradicted", "not_enough_info"}
+    ]
+    return {
+        "citation_support": round(sum(support_scores) / len(support_scores), 3),
+        "unsupported_claim_rate": round(len(unsupported) / len(evaluated_checks), 3),
     }
 
 

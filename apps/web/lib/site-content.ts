@@ -14,6 +14,7 @@ export const docsNav = [
   { href: "/docs", label: "Overview" },
   { href: "/docs/quickstart", label: "Quickstart" },
   { href: "/docs/sdk", label: "Python SDK" },
+  { href: "/docs/reliability-score", label: "Reliability Score" },
   { href: "/docs/langchain", label: "LangChain" },
   { href: "/docs/llamaindex", label: "LlamaIndex" },
   { href: "/docs/api", label: "API Reference" }
@@ -76,6 +77,31 @@ async with ct.trace(query="What is the refund policy?") as trace:
     await trace.log_retrieval(chunks)
     await trace.log_answer(answer)
     result = await trace.evaluate()`
+      }
+    ]
+  },
+  "reliability-score": {
+    title: "Reliability Score",
+    description: "A practical diagnostic score for triaging RAG traces and eval summaries.",
+    sections: [
+      {
+        title: "Purpose",
+        body: "The score is an explainable diagnostic signal. It summarizes available metrics but does not replace citation support, unsupported claim rate, failure type, or raw trace evidence."
+      },
+      {
+        title: "Components",
+        body: "ContextTrace combines citation support, unsupported claim rate, failure rate, and optional retrieval quality, abstention quality, and token efficiency when those metrics are logged.",
+        code: `{
+  "score": 78,
+  "grade": "B",
+  "strengths": ["Citations are usually supported by evidence."],
+  "weaknesses": ["Unsupported claims are present."],
+  "recommendations": ["Review low-support citations."]
+}`
+      },
+      {
+        title: "Interpretation",
+        body: "Use the grade for triage, then inspect the underlying metrics and failure report before making product or release decisions."
       }
     ]
   },
@@ -167,4 +193,3 @@ export const useCases = [
   "Internal knowledge assistants",
   "LLM app evaluations"
 ];
-

@@ -28,6 +28,7 @@ export default async function TraceDetailPage({
     (chunk) => !chunk.selected || droppedChunkIds.has(chunk.chunk_id)
   );
   const usage = trace.data.answer?.usage ?? {};
+  const reliability = trace.data.evaluation?.reliability;
 
   return (
     <AppShell>
@@ -38,7 +39,12 @@ export default async function TraceDetailPage({
         error={trace.error}
       />
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-4">
+        <MetricCard
+          label="Reliability Score"
+          value={reliability ? `${reliability.score} (${reliability.grade})` : "Not scored"}
+          detail="Diagnostic score"
+        />
         <MetricCard label="Citation Support" value={formatPercent(avgSupport)} detail={`${checks.length} checks`} />
         <MetricCard label="Selected Context" value={String(selected.length)} detail={`${trace.data.chunks.length} retrieved chunks`} />
         <MetricCard
@@ -58,6 +64,41 @@ export default async function TraceDetailPage({
         <AgentTimeline events={trace.data.agent_events ?? []} />
         <PolicyCard policy={policy} />
         <FailureCard failure={trace.data.evaluation?.failure} />
+        {reliability ? (
+          <Card>
+            <CardHeader>
+              <CardTitle>Reliability Score</CardTitle>
+            </CardHeader>
+            <div className="grid gap-4 text-sm md:grid-cols-3">
+              <div>
+                <div className="text-xs font-medium uppercase text-muted-foreground">Strengths</div>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-muted-foreground">
+                  {reliability.strengths.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <div className="text-xs font-medium uppercase text-muted-foreground">Weaknesses</div>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-muted-foreground">
+                  {reliability.weaknesses.length ? (
+                    reliability.weaknesses.map((item) => <li key={item}>{item}</li>)
+                  ) : (
+                    <li>No major weaknesses recorded.</li>
+                  )}
+                </ul>
+              </div>
+              <div>
+                <div className="text-xs font-medium uppercase text-muted-foreground">Recommendations</div>
+                <ul className="mt-2 list-disc space-y-1 pl-4 text-muted-foreground">
+                  {reliability.recommendations.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </Card>
+        ) : null}
         <CitationCards checks={checks} />
         <ChunkList title="Selected Context" chunks={selected} />
         <ChunkList title="Dropped Chunks" chunks={dropped} />
