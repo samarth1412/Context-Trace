@@ -5,12 +5,47 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "contexttrace"
 version = "0.1.0"
-description = "Python SDK for ContextTrace RAG reliability tracing."
+description = "SDK-first reliability tracing, citation verification, and diagnostics for RAG and agent applications."
+readme = "README.md"
 requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [
+    { name = "ContextTrace contributors" },
+]
+keywords = [
+    "rag",
+    "llm",
+    "retrieval-augmented-generation",
+    "citations",
+    "evaluation",
+    "observability",
+    "agents",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+]
 dependencies = [
     "httpx>=0.27",
     "typing-extensions>=4.9",
 ]
+
+[project.urls]
+Homepage = "https://github.com/samarth1412/Context-Trace"
+Documentation = "https://github.com/samarth1412/Context-Trace/tree/main/docs"
+Repository = "https://github.com/samarth1412/Context-Trace"
+Issues = "https://github.com/samarth1412/Context-Trace/issues"
+Changelog = "https://github.com/samarth1412/Context-Trace/blob/main/CHANGELOG.md"
 
 [project.scripts]
 contexttrace = "contexttrace.cli:main"
@@ -22,16 +57,27 @@ langchain = [
 llamaindex = [
     "llama-index-core>=0.10",
 ]
+local = []
 fastapi = [
     "fastapi>=0.110",
 ]
 langgraph = [
     "langgraph>=0.2",
 ]
+otel = [
+    "opentelemetry-api>=1.24",
+]
 opentelemetry = [
     "opentelemetry-api>=1.24",
 ]
 integrations = [
+    "fastapi>=0.110",
+    "langchain-core>=0.2",
+    "langgraph>=0.2",
+    "llama-index-core>=0.10",
+    "opentelemetry-api>=1.24",
+]
+all = [
     "fastapi>=0.110",
     "langchain-core>=0.2",
     "langgraph>=0.2",
@@ -45,3 +91,6 @@ test = [
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["contexttrace*"]
+
+[tool.setuptools.package-data]
+contexttrace = ["py.typed"]

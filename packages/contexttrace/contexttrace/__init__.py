@@ -1,3 +1,4 @@
+from contexttrace._version import __version__
 from contexttrace.client import AsyncContextTrace, ContextTrace
 from contexttrace.config import ContextTraceConfig
 from contexttrace.errors import (
@@ -31,4 +32,5 @@ __all__ = [
     "ReliabilityScorer",
     "ReportGenerator",
     "export_contexttrace_trace",
+    "__version__",
 ]

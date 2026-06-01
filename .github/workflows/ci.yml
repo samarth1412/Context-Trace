@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  python:
+    name: Python tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install packages
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e "./apps/api[test]"
+          python -m pip install -e "./packages/contexttrace[test]"
+
+      - name: Run tests
+        run: python -m pytest -q
+
+      - name: Build SDK package
+        run: |
+          python -m pip install build
+          python -m build packages/contexttrace
+
+      - name: Smoke install SDK wheel
+        run: |
+          python -m venv /tmp/contexttrace-smoke
+          /tmp/contexttrace-smoke/bin/python -m pip install --upgrade pip
+          /tmp/contexttrace-smoke/bin/python -m pip install packages/contexttrace/dist/contexttrace-*.whl
+          /tmp/contexttrace-smoke/bin/contexttrace --version
+          /tmp/contexttrace-smoke/bin/python -c "import contexttrace; print(contexttrace.__version__)"
+
+  web:
+    name: Web typecheck and build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build

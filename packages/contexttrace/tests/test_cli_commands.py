@@ -1,5 +1,17 @@
 from contexttrace import ContextTrace
+from contexttrace import __version__
 from contexttrace.cli import main
+
+
+def test_cli_version(capsys):
+    try:
+        main(["--version"])
+    except SystemExit as exc:
+        assert exc.code == 0
+    else:
+        raise AssertionError("argparse version action should exit")
+
+    assert "contexttrace %s" % __version__ in capsys.readouterr().out
 
 
 def test_cli_init_config_trace_list_and_report(monkeypatch, tmp_path, capsys):

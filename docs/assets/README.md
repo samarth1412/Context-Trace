@@ -1,11 +1,14 @@
-# Screenshot Placeholders
+# Launch Assets
 
-This directory is reserved for dashboard screenshots once the UI stabilizes.
+This directory contains launch-ready placeholder assets for the README and docs. Replace the SVG placeholders and demo GIF placeholders with real captures when final production screenshots are available.
 
-Expected files:
+Screenshot placeholders:
 
 ```text
-dashboard-placeholder.png
-trace-detail-placeholder.png
-playground-placeholder.png
+dashboard-placeholder.svg
+trace-detail-placeholder.svg
+playground-placeholder.svg
+contexttrace-architecture.svg
 ```
+
+Demo GIF placeholders live in `demo-gifs/`.

@@ -8,6 +8,7 @@ from dataclasses import asdict
 from pathlib import Path
 from typing import Optional
 
+from contexttrace._version import __version__
 from contexttrace.client import ContextTrace
 from contexttrace.config import load_config, write_default_config
 from contexttrace.errors import ContextTraceError
@@ -39,6 +40,11 @@ def main(argv: Optional[list[str]] = None) -> int:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="contexttrace")
+    parser.add_argument(
+        "--version",
+        action="version",
+        version="contexttrace %s" % __version__,
+    )
     parser.add_argument(
         "--config",
         default=None,

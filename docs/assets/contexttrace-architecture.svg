@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+  <title id="title">ContextTrace architecture</title>
+  <desc id="desc">Architecture diagram showing SDK, API, database, judge providers, vector store, dashboard, playground, reports, and integrations.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f7f8fa; }
+      .panel { fill: #ffffff; stroke: #d8dee8; stroke-width: 1.5; }
+      .accent { fill: #2458d3; }
+      .soft { fill: #eef4ff; stroke: #b8c9f3; stroke-width: 1.2; }
+      .store { fill: #f3faf7; stroke: #a8d8bf; stroke-width: 1.2; }
+      .text { fill: #1f2933; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .muted { fill: #697386; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .line { stroke: #8ea3c4; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+      .line2 { stroke: #9db5a8; stroke-width: 2; fill: none; marker-end: url(#arrowGreen); }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#8ea3c4"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#9db5a8"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1120" height="560" rx="24"/>
+  <text class="text" x="56" y="58" font-size="30" font-weight="700">ContextTrace Architecture</text>
+  <text class="muted" x="56" y="86" font-size="15">SDK-first trace logging, evidence verification, diagnostics, reports, and dashboard workflows.</text>
+
+  <rect class="panel" x="56" y="130" width="230" height="290" rx="12"/>
+  <text class="text" x="82" y="168" font-size="19" font-weight="700">Developer App</text>
+  <rect class="soft" x="82" y="196" width="178" height="50" rx="8"/>
+  <text class="text" x="104" y="226" font-size="14" font-weight="600">Existing RAG Pipeline</text>
+  <rect class="soft" x="82" y="260" width="178" height="50" rx="8"/>
+  <text class="text" x="113" y="291" font-size="14" font-weight="600">AI Agent Runtime</text>
+  <rect class="soft" x="82" y="324" width="178" height="50" rx="8"/>
+  <text class="text" x="119" y="355" font-size="14" font-weight="600">SDK and CLI</text>
+
+  <rect class="panel" x="370" y="110" width="300" height="340" rx="12"/>
+  <text class="text" x="398" y="148" font-size="19" font-weight="700">FastAPI Backend</text>
+  <rect class="soft" x="400" y="176" width="240" height="44" rx="8"/>
+  <text class="text" x="446" y="203" font-size="14" font-weight="600">Trace Ingestion API</text>
+  <rect class="soft" x="400" y="234" width="240" height="44" rx="8"/>
+  <text class="text" x="435" y="261" font-size="14" font-weight="600">Citation Verification</text>
+  <rect class="soft" x="400" y="292" width="240" height="44" rx="8"/>
+  <text class="text" x="437" y="319" font-size="14" font-weight="600">Failure Classification</text>
+  <rect class="soft" x="400" y="350" width="240" height="44" rx="8"/>
+  <text class="text" x="428" y="377" font-size="14" font-weight="600">Reliability Score and Evals</text>
+
+  <rect class="panel" x="760" y="110" width="300" height="340" rx="12"/>
+  <text class="text" x="790" y="148" font-size="19" font-weight="700">Data and Providers</text>
+  <rect class="store" x="790" y="176" width="240" height="44" rx="8"/>
+  <text class="text" x="833" y="203" font-size="14" font-weight="600">PostgreSQL Traces</text>
+  <rect class="store" x="790" y="234" width="240" height="44" rx="8"/>
+  <text class="text" x="855" y="261" font-size="14" font-weight="600">Qdrant Vectors</text>
+  <rect class="store" x="790" y="292" width="240" height="44" rx="8"/>
+  <text class="text" x="829" y="319" font-size="14" font-weight="600">LLM Judge Provider</text>
+  <rect class="store" x="790" y="350" width="240" height="44" rx="8"/>
+  <text class="text" x="828" y="377" font-size="14" font-weight="600">Embedding Provider</text>
+
+  <rect class="panel" x="180" y="470" width="760" height="58" rx="12"/>
+  <text class="text" x="212" y="505" font-size="16" font-weight="700">Outputs:</text>
+  <text class="muted" x="286" y="505" font-size="15">dashboard, playground, HTML reports, GitHub Action summaries, benchmark charts, OpenTelemetry events</text>
+
+  <path class="line" d="M286 275 C322 275 335 275 370 275"/>
+  <path class="line2" d="M670 198 C706 198 724 198 760 198"/>
+  <path class="line2" d="M670 256 C706 256 724 256 760 256"/>
+  <path class="line2" d="M670 314 C706 314 724 314 760 314"/>
+  <path class="line2" d="M670 372 C706 372 724 372 760 372"/>
+  <path class="line" d="M520 450 C520 465 520 462 520 470"/>
+</svg>
