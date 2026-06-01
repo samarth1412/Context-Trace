@@ -1,63 +1,51 @@
-# ContextTrace Benchmarks
+# Benchmarks
 
-The benchmark pipeline produces deterministic RAG strategy comparisons for reports, launch posts, and regression discussions. It does not call a hosted LLM by default, so the same dataset and code produce stable scores.
-
-## Run a Benchmark
+ContextTrace includes a local benchmark command for comparing RAG strategies and producing reproducible report artifacts.
 
 ```bash
-python benchmarks/run_benchmark.py --dataset datasets/refund_policy
+contexttrace benchmark --dataset datasets/demo/refund_policy
 ```
 
-The dataset path may be either a real path or a path relative to `benchmarks/`. The command writes:
-
-- `benchmarks/results/<dataset>/benchmark_results.json`
-- `benchmarks/results/<dataset>/benchmark_summary.md`
-- `benchmarks/results/<dataset>/charts/*.svg`
-- `benchmarks/results/benchmark-results.json`
-- `benchmarks/results/assets/<dataset>/*.svg`
-
-## Datasets
-
-Each dataset lives under `benchmarks/datasets/<name>` and includes:
-
-- `documents/` with Markdown source documents
-- `questions.json`
-- `expected_answers.json`
-- `expected_sources.json`
-
-Current sample datasets:
-
-- `employee_handbook`
-- `refund_policy`
-- `ai_paper_qa`
-
-## Strategies
-
-The runner compares:
+Supported strategy labels:
 
 - `dense_top_k`
-- `bm25_top_k`
+- `bm25`
 - `hybrid`
 - `hybrid_rerank`
-- `corrective_rag`
-- `contexttrace_adaptive`
+- `corrective`
+- `adaptive`
 
-The implementation is intentionally local and deterministic. It uses token overlap, lightweight synonym expansion, and strategy-specific cost and latency modeling to create stable public-report fixtures. Live provider benchmarks can be layered on later, but public numbers should clearly disclose which runner produced them.
+If your full retrieval stack is not available in CI, use endpoint eval mode instead:
 
-## Metrics
+```bash
+contexttrace eval \
+  --dataset evals/questions.json \
+  --endpoint http://localhost:8000/query
+```
 
-The summary reports:
+Benchmark metrics:
 
+- `failure_rate`
 - `citation_support`
 - `unsupported_claim_rate`
-- `failure_rate`
 - `retrieval_miss_rate`
-- `average_tokens`
-- `average_latency_ms`
-- `average_cost_usd`
+- `latency_ms`
+- `token_count`
+- `cost_usd`
 
-`benchmark_summary.md` includes tradeoff notes so the report does not imply that one strategy wins every dimension.
+Outputs:
 
-## Data Export
+- `benchmark_results.json`
+- `benchmark_summary.md`
+- `benchmark_report.html`
 
-The local data export is written to `benchmarks/results/benchmark-results.json` and chart SVGs are copied to `benchmarks/results/assets/<dataset>`. Re-run the benchmark command after editing datasets or strategy scoring.
+Use thresholds to fail CI:
+
+```bash
+contexttrace benchmark \
+  --dataset datasets/demo/refund_policy \
+  --fail-on "failure_rate>0.25" \
+  --fail-on "citation_support<0.80"
+```
+
+The report is static HTML and can be used for GitHub artifacts, screenshots, and launch posts.

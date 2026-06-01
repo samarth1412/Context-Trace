@@ -1,0 +1,12 @@
+[
+  {"id": "emp_q1", "query": "How many PTO days do full-time employees receive?", "type": "answerable"},
+  {"id": "emp_q2", "query": "When is manager approval required for long PTO?", "type": "citation-sensitive", "expected_failure": "citation_mismatch"},
+  {"id": "emp_q3", "query": "How many remote days are allowed now?", "type": "answerable"},
+  {"id": "emp_q4", "query": "What is the home-office equipment reimbursement limit?", "type": "answerable"},
+  {"id": "emp_q5", "query": "Can employees paste customer data into a public AI tool?", "type": "answerable"},
+  {"id": "emp_q6", "query": "Does the handbook mention a four-day workweek benefit?", "type": "unanswerable", "expected_failure": "should_have_abstained"},
+  {"id": "emp_q7", "query": "Compare the old and current remote work allowance.", "type": "conflicting", "expected_failure": "conflicting_sources"},
+  {"id": "emp_q8", "query": "When must a lost device be reported?", "type": "answerable", "expected_failure": "retrieval_miss"},
+  {"id": "emp_q9", "query": "Can unused PTO roll over everywhere?", "type": "edge-case"},
+  {"id": "emp_q10", "query": "Can interns expense 1200 USD for chairs?", "type": "edge-case", "expected_failure": "unsupported_answer"}
+]

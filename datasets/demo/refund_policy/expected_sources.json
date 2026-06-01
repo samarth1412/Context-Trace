@@ -1,0 +1,12 @@
+{
+  "refund_q1": ["refund_policy.md"],
+  "refund_q2": ["refund_policy.md"],
+  "refund_q3": ["refund_policy.md"],
+  "refund_q4": ["refund_policy.md"],
+  "refund_q5": [],
+  "refund_q6": ["refund_policy.md", "legacy_refund_memo.md"],
+  "refund_q7": ["exchange_policy.md"],
+  "refund_q8": ["exchange_policy.md"],
+  "refund_q9": ["refund_policy.md"],
+  "refund_q10": ["subscription_terms.md"]
+}

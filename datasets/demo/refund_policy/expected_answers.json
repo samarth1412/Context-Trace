@@ -1,0 +1,12 @@
+{
+  "refund_q1": "Customers have 30 days from purchase to request a refund.",
+  "refund_q2": "Approved refunds are processed within 7 business days.",
+  "refund_q3": "No. Shipping upgrades are non-refundable.",
+  "refund_q4": "No. Consumed digital credits are non-refundable.",
+  "refund_q5": "The documents do not state a 90-day loyalty-member refund exception.",
+  "refund_q6": "The archived memo says 14 days before March 2024, while the current policy says 30 days.",
+  "refund_q7": "Yes. Unopened items may be exchanged within 45 days.",
+  "refund_q8": "Yes. Defective items may be replaced after support receives a photo and order number.",
+  "refund_q9": "Approved refunds are returned to the original payment method.",
+  "refund_q10": "Monthly subscriptions renew automatically until canceled."
+}

@@ -7,6 +7,8 @@ ContextTrace is local-first. You can trace a RAG pipeline, evaluate citation sup
 ```bash
 pip install contexttrace
 contexttrace init
+contexttrace demo --dataset refund_policy
+contexttrace report --last --open
 ```
 
 For repo development:
@@ -65,6 +67,17 @@ contexttrace eval \
 
 This calls your endpoint, maps the response fields, creates local traces, runs diagnostics, and writes an HTML eval report.
 
+## 6. Run A Regression Benchmark
+
+```bash
+contexttrace benchmark \
+  --dataset datasets/demo/refund_policy \
+  --fail-on "failure_rate>0.25" \
+  --fail-on "citation_support<0.80"
+```
+
+This writes `benchmark_results.json`, `benchmark_summary.md`, and `benchmark_report.html` under `.contexttrace/benchmarks/`.
+
 ## Optional Backend
 
 The FastAPI backend remains available for local API mode and compatibility work:
@@ -102,4 +115,4 @@ Citations should reference logged chunk IDs:
 
 ## Next Steps
 
-Read [SDK Usage](sdk.md), [Local Mode](local-mode.md), [Bring Your Own RAG Endpoint](byo-rag-endpoint.md), [Citation Verification](citation_verification.md), and [Failure Taxonomy](failure_taxonomy.md).
+Read [SDK Usage](sdk.md), [Local Mode](local-mode.md), [Demo Datasets](demo-datasets.md), [Bring Your Own RAG Endpoint](byo-rag-endpoint.md), [Regression Testing](regression-testing.md), [Citation Verification](citation-verification.md), and [Failure Taxonomy](failure-taxonomy.md).

@@ -1,6 +1,6 @@
 # Python SDK
 
-The `contexttrace` SDK is intentionally small. It records the inputs and evidence from your existing RAG pipeline, then asks the ContextTrace backend to verify citations and classify failures.
+The `contexttrace` SDK is intentionally small. It records the inputs and evidence from your existing RAG pipeline, stores traces locally by default, then verifies citations and classifies failures.
 
 ## Installation
 
@@ -21,20 +21,18 @@ pip install -e "packages/contexttrace[llamaindex]"
 from contexttrace import ContextTrace
 
 ct = ContextTrace(
-    api_key="ctx_test",
     project="support-rag",
-    base_url="http://localhost:8000",
 )
 ```
 
 Configuration precedence is:
 
 1. Direct constructor arguments
-2. Environment variables such as `CONTEXTTRACE_API_KEY`, `CONTEXTTRACE_PROJECT`, `CONTEXTTRACE_BASE_URL`, and `CONTEXTTRACE_MODE`
+2. Environment variables such as `CONTEXTTRACE_PROJECT`, `CONTEXTTRACE_STORAGE_PATH`, `CONTEXTTRACE_API_KEY`, and `CONTEXTTRACE_MODE`
 3. `contexttrace.yaml`
 4. SDK defaults
 
-Local mode stores traces as JSON files and can generate reports without the backend:
+Local mode stores traces in SQLite and can generate reports without a backend:
 
 ```python
 ct = ContextTrace(mode="local", project="support-rag")
@@ -58,7 +56,7 @@ with ct.trace(query="What is the refund policy?", metadata={"env": "local"}) as 
     evaluation = trace.evaluate()
 ```
 
-The context manager starts a trace through `POST /v1/traces/start`. Each logging method sends one event to the backend.
+The context manager starts a trace in the active transport. By default that transport is the local SQLite store.
 
 ## Methods
 
@@ -120,7 +118,7 @@ Lists recent traces when the active transport supports trace listing, including 
 
 ### `ContextTrace.upload_traces(...)`
 
-Uploads stored local traces to a hosted ContextTrace backend by replaying trace events.
+Uploads stored local traces to an explicitly configured API transport by replaying trace events.
 
 ## Async SDK
 
@@ -183,10 +181,9 @@ See [Bring Your Own RAG API](bring-your-own-rag-api.md) for response mapping det
 ```bash
 contexttrace eval \
   --dataset evals/questions.json \
-  --endpoint https://my-rag-api.com/query \
-  --min-citation-support 0.80 \
-  --max-unsupported-claim-rate 0.10 \
-  --max-failure-rate 0.05
+  --endpoint http://localhost:8000/query \
+  --fail-on "citation_support<0.80" \
+  --fail-on "failure_rate>0.25"
 ```
 
 The endpoint can also be stored as `eval_endpoint` in `contexttrace.yaml` or `CONTEXTTRACE_EVAL_ENDPOINT`.
@@ -195,8 +192,9 @@ The CLI calls your endpoint for each question, logs traces, evaluates them, writ
 Other local CLI commands:
 
 ```bash
-contexttrace trace list
-contexttrace report --last --output report.html
+contexttrace traces list
+contexttrace report --last --open
+contexttrace benchmark --dataset datasets/demo/refund_policy
 ```
 
 ## Error Handling

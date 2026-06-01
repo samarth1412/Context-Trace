@@ -1,7 +1,12 @@
 [
-  {
-    "id": "refund_policy",
-    "query": "What is the refund policy?",
-    "expected_sources": ["refund_policy.md"]
-  }
+  {"id": "refund_q1", "query": "How long do customers have to request a refund?", "type": "answerable"},
+  {"id": "refund_q2", "query": "How long do approved refunds take to process?", "type": "citation-sensitive", "expected_failure": "citation_mismatch"},
+  {"id": "refund_q3", "query": "Can shipping upgrades be refunded?", "type": "answerable"},
+  {"id": "refund_q4", "query": "Can customers refund consumed digital credits?", "type": "answerable"},
+  {"id": "refund_q5", "query": "Does the company provide refunds after 90 days for loyalty members?", "type": "unanswerable", "expected_failure": "should_have_abstained"},
+  {"id": "refund_q6", "query": "What was the old refund window and what is the current window?", "type": "conflicting", "expected_failure": "conflicting_sources"},
+  {"id": "refund_q7", "query": "Can an unopened item be exchanged after 40 days?", "type": "multi-hop"},
+  {"id": "refund_q8", "query": "Are defective items replaceable?", "type": "answerable"},
+  {"id": "refund_q9", "query": "Which payment method receives approved refunds?", "type": "answerable", "expected_failure": "retrieval_miss"},
+  {"id": "refund_q10", "query": "Are subscription renewals automatically charged?", "type": "edge-case", "expected_failure": "unsupported_answer"}
 ]

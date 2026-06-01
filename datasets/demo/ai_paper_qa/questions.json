@@ -1,0 +1,12 @@
+[
+  {"id": "paper_q1", "query": "What retrieval strategy did the paper evaluate?", "type": "answerable"},
+  {"id": "paper_q2", "query": "How much did hybrid reranking improve citation support?", "type": "citation-sensitive", "expected_failure": "citation_mismatch"},
+  {"id": "paper_q3", "query": "What chunk size reduced boundary errors?", "type": "answerable"},
+  {"id": "paper_q4", "query": "What problem did aggressive compression create?", "type": "answerable"},
+  {"id": "paper_q5", "query": "Did the paper evaluate German legal contracts?", "type": "unanswerable", "expected_failure": "should_have_abstained"},
+  {"id": "paper_q6", "query": "Compare the archived dense-only claim with the final retrieval result.", "type": "conflicting", "expected_failure": "conflicting_sources"},
+  {"id": "paper_q7", "query": "Why can stale memory hurt agents?", "type": "answerable"},
+  {"id": "paper_q8", "query": "What latency cost did reranking add?", "type": "answerable", "expected_failure": "retrieval_miss"},
+  {"id": "paper_q9", "query": "What overlap did the chunking paper use?", "type": "multi-hop"},
+  {"id": "paper_q10", "query": "Did hybrid retrieval reduce latency by 500 ms?", "type": "edge-case", "expected_failure": "unsupported_answer"}
+]

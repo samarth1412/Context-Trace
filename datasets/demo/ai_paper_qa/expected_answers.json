@@ -1,0 +1,12 @@
+{
+  "paper_q1": "It evaluated hybrid retrieval combining BM25 scores with dense embedding similarity before reranking.",
+  "paper_q2": "Hybrid reranking improved citation support from 0.71 to 0.84.",
+  "paper_q3": "The paper used 350-token chunks.",
+  "paper_q4": "Aggressive compression removed important qualifier sentences.",
+  "paper_q5": "The documents do not say the paper evaluated German legal contracts.",
+  "paper_q6": "The archived note claimed dense-only was better, but the final paper found hybrid reranking improved citation support.",
+  "paper_q7": "Stale memory can cause agents to reuse obsolete policy facts even when newer evidence is retrieved.",
+  "paper_q8": "Hybrid reranking added a 120 ms median latency increase.",
+  "paper_q9": "The chunking paper used 60-token overlap.",
+  "paper_q10": "No. The paper reports a 120 ms latency increase, not a 500 ms reduction."
+}

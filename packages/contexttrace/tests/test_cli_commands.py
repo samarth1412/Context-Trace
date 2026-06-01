@@ -70,5 +70,30 @@ def test_cli_demo_creates_trace_and_report(monkeypatch, tmp_path, capsys):
     assert main(["demo", "--dataset", "refund_policy"]) == 0
     output = capsys.readouterr().out
 
-    assert "Created demo trace:" in output
+    assert "Traces created: 10" in output
+    assert "Top failures:" in output
     assert list((tmp_path / ".contexttrace" / "reports").glob("*.html"))
+
+
+def test_cli_benchmark_fails_on_threshold(monkeypatch, tmp_path, capsys):
+    monkeypatch.chdir(tmp_path)
+
+    assert main(["init"]) == 0
+    capsys.readouterr()
+    exit_code = main(
+        [
+            "benchmark",
+            "--dataset",
+            "refund_policy",
+            "--strategy",
+            "adaptive",
+            "--output-dir",
+            str(tmp_path / "benchmarks"),
+            "--fail-on",
+            "failure_rate>0.01",
+        ]
+    )
+
+    assert exit_code == 1
+    assert (tmp_path / "benchmarks" / "benchmark_results.json").exists()
+    assert "Status: failed" in capsys.readouterr().out

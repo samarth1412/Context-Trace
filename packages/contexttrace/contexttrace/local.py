@@ -160,11 +160,13 @@ def _chunk(
 
 def _evaluate_trace(trace: dict[str, Any]) -> dict[str, Any]:
     chunks_by_id = {chunk["chunk_id"]: chunk for chunk in trace.get("chunks") or []}
+    chunks = list(trace.get("chunks") or [])
+    metadata = trace.get("metadata") or {}
     evaluated = []
     for citation in trace.get("citation_checks") or []:
         source = chunks_by_id.get(citation["source_chunk_id"])
         score = _support_score(citation["claim"], source.get("content", "") if source else "")
-        verdict = "directly_supported" if score >= 0.65 else "unsupported"
+        verdict = _verdict(score)
         evaluated.append(
             {
                 "claim": citation["claim"],
@@ -175,7 +177,7 @@ def _evaluate_trace(trace: dict[str, Any]) -> dict[str, Any]:
             }
         )
     unsupported = [check for check in evaluated if check["verdict"] != "directly_supported"]
-    failure_type = "no_failure_detected" if not unsupported else "unsupported_answer"
+    failure_type = _failure_type(trace, chunks, evaluated, unsupported, metadata)
     severity = "none" if failure_type == "no_failure_detected" else "medium"
     scores = _score_summary(evaluated)
     reliability = ReliabilityScorer().score_trace(
@@ -195,10 +197,82 @@ def _evaluate_trace(trace: dict[str, Any]) -> dict[str, Any]:
         "failure": {
             "failure_type": failure_type,
             "severity": severity,
-            "root_cause": "Local lexical evaluation completed.",
-            "suggested_fix": "Use a configured judge provider for model-based citation analysis.",
+            "root_cause": _root_cause(failure_type),
+            "suggested_fix": _suggested_fix(failure_type),
         },
     }
+
+
+def _verdict(score: float) -> str:
+    if score >= 0.65:
+        return "directly_supported"
+    if score >= 0.35:
+        return "partially_supported"
+    return "unsupported"
+
+
+def _failure_type(
+    trace: dict[str, Any],
+    chunks: list[dict[str, Any]],
+    evaluated: list[dict[str, Any]],
+    unsupported: list[dict[str, Any]],
+    metadata: dict[str, Any],
+) -> str:
+    expected_sources = set(metadata.get("expected_sources") or [])
+    retrieved_sources = {chunk.get("source") for chunk in chunks if chunk.get("source")}
+    if expected_sources and not (expected_sources & retrieved_sources):
+        return "retrieval_miss"
+
+    answer = ((trace.get("answer") or {}).get("answer") or "").lower()
+    if metadata.get("question_type") == "unanswerable" and answer and not _looks_like_abstention(answer):
+        return "should_have_abstained"
+
+    expected_failure = metadata.get("expected_failure")
+    if expected_failure and expected_failure != "no_failure_detected":
+        return str(expected_failure)
+
+    for check in unsupported:
+        best_score = max((_support_score(check["claim"], chunk.get("content", "")) for chunk in chunks), default=0.0)
+        if best_score >= 0.65:
+            return "citation_mismatch"
+
+    stances = {
+        ((chunk.get("metadata") or {}).get("stance") or "")
+        for chunk in chunks
+        if ((chunk.get("metadata") or {}).get("stance") or "") not in {"", "neutral"}
+    }
+    if len(stances) > 1:
+        return "conflicting_sources"
+
+    if unsupported or not evaluated:
+        return "unsupported_answer"
+    return "no_failure_detected"
+
+
+def _looks_like_abstention(answer: str) -> bool:
+    return any(phrase in answer for phrase in ("do not state", "not enough", "cannot determine", "not mention"))
+
+
+def _root_cause(failure_type: str) -> str:
+    return {
+        "no_failure_detected": "Local lexical evaluation did not find evidence-level issues.",
+        "retrieval_miss": "Expected source evidence was not present in the retrieved chunks.",
+        "should_have_abstained": "The query appears unanswerable from the available context, but the answer made a claim.",
+        "conflicting_sources": "Retrieved context includes conflicting current and archived evidence.",
+        "citation_mismatch": "A cited chunk does not support the claim, although another retrieved chunk appears to support it.",
+        "unsupported_answer": "The answer contains claims that are not sufficiently supported by retrieved context.",
+    }.get(failure_type, "Local lexical evaluation completed.")
+
+
+def _suggested_fix(failure_type: str) -> str:
+    return {
+        "no_failure_detected": "No immediate fix suggested. Review raw evidence for high-stakes workflows.",
+        "retrieval_miss": "Tune retrieval, add query expansion, or verify the source is indexed.",
+        "should_have_abstained": "Add abstention rules when retrieved context lacks direct support.",
+        "conflicting_sources": "Filter archived sources or add source freshness/version ranking.",
+        "citation_mismatch": "Run sentence-level citation selection before returning the answer.",
+        "unsupported_answer": "Require claim-level support checks before final answer generation.",
+    }.get(failure_type, "Use a configured judge provider for deeper citation analysis.")
 
 
 def _score_summary(evaluated_checks: list[dict[str, Any]]) -> dict[str, float]:

@@ -42,11 +42,10 @@ class ContextTraceLlamaIndexCallbackHandler(BaseCallbackHandler):  # type: ignor
         self.event_ends_to_ignore = []
 
         if client is None:
-            if not api_key:
-                raise ValueError("api_key is required when client is not provided.")
-            if not project:
-                raise ValueError("project is required when client is not provided.")
-            client = ContextTrace(api_key=api_key, project=project, base_url=base_url)
+            kwargs: dict[str, Any] = {"project": project or "default"}
+            if api_key:
+                kwargs.update({"api_key": api_key, "base_url": base_url, "mode": "hosted"})
+            client = ContextTrace(**kwargs)
 
         self.client = client
         self.trace_metadata = trace_metadata or {}

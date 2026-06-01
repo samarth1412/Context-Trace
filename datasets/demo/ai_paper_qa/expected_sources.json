@@ -1,0 +1,12 @@
+{
+  "paper_q1": ["retrieval_paper.md"],
+  "paper_q2": ["retrieval_paper.md"],
+  "paper_q3": ["chunking_paper.md"],
+  "paper_q4": ["chunking_paper.md"],
+  "paper_q5": [],
+  "paper_q6": ["retrieval_paper.md", "old_retrieval_note.md"],
+  "paper_q7": ["agent_memory_paper.md"],
+  "paper_q8": ["retrieval_paper.md"],
+  "paper_q9": ["chunking_paper.md"],
+  "paper_q10": ["retrieval_paper.md"]
+}

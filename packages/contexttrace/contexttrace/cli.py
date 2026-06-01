@@ -14,10 +14,14 @@ import click
 from contexttrace._version import __version__
 from contexttrace.client import ContextTrace
 from contexttrace.config import ContextTraceConfig, load_config, write_default_config
+from contexttrace.demo import run_demo_dataset
+from contexttrace.demo_data import list_demo_datasets
 from contexttrace.endpoint_eval import run_endpoint_eval
 from contexttrace.errors import ContextTraceError
+from contexttrace.regression import BENCHMARK_STRATEGIES, run_local_benchmark
 from contexttrace.report import ReportGenerator
 from contexttrace.storage import SQLiteTraceStore
+from contexttrace.thresholds import parse_thresholds, threshold_failures
 from contexttrace.viewer import serve_viewer
 
 
@@ -209,6 +213,8 @@ def report(
 @click.option("--max-unsupported-claim-rate", default=1.0, show_default=True, type=float, help="Fail when unsupported claim rate is above this value.")
 @click.option("--max-failure-rate", default=1.0, show_default=True, type=float, help="Fail when failure rate is above this value.")
 @click.option("--summary-path", default=None, help="Optional markdown summary output path.")
+@click.option("--fail-on", multiple=True, help="Threshold rule such as failure_rate>0.25. May be repeated.")
+@click.option("--results-path", default=None, help="Optional JSON results output path.")
 @click.pass_context
 def eval_command(
     ctx: click.Context,
@@ -229,6 +235,8 @@ def eval_command(
     max_unsupported_claim_rate: float,
     max_failure_rate: float,
     summary_path: Optional[str],
+    fail_on: tuple[str, ...],
+    results_path: Optional[str],
 ) -> None:
     config = _load(ctx)
     resolved_endpoint = endpoint or config.eval_endpoint
@@ -260,59 +268,93 @@ def eval_command(
     if summary_path:
         Path(summary_path).write_text(_eval_markdown(result), encoding="utf-8")
         click.echo("Summary: %s" % summary_path)
+    if results_path:
+        Path(results_path).parent.mkdir(parents=True, exist_ok=True)
+        Path(results_path).write_text(json.dumps(result.to_dict(), indent=2), encoding="utf-8")
+        click.echo("Results: %s" % results_path)
+    metrics = {
+        "failure_rate": result.failure_rate,
+        "citation_support": result.avg_citation_support,
+        "avg_citation_support": result.avg_citation_support,
+        "unsupported_claim_rate": result.unsupported_claim_rate,
+        "reliability_score": result.reliability_score,
+    }
+    parsed_fail_on = parse_thresholds(fail_on)
+    fail_on_messages = threshold_failures(metrics, parsed_fail_on)
+    for message in fail_on_messages:
+        click.echo("Threshold failed: %s" % message, err=True)
     failed = (
         result.avg_citation_support < min_citation_support
         or result.unsupported_claim_rate > max_unsupported_claim_rate
         or result.failure_rate > max_failure_rate
+        or bool(fail_on_messages)
     )
     if failed:
-        ctx.exit(1)
+        return 1
+    return 0
 
 
 @cli.command()
-@click.option("--dataset", default="refund_policy", show_default=True, help="Demo dataset name.")
+@click.option("--dataset", default="refund_policy", show_default=True, help="Demo dataset name or path.")
+@click.option("--strategy", default="adaptive", show_default=True, help="Demo retrieval strategy.")
 @click.pass_context
-def demo(ctx: click.Context, dataset: str) -> None:
-    if dataset != "refund_policy":
-        raise click.ClickException("Only the refund_policy demo dataset is bundled for now.")
+def demo(ctx: click.Context, dataset: str, strategy: str) -> None:
     client = _client(ctx)
-    with client.trace(query="What is the refund policy?", metadata={"dataset": dataset}) as trace:
-        trace.log_retrieval(
-            [
-                {
-                    "chunk_id": "refund_policy_1",
-                    "content": "Customers may request a refund within 30 days of purchase when the product has not been consumed.",
-                    "source": "refund_policy.md",
-                    "relevance_score": 0.92,
-                },
-                {
-                    "chunk_id": "shipping_1",
-                    "content": "Shipping upgrades are non-refundable once the order has left the warehouse.",
-                    "source": "shipping_policy.md",
-                    "relevance_score": 0.41,
-                },
-            ]
-        )
-        trace.log_context(chunk_ids=["refund_policy_1"])
-        trace.log_answer(
-            "Refunds are available within 30 days of purchase when the product has not been consumed.",
-            usage={"total_tokens": 96},
-            metadata={"latency_ms": 42},
-        )
-        trace.log_citations(
-            [
-                {
-                    "claim": "Refunds are available within 30 days of purchase.",
-                    "source_chunk_id": "refund_policy_1",
-                }
-            ]
-        )
-        trace.evaluate()
     config = _load(ctx)
-    report_path = Path(config.local_store_dir) / "reports" / ("%s.html" % trace.trace_id)
-    written = client.export_report(trace_id=trace.trace_id, path=str(report_path))
-    click.echo("Created demo trace: %s" % trace.trace_id)
-    click.echo("Report: %s" % written)
+    report_path = Path(config.local_store_dir) / "reports" / ("%s_demo.html" % Path(dataset).name)
+    result = run_demo_dataset(
+        dataset=dataset,
+        contexttrace=client,
+        strategy=strategy,
+        report_path=str(report_path),
+    )
+    click.echo("Dataset: %s" % result.dataset)
+    click.echo("Traces created: %s" % len(result.trace_ids))
+    click.echo("Reliability score: %s" % result.summary.get("reliability_score"))
+    click.echo("Failure rate: %s" % result.summary.get("failure_rate"))
+    click.echo("Citation support: %s" % result.summary.get("citation_support"))
+    click.echo("Top failures: %s" % (", ".join(result.summary.get("top_failures") or []) or "None"))
+    click.echo("Report: %s" % result.report_path)
+
+
+@cli.command()
+@click.option("--dataset", required=True, help="Demo dataset name or path.")
+@click.option("--strategy", "strategies", multiple=True, help="Strategy to run. May be repeated.")
+@click.option("--output-dir", default=".contexttrace/benchmarks", show_default=True, help="Benchmark output directory.")
+@click.option("--fail-on", multiple=True, help="Threshold rule such as failure_rate>0.25. May be repeated.")
+@click.option("--report-path", default=None, help="Optional benchmark HTML report path.")
+@click.pass_context
+def benchmark(
+    ctx: click.Context,
+    dataset: str,
+    strategies: tuple[str, ...],
+    output_dir: str,
+    fail_on: tuple[str, ...],
+    report_path: Optional[str],
+) -> None:
+    result = run_local_benchmark(
+        dataset=dataset,
+        contexttrace=_client(ctx),
+        output_dir=output_dir,
+        strategies=strategies or BENCHMARK_STRATEGIES,
+        fail_on=fail_on,
+        report_path=report_path,
+    )
+    summary = result["summary"]
+    click.echo("Status: %s" % result["status"])
+    click.echo("Questions tested: %s" % summary.get("questions_tested"))
+    click.echo("Reliability score: %s" % summary.get("reliability_score"))
+    click.echo("Failure rate: %s" % summary.get("failure_rate"))
+    click.echo("Citation support: %s" % summary.get("citation_support"))
+    click.echo("Unsupported claim rate: %s" % summary.get("unsupported_claim_rate"))
+    click.echo("Results: %s" % result["results_path"])
+    click.echo("Summary: %s" % result["summary_path"])
+    click.echo("Report: %s" % result["report_path"])
+    for failure in result["threshold_failures"]:
+        click.echo("Threshold failed: %s" % failure, err=True)
+    if result["threshold_failures"]:
+        return 1
+    return 0
 
 
 @cli.command()
@@ -327,7 +369,7 @@ def doctor(ctx: click.Context) -> None:
         checks.append(("SQLite writable", True))
     except Exception:
         checks.append(("SQLite writable", False))
-    checks.append(("demo datasets available", True))
+    checks.append(("demo datasets available", bool(list_demo_datasets())))
     if config.judge_provider in {"openai", "openai-compatible"}:
         checks.append(("LLM API key present", bool(config.api_key)))
     else:
@@ -352,14 +394,17 @@ def viewer(ctx: click.Context, host: str, port: int) -> None:
 
 def main(argv: Optional[list[str]] = None) -> int:
     try:
-        cli.main(args=argv, prog_name="contexttrace", standalone_mode=False)
-        return 0
+        result = cli.main(args=argv, prog_name="contexttrace", standalone_mode=False)
+        return int(result or 0)
     except click.exceptions.Exit as exc:
         return int(exc.exit_code or 0)
     except click.ClickException as exc:
         exc.show(file=sys.stderr)
         return int(exc.exit_code)
     except ContextTraceError as exc:
+        click.echo("ContextTrace failed: %s" % exc, err=True)
+        return 2
+    except ValueError as exc:
         click.echo("ContextTrace failed: %s" % exc, err=True)
         return 2
 

@@ -1,0 +1,47 @@
+name: ContextTrace RAG Eval
+
+on:
+  workflow_dispatch:
+    inputs:
+      dataset_path:
+        description: Dataset path
+        required: false
+        default: datasets/demo/refund_policy
+      endpoint_url:
+        description: Optional RAG endpoint URL
+        required: false
+        default: ""
+  pull_request:
+    paths:
+      - "datasets/**"
+      - "examples/**"
+      - "packages/contexttrace/**"
+      - ".github/actions/contexttrace-rag-eval/**"
+
+jobs:
+  contexttrace:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run ContextTrace local eval
+        id: contexttrace
+        uses: ./.github/actions/contexttrace-rag-eval
+        with:
+          dataset_path: ${{ github.event.inputs.dataset_path || 'datasets/demo/refund_policy' }}
+          endpoint_url: ${{ github.event.inputs.endpoint_url || '' }}
+          fail_on: |
+            failure_rate>0.95
+            citation_support<0.10
+          report_path: .contexttrace/reports/contexttrace-rag-eval.html
+
+      - name: Print metrics
+        run: |
+          echo "Reliability score: ${{ steps.contexttrace.outputs.reliability_score }}"
+          echo "Failure rate: ${{ steps.contexttrace.outputs.failure_rate }}"
+          echo "Citation support: ${{ steps.contexttrace.outputs.citation_support }}"
+          echo "Unsupported claim rate: ${{ steps.contexttrace.outputs.unsupported_claim_rate }}"
