@@ -771,7 +771,7 @@
     "bm25_top_k had the lowest latency, which can matter for interactive support workflows.",
     "Retrieval miss rate is reported separately because citation support alone can hide missed-evidence failures."
   ],
-  "website_charts": {
+  "published_charts": {
     "citation_support": "/benchmarks/refund_policy/citation_support.svg",
     "failure_rate": "/benchmarks/refund_policy/failure_rate.svg",
     "average_cost_usd": "/benchmarks/refund_policy/average_cost_usd.svg"

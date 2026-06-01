@@ -5,7 +5,7 @@ This directory contains launch-ready placeholder assets for the README and docs.
 Screenshot placeholders:
 
 ```text
-dashboard-placeholder.svg
+dashboard-placeholder.svg (local viewer overview placeholder)
 trace-detail-placeholder.svg
 playground-placeholder.svg
 contexttrace-architecture.svg

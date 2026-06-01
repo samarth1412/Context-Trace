@@ -1,6 +1,6 @@
 # ContextTrace Benchmarks
 
-The benchmark pipeline produces deterministic RAG strategy comparisons for the website, launch posts, and regression discussions. It does not call a hosted LLM by default, so the same dataset and code produce stable scores.
+The benchmark pipeline produces deterministic RAG strategy comparisons for reports, launch posts, and regression discussions. It does not call a hosted LLM by default, so the same dataset and code produce stable scores.
 
 ## Run a Benchmark
 
@@ -13,8 +13,8 @@ The dataset path may be either a real path or a path relative to `benchmarks/`. 
 - `benchmarks/results/<dataset>/benchmark_results.json`
 - `benchmarks/results/<dataset>/benchmark_summary.md`
 - `benchmarks/results/<dataset>/charts/*.svg`
-- `apps/web/lib/benchmark-results.json`
-- `apps/web/public/benchmarks/<dataset>/*.svg`
+- `benchmarks/results/benchmark-results.json`
+- `benchmarks/results/assets/<dataset>/*.svg`
 
 ## Datasets
 
@@ -58,7 +58,6 @@ The summary reports:
 
 `benchmark_summary.md` includes tradeoff notes so the report does not imply that one strategy wins every dimension.
 
-## Website Export
+## Data Export
 
-The dashboard benchmark page reads `apps/web/lib/benchmark-results.json` and chart SVGs copied to `apps/web/public/benchmarks/<dataset>`. Re-run the benchmark command after editing datasets or strategy scoring.
-
+The local data export is written to `benchmarks/results/benchmark-results.json` and chart SVGs are copied to `benchmarks/results/assets/<dataset>`. Re-run the benchmark command after editing datasets or strategy scoring.

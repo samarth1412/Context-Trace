@@ -112,6 +112,17 @@ test = ct.test_rag_endpoint(endpoint["id"], query="What is the refund policy?")
 run = ct.evaluate_rag_endpoint(endpoint["id"], eval_set_id="eval_set_id")
 ```
 
-## Dashboard
+## Local-First CLI
 
-Open `/rag-api` in the dashboard to configure an endpoint and send a test query. The page shows the mapped answer, chunks, citations, and the generated trace link.
+For the local-first workflow, prefer the CLI:
+
+```bash
+contexttrace eval \
+  --dataset evals/questions.json \
+  --endpoint http://localhost:8000/query \
+  --answer-path $.answer \
+  --contexts-path $.contexts \
+  --citations-path $.citations
+```
+
+The CLI stores traces in `.contexttrace/contexttrace.db` and writes an HTML report under `.contexttrace/reports/`.

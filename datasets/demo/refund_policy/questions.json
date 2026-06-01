@@ -1,0 +1,7 @@
+[
+  {
+    "id": "refund_policy",
+    "query": "What is the refund policy?",
+    "expected_sources": ["refund_policy.md"]
+  }
+]

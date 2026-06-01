@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Report a reproducible problem in the SDK, API, dashboard, or integrations
+about: Report a reproducible problem in the SDK, CLI, local viewer, API, or integrations
 title: "[Bug]: "
 labels: bug
 assignees: ""
@@ -28,9 +28,8 @@ What happened instead?
 
 - ContextTrace version or commit:
 - Python version:
-- Node version, if dashboard related:
 - OS:
-- Backend mode: local / hosted / docker
+- Mode: local / optional backend / docker
 
 ## Trace Or Logs
 

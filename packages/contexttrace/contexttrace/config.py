@@ -8,10 +8,11 @@ from typing import Any, Optional
 from contexttrace.errors import ContextTraceConfigError
 
 
-DEFAULT_BASE_URL = "http://localhost:8000"
 DEFAULT_PROJECT = "default"
-DEFAULT_MODE = "hosted"
+DEFAULT_BASE_URL = "http://localhost:8000"
+DEFAULT_MODE = "local"
 DEFAULT_LOCAL_STORE_DIR = ".contexttrace"
+DEFAULT_STORAGE_PATH = ".contexttrace/contexttrace.db"
 CONFIG_FILE = "contexttrace.yaml"
 
 
@@ -21,11 +22,16 @@ class ContextTraceConfig:
     project: str = DEFAULT_PROJECT
     base_url: str = DEFAULT_BASE_URL
     mode: str = DEFAULT_MODE
+    local_only: bool = True
     timeout: float = 30.0
     retries: int = 2
     debug: bool = False
     local_store_dir: str = DEFAULT_LOCAL_STORE_DIR
+    storage_path: str = DEFAULT_STORAGE_PATH
+    log_chunk_text: bool = True
+    log_answer_text: bool = True
     eval_endpoint: Optional[str] = None
+    judge_provider: str = "local"
 
 
 def load_config(
@@ -33,15 +39,55 @@ def load_config(
     api_key: Optional[str] = None,
     project: Optional[str] = None,
     base_url: Optional[str] = None,
+    api_url: Optional[str] = None,
     mode: Optional[str] = None,
+    local_only: Optional[bool] = None,
     timeout: Optional[float] = None,
     retries: Optional[int] = None,
     debug: Optional[bool] = None,
     local_store_dir: Optional[str] = None,
+    storage_path: Optional[str] = None,
+    log_chunk_text: Optional[bool] = None,
+    log_answer_text: Optional[bool] = None,
     eval_endpoint: Optional[str] = None,
+    judge_provider: Optional[str] = None,
     config_path: Optional[str] = None,
 ) -> ContextTraceConfig:
     file_values = _read_config_file(config_path)
+    env_base_url = os.getenv("CONTEXTTRACE_API_URL") or os.getenv("CONTEXTTRACE_BASE_URL")
+    explicit_api_url = api_url or base_url
+    resolved_mode = _first(
+        mode,
+        os.getenv("CONTEXTTRACE_MODE"),
+        file_values.get("mode"),
+        "hosted" if explicit_api_url and local_only is not True else None,
+        "hosted" if env_base_url and local_only is not True else None,
+        DEFAULT_MODE,
+    )
+    resolved_local_store_dir = str(
+        _first(
+            local_store_dir,
+            os.getenv("CONTEXTTRACE_LOCAL_STORE_DIR"),
+            file_values.get("local_store_dir"),
+            DEFAULT_LOCAL_STORE_DIR,
+        )
+    )
+    resolved_storage_path = str(
+        _first(
+            storage_path,
+            os.getenv("CONTEXTTRACE_STORAGE_PATH"),
+            file_values.get("storage_path"),
+            str(Path(resolved_local_store_dir) / "contexttrace.db"),
+        )
+    )
+    resolved_local_only = _as_bool(
+        _first(
+            local_only,
+            os.getenv("CONTEXTTRACE_LOCAL_ONLY"),
+            file_values.get("local_only"),
+            False if resolved_mode == "hosted" else True,
+        )
+    )
 
     resolved = ContextTraceConfig(
         api_key=_first(
@@ -59,21 +105,16 @@ def load_config(
         ),
         base_url=str(
             _first(
+                api_url,
                 base_url,
-                os.getenv("CONTEXTTRACE_BASE_URL"),
-                os.getenv("CONTEXTTRACE_API_URL"),
+                env_base_url,
                 file_values.get("base_url"),
+                file_values.get("api_url"),
                 DEFAULT_BASE_URL,
             )
         ),
-        mode=str(
-            _first(
-                mode,
-                os.getenv("CONTEXTTRACE_MODE"),
-                file_values.get("mode"),
-                DEFAULT_MODE,
-            )
-        ),
+        mode=str(resolved_mode),
+        local_only=resolved_local_only,
         timeout=float(
             _first(
                 timeout,
@@ -98,18 +139,36 @@ def load_config(
                 False,
             )
         ),
-        local_store_dir=str(
+        local_store_dir=resolved_local_store_dir,
+        storage_path=resolved_storage_path,
+        log_chunk_text=_as_bool(
             _first(
-                local_store_dir,
-                os.getenv("CONTEXTTRACE_LOCAL_STORE_DIR"),
-                file_values.get("local_store_dir"),
-                DEFAULT_LOCAL_STORE_DIR,
+                log_chunk_text,
+                os.getenv("CONTEXTTRACE_LOG_CHUNK_TEXT"),
+                file_values.get("log_chunk_text"),
+                True,
+            )
+        ),
+        log_answer_text=_as_bool(
+            _first(
+                log_answer_text,
+                os.getenv("CONTEXTTRACE_LOG_ANSWER_TEXT"),
+                file_values.get("log_answer_text"),
+                True,
             )
         ),
         eval_endpoint=_first(
             eval_endpoint,
             os.getenv("CONTEXTTRACE_EVAL_ENDPOINT"),
             file_values.get("eval_endpoint"),
+        ),
+        judge_provider=str(
+            _first(
+                judge_provider,
+                os.getenv("CONTEXTTRACE_JUDGE_PROVIDER"),
+                file_values.get("judge_provider"),
+                "local",
+            )
         ),
     )
 
@@ -127,9 +186,14 @@ def write_default_config(path: str = CONFIG_FILE, *, overwrite: bool = False) ->
             [
                 "mode: local",
                 "project: default",
-                "base_url: http://localhost:8000",
-                "api_key: ctx_test",
+                "local_only: true",
                 "local_store_dir: .contexttrace",
+                "storage_path: .contexttrace/contexttrace.db",
+                "log_chunk_text: true",
+                "log_answer_text: true",
+                "judge_provider: local",
+                "api_key: ''",
+                "base_url: ''",
                 "timeout: 30",
                 "retries: 2",
                 "debug: false",

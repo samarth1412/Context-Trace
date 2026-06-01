@@ -181,14 +181,19 @@ def test_cli_eval_command_invokes_runner(monkeypatch, tmp_path):
     calls = []
 
     class Summary:
-        failed = False
-        markdown = "# Summary\n"
+        questions_tested = 1
+        reliability_score = 90
+        failure_rate = 0.0
+        avg_citation_support = 0.9
+        unsupported_claim_rate = 0.0
+        top_failures = []
+        report_path = "report.html"
 
-    def fake_run_evaluation(**kwargs):
+    def fake_run_endpoint_eval(**kwargs):
         calls.append(kwargs)
         return Summary()
 
-    monkeypatch.setattr("contexttrace.cli.run_evaluation", fake_run_evaluation)
+    monkeypatch.setattr("contexttrace.cli.run_endpoint_eval", fake_run_endpoint_eval)
 
     exit_code = main(
         [
@@ -197,8 +202,6 @@ def test_cli_eval_command_invokes_runner(monkeypatch, tmp_path):
             str(dataset),
             "--endpoint",
             "https://rag.example/query",
-            "--api-key",
-            "ctx_test",
             "--endpoint-header",
             "X-Test: 1",
         ]
@@ -206,7 +209,7 @@ def test_cli_eval_command_invokes_runner(monkeypatch, tmp_path):
 
     assert exit_code == 0
     assert calls[0]["dataset_path"] == str(dataset)
-    assert calls[0]["endpoint_headers"] == {"X-Test": "1"}
+    assert calls[0]["headers"] == {"X-Test": "1"}
 
 
 def test_cli_eval_command_uses_config_endpoint(monkeypatch, tmp_path):
@@ -227,18 +230,23 @@ def test_cli_eval_command_uses_config_endpoint(monkeypatch, tmp_path):
     calls = []
 
     class Summary:
-        failed = False
-        markdown = "# Summary\n"
+        questions_tested = 1
+        reliability_score = 90
+        failure_rate = 0.0
+        avg_citation_support = 0.9
+        unsupported_claim_rate = 0.0
+        top_failures = []
+        report_path = "report.html"
 
-    def fake_run_evaluation(**kwargs):
+    def fake_run_endpoint_eval(**kwargs):
         calls.append(kwargs)
         return Summary()
 
-    monkeypatch.setattr("contexttrace.cli.run_evaluation", fake_run_evaluation)
+    monkeypatch.setattr("contexttrace.cli.run_endpoint_eval", fake_run_endpoint_eval)
     monkeypatch.chdir(tmp_path)
 
     exit_code = main(["--config", str(config), "eval", "--dataset", str(dataset)])
 
     assert exit_code == 0
     assert calls[0]["endpoint"] == "https://rag.example/query"
-    assert calls[0]["project"] == "cli-eval"
+    assert calls[0]["contexttrace"].project == "cli-eval"

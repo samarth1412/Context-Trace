@@ -67,6 +67,6 @@ The score is included in:
 - local HTML reports
 - eval-set summaries
 - CLI batch eval markdown reports
-- dashboard summary cards and trace detail views
+- local viewer trace pages
 
 The raw metrics remain visible next to the score so teams can see why the diagnostic changed.

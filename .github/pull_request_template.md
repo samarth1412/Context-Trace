@@ -13,8 +13,7 @@ Describe what changed and why.
 ## Testing
 
 - [ ] `python -m pytest -q`
-- [ ] `npm run typecheck`
-- [ ] `npm run build`
+- [ ] `contexttrace doctor`
 - [ ] Not run, reason:
 
 ## Checklist

@@ -1,88 +1,31 @@
 from __future__ import annotations
 
-import json
 import logging
-import time
-import uuid
 from pathlib import Path
 from typing import Any, Optional
 
 from contexttrace.errors import ContextTraceLocalError
 from contexttrace.reliability import ReliabilityScorer
+from contexttrace.storage import SQLiteTraceStore
 
 logger = logging.getLogger("contexttrace")
 
 
-class LocalStore:
-    def __init__(self, directory: str = ".contexttrace") -> None:
-        self.directory = Path(directory)
-        self.traces_dir = self.directory / "traces"
-        self.traces_dir.mkdir(parents=True, exist_ok=True)
-
-    def create_trace(self, *, project: str, query: str, metadata: dict[str, Any]) -> dict[str, Any]:
-        trace_id = _new_id("local_trace")
-        now = _now()
-        trace = {
-            "id": trace_id,
-            "project_id": _new_id("local_project"),
-            "project": project,
-            "query": query,
-            "metadata": metadata,
-            "status": "started",
-            "chunks": [],
-            "answer": None,
-            "citation_checks": [],
-            "agent_events": [],
-            "evaluation": None,
-            "created_at": now,
-            "updated_at": now,
-        }
-        self.save_trace(trace)
-        self._write_last_trace_id(trace_id)
-        return trace
-
-    def save_trace(self, trace: dict[str, Any]) -> None:
-        trace["updated_at"] = _now()
-        self._path(trace["id"]).write_text(json.dumps(trace, indent=2), encoding="utf-8")
-        self._write_last_trace_id(trace["id"])
-
-    def get_trace(self, trace_id: str) -> dict[str, Any]:
-        path = self._path(trace_id)
-        if not path.exists():
-            raise ContextTraceLocalError("Local trace not found: %s" % trace_id)
-        return json.loads(path.read_text(encoding="utf-8"))
-
-    def list_traces(self, *, limit: int = 20) -> list[dict[str, Any]]:
-        traces = []
-        for path in sorted(self.traces_dir.glob("*.json"), key=lambda item: item.stat().st_mtime, reverse=True):
-            traces.append(json.loads(path.read_text(encoding="utf-8")))
-            if len(traces) >= limit:
-                break
-        return traces
-
-    def last_trace(self) -> Optional[dict[str, Any]]:
-        last_path = self.directory / "last_trace"
-        if last_path.exists():
-            trace_id = last_path.read_text(encoding="utf-8").strip()
-            if trace_id:
-                try:
-                    return self.get_trace(trace_id)
-                except ContextTraceLocalError:
-                    pass
-        traces = self.list_traces(limit=1)
-        return traces[0] if traces else None
-
-    def _path(self, trace_id: str) -> Path:
-        return self.traces_dir / ("%s.json" % trace_id)
-
-    def _write_last_trace_id(self, trace_id: str) -> None:
-        (self.directory / "last_trace").write_text(trace_id, encoding="utf-8")
-
-
 class LocalTransport:
-    def __init__(self, *, store_dir: str = ".contexttrace", debug: bool = False) -> None:
-        self.store = LocalStore(store_dir)
+    def __init__(
+        self,
+        *,
+        store_dir: str = ".contexttrace",
+        storage_path: Optional[str] = None,
+        debug: bool = False,
+        log_chunk_text: bool = True,
+        log_answer_text: bool = True,
+    ) -> None:
+        self.storage_path = storage_path or str(Path(store_dir) / "contexttrace.db")
+        self.store = SQLiteTraceStore(self.storage_path)
         self.debug = debug
+        self.log_chunk_text = log_chunk_text
+        self.log_answer_text = log_answer_text
 
     def post(self, path: str, payload: Optional[dict[str, Any]] = None) -> dict[str, Any]:
         payload = payload or {}
@@ -96,85 +39,57 @@ class LocalTransport:
             return {"trace_id": trace["id"], "project_id": trace["project_id"]}
 
         trace_id, action = _parse_trace_action(path)
-        trace = self.store.get_trace(trace_id)
         if action == "retrieval":
-            chunks = [_chunk(chunk, index=index, selected=False) for index, chunk in enumerate(payload.get("chunks") or [])]
-            trace["chunks"] = _upsert_chunks(trace["chunks"], chunks)
-            trace["status"] = "retrieval_logged"
-            self.store.save_trace(trace)
-            return {"trace_id": trace_id, "accepted": len(chunks)}
-        if action == "context":
-            accepted = 0
-            chunk_ids = set(payload.get("chunk_ids") or [])
-            for chunk in trace["chunks"]:
-                if chunk["chunk_id"] in chunk_ids:
-                    chunk["selected"] = True
-                    accepted += 1
-            chunks = [_chunk(chunk, index=len(trace["chunks"]) + index, selected=True) for index, chunk in enumerate(payload.get("chunks") or [])]
-            trace["chunks"] = _upsert_chunks(trace["chunks"], chunks)
-            accepted += len(chunks)
-            trace["status"] = "context_logged"
-            self.store.save_trace(trace)
+            chunks = [
+                _chunk(
+                    chunk,
+                    index=index,
+                    selected=False,
+                    log_chunk_text=self.log_chunk_text,
+                )
+                for index, chunk in enumerate(payload.get("chunks") or [])
+            ]
+            accepted = self.store.upsert_chunks(trace_id, chunks, selected=False)
             return {"trace_id": trace_id, "accepted": accepted}
+
+        if action == "context":
+            accepted = self.store.mark_context(trace_id, list(payload.get("chunk_ids") or []))
+            chunks = [
+                _chunk(
+                    chunk,
+                    index=index,
+                    selected=True,
+                    log_chunk_text=self.log_chunk_text,
+                )
+                for index, chunk in enumerate(payload.get("chunks") or [])
+            ]
+            accepted += self.store.upsert_chunks(trace_id, chunks, selected=True)
+            return {"trace_id": trace_id, "accepted": accepted}
+
         if action == "answer":
-            trace["answer"] = {
-                "id": _new_id("local_answer"),
-                "answer": payload["answer"],
-                "model": payload.get("model"),
-                "usage": payload.get("usage") or {},
-                "metadata": payload.get("metadata") or {},
-            }
-            trace["status"] = "answer_logged"
-            self.store.save_trace(trace)
+            answer_text = payload["answer"] if self.log_answer_text else "[answer text redacted]"
+            self.store.save_answer(
+                trace_id,
+                {
+                    "answer": answer_text,
+                    "model": payload.get("model"),
+                    "usage": payload.get("usage") or {},
+                    "metadata": payload.get("metadata") or {},
+                },
+            )
             return {"trace_id": trace_id, "accepted": 1}
+
         if action == "citations":
-            trace["citation_checks"] = [
-                {
-                    "id": _new_id("local_check"),
-                    "claim": citation["claim"],
-                    "source_chunk_id": citation["source_chunk_id"],
-                    "support_status": "pending",
-                    "support_score": None,
-                    "rationale": None,
-                }
-                for citation in payload.get("citations") or []
-            ]
-            trace["status"] = "citations_logged"
-            self.store.save_trace(trace)
-            return {"trace_id": trace_id, "accepted": len(trace["citation_checks"])}
+            accepted = self.store.save_citations(trace_id, list(payload.get("citations") or []))
+            return {"trace_id": trace_id, "accepted": accepted}
+
         if action == "agent-events":
-            event = {
-                "id": _new_id("local_agent_event"),
-                "trace_id": trace_id,
-                "event_type": payload["event_type"],
-                "name": payload.get("name"),
-                "input_json": payload.get("input_json") if payload.get("input_json") is not None else {},
-                "output_json": payload.get("output_json") if payload.get("output_json") is not None else {},
-                "metadata_json": payload.get("metadata_json") or {},
-                "latency_ms": payload.get("latency_ms"),
-                "error_message": payload.get("error_message"),
-                "created_at": _now(),
-            }
-            trace.setdefault("agent_events", []).append(event)
-            trace["status"] = "agent_event_logged"
-            self.store.save_trace(trace)
-            return {"trace_id": trace_id, "event_id": event["id"], "accepted": 1}
+            return self.store.add_agent_event(trace_id, payload)
+
         if action == "evaluate":
+            trace = self.store.get_trace(trace_id)
             evaluation = _evaluate_trace(trace)
-            trace["evaluation"] = evaluation
-            trace["citation_checks"] = [
-                {
-                    "id": check.get("id", _new_id("local_check")),
-                    "claim": evaluated["claim"],
-                    "source_chunk_id": evaluated["source_chunk_id"],
-                    "support_status": evaluated["verdict"],
-                    "support_score": evaluated["support_score"],
-                    "rationale": evaluated["reason"],
-                }
-                for check, evaluated in zip(trace.get("citation_checks") or [], evaluation["citation_checks"])
-            ]
-            trace["status"] = "evaluated"
-            self.store.save_trace(trace)
+            self.store.save_evaluation(trace_id, evaluation)
             return evaluation
 
         raise ContextTraceLocalError("Unsupported local POST path: %s" % path)
@@ -182,16 +97,28 @@ class LocalTransport:
     def get(self, path: str) -> dict[str, Any]:
         self._debug("GET", path, None)
         if path.startswith("/v1/traces?") or path == "/v1/traces":
-            return {"traces": self.store.list_traces()}
+            limit = _query_int(path, "limit", default=20)
+            return {"traces": self.store.list_traces(limit=limit)}
         if path == "/v1/traces/last":
             trace = self.store.last_trace()
             if trace is None:
                 raise ContextTraceLocalError("No local traces found.")
             return trace
+        if path == "/v1/status":
+            last_eval = self.store.last_eval_run()
+            return {
+                "storage_path": self.storage_path,
+                "trace_count": self.store.trace_count(),
+                "last_eval_run": last_eval,
+            }
         parts = path.strip("/").split("/")
         if len(parts) == 4 and parts[:2] == ["v1", "traces"] and parts[3] == "agent-events":
             trace = self.store.get_trace(parts[2])
             return {"trace_id": parts[2], "events": trace.get("agent_events") or []}
+        if len(parts) == 3 and parts[:2] == ["v1", "eval-runs"]:
+            return self.store.get_eval_run(parts[2])
+        if path == "/v1/eval-runs":
+            return {"eval_runs": self.store.list_eval_runs()}
         if path.startswith("/v1/traces/"):
             trace_id = path.rsplit("/", 1)[-1]
             return self.store.get_trace(trace_id)
@@ -212,30 +139,23 @@ def _parse_trace_action(path: str) -> tuple[str, str]:
     return parts[2], parts[3]
 
 
-def _chunk(chunk: dict[str, Any], *, index: int, selected: bool) -> dict[str, Any]:
+def _chunk(
+    chunk: dict[str, Any],
+    *,
+    index: int,
+    selected: bool,
+    log_chunk_text: bool,
+) -> dict[str, Any]:
     chunk_id = chunk.get("chunk_id") or chunk.get("id") or "chunk_%s" % index
+    content = str(chunk.get("content") or chunk.get("text") or chunk.get("page_content") or "")
     return {
-        "id": _new_id("local_chunk"),
         "chunk_id": str(chunk_id),
-        "content": str(chunk.get("content") or chunk.get("text") or chunk.get("page_content") or ""),
+        "content": content if log_chunk_text else "[chunk text redacted]",
         "source": chunk.get("source"),
         "metadata": chunk.get("metadata") or {},
         "relevance_score": chunk.get("relevance_score") or chunk.get("score"),
-        "position": index,
         "selected": selected,
     }
-
-
-def _upsert_chunks(existing: list[dict[str, Any]], incoming: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    by_id = {chunk["chunk_id"]: chunk for chunk in existing}
-    for chunk in incoming:
-        current = by_id.get(chunk["chunk_id"])
-        if current:
-            current.update({key: value for key, value in chunk.items() if key != "id"})
-            current["selected"] = current.get("selected") or chunk.get("selected")
-        else:
-            by_id[chunk["chunk_id"]] = chunk
-    return list(by_id.values())
 
 
 def _evaluate_trace(trace: dict[str, Any]) -> dict[str, Any]:
@@ -276,7 +196,7 @@ def _evaluate_trace(trace: dict[str, Any]) -> dict[str, Any]:
             "failure_type": failure_type,
             "severity": severity,
             "root_cause": "Local lexical evaluation completed.",
-            "suggested_fix": "Use hosted judge evaluation for model-based citation analysis.",
+            "suggested_fix": "Use a configured judge provider for model-based citation analysis.",
         },
     }
 
@@ -315,9 +235,17 @@ def _terms(text: str) -> set:
     }
 
 
-def _new_id(prefix: str) -> str:
-    return "%s_%s" % (prefix, uuid.uuid4().hex[:12])
-
-
-def _now() -> str:
-    return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+def _query_int(path: str, key: str, *, default: int) -> int:
+    if "?" not in path:
+        return default
+    _, query = path.split("?", 1)
+    for part in query.split("&"):
+        if "=" not in part:
+            continue
+        name, value = part.split("=", 1)
+        if name == key:
+            try:
+                return int(value)
+            except ValueError:
+                return default
+    return default

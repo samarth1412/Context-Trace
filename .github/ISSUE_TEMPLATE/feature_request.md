@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an SDK, API, dashboard, integration, or benchmark improvement
+about: Suggest an SDK, CLI, local viewer, API, integration, or benchmark improvement
 title: "[Feature]: "
 labels: enhancement
 assignees: ""

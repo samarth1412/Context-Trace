@@ -40,29 +40,3 @@ jobs:
           /tmp/contexttrace-smoke/bin/python -m pip install packages/contexttrace/dist/contexttrace-*.whl
           /tmp/contexttrace-smoke/bin/contexttrace --version
           /tmp/contexttrace-smoke/bin/python -c "import contexttrace; print(contexttrace.__version__)"
-
-  web:
-    name: Web typecheck and build
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: apps/web
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: npm
-          cache-dependency-path: apps/web/package-lock.json
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Typecheck
-        run: npm run typecheck
-
-      - name: Build
-        run: npm run build

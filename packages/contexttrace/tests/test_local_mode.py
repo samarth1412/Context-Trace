@@ -59,6 +59,41 @@ def test_local_mode_stores_traces_and_exports_report(tmp_path):
     assert len(traces) == 1
     assert traces[0]["id"] == trace.trace_id
     assert last_trace["id"] == trace.trace_id
+    assert (tmp_path / "store" / "contexttrace.db").exists()
+    assert last_trace["citation_checks"][0]["support_status"] == "directly_supported"
+    assert last_trace["evaluation"]["failure"]["failure_type"] == "no_failure_detected"
+
+
+def test_default_client_uses_local_sqlite_without_network(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    ct = ContextTrace(project="support-rag")
+
+    with ct.trace(query="What is the refund policy?") as trace:
+        trace.log_retrieval([{"chunk_id": "chunk_1", "content": "Refunds are available within 30 days."}])
+        trace.log_context(chunk_ids=["chunk_1"])
+        trace.log_answer("Refunds are available within 30 days.")
+        trace.log_citations([{"claim": "Refunds are available within 30 days.", "source_chunk_id": "chunk_1"}])
+        trace.evaluate()
+
+    assert (tmp_path / ".contexttrace" / "contexttrace.db").exists()
+    assert ct.last_trace()["id"] == trace.trace_id
+
+
+def test_local_text_redaction_options(tmp_path):
+    ct = ContextTrace(
+        project="privacy-rag",
+        storage_path=str(tmp_path / "contexttrace.db"),
+        log_chunk_text=False,
+        log_answer_text=False,
+    )
+
+    with ct.trace(query="Private query") as trace:
+        trace.log_retrieval([{"chunk_id": "chunk_1", "content": "Sensitive chunk text."}])
+        trace.log_answer("Sensitive answer text.")
+
+    fetched = trace.fetch()
+    assert fetched["chunks"][0]["content"] == "[chunk text redacted]"
+    assert fetched["answer"]["answer"] == "[answer text redacted]"
 
 
 def test_batch_upload_replays_local_traces(tmp_path):

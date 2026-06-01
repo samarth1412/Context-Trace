@@ -14,6 +14,56 @@ class ReportGenerator:
         output_path.write_text(self.render(trace), encoding="utf-8")
         return str(output_path)
 
+    def generate_eval_report(
+        self,
+        eval_run: dict[str, Any],
+        traces: Iterable[dict[str, Any]],
+        *,
+        path: str,
+    ) -> str:
+        output_path = Path(path)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(self.render_eval_report(eval_run, traces), encoding="utf-8")
+        return str(output_path)
+
+    def render_eval_report(self, eval_run: dict[str, Any], traces: Iterable[dict[str, Any]]) -> str:
+        trace_list = list(traces)
+        summary = eval_run.get("summary") or {}
+        failure_counts: dict[str, int] = {}
+        trace_rows = []
+        for trace in trace_list:
+            evaluation = trace.get("evaluation") or {}
+            failure = evaluation.get("failure") or {}
+            scores = evaluation.get("scores") or {}
+            failure_type = failure.get("failure_type") or "not_evaluated"
+            failure_counts[failure_type] = failure_counts.get(failure_type, 0) + 1
+            trace_rows.append(
+                """
+                <tr>
+                  <td>{trace_id}</td>
+                  <td>{query}</td>
+                  <td>{failure}</td>
+                  <td>{citation_support}</td>
+                  <td>{unsupported}</td>
+                </tr>
+                """.format(
+                    trace_id=escape(_string(trace.get("id"))),
+                    query=escape(_string(trace.get("query"))[:160]),
+                    failure=escape(_string(failure_type)),
+                    citation_support=escape(_string(scores.get("citation_support", ""))),
+                    unsupported=escape(_string(scores.get("unsupported_claim_rate", ""))),
+                )
+            )
+        return EVAL_HTML_TEMPLATE.format(
+            dataset=escape(_string(eval_run.get("dataset"))),
+            endpoint=escape(_string(eval_run.get("endpoint"))),
+            eval_run_id=escape(_string(eval_run.get("id"))),
+            summary=_render_kv(summary),
+            failure_breakdown=_render_kv(failure_counts),
+            traces="\n".join(trace_rows)
+            or "<tr><td colspan=\"5\" class=\"muted\">No traces were recorded.</td></tr>",
+        )
+
     def render(self, trace: dict[str, Any]) -> str:
         answer = trace.get("answer") or {}
         metadata = trace.get("metadata") or {}
@@ -408,6 +458,91 @@ HTML_TEMPLATE = """<!doctype html>
     <section>
       <h2>Retrieved Chunks</h2>
       {retrieved_chunks}
+    </section>
+  </main>
+</body>
+</html>
+"""
+
+
+EVAL_HTML_TEMPLATE = """<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ContextTrace Eval Report</title>
+  <style>
+    :root {{
+      --bg: #f7f8fa;
+      --panel: #ffffff;
+      --text: #1f2933;
+      --muted: #697386;
+      --line: #d8dee8;
+      --accent: #2458d3;
+    }}
+    * {{ box-sizing: border-box; }}
+    body {{
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }}
+    main {{ max-width: 1120px; margin: 0 auto; padding: 32px 20px 56px; }}
+    header {{ border-bottom: 1px solid var(--line); margin-bottom: 24px; padding-bottom: 18px; }}
+    h1 {{ margin: 0; font-size: 30px; }}
+    h2 {{ font-size: 18px; margin: 0 0 12px; }}
+    section {{
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin: 16px 0;
+      padding: 18px;
+    }}
+    .muted {{ color: var(--muted); }}
+    table {{ width: 100%; border-collapse: collapse; font-size: 14px; }}
+    th, td {{ border-bottom: 1px solid var(--line); padding: 10px; text-align: left; vertical-align: top; }}
+    th {{ color: var(--muted); font-size: 12px; text-transform: uppercase; }}
+    .metrics {{
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      margin: 0;
+    }}
+    .metrics div {{ border: 1px solid var(--line); border-radius: 8px; padding: 10px; background: #fbfcfe; }}
+    dt {{ color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase; }}
+    dd {{ margin: 4px 0 0; }}
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>ContextTrace Eval Report</h1>
+      <p class="muted">Eval run {eval_run_id}</p>
+      <p><strong>Dataset:</strong> {dataset}<br><strong>Endpoint:</strong> {endpoint}</p>
+    </header>
+    <section>
+      <h2>Executive Summary</h2>
+      {summary}
+    </section>
+    <section>
+      <h2>Failure Breakdown</h2>
+      {failure_breakdown}
+    </section>
+    <section>
+      <h2>Trace Details</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Trace ID</th>
+            <th>Query</th>
+            <th>Failure Type</th>
+            <th>Citation Support</th>
+            <th>Unsupported Claim Rate</th>
+          </tr>
+        </thead>
+        <tbody>{traces}</tbody>
+      </table>
     </section>
   </main>
 </body>

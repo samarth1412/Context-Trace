@@ -4,14 +4,9 @@ from contexttrace.cli import main
 
 
 def test_cli_version(capsys):
-    try:
-        main(["--version"])
-    except SystemExit as exc:
-        assert exc.code == 0
-    else:
-        raise AssertionError("argparse version action should exit")
+    assert main(["--version"]) == 0
 
-    assert "contexttrace %s" % __version__ in capsys.readouterr().out
+    assert __version__ in capsys.readouterr().out
 
 
 def test_cli_init_config_trace_list_and_report(monkeypatch, tmp_path, capsys):
@@ -21,6 +16,8 @@ def test_cli_init_config_trace_list_and_report(monkeypatch, tmp_path, capsys):
     init_output = capsys.readouterr().out
     assert "contexttrace.yaml" in init_output
     assert (tmp_path / "contexttrace.yaml").exists()
+    assert (tmp_path / ".contexttrace" / "contexttrace.db").exists()
+    assert (tmp_path / "evals" / "sample_questions.json").exists()
 
     ct = ContextTrace(config_path="contexttrace.yaml")
     with ct.trace(query="What is the refund policy?") as trace:
@@ -49,3 +46,29 @@ def test_cli_init_config_trace_list_and_report(monkeypatch, tmp_path, capsys):
     assert str(report_path) in report_output
     assert report_path.exists()
     assert "ContextTrace Report" in report_path.read_text(encoding="utf-8")
+
+    opened = []
+    monkeypatch.setattr("contexttrace.cli.webbrowser.open", lambda value: opened.append(value))
+    assert main(["report", "--last", "--output", str(tmp_path / "open-report.html"), "--open"]) == 0
+    assert opened
+
+    assert main(["status"]) == 0
+    assert "Trace count: 1" in capsys.readouterr().out
+
+    assert main(["traces", "show", trace.trace_id]) == 0
+    assert "Failure type:" in capsys.readouterr().out
+
+    assert main(["doctor"]) == 0
+    assert "SQLite writable" in capsys.readouterr().out
+
+
+def test_cli_demo_creates_trace_and_report(monkeypatch, tmp_path, capsys):
+    monkeypatch.chdir(tmp_path)
+
+    assert main(["init"]) == 0
+    capsys.readouterr()
+    assert main(["demo", "--dataset", "refund_policy"]) == 0
+    output = capsys.readouterr().out
+
+    assert "Created demo trace:" in output
+    assert list((tmp_path / ".contexttrace" / "reports").glob("*.html"))

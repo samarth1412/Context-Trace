@@ -20,23 +20,33 @@ class ContextTrace:
         api_key: Optional[str] = None,
         project: Optional[str] = None,
         base_url: Optional[str] = None,
+        api_url: Optional[str] = None,
         mode: Optional[str] = None,
+        local_only: Optional[bool] = None,
         transport: Transport | None = None,
         timeout: Optional[float] = None,
         retries: Optional[int] = None,
         debug: Optional[bool] = None,
         local_store_dir: Optional[str] = None,
+        storage_path: Optional[str] = None,
+        log_chunk_text: Optional[bool] = None,
+        log_answer_text: Optional[bool] = None,
         config_path: Optional[str] = None,
     ) -> None:
         self.config = load_config(
             api_key=api_key,
             project=project,
             base_url=base_url,
+            api_url=api_url,
             mode=mode,
+            local_only=local_only,
             timeout=timeout,
             retries=retries,
             debug=debug,
             local_store_dir=local_store_dir,
+            storage_path=storage_path,
+            log_chunk_text=log_chunk_text,
+            log_answer_text=log_answer_text,
             config_path=config_path,
         )
         _configure_logging(self.config)
@@ -46,7 +56,13 @@ class ContextTrace:
 
     def _build_transport(self, config: ContextTraceConfig) -> Transport:
         if config.mode == "local":
-            return LocalTransport(store_dir=config.local_store_dir, debug=config.debug)
+            return LocalTransport(
+                store_dir=config.local_store_dir,
+                storage_path=config.storage_path,
+                debug=config.debug,
+                log_chunk_text=config.log_chunk_text,
+                log_answer_text=config.log_answer_text,
+            )
         if not config.api_key:
             raise ContextTraceConfigError(
                 "ContextTrace api_key is required in hosted mode. Pass api_key=..., "
@@ -156,6 +172,9 @@ class ContextTrace:
             raise ValueError("Trace list response did not include a traces list.")
         return traces[:limit]
 
+    def get_trace(self, trace_id: str) -> dict[str, Any]:
+        return self._transport.get(f"/v1/traces/{trace_id}")
+
     def last_trace(self) -> Optional[dict[str, Any]]:
         try:
             return self._transport.get("/v1/traces/last")
@@ -175,7 +194,7 @@ class ContextTrace:
             if trace is None:
                 raise ValueError("No traces found to export.")
         elif trace_id:
-            trace = self._transport.get(f"/v1/traces/{trace_id}")
+            trace = self.get_trace(trace_id)
         else:
             raise ValueError("Pass trace_id=... or last=True.")
         return ReportGenerator().generate(trace, path=path)
@@ -484,23 +503,33 @@ class AsyncContextTrace:
         api_key: Optional[str] = None,
         project: Optional[str] = None,
         base_url: Optional[str] = None,
+        api_url: Optional[str] = None,
         mode: Optional[str] = None,
+        local_only: Optional[bool] = None,
         transport: AsyncTransport | None = None,
         timeout: Optional[float] = None,
         retries: Optional[int] = None,
         debug: Optional[bool] = None,
         local_store_dir: Optional[str] = None,
+        storage_path: Optional[str] = None,
+        log_chunk_text: Optional[bool] = None,
+        log_answer_text: Optional[bool] = None,
         config_path: Optional[str] = None,
     ) -> None:
         self.config = load_config(
             api_key=api_key,
             project=project,
             base_url=base_url,
+            api_url=api_url,
             mode=mode,
+            local_only=local_only,
             timeout=timeout,
             retries=retries,
             debug=debug,
             local_store_dir=local_store_dir,
+            storage_path=storage_path,
+            log_chunk_text=log_chunk_text,
+            log_answer_text=log_answer_text,
             config_path=config_path,
         )
         _configure_logging(self.config)
@@ -510,7 +539,15 @@ class AsyncContextTrace:
 
     def _build_transport(self, config: ContextTraceConfig) -> AsyncTransport:
         if config.mode == "local":
-            return _AsyncTransportAdapter(LocalTransport(store_dir=config.local_store_dir, debug=config.debug))
+            return _AsyncTransportAdapter(
+                LocalTransport(
+                    store_dir=config.local_store_dir,
+                    storage_path=config.storage_path,
+                    debug=config.debug,
+                    log_chunk_text=config.log_chunk_text,
+                    log_answer_text=config.log_answer_text,
+                )
+            )
         if not config.api_key:
             raise ContextTraceConfigError(
                 "ContextTrace api_key is required in hosted mode. Pass api_key=..., "

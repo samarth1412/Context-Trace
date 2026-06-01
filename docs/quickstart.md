@@ -1,41 +1,26 @@
 # ContextTrace Quickstart
 
-ContextTrace adds evidence-level observability to existing RAG pipelines. It is not a chatbot framework: you keep your retriever, generator, and app code, then log the evidence and answer lifecycle to ContextTrace.
+ContextTrace is local-first. You can trace a RAG pipeline, evaluate citation support, and generate reports without running a backend server.
 
-## 1. Start The Backend
-
-```bash
-docker compose up -d postgres qdrant
-cp .env.example .env
-cd apps/api
-pip install -e ".[test]"
-alembic upgrade head
-uvicorn app.main:app --reload
-```
-
-The local API runs at `http://localhost:8000`. The default development API key is `ctx_test`.
-
-## 2. Install The SDK
+## 1. Install
 
 ```bash
-cd packages/contexttrace
-pip install -e ".[test]"
-```
-
-For local-only usage without the backend:
-
-```bash
+pip install contexttrace
 contexttrace init
 ```
 
-This creates `contexttrace.yaml` in local mode and stores traces under `.contexttrace`.
+For repo development:
 
-## 3. Trace A RAG Request
+```bash
+pip install -e "./packages/contexttrace[test]"
+```
+
+## 2. Trace A RAG Request
 
 ```python
 from contexttrace import ContextTrace
 
-ct = ContextTrace(mode="local", project="support-rag")
+ct = ContextTrace(project="support-rag")
 
 with ct.trace(query="What is the refund policy?") as trace:
     chunks = retriever.search("What is the refund policy?")
@@ -47,35 +32,49 @@ with ct.trace(query="What is the refund policy?") as trace:
     result = trace.evaluate()
 ```
 
-Use hosted mode with the same trace lifecycle:
+Traces are stored in `.contexttrace/contexttrace.db` by default.
 
-```python
-ct = ContextTrace(api_key="ctx_test", project="support-rag", base_url="http://localhost:8000")
-```
-
-## 4. Open The Dashboard
+## 3. Generate A Report
 
 ```bash
-cd apps/web
-npm install
-npm run dev
+contexttrace report --last --open
 ```
 
-Open `http://localhost:3000/dashboard`.
+Reports include query, retrieved chunks, selected context, answer, citations, support verdicts, failure diagnosis, token usage, and latency metadata.
 
-## 5. Generate A Local Report
-
-```python
-trace.export_report(path="report.html")
-```
-
-Reports include the query, retrieved chunks, selected context, answer, citations, support verdicts, failure diagnosis, token usage, and latency metadata.
-
-From the CLI:
+## 4. Use The Local Viewer
 
 ```bash
-contexttrace trace list
-contexttrace report --last --output report.html
+contexttrace viewer
+```
+
+Open `http://localhost:8765` to inspect local traces, eval runs, and reports.
+
+## 5. Evaluate A RAG Endpoint
+
+```bash
+contexttrace eval \
+  --dataset evals/sample_questions.json \
+  --endpoint http://localhost:8000/query \
+  --method POST \
+  --input-key question \
+  --answer-path $.answer \
+  --contexts-path $.contexts \
+  --citations-path $.citations
+```
+
+This calls your endpoint, maps the response fields, creates local traces, runs diagnostics, and writes an HTML eval report.
+
+## Optional Backend
+
+The FastAPI backend remains available for local API mode and compatibility work:
+
+```bash
+docker compose up -d postgres qdrant
+pip install -e "./apps/api[test]"
+cd apps/api
+alembic upgrade head
+uvicorn app.main:app --reload
 ```
 
 ## Data Shape
@@ -103,4 +102,4 @@ Citations should reference logged chunk IDs:
 
 ## Next Steps
 
-Read [SDK Usage](sdk.md), [Citation Verification](citation_verification.md), and [Failure Taxonomy](failure_taxonomy.md).
+Read [SDK Usage](sdk.md), [Local Mode](local-mode.md), [Bring Your Own RAG Endpoint](byo-rag-endpoint.md), [Citation Verification](citation_verification.md), and [Failure Taxonomy](failure_taxonomy.md).

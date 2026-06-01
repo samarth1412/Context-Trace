@@ -83,28 +83,27 @@ def test_rank_strategies_prioritizes_reliability_then_cost() -> None:
 def test_run_benchmark_writes_reproducible_outputs(tmp_path: Path) -> None:
     dataset_dir = Path(__file__).resolve().parents[1] / "datasets" / "refund_policy"
     output_dir = tmp_path / "results"
-    website_export = tmp_path / "web" / "benchmark-results.json"
-    website_assets = tmp_path / "web" / "public" / "benchmarks"
+    data_export = tmp_path / "benchmark-results.json"
+    assets_dir = tmp_path / "assets"
 
     result = run_benchmark(
         dataset_dir=dataset_dir,
         output_dir=output_dir,
         strategies=("dense_top_k", "contexttrace_adaptive"),
-        website_export=website_export,
-        website_assets_dir=website_assets,
+        data_export=data_export,
+        assets_dir=assets_dir,
         generated_at="test-run",
     )
 
     results_path = Path(result["results_path"])
     summary_path = Path(result["summary_path"])
     payload = json.loads(results_path.read_text(encoding="utf-8"))
-    website_payload = json.loads(website_export.read_text(encoding="utf-8"))
+    exported_payload = json.loads(data_export.read_text(encoding="utf-8"))
 
     assert results_path.exists()
     assert summary_path.exists()
     assert payload["generated_at"] == "test-run"
     assert len(payload["question_results"]) == 8
     assert "Honest Tradeoffs" in summary_path.read_text(encoding="utf-8")
-    assert website_payload["website_charts"]["citation_support"].endswith("citation_support.svg")
-    assert (website_assets / "refund_policy" / "citation_support.svg").exists()
-
+    assert exported_payload["published_charts"]["citation_support"].endswith("citation_support.svg")
+    assert (assets_dir / "refund_policy" / "citation_support.svg").exists()

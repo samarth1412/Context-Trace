@@ -96,14 +96,16 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--dataset", required=True, help="Dataset path, for example datasets/refund_policy.")
     parser.add_argument("--output-dir", default=None, help="Directory for benchmark outputs.")
     parser.add_argument(
-        "--website-export",
-        default="apps/web/lib/benchmark-results.json",
-        help="Write dashboard/website data export JSON to this path.",
+        "--data-export",
+        dest="data_export",
+        default="benchmarks/results/benchmark-results.json",
+        help="Write benchmark data export JSON to this path.",
     )
     parser.add_argument(
-        "--website-assets-dir",
-        default="apps/web/public/benchmarks",
-        help="Copy SVG charts here for website/blog usage.",
+        "--assets-dir",
+        dest="assets_dir",
+        default="benchmarks/results/assets",
+        help="Copy SVG charts here for reports/blog usage.",
     )
     parser.add_argument(
         "--strategy",
@@ -124,8 +126,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         dataset_dir=dataset_dir,
         output_dir=output_dir,
         strategies=tuple(args.strategy or STRATEGIES),
-        website_export=Path(args.website_export) if args.website_export else None,
-        website_assets_dir=Path(args.website_assets_dir) if args.website_assets_dir else None,
+        data_export=Path(args.data_export) if args.data_export else None,
+        assets_dir=Path(args.assets_dir) if args.assets_dir else None,
         generated_at=args.generated_at,
     )
     print("Wrote %s" % result["results_path"])
@@ -138,8 +140,8 @@ def run_benchmark(
     dataset_dir: Path,
     output_dir: Path,
     strategies: Sequence[str] = STRATEGIES,
-    website_export: Optional[Path] = None,
-    website_assets_dir: Optional[Path] = None,
+    data_export: Optional[Path] = None,
+    assets_dir: Optional[Path] = None,
     generated_at: str = "reproducible-local-run",
 ) -> Dict[str, Any]:
     dataset = load_dataset(dataset_dir)
@@ -164,9 +166,9 @@ def run_benchmark(
         "charts": charts,
         "notes": honest_tradeoff_notes(ranked),
     }
-    if website_assets_dir is not None:
-        publish_charts(charts, website_assets_dir / dataset["name"])
-        results["website_charts"] = {
+    if assets_dir is not None:
+        publish_charts(charts, assets_dir / dataset["name"])
+        results["published_charts"] = {
             key: "/benchmarks/%s/%s" % (dataset["name"], Path(path).name)
             for key, path in charts.items()
         }
@@ -176,9 +178,9 @@ def run_benchmark(
     results_path.write_text(json.dumps(results, indent=2), encoding="utf-8")
     summary_path.write_text(render_summary_markdown(results), encoding="utf-8")
 
-    if website_export is not None:
-        website_export.parent.mkdir(parents=True, exist_ok=True)
-        website_export.write_text(json.dumps(results, indent=2), encoding="utf-8")
+    if data_export is not None:
+        data_export.parent.mkdir(parents=True, exist_ok=True)
+        data_export.write_text(json.dumps(results, indent=2), encoding="utf-8")
 
     return {
         "results_path": str(results_path),
