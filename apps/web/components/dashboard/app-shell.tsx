@@ -7,7 +7,7 @@ const navItems = [
   { href: "/traces", label: "Traces", icon: Activity },
   { href: "/playground", label: "Playground", icon: Search },
   { href: "/rag-api", label: "RAG APIs", icon: Plug },
-  { href: "/benchmarks", label: "Benchmarks", icon: BarChart3 },
+  { href: "/benchmark", label: "Benchmark", icon: BarChart3 },
   { href: "/reports", label: "Reports", icon: FileText }
 ];
 
