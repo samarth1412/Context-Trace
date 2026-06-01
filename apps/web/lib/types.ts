@@ -168,11 +168,15 @@ export type PlaygroundChunk = {
 export type PlaygroundQueryResponse = {
   answer: string;
   trace_id: string;
+  strategy: RetrievalStrategyName;
   retrieved_chunks: PlaygroundChunk[];
+  selected_context: PlaygroundChunk[];
+  dropped_context: PlaygroundChunk[];
   citations: Array<{
     claim: string;
     source_chunk_id: string;
   }>;
+  metrics: PlaygroundComparisonMetrics;
   evaluation: TraceEvaluation;
 };
 
@@ -180,9 +184,39 @@ export type PlaygroundDocumentUploadResponse = {
   document_id: string;
   filename: string;
   chunk_count: number;
+  text_preview: string;
+  chunks: Array<{
+    chunk_id: string;
+    content: string;
+    source: string;
+    token_count: number;
+    metadata?: Record<string, unknown>;
+  }>;
 };
 
-export type RetrievalStrategyName = "dense_top_k" | "bm25_top_k" | "hybrid" | "hybrid_rerank";
+export type PlaygroundSampleDataset = {
+  sample_id: string;
+  name: string;
+  description: string;
+  suggested_queries: string[];
+};
+
+export type PlaygroundSamplesResponse = {
+  samples: PlaygroundSampleDataset[];
+};
+
+export type PlaygroundSampleLoadResponse = PlaygroundSampleDataset & {
+  documents: PlaygroundDocumentUploadResponse[];
+  chunk_count: number;
+};
+
+export type RetrievalStrategyName =
+  | "dense_top_k"
+  | "bm25_top_k"
+  | "hybrid"
+  | "hybrid_rerank"
+  | "corrective_rag"
+  | "contexttrace_adaptive";
 
 export type PlaygroundComparisonMetrics = {
   citation_support: number;
@@ -190,6 +224,7 @@ export type PlaygroundComparisonMetrics = {
   failure_type: FailureType;
   token_usage: Record<string, unknown>;
   latency_ms: number;
+  estimated_cost_usd: number;
 };
 
 export type PlaygroundComparisonResult = {
@@ -197,6 +232,8 @@ export type PlaygroundComparisonResult = {
   trace_id: string;
   answer: string;
   retrieved_chunks: PlaygroundChunk[];
+  selected_context: PlaygroundChunk[];
+  dropped_context: PlaygroundChunk[];
   citations: Array<{
     claim: string;
     source_chunk_id: string;

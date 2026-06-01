@@ -13,11 +13,15 @@ STRATEGY_DENSE_TOP_K = "dense_top_k"
 STRATEGY_BM25_TOP_K = "bm25_top_k"
 STRATEGY_HYBRID = "hybrid"
 STRATEGY_HYBRID_RERANK = "hybrid_rerank"
+STRATEGY_CORRECTIVE_RAG = "corrective_rag"
+STRATEGY_CONTEXTTRACE_ADAPTIVE = "contexttrace_adaptive"
 DEFAULT_STRATEGIES = [
     STRATEGY_DENSE_TOP_K,
     STRATEGY_BM25_TOP_K,
     STRATEGY_HYBRID,
     STRATEGY_HYBRID_RERANK,
+    STRATEGY_CORRECTIVE_RAG,
+    STRATEGY_CONTEXTTRACE_ADAPTIVE,
 ]
 
 
@@ -136,12 +140,67 @@ class HybridRerankStrategy(RetrievalStrategy):
         return [_with_score(record, score) for score, record in reranked[: context.top_k]]
 
 
+class CorrectiveRAGStrategy(RetrievalStrategy):
+    name = STRATEGY_CORRECTIVE_RAG
+
+    async def retrieve(
+        self,
+        *,
+        vector_store: VectorStore,
+        context: RetrievalRequestContext,
+    ) -> List[VectorRecord]:
+        reranked = await HybridRerankStrategy().retrieve(
+            vector_store=vector_store,
+            context=RetrievalRequestContext(
+                query=context.query,
+                query_vector=context.query_vector,
+                top_k=max(context.top_k, context.top_k * 2),
+                filters=context.filters,
+            ),
+        )
+        if reranked and max(record.score for record in reranked) >= 0.25:
+            return reranked[: context.top_k]
+
+        lexical = _bm25_rank(
+            context.query,
+            await vector_store.list_records(filters=context.filters),
+            limit=max(context.top_k * 3, 10),
+        )
+        return _merge_ranked_records(
+            reranked,
+            lexical,
+            limit=context.top_k,
+            dense_weight=0.35,
+            lexical_weight=0.65,
+        )
+
+
+class ContextTraceAdaptiveStrategy(RetrievalStrategy):
+    name = STRATEGY_CONTEXTTRACE_ADAPTIVE
+
+    async def retrieve(
+        self,
+        *,
+        vector_store: VectorStore,
+        context: RetrievalRequestContext,
+    ) -> List[VectorRecord]:
+        query_tokens = _tokenize(context.query)
+        if _looks_like_complex_query(query_tokens, context.query):
+            return await HybridRerankStrategy().retrieve(vector_store=vector_store, context=context)
+        dense = await DenseTopKStrategy().retrieve(vector_store=vector_store, context=context)
+        if dense and dense[0].score >= 0.42:
+            return dense
+        return await HybridStrategy().retrieve(vector_store=vector_store, context=context)
+
+
 def get_retrieval_strategy(name: str) -> RetrievalStrategy:
     strategies = {
         STRATEGY_DENSE_TOP_K: DenseTopKStrategy(),
         STRATEGY_BM25_TOP_K: BM25TopKStrategy(),
         STRATEGY_HYBRID: HybridStrategy(),
         STRATEGY_HYBRID_RERANK: HybridRerankStrategy(),
+        STRATEGY_CORRECTIVE_RAG: CorrectiveRAGStrategy(),
+        STRATEGY_CONTEXTTRACE_ADAPTIVE: ContextTraceAdaptiveStrategy(),
     }
     try:
         return strategies[name]
@@ -272,3 +331,12 @@ def _phrase_bonus(query: str, content: str) -> float:
     pairs = ["%s %s" % (left, right) for left, right in zip(query_tokens, query_tokens[1:])]
     hits = sum(1 for pair in pairs if pair in normalized_content)
     return min(hits * 0.05, 0.2)
+
+
+def _looks_like_complex_query(query_tokens: List[str], query: str) -> bool:
+    normalized = query.lower()
+    return (
+        len(query_tokens) > 12
+        or any(term in normalized for term in ["compare", "summarize", "why", "how", "difference"])
+        or normalized.count("?") > 1
+    )

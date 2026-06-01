@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import io
 import re
+import zipfile
+import xml.etree.ElementTree as ET
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
@@ -42,8 +44,10 @@ class DocumentParser:
             text = self._parse_text(content)
         elif extension == "txt" or normalized_type.startswith("text/"):
             text = self._parse_text(content)
+        elif extension == "docx" or normalized_type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+            text = self._parse_docx(content)
         else:
-            raise ValueError("Unsupported document type. Upload PDF, TXT, or Markdown.")
+            raise ValueError("Unsupported document type. Upload PDF, TXT, Markdown, or DOCX.")
 
         return ParsedDocument(
             filename=filename,
@@ -69,6 +73,24 @@ class DocumentParser:
         reader = PdfReader(io.BytesIO(content))
         pages = [page.extract_text() or "" for page in reader.pages]
         return "\n\n".join(pages)
+
+    def _parse_docx(self, content: bytes) -> str:
+        try:
+            with zipfile.ZipFile(io.BytesIO(content)) as archive:
+                xml = archive.read("word/document.xml")
+        except (KeyError, zipfile.BadZipFile) as exc:
+            raise ValueError("DOCX file could not be parsed.") from exc
+
+        namespace = {"w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
+        root = ET.fromstring(xml)
+        paragraphs = []
+        for paragraph in root.findall(".//w:p", namespace):
+            text = "".join(
+                node.text or "" for node in paragraph.findall(".//w:t", namespace)
+            ).strip()
+            if text:
+                paragraphs.append(text)
+        return "\n\n".join(paragraphs)
 
 
 class TokenAwareChunker:
@@ -144,4 +166,6 @@ def _content_type_for_extension(extension: str) -> str:
         return "application/pdf"
     if extension in {"md", "markdown"}:
         return "text/markdown"
+    if extension == "docx":
+        return "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     return "text/plain"

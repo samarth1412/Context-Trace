@@ -22,10 +22,47 @@ from app.schemas import (
     PlaygroundDocumentUploadResponse,
     PlaygroundQueryRequest,
     PlaygroundQueryResponse,
+    PlaygroundSampleLoadResponse,
+    PlaygroundSamplesResponse,
 )
 from app.services.playground import PlaygroundService
 
 router = APIRouter(prefix="/playground", tags=["playground"])
+
+
+@router.get("/samples", response_model=PlaygroundSamplesResponse)
+async def list_playground_samples(
+    db: Annotated[Session, Depends(get_db)],
+    user: Annotated[User, Depends(get_current_user)],
+    settings: Annotated[Settings, Depends(get_settings)],
+    embedding_provider: Annotated[EmbeddingProvider, Depends(get_embedding_provider)],
+    vector_store: Annotated[VectorStore, Depends(get_vector_store)],
+) -> PlaygroundSamplesResponse:
+    return await PlaygroundService(
+        db=db,
+        user=user,
+        settings=settings,
+        embedding_provider=embedding_provider,
+        vector_store=vector_store,
+    ).list_sample_datasets()
+
+
+@router.post("/samples/{sample_id}/load", response_model=PlaygroundSampleLoadResponse)
+async def load_playground_sample(
+    sample_id: str,
+    db: Annotated[Session, Depends(get_db)],
+    user: Annotated[User, Depends(get_current_user)],
+    settings: Annotated[Settings, Depends(get_settings)],
+    embedding_provider: Annotated[EmbeddingProvider, Depends(get_embedding_provider)],
+    vector_store: Annotated[VectorStore, Depends(get_vector_store)],
+) -> PlaygroundSampleLoadResponse:
+    return await PlaygroundService(
+        db=db,
+        user=user,
+        settings=settings,
+        embedding_provider=embedding_provider,
+        vector_store=vector_store,
+    ).load_sample_dataset(sample_id)
 
 
 @router.post("/documents", response_model=PlaygroundDocumentUploadResponse, status_code=201)

@@ -47,9 +47,13 @@ from app.schemas.playground import (
     PlaygroundComparisonMetrics,
     PlaygroundComparisonResult,
     PlaygroundChunk,
+    PlaygroundChunkPreview,
     PlaygroundDocumentUploadResponse,
     PlaygroundQueryRequest,
     PlaygroundQueryResponse,
+    PlaygroundSampleDataset,
+    PlaygroundSampleLoadResponse,
+    PlaygroundSamplesResponse,
     RetrievalStrategyName,
 )
 
@@ -92,6 +96,7 @@ __all__ = [
     "MappedExternalResponse",
     "WorstTrace",
     "PlaygroundChunk",
+    "PlaygroundChunkPreview",
     "PlaygroundCompareRequest",
     "PlaygroundCompareResponse",
     "PlaygroundComparisonMetrics",
@@ -99,5 +104,8 @@ __all__ = [
     "PlaygroundDocumentUploadResponse",
     "PlaygroundQueryRequest",
     "PlaygroundQueryResponse",
+    "PlaygroundSampleDataset",
+    "PlaygroundSampleLoadResponse",
+    "PlaygroundSamplesResponse",
     "RetrievalStrategyName",
 ]

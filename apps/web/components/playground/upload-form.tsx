@@ -26,7 +26,7 @@ export function UploadForm() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!file) {
-      setError("Choose a PDF, TXT, or Markdown file.");
+      setError("Choose a PDF, TXT, Markdown, or DOCX file.");
       return;
     }
 
@@ -76,7 +76,7 @@ export function UploadForm() {
           <input
             className="rounded-md border bg-background px-3 py-2 text-sm file:mr-3 file:rounded-md file:border-0 file:bg-muted file:px-3 file:py-1.5 file:text-sm"
             type="file"
-            accept=".pdf,.txt,.md,.markdown,application/pdf,text/plain,text/markdown"
+            accept=".pdf,.txt,.md,.markdown,.docx,application/pdf,text/plain,text/markdown,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             onChange={onFileChange}
           />
         </label>
@@ -105,6 +105,30 @@ export function UploadForm() {
             <div className="font-medium">{result.filename}</div>
             <div className="text-emerald-800">
               {result.chunk_count} chunks indexed | {result.document_id}
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {result ? (
+        <div className="mt-4 grid gap-4 lg:grid-cols-[0.8fr_1.2fr]">
+          <div className="rounded-md border p-3">
+            <div className="mb-2 text-sm font-medium">Document Preview</div>
+            <p className="text-sm leading-6 text-muted-foreground">{result.text_preview}</p>
+          </div>
+          <div className="rounded-md border p-3">
+            <div className="mb-2 text-sm font-medium">Chunk Preview</div>
+            <div className="grid max-h-96 gap-3 overflow-auto">
+              {result.chunks.map((chunk) => (
+                <article key={chunk.chunk_id} className="rounded-md border bg-background p-3">
+                  <div className="mb-2 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                    <span className="font-medium text-foreground">{chunk.source}</span>
+                    <span>{chunk.token_count} tokens</span>
+                    <span>{chunk.chunk_id}</span>
+                  </div>
+                  <p className="text-sm leading-6">{chunk.content}</p>
+                </article>
+              ))}
             </div>
           </div>
         </div>

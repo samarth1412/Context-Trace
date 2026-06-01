@@ -20,10 +20,12 @@ from app.playground.policy import (
 )
 from app.playground.providers import AnswerProvider, EmbeddingProvider, GeneratedAnswer
 from app.playground.retrieval import (
+    STRATEGY_CONTEXTTRACE_ADAPTIVE,
     STRATEGY_DENSE_TOP_K,
     RetrievalRequestContext,
     get_retrieval_strategy,
 )
+from app.playground.samples import get_sample, list_samples
 from app.playground.vector_store import VectorRecord, VectorStore
 from app.schemas import (
     AnswerRequest,
@@ -34,11 +36,15 @@ from app.schemas import (
     PlaygroundCompareRequest,
     PlaygroundCompareResponse,
     PlaygroundChunk,
+    PlaygroundChunkPreview,
     PlaygroundComparisonMetrics,
     PlaygroundComparisonResult,
     PlaygroundDocumentUploadResponse,
     PlaygroundQueryRequest,
     PlaygroundQueryResponse,
+    PlaygroundSampleDataset,
+    PlaygroundSampleLoadResponse,
+    PlaygroundSamplesResponse,
     RetrievalRequest,
     RetrievalStrategyName,
     TraceStartRequest,
@@ -88,6 +94,51 @@ class PlaygroundService:
         except ValueError as exc:
             raise BadRequestError(str(exc)) from exc
 
+        return await self._ingest_parsed_document(document=document)
+
+    async def list_sample_datasets(self) -> PlaygroundSamplesResponse:
+        return PlaygroundSamplesResponse(
+            samples=[
+                PlaygroundSampleDataset(
+                    sample_id=sample.sample_id,
+                    name=sample.name,
+                    description=sample.description,
+                    suggested_queries=sample.suggested_queries,
+                )
+                for sample in list_samples()
+            ]
+        )
+
+    async def load_sample_dataset(self, sample_id: str) -> PlaygroundSampleLoadResponse:
+        try:
+            sample = get_sample(sample_id)
+        except ValueError as exc:
+            raise BadRequestError(str(exc)) from exc
+
+        documents = []
+        for sample_document in sample.documents:
+            parsed = DocumentParser().parse(
+                filename=sample_document.filename,
+                content=sample_document.content.encode("utf-8"),
+                content_type=sample_document.content_type,
+            )
+            parsed.metadata.update({"sample_id": sample.sample_id, "sample_name": sample.name})
+            documents.append(await self._ingest_parsed_document(document=parsed))
+
+        return PlaygroundSampleLoadResponse(
+            sample_id=sample.sample_id,
+            name=sample.name,
+            description=sample.description,
+            suggested_queries=sample.suggested_queries,
+            documents=documents,
+            chunk_count=sum(document.chunk_count for document in documents),
+        )
+
+    async def _ingest_parsed_document(
+        self,
+        *,
+        document,
+    ) -> PlaygroundDocumentUploadResponse:
         chunker = TokenAwareChunker(
             max_tokens=self.settings.playground_chunk_tokens,
             overlap_tokens=self.settings.playground_chunk_overlap_tokens,
@@ -99,6 +150,7 @@ class PlaygroundService:
         document_id = str(uuid.uuid4())
         embeddings = await self.embedding_provider.embed_texts([chunk.content for chunk in chunks])
         payloads = []
+        preview_chunks: List[PlaygroundChunkPreview] = []
         for chunk in chunks:
             chunk_id = "%s_%s" % (document_id, chunk.chunk_id)
             metadata = {
@@ -116,30 +168,45 @@ class PlaygroundService:
                     "metadata": metadata,
                 }
             )
+            preview_chunks.append(
+                PlaygroundChunkPreview(
+                    chunk_id=chunk_id,
+                    content=chunk.content,
+                    source=chunk.source,
+                    token_count=int(metadata.get("token_count") or len(chunk.content.split())),
+                    metadata=metadata,
+                )
+            )
 
         await self.vector_store.upsert(vectors=embeddings, payloads=payloads)
         return PlaygroundDocumentUploadResponse(
             document_id=document_id,
             filename=document.filename,
             chunk_count=len(chunks),
+            text_preview=self._preview(document.text),
+            chunks=preview_chunks,
         )
 
     async def query(self, request: PlaygroundQueryRequest) -> PlaygroundQueryResponse:
         result = await self._run_strategy(
             query=request.query,
             top_k=request.top_k,
-            strategy_name=STRATEGY_DENSE_TOP_K,
+            strategy_name=request.strategy.value,
             project=request.project,
             metadata=request.metadata,
             mode="playground",
             query_vector=None,
-            use_policy_runtime=True,
+            use_policy_runtime=request.strategy.value == STRATEGY_CONTEXTTRACE_ADAPTIVE,
         )
         return PlaygroundQueryResponse(
             answer=result.answer,
             trace_id=result.trace_id,
+            strategy=result.strategy,
             retrieved_chunks=result.retrieved_chunks,
+            selected_context=result.selected_context,
+            dropped_context=result.dropped_context,
             citations=result.citations,
+            metrics=result.metrics,
             evaluation=result.evaluation,
         )
 
@@ -217,6 +284,7 @@ class PlaygroundService:
             self._record_to_chunk_payload(record) for record in selected_chunks
         ]
         retrieved_chunk_payloads = [self._record_to_chunk_payload(record) for record in retrieved]
+        dropped_records = [record for record in retrieved if record.chunk_id in set(dropped_chunk_ids)]
 
         if policy_decision.selected_policy == POLICY_ABSTAIN_LOW_CONFIDENCE:
             answer = GeneratedAnswer(
@@ -265,6 +333,10 @@ class PlaygroundService:
             answer=answer_text,
             trace_id=trace.trace_id,
             retrieved_chunks=[self._record_to_response_chunk(record) for record in retrieved],
+            selected_context=[
+                self._chunk_payload_to_response_chunk(chunk) for chunk in selected_chunk_payloads
+            ],
+            dropped_context=[self._record_to_response_chunk(record) for record in dropped_records],
             citations=[
                 {
                     "claim": citation.claim,
@@ -278,6 +350,7 @@ class PlaygroundService:
                 failure_type=evaluation.failure.failure_type.value,
                 token_usage=answer.usage,
                 latency_ms=latency_ms,
+                estimated_cost_usd=self._estimated_cost(answer.usage),
             ),
             evaluation=evaluation,
         )
@@ -511,6 +584,15 @@ class PlaygroundService:
             metadata=record.metadata,
         )
 
+    def _chunk_payload_to_response_chunk(self, chunk: ChunkPayload) -> PlaygroundChunk:
+        return PlaygroundChunk(
+            chunk_id=chunk.chunk_id or "unknown_chunk",
+            content=chunk.content,
+            source=chunk.source,
+            score=chunk.relevance_score or 0.0,
+            metadata=chunk.metadata,
+        )
+
     def _chunk_payload_to_provider_dict(self, chunk: ChunkPayload) -> Dict[str, Any]:
         return {
             "chunk_id": chunk.chunk_id,
@@ -554,3 +636,15 @@ class PlaygroundService:
             if check.verdict.value in {"unsupported", "contradicted", "not_enough_info"}
         ]
         return round(len(unsupported) / len(citation_checks), 3)
+
+    def _estimated_cost(self, usage: Dict[str, Any]) -> float:
+        total_tokens = usage.get("total_tokens")
+        if not isinstance(total_tokens, (int, float)):
+            total_tokens = 0
+        return round(float(total_tokens) / 1000 * 0.0008, 6)
+
+    def _preview(self, text: str, *, limit: int = 520) -> str:
+        normalized = " ".join(text.split())
+        if len(normalized) <= limit:
+            return normalized
+        return normalized[: limit - 3].rstrip() + "..."

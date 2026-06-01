@@ -1,4 +1,6 @@
 import pytest
+import zipfile
+from io import BytesIO
 
 from app.api.deps import get_answer_provider, get_embedding_provider, get_vector_store
 from app.playground.documents import DocumentParser, ParsedDocument, TokenAwareChunker
@@ -24,6 +26,27 @@ def test_document_parser_reads_txt_and_markdown():
     assert txt.content_type == "text/plain"
     assert "Refund Policy" in md.text
     assert md.content_type == "text/markdown"
+
+
+def test_document_parser_reads_docx_with_stdlib_zip_parser():
+    parser = DocumentParser()
+    buffer = BytesIO()
+    xml = (
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+        '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'
+        "<w:body><w:p><w:r><w:t>Refund policy text from DOCX.</w:t></w:r></w:p></w:body>"
+        "</w:document>"
+    )
+    with zipfile.ZipFile(buffer, "w") as archive:
+        archive.writestr("word/document.xml", xml)
+
+    parsed = parser.parse(
+        filename="policy.docx",
+        content=buffer.getvalue(),
+        content_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    )
+
+    assert parsed.text == "Refund policy text from DOCX."
 
 
 def test_document_parser_rejects_unsupported_types():
@@ -73,17 +96,23 @@ def test_playground_upload_query_and_trace_creation(client, auth_headers):
 
     assert upload.status_code == 201
     assert upload.json()["chunk_count"] == 1
+    assert "Refunds are available" in upload.json()["text_preview"]
+    assert upload.json()["chunks"][0]["token_count"] > 0
 
     query = client.post(
         "/v1/playground/query",
         headers=auth_headers,
-        json={"query": "What is the refund policy?", "top_k": 1},
+        json={"query": "What is the refund policy?", "top_k": 1, "strategy": "hybrid"},
     )
 
     assert query.status_code == 200
     body = query.json()
     assert "Refunds are available within 30 days" in body["answer"]
+    assert body["strategy"] == "hybrid"
     assert len(body["retrieved_chunks"]) == 1
+    assert len(body["selected_context"]) == 1
+    assert body["metrics"]["latency_ms"] >= 0
+    assert body["metrics"]["estimated_cost_usd"] >= 0
     assert body["evaluation"]["failure"]["failure_type"] == "no_failure_detected"
 
     fetched = client.get("/v1/traces/%s" % body["trace_id"], headers=auth_headers)
@@ -124,7 +153,14 @@ def test_playground_compare_runs_selected_retrieval_strategies(client, auth_head
         json={
             "query": "Refunds available within 30 days",
             "top_k": 1,
-            "strategies": ["dense_top_k", "bm25_top_k", "hybrid", "hybrid_rerank"],
+            "strategies": [
+                "dense_top_k",
+                "bm25_top_k",
+                "hybrid",
+                "hybrid_rerank",
+                "corrective_rag",
+                "contexttrace_adaptive",
+            ],
         },
     )
 
@@ -135,6 +171,8 @@ def test_playground_compare_runs_selected_retrieval_strategies(client, auth_head
         "bm25_top_k",
         "hybrid",
         "hybrid_rerank",
+        "corrective_rag",
+        "contexttrace_adaptive",
     ]
     assert all(result["trace_id"] for result in body["results"])
     assert all(result["metrics"]["citation_support"] == 1.0 for result in body["results"])
@@ -144,3 +182,43 @@ def test_playground_compare_runs_selected_retrieval_strategies(client, auth_head
         for result in body["results"]
     )
     assert all(result["metrics"]["latency_ms"] >= 0 for result in body["results"])
+    assert all(result["metrics"]["estimated_cost_usd"] >= 0 for result in body["results"])
+
+
+def test_playground_sample_datasets_load_and_query(client, auth_headers):
+    vector_store = InMemoryVectorStore()
+    client.app.dependency_overrides[get_vector_store] = lambda: vector_store
+    client.app.dependency_overrides[get_embedding_provider] = lambda: HashEmbeddingProvider(
+        dimensions=32
+    )
+    client.app.dependency_overrides[get_answer_provider] = lambda: MockAnswerProvider()
+
+    samples = client.get("/v1/playground/samples", headers=auth_headers)
+    assert samples.status_code == 200
+    assert {sample["sample_id"] for sample in samples.json()["samples"]} >= {
+        "employee_handbook",
+        "refund_policy",
+        "ai_paper_qa",
+    }
+
+    load = client.post("/v1/playground/samples/refund_policy/load", headers=auth_headers)
+    assert load.status_code == 200
+    body = load.json()
+    assert body["sample_id"] == "refund_policy"
+    assert body["chunk_count"] >= 1
+    assert body["documents"][0]["chunks"][0]["metadata"]["sample_id"] == "refund_policy"
+
+    query = client.post(
+        "/v1/playground/query",
+        headers=auth_headers,
+        json={
+            "query": body["suggested_queries"][0],
+            "top_k": 2,
+            "strategy": "contexttrace_adaptive",
+        },
+    )
+    assert query.status_code == 200
+    result = query.json()
+    assert result["trace_id"]
+    assert result["evaluation"]["failure"]["failure_type"] == "no_failure_detected"
+    assert result["selected_context"]

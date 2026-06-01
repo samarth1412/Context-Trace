@@ -93,11 +93,18 @@ class MockAnswerProvider:
                     "source_chunk_id": chunk["chunk_id"],
                 }
             )
+        prompt_tokens = sum(len(chunk["content"].split()) for chunk in chunks) + len(query.split())
+        completion_tokens = sum(len(line.split()) for line in source_lines)
 
         return GeneratedAnswer(
             answer=" ".join(source_lines),
             citations=citations,
             model="mock-answer-provider",
+            usage={
+                "prompt_tokens": prompt_tokens,
+                "completion_tokens": completion_tokens,
+                "total_tokens": prompt_tokens + completion_tokens,
+            },
             metadata={"provider": "mock", "query": query},
         )
 

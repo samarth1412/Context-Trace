@@ -17,7 +17,9 @@ const STRATEGIES: Array<{ value: RetrievalStrategyName; label: string }> = [
   { value: "dense_top_k", label: "Dense" },
   { value: "bm25_top_k", label: "BM25" },
   { value: "hybrid", label: "Hybrid" },
-  { value: "hybrid_rerank", label: "Hybrid Rerank" }
+  { value: "hybrid_rerank", label: "Hybrid Rerank" },
+  { value: "corrective_rag", label: "Corrective RAG" },
+  { value: "contexttrace_adaptive", label: "Adaptive" }
 ];
 
 export function StrategyComparison() {
@@ -158,6 +160,7 @@ function ComparisonTable({ result }: { result: PlaygroundCompareResponse }) {
             <th className="py-2 pr-4 font-medium">Failure</th>
             <th className="py-2 pr-4 font-medium">Tokens</th>
             <th className="py-2 pr-4 font-medium">Latency</th>
+            <th className="py-2 pr-4 font-medium">Cost</th>
             <th className="py-2 pr-4 font-medium">Trace</th>
           </tr>
         </thead>
@@ -174,6 +177,7 @@ function ComparisonTable({ result }: { result: PlaygroundCompareResponse }) {
               </td>
               <td className="py-3 pr-4">{tokenCount(row.metrics.token_usage)}</td>
               <td className="py-3 pr-4">{formatDecimal(row.metrics.latency_ms)} ms</td>
+              <td className="py-3 pr-4">${row.metrics.estimated_cost_usd.toFixed(6)}</td>
               <td className="py-3 pr-4">
                 <Link className="font-medium text-primary" href={`/traces/${row.trace_id}`}>
                   Open
