@@ -51,9 +51,12 @@ def init(path: str, force: bool) -> None:
     Path(config.local_store_dir).mkdir(parents=True, exist_ok=True)
     Path(config.local_store_dir, "reports").mkdir(parents=True, exist_ok=True)
     Path("evals").mkdir(parents=True, exist_ok=True)
-    sample_path = Path("evals") / "sample_questions.json"
+    sample_path = Path("evals") / "questions.json"
     if force or not sample_path.exists():
         sample_path.write_text(json.dumps(SAMPLE_QUESTIONS, indent=2), encoding="utf-8")
+    legacy_sample_path = Path("evals") / "sample_questions.json"
+    if force or not legacy_sample_path.exists():
+        legacy_sample_path.write_text(json.dumps(SAMPLE_QUESTIONS, indent=2), encoding="utf-8")
     SQLiteTraceStore(config.storage_path)
     click.echo("Wrote %s" % config_path)
     click.echo("Initialized local trace store: %s" % config.storage_path)

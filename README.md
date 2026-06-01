@@ -92,6 +92,21 @@ Suggested fix        Add sentence-level citation selection before returning
 Report               .contexttrace/reports/refund_policy_demo.html
 ```
 
+## Canonical Demo Story
+
+Use this failure pattern when explaining ContextTrace:
+
+| Step | Value |
+| --- | --- |
+| Query | How long does refund processing take? |
+| Source chunk | Customers may request a refund within 30 days of purchase. |
+| Bad RAG answer | Customers can request refunds within 30 days, and refunds are processed within 5 business days. |
+| Claim 1 verdict | `directly_supported` |
+| Claim 2 verdict | `unsupported` |
+| Failure type | `unsupported_answer` |
+| Root cause | The answer added a processing-time claim that was not present in the retrieved evidence. |
+| Suggested fix | Require sentence-level citation support before returning the final answer. |
+
 ## SDK Usage
 
 ```python
@@ -224,6 +239,9 @@ contexttrace viewer
 
 The local viewer reads from `.contexttrace/contexttrace.db` and serves pages at `http://localhost:8765`.
 
+## Example Report
+
+![ContextTrace local report](docs/assets/contexttrace-report.png)
 
 ## CLI Commands
 
