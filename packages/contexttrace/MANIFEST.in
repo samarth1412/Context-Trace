@@ -1,0 +1,18 @@
+include README.md
+include pyproject.toml
+include setup.py
+include contexttrace/py.typed
+recursive-include contexttrace *.py
+prune build
+prune dist
+prune tests
+prune .contexttrace
+prune .pytest_cache
+prune contexttrace.egg-info
+global-exclude __pycache__/*
+global-exclude *.py[cod]
+global-exclude *.db
+global-exclude *.sqlite
+global-exclude *.sqlite3
+global-exclude *.log
+global-exclude .env

@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "contexttrace"
 version = "0.1.0"
-description = "SDK-first reliability tracing, citation verification, and diagnostics for RAG and agent applications."
+description = "Local-first SDK and CLI for RAG and agent reliability tracing, citation checks, and failure diagnosis."
 readme = "README.md"
 requires-python = ">=3.8"
 license = { text = "MIT" }
@@ -20,6 +20,8 @@ keywords = [
     "evaluation",
     "observability",
     "agents",
+    "cli",
+    "sqlite",
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",

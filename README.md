@@ -1,7 +1,7 @@
 # ContextTrace: Local-first RAG reliability SDK
 
 [![Build](https://github.com/samarth1412/Context-Trace/actions/workflows/ci.yml/badge.svg)](https://github.com/samarth1412/Context-Trace/actions)
-[![PyPI](https://img.shields.io/badge/pypi-coming_soon-blue)](https://pypi.org/project/contexttrace/)
+[![PyPI](https://img.shields.io/pypi/v/contexttrace.svg)](https://pypi.org/project/contexttrace/)
 [![Python](https://img.shields.io/badge/python-3.8%2B-blue)](packages/contexttrace/pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
@@ -63,7 +63,9 @@ contexttrace report --last --open
 
 This creates `.contexttrace/contexttrace.db`, runs a synthetic demo RAG flow, evaluates the traces, and writes an HTML report under `.contexttrace/reports/`.
 
-If the package is not yet published, install locally:
+## Development Install
+
+For local development from source:
 
 ```bash
 git clone https://github.com/samarth1412/Context-Trace.git

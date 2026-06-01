@@ -17,6 +17,7 @@ def test_cli_init_config_trace_list_and_report(monkeypatch, tmp_path, capsys):
     assert "contexttrace.yaml" in init_output
     assert (tmp_path / "contexttrace.yaml").exists()
     assert (tmp_path / ".contexttrace" / "contexttrace.db").exists()
+    assert (tmp_path / "evals" / "questions.json").exists()
     assert (tmp_path / "evals" / "sample_questions.json").exists()
 
     ct = ContextTrace(config_path="contexttrace.yaml")
