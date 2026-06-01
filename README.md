@@ -5,21 +5,52 @@
 [![Python](https://img.shields.io/badge/python-3.8%2B-blue)](packages/contexttrace/pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-Debug retrieval misses, unsupported claims, citation mismatches, and context failures without uploading your data.
+**Debug RAG failures before users find them.**
 
-ContextTrace is an SDK and CLI for RAG and agent developers. It stores traces locally in SQLite, evaluates citation support, classifies RAG failure modes, and generates local HTML reports you can share in issues, PRs, and regression reviews.
+ContextTrace is a local-first SDK and CLI for evaluating existing RAG and AI agent systems. Instrument your pipeline with the SDK or point the CLI at your RAG API, then get local traces, citation support checks, failure labels, root-cause diagnosis, and HTML reports. No dashboard service is required.
+
+## Core Idea
+
+Most evaluation tools tell you a score. ContextTrace shows the failure path:
+
+```text
+retrieved weak evidence
+  -> selected incomplete context
+  -> generated unsupported claim
+  -> citation mismatch
+  -> suggested fix
+```
+
+The goal is not just to say a RAG answer failed. The goal is to show where the evidence chain broke and what to try next.
 
 ## Why ContextTrace?
 
-RAG systems often fail silently:
+RAG systems often fail in ways that look plausible:
 
-- retrievers miss the source that answers the question
+- the retriever misses the source that answers the question
 - selected context drops the most relevant chunk
 - citations point to evidence that does not support the claim
 - archived or conflicting sources leak into answers
 - agents reuse stale memory or irrelevant tool output
 
-ContextTrace records the evidence path and turns it into an actionable local report.
+ContextTrace records the evidence path and turns it into a local report with concrete fixes to try next.
+
+## What ContextTrace Catches
+
+| Failure | Example |
+| --- | --- |
+| `retrieval_miss` | The refund policy exists, but the retriever only returns shipping terms. |
+| `citation_mismatch` | The answer cites `refund_policy.md`, but the cited chunk only explains exchanges. |
+| `unsupported_answer` | The answer claims "refunds are processed in 2 days" when no source says that. |
+| `should_have_abstained` | The user asks about a loyalty exception that is not in the documents, but the model invents one. |
+| `conflicting_sources` | Current policy says 30 days, while an archived memo says 14 days. |
+| `stale_memory_used` | An agent uses an old customer-policy memory instead of the latest retrieved context. |
+
+## Requirements
+
+- Python 3.8+
+- Optional LLM judge provider API key
+- No hosted backend required
 
 ## Quickstart
 
@@ -30,7 +61,36 @@ contexttrace demo --dataset refund_policy
 contexttrace report --last --open
 ```
 
-This creates `.contexttrace/contexttrace.db`, runs a synthetic demo RAG flow, and writes an HTML report under `.contexttrace/reports/`.
+This creates `.contexttrace/contexttrace.db`, runs a synthetic demo RAG flow, evaluates the traces, and writes an HTML report under `.contexttrace/reports/`.
+
+If the package is not yet published, install locally:
+
+```bash
+git clone https://github.com/samarth1412/Context-Trace.git
+cd Context-Trace
+pip install -e packages/contexttrace
+```
+
+## Example Output
+
+```text
+$ contexttrace demo --dataset refund_policy
+
+Dataset              refund_policy
+Questions tested     10
+Reliability score    72/100
+Failure rate         0.30
+Citation support     0.81
+Top failures         citation_mismatch: 2
+                     unsupported_answer: 1
+                     retrieval_miss: 1
+Worst trace          trace_8f31c2
+Root cause           The answer cited the exchange policy, but the claim was
+                     about refund processing time.
+Suggested fix        Add sentence-level citation selection before returning
+                     the final answer.
+Report               .contexttrace/reports/refund_policy_demo.html
+```
 
 ## SDK Usage
 
@@ -43,19 +103,23 @@ with ct.trace(query="What is the refund policy?") as trace:
     chunks = retriever.search("What is the refund policy?")
     trace.log_retrieval(chunks)
     trace.log_context(chunks[:5])
+
     answer = llm.generate("What is the refund policy?", chunks[:5])
     trace.log_answer(answer, usage={"total_tokens": 1200})
     trace.log_citations([
         {"claim": "Refunds are available within 30 days.", "source_chunk_id": "chunk_12"}
     ])
-    trace.evaluate()
+
+    result = trace.evaluate()
+    print(result["failure"]["failure_type"])
+    print(result["failure"]["suggested_fix"])
 ```
 
 No backend server is required unless you explicitly configure one.
 
-## BYO RAG Endpoint
+## Evaluate Your Own RAG API
 
-Evaluate an existing API without adding SDK code:
+Evaluate an existing RAG endpoint without adding SDK code:
 
 ```bash
 contexttrace eval \
@@ -70,7 +134,50 @@ contexttrace eval \
   --fail-on "citation_support<0.80"
 ```
 
+Expected endpoint response shape:
+
+```json
+{
+  "answer": "Refunds are available within 30 days.",
+  "contexts": [
+    {
+      "id": "refund_policy_1",
+      "text": "Customers may request a refund within 30 days of purchase.",
+      "source": "refund_policy.md"
+    }
+  ],
+  "citations": [
+    {
+      "claim": "Refunds are available within 30 days.",
+      "source_chunk_id": "refund_policy_1"
+    }
+  ]
+}
+```
+
 ContextTrace calls your endpoint, maps the JSON response, creates local traces, evaluates them, and writes a report.
+
+## How ContextTrace Is Different
+
+ContextTrace complements existing evaluation and observability tools. It focuses on local, RAG-specific diagnosis rather than replacing broader tracing or benchmark frameworks.
+
+| Tool Category | Primary Strength | ContextTrace Focus |
+| --- | --- | --- |
+| RAGAS / DeepEval | Scoring and eval metrics | Local evidence traces, citation support, failure taxonomy, suggested fixes |
+| LangSmith | General LLM app tracing | RAG-specific root-cause diagnosis for retrieval, context, citations, and agents |
+| Phoenix / TruLens | Observability and evaluation | Local-first reports with claim-to-source checks and actionable failure labels |
+| ContextTrace | RAG and agent reliability debugging | Local SQLite traces, BYO endpoint eval, citation verification, failure diagnosis, CI regression checks |
+
+## When Should You Use ContextTrace?
+
+Use ContextTrace when:
+
+- you already built a RAG app and need to debug quality issues
+- you want to test whether citations actually support answer claims
+- you need local reports for private documents or internal policies
+- you want CI regression checks for retrieval or prompt changes
+- you want root-cause diagnosis instead of only aggregate scores
+- you want a lightweight way to inspect agent tool, memory, and retrieval events
 
 ## Failure Taxonomy
 
@@ -87,6 +194,15 @@ RAG failure labels include:
 - `should_have_abstained`
 - `query_needs_decomposition`
 
+Agent-oriented labels include:
+
+- `wrong_tool_used`
+- `tool_error`
+- `stale_memory_used`
+- `missing_memory`
+- `excessive_tool_calls`
+- `agent_loop_detected`
+
 Each report includes severity, root cause, and suggested fix.
 
 ## Local Reports
@@ -98,8 +214,21 @@ Reports include:
 - citation verdicts and unsupported claims
 - failure breakdown and suggested fixes
 - token, cost, and latency metrics when logged
+- strategy comparison or eval summary when available
 
-Placeholder assets live in [docs/assets](docs/assets/) until final screenshots are captured.
+Open recent traces locally:
+
+```bash
+contexttrace viewer
+```
+
+The local viewer reads from `.contexttrace/contexttrace.db` and serves pages at `http://localhost:8765`.
+
+## Example Report
+
+![ContextTrace local report](docs/assets/contexttrace-report.png)
+
+Screenshots and GIFs should show terminal output, citation verdicts, and failure diagnosis so users can understand the debugging workflow without reading the code.
 
 ## CLI Commands
 
@@ -126,7 +255,13 @@ contexttrace doctor
 
 ## Privacy And Local Mode
 
-Local mode is the default. Trace data is written to `.contexttrace/contexttrace.db`. ContextTrace makes no network calls unless you configure an LLM judge provider or point the CLI at your RAG endpoint.
+Local mode is the default. Trace data is written to:
+
+```text
+.contexttrace/contexttrace.db
+```
+
+ContextTrace does not require a hosted dashboard. It makes no network calls unless you configure an LLM judge provider or run endpoint evaluation against a RAG API you provide.
 
 Privacy controls:
 
@@ -162,16 +297,11 @@ The action uploads the HTML report and writes a GitHub markdown summary.
 ## Architecture
 
 ```text
-RAG app / agent / endpoint
-    |
-    | SDK, integrations, or CLI eval
-    v
-packages/contexttrace
-    |-- local SQLite store: .contexttrace/contexttrace.db
-    |-- citation and failure diagnostics
-    |-- HTML report generator
-    |-- local viewer: http://localhost:8765
-    |-- optional API transport
+User RAG app / agent / endpoint
+  -> SDK / CLI / integrations
+  -> local SQLite trace store
+  -> citation verifier + failure analyzer
+  -> local HTML report / viewer
 ```
 
 Repository layout:
@@ -185,13 +315,29 @@ docs                    Developer documentation
 examples                SDK and endpoint examples
 ```
 
+## Limitations
+
+- ContextTrace is diagnostic, not a guarantee of correctness.
+- LLM-judge outputs should be reviewed for high-stakes workflows.
+- ContextTrace complements existing eval and observability tools; it does not replace them.
+
 ## Roadmap
 
-- stronger configurable local judge providers
-- richer local viewer filtering
-- more public demo datasets
-- packaged benchmark fixtures
-- optional hosted mode as an add-on, not a requirement
+- richer local viewer
+- more demo datasets
+- stronger agent trace diagnostics
+- more judge provider adapters
+- optional remote API mode later
+
+## Try It
+
+```bash
+contexttrace demo --dataset refund_policy
+contexttrace eval --dataset evals/questions.json --endpoint http://localhost:8000/query
+contexttrace report --last --open
+```
+
+Try the demo, run it on your RAG endpoint, then open the report.
 
 ## Contributing
 
