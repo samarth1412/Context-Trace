@@ -76,6 +76,30 @@ contexttrace eval \
   --fail-on "failure_rate>0.25"
 ```
 
+## Claim-Level Evidence Verification
+
+Verify a portable RAG trace artifact without a hosted dashboard:
+
+```bash
+contexttrace verify-demo unsupported_claim --report
+contexttrace verify trace.json
+contexttrace verify trace.json --json
+contexttrace verify trace.json --report --out reports/example.html
+contexttrace verify trace.json --mode semantic
+contexttrace verify trace.json --fail-on unsupported --fail-on citation_mismatch
+contexttrace verify-benchmark --mode semantic
+```
+
+Input requires `query`, `answer`, and `contexts` with `id` and `text`. Optional `citations` are checked to catch cited sources that do not actually support the matched claim.
+
+`verify-demo` uses bundled demo traces, so it works immediately after `pip install contexttrace`. Available demos include `unsupported_claim`, `partial_support`, `citation_mismatch`, `should_abstain`, and `supported_answer`.
+
+Use `--mode semantic` for local paraphrase-aware matching, and `verify-benchmark` to inspect bundled precision/recall metrics.
+
+ContextTrace verifies whether each generated claim is actually supported by retrieved evidence. Instead of only showing a trace or a score, it tells you where the evidence chain broke: unsupported claim, citation mismatch, insufficient context, or should-have-abstained.
+
+The v0.2.0 verifier uses local lexical heuristics by default. Claim extraction is rule-based, contradiction detection is conservative, and semantic or LLM-judge support can be added later.
+
 ## What It Catches
 
 - `retrieval_miss`

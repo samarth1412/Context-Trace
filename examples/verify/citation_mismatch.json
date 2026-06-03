@@ -1,0 +1,35 @@
+{
+  "query": "What is the current refund window?",
+  "answer": "Refunds are allowed within 30 days of purchase.",
+  "contexts": [
+    {
+      "id": "policy_2024",
+      "text": "Customers may exchange eligible items within 14 days of purchase. This archived memo does not define the current refund window.",
+      "metadata": {
+        "source": "archived_exchange_policy.pdf",
+        "page": 1,
+        "version": "2024"
+      }
+    },
+    {
+      "id": "policy_2026",
+      "text": "Customers may request refunds within 30 days of purchase.",
+      "metadata": {
+        "source": "refund_policy.pdf",
+        "page": 2,
+        "version": "2026"
+      }
+    }
+  ],
+  "citations": [
+    {
+      "claim": "Refunds are allowed within 30 days of purchase.",
+      "source_id": "policy_2024"
+    }
+  ],
+  "metadata": {
+    "model": "demo-rag",
+    "retriever": "hybrid_top_5",
+    "run_id": "golden_citation_mismatch"
+  }
+}

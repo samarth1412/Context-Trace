@@ -63,6 +63,62 @@ contexttrace report --last --open
 
 This creates `.contexttrace/contexttrace.db`, runs a synthetic demo RAG flow, evaluates the traces, and writes an HTML report under `.contexttrace/reports/`.
 
+## Claim-Level Evidence Verification
+
+Citations are not always grounding.
+
+ContextTrace can verify whether each generated claim is actually supported by retrieved evidence:
+
+```bash
+contexttrace verify-demo unsupported_claim --report
+```
+
+It checks:
+
+- supported claims
+- partially supported claims
+- unsupported claims
+- citation mismatches
+- contradicted or unverifiable claims
+- whether the model should have abstained
+
+Instead of only saying an answer is low quality, ContextTrace shows where the evidence chain broke.
+
+The bundled demos work after `pip install contexttrace`. If you are using a cloned repository, the same golden traces are also available as JSON files under `examples/verify/`.
+
+Short input example:
+
+```json
+{
+  "query": "How long does refund processing take?",
+  "answer": "Refunds are processed within 5 business days.",
+  "contexts": [
+    {
+      "id": "policy_2026",
+      "text": "Customers may request refunds within 30 days of purchase."
+    }
+  ]
+}
+```
+
+Short output example:
+
+```json
+{
+  "summary": {
+    "total_claims": 1,
+    "supported": 0,
+    "unsupported": 1,
+    "support_rate": 0.0,
+    "unsupported_claim_rate": 1.0,
+    "failure_type": "should_have_abstained",
+    "failure_types": ["should_have_abstained", "unsupported_answer"],
+    "should_abstain": true,
+    "suggested_fix": "Add an abstention rule: when retrieved contexts do not support the requested fact, say the information is unavailable instead of generating a factual answer."
+  }
+}
+```
+
 ## Development Install
 
 For local development from source:
@@ -174,6 +230,172 @@ Expected endpoint response shape:
 
 ContextTrace calls your endpoint, maps the JSON response, creates local traces, evaluates them, and writes a report.
 
+## Verification CLI Details
+
+ContextTrace verifies whether each generated claim is actually supported by retrieved evidence. Instead of only showing a trace or a score, it tells you where the evidence chain broke: unsupported claim, citation mismatch, insufficient context, or should-have-abstained.
+
+This solves a common RAG failure: an answer can look cited even when the cited source does not actually support the claim. `contexttrace verify` checks a portable JSON artifact that most RAG systems can already emit:
+
+```text
+query -> retrieved contexts -> answer -> claims -> citations -> support verdicts
+```
+
+Install ContextTrace:
+
+```bash
+pip install contexttrace
+```
+
+Example input:
+
+```json
+{
+  "query": "How long does refund processing take?",
+  "answer": "Refunds are processed within 5 business days.",
+  "contexts": [
+    {
+      "id": "policy_2026",
+      "text": "Customers may request refunds within 30 days of purchase.",
+      "metadata": {
+        "source": "refund_policy.pdf",
+        "page": 2
+      }
+    }
+  ],
+  "metadata": {
+    "model": "gpt-4.1",
+    "retriever": "hybrid_top_5"
+  }
+}
+```
+
+CLI usage:
+
+```bash
+contexttrace verify trace.json
+contexttrace verify trace.json --json
+contexttrace verify trace.json --report
+contexttrace verify trace.json --report --out reports/example.html
+contexttrace verify trace.json --mode semantic
+contexttrace verify trace.json --fail-on unsupported --fail-on citation_mismatch
+contexttrace verify-benchmark --mode semantic
+```
+
+Run a bundled demo:
+
+```bash
+contexttrace verify-demo unsupported_claim --report
+```
+
+Run a repo-relative JSON example from a source checkout:
+
+```bash
+contexttrace verify examples/verify/unsupported_claim.json --report
+```
+
+Example JSON output:
+
+```json
+{
+  "query": "How long does refund processing take?",
+  "answer": "Refunds are processed within 5 business days.",
+  "summary": {
+    "total_claims": 1,
+    "supported": 0,
+    "unsupported": 1,
+    "contradicted": 0,
+    "unverifiable": 0,
+    "support_rate": 0.0,
+    "unsupported_claim_rate": 1.0,
+    "citation_mismatches": 1,
+    "should_abstain": true,
+    "failure_type": "should_have_abstained",
+    "failure_types": ["should_have_abstained", "unsupported_answer"],
+    "suggested_fix": "Add an abstention rule: when retrieved contexts do not support the requested fact, say the information is unavailable instead of generating a factual answer."
+  },
+  "claims": [
+    {
+      "claim_id": "claim_1",
+      "claim": "Refunds are processed within 5 business days.",
+      "verdict": "unsupported",
+      "confidence": 0.819,
+      "best_context_id": "policy_2026",
+      "best_context_text": "Customers may request refunds within 30 days of purchase.",
+      "best_score": 0.181,
+      "evidence": "Customers may request refunds within 30 days of purchase.",
+      "matched_terms": ["refunds", "days"],
+      "reason": "No retrieved context has enough lexical overlap to support the claim.",
+      "citation_status": "claim_has_no_citation",
+      "citation_source_id": null
+    }
+  ],
+  "abstention": {
+    "should_abstain": true,
+    "reason": "The answer contains factual claims, but most important claims are unsupported or contradicted by the retrieved contexts."
+  },
+  "diagnostics": {
+    "failure_type": "should_have_abstained",
+    "failure_types": ["should_have_abstained", "unsupported_answer"],
+    "suggested_fix": "Add an abstention rule: when retrieved contexts do not support the requested fact, say the information is unavailable instead of generating a factual answer."
+  },
+  "metadata": {
+    "model": "gpt-4.1",
+    "retriever": "hybrid_top_5"
+  }
+}
+```
+
+The local HTML report is self-contained and includes a reliability summary, claim support overview, unsupported claims, citation mismatches, retrieved contexts, developer-friendly failure explanations, and a raw JSON summary. Report placeholder: `contexttrace verify-demo unsupported_claim --report --out reports/example.html`.
+
+Verdict meanings:
+
+- `supported`: strong local lexical evidence overlap with a retrieved context.
+- `partially_supported`: the context supports some terms or details, but not the complete claim.
+- `unsupported`: no retrieved context has enough evidence for the claim.
+- `unverifiable`: some evidence overlaps, but it is weak or ambiguous.
+- `contradicted`: conservative detection found explicit negation or conflicting numeric/date values.
+
+CI failure gates:
+
+- `unsupported`
+- `partial_support`
+- `citation_mismatch`
+- `should_abstain`
+- `contradicted`
+- `unverifiable`
+- `no_citation`
+- `any_failure`
+
+Verification modes:
+
+- `lexical`: default deterministic token and phrase overlap.
+- `semantic`: local paraphrase-aware normalization for common RAG support cases such as refund vs money back, order number vs order ID, and numeric words vs digits.
+
+Run the bundled precision/recall benchmark:
+
+```bash
+contexttrace verify-benchmark --mode lexical
+contexttrace verify-benchmark --mode semantic --json
+```
+
+The benchmark reports exact-match rate and per-label precision, recall, and F1 for supported, unsupported, partial-support, citation-mismatch, abstention, and contradiction cases.
+
+Citation statuses:
+
+- `citation_ok`
+- `cited_source_missing`
+- `cited_source_does_not_support_claim`
+- `claim_has_no_citation`
+
+Limitations:
+
+- v0.2.0 uses local lexical heuristics by default.
+- Semantic mode uses local normalization, not embedding or LLM reasoning.
+- Optional embedding or LLM-judge support can come later.
+- Contradiction detection is conservative.
+- Claim extraction is rule-based initially.
+- This is best for debugging and is not a replacement for human review in high-stakes domains.
+
 ## How ContextTrace Is Different
 
 ContextTrace complements existing evaluation and observability tools. It focuses on local, RAG-specific diagnosis rather than replacing broader tracing or benchmark frameworks.
@@ -253,6 +475,8 @@ contexttrace status
 contexttrace demo --dataset refund_policy
 contexttrace traces list
 contexttrace traces show <trace_id>
+contexttrace verify-demo unsupported_claim --report
+contexttrace verify examples/verify/unsupported_claim.json --report
 contexttrace report --last --open
 contexttrace viewer
 contexttrace benchmark --dataset datasets/demo/refund_policy

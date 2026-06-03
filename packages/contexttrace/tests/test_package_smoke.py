@@ -1,11 +1,11 @@
-from importlib import metadata
+from pathlib import Path
 
 import contexttrace
 from contexttrace import AsyncContextTrace, ContextTrace, ReliabilityScorer
 
 
 def test_package_exports_core_public_api():
-    assert contexttrace.__version__ == "0.1.0"
+    assert contexttrace.__version__ == "0.2.0"
     assert ContextTrace is not None
     assert AsyncContextTrace is not None
     assert ReliabilityScorer().score(
@@ -15,10 +15,7 @@ def test_package_exports_core_public_api():
     ).grade == "A"
 
 
-def test_installed_distribution_metadata_when_available():
-    try:
-        version = metadata.version("contexttrace")
-    except metadata.PackageNotFoundError:
-        version = contexttrace.__version__
+def test_source_distribution_metadata_matches_public_version():
+    pyproject = Path(__file__).parents[1] / "pyproject.toml"
 
-    assert version == contexttrace.__version__
+    assert 'version = "%s"' % contexttrace.__version__ in pyproject.read_text(encoding="utf-8")

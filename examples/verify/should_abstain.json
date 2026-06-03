@@ -1,0 +1,19 @@
+{
+  "query": "What refund exception applies to VIP customers?",
+  "answer": "VIP customers receive cash refunds up to 90 days after purchase.",
+  "contexts": [
+    {
+      "id": "shipping_policy",
+      "text": "Standard shipping takes 3 to 5 business days. Expedited shipping is available for eligible orders.",
+      "metadata": {
+        "source": "shipping_policy.pdf",
+        "page": 4
+      }
+    }
+  ],
+  "metadata": {
+    "model": "demo-rag",
+    "retriever": "keyword_top_3",
+    "run_id": "golden_should_abstain"
+  }
+}

@@ -22,6 +22,15 @@ from contexttrace.regression import BENCHMARK_STRATEGIES, run_local_benchmark
 from contexttrace.report import ReportGenerator
 from contexttrace.storage import SQLiteTraceStore
 from contexttrace.thresholds import parse_thresholds, threshold_failures
+from contexttrace.verify import (
+    VerificationInputError,
+    list_verify_demos,
+    load_trace_file,
+    load_verify_demo,
+    verify_trace,
+)
+from contexttrace.verify.benchmark import run_verify_benchmark
+from contexttrace.verify.report import VerifyReportGenerator
 from contexttrace.viewer import serve_viewer
 
 
@@ -196,6 +205,214 @@ def report(
     click.echo("Wrote %s" % written)
     if open_browser:
         webbrowser.open(Path(written).resolve().as_uri())
+
+
+@cli.command("verify")
+@click.argument("trace_json")
+@click.option("--json", "json_output", is_flag=True, help="Print the full verification result as JSON.")
+@click.option("--report", is_flag=True, help="Generate a local HTML verification report.")
+@click.option("--out", default=None, help="HTML report path. Implies --report when provided.")
+@click.option("--mode", default="lexical", show_default=True, type=click.Choice(["lexical", "semantic"]), help="Evidence scoring mode.")
+@click.option("--fail-on", multiple=True, help="Fail on unsupported, partial_support, citation_mismatch, should_abstain, contradicted, unverifiable, no_citation, or any_failure.")
+def verify_command(
+    trace_json: str,
+    json_output: bool,
+    report: bool,
+    out: Optional[str],
+    mode: str,
+    fail_on: tuple[str, ...],
+) -> int:
+    """Verify claim-level evidence support for a portable RAG trace JSON file."""
+
+    try:
+        trace = load_trace_file(trace_json)
+    except VerificationInputError as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    result = verify_trace(trace, mode=mode)
+    written_report = _write_verify_report(
+        result,
+        trace,
+        report=report,
+        out=out,
+        default_name="%s_verify.html" % Path(trace_json).stem,
+    )
+    return _print_verify_result(
+        result,
+        json_output=json_output,
+        written_report=written_report,
+        fail_on=fail_on,
+    )
+
+
+@cli.command("verify-demo")
+@click.argument("demo_name", required=False, default="unsupported_claim")
+@click.option("--json", "json_output", is_flag=True, help="Print the full verification result as JSON.")
+@click.option("--report", is_flag=True, help="Generate a local HTML verification report.")
+@click.option("--out", default=None, help="HTML report path. Implies --report when provided.")
+@click.option("--mode", default="lexical", show_default=True, type=click.Choice(["lexical", "semantic"]), help="Evidence scoring mode.")
+@click.option("--fail-on", multiple=True, help="Fail on unsupported, partial_support, citation_mismatch, should_abstain, contradicted, unverifiable, no_citation, or any_failure.")
+def verify_demo_command(
+    demo_name: str,
+    json_output: bool,
+    report: bool,
+    out: Optional[str],
+    mode: str,
+    fail_on: tuple[str, ...],
+) -> int:
+    """Run a bundled claim-level verification demo."""
+
+    try:
+        trace = load_verify_demo(demo_name)
+    except KeyError as exc:
+        raise click.ClickException(
+            "Unknown verify demo %s. Available demos: %s"
+            % (demo_name, ", ".join(list_verify_demos()))
+        ) from exc
+
+    result = verify_trace(trace, mode=mode)
+    written_report = _write_verify_report(
+        result,
+        trace,
+        report=report,
+        out=out,
+        default_name="%s_verify_demo.html" % demo_name,
+    )
+    return _print_verify_result(
+        result,
+        json_output=json_output,
+        written_report=written_report,
+        fail_on=fail_on,
+    )
+
+
+@cli.command("verify-benchmark")
+@click.option("--mode", default="lexical", show_default=True, type=click.Choice(["lexical", "semantic"]), help="Evidence scoring mode.")
+@click.option("--json", "json_output", is_flag=True, help="Print benchmark results as JSON.")
+def verify_benchmark_command(mode: str, json_output: bool) -> int:
+    """Run the bundled verification precision/recall benchmark."""
+
+    result = run_verify_benchmark(mode=mode)
+    if json_output:
+        click.echo(json.dumps(result, indent=2))
+        return 0
+
+    click.echo("Mode: %s" % result["mode"])
+    click.echo("Cases: %s" % result["cases"])
+    click.echo("Exact match rate: %.3f" % float(result["exact_match_rate"]))
+    click.echo("label\tprecision\trecall\tf1\ttp\tfp\tfn")
+    for label, metrics in result["per_label"].items():
+        click.echo(
+            "%s\t%.3f\t%.3f\t%.3f\t%s\t%s\t%s"
+            % (
+                label,
+                float(metrics["precision"]),
+                float(metrics["recall"]),
+                float(metrics["f1"]),
+                metrics["tp"],
+                metrics["fp"],
+                metrics["fn"],
+            )
+        )
+    missed = [row for row in result["rows"] if not row["exact_match"]]
+    if missed:
+        click.echo("Mismatches:")
+        for row in missed:
+            click.echo(
+                "- %s expected=%s predicted=%s"
+                % (row["id"], ",".join(row["expected"]), ",".join(row["predicted"]))
+            )
+    return 0
+
+
+def _write_verify_report(
+    result: dict,
+    trace: object,
+    *,
+    report: bool,
+    out: Optional[str],
+    default_name: str,
+) -> Optional[str]:
+    if not report and not out:
+        return None
+    output_path = out or str(Path(".contexttrace") / "reports" / default_name)
+    return VerifyReportGenerator().generate(result, trace, path=output_path)
+
+
+def _print_verify_result(
+    result: dict,
+    *,
+    json_output: bool,
+    written_report: Optional[str],
+    fail_on: tuple[str, ...] = (),
+) -> int:
+    fail_messages = _verify_failures(result, fail_on)
+    if json_output:
+        if written_report:
+            click.echo("Report: %s" % written_report, err=True)
+        click.echo(json.dumps(result, indent=2))
+        for message in fail_messages:
+            click.echo("Verification failed: %s" % message, err=True)
+        return 1 if fail_messages else 0
+    summary = result["summary"]
+    click.echo("Claims verified: %s" % summary["total_claims"])
+    click.echo(
+        "Supported: {supported} | Partial: {partially_supported} | Unsupported: {unsupported} | Unverifiable: {unverifiable} | Contradicted: {contradicted}".format(
+            **summary
+        )
+    )
+    click.echo("Support rate: %.3f" % float(summary["support_rate"]))
+    click.echo("Unsupported claim rate: %.3f" % float(summary["unsupported_claim_rate"]))
+    click.echo("Citation mismatches: %s" % summary["citation_mismatches"])
+    click.echo("Failure type: %s" % summary["failure_type"])
+    click.echo("Should abstain: %s" % str(summary["should_abstain"]).lower())
+    click.echo("Suggested fix: %s" % summary["suggested_fix"])
+    if written_report:
+        click.echo("Report: %s" % written_report)
+    for message in fail_messages:
+        click.echo("Verification failed: %s" % message, err=True)
+    return 1 if fail_messages else 0
+
+
+def _verify_failures(result: dict, fail_on: tuple[str, ...]) -> list[str]:
+    if not fail_on:
+        return []
+    summary = result.get("summary") or {}
+    claims = result.get("claims") or []
+    failure_types = set(summary.get("failure_types") or [])
+    messages = []
+    for raw_rule in fail_on:
+        rule = raw_rule.strip().lower().replace("-", "_")
+        if rule == "unsupported" and int(summary.get("unsupported") or 0) > 0:
+            messages.append("unsupported claim detected")
+        elif rule in {"partial", "partial_support", "partially_supported"} and int(summary.get("partially_supported") or 0) > 0:
+            messages.append("partially supported claim detected")
+        elif rule == "citation_mismatch" and "citation_mismatch" in failure_types:
+            messages.append("citation mismatch detected")
+        elif rule == "should_abstain" and bool(summary.get("should_abstain")):
+            messages.append("answer should have abstained")
+        elif rule == "contradicted" and int(summary.get("contradicted") or 0) > 0:
+            messages.append("contradicted claim detected")
+        elif rule == "unverifiable" and int(summary.get("unverifiable") or 0) > 0:
+            messages.append("unverifiable claim detected")
+        elif rule == "no_citation" and any(claim.get("citation_status") == "claim_has_no_citation" for claim in claims):
+            messages.append("claim without citation detected")
+        elif rule == "any_failure" and failure_types != {"no_failure_detected"}:
+            messages.append("verification failure detected")
+        elif rule not in {
+            "unsupported",
+            "partial",
+            "partial_support",
+            "partially_supported",
+            "citation_mismatch",
+            "should_abstain",
+            "contradicted",
+            "unverifiable",
+            "no_citation",
+            "any_failure",
+        }:
+            messages.append("unknown --fail-on rule %s" % raw_rule)
+    return messages
 
 
 @cli.command("eval")

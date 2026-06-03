@@ -1,0 +1,30 @@
+{
+  "query": "What is the refund policy?",
+  "answer": "Refunds are allowed within 30 days of purchase. Refund requests must include an order number.",
+  "contexts": [
+    {
+      "id": "policy_2026",
+      "text": "Customers may request refunds within 30 days of purchase. Refund requests must include an order number.",
+      "metadata": {
+        "source": "refund_policy.pdf",
+        "page": 2,
+        "version": "2026"
+      }
+    }
+  ],
+  "citations": [
+    {
+      "claim": "Refunds are allowed within 30 days of purchase.",
+      "source_id": "policy_2026"
+    },
+    {
+      "claim": "Refund requests must include an order number.",
+      "source_id": "policy_2026"
+    }
+  ],
+  "metadata": {
+    "model": "demo-rag",
+    "retriever": "hybrid_top_5",
+    "run_id": "golden_supported_answer"
+  }
+}

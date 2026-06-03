@@ -1,0 +1,20 @@
+{
+  "query": "What refund details apply?",
+  "answer": "Refunds within 30 days require manager approval.",
+  "contexts": [
+    {
+      "id": "policy_2026",
+      "text": "Customers may request refunds within 30 days of purchase.",
+      "metadata": {
+        "source": "refund_policy.pdf",
+        "page": 2,
+        "version": "2026"
+      }
+    }
+  ],
+  "metadata": {
+    "model": "demo-rag",
+    "retriever": "hybrid_top_5",
+    "run_id": "demo_partial_support"
+  }
+}
