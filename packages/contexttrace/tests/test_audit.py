@@ -42,7 +42,22 @@ def test_audit_detects_retrieval_miss_when_corpus_has_support(tmp_path):
 
     assert result["summary"]["primary_audit_label"] == "retrieval_miss"
     assert result["summary"]["retrieval_miss"] == 1
+    assert result["summary"]["failure_stages"] == {"retrieval": 1}
+    assert result["summary"]["retrieval_change_claims"] == 1
+    assert result["summary"]["top_recommended_actions"][0]["action"].startswith("Increase retrieval recall")
     assert result["claims"][0]["corpus"]["verdict"] == "supported"
+    assert result["claims"][0]["failure_stage"] == "retrieval"
+    assert result["claims"][0]["evidence_status"] == "support_found_in_corpus_not_retrieved"
+    assert result["claims"][0]["failure_path"] == [
+        "claim",
+        "retrieved_contexts",
+        "corpus_check",
+        "retrieval",
+        "support_found_in_corpus_not_retrieved",
+    ]
+    assert result["claims"][0]["diagnostic_signals"]["corpus_best_document_id"] == "contexttrace_local_mode.md"
+    assert result["claims"][0]["recommended_actions"]
+    assert "Support was found in contexttrace_local_mode.md" in result["claims"][0]["developer_summary"]
     assert "broader corpus contains evidence" in result["claims"][0]["reason"]
 
 
@@ -200,6 +215,8 @@ def test_audit_report_generation(tmp_path):
     html = report_path.read_text(encoding="utf-8")
     assert "ContextTrace Retrieval Audit Report" in html
     assert "Audit Summary" in html
+    assert "Prioritized Next Actions" in html
+    assert "Failure stage" in html
     assert "Retrieval Misses" in html
     assert "Raw JSON Summary" in html
 
@@ -275,3 +292,5 @@ def test_audit_cli_plain_output(tmp_path, capsys):
     output = capsys.readouterr().out
     assert "Primary audit label: retrieval_miss" in output
     assert "Retrieval misses: 1" in output
+    assert "Failure stages: retrieval=1" in output
+    assert "Top actions:" in output

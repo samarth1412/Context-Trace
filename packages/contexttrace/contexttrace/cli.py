@@ -12,6 +12,8 @@ from typing import Optional
 import click
 
 from contexttrace._version import __version__
+from contexttrace.capture import write_rag_trace
+from contexttrace.capture_endpoint import capture_endpoint_trace, capture_response_trace
 from contexttrace.client import ContextTrace
 from contexttrace.config import ContextTraceConfig, load_config, write_default_config
 from contexttrace.demo import run_demo_dataset
@@ -354,7 +356,7 @@ def verify_benchmark_command(mode: str, case_set: str, json_output: bool, report
 @click.option("--report", is_flag=True, help="Generate a local HTML audit benchmark report.")
 @click.option("--out", default=None, help="HTML audit benchmark report path. Implies --report when provided.")
 def audit_benchmark_command(mode: str, case_set: str, json_output: bool, report: bool, out: Optional[str]) -> int:
-    """Run the bundled real-case retrieval audit benchmark."""
+    """Run the bundled public-source retrieval audit benchmark."""
 
     try:
         result = run_audit_benchmark(mode=mode, case_set=case_set)
@@ -513,11 +515,220 @@ def audit_command(
     click.echo("Corpus gaps: %s" % summary["corpus_gap"])
     click.echo("Answer overreach: %s" % summary["answer_overreach"])
     click.echo("Insufficient context: %s" % summary["insufficient_context"])
+    stages = summary.get("failure_stages") or {}
+    if stages:
+        click.echo(
+            "Failure stages: %s"
+            % ", ".join("%s=%s" % (stage, count) for stage, count in sorted(stages.items()))
+        )
+    actions = list(summary.get("top_recommended_actions") or [])
+    if actions:
+        click.echo("Top actions:")
+        for action in actions[:3]:
+            click.echo("- %s claim(s): %s" % (action.get("claims"), action.get("action")))
     if written_report:
         click.echo("Report: %s" % written_report)
     for message in fail_messages:
         click.echo("Audit failed: %s" % message, err=True)
     return 1 if fail_messages else 0
+
+
+@cli.group("capture")
+def capture_group() -> None:
+    """Capture RAG artifacts into portable verification traces."""
+
+
+@capture_group.command("endpoint")
+@click.option("--endpoint", default=None, help="RAG endpoint URL. Defaults to config eval_endpoint.")
+@click.option("--query", required=True, help="Question to send to the RAG endpoint.")
+@click.option("--method", default="POST", type=click.Choice(["GET", "POST"], case_sensitive=False), help="Endpoint method.")
+@click.option("--input-key", default="question", show_default=True, help="Request body/query key for the question.")
+@click.option("--answer-path", default="$.answer", show_default=True, help="JSONPath for answer extraction.")
+@click.option("--contexts-path", default="$.contexts", show_default=True, help="JSONPath for context extraction.")
+@click.option("--citations-path", default="$.citations", show_default=True, help="JSONPath for citation extraction.")
+@click.option("--metadata-path", default="$.metadata", show_default=True, help="JSONPath for response metadata extraction.")
+@click.option("--body-template", default=None, help="JSON body template. Use {{query}} where the question should be inserted.")
+@click.option("--endpoint-header", multiple=True, help="Header formatted as Name:Value. May be repeated.")
+@click.option("--timeout", default=30.0, show_default=True, type=float, help="Request timeout.")
+@click.option("--out", default=".contexttrace/traces/captured_endpoint_trace.json", show_default=True, help="Portable trace JSON output path.")
+@click.option("--verify", "verify_output", is_flag=True, help="Run claim-level verification after capture.")
+@click.option("--json", "json_output", is_flag=True, help="Print capture output as JSON.")
+@click.option("--report", is_flag=True, help="Generate a local HTML verification report. Implies --verify.")
+@click.option("--report-out", default=None, help="HTML report path. Implies --report and --verify when provided.")
+@click.option("--mode", default="lexical", show_default=True, type=click.Choice(["lexical", "semantic"]), help="Evidence scoring mode when verifying.")
+@click.option("--fail-on", multiple=True, help="Verification fail rule. Implies --verify.")
+@click.pass_context
+def capture_endpoint_command(
+    ctx: click.Context,
+    endpoint: Optional[str],
+    query: str,
+    method: str,
+    input_key: str,
+    answer_path: str,
+    contexts_path: str,
+    citations_path: str,
+    metadata_path: str,
+    body_template: Optional[str],
+    endpoint_header: tuple[str, ...],
+    timeout: float,
+    out: str,
+    verify_output: bool,
+    json_output: bool,
+    report: bool,
+    report_out: Optional[str],
+    mode: str,
+    fail_on: tuple[str, ...],
+) -> int:
+    """Capture one live endpoint response as `contexttrace verify` JSON."""
+
+    config = _load(ctx)
+    resolved_endpoint = endpoint or config.eval_endpoint
+    if not resolved_endpoint:
+        raise click.ClickException("--endpoint or eval_endpoint in contexttrace.yaml is required.")
+    try:
+        body = json.loads(body_template) if body_template else None
+        captured = capture_endpoint_trace(
+            endpoint=resolved_endpoint,
+            query=query,
+            method=method,
+            headers=_parse_headers(list(endpoint_header)),
+            body_template=body,
+            input_key=input_key,
+            answer_path=answer_path,
+            contexts_path=contexts_path,
+            citations_path=citations_path,
+            metadata_path=metadata_path,
+            timeout=timeout,
+        )
+        written_trace = write_rag_trace(captured.trace, out)
+    except (RuntimeError, ValueError, VerificationInputError) as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    return _finish_capture_command(
+        captured.trace,
+        written_trace=written_trace,
+        verify_output=verify_output,
+        json_output=json_output,
+        report=report,
+        report_out=report_out,
+        mode=mode,
+        fail_on=fail_on,
+    )
+
+
+@capture_group.command("response")
+@click.argument("response_json")
+@click.option("--query", required=True, help="Question that produced the saved RAG response.")
+@click.option("--answer-path", default="$.answer", show_default=True, help="JSONPath for answer extraction.")
+@click.option("--contexts-path", default="$.contexts", show_default=True, help="JSONPath for context extraction.")
+@click.option("--citations-path", default="$.citations", show_default=True, help="JSONPath for citation extraction.")
+@click.option("--metadata-path", default="$.metadata", show_default=True, help="JSONPath for response metadata extraction.")
+@click.option("--out", default=".contexttrace/traces/captured_response_trace.json", show_default=True, help="Portable trace JSON output path.")
+@click.option("--verify", "verify_output", is_flag=True, help="Run claim-level verification after capture.")
+@click.option("--json", "json_output", is_flag=True, help="Print capture output as JSON.")
+@click.option("--report", is_flag=True, help="Generate a local HTML verification report. Implies --verify.")
+@click.option("--report-out", default=None, help="HTML report path. Implies --report and --verify when provided.")
+@click.option("--mode", default="lexical", show_default=True, type=click.Choice(["lexical", "semantic"]), help="Evidence scoring mode when verifying.")
+@click.option("--fail-on", multiple=True, help="Verification fail rule. Implies --verify.")
+def capture_response_command(
+    response_json: str,
+    query: str,
+    answer_path: str,
+    contexts_path: str,
+    citations_path: str,
+    metadata_path: str,
+    out: str,
+    verify_output: bool,
+    json_output: bool,
+    report: bool,
+    report_out: Optional[str],
+    mode: str,
+    fail_on: tuple[str, ...],
+) -> int:
+    """Capture a saved RAG endpoint response as `contexttrace verify` JSON."""
+
+    try:
+        raw = Path(response_json).read_text(encoding="utf-8")
+        response = json.loads(raw)
+        captured = capture_response_trace(
+            response=response,
+            query=query,
+            response_source=response_json,
+            answer_path=answer_path,
+            contexts_path=contexts_path,
+            citations_path=citations_path,
+            metadata_path=metadata_path,
+        )
+        written_trace = write_rag_trace(captured.trace, out)
+    except OSError as exc:
+        raise click.ClickException("Could not read response file %s: %s" % (response_json, exc)) from exc
+    except json.JSONDecodeError as exc:
+        raise click.ClickException(
+            "Invalid JSON in %s at line %s column %s: %s"
+            % (response_json, exc.lineno, exc.colno, exc.msg)
+        ) from exc
+    except (ValueError, VerificationInputError) as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    return _finish_capture_command(
+        captured.trace,
+        written_trace=written_trace,
+        verify_output=verify_output,
+        json_output=json_output,
+        report=report,
+        report_out=report_out,
+        mode=mode,
+        fail_on=fail_on,
+    )
+
+
+def _finish_capture_command(
+    trace: object,
+    *,
+    written_trace: str,
+    verify_output: bool,
+    json_output: bool,
+    report: bool,
+    report_out: Optional[str],
+    mode: str,
+    fail_on: tuple[str, ...],
+) -> int:
+    should_verify = verify_output or report or report_out is not None or bool(fail_on)
+    verification = verify_trace(trace, mode=mode) if should_verify else None
+    written_report = None
+    if verification is not None:
+        written_report = _write_verify_report(
+            verification,
+            trace,
+            report=report,
+            out=report_out,
+            default_name="%s_verify.html" % Path(written_trace).stem,
+        )
+
+    if json_output:
+        payload = {
+            "trace_path": written_trace,
+            "trace": trace.to_dict(),
+        }
+        if verification is not None:
+            payload["verification"] = verification
+        if written_report:
+            payload["report_path"] = written_report
+        click.echo(json.dumps(payload, indent=2))
+        fail_messages = _verify_failures(verification or {}, fail_on)
+        for message in fail_messages:
+            click.echo("Verification failed: %s" % message, err=True)
+        return 1 if fail_messages else 0
+
+    click.echo("Trace: %s" % written_trace)
+    if verification is None:
+        return 0
+    return _print_verify_result(
+        verification,
+        json_output=False,
+        written_report=written_report,
+        fail_on=fail_on,
+    )
 
 
 def _write_verify_report(

@@ -99,7 +99,7 @@ ContextTrace splits the answer into claims and classifies each claim as:
 - `unverifiable`
 - `contradicted`
 
-Capture real RAG artifacts directly from common document objects:
+Capture RAG artifacts directly from common document objects:
 
 ```python
 from contexttrace import capture_rag_trace, write_rag_trace
@@ -142,7 +142,7 @@ The comparison report shows support-rate deltas, new unsupported claims, citatio
 
 ### 3. Audit Retrieval Failures
 
-Use `audit` when a claim failed and you want to know whether the evidence existed elsewhere in the corpus.
+Use `audit` when a claim failed and you want to know whether the evidence existed elsewhere in the corpus. The audit output includes a failure stage, evidence status, diagnostic signals, and prioritized next actions so you can tell whether the fix belongs in retrieval, reranking, chunking, generation, corpus coverage, or source freshness.
 
 ```bash
 contexttrace audit trace.json --corpus docs/
@@ -157,7 +157,7 @@ Run the bundled source-checkout example:
 contexttrace audit examples/audit/retrieval_miss_trace.json --corpus examples/audit/corpus --report
 ```
 
-Check the audit labels against bundled real OSS cases:
+Check the audit labels against bundled public-source OSS cases:
 
 ```bash
 contexttrace audit-benchmark --case-set real --mode semantic --report
@@ -177,7 +177,33 @@ Audit labels:
 
 ### 4. Evaluate An Existing RAG Endpoint
 
-Use `eval` when you want ContextTrace to call your RAG API and create local traces.
+Use `capture endpoint` when you want to inspect one live response from a running RAG API and save it as portable `contexttrace verify` JSON:
+
+```bash
+contexttrace capture endpoint \
+  --endpoint http://localhost:8000/query \
+  --query "What is the refund policy?" \
+  --answer-path $.answer \
+  --contexts-path $.contexts \
+  --citations-path $.citations \
+  --out traces/refund_trace.json \
+  --verify \
+  --report
+```
+
+If you already saved the RAG response JSON from logs or a failing run:
+
+```bash
+contexttrace capture response response.json \
+  --query "What is the refund policy?" \
+  --answer-path $.answer \
+  --contexts-path $.contexts \
+  --out traces/refund_trace.json \
+  --verify \
+  --report
+```
+
+Use `eval` when you want ContextTrace to call your RAG API across a dataset and create local traces:
 
 ```bash
 contexttrace eval \

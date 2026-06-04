@@ -9,9 +9,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 ### Added
 
 - `contexttrace audit-benchmark --case-set real` for validating retrieval-audit labels against bundled public OSS documentation and GitHub issue cases.
-- Real audit benchmark cases covering retrieval misses, chunking issues, reranking failures, corpus gaps, answer overreach, stale sources, insufficient context, and clean retrieval.
-- `capture_rag_trace` and `write_rag_trace` helpers for exporting real in-memory RAG artifacts to portable `contexttrace verify` JSON.
-- Real-world validation harnesses, including an end-to-end LangChain/Ollama/FAISS run against a public RAG repository.
+- Public-source audit benchmark cases covering retrieval misses, chunking issues, reranking failures, corpus gaps, answer overreach, stale sources, insufficient context, and clean retrieval.
+- `capture_rag_trace` and `write_rag_trace` helpers for exporting in-memory RAG artifacts to portable `contexttrace verify` JSON.
+- `contexttrace capture endpoint` for turning one live RAG endpoint response into portable `contexttrace verify` JSON, with optional immediate verification and local HTML report generation.
+- `contexttrace capture response` for turning a saved RAG endpoint response JSON file into the same portable verification trace format.
+- Retrieval audit diagnostics now include failure stages, evidence status, diagnostic signals, failure paths, developer summaries, and prioritized recommended actions.
+- Public RAG app validation harnesses, including an end-to-end LangChain/Ollama/FAISS run against a public RAG repository.
 
 ## [0.5.0] - 2026-06-04
 
@@ -33,9 +36,9 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ### Added
 
-- Real-document verification benchmark cases sourced from ContextTrace docs and release artifacts.
+- Document-backed verification benchmark cases sourced from ContextTrace docs and release artifacts.
 - External verification benchmark case set sourced from Qdrant, Chroma, Haystack, LangChain docs, and public Chroma GitHub issues.
-- `contexttrace verify-benchmark --case-set external|all` for running third-party real-world benchmark cases.
+- `contexttrace verify-benchmark --case-set external|all` for running third-party benchmark cases.
 - `contexttrace verify-benchmark --report` for local HTML benchmark reports with misses to inspect.
 - Claim and evidence sentence splitting safeguards for version numbers and file paths.
 - Evidence span metadata with character offsets and stable span hashes in verification output.

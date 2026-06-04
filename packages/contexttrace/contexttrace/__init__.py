@@ -1,5 +1,6 @@
 from contexttrace._version import __version__
 from contexttrace.capture import capture_rag_trace, langchain_documents_to_contexts, write_rag_trace
+from contexttrace.capture_endpoint import EndpointCapture, capture_endpoint_trace, capture_response_trace
 from contexttrace.client import AsyncContextTrace, ContextTrace
 from contexttrace.config import ContextTraceConfig
 from contexttrace.errors import (
@@ -28,11 +29,14 @@ __all__ = [
     "ContextTraceLocalError",
     "ContextTraceLangGraphTracer",
     "ContextTraceLlamaIndexCallbackHandler",
+    "EndpointCapture",
     "OpenTelemetryExporter",
     "ReliabilityScore",
     "ReliabilityScorer",
     "ReportGenerator",
     "capture_rag_trace",
+    "capture_endpoint_trace",
+    "capture_response_trace",
     "export_contexttrace_trace",
     "langchain_documents_to_contexts",
     "write_rag_trace",

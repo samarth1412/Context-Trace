@@ -204,6 +204,23 @@ def _audit_claim(
         "confidence": diagnosis["confidence"],
         "reason": diagnosis["reason"],
         "suggested_fix": diagnosis["suggested_fix"],
+        "failure_stage": diagnosis["failure_stage"],
+        "evidence_status": diagnosis["evidence_status"],
+        "failure_path": list(diagnosis["failure_path"]),
+        "recommended_actions": list(diagnosis["recommended_actions"]),
+        "developer_summary": diagnosis["developer_summary"],
+        "diagnostic_signals": dict(diagnosis["diagnostic_signals"]),
+        "diagnosis": {
+            "label": diagnosis["label"],
+            "failure_stage": diagnosis["failure_stage"],
+            "evidence_status": diagnosis["evidence_status"],
+            "confidence": diagnosis["confidence"],
+            "reason": diagnosis["reason"],
+            "suggested_fix": diagnosis["suggested_fix"],
+            "recommended_actions": list(diagnosis["recommended_actions"]),
+            "developer_summary": diagnosis["developer_summary"],
+            "diagnostic_signals": dict(diagnosis["diagnostic_signals"]),
+        },
         "retrieved": {
             "verdict": claim.get("verdict"),
             "best_context_id": claim.get("best_context_id"),
@@ -241,6 +258,12 @@ def _diagnose(
     corpus_verdict = str(getattr(corpus_verification, "verdict", ""))
     corpus_score = float(getattr(corpus_match, "score", 0.0) or 0.0)
     same_source_rank = _same_source_retrieved_rank(str(getattr(corpus_match, "context_id", "") or ""), trace)
+    diagnostic_signals = _diagnostic_signals(
+        claim=claim,
+        corpus_match=corpus_match,
+        corpus_verification=corpus_verification,
+        same_source_rank=same_source_rank,
+    )
 
     if _is_citation_only_failure(claim):
         return _result(
@@ -248,6 +271,7 @@ def _diagnose(
             0.92,
             "The claim is supported by retrieved evidence; the remaining issue is citation-level, not a retrieval or corpus failure.",
             "Fix the claim-level citation, but do not treat this as a retrieval miss.",
+            diagnostic_signals=diagnostic_signals,
         )
 
     if not _is_failure(claim):
@@ -256,6 +280,7 @@ def _diagnose(
             0.99,
             "The claim is already supported by the retrieved contexts.",
             "No fix needed for this claim.",
+            diagnostic_signals=diagnostic_signals,
         )
 
     if verdict == "contradicted" or corpus_verdict == "contradicted" or root_label in {"stale_context", "conflicting_contexts"}:
@@ -264,6 +289,7 @@ def _diagnose(
             0.86,
             "The claim appears to conflict with retrieved or corpus evidence.",
             "Resolve stale or conflicting sources before allowing the answer to use this fact.",
+            diagnostic_signals=diagnostic_signals,
         )
 
     if corpus_verdict in SUPPORTED_VERDICTS:
@@ -273,6 +299,7 @@ def _diagnose(
                 max(0.82, min(0.98, corpus_score + 0.12)),
                 "The broader corpus contains evidence for this claim, but the retrieved contexts did not include it.",
                 "Improve retrieval recall, filters, query rewriting, or top_k so this source is retrieved.",
+                diagnostic_signals=diagnostic_signals,
             )
         if same_source_rank >= RERANKING_CUTOFF:
             return _result(
@@ -280,12 +307,14 @@ def _diagnose(
                 max(0.78, min(0.95, corpus_score + 0.08)),
                 "A related source was retrieved, but it appeared too low in the retrieved context list for reliable generation.",
                 "Add a reranker or raise high-evidence chunks from this source before generation.",
+                diagnostic_signals=diagnostic_signals,
             )
         return _result(
             CHUNKING_ISSUE,
             max(0.78, min(0.95, corpus_score + 0.08)),
             "The retrieved source appears related, but the retrieved chunk omitted the supporting span found in the corpus.",
             "Adjust chunk boundaries, overlap, or parent-document retrieval so the answerable span is included.",
+            diagnostic_signals=diagnostic_signals,
         )
 
     if root_label == "answer_overreach" or verdict == "partially_supported":
@@ -294,6 +323,7 @@ def _diagnose(
             0.82,
             "The evidence supports part of the claim, but not every required fact.",
             "Remove unsupported details or retrieve evidence that explicitly supports each detail.",
+            diagnostic_signals=diagnostic_signals,
         )
 
     if corpus_verdict == "partially_supported":
@@ -302,6 +332,7 @@ def _diagnose(
             0.78,
             "The corpus supports only part of the claim, so the answer likely added unsupported detail.",
             "Split the claim and require support for every required fact before answering.",
+            diagnostic_signals=diagnostic_signals,
         )
 
     if corpus_verdict == "unverifiable" or verdict == "unverifiable":
@@ -310,6 +341,7 @@ def _diagnose(
             0.72,
             "The closest corpus evidence is related but too weak or ambiguous to verify the claim.",
             "Retrieve more specific evidence or force the model to qualify/abstain.",
+            diagnostic_signals=diagnostic_signals,
         )
 
     if citation_status in BAD_CITATIONS and corpus_score >= 0.35:
@@ -318,6 +350,7 @@ def _diagnose(
             0.7,
             "The claim has a citation problem and the broader corpus evidence is still not strong enough.",
             "Regenerate claim-level citations and require cited sources to cover all required facts.",
+            diagnostic_signals=diagnostic_signals,
         )
 
     return _result(
@@ -325,6 +358,7 @@ def _diagnose(
         max(0.7, min(0.95, 1.0 - corpus_score)),
         "Neither the retrieved contexts nor the broader corpus provide enough support for this claim.",
         "Add the missing source to the corpus or make the answer abstain when the corpus lacks this fact.",
+        diagnostic_signals=diagnostic_signals,
     )
 
 
@@ -336,6 +370,17 @@ def _summary(
     mode: str,
 ) -> dict[str, Any]:
     counts = Counter(str(claim.get("audit_label") or NO_FAILURE) for claim in claim_audits)
+    stage_counts = Counter(
+        str(claim.get("failure_stage") or "none")
+        for claim in claim_audits
+        if str(claim.get("audit_label") or NO_FAILURE) != NO_FAILURE
+    )
+    action_counts = Counter(
+        action
+        for claim in claim_audits
+        if str(claim.get("audit_label") or NO_FAILURE) != NO_FAILURE
+        for action in claim.get("recommended_actions") or []
+    )
     labels = [NO_FAILURE] + sorted(AUDIT_FAILURE_LABELS)
     failure_count = sum(counts[label] for label in AUDIT_FAILURE_LABELS)
     return {
@@ -345,6 +390,27 @@ def _summary(
         "corpus_documents": len(corpus_contexts),
         "has_audit_failures": failure_count > 0,
         "primary_audit_label": _primary_label(counts),
+        "failure_stages": dict(sorted(stage_counts.items())),
+        "top_recommended_actions": [
+            {"action": action, "claims": count}
+            for action, count in action_counts.most_common(5)
+        ],
+        "retrieval_change_claims": sum(
+            stage_counts[stage] for stage in ("retrieval", "reranking", "chunking")
+        ),
+        "generation_change_claims": sum(
+            stage_counts[stage] for stage in ("generation", "evidence_quality")
+        ),
+        "corpus_change_claims": sum(
+            stage_counts[stage] for stage in ("corpus", "source_freshness")
+        ),
+        "citation_change_claims": len(
+            [
+                claim
+                for claim in claim_audits
+                if (claim.get("retrieved") or {}).get("citation_status") in BAD_CITATIONS
+            ]
+        ),
         "verification_failure_type": (verification.get("summary") or {}).get("failure_type"),
         "verification_primary_root_cause": (verification.get("summary") or {}).get("primary_root_cause"),
         **{label: counts[label] for label in labels},
@@ -420,13 +486,170 @@ def _source_key(value: Any) -> str:
     return text.strip("./")
 
 
-def _result(label: str, confidence: float, reason: str, suggested_fix: str) -> dict[str, Any]:
+def _diagnostic_signals(
+    *,
+    claim: dict[str, Any],
+    corpus_match: object,
+    corpus_verification: object,
+    same_source_rank: int | None,
+) -> dict[str, Any]:
+    return {
+        "retrieved_verdict": claim.get("verdict"),
+        "retrieved_best_context_id": claim.get("best_context_id"),
+        "retrieved_best_score": claim.get("best_score"),
+        "retrieved_root_cause": (claim.get("root_cause") or {}).get("label"),
+        "citation_status": claim.get("citation_status"),
+        "corpus_verdict": getattr(corpus_verification, "verdict", None),
+        "corpus_best_document_id": getattr(corpus_match, "context_id", None),
+        "corpus_best_score": getattr(corpus_match, "score", None),
+        "retrieved_source_rank": same_source_rank + 1 if same_source_rank is not None else None,
+        "matched_facts": list(getattr(corpus_verification, "matched_facts", []) or []),
+        "missing_facts": list(getattr(corpus_verification, "missing_facts", []) or []),
+        "conflicting_facts": list(getattr(corpus_verification, "conflicting_facts", []) or []),
+    }
+
+
+def _result(
+    label: str,
+    confidence: float,
+    reason: str,
+    suggested_fix: str,
+    *,
+    diagnostic_signals: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    stage = _failure_stage(label)
+    evidence_status = _evidence_status(label)
+    actions = _recommended_actions(label)
+    signals = dict(diagnostic_signals or {})
+    developer_summary = _developer_summary(
+        label=label,
+        reason=reason,
+        suggested_fix=suggested_fix,
+        signals=signals,
+    )
     return {
         "label": label,
         "confidence": round(confidence, 3),
         "reason": reason,
         "suggested_fix": suggested_fix,
+        "failure_stage": stage,
+        "evidence_status": evidence_status,
+        "failure_path": _failure_path(stage, evidence_status),
+        "recommended_actions": actions,
+        "developer_summary": developer_summary,
+        "diagnostic_signals": signals,
     }
+
+
+def _failure_stage(label: str) -> str:
+    return {
+        NO_FAILURE: "none",
+        RETRIEVAL_MISS: "retrieval",
+        RERANKING_FAILURE: "reranking",
+        CHUNKING_ISSUE: "chunking",
+        CORPUS_GAP: "corpus",
+        ANSWER_OVERREACH: "generation",
+        STALE_SOURCE: "source_freshness",
+        INSUFFICIENT_CONTEXT: "evidence_quality",
+    }.get(label, "unknown")
+
+
+def _evidence_status(label: str) -> str:
+    return {
+        NO_FAILURE: "retrieved_supports_claim",
+        RETRIEVAL_MISS: "support_found_in_corpus_not_retrieved",
+        RERANKING_FAILURE: "supporting_source_retrieved_too_low",
+        CHUNKING_ISSUE: "supporting_source_retrieved_span_missing",
+        CORPUS_GAP: "support_not_found",
+        ANSWER_OVERREACH: "partial_support_only",
+        STALE_SOURCE: "conflicting_evidence",
+        INSUFFICIENT_CONTEXT: "related_but_ambiguous",
+    }.get(label, "unknown")
+
+
+def _failure_path(stage: str, evidence_status: str) -> list[str]:
+    if stage == "none":
+        return ["claim", "retrieved_contexts", "supported"]
+    return ["claim", "retrieved_contexts", "corpus_check", stage, evidence_status]
+
+
+def _recommended_actions(label: str) -> list[str]:
+    return {
+        NO_FAILURE: [],
+        RETRIEVAL_MISS: [
+            "Increase retrieval recall, top_k, or query rewriting for this query shape.",
+            "Check metadata filters so the supporting source is eligible for retrieval.",
+            "Add this query and source to retrieval regression tests.",
+        ],
+        RERANKING_FAILURE: [
+            "Add or tune a reranker using claim-level support as the target signal.",
+            "Raise high-evidence chunks before generation instead of relying on raw retrieval order.",
+            "Inspect context-window truncation so lower-ranked supporting chunks are not dropped.",
+        ],
+        CHUNKING_ISSUE: [
+            "Use parent-document retrieval, larger overlap, or sentence-aware chunking for this source.",
+            "Keep headings and neighboring sentences with answerable spans.",
+            "Add chunk-level tests for this document section.",
+        ],
+        CORPUS_GAP: [
+            "Add the missing source to the indexed corpus or mark the question unsupported.",
+            "Make the answer abstain when no corpus source supports the required fact.",
+            "Add corpus coverage checks for this topic.",
+        ],
+        ANSWER_OVERREACH: [
+            "Require every answer detail to map to a supporting span before final generation.",
+            "Split compound claims and remove details without explicit evidence.",
+            "Tune the prompt to abstain or qualify answers when evidence is partial.",
+        ],
+        STALE_SOURCE: [
+            "Resolve conflicting source versions before retrieval.",
+            "Prefer current documents using version, timestamp, or source-of-truth metadata.",
+            "Add freshness filters for documents that can conflict.",
+        ],
+        INSUFFICIENT_CONTEXT: [
+            "Retrieve more specific evidence before answering.",
+            "Force the model to qualify or abstain when evidence is ambiguous.",
+            "Add follow-up retrieval for weakly matched claims.",
+        ],
+    }.get(label, ["Inspect the trace and corpus evidence for this claim."])
+
+
+def _developer_summary(
+    *,
+    label: str,
+    reason: str,
+    suggested_fix: str,
+    signals: dict[str, Any],
+) -> str:
+    corpus_doc = str(signals.get("corpus_best_document_id") or "no corpus document")
+    retrieved_context = str(signals.get("retrieved_best_context_id") or "no retrieved context")
+    rank = signals.get("retrieved_source_rank")
+    if label == RETRIEVAL_MISS:
+        return (
+            "Support was found in %s, but the retrieved contexts did not include that source. %s"
+            % (corpus_doc, suggested_fix)
+        )
+    if label == RERANKING_FAILURE:
+        return (
+            "The supporting source was retrieved at rank %s, which makes it easy to drop or ignore. %s"
+            % (rank or "unknown", suggested_fix)
+        )
+    if label == CHUNKING_ISSUE:
+        return (
+            "The source appears in retrieval, but %s did not contain the supporting span found in %s. %s"
+            % (retrieved_context, corpus_doc, suggested_fix)
+        )
+    if label == CORPUS_GAP:
+        return "No retrieved or corpus document supports the claim. %s" % suggested_fix
+    if label == ANSWER_OVERREACH:
+        return "The answer included detail beyond the available evidence. %s" % suggested_fix
+    if label == STALE_SOURCE:
+        return "The trace contains conflicting or stale evidence. %s" % suggested_fix
+    if label == INSUFFICIENT_CONTEXT:
+        return "The closest evidence is related but not decisive. %s" % suggested_fix
+    if label == NO_FAILURE:
+        return reason
+    return "%s %s" % (reason, suggested_fix)
 
 
 def _corpus_files(root: Path) -> list[Path]:

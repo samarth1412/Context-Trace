@@ -277,6 +277,7 @@ def _normalize_citations(
     *,
     answer: Any,
     chunks: list[dict[str, Any]],
+    default_to_first_chunk: bool = True,
 ) -> list[dict[str, Any]]:
     if raw_citations is None:
         raw_citations = []
@@ -285,7 +286,7 @@ def _normalize_citations(
     citations = []
     for item in raw_citations if isinstance(raw_citations, CollectionsIterable) and not isinstance(raw_citations, str) else []:
         if isinstance(item, dict):
-            source_chunk_id = item.get("source_chunk_id") or item.get("chunk_id") or item.get("id")
+            source_chunk_id = item.get("source_id") or item.get("source_chunk_id") or item.get("chunk_id") or item.get("id")
             if source_chunk_id is None and item.get("source") and chunks:
                 source_chunk_id = chunks[0]["chunk_id"]
             citations.append(
@@ -296,7 +297,7 @@ def _normalize_citations(
             )
         elif isinstance(item, str) and chunks:
             citations.append({"claim": item, "source_chunk_id": chunks[0]["chunk_id"]})
-    if not citations and answer and chunks:
+    if default_to_first_chunk and not citations and answer and chunks:
         citations.append({"claim": str(answer), "source_chunk_id": chunks[0]["chunk_id"]})
     return [citation for citation in citations if citation["claim"] and citation["source_chunk_id"]]
 

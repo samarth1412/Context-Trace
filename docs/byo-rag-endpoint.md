@@ -1,6 +1,39 @@
 # Bring Your Own RAG Endpoint
 
-Use ContextTrace to evaluate an existing RAG API without adding SDK code to that service.
+Use ContextTrace to capture and evaluate an existing RAG API without adding SDK code to that service.
+
+Start with one live response when you are debugging a specific failure:
+
+```bash
+contexttrace capture endpoint \
+  --endpoint http://localhost:8000/query \
+  --query "What is the refund policy?" \
+  --method POST \
+  --input-key question \
+  --answer-path $.answer \
+  --contexts-path $.contexts \
+  --citations-path $.citations \
+  --out traces/refund_trace.json \
+  --verify \
+  --report
+```
+
+This writes a portable trace JSON file that can be rerun with `contexttrace verify traces/refund_trace.json`.
+
+If you already have the endpoint response saved from logs, capture it without making a network request:
+
+```bash
+contexttrace capture response response.json \
+  --query "What is the refund policy?" \
+  --answer-path $.answer \
+  --contexts-path $.contexts \
+  --citations-path $.citations \
+  --out traces/refund_trace.json \
+  --verify \
+  --report
+```
+
+Use `eval` when you want to run a dataset through the endpoint:
 
 ```bash
 contexttrace eval \

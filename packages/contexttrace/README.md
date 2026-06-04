@@ -62,7 +62,31 @@ with ct.trace(query="What is the refund policy?") as trace:
 
 ## BYO RAG Endpoint
 
-Evaluate a running local or hosted RAG API without adding SDK code:
+Capture and verify one live response from a running local or hosted RAG API without adding SDK code:
+
+```bash
+contexttrace capture endpoint \
+  --endpoint http://localhost:8000/query \
+  --query "What is the refund policy?" \
+  --answer-path $.answer \
+  --contexts-path $.contexts \
+  --citations-path $.citations \
+  --out traces/refund_trace.json \
+  --verify \
+  --report
+```
+
+If you already have a saved endpoint response:
+
+```bash
+contexttrace capture response response.json \
+  --query "What is the refund policy?" \
+  --out traces/refund_trace.json \
+  --verify \
+  --report
+```
+
+Evaluate a dataset through the same endpoint when you are ready to regression test:
 
 ```bash
 contexttrace eval \
@@ -104,13 +128,13 @@ Input requires `query`, `answer`, and `contexts` with `id` and `text`. Optional 
 
 `verify-demo` uses bundled demo traces, so it works immediately after `pip install contexttrace`. Available demos include `unsupported_claim`, `partial_support`, `citation_mismatch`, `should_abstain`, and `supported_answer`.
 
-Use `--mode semantic` for local paraphrase-aware matching, and `verify-benchmark` to inspect bundled precision/recall metrics. The default benchmark includes 32 real ContextTrace docs and release-artifact cases. `--case-set external` adds public OSS documentation and GitHub issue cases from Qdrant, Chroma, Haystack, and LangChain, while `--case-set all` runs both packs. `--report` writes an HTML report with misses to inspect.
+Use `--mode semantic` for local paraphrase-aware matching, and `verify-benchmark` to inspect bundled precision/recall metrics. The default benchmark includes 32 ContextTrace docs and release-artifact cases. `--case-set external` adds public OSS documentation and GitHub issue cases from Qdrant, Chroma, Haystack, and LangChain, while `--case-set all` runs both packs. `--report` writes an HTML report with misses to inspect.
 
 Verification output includes evidence span offsets, stable span hashes, multiple supporting spans, typed matched/missing facts, and claim-level root causes so partial support failures are easier to inspect.
 
 ContextTrace verifies whether each generated claim is actually supported by retrieved evidence. Instead of only showing a trace or a score, it tells you where the evidence chain broke: unsupported claim, citation mismatch, retrieval miss, answer overreach, conflicting context, or should-have-abstained.
 
-Use the capture helper when you have real RAG artifacts in memory:
+Use the capture helper when you have RAG artifacts in memory:
 
 ```python
 from contexttrace import capture_rag_trace, write_rag_trace
@@ -121,7 +145,7 @@ write_rag_trace(trace, "trace.json")
 
 Use `contexttrace compare baseline.json current.json` to diff two portable traces or saved `verify --json` outputs. It reports support-rate deltas, new unsupported claims, citation regressions, should-abstain flips, and new root causes, with `--fail-on` gates for CI.
 
-Use `contexttrace audit trace.json --corpus docs/` to diagnose whether an unsupported claim failed because retrieval missed evidence, chunking omitted the supporting span, the corpus lacks coverage, or generation overclaimed.
+Use `contexttrace audit trace.json --corpus docs/` to diagnose whether an unsupported claim failed because retrieval missed evidence, reranking buried it, chunking omitted the supporting span, the corpus lacks coverage, or generation overclaimed. Audit output includes failure stages, diagnostic signals, and prioritized next actions.
 
 Use `contexttrace audit-benchmark --case-set real --mode semantic` to test retrieval-audit labels against bundled public OSS documentation and GitHub issue snippets from Qdrant, Chroma, Haystack, LangChain, and ContextTrace docs.
 

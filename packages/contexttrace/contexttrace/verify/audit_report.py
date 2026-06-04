@@ -22,6 +22,7 @@ class AuditReportGenerator:
             query=escape(_string(result.get("query"))),
             answer=escape(_string(result.get("answer"))),
             summary_cards=_summary_cards(summary),
+            next_actions=_next_actions(summary),
             claim_rows=_claim_rows(claims),
             retrieval_misses=_claim_cards(claims, {"retrieval_miss"}, "No retrieval misses detected."),
             chunking_issues=_claim_cards(
@@ -48,6 +49,10 @@ def _summary_cards(summary: dict[str, Any]) -> str:
         ("Total Claims", summary.get("total_claims", 0)),
         ("Audited Failures", summary.get("audited_claims", 0)),
         ("Corpus Documents", summary.get("corpus_documents", 0)),
+        ("Retrieval Changes", summary.get("retrieval_change_claims", 0)),
+        ("Generation Changes", summary.get("generation_change_claims", 0)),
+        ("Corpus Changes", summary.get("corpus_change_claims", 0)),
+        ("Citation Changes", summary.get("citation_change_claims", 0)),
         ("Retrieval Misses", summary.get("retrieval_miss", 0)),
         ("Chunking Issues", summary.get("chunking_issue", 0)),
         ("Reranking Failures", summary.get("reranking_failure", 0)),
@@ -68,9 +73,24 @@ def _summary_cards(summary: dict[str, Any]) -> str:
     )
 
 
+def _next_actions(summary: dict[str, Any]) -> str:
+    actions = list(summary.get("top_recommended_actions") or [])
+    if not actions:
+        return "<p class=\"muted\">No audit-level action is needed for this trace.</p>"
+    items = []
+    for action in actions:
+        items.append(
+            "<li><strong>{count} claim(s):</strong> {action}</li>".format(
+                count=escape(_string(action.get("claims"))),
+                action=escape(_string(action.get("action"))),
+            )
+        )
+    return "<ul>%s</ul>" % "\n".join(items)
+
+
 def _claim_rows(claims: list[dict[str, Any]]) -> str:
     if not claims:
-        return "<tr><td colspan=\"7\" class=\"muted\">No factual claims were extracted.</td></tr>"
+        return "<tr><td colspan=\"8\" class=\"muted\">No factual claims were extracted.</td></tr>"
     rows = []
     for claim in claims:
         retrieved = claim.get("retrieved") or {}
@@ -80,6 +100,7 @@ def _claim_rows(claims: list[dict[str, Any]]) -> str:
             """
             <tr>
               <td><span class="badge audit-{label_class}">{label}</span></td>
+              <td>{stage}</td>
               <td>{claim}</td>
               <td>{retrieved_verdict}</td>
               <td>{retrieved_context}</td>
@@ -90,6 +111,7 @@ def _claim_rows(claims: list[dict[str, Any]]) -> str:
             """.format(
                 label_class=escape(_css_token(label)),
                 label=escape(label),
+                stage=escape(_string(claim.get("failure_stage"))),
                 claim=escape(_string(claim.get("claim"))),
                 retrieved_verdict=escape(_string(retrieved.get("verdict"))),
                 retrieved_context=escape(_string(retrieved.get("best_context_id") or "none")),
@@ -116,11 +138,14 @@ def _claim_card(claim: dict[str, Any]) -> str:
       <div class="item-meta">{claim_id} | {label} | confidence {confidence}</div>
       <h3>{claim}</h3>
       <p><strong>Diagnosis:</strong> {reason}</p>
+      <p><strong>Failure stage:</strong> {stage} | <strong>Evidence status:</strong> {evidence_status}</p>
       <p><strong>Retrieved evidence:</strong> {retrieved_evidence}</p>
       <p class="muted">Retrieved context: {retrieved_context} | verdict {retrieved_verdict} | score {retrieved_score}</p>
       <p><strong>Corpus evidence:</strong> {corpus_evidence}</p>
       <p class="muted">Corpus document: {corpus_document} | verdict {corpus_verdict} | score {corpus_score}</p>
+      <p><strong>Developer summary:</strong> {developer_summary}</p>
       <p><strong>Suggested fix:</strong> {fix}</p>
+      {actions}
     </article>
     """.format(
         claim_id=escape(_string(claim.get("claim_id"))),
@@ -128,6 +153,8 @@ def _claim_card(claim: dict[str, Any]) -> str:
         confidence=escape(_string(claim.get("confidence"))),
         claim=escape(_string(claim.get("claim"))),
         reason=escape(_string(claim.get("reason"))),
+        stage=escape(_string(claim.get("failure_stage"))),
+        evidence_status=escape(_string(claim.get("evidence_status"))),
         retrieved_evidence=escape(_string(retrieved.get("evidence") or "none")),
         retrieved_context=escape(_string(retrieved.get("best_context_id") or "none")),
         retrieved_verdict=escape(_string(retrieved.get("verdict"))),
@@ -136,7 +163,17 @@ def _claim_card(claim: dict[str, Any]) -> str:
         corpus_document=escape(_string(corpus.get("best_document_id") or "none")),
         corpus_verdict=escape(_string(corpus.get("verdict"))),
         corpus_score=escape(_string(corpus.get("best_score"))),
+        developer_summary=escape(_string(claim.get("developer_summary"))),
         fix=escape(_string(claim.get("suggested_fix"))),
+        actions=_action_list(claim.get("recommended_actions") or []),
+    )
+
+
+def _action_list(actions: list[str]) -> str:
+    if not actions:
+        return ""
+    return "<p><strong>Recommended actions:</strong></p><ul>%s</ul>" % "\n".join(
+        "<li>%s</li>" % escape(_string(action)) for action in actions
     )
 
 
@@ -303,6 +340,11 @@ HTML_TEMPLATE = """<!doctype html>
     </section>
 
     <section>
+      <h2>Prioritized Next Actions</h2>
+      {next_actions}
+    </section>
+
+    <section>
       <h2>Query</h2>
       <p>{query}</p>
       <h2>Answer</h2>
@@ -315,6 +357,7 @@ HTML_TEMPLATE = """<!doctype html>
         <thead>
           <tr>
             <th>Audit Label</th>
+            <th>Stage</th>
             <th>Claim</th>
             <th>Retrieved Verdict</th>
             <th>Retrieved Context</th>

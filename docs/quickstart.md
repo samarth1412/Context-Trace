@@ -54,6 +54,29 @@ Open `http://localhost:8765` to inspect local traces, eval runs, and reports.
 
 ## 5. Evaluate A RAG Endpoint
 
+Capture one live response as portable verification JSON:
+
+```bash
+contexttrace capture endpoint \
+  --endpoint http://localhost:8000/query \
+  --query "What is the refund policy?" \
+  --out traces/refund_trace.json \
+  --verify \
+  --report
+```
+
+Or capture a saved response JSON from a failing run:
+
+```bash
+contexttrace capture response response.json \
+  --query "What is the refund policy?" \
+  --out traces/refund_trace.json \
+  --verify \
+  --report
+```
+
+Run a full dataset through the same endpoint:
+
 ```bash
 contexttrace eval \
   --dataset evals/sample_questions.json \
@@ -65,7 +88,7 @@ contexttrace eval \
   --citations-path $.citations
 ```
 
-This calls your endpoint, maps the response fields, creates local traces, runs diagnostics, and writes an HTML eval report.
+These commands map your endpoint response fields, create local traces or portable trace JSON, run diagnostics, and write local HTML reports.
 
 ## 6. Run A Regression Benchmark
 
