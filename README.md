@@ -419,6 +419,36 @@ contexttrace compare examples/verify/compare_baseline.json examples/verify/compa
 
 The comparison report shows support-rate deltas, unsupported-claim-rate deltas, citation mismatch deltas, added or removed claims, new failures, resolved failures, and root-cause changes. This is meant for release checks: if a retrieval or prompt change adds a new unsupported answer detail, `contexttrace compare --fail-on new_failure` can fail CI before the change ships.
 
+### Retrieval Failure Auditing
+
+When a claim is unsupported, the next question is whether retrieval failed or the source corpus simply does not contain the fact. `contexttrace audit` searches a local corpus and compares broader corpus evidence with the contexts that were actually retrieved:
+
+```bash
+contexttrace audit trace.json --corpus docs/
+contexttrace audit trace.json --corpus docs/ --json
+contexttrace audit trace.json --corpus docs/ --report
+contexttrace audit trace.json --corpus docs/ --report --out reports/audit.html
+contexttrace audit trace.json --corpus docs/ --fail-on retrieval_miss
+```
+
+Run the bundled source-checkout example:
+
+```bash
+contexttrace audit examples/audit/retrieval_miss_trace.json --corpus examples/audit/corpus --report
+```
+
+Audit labels:
+
+- `retrieval_miss`: supporting evidence exists in the corpus but was not retrieved.
+- `reranking_failure`: a related source was retrieved too low in the context list.
+- `chunking_issue`: a retrieved source is related, but the chunk omitted the supporting span.
+- `corpus_gap`: neither retrieved contexts nor the broader corpus support the claim.
+- `answer_overreach`: evidence supports part of the claim, but the answer added unsupported detail.
+- `stale_source`: retrieved or corpus evidence conflicts with the answer.
+- `insufficient_context`: available evidence is related but too weak or ambiguous.
+
+This keeps ContextTrace focused on evidence-chain debugging: not just "the answer failed," but whether the failure came from retrieval, chunking, corpus coverage, stale evidence, or generation overreach.
+
 Citation statuses:
 
 - `citation_ok`
@@ -518,6 +548,7 @@ contexttrace traces show <trace_id>
 contexttrace verify-demo unsupported_claim --report
 contexttrace verify examples/verify/unsupported_claim.json --report
 contexttrace compare examples/verify/compare_baseline.json examples/verify/compare_current_regression.json --report
+contexttrace audit examples/audit/retrieval_miss_trace.json --corpus examples/audit/corpus --report
 contexttrace report --last --open
 contexttrace viewer
 contexttrace benchmark --dataset datasets/demo/refund_policy

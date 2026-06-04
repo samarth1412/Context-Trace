@@ -24,6 +24,8 @@ from contexttrace.storage import SQLiteTraceStore
 from contexttrace.thresholds import parse_thresholds, threshold_failures
 from contexttrace.verify import (
     VerificationInputError,
+    audit_failures,
+    audit_trace,
     compare_failures,
     compare_trace_files,
     list_verify_demos,
@@ -32,6 +34,7 @@ from contexttrace.verify import (
     verify_trace,
 )
 from contexttrace.verify.benchmark import run_verify_benchmark, write_verify_benchmark_report
+from contexttrace.verify.audit_report import AuditReportGenerator
 from contexttrace.verify.compare_report import CompareReportGenerator
 from contexttrace.verify.report import VerifyReportGenerator
 from contexttrace.viewer import serve_viewer
@@ -401,6 +404,63 @@ def compare_command(
         click.echo("Report: %s" % written_report)
     for message in fail_messages:
         click.echo("Comparison failed: %s" % message, err=True)
+    return 1 if fail_messages else 0
+
+
+@cli.command("audit")
+@click.argument("trace_json")
+@click.option("--corpus", "corpus_path", required=True, help="Local corpus directory or file to search for supporting evidence.")
+@click.option("--json", "json_output", is_flag=True, help="Print the full audit result as JSON.")
+@click.option("--report", is_flag=True, help="Generate a local HTML retrieval audit report.")
+@click.option("--out", default=None, help="HTML report path. Implies --report when provided.")
+@click.option("--mode", default="lexical", show_default=True, type=click.Choice(["lexical", "semantic"]), help="Evidence scoring mode.")
+@click.option("--fail-on", multiple=True, help="Fail on retrieval_miss, reranking_failure, chunking_issue, corpus_gap, answer_overreach, stale_source, insufficient_context, or any_failure.")
+def audit_command(
+    trace_json: str,
+    corpus_path: str,
+    json_output: bool,
+    report: bool,
+    out: Optional[str],
+    mode: str,
+    fail_on: tuple[str, ...],
+) -> int:
+    """Audit a verified trace against a broader local corpus."""
+
+    try:
+        trace = load_trace_file(trace_json)
+        result = audit_trace(trace, corpus_path=corpus_path, mode=mode)
+    except VerificationInputError as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    written_report = None
+    if report or out:
+        default_name = "%s_audit.html" % Path(trace_json).stem
+        output_path = out or str(Path(".contexttrace") / "reports" / default_name)
+        written_report = AuditReportGenerator().generate(result, trace, path=output_path)
+
+    fail_messages = audit_failures(result, fail_on)
+    if json_output:
+        if written_report:
+            click.echo("Report: %s" % written_report, err=True)
+        click.echo(json.dumps(result, indent=2))
+        for message in fail_messages:
+            click.echo("Audit failed: %s" % message, err=True)
+        return 1 if fail_messages else 0
+
+    summary = result["summary"]
+    click.echo("Primary audit label: %s" % summary["primary_audit_label"])
+    click.echo("Claims audited: %s" % summary["total_claims"])
+    click.echo("Corpus documents: %s" % summary["corpus_documents"])
+    click.echo("Retrieval misses: %s" % summary["retrieval_miss"])
+    click.echo("Chunking issues: %s" % summary["chunking_issue"])
+    click.echo("Reranking failures: %s" % summary["reranking_failure"])
+    click.echo("Corpus gaps: %s" % summary["corpus_gap"])
+    click.echo("Answer overreach: %s" % summary["answer_overreach"])
+    click.echo("Insufficient context: %s" % summary["insufficient_context"])
+    if written_report:
+        click.echo("Report: %s" % written_report)
+    for message in fail_messages:
+        click.echo("Audit failed: %s" % message, err=True)
     return 1 if fail_messages else 0
 
 

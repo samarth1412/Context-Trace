@@ -6,6 +6,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+### Added
+
+- `contexttrace audit trace.json --corpus docs/` for local corpus-level retrieval failure diagnosis.
+- Retrieval audit labels for retrieval misses, reranking failures, chunking issues, corpus gaps, answer overreach, stale sources, and insufficient context.
+- Local HTML audit reports that explain whether unsupported claims failed because retrieval missed evidence, the source corpus lacks coverage, or generation overclaimed.
+
 ## [0.4.0] - 2026-06-04
 
 ### Added

@@ -1,0 +1,16 @@
+{
+  "query": "Where does ContextTrace store local traces?",
+  "answer": "ContextTrace stores local traces in .contexttrace/contexttrace.db.",
+  "contexts": [
+    {
+      "id": "reports_doc",
+      "text": "ContextTrace writes local HTML reports under .contexttrace/reports/.",
+      "metadata": {
+        "source": "contexttrace_reports.md"
+      }
+    }
+  ],
+  "metadata": {
+    "run_id": "audit_retrieval_miss_demo"
+  }
+}
