@@ -398,6 +398,27 @@ contexttrace verify-benchmark --case-set all --mode semantic
 
 The default benchmark uses 32 real ContextTrace repository docs and release artifacts, not synthetic refund-policy fixtures. `--case-set external` runs public OSS documentation and GitHub issue cases from Qdrant, Chroma, Haystack, and LangChain. `--case-set all` runs both packs together. The benchmark reports exact-match rate, verdict match rate, citation match rate, abstention match rate, and per-label precision, recall, and F1. The HTML report includes misses to inspect so the verifier can be improved against concrete product-doc failures.
 
+### Verification Regression Diffing
+
+Compare two portable traces, or two saved `contexttrace verify --json` outputs, to catch whether a prompt, retriever, chunking, or model change made grounding worse:
+
+```bash
+contexttrace compare baseline.json current.json
+contexttrace compare baseline.json current.json --json
+contexttrace compare baseline.json current.json --report
+contexttrace compare baseline.json current.json --report --out reports/compare.html
+contexttrace compare baseline.json current.json --fail-on new_failure
+contexttrace compare baseline.json current.json --fail-on support_rate_drop --fail-on new_root_cause
+```
+
+Run the bundled source-checkout example:
+
+```bash
+contexttrace compare examples/verify/compare_baseline.json examples/verify/compare_current_regression.json --report
+```
+
+The comparison report shows support-rate deltas, unsupported-claim-rate deltas, citation mismatch deltas, added or removed claims, new failures, resolved failures, and root-cause changes. This is meant for release checks: if a retrieval or prompt change adds a new unsupported answer detail, `contexttrace compare --fail-on new_failure` can fail CI before the change ships.
+
 Citation statuses:
 
 - `citation_ok`
@@ -408,7 +429,7 @@ Citation statuses:
 
 Limitations:
 
-- v0.3.0 uses local lexical heuristics by default.
+- v0.4.0 uses local lexical heuristics by default.
 - Semantic mode uses local normalization, not embedding or LLM reasoning.
 - Optional embedding or LLM-judge support can come later.
 - Contradiction detection is conservative.
@@ -496,6 +517,7 @@ contexttrace traces list
 contexttrace traces show <trace_id>
 contexttrace verify-demo unsupported_claim --report
 contexttrace verify examples/verify/unsupported_claim.json --report
+contexttrace compare examples/verify/compare_baseline.json examples/verify/compare_current_regression.json --report
 contexttrace report --last --open
 contexttrace viewer
 contexttrace benchmark --dataset datasets/demo/refund_policy

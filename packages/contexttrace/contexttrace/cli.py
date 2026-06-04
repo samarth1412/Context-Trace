@@ -24,12 +24,15 @@ from contexttrace.storage import SQLiteTraceStore
 from contexttrace.thresholds import parse_thresholds, threshold_failures
 from contexttrace.verify import (
     VerificationInputError,
+    compare_failures,
+    compare_trace_files,
     list_verify_demos,
     load_trace_file,
     load_verify_demo,
     verify_trace,
 )
 from contexttrace.verify.benchmark import run_verify_benchmark, write_verify_benchmark_report
+from contexttrace.verify.compare_report import CompareReportGenerator
 from contexttrace.verify.report import VerifyReportGenerator
 from contexttrace.viewer import serve_viewer
 
@@ -338,6 +341,67 @@ def verify_benchmark_command(mode: str, case_set: str, json_output: bool, report
     if written_report:
         click.echo("Report: %s" % written_report)
     return 0
+
+
+@cli.command("compare")
+@click.argument("baseline_json")
+@click.argument("current_json")
+@click.option("--json", "json_output", is_flag=True, help="Print the full comparison result as JSON.")
+@click.option("--report", is_flag=True, help="Generate a local HTML regression report.")
+@click.option("--out", default=None, help="HTML report path. Implies --report when provided.")
+@click.option("--mode", default="lexical", show_default=True, type=click.Choice(["lexical", "semantic"]), help="Evidence scoring mode for raw trace inputs.")
+@click.option("--fail-on", multiple=True, help="Fail on new_failure, new_unsupported, new_citation_mismatch, should_abstain_flip, support_rate_drop, new_root_cause, or any_regression.")
+def compare_command(
+    baseline_json: str,
+    current_json: str,
+    json_output: bool,
+    report: bool,
+    out: Optional[str],
+    mode: str,
+    fail_on: tuple[str, ...],
+) -> int:
+    """Compare two portable RAG traces or verification JSON outputs."""
+
+    try:
+        result = compare_trace_files(baseline_json, current_json, mode=mode)
+    except VerificationInputError as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    written_report = None
+    if report or out:
+        default_name = "%s_vs_%s_compare.html" % (Path(baseline_json).stem, Path(current_json).stem)
+        output_path = out or str(Path(".contexttrace") / "reports" / default_name)
+        written_report = CompareReportGenerator().generate(result, path=output_path)
+
+    fail_messages = compare_failures(result, fail_on)
+    if json_output:
+        if written_report:
+            click.echo("Report: %s" % written_report, err=True)
+        click.echo(json.dumps(result, indent=2))
+        for message in fail_messages:
+            click.echo("Comparison failed: %s" % message, err=True)
+        return 1 if fail_messages else 0
+
+    summary = result["summary"]
+    click.echo("Regression: %s" % str(summary["regression"]).lower())
+    click.echo("Support rate: %.3f -> %.3f (%+.3f)" % (
+        float(summary.get("support_rate_before") or 0.0),
+        float(summary.get("support_rate_after") or 0.0),
+        float(summary.get("support_rate_delta") or 0.0),
+    ))
+    click.echo("Unsupported claim rate delta: %+.3f" % float(summary.get("unsupported_claim_rate_delta") or 0.0))
+    click.echo("Citation mismatch delta: %+d" % int(summary.get("citation_mismatch_delta") or 0))
+    click.echo("New failures: %s" % summary["new_failures"])
+    click.echo("Resolved failures: %s" % summary["resolved_failures"])
+    click.echo("Added claims: %s" % summary["added_claims"])
+    click.echo("Removed claims: %s" % summary["removed_claims"])
+    click.echo("Changed claims: %s" % summary["changed_claims"])
+    click.echo("New root causes: %s" % (", ".join(summary.get("new_root_causes") or []) or "none"))
+    if written_report:
+        click.echo("Report: %s" % written_report)
+    for message in fail_messages:
+        click.echo("Comparison failed: %s" % message, err=True)
+    return 1 if fail_messages else 0
 
 
 def _write_verify_report(

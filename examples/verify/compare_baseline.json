@@ -1,0 +1,14 @@
+{
+  "query": "Where does ContextTrace store local traces?",
+  "answer": "ContextTrace stores traces under .contexttrace/contexttrace.db.",
+  "contexts": [
+    {
+      "id": "readme_local_mode",
+      "text": "ContextTrace stores traces under .contexttrace/contexttrace.db."
+    }
+  ],
+  "metadata": {
+    "run_id": "compare_baseline",
+    "version": "baseline"
+  }
+}

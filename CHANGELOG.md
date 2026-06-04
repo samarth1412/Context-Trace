@@ -6,6 +6,14 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-06-04
+
+### Added
+
+- `contexttrace compare baseline.json current.json` for local regression diffing across two claim-level verification runs.
+- `contexttrace compare --json --report --fail-on ...` for CI-friendly detection of new unsupported claims, citation regressions, support-rate drops, should-abstain flips, and new root causes.
+- Local HTML regression reports that show metric deltas, new failures, resolved failures, root-cause changes, and raw JSON summaries.
+
 ## [0.3.0] - 2026-06-03
 
 ### Added

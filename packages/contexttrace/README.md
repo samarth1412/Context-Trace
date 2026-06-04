@@ -90,6 +90,9 @@ contexttrace verify trace.json --fail-on unsupported --fail-on citation_mismatch
 contexttrace verify-benchmark --mode semantic
 contexttrace verify-benchmark --mode semantic --report
 contexttrace verify-benchmark --case-set external --mode semantic --report
+contexttrace compare baseline.json current.json
+contexttrace compare baseline.json current.json --report
+contexttrace compare baseline.json current.json --fail-on new_failure
 ```
 
 Input requires `query`, `answer`, and `contexts` with `id` and `text`. Optional `citations` are checked to catch cited sources that do not actually support the matched claim.
@@ -102,7 +105,9 @@ Verification output includes evidence span offsets, stable span hashes, multiple
 
 ContextTrace verifies whether each generated claim is actually supported by retrieved evidence. Instead of only showing a trace or a score, it tells you where the evidence chain broke: unsupported claim, citation mismatch, retrieval miss, answer overreach, conflicting context, or should-have-abstained.
 
-The v0.3.0 verifier uses local lexical heuristics by default. Claim extraction is rule-based, contradiction detection is conservative, and semantic or LLM-judge support can be added later.
+Use `contexttrace compare baseline.json current.json` to diff two portable traces or saved `verify --json` outputs. It reports support-rate deltas, new unsupported claims, citation regressions, should-abstain flips, and new root causes, with `--fail-on` gates for CI.
+
+The v0.4.0 verifier uses local lexical heuristics by default. Claim extraction is rule-based, contradiction detection is conservative, and semantic or LLM-judge support can be added later.
 
 ## What It Catches
 
