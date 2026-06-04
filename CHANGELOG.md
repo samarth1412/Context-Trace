@@ -10,6 +10,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 - `contexttrace audit-benchmark --case-set real` for validating retrieval-audit labels against bundled public OSS documentation and GitHub issue cases.
 - Real audit benchmark cases covering retrieval misses, chunking issues, reranking failures, corpus gaps, answer overreach, stale sources, insufficient context, and clean retrieval.
+- `capture_rag_trace` and `write_rag_trace` helpers for exporting real in-memory RAG artifacts to portable `contexttrace verify` JSON.
+- Real-world validation harnesses, including an end-to-end LangChain/Ollama/FAISS run against a public RAG repository.
 
 ## [0.5.0] - 2026-06-04
 

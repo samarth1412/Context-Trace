@@ -110,6 +110,15 @@ Verification output includes evidence span offsets, stable span hashes, multiple
 
 ContextTrace verifies whether each generated claim is actually supported by retrieved evidence. Instead of only showing a trace or a score, it tells you where the evidence chain broke: unsupported claim, citation mismatch, retrieval miss, answer overreach, conflicting context, or should-have-abstained.
 
+Use the capture helper when you have real RAG artifacts in memory:
+
+```python
+from contexttrace import capture_rag_trace, write_rag_trace
+
+trace = capture_rag_trace(query=question, answer=answer, contexts=retrieved_docs)
+write_rag_trace(trace, "trace.json")
+```
+
 Use `contexttrace compare baseline.json current.json` to diff two portable traces or saved `verify --json` outputs. It reports support-rate deltas, new unsupported claims, citation regressions, should-abstain flips, and new root causes, with `--fail-on` gates for CI.
 
 Use `contexttrace audit trace.json --corpus docs/` to diagnose whether an unsupported claim failed because retrieval missed evidence, chunking omitted the supporting span, the corpus lacks coverage, or generation overclaimed.

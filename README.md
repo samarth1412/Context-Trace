@@ -99,6 +99,20 @@ ContextTrace splits the answer into claims and classifies each claim as:
 - `unverifiable`
 - `contradicted`
 
+Capture real RAG artifacts directly from common document objects:
+
+```python
+from contexttrace import capture_rag_trace, write_rag_trace
+
+trace = capture_rag_trace(
+    query=question,
+    answer=answer,
+    contexts=retrieved_docs,  # dicts or LangChain-style Documents
+    metadata={"system": "my-rag-app"},
+)
+write_rag_trace(trace, "trace.json")
+```
+
 It also checks citation status:
 
 - `citation_ok`

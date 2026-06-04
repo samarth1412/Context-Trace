@@ -13,6 +13,12 @@ This is not a leaderboard. It answers one practical question: when a developer p
 python benchmarks/real_world_rag/run_real_world_validation.py
 ```
 
+For the slower end-to-end LangChain/Ollama/FAISS run against `taha-parsayan/Ollama-and-HuggingFace-RAG-Engine`:
+
+```bash
+python benchmarks/real_world_rag/run_ollama_hf_e2e.py
+```
+
 Environment used in the latest run:
 
 - Generation model: `mistral`
@@ -20,7 +26,25 @@ Environment used in the latest run:
 - Answer mode: `extractive_from_retrieved_context`
 - Date: `2026-06-04`
 
-## Results
+## End-To-End App Run
+
+The stronger validation run executes the cloned repo's real document loader, chunker, FAISS vector-store factory, MMR retriever shape, prompt chain, and local Ollama generation. A compatibility wrapper is used for Ollama embeddings because the installed Ollama server exposes `/api/embeddings`, while the current `langchain_ollama` client expects `/api/embed`.
+
+Latest result:
+
+- Repo: https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine
+- Question: `What are the main advantages of PET/MRI compared with PET/CT?`
+- Retrieved contexts: 3 real FAISS/MMR chunks from `data/PETMRI.txt`
+- Generated model answer: local Ollama `phi3`
+- Verify support rate: `0.600`
+- Verification failure type: `contradicted_answer`
+- Audit primary label: `retrieval_miss`
+- Trace: `traces/ollama_hf_e2e_petmri.json`
+- Reports: `reports/ollama_hf_e2e_petmri_verify.html`, `reports/ollama_hf_e2e_petmri_audit.html`
+
+This is the first validation that is close to a real developer workflow: a real RAG repo, its own corpus, real retrieval, real local generation, then ContextTrace verification.
+
+## Smoke Results
 
 ### HeskethGD/local-rag-chat
 

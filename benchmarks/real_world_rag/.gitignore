@@ -1,3 +1,4 @@
 reports/
 traces/
 results.json
+*_result.json

@@ -1,4 +1,5 @@
 from contexttrace._version import __version__
+from contexttrace.capture import capture_rag_trace, langchain_documents_to_contexts, write_rag_trace
 from contexttrace.client import AsyncContextTrace, ContextTrace
 from contexttrace.config import ContextTraceConfig
 from contexttrace.errors import (
@@ -31,6 +32,9 @@ __all__ = [
     "ReliabilityScore",
     "ReliabilityScorer",
     "ReportGenerator",
+    "capture_rag_trace",
     "export_contexttrace_trace",
+    "langchain_documents_to_contexts",
+    "write_rag_trace",
     "__version__",
 ]
