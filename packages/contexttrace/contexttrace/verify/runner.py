@@ -31,7 +31,7 @@ def verify_trace(trace: RAGTrace, *, mode: str = "lexical") -> dict[str, Any]:
     for claim in claims:
         match = find_best_evidence(claim.text, trace.contexts, mode=mode)
         verifications.append(
-            classify_claim(claim, match, has_contexts=bool(trace.contexts))
+            classify_claim(claim, match, has_contexts=bool(trace.contexts), mode=mode)
         )
 
     verifications = attach_citation_statuses(claims, verifications, trace, mode=mode)

@@ -143,6 +143,12 @@ Run the bundled source-checkout example:
 contexttrace audit examples/audit/retrieval_miss_trace.json --corpus examples/audit/corpus --report
 ```
 
+Check the audit labels against bundled real OSS cases:
+
+```bash
+contexttrace audit-benchmark --case-set real --mode semantic --report
+```
+
 Audit labels:
 
 - `retrieval_miss`: supporting evidence exists in the corpus but was not retrieved

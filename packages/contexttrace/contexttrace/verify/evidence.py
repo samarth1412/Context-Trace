@@ -396,6 +396,8 @@ SEMANTIC_TOKEN_MAP = {
     "repayment": "refund",
     "id": "number",
     "identifier": "number",
+    "retriever": "retrieval",
+    "retrievers": "retrieval",
     "receipt": "proof",
     "documentation": "proof",
     "documents": "proof",

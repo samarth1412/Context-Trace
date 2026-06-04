@@ -1,0 +1,574 @@
+{
+  "description": "Real audit benchmark cases using public OSS RAG/vector database docs, public GitHub issue snippets, and ContextTrace documentation snippets. Cases are embedded so benchmark runs are local and deterministic.",
+  "cases": [
+    {
+      "id": "qdrant_payload_retrieval_miss",
+      "source": "qdrant.tech/documentation/concepts/payload",
+      "note": "Supporting Qdrant payload evidence exists in corpus but retrieved context is from filtering docs.",
+      "query": "How does Qdrant store payloads?",
+      "answer": "Qdrant stores additional information with vectors as payload.",
+      "retrieved_contexts": [
+        {
+          "id": "qdrant_filtering",
+          "text": "Filtering lets you define conditions that must match payload values during search.",
+          "metadata": {"source": "qdrant_filtering.md"}
+        }
+      ],
+      "corpus_contexts": [
+        {
+          "id": "qdrant_payload.md",
+          "source_url": "https://qdrant.tech/documentation/concepts/payload/",
+          "text": "Qdrant stores additional information along with vectors as payload."
+        }
+      ],
+      "expected_label": "retrieval_miss"
+    },
+    {
+      "id": "chroma_where_filter_retrieval_miss",
+      "source": "github.com/chroma-core/docs/docs/usage-guide.md",
+      "note": "Chroma metadata filter evidence exists in corpus but was not retrieved.",
+      "query": "How does Chroma filter documents by metadata?",
+      "answer": "Chroma supports filtering results with a where metadata clause.",
+      "retrieved_contexts": [
+        {
+          "id": "chroma_collection",
+          "text": "A Chroma collection stores embeddings, documents, and metadata together.",
+          "metadata": {"source": "chroma_collection.md"}
+        }
+      ],
+      "corpus_contexts": [
+        {
+          "id": "chroma_usage_guide.md",
+          "source_url": "https://github.com/chroma-core/docs/blob/main/docs/docs.trychroma.com/markdoc/content/docs/querying-collections/query-and-get.md",
+          "text": "Chroma supports filtering results with a where metadata clause when querying a collection."
+        }
+      ],
+      "expected_label": "retrieval_miss"
+    },
+    {
+      "id": "haystack_document_store_retrieval_miss",
+      "source": "docs.haystack.deepset.ai/docs/document-store",
+      "note": "Haystack Document Store support exists in corpus but retriever returned pipeline text.",
+      "query": "What does a Haystack Document Store store?",
+      "answer": "A Haystack Document Store stores documents for retrieval.",
+      "retrieved_contexts": [
+        {
+          "id": "haystack_pipeline",
+          "text": "Haystack pipelines connect components that process inputs and produce outputs.",
+          "metadata": {"source": "haystack_pipeline.md"}
+        }
+      ],
+      "corpus_contexts": [
+        {
+          "id": "haystack_document_store.md",
+          "source_url": "https://docs.haystack.deepset.ai/docs/document-store",
+          "text": "A Document Store stores documents and makes them available to Retrievers."
+        }
+      ],
+      "expected_label": "retrieval_miss"
+    },
+    {
+      "id": "langchain_retriever_retrieval_miss",
+      "source": "reference.langchain.com/javascript/langchain-core/vectorstores/VectorStoreRetriever",
+      "note": "LangChain retriever source exists in corpus but only tracing docs were retrieved.",
+      "query": "What does VectorStoreRetriever do?",
+      "answer": "VectorStoreRetriever retrieves documents from a vector store.",
+      "retrieved_contexts": [
+        {
+          "id": "langchain_callbacks",
+          "text": "Callbacks let LangChain users observe chain and model execution events.",
+          "metadata": {"source": "langchain_callbacks.md"}
+        }
+      ],
+      "corpus_contexts": [
+        {
+          "id": "langchain_vectorstore_retriever.md",
+          "source_url": "https://reference.langchain.com/javascript/classes/_langchain_core.vectorstores.VectorStoreRetriever.html",
+          "text": "VectorStoreRetriever retrieves documents from a vector store by calling the configured search."
+        }
+      ],
+      "expected_label": "retrieval_miss"
+    },
+    {
+      "id": "contexttrace_local_store_retrieval_miss",
+      "source": "docs/local-mode.md",
+      "note": "ContextTrace local DB evidence exists in corpus but report docs were retrieved.",
+      "query": "Where does ContextTrace store traces in local mode?",
+      "answer": "ContextTrace stores local traces in .contexttrace/contexttrace.db.",
+      "retrieved_contexts": [
+        {
+          "id": "reports_doc",
+          "text": "ContextTrace writes local HTML reports under .contexttrace/reports/.",
+          "metadata": {"source": "reports.md"}
+        }
+      ],
+      "corpus_contexts": [
+        {
+          "id": "local-mode.md",
+          "source_url": "https://github.com/samarth1412/Context-Trace",
+          "text": "Local mode is the default. ContextTrace stores local traces in .contexttrace/contexttrace.db."
+        }
+      ],
+      "expected_label": "retrieval_miss"
+    },
+    {
+      "id": "qdrant_array_chunking_issue",
+      "source": "qdrant.tech/documentation/concepts/payload",
+      "note": "Same Qdrant source was retrieved, but the chunk omitted the array filtering span.",
+      "query": "How does Qdrant filter array payloads?",
+      "answer": "When Qdrant filters an array payload, the filter succeeds if at least one value inside the array meets the condition.",
+      "retrieved_contexts": [
+        {
+          "id": "qdrant_payload_chunk",
+          "text": "Qdrant stores additional information along with vectors as payload.",
+          "metadata": {"source": "qdrant_payload.md"}
+        }
+      ],
+      "corpus_contexts": [
+        {
+          "id": "qdrant_payload.md",
+          "source_url": "https://qdrant.tech/documentation/concepts/payload/",
+          "text": "Arrays are treated differently during filtering. When a filter is applied to an array, it succeeds if at least one of the values inside the array meets the condition."
+        }
+      ],
+      "expected_label": "chunking_issue"
+    },
+    {
+      "id": "qdrant_payload_index_chunking_issue",
+      "source": "qdrant.tech/documentation/search/filtering",
+      "note": "Filtering source was retrieved without the payload index recommendation span.",
+      "query": "What does Qdrant recommend for performant filtering?",
+      "answer": "For performant filtering, Qdrant recommends creating payload indexes for fields you plan to filter on.",
+      "retrieved_contexts": [
+        {
+          "id": "qdrant_filtering_chunk",
+          "text": "Qdrant filtering lets you restrict search results by payload conditions.",
+          "metadata": {"source": "qdrant_filtering.md"}
+        }
+      ],
+      "corpus_contexts": [
+        {
+          "id": "qdrant_filtering.md",
+          "source_url": "https://qdrant.tech/documentation/concepts/indexing/",
+          "text": "For performant filtering, create payload indexes for the fields you plan to filter on."
+        }
+      ],
+      "expected_label": "chunking_issue"
+    },
+    {
+      "id": "chroma_issue_chunking_issue",
+      "source": "github.com/chroma-core/chroma/issues/1331",
+      "note": "GitHub issue source was retrieved but not the no-result where-filter span.",
+      "query": "What can happen when a Chroma where filter has no matches?",
+      "answer": "A Chroma where filter can return no matching results.",
+      "retrieved_contexts": [
+        {
+          "id": "chroma_issue_1331_chunk",
+          "text": "The Chroma issue discusses query behavior with where filters.",
+          "metadata": {"source": "chroma_issue_1331.md"}
+        }
+      ],
+      "corpus_contexts": [
+        {
+          "id": "chroma_issue_1331.md",
+          "source_url": "https://github.com/chroma-core/chroma/issues/1331",
+          "text": "A query using a where filter can return no results when no metadata values match the condition."
+        }
+      ],
+      "expected_label": "chunking_issue"
+    },
+    {
+      "id": "contexttrace_privacy_chunking_issue",
+      "source": "docs/privacy.md",
+      "note": "Privacy source was retrieved but omitted the no-network span.",
+      "query": "Does ContextTrace require network calls in local mode?",
+      "answer": "ContextTrace does not make network calls unless an external judge provider or endpoint is configured.",
+      "retrieved_contexts": [
+        {
+          "id": "privacy_chunk",
+          "text": "Local mode stores traces on the developer machine.",
+          "metadata": {"source": "privacy.md"}
+        }
+      ],
+      "corpus_contexts": [
+        {
+          "id": "privacy.md",
+          "source_url": "https://github.com/samarth1412/Context-Trace",
+          "text": "ContextTrace does not make network calls unless you configure an external judge provider or point it at an endpoint you control."
+        }
+      ],
+      "expected_label": "chunking_issue"
+    },
+    {
+      "id": "qdrant_match_any_reranking_failure",
+      "source": "qdrant.tech/documentation/search/filtering",
+      "note": "Correct source appears at rank 4, below the audit reranking cutoff.",
+      "query": "What does Qdrant match any do?",
+      "answer": "Qdrant match any checks whether a stored value is one of several supplied values.",
+      "retrieved_contexts": [
+        {"id": "rank1", "text": "Qdrant supports vector search.", "metadata": {"source": "overview.md"}},
+        {"id": "rank2", "text": "Payloads store extra information.", "metadata": {"source": "payload.md"}},
+        {"id": "rank3", "text": "Indexes can improve filtering.", "metadata": {"source": "indexing.md"}},
+        {"id": "rank4", "text": "Filtering conditions can be combined with must and should clauses.", "metadata": {"source": "qdrant_filtering.md"}}
+      ],
+      "corpus_contexts": [
+        {
+          "id": "qdrant_filtering.md",
+          "source_url": "https://qdrant.tech/documentation/concepts/filtering/",
+          "text": "Match Any checks if the stored value is one of multiple supplied values."
+        }
+      ],
+      "expected_label": "reranking_failure"
+    },
+    {
+      "id": "haystack_retriever_reranking_failure",
+      "source": "docs.haystack.deepset.ai/docs/retrievers",
+      "note": "Haystack retriever source is present but ranked too low.",
+      "query": "What do Haystack retrievers do?",
+      "answer": "Haystack retrievers fetch relevant documents from a Document Store.",
+      "retrieved_contexts": [
+        {"id": "rank1", "text": "Haystack components can be connected in pipelines.", "metadata": {"source": "pipeline.md"}},
+        {"id": "rank2", "text": "Haystack has several component types for pipelines.", "metadata": {"source": "document-store.md"}},
+        {"id": "rank3", "text": "Readers can extract answers from documents.", "metadata": {"source": "reader.md"}},
+        {"id": "rank4", "text": "The Haystack retrievers documentation describes available components.", "metadata": {"source": "haystack_retrievers.md"}}
+      ],
+      "corpus_contexts": [
+        {
+          "id": "haystack_retrievers.md",
+          "source_url": "https://docs.haystack.deepset.ai/docs/retrievers",
+          "text": "Retrievers fetch relevant documents from a Document Store for a user query."
+        }
+      ],
+      "expected_label": "reranking_failure"
+    },
+    {
+      "id": "langchain_retriever_reranking_failure",
+      "source": "reference.langchain.com/javascript/langchain-core/vectorstores/VectorStoreRetriever",
+      "note": "LangChain retriever evidence is in rank 4.",
+      "query": "How does VectorStoreRetriever get documents?",
+      "answer": "VectorStoreRetriever gets documents by calling a configured vector store search.",
+      "retrieved_contexts": [
+        {"id": "rank1", "text": "LangChain callbacks observe execution.", "metadata": {"source": "callbacks.md"}},
+        {"id": "rank2", "text": "Runnable objects can be composed.", "metadata": {"source": "runnables.md"}},
+        {"id": "rank3", "text": "Vector stores contain embeddings.", "metadata": {"source": "vectorstores.md"}},
+        {"id": "rank4", "text": "VectorStoreRetriever is a retriever class.", "metadata": {"source": "langchain_vectorstore_retriever.md"}}
+      ],
+      "corpus_contexts": [
+        {
+          "id": "langchain_vectorstore_retriever.md",
+          "source_url": "https://reference.langchain.com/javascript/classes/_langchain_core.vectorstores.VectorStoreRetriever.html",
+          "text": "VectorStoreRetriever retrieves documents from a vector store by calling the configured search."
+        }
+      ],
+      "expected_label": "reranking_failure"
+    },
+    {
+      "id": "contexttrace_hosted_dashboard_corpus_gap",
+      "source": "README.md",
+      "note": "Corpus explicitly conflicts with the hosted dashboard requirement.",
+      "query": "Does ContextTrace require a hosted dashboard?",
+      "answer": "ContextTrace requires a hosted dashboard to inspect traces.",
+      "retrieved_contexts": [
+        {
+          "id": "readme_local",
+          "text": "ContextTrace is a local-first SDK and CLI.",
+          "metadata": {"source": "README.md"}
+        }
+      ],
+      "corpus_contexts": [
+        {
+          "id": "README.md",
+          "source_url": "https://github.com/samarth1412/Context-Trace",
+          "text": "ContextTrace is local-first and does not require a hosted dashboard."
+        }
+      ],
+      "expected_label": "stale_source"
+    },
+    {
+      "id": "qdrant_pricing_corpus_gap",
+      "source": "qdrant.tech/documentation",
+      "note": "Answer invents pricing details not present in the supplied public docs snippet.",
+      "query": "How much does a Qdrant payload index cost?",
+      "answer": "A Qdrant payload index costs 10 dollars per collection.",
+      "retrieved_contexts": [
+        {
+          "id": "qdrant_indexing",
+          "text": "Payload indexes can improve filtering performance.",
+          "metadata": {"source": "qdrant_indexing.md"}
+        }
+      ],
+      "corpus_contexts": [
+        {
+          "id": "qdrant_indexing.md",
+          "source_url": "https://qdrant.tech/documentation/concepts/indexing/",
+          "text": "Payload indexes can improve filtering performance for fields used in filters."
+        }
+      ],
+      "expected_label": "corpus_gap"
+    },
+    {
+      "id": "chroma_sql_corpus_gap",
+      "source": "github.com/chroma-core/docs",
+      "note": "Corpus supports where filters, but the answer adds unsupported SQL join behavior.",
+      "query": "Can Chroma where filters use SQL joins?",
+      "answer": "Chroma where filters support SQL joins across collections.",
+      "retrieved_contexts": [
+        {
+          "id": "chroma_where",
+          "text": "Chroma supports metadata filtering with where clauses.",
+          "metadata": {"source": "chroma_usage_guide.md"}
+        }
+      ],
+      "corpus_contexts": [
+        {
+          "id": "chroma_usage_guide.md",
+          "source_url": "https://github.com/chroma-core/docs",
+          "text": "Chroma supports metadata filtering with where clauses on collection queries."
+        }
+      ],
+      "expected_label": "answer_overreach"
+    },
+    {
+      "id": "qdrant_payload_answer_overreach",
+      "source": "qdrant.tech/documentation/concepts/payload",
+      "note": "Corpus supports payload storage, but answer adds encryption claim.",
+      "query": "What does Qdrant store with vectors?",
+      "answer": "Qdrant stores payload information with vectors and encrypts every payload by default.",
+      "retrieved_contexts": [
+        {
+          "id": "qdrant_payload",
+          "text": "Qdrant stores additional information along with vectors as payload.",
+          "metadata": {"source": "qdrant_payload.md"}
+        }
+      ],
+      "corpus_contexts": [
+        {
+          "id": "qdrant_payload.md",
+          "source_url": "https://qdrant.tech/documentation/concepts/payload/",
+          "text": "Qdrant stores additional information along with vectors as payload."
+        }
+      ],
+      "expected_label": "answer_overreach"
+    },
+    {
+      "id": "haystack_store_answer_overreach",
+      "source": "docs.haystack.deepset.ai/docs/document-store",
+      "note": "Corpus supports document storage, not automatic duplicate removal.",
+      "query": "What does a Haystack Document Store do?",
+      "answer": "A Haystack Document Store stores documents and automatically removes duplicate content.",
+      "retrieved_contexts": [
+        {
+          "id": "haystack_document_store",
+          "text": "A Document Store stores documents and makes them available to Retrievers.",
+          "metadata": {"source": "haystack_document_store.md"}
+        }
+      ],
+      "corpus_contexts": [
+        {
+          "id": "haystack_document_store.md",
+          "source_url": "https://docs.haystack.deepset.ai/docs/document-store",
+          "text": "A Document Store stores documents and makes them available to Retrievers."
+        }
+      ],
+      "expected_label": "answer_overreach"
+    },
+    {
+      "id": "contexttrace_local_answer_overreach",
+      "source": "docs/local-mode.md",
+      "note": "Corpus supports local DB storage, not automatic cloud sync.",
+      "query": "Where does ContextTrace store traces?",
+      "answer": "ContextTrace stores traces in .contexttrace/contexttrace.db and automatically syncs them to the cloud.",
+      "retrieved_contexts": [
+        {
+          "id": "local-mode.md",
+          "text": "ContextTrace stores traces in .contexttrace/contexttrace.db.",
+          "metadata": {"source": "local-mode.md"}
+        }
+      ],
+      "corpus_contexts": [
+        {
+          "id": "local-mode.md",
+          "source_url": "https://github.com/samarth1412/Context-Trace",
+          "text": "ContextTrace stores traces in .contexttrace/contexttrace.db."
+        }
+      ],
+      "expected_label": "answer_overreach"
+    },
+    {
+      "id": "contexttrace_viewer_stale_source",
+      "source": "README.md",
+      "note": "Viewer port conflicts with current docs.",
+      "query": "Where does the ContextTrace viewer run?",
+      "answer": "The ContextTrace viewer runs at http://localhost:9999.",
+      "retrieved_contexts": [
+        {
+          "id": "viewer_docs",
+          "text": "The local viewer serves pages at http://localhost:8765.",
+          "metadata": {"source": "README.md"}
+        }
+      ],
+      "corpus_contexts": [
+        {
+          "id": "README.md",
+          "source_url": "https://github.com/samarth1412/Context-Trace",
+          "text": "The local viewer reads from .contexttrace/contexttrace.db and serves pages at http://localhost:8765."
+        }
+      ],
+      "expected_label": "stale_source"
+    },
+    {
+      "id": "contexttrace_python_stale_source",
+      "source": "README.md",
+      "note": "Python version claim conflicts with current requirement.",
+      "query": "What Python version does ContextTrace require?",
+      "answer": "ContextTrace supports Python 3.7 and later.",
+      "retrieved_contexts": [
+        {
+          "id": "readme_python",
+          "text": "ContextTrace requires Python 3.8+.",
+          "metadata": {"source": "README.md"}
+        }
+      ],
+      "corpus_contexts": [
+        {
+          "id": "README.md",
+          "source_url": "https://github.com/samarth1412/Context-Trace",
+          "text": "ContextTrace requires Python 3.8+."
+        }
+      ],
+      "expected_label": "stale_source"
+    },
+    {
+      "id": "qdrant_filter_answer_overreach",
+      "source": "qdrant.tech/documentation/search/filtering",
+      "note": "Corpus supports payload filtering, but not the added ranking interaction.",
+      "query": "How do Qdrant filters affect ranking?",
+      "answer": "Qdrant filters combine payload conditions with vector ranking.",
+      "retrieved_contexts": [
+        {
+          "id": "qdrant_filtering",
+          "text": "Qdrant filtering applies conditions during search.",
+          "metadata": {"source": "qdrant_filtering.md"}
+        }
+      ],
+      "corpus_contexts": [
+        {
+          "id": "qdrant_filtering.md",
+          "source_url": "https://qdrant.tech/documentation/concepts/filtering/",
+          "text": "Qdrant filtering applies payload conditions during search."
+        }
+      ],
+      "expected_label": "answer_overreach"
+    },
+    {
+      "id": "langchain_search_insufficient_context",
+      "source": "reference.langchain.com/javascript/langchain-core/vectorstores/VectorStoreRetriever",
+      "note": "Corpus does not support the deterministic ranking guarantee.",
+      "query": "Does VectorStoreRetriever guarantee deterministic ranking?",
+      "answer": "VectorStoreRetriever guarantees deterministic ranking for every query.",
+      "retrieved_contexts": [
+        {
+          "id": "langchain_vectorstore_retriever",
+          "text": "VectorStoreRetriever retrieves documents from a vector store by calling the configured search.",
+          "metadata": {"source": "langchain_vectorstore_retriever.md"}
+        }
+      ],
+      "corpus_contexts": [
+        {
+          "id": "langchain_vectorstore_retriever.md",
+          "source_url": "https://reference.langchain.com/javascript/classes/_langchain_core.vectorstores.VectorStoreRetriever.html",
+          "text": "VectorStoreRetriever retrieves documents from a vector store by calling the configured search."
+        }
+      ],
+      "expected_label": "corpus_gap"
+    },
+    {
+      "id": "qdrant_filter_insufficient_context",
+      "source": "qdrant.tech/documentation/search/filtering",
+      "note": "Corpus is related to filtering, but too weak to verify a distance-scoring claim.",
+      "query": "Do Qdrant filters change vector distance scoring?",
+      "answer": "Qdrant filtering changes vector distance scoring.",
+      "retrieved_contexts": [
+        {
+          "id": "qdrant_overview",
+          "text": "Qdrant supports vector search over collections.",
+          "metadata": {"source": "overview.md"}
+        }
+      ],
+      "corpus_contexts": [
+        {
+          "id": "qdrant_filtering.md",
+          "source_url": "https://qdrant.tech/documentation/concepts/filtering/",
+          "text": "Qdrant filtering applies conditions during search."
+        }
+      ],
+      "expected_label": "insufficient_context"
+    },
+    {
+      "id": "haystack_ranking_insufficient_context",
+      "source": "docs.haystack.deepset.ai/docs/retrievers",
+      "note": "Corpus explains retriever purpose, but not ranking explanations.",
+      "query": "Do Haystack retrievers explain document ranking?",
+      "answer": "Haystack retrievers explain why each document was ranked.",
+      "retrieved_contexts": [
+        {
+          "id": "haystack_pipeline",
+          "text": "Haystack pipelines connect components that process inputs and outputs.",
+          "metadata": {"source": "pipeline.md"}
+        }
+      ],
+      "corpus_contexts": [
+        {
+          "id": "haystack_retrievers.md",
+          "source_url": "https://docs.haystack.deepset.ai/docs/retrievers",
+          "text": "Retrievers fetch relevant documents from a Document Store for a user query."
+        }
+      ],
+      "expected_label": "insufficient_context"
+    },
+    {
+      "id": "qdrant_payload_no_failure",
+      "source": "qdrant.tech/documentation/concepts/payload",
+      "note": "Healthy audit case where retrieved evidence already supports the claim.",
+      "query": "What is a Qdrant payload?",
+      "answer": "Qdrant stores additional information along with vectors as payload.",
+      "retrieved_contexts": [
+        {
+          "id": "qdrant_payload.md",
+          "text": "Qdrant stores additional information along with vectors as payload.",
+          "metadata": {"source": "qdrant_payload.md"}
+        }
+      ],
+      "corpus_contexts": [
+        {
+          "id": "qdrant_payload.md",
+          "source_url": "https://qdrant.tech/documentation/concepts/payload/",
+          "text": "Qdrant stores additional information along with vectors as payload."
+        }
+      ],
+      "expected_label": "no_failure_detected"
+    },
+    {
+      "id": "contexttrace_local_no_failure",
+      "source": "README.md",
+      "note": "Healthy ContextTrace local storage claim.",
+      "query": "Where does ContextTrace store local traces?",
+      "answer": "ContextTrace stores local traces in .contexttrace/contexttrace.db.",
+      "retrieved_contexts": [
+        {
+          "id": "README.md",
+          "text": "ContextTrace stores local traces in .contexttrace/contexttrace.db.",
+          "metadata": {"source": "README.md"}
+        }
+      ],
+      "corpus_contexts": [
+        {
+          "id": "README.md",
+          "source_url": "https://github.com/samarth1412/Context-Trace",
+          "text": "ContextTrace stores local traces in .contexttrace/contexttrace.db."
+        }
+      ],
+      "expected_label": "no_failure_detected"
+    }
+  ]
+}

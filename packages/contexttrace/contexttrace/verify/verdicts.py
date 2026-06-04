@@ -113,9 +113,16 @@ class ClaimVerification:
         }
 
 
-def classify_claim(claim: Claim, match: EvidenceMatch, *, has_contexts: bool) -> ClaimVerification:
+def classify_claim(
+    claim: Claim,
+    match: EvidenceMatch,
+    *,
+    has_contexts: bool,
+    mode: str = "lexical",
+) -> ClaimVerification:
     fact_evidence = match.supporting_text or match.snippet
-    fact_match = compare_facts(claim.text, fact_evidence, mode="semantic")
+    fact_mode = "semantic" if mode == "semantic" else "lexical"
+    fact_match = compare_facts(claim.text, fact_evidence, mode=fact_mode)
     contradiction_evidence = _contradiction_evidence_text(claim.text, match)
     contradicted = has_contexts and is_contradicted(claim.text, contradiction_evidence, match.score)
     if contradicted or fact_match.conflicting_facts:
@@ -239,7 +246,7 @@ def _is_partially_supported(fact_match: object) -> bool:
     matched = list(getattr(fact_match, "matched_facts", []) or [])
     missing = list(getattr(fact_match, "missing_facts", []) or [])
     coverage = float(getattr(fact_match, "coverage", 0.0) or 0.0)
-    return bool(matched and missing and len(matched) >= 2 and coverage >= 0.4)
+    return bool(matched and missing and coverage >= 0.4 and (len(matched) >= 2 or coverage >= 0.5))
 
 
 def _join_facts(facts: list[str]) -> str:

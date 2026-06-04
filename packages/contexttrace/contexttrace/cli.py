@@ -34,6 +34,7 @@ from contexttrace.verify import (
     verify_trace,
 )
 from contexttrace.verify.benchmark import run_verify_benchmark, write_verify_benchmark_report
+from contexttrace.verify.audit_benchmark import run_audit_benchmark, write_audit_benchmark_report
 from contexttrace.verify.audit_report import AuditReportGenerator
 from contexttrace.verify.compare_report import CompareReportGenerator
 from contexttrace.verify.report import VerifyReportGenerator
@@ -340,6 +341,61 @@ def verify_benchmark_command(mode: str, case_set: str, json_output: bool, report
             click.echo(
                 "- %s expected=%s predicted=%s"
                 % (row["id"], ",".join(row["expected"]), ",".join(row["predicted"]))
+            )
+    if written_report:
+        click.echo("Report: %s" % written_report)
+    return 0
+
+
+@cli.command("audit-benchmark")
+@click.option("--mode", default="semantic", show_default=True, type=click.Choice(["lexical", "semantic"]), help="Evidence scoring mode.")
+@click.option("--case-set", default="real", show_default=True, type=click.Choice(["real"]), help="Benchmark case set to run.")
+@click.option("--json", "json_output", is_flag=True, help="Print audit benchmark results as JSON.")
+@click.option("--report", is_flag=True, help="Generate a local HTML audit benchmark report.")
+@click.option("--out", default=None, help="HTML audit benchmark report path. Implies --report when provided.")
+def audit_benchmark_command(mode: str, case_set: str, json_output: bool, report: bool, out: Optional[str]) -> int:
+    """Run the bundled real-case retrieval audit benchmark."""
+
+    try:
+        result = run_audit_benchmark(mode=mode, case_set=case_set)
+    except ValueError as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    written_report = None
+    if report or out:
+        output_path = out or str(Path(".contexttrace") / "reports" / ("audit_benchmark_%s.html" % mode))
+        written_report = write_audit_benchmark_report(result, path=output_path)
+    if json_output:
+        if written_report:
+            click.echo("Report: %s" % written_report, err=True)
+        click.echo(json.dumps(result, indent=2))
+        return 0
+
+    click.echo("Mode: %s" % result["mode"])
+    click.echo("Case source: %s" % result["case_source"])
+    click.echo("Cases: %s" % result["cases"])
+    click.echo("Exact match rate: %.3f" % float(result["exact_match_rate"]))
+    click.echo("label\tprecision\trecall\tf1\ttp\tfp\tfn")
+    for label, metrics in result["per_label"].items():
+        click.echo(
+            "%s\t%.3f\t%.3f\t%.3f\t%s\t%s\t%s"
+            % (
+                label,
+                float(metrics["precision"]),
+                float(metrics["recall"]),
+                float(metrics["f1"]),
+                metrics["tp"],
+                metrics["fp"],
+                metrics["fn"],
+            )
+        )
+    missed = [row for row in result["rows"] if not row["exact_match"]]
+    if missed:
+        click.echo("Mismatches:")
+        for row in missed:
+            click.echo(
+                "- %s expected=%s predicted=%s"
+                % (row["id"], row["expected"], row["predicted"])
             )
     if written_report:
         click.echo("Report: %s" % written_report)

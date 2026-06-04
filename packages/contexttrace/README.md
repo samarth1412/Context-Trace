@@ -96,6 +96,8 @@ contexttrace compare baseline.json current.json --fail-on new_failure
 contexttrace audit trace.json --corpus docs/
 contexttrace audit trace.json --corpus docs/ --report
 contexttrace audit trace.json --corpus docs/ --fail-on retrieval_miss
+contexttrace audit-benchmark --case-set real --mode semantic
+contexttrace audit-benchmark --case-set real --mode semantic --report
 ```
 
 Input requires `query`, `answer`, and `contexts` with `id` and `text`. Optional `citations` are checked to catch cited sources that do not actually support the matched claim.
@@ -111,6 +113,8 @@ ContextTrace verifies whether each generated claim is actually supported by retr
 Use `contexttrace compare baseline.json current.json` to diff two portable traces or saved `verify --json` outputs. It reports support-rate deltas, new unsupported claims, citation regressions, should-abstain flips, and new root causes, with `--fail-on` gates for CI.
 
 Use `contexttrace audit trace.json --corpus docs/` to diagnose whether an unsupported claim failed because retrieval missed evidence, chunking omitted the supporting span, the corpus lacks coverage, or generation overclaimed.
+
+Use `contexttrace audit-benchmark --case-set real --mode semantic` to test retrieval-audit labels against bundled public OSS documentation and GitHub issue snippets from Qdrant, Chroma, Haystack, LangChain, and ContextTrace docs.
 
 The v0.5.0 verifier uses local lexical heuristics by default. Claim extraction is rule-based, contradiction detection is conservative, and semantic or LLM-judge support can be added later.
 

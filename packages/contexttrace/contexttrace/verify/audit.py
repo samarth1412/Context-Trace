@@ -83,6 +83,21 @@ def audit_trace(
     mode: str = "lexical",
 ) -> dict[str, Any]:
     corpus_contexts = load_corpus(corpus_path)
+    return audit_trace_with_corpus(
+        trace,
+        corpus_contexts,
+        corpus_path=str(Path(corpus_path)),
+        mode=mode,
+    )
+
+
+def audit_trace_with_corpus(
+    trace: RAGTrace,
+    corpus_contexts: list[TraceContext],
+    *,
+    corpus_path: str = "embedded",
+    mode: str = "lexical",
+) -> dict[str, Any]:
     verification = verify_trace(trace, mode=mode)
     claim_audits = [
         _audit_claim(claim, trace, corpus_contexts, mode=mode)
@@ -100,7 +115,7 @@ def audit_trace(
             "diagnostics": verification.get("diagnostics") or {},
         },
         "corpus": {
-            "path": str(Path(corpus_path)),
+            "path": str(corpus_path),
             "documents": len(corpus_contexts),
         },
         "metadata": dict(trace.metadata),
@@ -179,6 +194,7 @@ def _audit_claim(
         Claim(id=claim_id or "claim", text=claim_text),
         corpus_match,
         has_contexts=bool(corpus_contexts),
+        mode=mode,
     )
     diagnosis = _diagnose(claim, trace, corpus_match, corpus_verification)
     return {

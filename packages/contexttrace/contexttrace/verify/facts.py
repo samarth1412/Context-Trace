@@ -5,7 +5,10 @@ from dataclasses import dataclass
 
 
 TOKEN_RE = re.compile(r"[A-Za-z0-9_./-]+")
+ACRONYM_RE = re.compile(r"\b[A-Z][A-Z0-9]{1,}\b")
 VERSION_RE = re.compile(r"\bv?\d+(?:\.\d+){1,}\b", re.IGNORECASE)
+NUMBER_RE = re.compile(r"\b\d+(?:\.\d+)?\b")
+PORT_RE = re.compile(r":(\d{2,5})\b")
 PATH_RE = re.compile(r"(?:^|\s)([./]?[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)+)")
 NUMBER_UNIT_RE = re.compile(
     r"\b\d+(?:\.\d+)?\s+(?:business\s+days?|days?|weeks?|months?|years?|ms|usd|dollars?)\b",
@@ -134,6 +137,9 @@ def compare_facts(claim_text: str, evidence_text: str, *, mode: str = "lexical")
     version_conflict = _version_conflict(claim_text, evidence_text, mode=mode)
     if version_conflict is not None:
         conflicting_details.append(version_conflict)
+    numeric_conflict = _numeric_conflict(claim_text, evidence_text, mode=mode)
+    if numeric_conflict is not None:
+        conflicting_details.append(numeric_conflict)
 
     return FactMatch(
         required_facts=[fact.text for fact in required_details],
@@ -174,6 +180,9 @@ def _list_facts(claim: str) -> list[RequiredFact]:
 
 
 def _fact_supported(fact: str, evidence_text: str, *, mode: str) -> bool:
+    if _missing_exact_terms(fact, evidence_text):
+        return False
+
     fact_tokens = _important_tokens(fact, mode=mode)
     if not fact_tokens:
         return False
@@ -281,9 +290,47 @@ def _version_conflict(claim_text: str, evidence_text: str, *, mode: str) -> Requ
     evidence_versions = set(match.group(0).lower() for match in VERSION_RE.finditer(evidence_text))
     if not claim_versions or not evidence_versions:
         return None
-    if claim_versions.isdisjoint(evidence_versions) and _token_overlap(claim_text, evidence_text, mode=mode) >= 0.45:
+    if claim_versions.isdisjoint(evidence_versions) and _anchor_overlap(claim_text, evidence_text, mode=mode) >= 0.35:
         return RequiredFact(text=", ".join(sorted(claim_versions)), type="version")
     return None
+
+
+def _numeric_conflict(claim_text: str, evidence_text: str, *, mode: str) -> RequiredFact | None:
+    claim_ports = set(PORT_RE.findall(str(claim_text or "")))
+    evidence_ports = set(PORT_RE.findall(str(evidence_text or "")))
+    if (
+        claim_ports
+        and evidence_ports
+        and claim_ports.isdisjoint(evidence_ports)
+        and _anchor_overlap(claim_text, evidence_text, mode=mode) >= 0.45
+    ):
+        return RequiredFact(text=", ".join(sorted(claim_ports)), type="numeric")
+
+    claim_numbers = set(NUMBER_RE.findall(str(claim_text or "")))
+    evidence_numbers = set(NUMBER_RE.findall(str(evidence_text or "")))
+    if not claim_numbers or not evidence_numbers:
+        return None
+    if claim_numbers.isdisjoint(evidence_numbers) and _anchor_overlap(claim_text, evidence_text, mode=mode) >= 0.65:
+        return RequiredFact(text=", ".join(sorted(claim_numbers)), type="numeric")
+    return None
+
+
+def _anchor_overlap(claim_text: str, evidence_text: str, *, mode: str) -> float:
+    claim_tokens = [token for token in _important_tokens(claim_text, mode=mode) if not NUMBER_RE.fullmatch(token)]
+    evidence_tokens = {
+        token for token in _important_tokens(evidence_text, mode=mode) if not NUMBER_RE.fullmatch(token)
+    }
+    if not claim_tokens:
+        return 0.0
+    return len([token for token in claim_tokens if token in evidence_tokens]) / len(claim_tokens)
+
+
+def _missing_exact_terms(fact: str, evidence_text: str) -> list[str]:
+    required = {term.lower() for term in ACRONYM_RE.findall(str(fact or ""))}
+    if not required:
+        return []
+    present = {term.lower() for term in TOKEN_RE.findall(str(evidence_text or ""))}
+    return sorted(required - present)
 
 
 def _contains_predicate(value: str) -> bool:
@@ -370,8 +417,19 @@ def _clean_token(token: str) -> str:
 
 
 SEMANTIC_TOKEN_MAP = {
+    "cashback": "refund",
+    "reimburse": "refund",
+    "reimbursed": "refund",
+    "reimbursement": "refund",
+    "reimbursements": "refund",
+    "return": "refund",
+    "returns": "refund",
+    "repay": "refund",
+    "repayment": "refund",
     "id": "number",
     "identifier": "number",
+    "retriever": "retrieval",
+    "retrievers": "retrieval",
     "five": "5",
     "thirty": "30",
     "fourteen": "14",
@@ -380,8 +438,16 @@ SEMANTIC_TOKEN_MAP = {
 }
 
 
+SEMANTIC_PHRASES = (
+    ("money back", "refund"),
+    ("cash back", "refund"),
+    ("business day", "business days"),
+    ("order id", "order number"),
+)
+
+
 def _semantic_text(text: str) -> str:
     value = str(text or "").lower()
-    value = value.replace("order id", "order number")
-    value = value.replace("business day", "business days")
+    for source, replacement in SEMANTIC_PHRASES:
+        value = value.replace(source, replacement)
     return value
