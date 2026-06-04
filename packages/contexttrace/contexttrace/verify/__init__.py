@@ -10,6 +10,7 @@ from contexttrace.verify.schema import (
     load_trace_file,
 )
 from contexttrace.verify.demos import list_verify_demos, load_verify_demo
+from contexttrace.verify.qa import qa_failures, qa_trace
 from contexttrace.verify.trace_inspect import inspect_trace
 
 __all__ = [
@@ -29,6 +30,8 @@ __all__ = [
     "load_corpus",
     "load_trace_file",
     "load_verify_demo",
+    "qa_failures",
+    "qa_trace",
     "run_audit_benchmark",
     "verify_trace",
     "verify_trace_file",

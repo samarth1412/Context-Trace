@@ -107,6 +107,7 @@ Verify a portable RAG trace artifact without a hosted dashboard:
 ```bash
 contexttrace verify-demo unsupported_claim --report
 contexttrace inspect trace.json
+contexttrace qa trace.json --corpus docs/ --report
 contexttrace verify trace.json
 contexttrace verify trace.json --json
 contexttrace verify trace.json --report --out reports/example.html

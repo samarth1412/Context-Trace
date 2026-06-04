@@ -96,6 +96,12 @@ Inspect a portable trace before deeper debugging:
 contexttrace inspect traces/refund_trace.json
 ```
 
+Run the complete evidence QA workflow:
+
+```bash
+contexttrace qa traces/refund_trace.json --corpus docs/ --report
+```
+
 ## 6. Run A Regression Benchmark
 
 ```bash

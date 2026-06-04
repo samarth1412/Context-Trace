@@ -72,6 +72,7 @@ Use `verify` when you already have a portable RAG artifact with a query, answer,
 ```bash
 contexttrace verify trace.json
 contexttrace inspect trace.json
+contexttrace qa trace.json --corpus docs/ --report
 contexttrace verify trace.json --json
 contexttrace verify trace.json --report
 contexttrace verify trace.json --fail-on unsupported --fail-on citation_mismatch
@@ -101,6 +102,8 @@ ContextTrace splits the answer into claims and classifies each claim as:
 - `contradicted`
 
 Use `inspect` before verification when you want to check trace shape, extracted claims, duplicate context IDs, citation references, and suggested next commands without running evidence scoring.
+
+Use `qa` when you want the full local evidence workflow in one command: inspect, verify, optional corpus audit, risk summary, and prioritized next actions.
 
 Capture RAG artifacts directly from common document objects:
 

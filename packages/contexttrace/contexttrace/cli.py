@@ -39,6 +39,8 @@ from contexttrace.verify.benchmark import run_verify_benchmark, write_verify_ben
 from contexttrace.verify.audit_benchmark import run_audit_benchmark, write_audit_benchmark_report
 from contexttrace.verify.audit_report import AuditReportGenerator
 from contexttrace.verify.compare_report import CompareReportGenerator
+from contexttrace.verify.qa import qa_failures, qa_trace
+from contexttrace.verify.qa_report import QAReportGenerator
 from contexttrace.verify.report import VerifyReportGenerator
 from contexttrace.verify.trace_inspect import inspect_trace
 from contexttrace.viewer import serve_viewer
@@ -303,6 +305,78 @@ def inspect_command(trace_json: str, json_output: bool) -> int:
     for command in result["suggested_next_commands"]:
         click.echo("- %s" % command)
     return 0
+
+
+@cli.command("qa")
+@click.argument("trace_json")
+@click.option("--corpus", "corpus_path", default=None, help="Optional local corpus directory or file for retrieval/corpus audit.")
+@click.option("--json", "json_output", is_flag=True, help="Print the full QA result as JSON.")
+@click.option("--report", is_flag=True, help="Generate a local HTML evidence QA report.")
+@click.option("--out", default=None, help="HTML report path. Implies --report when provided.")
+@click.option("--mode", default="lexical", show_default=True, type=click.Choice(["lexical", "semantic"]), help="Evidence scoring mode.")
+@click.option("--fail-on", multiple=True, help="Fail on high_risk, medium_risk, any_risk, unsupported, should_abstain, audit_failure, or inspect_warning.")
+def qa_command(
+    trace_json: str,
+    corpus_path: Optional[str],
+    json_output: bool,
+    report: bool,
+    out: Optional[str],
+    mode: str,
+    fail_on: tuple[str, ...],
+) -> int:
+    """Run inspect, verify, optional audit, and risk summary for a RAG trace."""
+
+    try:
+        trace = load_trace_file(trace_json)
+        result = qa_trace(trace, trace_path=trace_json, corpus_path=corpus_path, mode=mode)
+    except VerificationInputError as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    written_report = None
+    if report or out:
+        default_name = "%s_qa.html" % Path(trace_json).stem
+        output_path = out or str(Path(".contexttrace") / "reports" / default_name)
+        written_report = QAReportGenerator().generate(result, trace, path=output_path)
+
+    fail_messages = qa_failures(result, fail_on)
+    if json_output:
+        if written_report:
+            click.echo("Report: %s" % written_report, err=True)
+        click.echo(json.dumps(result, indent=2))
+        for message in fail_messages:
+            click.echo("QA failed: %s" % message, err=True)
+        return 1 if fail_messages else 0
+
+    summary = result["summary"]
+    click.echo("Risk level: %s" % summary["risk_level"])
+    click.echo("Risk score: %s" % summary["risk_score"])
+    click.echo("Primary issue: %s" % summary["primary_issue"])
+    click.echo("Claims: %s" % summary["total_claims"])
+    click.echo("Support rate: %.3f" % float(summary.get("support_rate") or 0.0))
+    click.echo("Unsupported claim rate: %.3f" % float(summary.get("unsupported_claim_rate") or 0.0))
+    click.echo("Should abstain: %s" % str(summary.get("should_abstain")).lower())
+    click.echo("Inspection warnings: %s" % summary["inspect_warnings"])
+    if summary.get("corpus_audited"):
+        click.echo("Audit label: %s" % summary.get("audit_primary_label"))
+        stages = summary.get("failure_stages") or {}
+        if stages:
+            click.echo(
+                "Failure stages: %s"
+                % ", ".join("%s=%s" % (stage, count) for stage, count in sorted(stages.items()))
+            )
+    else:
+        click.echo("Audit label: not_run")
+
+    actions = list(result.get("next_actions") or [])
+    if actions:
+        click.echo("Next actions:")
+        for action in actions:
+            click.echo("- %s" % action)
+    if written_report:
+        click.echo("Report: %s" % written_report)
+    for message in fail_messages:
+        click.echo("QA failed: %s" % message, err=True)
+    return 1 if fail_messages else 0
 
 
 @cli.command("verify-demo")

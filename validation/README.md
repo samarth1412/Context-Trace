@@ -5,7 +5,7 @@ This folder is for reproducible validation notes and fixtures from public-source
 The goal is to show the full debugging path:
 
 ```text
-capture -> inspect -> verify -> audit -> report
+capture -> inspect -> qa -> report
 ```
 
 Do not add invented response fixtures here. Keep generated traces and reports under `.contexttrace/` or another ignored output directory unless they are intentionally checked in as a documented validation artifact.
@@ -41,6 +41,10 @@ Then inspect and audit:
 
 ```bash
 contexttrace inspect .contexttrace/traces/public_app_trace.json
+contexttrace qa .contexttrace/traces/public_app_trace.json \
+  --corpus path/to/corpus \
+  --report \
+  --out .contexttrace/reports/public_app_qa.html
 contexttrace audit .contexttrace/traces/public_app_trace.json \
   --corpus path/to/corpus \
   --report \
