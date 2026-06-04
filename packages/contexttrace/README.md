@@ -112,7 +112,7 @@ Use `contexttrace compare baseline.json current.json` to diff two portable trace
 
 Use `contexttrace audit trace.json --corpus docs/` to diagnose whether an unsupported claim failed because retrieval missed evidence, chunking omitted the supporting span, the corpus lacks coverage, or generation overclaimed.
 
-The v0.4.0 verifier uses local lexical heuristics by default. Claim extraction is rule-based, contradiction detection is conservative, and semantic or LLM-judge support can be added later.
+The v0.5.0 verifier uses local lexical heuristics by default. Claim extraction is rule-based, contradiction detection is conservative, and semantic or LLM-judge support can be added later.
 
 ## What It Catches
 
