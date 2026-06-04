@@ -10,6 +10,7 @@ from contexttrace.verify.schema import (
     load_trace_file,
 )
 from contexttrace.verify.demos import list_verify_demos, load_verify_demo
+from contexttrace.verify.trace_inspect import inspect_trace
 
 __all__ = [
     "RAGTrace",
@@ -23,6 +24,7 @@ __all__ = [
     "compare_failures",
     "compare_trace_files",
     "compare_verifications",
+    "inspect_trace",
     "list_verify_demos",
     "load_corpus",
     "load_trace_file",

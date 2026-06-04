@@ -90,6 +90,12 @@ contexttrace eval \
 
 These commands map your endpoint response fields, create local traces or portable trace JSON, run diagnostics, and write local HTML reports.
 
+Inspect a portable trace before deeper debugging:
+
+```bash
+contexttrace inspect traces/refund_trace.json
+```
+
 ## 6. Run A Regression Benchmark
 
 ```bash

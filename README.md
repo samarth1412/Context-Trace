@@ -71,6 +71,7 @@ Use `verify` when you already have a portable RAG artifact with a query, answer,
 
 ```bash
 contexttrace verify trace.json
+contexttrace inspect trace.json
 contexttrace verify trace.json --json
 contexttrace verify trace.json --report
 contexttrace verify trace.json --fail-on unsupported --fail-on citation_mismatch
@@ -98,6 +99,8 @@ ContextTrace splits the answer into claims and classifies each claim as:
 - `unsupported`
 - `unverifiable`
 - `contradicted`
+
+Use `inspect` before verification when you want to check trace shape, extracted claims, duplicate context IDs, citation references, and suggested next commands without running evidence scoring.
 
 Capture RAG artifacts directly from common document objects:
 

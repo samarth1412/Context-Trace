@@ -40,6 +40,7 @@ from contexttrace.verify.audit_benchmark import run_audit_benchmark, write_audit
 from contexttrace.verify.audit_report import AuditReportGenerator
 from contexttrace.verify.compare_report import CompareReportGenerator
 from contexttrace.verify.report import VerifyReportGenerator
+from contexttrace.verify.trace_inspect import inspect_trace
 from contexttrace.viewer import serve_viewer
 
 
@@ -252,6 +253,56 @@ def verify_command(
         written_report=written_report,
         fail_on=fail_on,
     )
+
+
+@cli.command("inspect")
+@click.argument("trace_json")
+@click.option("--json", "json_output", is_flag=True, help="Print trace inspection as JSON.")
+def inspect_command(trace_json: str, json_output: bool) -> int:
+    """Inspect portable RAG trace shape before verification."""
+
+    try:
+        trace = load_trace_file(trace_json)
+    except VerificationInputError as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    result = inspect_trace(trace, trace_path=trace_json)
+    if json_output:
+        click.echo(json.dumps(result, indent=2))
+        return 0
+
+    click.echo("Trace: %s" % trace_json)
+    click.echo("Query: %s" % result["query"])
+    click.echo("Answer preview: %s" % result["answer_preview"])
+    click.echo("Claims extracted: %s" % len(result["claims"]))
+    for claim in result["claims"]:
+        click.echo("- %s: %s" % (claim["id"], claim["text"]))
+
+    contexts = result["contexts"]
+    click.echo("Contexts: %s (%s unique IDs)" % (contexts["count"], contexts["unique_ids"]))
+    if contexts["duplicate_ids"]:
+        click.echo("Duplicate context IDs: %s" % ", ".join(contexts["duplicate_ids"]))
+    if contexts["empty_text_ids"]:
+        click.echo("Empty context text IDs: %s" % ", ".join(contexts["empty_text_ids"]))
+
+    citations = result["citations"]
+    click.echo("Citations: %s" % citations["count"])
+    if citations["missing_source_ids"]:
+        click.echo("Missing citation source IDs: %s" % ", ".join(citations["missing_source_ids"]))
+
+    if result["metadata_keys"]:
+        click.echo("Metadata keys: %s" % ", ".join(result["metadata_keys"]))
+
+    warnings = result["warnings"]
+    if warnings:
+        click.echo("Warnings:")
+        for warning in warnings:
+            click.echo("- %s" % warning)
+
+    click.echo("Suggested next commands:")
+    for command in result["suggested_next_commands"]:
+        click.echo("- %s" % command)
+    return 0
 
 
 @cli.command("verify-demo")

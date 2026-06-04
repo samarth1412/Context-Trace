@@ -13,7 +13,9 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - `capture_rag_trace` and `write_rag_trace` helpers for exporting in-memory RAG artifacts to portable `contexttrace verify` JSON.
 - `contexttrace capture endpoint` for turning one live RAG endpoint response into portable `contexttrace verify` JSON, with optional immediate verification and local HTML report generation.
 - `contexttrace capture response` for turning a saved RAG endpoint response JSON file into the same portable verification trace format.
+- `contexttrace inspect trace.json` for checking portable trace shape, extracted claims, context IDs, citation references, warnings, and suggested next commands before verification.
 - Retrieval audit diagnostics now include failure stages, evidence status, diagnostic signals, failure paths, developer summaries, and prioritized recommended actions.
+- Validation pack docs for recording public-source RAG app runs and saved-response debugging workflows.
 - Public RAG app validation harnesses, including an end-to-end LangChain/Ollama/FAISS run against a public RAG repository.
 
 ## [0.5.0] - 2026-06-04
