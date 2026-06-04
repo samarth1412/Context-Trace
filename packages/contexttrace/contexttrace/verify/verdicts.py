@@ -4,6 +4,7 @@ from dataclasses import dataclass
 
 from contexttrace.verify.claims import Claim
 from contexttrace.verify.evidence import EvidenceMatch, extract_numbers, unique_important_tokens
+from contexttrace.verify.facts import compare_facts
 
 
 SUPPORTED_THRESHOLD = 0.62
@@ -44,7 +45,17 @@ class ClaimVerification:
     best_context_text: str
     best_score: float
     evidence: str
+    evidence_span: dict[str, object] | None
+    supporting_spans: list[dict[str, object]]
     matched_terms: list[str]
+    required_facts: list[str]
+    matched_facts: list[str]
+    missing_facts: list[str]
+    conflicting_facts: list[str]
+    required_fact_details: list[dict[str, object]]
+    matched_fact_details: list[dict[str, object]]
+    missing_fact_details: list[dict[str, object]]
+    conflicting_fact_details: list[dict[str, object]]
     reason: str
     citation_status: str = "claim_has_no_citation"
     citation_source_id: str | None = None
@@ -59,7 +70,17 @@ class ClaimVerification:
             best_context_text=self.best_context_text,
             best_score=self.best_score,
             evidence=self.evidence,
+            evidence_span=dict(self.evidence_span) if self.evidence_span else None,
+            supporting_spans=[dict(item) for item in self.supporting_spans],
             matched_terms=list(self.matched_terms),
+            required_facts=list(self.required_facts),
+            matched_facts=list(self.matched_facts),
+            missing_facts=list(self.missing_facts),
+            conflicting_facts=list(self.conflicting_facts),
+            required_fact_details=[dict(item) for item in self.required_fact_details],
+            matched_fact_details=[dict(item) for item in self.matched_fact_details],
+            missing_fact_details=[dict(item) for item in self.missing_fact_details],
+            conflicting_fact_details=[dict(item) for item in self.conflicting_fact_details],
             reason=self.reason,
             citation_status=status,
             citation_source_id=source_id,
@@ -75,7 +96,17 @@ class ClaimVerification:
             "best_context_text": self.best_context_text,
             "best_score": self.best_score,
             "evidence": self.evidence,
+            "evidence_span": dict(self.evidence_span) if self.evidence_span else None,
+            "supporting_spans": [dict(item) for item in self.supporting_spans],
             "matched_terms": list(self.matched_terms),
+            "required_facts": list(self.required_facts),
+            "matched_facts": list(self.matched_facts),
+            "missing_facts": list(self.missing_facts),
+            "conflicting_facts": list(self.conflicting_facts),
+            "required_fact_details": [dict(item) for item in self.required_fact_details],
+            "matched_fact_details": [dict(item) for item in self.matched_fact_details],
+            "missing_fact_details": [dict(item) for item in self.missing_fact_details],
+            "conflicting_fact_details": [dict(item) for item in self.conflicting_fact_details],
             "reason": self.reason,
             "citation_status": self.citation_status,
             "citation_source_id": self.citation_source_id,
@@ -83,8 +114,11 @@ class ClaimVerification:
 
 
 def classify_claim(claim: Claim, match: EvidenceMatch, *, has_contexts: bool) -> ClaimVerification:
-    contradicted = has_contexts and is_contradicted(claim.text, match.snippet, match.score)
-    if contradicted:
+    fact_evidence = match.supporting_text or match.snippet
+    fact_match = compare_facts(claim.text, fact_evidence, mode="semantic")
+    contradiction_evidence = _contradiction_evidence_text(claim.text, match)
+    contradicted = has_contexts and is_contradicted(claim.text, contradiction_evidence, match.score)
+    if contradicted or fact_match.conflicting_facts:
         verdict = "contradicted"
         confidence = max(0.66, min(0.98, match.score + 0.12))
         reason = (
@@ -95,6 +129,20 @@ def classify_claim(claim: Claim, match: EvidenceMatch, *, has_contexts: bool) ->
         verdict = "unsupported"
         confidence = 0.95
         reason = "No retrieved contexts were provided, so the claim has no evidence to verify against."
+    elif fact_match.required_facts and not fact_match.missing_facts:
+        verdict = "supported"
+        confidence = round(max(match.score, 0.82), 3)
+        reason = "The claim is supported by the retrieved evidence because all required facts were matched."
+    elif _is_partially_supported(fact_match):
+        verdict = "partially_supported"
+        confidence = round(max(match.score, min(0.88, 0.45 + (0.35 * fact_match.coverage))), 3)
+        reason = (
+            "The strongest evidence supports %s, but it is missing %s."
+            % (
+                _join_facts(fact_match.matched_facts),
+                _join_facts(fact_match.missing_facts),
+            )
+        )
     elif match.score >= SUPPORTED_THRESHOLD:
         verdict = "supported"
         confidence = match.score
@@ -130,7 +178,17 @@ def classify_claim(claim: Claim, match: EvidenceMatch, *, has_contexts: bool) ->
         best_context_text=match.context_text,
         best_score=match.score,
         evidence=match.snippet,
+        evidence_span=match.span_dict(),
+        supporting_spans=list(match.supporting_spans or []),
         matched_terms=list(match.matched_terms),
+        required_facts=list(fact_match.required_facts),
+        matched_facts=list(fact_match.matched_facts),
+        missing_facts=list(fact_match.missing_facts),
+        conflicting_facts=list(fact_match.conflicting_facts),
+        required_fact_details=[fact.to_dict() for fact in fact_match.required_fact_details],
+        matched_fact_details=[fact.to_dict() for fact in fact_match.matched_fact_details],
+        missing_fact_details=[fact.to_dict() for fact in fact_match.missing_fact_details],
+        conflicting_fact_details=[fact.to_dict() for fact in fact_match.conflicting_fact_details],
         reason=reason,
     )
 
@@ -162,9 +220,31 @@ def _has_negation(text: str) -> bool:
     return any(token.strip(".,;:!?()[]{}\"'") in NEGATION_TERMS for token in tokens) or " not " in normalized
 
 
+def _contradiction_evidence_text(claim_text: str, match: EvidenceMatch) -> str:
+    supporting_text = str(match.supporting_text or "").strip()
+    if supporting_text and _has_negation(claim_text) == _has_negation(supporting_text):
+        return supporting_text
+    return match.snippet
+
+
 def _core_overlap(claim_text: str, evidence_text: str) -> float:
     claim_terms = [term for term in unique_important_tokens(claim_text) if not term.isdigit()]
     evidence_terms = set(term for term in unique_important_tokens(evidence_text) if not term.isdigit())
     if not claim_terms:
         return 0.0
     return len([term for term in claim_terms if term in evidence_terms]) / len(claim_terms)
+
+
+def _is_partially_supported(fact_match: object) -> bool:
+    matched = list(getattr(fact_match, "matched_facts", []) or [])
+    missing = list(getattr(fact_match, "missing_facts", []) or [])
+    coverage = float(getattr(fact_match, "coverage", 0.0) or 0.0)
+    return bool(matched and missing and len(matched) >= 2 and coverage >= 0.4)
+
+
+def _join_facts(facts: list[str]) -> str:
+    if not facts:
+        return "some facts"
+    if len(facts) == 1:
+        return '"%s"' % facts[0]
+    return ", ".join('"%s"' % fact for fact in facts)

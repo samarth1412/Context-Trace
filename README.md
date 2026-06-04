@@ -345,7 +345,22 @@ Example JSON output:
 }
 ```
 
-The local HTML report is self-contained and includes a reliability summary, claim support overview, unsupported claims, citation mismatches, retrieved contexts, developer-friendly failure explanations, and a raw JSON summary. Report placeholder: `contexttrace verify-demo unsupported_claim --report --out reports/example.html`.
+The local HTML report is self-contained and includes a reliability summary, claim support overview, unsupported claims, root-cause diagnosis, citation mismatches, retrieved contexts, developer-friendly failure explanations, and a raw JSON summary. Report placeholder: `contexttrace verify-demo unsupported_claim --report --out reports/example.html`.
+
+Verification output also includes evidence span metadata (`start_char`, `end_char`, and `span_hash`), multiple supporting spans when a claim needs evidence from more than one retrieved passage, typed required/matched/missing facts, and claim-level root causes so partial support is easier to debug.
+
+Root-cause labels:
+
+- `no_failure_detected`
+- `retrieval_miss`
+- `answer_overreach`
+- `partial_context_support`
+- `wrong_source_cited`
+- `missing_cited_source`
+- `conflicting_contexts`
+- `stale_context`
+- `insufficient_context`
+- `should_have_abstained`
 
 Verdict meanings:
 
@@ -376,20 +391,24 @@ Run the bundled precision/recall benchmark:
 ```bash
 contexttrace verify-benchmark --mode lexical
 contexttrace verify-benchmark --mode semantic --json
+contexttrace verify-benchmark --mode semantic --report
+contexttrace verify-benchmark --case-set external --mode semantic --report
+contexttrace verify-benchmark --case-set all --mode semantic
 ```
 
-The benchmark reports exact-match rate and per-label precision, recall, and F1 for supported, unsupported, partial-support, citation-mismatch, abstention, and contradiction cases.
+The default benchmark uses 32 real ContextTrace repository docs and release artifacts, not synthetic refund-policy fixtures. `--case-set external` runs public OSS documentation and GitHub issue cases from Qdrant, Chroma, Haystack, and LangChain. `--case-set all` runs both packs together. The benchmark reports exact-match rate, verdict match rate, citation match rate, abstention match rate, and per-label precision, recall, and F1. The HTML report includes misses to inspect so the verifier can be improved against concrete product-doc failures.
 
 Citation statuses:
 
 - `citation_ok`
 - `cited_source_missing`
 - `cited_source_does_not_support_claim`
+- `claim_supported_by_different_source`
 - `claim_has_no_citation`
 
 Limitations:
 
-- v0.2.0 uses local lexical heuristics by default.
+- v0.3.0 uses local lexical heuristics by default.
 - Semantic mode uses local normalization, not embedding or LLM reasoning.
 - Optional embedding or LLM-judge support can come later.
 - Contradiction detection is conservative.

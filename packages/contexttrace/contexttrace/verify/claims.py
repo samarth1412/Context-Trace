@@ -13,7 +13,6 @@ class Claim:
         return {"id": self.id, "text": self.text}
 
 
-_SENTENCE_RE = re.compile(r"[^.!?\n]+(?:[.!?]+|$)", re.MULTILINE)
 _WHITESPACE_RE = re.compile(r"\s+")
 _COMPOUND_SPLIT_RE = re.compile(r"\s+(?:and|but)\s+", re.IGNORECASE)
 
@@ -42,6 +41,30 @@ _FILLER_PREFIXES = (
     "according to the provided context",
 )
 
+_MAIN_VERBS = {
+    "captures",
+    "checks",
+    "creates",
+    "detects",
+    "fetches",
+    "filters",
+    "generates",
+    "includes",
+    "keeps",
+    "logs",
+    "maps",
+    "records",
+    "reports",
+    "retrieves",
+    "runs",
+    "saves",
+    "stores",
+    "supports",
+    "uses",
+    "verifies",
+    "writes",
+}
+
 
 def extract_claims(answer: str) -> list[Claim]:
     """Split an answer into lightweight factual claim candidates."""
@@ -50,7 +73,7 @@ def extract_claims(answer: str) -> list[Claim]:
     if not normalized_answer:
         return []
 
-    sentences = [match.group(0).strip() for match in _SENTENCE_RE.finditer(normalized_answer)]
+    sentences = _split_sentences(normalized_answer)
     if not sentences:
         sentences = [normalized_answer]
 
@@ -68,6 +91,40 @@ def extract_claims(answer: str) -> list[Claim]:
 def _clean_sentence(value: str) -> str:
     cleaned = _WHITESPACE_RE.sub(" ", value).strip()
     return cleaned.strip("-* \t")
+
+
+def _split_sentences(text: str) -> list[str]:
+    sentences: list[str] = []
+    start = 0
+    for index, char in enumerate(text):
+        if char not in ".!?":
+            continue
+        if char == "." and _is_internal_period(text, index):
+            continue
+        sentence = text[start : index + 1].strip()
+        if sentence:
+            sentences.append(sentence)
+        start = index + 1
+    tail = text[start:].strip()
+    if tail:
+        sentences.append(tail)
+    return sentences
+
+
+def _is_internal_period(text: str, index: int) -> bool:
+    previous = text[index - 1] if index > 0 else ""
+    next_char = text[index + 1] if index + 1 < len(text) else ""
+    if previous.isdigit() and next_char.isdigit():
+        return True
+    if previous.isalnum() and next_char.isalnum():
+        return True
+    if next_char.isalnum() and (not previous or previous.isspace() or previous in "([{/\\$"):
+        return True
+    if previous.isalnum() and next_char in "_-/\\":
+        return True
+    if previous in "_-/\\" and next_char.isalnum():
+        return True
+    return False
 
 
 def _is_filler(sentence: str) -> bool:
@@ -134,6 +191,9 @@ def _subject_prefix(clause: str) -> str:
             "have",
             "had",
         }:
+            return " ".join(words[:index])
+    for index, word in enumerate(words):
+        if index > 0 and _clean_word(word) in _MAIN_VERBS:
             return " ".join(words[:index])
     return " ".join(words[:2]) if len(words) >= 3 else ""
 

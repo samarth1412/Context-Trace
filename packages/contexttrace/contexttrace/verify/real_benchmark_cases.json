@@ -1,0 +1,713 @@
+{
+  "description": "Real ContextTrace verification benchmark cases. Context text is copied from repository docs, release notes, package metadata, and changelog entries rather than synthetic policy fixtures.",
+  "cases": [
+    {
+      "id": "local_mode_sqlite_supported",
+      "source": "docs/local-mode.md",
+      "note": "Supported claim from the local-mode documentation.",
+      "query": "Where does a local SDK client store traces?",
+      "answer": "A new SDK client stores traces in SQLite under .contexttrace/contexttrace.db.",
+      "contexts": [
+        {
+          "id": "docs/local-mode.md",
+          "source": "docs/local-mode.md",
+          "text": "ContextTrace is local-first by default. A new SDK client stores traces in SQLite under: .contexttrace/contexttrace.db. No backend server is required for normal SDK, CLI, report, or viewer workflows."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "A new SDK client stores traces in SQLite under .contexttrace/contexttrace.db.",
+          "source_id": "docs/local-mode.md"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "v020_claim_verification_supported",
+      "source": "release/v0.2.0.md",
+      "note": "Supported release-note claim for the v0.2.0 verifier.",
+      "query": "What did ContextTrace v0.2.0 add?",
+      "answer": "ContextTrace v0.2.0 adds local claim-level evidence verification for portable RAG traces.",
+      "contexts": [
+        {
+          "id": "release/v0.2.0.md",
+          "source": "release/v0.2.0.md",
+          "text": "ContextTrace v0.2.0 adds local claim-level evidence verification for portable RAG traces. The release focuses on one core question: is each generated claim actually supported by retrieved evidence?"
+        }
+      ],
+      "citations": [
+        {
+          "claim": "ContextTrace v0.2.0 adds local claim-level evidence verification for portable RAG traces.",
+          "source_id": "release/v0.2.0.md"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "langchain_agent_events_supported",
+      "source": "docs/integrations/langchain.md",
+      "note": "Supported LangChain integration claim.",
+      "query": "What agent events does the LangChain callback capture?",
+      "answer": "The LangChain callback captures tool calls, tool results, and chain/tool errors as agent timeline events.",
+      "contexts": [
+        {
+          "id": "docs/integrations/langchain.md",
+          "source": "docs/integrations/langchain.md",
+          "text": "ContextTrace ships a ContextTraceCallbackHandler for LangChain callback pipelines. It captures query/input, retrieved documents, selected context, final answer/output, citations when the chain returns them, metadata, tags, run IDs, model, token usage, and latency, tool calls, tool results, and chain/tool errors as agent timeline events."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "The LangChain callback captures tool calls, tool results, and chain/tool errors as agent timeline events.",
+          "source_id": "docs/integrations/langchain.md"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "fastapi_logging_supported",
+      "source": "docs/integrations/fastapi.md",
+      "note": "Supported FastAPI middleware behavior from docs.",
+      "query": "What happens when FastAPI tracing logging fails?",
+      "answer": "Logging failures are swallowed by default so tracing does not break the production endpoint.",
+      "contexts": [
+        {
+          "id": "docs/integrations/fastapi.md",
+          "source": "docs/integrations/fastapi.md",
+          "text": "Logging failures are swallowed by default so tracing does not break the production endpoint. Set raise_logging_errors=True during development."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Logging failures are swallowed by default so tracing does not break the production endpoint.",
+          "source_id": "docs/integrations/fastapi.md"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "failure_taxonomy_citation_supported",
+      "source": "docs/failure-taxonomy.md",
+      "note": "Supported failure taxonomy definition.",
+      "query": "What does citation_mismatch mean?",
+      "answer": "citation_mismatch means a claim cites a chunk that does not support it.",
+      "contexts": [
+        {
+          "id": "docs/failure-taxonomy.md",
+          "source": "docs/failure-taxonomy.md",
+          "text": "ContextTrace reports practical failure labels for RAG debugging. citation_mismatch: a claim cites a chunk that does not support it. unsupported_answer: the answer contains claims not supported by retrieved context."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "citation_mismatch means a claim cites a chunk that does not support it.",
+          "source_id": "docs/failure-taxonomy.md"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "citation_points_to_wrong_real_doc",
+      "source": "docs/failure-taxonomy.md + docs/local-mode.md",
+      "note": "Correct answer is supported by the taxonomy doc, but the supplied citation points to local-mode docs.",
+      "query": "What does citation_mismatch mean?",
+      "answer": "citation_mismatch means a claim cites a chunk that does not support it.",
+      "contexts": [
+        {
+          "id": "docs/failure-taxonomy.md",
+          "source": "docs/failure-taxonomy.md",
+          "text": "ContextTrace reports practical failure labels for RAG debugging. citation_mismatch: a claim cites a chunk that does not support it. unsupported_answer: the answer contains claims not supported by retrieved context."
+        },
+        {
+          "id": "docs/local-mode.md",
+          "source": "docs/local-mode.md",
+          "text": "ContextTrace is local-first by default. A new SDK client stores traces in SQLite under: .contexttrace/contexttrace.db. No backend server is required for normal SDK, CLI, report, or viewer workflows."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "citation_mismatch means a claim cites a chunk that does not support it.",
+          "source_id": "docs/local-mode.md"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["claim_supported_by_different_source"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "citation_source_missing_real_claim",
+      "source": "release/v0.2.0.md",
+      "note": "Correct answer is supported by release notes, but the citation source ID is absent from retrieved contexts.",
+      "query": "What did ContextTrace v0.2.0 add?",
+      "answer": "ContextTrace v0.2.0 adds local claim-level evidence verification for portable RAG traces.",
+      "contexts": [
+        {
+          "id": "release/v0.2.0.md",
+          "source": "release/v0.2.0.md",
+          "text": "ContextTrace v0.2.0 adds local claim-level evidence verification for portable RAG traces. The release focuses on one core question: is each generated claim actually supported by retrieved evidence?"
+        }
+      ],
+      "citations": [
+        {
+          "claim": "ContextTrace v0.2.0 adds local claim-level evidence verification for portable RAG traces.",
+          "source_id": "docs/missing-release-note.md"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["cited_source_missing"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "unsupported_local_storage_from_fastapi_context",
+      "source": "docs/local-mode.md answer + docs/integrations/fastapi.md context",
+      "note": "Real local-mode claim is answered from an unrelated FastAPI context, so the answer should have abstained.",
+      "query": "Where does local mode store traces?",
+      "answer": "A new SDK client stores traces in SQLite under .contexttrace/contexttrace.db.",
+      "contexts": [
+        {
+          "id": "docs/integrations/fastapi.md",
+          "source": "docs/integrations/fastapi.md",
+          "text": "ContextTraceFastAPIMiddleware traces incoming RAG API requests without installing SDK calls inside each endpoint. It is ASGI middleware, so it works with sync or async FastAPI endpoints."
+        }
+      ],
+      "expected_labels": ["should_have_abstained", "unsupported_answer"],
+      "expected_verdict_counts": {"unsupported": 1},
+      "expected_should_abstain": true
+    },
+    {
+      "id": "contradicted_backend_required",
+      "source": "docs/local-mode.md",
+      "note": "Counterfactual version of a real local-mode statement should be detected as contradicted.",
+      "query": "Is a backend server required for local mode?",
+      "answer": "A backend server is required for normal SDK, CLI, report, or viewer workflows.",
+      "contexts": [
+        {
+          "id": "docs/local-mode.md",
+          "source": "docs/local-mode.md",
+          "text": "ContextTrace is local-first by default. A new SDK client stores traces in SQLite under: .contexttrace/contexttrace.db. No backend server is required for normal SDK, CLI, report, or viewer workflows."
+        }
+      ],
+      "expected_labels": ["should_have_abstained", "contradicted_answer"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_should_abstain": true
+    },
+    {
+      "id": "partial_cross_doc_overclaim",
+      "source": "docs/integrations/langchain.md + docs/integrations/fastapi.md",
+      "note": "A realistic mixed-source answer combines a supported LangChain fact with a FastAPI-only fact not present in retrieved LangChain context.",
+      "query": "What does the LangChain callback capture?",
+      "answer": "The LangChain callback captures query, retrieved documents, selected context, and logging failures are swallowed by default.",
+      "contexts": [
+        {
+          "id": "docs/integrations/langchain.md",
+          "source": "docs/integrations/langchain.md",
+          "text": "ContextTrace ships a ContextTraceCallbackHandler for LangChain callback pipelines. It captures query/input, retrieved documents, selected context, final answer/output, citations when the chain returns them, metadata, tags, run IDs, model, token usage, and latency, tool calls, tool results, and chain/tool errors as agent timeline events."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"partially_supported": 1},
+      "expected_should_abstain": false
+    },
+    {
+      "id": "no_context_release_claim",
+      "source": "release/v0.2.0.md",
+      "note": "Real release-note answer with no retrieved context should abstain.",
+      "query": "What benchmark command was added in v0.2.0?",
+      "answer": "ContextTrace v0.2.0 includes a bundled benchmark through contexttrace verify-benchmark.",
+      "contexts": [],
+      "expected_labels": ["should_have_abstained", "unsupported_answer"],
+      "expected_verdict_counts": {"unsupported": 1},
+      "expected_should_abstain": true
+    },
+    {
+      "id": "quickstart_report_contents_supported",
+      "source": "docs/quickstart.md",
+      "note": "Supported report-content claim from quickstart docs.",
+      "query": "What do ContextTrace reports include?",
+      "answer": "Reports include query, retrieved chunks, selected context, answer, citations, support verdicts, failure diagnosis, token usage, and latency metadata.",
+      "contexts": [
+        {
+          "id": "docs/quickstart.md",
+          "source": "docs/quickstart.md",
+          "text": "Reports include query, retrieved chunks, selected context, answer, citations, support verdicts, failure diagnosis, token usage, and latency metadata."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Reports include query, retrieved chunks, selected context, answer, citations, support verdicts, failure diagnosis, token usage, and latency metadata.",
+          "source_id": "docs/quickstart.md"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "quickstart_viewer_supported",
+      "source": "docs/quickstart.md",
+      "note": "Supported local viewer claim.",
+      "query": "Where can users inspect local traces?",
+      "answer": "Users can open http://localhost:8765 to inspect local traces, eval runs, and reports.",
+      "contexts": [
+        {
+          "id": "docs/quickstart.md",
+          "source": "docs/quickstart.md",
+          "text": "Use the Local Viewer. Run contexttrace viewer. Open http://localhost:8765 to inspect local traces, eval runs, and reports."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Users can open http://localhost:8765 to inspect local traces, eval runs, and reports.",
+          "source_id": "docs/quickstart.md"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "quickstart_eval_workflow_supported",
+      "source": "docs/quickstart.md",
+      "note": "Supported multi-action eval workflow from quickstart docs.",
+      "query": "What does contexttrace eval do to an endpoint response?",
+      "answer": "The eval command calls your endpoint, maps response fields, creates local traces, runs diagnostics, and writes an HTML eval report.",
+      "contexts": [
+        {
+          "id": "docs/quickstart.md",
+          "source": "docs/quickstart.md",
+          "text": "This calls your endpoint, maps the response fields, creates local traces, runs diagnostics, and writes an HTML eval report."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "The eval command calls your endpoint, maps response fields, creates local traces, runs diagnostics, and writes an HTML eval report.",
+          "source_id": "docs/quickstart.md"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "sdk_config_precedence_supported",
+      "source": "docs/sdk.md",
+      "note": "Supported configuration precedence claim.",
+      "query": "What configuration precedence does the SDK use?",
+      "answer": "Configuration precedence is direct constructor arguments, environment variables, contexttrace.yaml, and SDK defaults.",
+      "contexts": [
+        {
+          "id": "docs/sdk.md",
+          "source": "docs/sdk.md",
+          "text": "Configuration precedence is: direct constructor arguments, environment variables such as CONTEXTTRACE_PROJECT, CONTEXTTRACE_STORAGE_PATH, CONTEXTTRACE_API_KEY, and CONTEXTTRACE_MODE, contexttrace.yaml, SDK defaults."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Configuration precedence is direct constructor arguments, environment variables, contexttrace.yaml, and SDK defaults.",
+          "source_id": "docs/sdk.md"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "sdk_agent_event_types_supported",
+      "source": "docs/sdk.md",
+      "note": "Supported agent event type list from SDK docs.",
+      "query": "What agent event types does ContextTrace support?",
+      "answer": "Supported event types include planner_step, tool_call, tool_result, retrieval, memory_read, memory_write, human_approval, final_answer, and error.",
+      "contexts": [
+        {
+          "id": "docs/sdk.md",
+          "source": "docs/sdk.md",
+          "text": "Supported event types are planner_step, tool_call, tool_result, retrieval, memory_read, memory_write, human_approval, final_answer, and error."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Supported event types include planner_step, tool_call, tool_result, retrieval, memory_read, memory_write, human_approval, final_answer, and error.",
+          "source_id": "docs/sdk.md"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "privacy_local_items_supported",
+      "source": "docs/privacy.md",
+      "note": "Supported privacy claim listing local artifacts.",
+      "query": "What stays local by default?",
+      "answer": "ContextTrace keeps queries, retrieved chunks, selected context, answers, citations, failure reports, and local HTML reports local.",
+      "contexts": [
+        {
+          "id": "docs/privacy.md",
+          "source": "docs/privacy.md",
+          "text": "ContextTrace is local-first by default. What stays local: queries, retrieved chunks, selected context, answers, citations, failure reports, local HTML reports."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "ContextTrace keeps queries, retrieved chunks, selected context, answers, citations, failure reports, and local HTML reports local.",
+          "source_id": "docs/privacy.md"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "privacy_no_network_supported",
+      "source": "docs/privacy.md",
+      "note": "Supported local SDK network behavior.",
+      "query": "Does local SDK tracing make network calls?",
+      "answer": "No network call is made for local SDK tracing.",
+      "contexts": [
+        {
+          "id": "docs/privacy.md",
+          "source": "docs/privacy.md",
+          "text": "Network behavior: No network call is made for local SDK tracing. contexttrace eval --endpoint calls only the endpoint you provide. LLM judge calls happen only when you configure a judge provider."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "No network call is made for local SDK tracing.",
+          "source_id": "docs/privacy.md"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "privacy_redaction_supported",
+      "source": "docs/privacy.md",
+      "note": "Supported redaction-control claim.",
+      "query": "When should users disable chunk or answer text logging?",
+      "answer": "Use log_chunk_text false or log_answer_text false when traces should preserve metadata and metrics without storing sensitive text.",
+      "contexts": [
+        {
+          "id": "docs/privacy.md",
+          "source": "docs/privacy.md",
+          "text": "Use log_chunk_text: false or log_answer_text: false when traces should preserve metadata and metrics without storing sensitive text."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Use log_chunk_text false or log_answer_text false when traces should preserve metadata and metrics without storing sensitive text.",
+          "source_id": "docs/privacy.md"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "release_runtime_dependencies_supported",
+      "source": "docs/release.md",
+      "note": "Supported package metadata claim from release checklist.",
+      "query": "What are the runtime dependencies?",
+      "answer": "Runtime dependencies are minimal: click, httpx, and typing-extensions.",
+      "contexts": [
+        {
+          "id": "docs/release.md",
+          "source": "docs/release.md",
+          "text": "Verify packages/contexttrace/pyproject.toml: runtime dependencies are minimal: click, httpx, typing-extensions."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Runtime dependencies are minimal: click, httpx, and typing-extensions.",
+          "source_id": "docs/release.md"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "byo_jsonpath_supported",
+      "source": "docs/byo-rag-endpoint.md",
+      "note": "Supported endpoint mapping JSONPath claim.",
+      "query": "What JSONPath response mappings are supported?",
+      "answer": "Endpoint response mapping supports $.answer, $.contexts, $.citations, dotted fields, and numeric indexes.",
+      "contexts": [
+        {
+          "id": "docs/byo-rag-endpoint.md",
+          "source": "docs/byo-rag-endpoint.md",
+          "text": "Endpoint response mapping uses a small JSONPath subset: $.answer, $.contexts, $.citations, dotted fields such as $.data.answer, numeric indexes such as $.results[0].answer."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Endpoint response mapping supports $.answer, $.contexts, $.citations, dotted fields, and numeric indexes.",
+          "source_id": "docs/byo-rag-endpoint.md"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "regression_threshold_metrics_supported",
+      "source": "docs/regression-testing.md",
+      "note": "Supported threshold metric list from regression docs.",
+      "query": "What threshold metrics are supported?",
+      "answer": "Supported threshold metrics include failure_rate, citation_support, unsupported_claim_rate, retrieval_miss_rate, latency_ms, token_count, cost_usd, and reliability_score.",
+      "contexts": [
+        {
+          "id": "docs/regression-testing.md",
+          "source": "docs/regression-testing.md",
+          "text": "Supported threshold metrics: failure_rate, citation_support, unsupported_claim_rate, retrieval_miss_rate, latency_ms, token_count, cost_usd, reliability_score."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Supported threshold metrics include failure_rate, citation_support, unsupported_claim_rate, retrieval_miss_rate, latency_ms, token_count, cost_usd, and reliability_score.",
+          "source_id": "docs/regression-testing.md"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "langgraph_errors_supported",
+      "source": "docs/integrations/langgraph.md",
+      "note": "Supported LangGraph wrapper exception behavior.",
+      "query": "What happens when wrapped LangGraph nodes raise exceptions?",
+      "answer": "Exceptions are logged as agent timeline errors and then re-raised.",
+      "contexts": [
+        {
+          "id": "docs/integrations/langgraph.md",
+          "source": "docs/integrations/langgraph.md",
+          "text": "The wrapper supports sync and async node functions. Exceptions are logged as agent timeline errors and then re-raised."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Exceptions are logged as agent timeline errors and then re-raised.",
+          "source_id": "docs/integrations/langgraph.md"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "llamaindex_mock_local_supported",
+      "source": "docs/integrations/llamaindex.md",
+      "note": "Supported LlamaIndex runnable example claim.",
+      "query": "Does the LlamaIndex example require external services?",
+      "answer": "The example uses mock nodes and local mode so it runs without external services.",
+      "contexts": [
+        {
+          "id": "docs/integrations/llamaindex.md",
+          "source": "docs/integrations/llamaindex.md",
+          "text": "Runnable Example: python examples/llamaindex_rag.py. The example uses mock nodes and local mode so it runs without external services."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "The example uses mock nodes and local mode so it runs without external services.",
+          "source_id": "docs/integrations/llamaindex.md"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "citation_wrong_quickstart_section",
+      "source": "docs/quickstart.md",
+      "note": "Correct report claim cites the quickstart install section instead of the report section.",
+      "query": "What do reports include?",
+      "answer": "Reports include token usage and latency metadata.",
+      "contexts": [
+        {
+          "id": "quickstart_install",
+          "source": "docs/quickstart.md#install",
+          "text": "Install ContextTrace with pip install contexttrace, then run contexttrace init, contexttrace demo --dataset refund_policy, and contexttrace report --last --open."
+        },
+        {
+          "id": "quickstart_report",
+          "source": "docs/quickstart.md#report",
+          "text": "Reports include query, retrieved chunks, selected context, answer, citations, support verdicts, failure diagnosis, token usage, and latency metadata."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Reports include token usage and latency metadata.",
+          "source_id": "quickstart_install"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["claim_supported_by_different_source"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "unsupported_python_support_wrong_context",
+      "source": "docs/release.md answer + docs/privacy.md context",
+      "note": "Real package metadata claim answered from unrelated privacy context.",
+      "query": "What Python version does ContextTrace support?",
+      "answer": "Python support is >=3.8.",
+      "contexts": [
+        {
+          "id": "docs/privacy.md",
+          "source": "docs/privacy.md",
+          "text": "ContextTrace is local-first by default. What stays local: queries, retrieved chunks, selected context, answers, citations, failure reports, local HTML reports."
+        }
+      ],
+      "expected_labels": ["should_have_abstained", "unsupported_answer"],
+      "expected_verdict_counts": {"unsupported": 1},
+      "expected_should_abstain": true
+    },
+    {
+      "id": "contradicted_privacy_network",
+      "source": "docs/privacy.md",
+      "note": "Counterfactual network behavior should be contradicted by privacy docs.",
+      "query": "Does local SDK tracing make a network call?",
+      "answer": "A network call is made for local SDK tracing.",
+      "contexts": [
+        {
+          "id": "docs/privacy.md",
+          "source": "docs/privacy.md",
+          "text": "Network behavior: No network call is made for local SDK tracing. contexttrace eval --endpoint calls only the endpoint you provide."
+        }
+      ],
+      "expected_labels": ["should_have_abstained", "contradicted_answer"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_should_abstain": true
+    },
+    {
+      "id": "partial_privacy_overclaim",
+      "source": "docs/privacy.md",
+      "note": "Mostly supported privacy claim with an invented sensitive-data detail.",
+      "query": "What stays local?",
+      "answer": "ContextTrace keeps queries, retrieved chunks, selected context, and credit card numbers local.",
+      "contexts": [
+        {
+          "id": "docs/privacy.md",
+          "source": "docs/privacy.md",
+          "text": "ContextTrace is local-first by default. What stays local: queries, retrieved chunks, selected context, answers, citations, failure reports, local HTML reports."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"partially_supported": 1},
+      "expected_should_abstain": false
+    },
+    {
+      "id": "multi_span_local_no_backend_supported",
+      "source": "docs/local-mode.md",
+      "note": "One claim supported across two adjacent evidence spans.",
+      "query": "What does local mode imply?",
+      "answer": "ContextTrace is local-first by default and no backend server is required.",
+      "contexts": [
+        {
+          "id": "docs/local-mode.md",
+          "source": "docs/local-mode.md",
+          "text": "ContextTrace is local-first by default. No backend server is required for normal SDK, CLI, report, or viewer workflows."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "ContextTrace is local-first by default and no backend server is required.",
+          "source_id": "docs/local-mode.md"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "multi_context_eval_workflow_supported",
+      "source": "docs/byo-rag-endpoint.md",
+      "note": "One claim supported across two retrieved contexts.",
+      "query": "What does the endpoint evaluator do?",
+      "answer": "The evaluator calls your endpoint for each question and saves traces in .contexttrace/contexttrace.db.",
+      "contexts": [
+        {
+          "id": "byo_eval_steps",
+          "source": "docs/byo-rag-endpoint.md#evaluator",
+          "text": "The evaluator will call your endpoint for each question, extract the answer, contexts, and citations, and create local ContextTrace traces."
+        },
+        {
+          "id": "byo_storage",
+          "source": "docs/byo-rag-endpoint.md#evaluator",
+          "text": "The evaluator will save traces in .contexttrace/contexttrace.db and generate an HTML eval report under .contexttrace/reports/."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "The evaluator calls your endpoint for each question and saves traces in .contexttrace/contexttrace.db.",
+          "source_id": "byo_eval_steps"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["cited_source_does_not_support_claim"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "contradicted_release_version",
+      "source": "release/v0.2.0.md",
+      "note": "Version conflict on a real release-note claim.",
+      "query": "Which release added local claim-level evidence verification?",
+      "answer": "ContextTrace v0.1.0 adds local claim-level evidence verification for portable RAG traces.",
+      "contexts": [
+        {
+          "id": "release/v0.2.0.md",
+          "source": "release/v0.2.0.md",
+          "text": "ContextTrace v0.2.0 adds local claim-level evidence verification for portable RAG traces. The release focuses on one core question: is each generated claim actually supported by retrieved evidence?"
+        }
+      ],
+      "expected_labels": ["should_have_abstained", "contradicted_answer"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_should_abstain": true
+    },
+    {
+      "id": "no_context_privacy_claim",
+      "source": "docs/privacy.md",
+      "note": "Real privacy answer with no retrieved contexts should abstain.",
+      "query": "What is the default storage path?",
+      "answer": "Default storage is .contexttrace/contexttrace.db.",
+      "contexts": [],
+      "expected_labels": ["should_have_abstained", "unsupported_answer"],
+      "expected_verdict_counts": {"unsupported": 1},
+      "expected_should_abstain": true
+    }
+  ]
+}

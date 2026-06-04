@@ -1,0 +1,311 @@
+{
+  "description": "External verification benchmark cases using public OSS documentation and GitHub issue snippets. Context text is sourced from real third-party docs/issues; traces intentionally exercise supported claims, citation mismatches, partial support, contradiction, and abstention behavior.",
+  "cases": [
+    {
+      "id": "qdrant_payload_filter_supported",
+      "source": "qdrant.tech/documentation/concepts/payload",
+      "note": "Supported Qdrant payload filtering claim from public docs.",
+      "query": "How can Qdrant use payloads during search?",
+      "answer": "Qdrant stores payload information with vectors and uses additional filters during search to add custom logic on top of semantic similarity.",
+      "contexts": [
+        {
+          "id": "qdrant_payload_filters",
+          "source": "qdrant.tech/documentation/concepts/payload",
+          "source_url": "https://qdrant.tech/documentation/concepts/payload/",
+          "text": "Qdrant stores additional information along with vectors as payload. In addition to storing payloads, Qdrant allows search based on certain kinds of values through additional filters during search, enabling custom logic on top of semantic similarity."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Qdrant stores payload information with vectors and uses additional filters during search to add custom logic on top of semantic similarity.",
+          "source_id": "qdrant_payload_filters"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "qdrant_array_filter_supported",
+      "source": "qdrant.tech/documentation/concepts/payload",
+      "note": "Supported array payload behavior from Qdrant docs.",
+      "query": "How does Qdrant treat array payloads during filtering?",
+      "answer": "When Qdrant filters an array payload, the filter succeeds if at least one value inside the array meets the condition.",
+      "contexts": [
+        {
+          "id": "qdrant_array_payloads",
+          "source": "qdrant.tech/documentation/concepts/payload",
+          "source_url": "https://qdrant.tech/documentation/concepts/payload/",
+          "text": "Arrays are treated differently during filtering. When a filter is applied to an array, it succeeds if at least one of the values inside the array meets the condition."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "When Qdrant filters an array payload, the filter succeeds if at least one value inside the array meets the condition.",
+          "source_id": "qdrant_array_payloads"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "qdrant_payload_index_supported",
+      "source": "qdrant.tech/documentation/search/filtering",
+      "note": "Supported Qdrant performance guidance for filtering.",
+      "query": "What does Qdrant recommend for performant filtering?",
+      "answer": "For performant filtering, Qdrant recommends creating payload indexes for fields you plan to filter on before ingesting data.",
+      "contexts": [
+        {
+          "id": "qdrant_filtering_indexes",
+          "source": "qdrant.tech/documentation/search/filtering",
+          "source_url": "https://qdrant.tech/documentation/search/filtering/",
+          "text": "For performant filtering, create payload indexes for the fields you plan to filter on. For best results, create payload indexes before ingesting data."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "For performant filtering, Qdrant recommends creating payload indexes for fields you plan to filter on before ingesting data.",
+          "source_id": "qdrant_filtering_indexes"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "qdrant_match_any_supported",
+      "source": "qdrant.tech/documentation/search/filtering",
+      "note": "Supported Match Any behavior from Qdrant filtering docs.",
+      "query": "What is Qdrant Match Any?",
+      "answer": "Qdrant Match Any works as a logical OR for given values and can be described as an IN operator.",
+      "contexts": [
+        {
+          "id": "qdrant_match_any",
+          "source": "qdrant.tech/documentation/search/filtering",
+          "source_url": "https://qdrant.tech/documentation/search/filtering/",
+          "text": "Match Any works as a logical OR for the given values. It can also be described as an IN operator."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Qdrant Match Any works as a logical OR for given values and can be described as an IN operator.",
+          "source_id": "qdrant_match_any"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 2},
+      "expected_citation_statuses": ["citation_ok", "citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "qdrant_text_any_contradicted",
+      "source": "qdrant.tech/documentation/search/filtering",
+      "note": "Contradicted claim about Qdrant text_any matching all query terms.",
+      "query": "Does Qdrant text_any require all query terms?",
+      "answer": "Qdrant text_any only matches fields that contain all query terms and never matches a field with just one query term.",
+      "contexts": [
+        {
+          "id": "qdrant_text_any",
+          "source": "qdrant.tech/documentation/search/filtering",
+          "source_url": "https://qdrant.tech/documentation/search/filtering/",
+          "text": "The text_any full-text match condition is similar to the text condition, but text only matches fields that contain all the query terms while text_any matches fields that contain any of the query terms. Even if a text field contains just one query term, it is considered a match."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "chroma_where_filter_supported",
+      "source": "github.com/chroma-core/docs/docs/usage-guide.md",
+      "note": "Supported Chroma where and where_document filter distinction.",
+      "query": "How does Chroma filter metadata and document contents?",
+      "answer": "Chroma uses the where filter for metadata and the where_document filter for document contents.",
+      "contexts": [
+        {
+          "id": "chroma_where_filters",
+          "source": "github.com/chroma-core/docs/docs/usage-guide.md",
+          "source_url": "https://github.com/chroma-core/docs/blob/main/docs/usage-guide.md",
+          "text": "Chroma supports filtering queries by metadata and document contents. The where filter is used to filter by metadata, and the where_document filter is used to filter by document contents."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Chroma uses the where filter for metadata and the where_document filter for document contents.",
+          "source_id": "chroma_where_filters"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "chroma_issue_where_no_match_supported",
+      "source": "github.com/chroma-core/chroma/issues/1331",
+      "note": "Supported real Chroma GitHub issue about where filters and empty metadata.",
+      "query": "What did Chroma issue 1331 report about unmatched where filters?",
+      "answer": "In Chroma issue 1331, if no entries matched the where clause, embeddings could include all entries while the metadatas list was empty.",
+      "contexts": [
+        {
+          "id": "chroma_issue_1331",
+          "source": "github.com/chroma-core/chroma/issues/1331",
+          "source_url": "https://github.com/chroma-core/chroma/issues/1331",
+          "text": "A user reported that when no entries matched the where clause, returned embeddings included all entries in the collection while the metadatas list was empty. The expected behavior was that both embeddings and metadatas would be empty."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "In Chroma issue 1331, if no entries matched the where clause, embeddings could include all entries while the metadatas list was empty.",
+          "source_id": "chroma_issue_1331"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "chroma_issue_metadata_list_error_supported",
+      "source": "github.com/chroma-core/chroma/issues/1552",
+      "note": "Supported real Chroma GitHub issue about list metadata ValueError.",
+      "query": "What metadata error did a Chroma user report?",
+      "answer": "A Chroma user reported a ValueError when metadata contained list values such as string arrays.",
+      "contexts": [
+        {
+          "id": "chroma_issue_1552",
+          "source": "github.com/chroma-core/chroma/issues/1552",
+          "source_url": "https://github.com/chroma-core/chroma/issues/1552",
+          "text": "A GitHub issue reported a ValueError: expected metadata value to be a str, int, float or bool, but got a list. The example metadata included fields such as string arrays and number arrays."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "A Chroma user reported a ValueError when metadata contained list values such as string arrays.",
+          "source_id": "chroma_issue_1552"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "haystack_document_store_supported",
+      "source": "docs.haystack.deepset.ai/docs/document-store",
+      "note": "Supported Haystack Document Store description.",
+      "query": "What is a Haystack Document Store used for?",
+      "answer": "A Haystack Document Store stores documents and is commonly used to fetch documents with a Retriever at query time.",
+      "contexts": [
+        {
+          "id": "haystack_document_store",
+          "source": "docs.haystack.deepset.ai/docs/document-store",
+          "source_url": "https://docs.haystack.deepset.ai/docs/document-store",
+          "text": "Document Store is an object that stores your documents and provides them to the Retriever at query time. The most common way to use a Document Store in Haystack is to fetch documents using a Retriever."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "A Haystack Document Store stores documents and is commonly used to fetch documents with a Retriever at query time.",
+          "source_id": "haystack_document_store"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 2},
+      "expected_citation_statuses": ["citation_ok", "citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "haystack_protocol_partial_support",
+      "source": "docs.haystack.deepset.ai/docs/document-store",
+      "note": "Partial support case from Haystack protocol methods with one unsupported extra method.",
+      "query": "Which methods are part of Haystack's DocumentStore protocol?",
+      "answer": "Haystack DocumentStore protocol includes count_documents, filter_documents, write_documents, delete_documents, and embed_documents.",
+      "contexts": [
+        {
+          "id": "haystack_document_store_protocol",
+          "source": "docs.haystack.deepset.ai/docs/document-store",
+          "source_url": "https://docs.haystack.deepset.ai/docs/document-store",
+          "text": "Document Stores in Haystack are designed to use count_documents, filter_documents, write_documents, and delete_documents as part of their protocol."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"partially_supported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "langchain_vectorstore_retriever_supported",
+      "source": "reference.langchain.com/javascript/langchain-core/vectorstores/VectorStoreRetriever",
+      "note": "Supported LangChain VectorStoreRetriever behavior from reference docs.",
+      "query": "How does LangChain VectorStoreRetriever retrieve documents?",
+      "answer": "LangChain VectorStoreRetriever retrieves documents from a VectorStore based on vector similarity or maximal marginal relevance.",
+      "contexts": [
+        {
+          "id": "langchain_vectorstore_retriever",
+          "source": "reference.langchain.com/javascript/langchain-core/vectorstores/VectorStoreRetriever",
+          "source_url": "https://reference.langchain.com/javascript/langchain-core/vectorstores/VectorStoreRetriever",
+          "text": "VectorStoreRetriever is a class for retrieving documents from a VectorStore based on vector similarity or maximal marginal relevance, also known as MMR."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "LangChain VectorStoreRetriever retrieves documents from a VectorStore based on vector similarity or maximal marginal relevance.",
+          "source_id": "langchain_vectorstore_retriever"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "external_wrong_source_citation",
+      "source": "qdrant.tech/documentation/search/filtering",
+      "note": "Wrong-source citation where another retrieved external doc supports the claim.",
+      "query": "What does Qdrant recommend for performant filtering?",
+      "answer": "For performant filtering, Qdrant recommends payload indexes for fields you plan to filter on.",
+      "contexts": [
+        {
+          "id": "qdrant_payload_general",
+          "source": "qdrant.tech/documentation/concepts/payload",
+          "source_url": "https://qdrant.tech/documentation/concepts/payload/",
+          "text": "Qdrant stores additional information along with vectors as payload. Qdrant also allows search based on values through additional filters during search."
+        },
+        {
+          "id": "qdrant_filtering_indexes",
+          "source": "qdrant.tech/documentation/search/filtering",
+          "source_url": "https://qdrant.tech/documentation/search/filtering/",
+          "text": "For performant filtering, create payload indexes for the fields you plan to filter on."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "For performant filtering, Qdrant recommends payload indexes for fields you plan to filter on.",
+          "source_id": "qdrant_payload_general"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["claim_supported_by_different_source"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "external_no_context_should_abstain",
+      "source": "reference.langchain.com/javascript/langchain-core/vectorstores/VectorStoreRetriever",
+      "note": "Real external claim with no retrieved context should abstain.",
+      "query": "How does LangChain VectorStoreRetriever retrieve documents?",
+      "answer": "VectorStoreRetriever retrieves documents from a VectorStore based on vector similarity or MMR.",
+      "contexts": [],
+      "expected_labels": ["should_have_abstained", "unsupported_answer"],
+      "expected_verdict_counts": {"unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    }
+  ]
+}

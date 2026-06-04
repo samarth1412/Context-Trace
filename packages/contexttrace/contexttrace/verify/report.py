@@ -30,6 +30,7 @@ class VerifyReportGenerator:
             claim_rows=_claim_rows(claims),
             evidence_cards=_evidence_cards(claims),
             unsupported_claims=_unsupported_claims(claims),
+            root_causes=_root_causes(claims),
             citation_mismatches=_citation_mismatches(claims),
             contexts=_contexts(trace),
             why_failed=_why_failed(claims, abstention),
@@ -50,6 +51,7 @@ def _summary_cards(summary: dict[str, Any]) -> str:
         ("Unsupported Claim Rate", summary.get("unsupported_claim_rate", 0)),
         ("Citation Mismatches", summary.get("citation_mismatches", 0)),
         ("Should Abstain", summary.get("should_abstain", False)),
+        ("Primary Root Cause", summary.get("primary_root_cause", "unknown")),
     ]
     return "\n".join(
         """
@@ -64,7 +66,7 @@ def _summary_cards(summary: dict[str, Any]) -> str:
 
 def _claim_rows(claims: list[dict[str, Any]]) -> str:
     if not claims:
-        return "<tr><td colspan=\"6\" class=\"muted\">No factual claims were extracted.</td></tr>"
+        return "<tr><td colspan=\"7\" class=\"muted\">No factual claims were extracted.</td></tr>"
     rows = []
     for claim in claims:
         rows.append(
@@ -76,6 +78,7 @@ def _claim_rows(claims: list[dict[str, Any]]) -> str:
               <td>{confidence}</td>
               <td>{context_id}</td>
               <td><span class="badge citation-{citation}">{citation}</span></td>
+              <td>{root_cause}</td>
             </tr>
             """.format(
                 claim_id=escape(_string(claim.get("claim_id"))),
@@ -84,6 +87,7 @@ def _claim_rows(claims: list[dict[str, Any]]) -> str:
                 confidence=escape(_string(claim.get("confidence"))),
                 context_id=escape(_string(claim.get("best_context_id"))),
                 citation=escape(_string(claim.get("citation_status"))),
+                root_cause=escape(_root_label(claim)),
             )
         )
     return "\n".join(rows)
@@ -99,8 +103,13 @@ def _evidence_cards(claims: list[dict[str, Any]]) -> str:
             <article class="item">
               <div class="item-meta">{claim_id} | {verdict} | score {score}</div>
               <h3>{claim}</h3>
+              <p class="muted">Evidence span: {span}</p>
+              <p><strong>Supporting spans:</strong> {supporting_spans}</p>
               <p>{evidence}</p>
               <p class="muted">Matched terms: {terms}</p>
+              <p><strong>Matched facts:</strong> {matched_facts}</p>
+              <p><strong>Missing facts:</strong> {missing_facts}</p>
+              <p><strong>Root cause:</strong> {root_cause}</p>
               <p>{reason}</p>
             </article>
             """.format(
@@ -108,11 +117,16 @@ def _evidence_cards(claims: list[dict[str, Any]]) -> str:
                 verdict=escape(_string(claim.get("verdict"))),
                 score=escape(_string(claim.get("best_score"))),
                 claim=escape(_string(claim.get("claim"))),
+                span=escape(_span_label(claim.get("evidence_span"))),
+                supporting_spans=_supporting_span_list(claim.get("supporting_spans") or []),
                 evidence=_highlight_terms(
                     _string(claim.get("evidence")) or "No evidence snippet found.",
                     claim.get("matched_terms") or [],
                 ),
                 terms=escape(", ".join(claim.get("matched_terms") or []) or "none"),
+                matched_facts=_fact_list(claim.get("matched_fact_details") or claim.get("matched_facts") or []),
+                missing_facts=_fact_list(claim.get("missing_fact_details") or claim.get("missing_facts") or []),
+                root_cause=escape(_root_label(claim)),
                 reason=escape(_string(claim.get("reason"))),
             )
         )
@@ -132,13 +146,48 @@ def _unsupported_claims(claims: list[dict[str, Any]]) -> str:
         <article class="item">
           <div class="item-meta">{claim_id} | {verdict}</div>
           <p>{claim}</p>
+          <p><strong>Missing facts:</strong> {missing_facts}</p>
+          <p><strong>Root cause:</strong> {root_cause}</p>
           <p>{reason}</p>
         </article>
         """.format(
             claim_id=escape(_string(claim.get("claim_id"))),
             verdict=escape(_string(claim.get("verdict"))),
             claim=escape(_string(claim.get("claim"))),
+            missing_facts=_fact_list(claim.get("missing_fact_details") or claim.get("missing_facts") or []),
+            root_cause=escape(_root_label(claim)),
             reason=escape(_string(claim.get("reason"))),
+        )
+        for claim in failures
+    )
+
+
+def _root_causes(claims: list[dict[str, Any]]) -> str:
+    failures = [
+        claim
+        for claim in claims
+        if _root_label(claim) != "no_failure_detected"
+    ]
+    if not failures:
+        return "<p class=\"muted\">No root-cause failure was detected.</p>"
+    return "\n".join(
+        """
+        <article class="item">
+          <div class="item-meta">{claim_id} | {label}</div>
+          <p>{claim}</p>
+          <p><strong>Missing fact:</strong> {missing_fact}</p>
+          <p><strong>Closest evidence:</strong> {closest_evidence}</p>
+          <p>{reason}</p>
+          <p><strong>Suggested fix:</strong> {suggested_fix}</p>
+        </article>
+        """.format(
+            claim_id=escape(_string(claim.get("claim_id"))),
+            label=escape(_root_label(claim)),
+            claim=escape(_string(claim.get("claim"))),
+            missing_fact=escape(_string((claim.get("root_cause") or {}).get("missing_fact")) or "none"),
+            closest_evidence=escape(_string((claim.get("root_cause") or {}).get("closest_evidence")) or "none"),
+            reason=escape(_string((claim.get("root_cause") or {}).get("reason"))),
+            suggested_fix=escape(_string((claim.get("root_cause") or {}).get("suggested_fix"))),
         )
         for claim in failures
     )
@@ -187,6 +236,24 @@ def _contexts(trace: RAGTrace) -> str:
 
 def _why_failed(claims: list[dict[str, Any]], abstention: dict[str, Any]) -> str:
     explanations = []
+    for claim in claims:
+        root = claim.get("root_cause") or {}
+        label = _string(root.get("label"))
+        if label and label != "no_failure_detected":
+            explanations.append(
+                "%s: %s Suggested fix: %s"
+                % (
+                    label,
+                    _string(root.get("reason")),
+                    _string(root.get("suggested_fix")),
+                )
+            )
+
+    if explanations:
+        if abstention.get("should_abstain"):
+            explanations.append(_string(abstention.get("reason")))
+        return "<ul>%s</ul>" % "\n".join("<li>%s</li>" % escape(item) for item in explanations)
+
     for claim in claims:
         verdict = claim.get("verdict")
         if verdict == "unsupported":
@@ -241,6 +308,53 @@ def _raw_summary(result: dict[str, Any]) -> dict[str, Any]:
         "diagnostics": result.get("diagnostics"),
         "claims": result.get("claims"),
     }
+
+
+def _span_label(value: Any) -> str:
+    if not isinstance(value, dict):
+        return "none"
+    context_id = _string(value.get("context_id"))
+    span_hash = _string(value.get("span_hash"))
+    start = _string(value.get("start_char"))
+    end = _string(value.get("end_char"))
+    return "%s chars %s-%s %s" % (context_id, start, end, span_hash)
+
+
+def _root_label(claim: dict[str, Any]) -> str:
+    root = claim.get("root_cause") or {}
+    if isinstance(root, dict):
+        return _string(root.get("label")) or "unknown"
+    return "unknown"
+
+
+def _fact_list(facts: list[Any]) -> str:
+    values = []
+    for fact in facts:
+        if isinstance(fact, dict):
+            text = _string(fact.get("text"))
+            fact_type = _string(fact.get("type"))
+            label = "%s (%s)" % (text, fact_type) if fact_type else text
+        else:
+            label = _string(fact)
+        if label:
+            values.append(escape(label))
+    if not values:
+        return "<span class=\"muted\">none</span>"
+    return "<span>%s</span>" % "</span>, <span>".join(values)
+
+
+def _supporting_span_list(spans: list[Any]) -> str:
+    values = []
+    for span in spans:
+        if not isinstance(span, dict):
+            continue
+        context_id = _string(span.get("context_id"))
+        span_hash = _string(span.get("span_hash"))
+        score = _string(span.get("score"))
+        values.append(escape("%s %s score %s" % (context_id, span_hash, score)))
+    if not values:
+        return "<span class=\"muted\">none</span>"
+    return "<span>%s</span>" % "</span>, <span>".join(values)
 
 
 def _highlight_terms(text: str, terms: list[str]) -> str:
@@ -345,6 +459,7 @@ HTML_TEMPLATE = """<!doctype html>
     .verdict-unverifiable, .verdict-partially_supported, .citation-claim_has_no_citation {{ color: var(--warn); background: #fff7df; }}
     .verdict-unsupported, .verdict-contradicted,
     .citation-cited_source_missing,
+    .citation-claim_supported_by_different_source,
     .citation-cited_source_does_not_support_claim {{ color: var(--bad); background: #fdeceb; }}
     pre {{
       margin: 0;
@@ -399,6 +514,7 @@ HTML_TEMPLATE = """<!doctype html>
             <th>Confidence</th>
             <th>Best Context</th>
             <th>Citation</th>
+            <th>Root Cause</th>
           </tr>
         </thead>
         <tbody>{claim_rows}</tbody>
@@ -409,6 +525,11 @@ HTML_TEMPLATE = """<!doctype html>
     <section>
       <h2>Unsupported Claims</h2>
       {unsupported_claims}
+    </section>
+
+    <section>
+      <h2>Root Cause Diagnosis</h2>
+      {root_causes}
     </section>
 
     <section>

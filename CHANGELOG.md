@@ -6,9 +6,18 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-06-03
+
 ### Added
 
-- Nothing yet.
+- Real-document verification benchmark cases sourced from ContextTrace docs and release artifacts.
+- External verification benchmark case set sourced from Qdrant, Chroma, Haystack, LangChain docs, and public Chroma GitHub issues.
+- `contexttrace verify-benchmark --case-set external|all` for running third-party real-world benchmark cases.
+- `contexttrace verify-benchmark --report` for local HTML benchmark reports with misses to inspect.
+- Claim and evidence sentence splitting safeguards for version numbers and file paths.
+- Evidence span metadata with character offsets and stable span hashes in verification output.
+- Required, matched, and missing fact diagnostics for claim-level verdicts and reports.
+- Claim-level root-cause diagnosis for retrieval misses, answer overreach, wrong citations, conflicting contexts, insufficient context, and should-have-abstained failures.
 
 ## [0.2.0] - 2026-06-03
 

@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from typing import Iterable
 
 from contexttrace.verify.schema import TraceContext
+from contexttrace.verify.spans import split_context_spans
 
 
 @dataclass(frozen=True)
@@ -14,6 +15,11 @@ class EvidenceMatch:
     score: float
     matched_terms: list[str]
     snippet: str
+    span_start: int | None = None
+    span_end: int | None = None
+    span_hash: str | None = None
+    supporting_spans: list[dict[str, object]] | None = None
+    supporting_text: str = ""
 
     def to_dict(self) -> dict[str, object]:
         return {
@@ -22,11 +28,23 @@ class EvidenceMatch:
             "best_score": self.score,
             "matched_terms": list(self.matched_terms),
             "evidence_snippet": self.snippet,
+            "evidence_span": self.span_dict(),
+            "supporting_spans": list(self.supporting_spans or []),
+        }
+
+    def span_dict(self) -> dict[str, object] | None:
+        if self.context_id is None or self.span_start is None or self.span_end is None or self.span_hash is None:
+            return None
+        return {
+            "context_id": self.context_id,
+            "text": self.snippet,
+            "start_char": self.span_start,
+            "end_char": self.span_end,
+            "span_hash": self.span_hash,
         }
 
 
 TOKEN_RE = re.compile(r"[A-Za-z0-9]+")
-SENTENCE_RE = re.compile(r"[^.!?\n]+(?:[.!?]+|$)", re.MULTILINE)
 
 STOPWORDS = {
     "a",
@@ -160,11 +178,25 @@ def find_best_evidence(
         matched_terms=[],
         snippet="",
     )
+    span_candidates: list[dict[str, object]] = []
     for context in contexts:
         candidate = score_claim_against_context(claim_text, context, mode=mode)
+        span_candidates.extend(candidate.supporting_spans or [])
         if best.context_id is None or candidate.score > best.score:
             best = candidate
-    return best
+    sorted_spans = _rank_spans(span_candidates)
+    return EvidenceMatch(
+        context_id=best.context_id,
+        context_text=best.context_text,
+        score=best.score,
+        matched_terms=list(best.matched_terms),
+        snippet=best.snippet,
+        span_start=best.span_start,
+        span_end=best.span_end,
+        span_hash=best.span_hash,
+        supporting_spans=sorted_spans,
+        supporting_text=" ".join(str(span.get("text") or "") for span in sorted_spans),
+    )
 
 
 def score_claim_against_context(
@@ -173,25 +205,65 @@ def score_claim_against_context(
     *,
     mode: str = "lexical",
 ) -> EvidenceMatch:
-    snippets = _sentences(context.text) or [context.text]
+    spans = split_context_spans(context)
     best_score = 0.0
     best_terms: list[str] = []
-    best_snippet = ""
-    for snippet in snippets:
-        score, terms = lexical_score(claim_text, snippet, mode=mode)
+    best_snippet = context.text.strip()
+    best_start: int | None = None
+    best_end: int | None = None
+    best_hash: str | None = None
+    span_candidates: list[dict[str, object]] = []
+    for span in spans:
+        score, terms = lexical_score(claim_text, span.text, mode=mode)
+        if score > 0:
+            span_candidates.append(
+                {
+                    "context_id": context.id,
+                    "text": span.text,
+                    "start_char": span.start_char,
+                    "end_char": span.end_char,
+                    "span_hash": span.span_hash,
+                    "score": score,
+                    "matched_terms": list(terms),
+                }
+            )
         if score > best_score:
             best_score = score
             best_terms = terms
-            best_snippet = snippet.strip()
-    if not best_snippet:
-        best_snippet = context.text.strip()
+            best_snippet = span.text.strip()
+            best_start = span.start_char
+            best_end = span.end_char
+            best_hash = span.span_hash
     return EvidenceMatch(
         context_id=context.id,
         context_text=context.text,
         score=best_score,
         matched_terms=best_terms,
         snippet=best_snippet,
+        span_start=best_start,
+        span_end=best_end,
+        span_hash=best_hash,
+        supporting_spans=_rank_spans(span_candidates),
+        supporting_text=" ".join(str(span.get("text") or "") for span in _rank_spans(span_candidates)),
     )
+
+
+def _rank_spans(spans: list[dict[str, object]], *, limit: int = 4) -> list[dict[str, object]]:
+    unique: dict[str, dict[str, object]] = {}
+    for span in spans:
+        key = str(span.get("span_hash") or "%s:%s:%s" % (span.get("context_id"), span.get("start_char"), span.get("end_char")))
+        existing = unique.get(key)
+        if existing is None or float(span.get("score") or 0) > float(existing.get("score") or 0):
+            unique[key] = dict(span)
+    ranked = sorted(
+        unique.values(),
+        key=lambda item: (
+            float(item.get("score") or 0),
+            len(item.get("matched_terms") or []),
+        ),
+        reverse=True,
+    )
+    return ranked[:limit]
 
 
 def lexical_score(claim_text: str, evidence_text: str, *, mode: str = "lexical") -> tuple[float, list[str]]:
@@ -273,7 +345,38 @@ def extract_numbers(text: str) -> list[str]:
 
 
 def _sentences(text: str) -> list[str]:
-    return [match.group(0).strip() for match in SENTENCE_RE.finditer(str(text or "")) if match.group(0).strip()]
+    value = str(text or "")
+    sentences: list[str] = []
+    start = 0
+    for index, char in enumerate(value):
+        if char not in ".!?":
+            continue
+        if char == "." and _is_internal_period(value, index):
+            continue
+        sentence = value[start : index + 1].strip()
+        if sentence:
+            sentences.append(sentence)
+        start = index + 1
+    tail = value[start:].strip()
+    if tail:
+        sentences.append(tail)
+    return sentences
+
+
+def _is_internal_period(text: str, index: int) -> bool:
+    previous = text[index - 1] if index > 0 else ""
+    next_char = text[index + 1] if index + 1 < len(text) else ""
+    if previous.isdigit() and next_char.isdigit():
+        return True
+    if previous.isalnum() and next_char.isalnum():
+        return True
+    if next_char.isalnum() and (not previous or previous.isspace() or previous in "([{/\\$"):
+        return True
+    if previous.isalnum() and next_char in "_-/\\":
+        return True
+    if previous in "_-/\\" and next_char.isalnum():
+        return True
+    return False
 
 
 def _compact_text(text: str, *, mode: str = "lexical") -> str:

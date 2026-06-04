@@ -29,7 +29,7 @@ from contexttrace.verify import (
     load_verify_demo,
     verify_trace,
 )
-from contexttrace.verify.benchmark import run_verify_benchmark
+from contexttrace.verify.benchmark import run_verify_benchmark, write_verify_benchmark_report
 from contexttrace.verify.report import VerifyReportGenerator
 from contexttrace.viewer import serve_viewer
 
@@ -288,18 +288,31 @@ def verify_demo_command(
 
 @cli.command("verify-benchmark")
 @click.option("--mode", default="lexical", show_default=True, type=click.Choice(["lexical", "semantic"]), help="Evidence scoring mode.")
+@click.option("--case-set", default="contexttrace", show_default=True, type=click.Choice(["contexttrace", "external", "all"]), help="Benchmark case set to run.")
 @click.option("--json", "json_output", is_flag=True, help="Print benchmark results as JSON.")
-def verify_benchmark_command(mode: str, json_output: bool) -> int:
+@click.option("--report", is_flag=True, help="Generate a local HTML benchmark report.")
+@click.option("--out", default=None, help="HTML benchmark report path. Implies --report when provided.")
+def verify_benchmark_command(mode: str, case_set: str, json_output: bool, report: bool, out: Optional[str]) -> int:
     """Run the bundled verification precision/recall benchmark."""
 
-    result = run_verify_benchmark(mode=mode)
+    result = run_verify_benchmark(mode=mode, case_set=case_set)
+    written_report = None
+    if report or out:
+        output_path = out or str(Path(".contexttrace") / "reports" / ("verify_benchmark_%s.html" % mode))
+        written_report = write_verify_benchmark_report(result, path=output_path)
     if json_output:
+        if written_report:
+            click.echo("Report: %s" % written_report, err=True)
         click.echo(json.dumps(result, indent=2))
         return 0
 
     click.echo("Mode: %s" % result["mode"])
+    click.echo("Case source: %s" % result["case_source"])
     click.echo("Cases: %s" % result["cases"])
     click.echo("Exact match rate: %.3f" % float(result["exact_match_rate"]))
+    click.echo("Verdict match rate: %.3f" % float(result["verdict_match_rate"]))
+    click.echo("Citation match rate: %.3f" % float(result["citation_match_rate"]))
+    click.echo("Abstention match rate: %.3f" % float(result["abstention_match_rate"]))
     click.echo("label\tprecision\trecall\tf1\ttp\tfp\tfn")
     for label, metrics in result["per_label"].items():
         click.echo(
@@ -322,6 +335,8 @@ def verify_benchmark_command(mode: str, json_output: bool) -> int:
                 "- %s expected=%s predicted=%s"
                 % (row["id"], ",".join(row["expected"]), ",".join(row["predicted"]))
             )
+    if written_report:
+        click.echo("Report: %s" % written_report)
     return 0
 
 
@@ -365,6 +380,7 @@ def _print_verify_result(
     click.echo("Unsupported claim rate: %.3f" % float(summary["unsupported_claim_rate"]))
     click.echo("Citation mismatches: %s" % summary["citation_mismatches"])
     click.echo("Failure type: %s" % summary["failure_type"])
+    click.echo("Primary root cause: %s" % summary.get("primary_root_cause", "unknown"))
     click.echo("Should abstain: %s" % str(summary["should_abstain"]).lower())
     click.echo("Suggested fix: %s" % summary["suggested_fix"])
     if written_report:

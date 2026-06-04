@@ -3,6 +3,7 @@ include pyproject.toml
 include setup.py
 include contexttrace/py.typed
 recursive-include contexttrace *.py
+recursive-include contexttrace/verify *.json
 prune build
 prune dist
 prune tests

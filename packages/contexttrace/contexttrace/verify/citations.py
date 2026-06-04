@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from contexttrace.verify.claims import Claim
 from contexttrace.verify.evidence import lexical_score, score_claim_against_context
+from contexttrace.verify.facts import compare_facts
 from contexttrace.verify.schema import RAGTrace, TraceCitation
 from contexttrace.verify.verdicts import ClaimVerification, is_supported_match
 
@@ -9,6 +10,7 @@ from contexttrace.verify.verdicts import ClaimVerification, is_supported_match
 CITATION_OK = "citation_ok"
 CITED_SOURCE_MISSING = "cited_source_missing"
 CITED_SOURCE_DOES_NOT_SUPPORT = "cited_source_does_not_support_claim"
+CLAIM_SUPPORTED_BY_DIFFERENT_SOURCE = "claim_supported_by_different_source"
 CLAIM_HAS_NO_CITATION = "claim_has_no_citation"
 
 
@@ -40,8 +42,10 @@ def attach_citation_statuses(
             continue
 
         cited_match = score_claim_against_context(claim.text, cited_context, mode=mode)
-        if is_supported_match(claim.text, cited_match):
+        if _source_fully_supports_claim(claim.text, cited_match, mode=mode):
             status = CITATION_OK
+        elif verification.verdict == "supported" and verification.best_context_id != citation.source_id:
+            status = CLAIM_SUPPORTED_BY_DIFFERENT_SOURCE
         else:
             status = CITED_SOURCE_DOES_NOT_SUPPORT
 
@@ -75,6 +79,20 @@ def find_citation_for_claim(
             best = citation
             best_score = score
     return best if best_score >= 0.55 else None
+
+
+def _source_fully_supports_claim(claim_text: str, match: object, *, mode: str) -> bool:
+    fact_mode = "semantic" if mode == "semantic" else "lexical"
+    fact_match = compare_facts(
+        claim_text,
+        str(getattr(match, "supporting_text", "") or getattr(match, "snippet", "")),
+        mode=fact_mode,
+    )
+    if fact_match.conflicting_facts:
+        return False
+    if fact_match.required_facts:
+        return not fact_match.missing_facts and float(getattr(match, "score", 0.0) or 0.0) >= 0.35
+    return is_supported_match(claim_text, match)
 
 
 def _normalize_text(text: str) -> str:

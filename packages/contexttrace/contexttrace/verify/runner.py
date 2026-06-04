@@ -11,6 +11,11 @@ from contexttrace.verify.citations import (
 )
 from contexttrace.verify.claims import extract_claims
 from contexttrace.verify.evidence import find_best_evidence
+from contexttrace.verify.root_cause import (
+    attach_root_causes,
+    primary_root_cause,
+    root_cause_summary,
+)
 from contexttrace.verify.schema import RAGTrace, load_trace_file
 from contexttrace.verify.verdicts import classify_claim
 
@@ -30,7 +35,6 @@ def verify_trace(trace: RAGTrace, *, mode: str = "lexical") -> dict[str, Any]:
         )
 
     verifications = attach_citation_statuses(claims, verifications, trace, mode=mode)
-    claim_results = [verification.to_dict() for verification in verifications]
     abstention = judge_abstention(
         query=trace.query,
         claims=claims,
@@ -38,7 +42,13 @@ def verify_trace(trace: RAGTrace, *, mode: str = "lexical") -> dict[str, Any]:
         verifications=verifications,
         mode=mode,
     )
+    claim_results = attach_root_causes(
+        [verification.to_dict() for verification in verifications],
+        abstention,
+    )
     summary = _summary(verifications, abstention)
+    summary["root_causes"] = root_cause_summary(claim_results)
+    summary["primary_root_cause"] = primary_root_cause(claim_results)
     diagnostics = _diagnostics(verifications, abstention)
     summary.update(
         {
