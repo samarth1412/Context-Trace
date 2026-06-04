@@ -151,7 +151,7 @@ Use `contexttrace audit trace.json --corpus docs/` to diagnose whether an unsupp
 
 Use `contexttrace audit-benchmark --case-set real --mode semantic` to test retrieval-audit labels against bundled public OSS documentation and GitHub issue snippets from Qdrant, Chroma, Haystack, LangChain, and ContextTrace docs.
 
-The v0.5.0 verifier uses local lexical heuristics by default. Claim extraction is rule-based, contradiction detection is conservative, and semantic or LLM-judge support can be added later.
+The v0.6.0 verifier uses local lexical heuristics by default. Claim extraction is rule-based, contradiction detection is conservative, and semantic or LLM-judge support can be added later.
 
 ## What It Catches
 
