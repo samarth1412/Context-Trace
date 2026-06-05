@@ -123,6 +123,8 @@ Common root causes include `retrieval_miss`, `reranking_failure`, `chunking_issu
 
 `support_status`, `truth_status`, and `source_status` stay separate so a claim can be grounded by a source while the source itself remains stale, wrong, or unassessed.
 
+Source metadata can include `source_authority`, `source_timestamp`, `source_version`, `canonical`, or `canonical_source`. ContextTrace uses those local fields to flag `grounded_but_stale`, `grounded_but_conflicted`, `grounded_by_low_authority_source`, or `supported_by_canonical_source`.
+
 ## Capture Existing Systems
 
 Capture one live endpoint response:

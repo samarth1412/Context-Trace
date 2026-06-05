@@ -29,6 +29,7 @@ class VerifyReportGenerator:
             suggested_fix=escape(_string(summary.get("suggested_fix") or diagnostics.get("suggested_fix"))),
             claim_rows=_claim_rows(claims),
             evidence_cards=_evidence_cards(claims),
+            source_trust=_source_trust(claims),
             unsupported_claims=_unsupported_claims(claims),
             root_causes=_root_causes(claims),
             citation_mismatches=_citation_mismatches(claims),
@@ -143,6 +144,42 @@ def _evidence_cards(claims: list[dict[str, Any]]) -> str:
                 root_cause=escape(_root_label(claim)),
                 reason=escape(_string(claim.get("reason"))),
                 status_note=escape(_string(claim.get("status_note"))),
+            )
+        )
+    return "\n".join(cards)
+
+
+def _source_trust(claims: list[dict[str, Any]]) -> str:
+    if not claims:
+        return "<p class=\"muted\">No source trust signals to show.</p>"
+    cards = []
+    for claim in claims:
+        assessment = claim.get("source_assessment") if isinstance(claim.get("source_assessment"), dict) else {}
+        best = assessment.get("best_source") if isinstance(assessment.get("best_source"), dict) else {}
+        conflicts = assessment.get("conflicting_sources") or []
+        newer = assessment.get("newer_related_sources") or []
+        cards.append(
+            """
+            <article class="item">
+              <div class="item-meta">{claim_id} | {source_status}</div>
+              <h3>{claim}</h3>
+              <p><strong>Best source:</strong> {best_source}</p>
+              <p><strong>Authority:</strong> {authority_label} ({authority_score}) | <strong>Canonical:</strong> {canonical} | <strong>Version:</strong> {version} | <strong>Timestamp:</strong> {timestamp}</p>
+              <p><strong>Conflicting sources:</strong> {conflicts}</p>
+              <p><strong>Newer related sources:</strong> {newer}</p>
+            </article>
+            """.format(
+                claim_id=escape(_string(claim.get("claim_id"))),
+                source_status=escape(_string(claim.get("source_status"))),
+                claim=escape(_string(claim.get("claim"))),
+                best_source=escape(_string(best.get("context_id") or claim.get("best_context_id") or "none")),
+                authority_label=escape(_string(best.get("authority_label") or "unknown")),
+                authority_score=escape(_string(best.get("authority_score") if best else "")),
+                canonical=escape(_string(best.get("canonical") if best else False).lower()),
+                version=escape(_string(best.get("source_version") or "unknown")),
+                timestamp=escape(_string(best.get("source_timestamp") or "unknown")),
+                conflicts=_source_signal_list(conflicts),
+                newer=_source_signal_list(newer),
             )
         )
     return "\n".join(cards)
@@ -377,6 +414,27 @@ def _supporting_span_list(spans: list[Any]) -> str:
     return "<span>%s</span>" % "</span>, <span>".join(values)
 
 
+def _source_signal_list(signals: list[Any]) -> str:
+    values = []
+    for signal in signals:
+        if not isinstance(signal, dict):
+            continue
+        values.append(
+            escape(
+                "%s verdict=%s authority=%s canonical=%s"
+                % (
+                    _string(signal.get("context_id")),
+                    _string(signal.get("verdict")),
+                    _string(signal.get("authority_score")),
+                    _string(signal.get("canonical")).lower(),
+                )
+            )
+        )
+    if not values:
+        return "<span class=\"muted\">none</span>"
+    return "<span>%s</span>" % "</span>, <span>".join(values)
+
+
 def _highlight_terms(text: str, terms: list[str]) -> str:
     escaped = escape(text)
     normalized_terms = [
@@ -556,6 +614,11 @@ HTML_TEMPLATE = """<!doctype html>
     <section>
       <h2>Unsupported Claims</h2>
       {unsupported_claims}
+    </section>
+
+    <section>
+      <h2>Source Trust & Freshness</h2>
+      {source_trust}
     </section>
 
     <section>

@@ -3,6 +3,12 @@ from __future__ import annotations
 from typing import Any
 
 from contexttrace.verify.root_cause import CONFLICTING_CONTEXTS, MISSING_CITED_SOURCE, STALE_CONTEXT
+from contexttrace.verify.source_trust import (
+    GROUNDED_BUT_CONFLICTED,
+    GROUNDED_BUT_STALE,
+    GROUNDED_BY_LOW_AUTHORITY_SOURCE,
+    SUPPORTED_BY_CANONICAL_SOURCE,
+)
 from contexttrace.verify.schema import RAGTrace
 
 
@@ -49,11 +55,15 @@ def truth_status(claim: dict[str, Any]) -> str:
 
 
 def source_status(claim: dict[str, Any], contexts_by_id: dict[str, Any]) -> str:
+    explicit_claim_status = _string(claim.get("source_status"))
+    if explicit_claim_status:
+        return explicit_claim_status
+
     root_label = _string((claim.get("root_cause") or {}).get("label"))
     if root_label == STALE_CONTEXT:
-        return "stale_or_version_conflicted"
+        return GROUNDED_BUT_STALE
     if root_label == CONFLICTING_CONTEXTS:
-        return "conflicting_source"
+        return GROUNDED_BUT_CONFLICTED
     if root_label == MISSING_CITED_SOURCE:
         return "cited_source_missing"
 
@@ -74,6 +84,27 @@ def source_status(claim: dict[str, Any], contexts_by_id: dict[str, Any]) -> str:
 
 
 def status_note(claim: dict[str, Any]) -> str:
+    source = source_status(claim, {})
+    if source == GROUNDED_BUT_CONFLICTED:
+        return (
+            "The selected evidence grounds the claim, but another retrieved source appears to conflict. "
+            "Resolve source authority or freshness before treating it as reliable."
+        )
+    if source == GROUNDED_BUT_STALE:
+        return (
+            "The selected evidence grounds the claim, but the source appears stale or superseded. "
+            "Grounded is not the same as current."
+        )
+    if source == GROUNDED_BY_LOW_AUTHORITY_SOURCE:
+        return (
+            "The selected evidence grounds the claim, but source authority is low. "
+            "Prefer canonical or higher-trust evidence."
+        )
+    if source == SUPPORTED_BY_CANONICAL_SOURCE:
+        return (
+            "The claim is grounded by selected evidence from a canonical or high-authority source. "
+            "This still does not certify independent real-world truth."
+        )
     if support_status(claim) == "grounded_by_span":
         return (
             "Grounded means the claim is supported by the selected evidence span. "

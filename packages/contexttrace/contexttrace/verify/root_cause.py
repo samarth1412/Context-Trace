@@ -12,6 +12,7 @@ WRONG_SOURCE_CITED = "wrong_source_cited"
 MISSING_CITED_SOURCE = "missing_cited_source"
 CONFLICTING_CONTEXTS = "conflicting_contexts"
 STALE_CONTEXT = "stale_context"
+LOW_AUTHORITY_SOURCE = "low_authority_source"
 INSUFFICIENT_CONTEXT = "insufficient_context"
 SHOULD_HAVE_ABSTAINED = "should_have_abstained"
 
@@ -46,6 +47,7 @@ def primary_root_cause(claims: list[dict[str, Any]]) -> str:
         SHOULD_HAVE_ABSTAINED,
         CONFLICTING_CONTEXTS,
         STALE_CONTEXT,
+        LOW_AUTHORITY_SOURCE,
         RETRIEVAL_MISS,
         ANSWER_OVERREACH,
         PARTIAL_CONTEXT_SUPPORT,
@@ -70,6 +72,49 @@ def diagnose_claim(claim: dict[str, Any], abstention: dict[str, Any]) -> dict[st
     conflicting_fact = _first_fact(conflicting_fact_values)
     closest_context_id = _string(claim.get("best_context_id")) or None
     closest_evidence = _string(claim.get("evidence")) or None
+    source_status = _string(claim.get("source_status"))
+    source_assessment = claim.get("source_assessment") if isinstance(claim.get("source_assessment"), dict) else {}
+
+    if verdict == "supported" and source_status == "grounded_but_conflicted":
+        conflict = _first_source_signal(source_assessment.get("stronger_conflicting_sources") or source_assessment.get("conflicting_sources") or [])
+        return _diagnosis(
+            label=CONFLICTING_CONTEXTS,
+            reason=(
+                "The claim is grounded by %s, but conflicting evidence was found in %s."
+                % (closest_context_id or "the selected source", _string(conflict.get("context_id")) or "another source")
+            ),
+            suggested_fix="Resolve source authority, freshness, or canonical-source precedence before treating this grounded claim as reliable.",
+            missing_fact=_string(claim.get("claim")),
+            closest_context_id=closest_context_id,
+            closest_evidence=closest_evidence,
+        )
+
+    if verdict == "supported" and source_status == "grounded_but_stale":
+        newer = _first_source_signal(source_assessment.get("newer_related_sources") or [])
+        reason = "The claim is grounded, but the supporting source appears stale or explicitly marked stale."
+        if newer:
+            reason = (
+                "The claim is grounded by %s, but newer related source %s was also retrieved."
+                % (closest_context_id or "the selected source", _string(newer.get("context_id")) or "another source")
+            )
+        return _diagnosis(
+            label=STALE_CONTEXT,
+            reason=reason,
+            suggested_fix="Refresh the source or prefer the newer canonical source before generation.",
+            missing_fact=_string(claim.get("claim")),
+            closest_context_id=closest_context_id,
+            closest_evidence=closest_evidence,
+        )
+
+    if verdict == "supported" and source_status == "grounded_by_low_authority_source":
+        return _diagnosis(
+            label=LOW_AUTHORITY_SOURCE,
+            reason="The claim is grounded, but the supporting source is low authority.",
+            suggested_fix="Prefer canonical or higher-authority evidence, or expose lower confidence to the user.",
+            missing_fact=_string(claim.get("claim")),
+            closest_context_id=closest_context_id,
+            closest_evidence=closest_evidence,
+        )
 
     if citation_status == "claim_supported_by_different_source":
         return _diagnosis(
@@ -210,6 +255,13 @@ def _looks_stale_fact(facts: list[Any]) -> bool:
         if value.startswith("v") and any(char.isdigit() for char in value):
             return True
     return False
+
+
+def _first_source_signal(signals: list[Any]) -> dict[str, Any]:
+    for signal in signals:
+        if isinstance(signal, dict):
+            return signal
+    return {}
 
 
 def _string(value: Any) -> str:

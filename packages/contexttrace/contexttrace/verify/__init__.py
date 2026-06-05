@@ -50,6 +50,15 @@ from contexttrace.verify.statuses import (
     support_status,
     truth_status,
 )
+from contexttrace.verify.source_trust import (
+    GROUNDED_BUT_CONFLICTED,
+    GROUNDED_BUT_STALE,
+    GROUNDED_BY_LOW_AUTHORITY_SOURCE,
+    SUPPORTED_BY_CANONICAL_SOURCE,
+    attach_source_assessments,
+    source_assessment,
+    source_status_from_assessment,
+)
 
 __all__ = [
     "CachedJudge",
@@ -65,6 +74,10 @@ __all__ = [
     "OpenAICompatibleJudge",
     "RAGTrace",
     "SOURCE_FRESHNESS_UNKNOWN",
+    "GROUNDED_BUT_CONFLICTED",
+    "GROUNDED_BUT_STALE",
+    "GROUNDED_BY_LOW_AUTHORITY_SOURCE",
+    "SUPPORTED_BY_CANONICAL_SOURCE",
     "TRUTH_NOT_ASSESSED",
     "TraceCitation",
     "TraceContext",
@@ -74,6 +87,7 @@ __all__ = [
     "audit_trace_file",
     "audit_trace_with_corpus",
     "attach_grounding_statuses",
+    "attach_source_assessments",
     "build_judge_provider",
     "build_nli_provider",
     "calibration_failures",
@@ -95,6 +109,8 @@ __all__ = [
     "run_audit_benchmark",
     "nli_calibration_failures",
     "source_status",
+    "source_assessment",
+    "source_status_from_assessment",
     "status_note",
     "support_status",
     "truth_status",

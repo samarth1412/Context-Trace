@@ -23,6 +23,7 @@ from contexttrace.verify.root_cause import (
     root_cause_summary,
 )
 from contexttrace.verify.schema import RAGTrace, TraceContext, load_trace_file
+from contexttrace.verify.source_trust import attach_source_assessments
 from contexttrace.verify.statuses import attach_grounding_statuses
 from contexttrace.verify.verdicts import classify_claim
 
@@ -73,16 +74,19 @@ def verify_trace(
         verifications=verifications,
         mode=evidence_mode,
     )
-    claim_results = attach_root_causes(
+    claim_results = attach_source_assessments(
         [verification.to_dict() for verification in verifications],
-        abstention,
+        trace,
+        mode=evidence_mode,
     )
+    claim_results = attach_root_causes(claim_results, abstention)
     claim_results = attach_grounding_statuses(claim_results, trace)
     summary = _summary(verifications, abstention)
     summary["root_causes"] = root_cause_summary(claim_results)
     summary["primary_root_cause"] = primary_root_cause(claim_results)
     summary["source_status"] = _source_status_summary(claim_results)
     diagnostics = _diagnostics(verifications, abstention)
+    diagnostics = _augment_diagnostics_with_source_status(diagnostics, claim_results)
     summary.update(
         {
             "failure_type": diagnostics["failure_type"],
@@ -309,9 +313,12 @@ def _source_status_summary(claims: list[dict[str, Any]]) -> str:
         return "freshness_unknown"
     priority = [
         "cited_source_missing",
+        "grounded_but_conflicted",
         "stale_or_version_conflicted",
+        "grounded_but_stale",
         "stale_source",
         "conflicting_source",
+        "grounded_by_low_authority_source",
         "no_source",
     ]
     for status in priority:
@@ -350,6 +357,36 @@ def _diagnostics(verifications: list[Any], abstention: dict[str, object]) -> dic
     }
 
 
+def _augment_diagnostics_with_source_status(
+    diagnostics: dict[str, object],
+    claims: list[dict[str, Any]],
+) -> dict[str, object]:
+    failure_types = [
+        item
+        for item in list(diagnostics.get("failure_types") or [])
+        if item != "no_failure_detected"
+    ]
+    source_statuses = {str(claim.get("source_status") or "") for claim in claims}
+    if "grounded_but_conflicted" in source_statuses:
+        failure_types.append("source_conflict")
+    if "grounded_but_stale" in source_statuses:
+        failure_types.append("stale_source")
+    if "grounded_by_low_authority_source" in source_statuses:
+        failure_types.append("low_authority_source")
+    if not failure_types:
+        failure_types = ["no_failure_detected"]
+    deduped = []
+    for failure_type in failure_types:
+        if failure_type not in deduped:
+            deduped.append(failure_type)
+    return {
+        **diagnostics,
+        "failure_type": deduped[0],
+        "failure_types": deduped,
+        "suggested_fix": _suggested_fix(deduped),
+    }
+
+
 def _suggested_fix(failure_types: list[str]) -> str:
     if "should_have_abstained" in failure_types:
         return (
@@ -358,6 +395,12 @@ def _suggested_fix(failure_types: list[str]) -> str:
         )
     if "contradicted_answer" in failure_types:
         return "Filter stale or conflicting sources and require the final answer to match the highest-priority evidence."
+    if "source_conflict" in failure_types:
+        return "Resolve conflicting retrieved sources using canonical, current, or higher-authority evidence before generation."
+    if "stale_source" in failure_types:
+        return "Refresh stale sources or prefer newer canonical evidence before trusting grounded claims."
+    if "low_authority_source" in failure_types:
+        return "Prefer canonical or higher-authority sources for this claim, or mark the answer as lower confidence."
     if "unsupported_answer" in failure_types:
         return "Constrain generation to retrieved evidence or retrieve a source that explicitly states the missing claim before answering."
     if "partial_support" in failure_types:

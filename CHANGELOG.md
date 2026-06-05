@@ -13,10 +13,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Optional `contexttrace[nli]` and `contexttrace[nli-onnx]` extras plus `--mode nli` for local claim-versus-span entailment and contradiction checks.
 - Local NLI model loading is explicit and offline-only through `CONTEXTTRACE_NLI_MODEL_PATH`; ContextTrace never downloads NLI models automatically.
 - `contexttrace nli-calibrate` for measuring local NLI exact-match rate, entailment precision, contradiction recall, dangerous false-green rate, citation match, and latency against bundled golden cases.
+- Local source trust and freshness scoring from trace metadata such as `source_authority`, `source_timestamp`, `source_version`, `canonical`, and `canonical_source`.
+- Source-aware claim statuses: `grounded_but_stale`, `grounded_but_conflicted`, `grounded_by_low_authority_source`, and `supported_by_canonical_source`.
 
 ### Changed
 
 - Verification and QA reports now say "grounded" for span-backed support and explicitly note that grounding is not a truth or freshness guarantee.
+- Verification reports now include a Source Trust & Freshness section showing authority, canonical-source, version, timestamp, conflict, and newer-source signals.
 
 ## [0.8.0] - 2026-06-04
 

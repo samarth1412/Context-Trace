@@ -278,8 +278,112 @@ def test_source_status_is_separate_from_grounding():
     assert claim["verdict"] == "supported"
     assert claim["support_status"] == "grounded_by_span"
     assert claim["truth_status"] == "not_assessed"
-    assert claim["source_status"] == "stale_source"
-    assert result["summary"]["source_status"] == "stale_source"
+    assert claim["source_status"] == "grounded_but_stale"
+    assert claim["root_cause"]["label"] == "stale_context"
+    assert result["summary"]["source_status"] == "grounded_but_stale"
+    assert result["summary"]["failure_type"] == "stale_source"
+
+
+def test_supported_claim_with_stronger_conflicting_source_is_flagged():
+    result = verify_trace(
+        RAGTrace(
+            query="What is the refund window?",
+            answer="Refunds are available within 30 days.",
+            contexts=[
+                TraceContext(
+                    id="policy_old",
+                    text="Refunds are available within 30 days.",
+                    metadata={
+                        "source_group": "refund_policy",
+                        "source_version": "2024.1",
+                        "source_authority": "medium",
+                    },
+                ),
+                TraceContext(
+                    id="policy_current",
+                    text="Refunds are available within 14 days.",
+                    metadata={
+                        "source_group": "refund_policy",
+                        "source_version": "2026.1",
+                        "canonical": True,
+                        "source_authority": "official",
+                    },
+                ),
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["source_status"] == "grounded_but_stale"
+    assert claim["root_cause"]["label"] == "stale_context"
+    assert "stale_source" in result["summary"]["failure_types"]
+    assert claim["source_assessment"]["newer_related_sources"][0]["context_id"] == "policy_current"
+
+
+def test_canonical_supported_source_wins_over_lower_authority_conflict():
+    result = verify_trace(
+        RAGTrace(
+            query="What is the refund window?",
+            answer="Refunds are available within 14 days.",
+            contexts=[
+                TraceContext(
+                    id="policy_current",
+                    text="Refunds are available within 14 days.",
+                    metadata={
+                        "source_group": "refund_policy",
+                        "source_version": "2026.1",
+                        "canonical": True,
+                        "source_authority": "official",
+                    },
+                ),
+                TraceContext(
+                    id="policy_old",
+                    text="Refunds are available within 30 days.",
+                    metadata={
+                        "source_group": "refund_policy",
+                        "source_version": "2024.1",
+                        "source_authority": "low",
+                    },
+                ),
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["source_status"] == "supported_by_canonical_source"
+    assert claim["root_cause"]["label"] == "no_failure_detected"
+    assert result["summary"]["failure_type"] == "no_failure_detected"
+    assert claim["source_assessment"]["conflicting_sources"][0]["context_id"] == "policy_old"
+
+
+def test_low_authority_supported_source_is_flagged():
+    result = verify_trace(
+        RAGTrace(
+            query="What is the refund window?",
+            answer="Refunds are available within 30 days.",
+            contexts=[
+                TraceContext(
+                    id="community_post",
+                    text="Refunds are available within 30 days.",
+                    metadata={
+                        "source_authority": "low",
+                        "source": "community/forum-post.md",
+                    },
+                )
+            ],
+        )
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["source_status"] == "grounded_by_low_authority_source"
+    assert claim["root_cause"]["label"] == "low_authority_source"
+    assert result["summary"]["failure_type"] == "low_authority_source"
+    assert claim["source_assessment"]["best_source"]["authority_score"] == 0.25
 
 
 def test_unsupported_claim_classification():
@@ -702,6 +806,7 @@ def test_report_generation(tmp_path):
     assert "Matched facts" in html
     assert "Evidence span" in html
     assert "Supporting spans" in html
+    assert "Source Trust & Freshness" in html
     assert "Root Cause Diagnosis" in html
 
 
