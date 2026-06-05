@@ -6,6 +6,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-06-05
+
 ### Added
 
 - Claim output now separates `support_status`, `truth_status`, and `source_status` so grounded evidence is not presented as independent truth.
