@@ -6,6 +6,7 @@ from typing import Iterable
 
 from contexttrace.verify.schema import TraceContext
 from contexttrace.verify.spans import split_context_spans
+from contexttrace.verify.local_ml import local_ml_score_pair
 
 
 @dataclass(frozen=True)
@@ -267,18 +268,19 @@ def _rank_spans(spans: list[dict[str, object]], *, limit: int = 4) -> list[dict[
 
 
 def lexical_score(claim_text: str, evidence_text: str, *, mode: str = "lexical") -> tuple[float, list[str]]:
-    claim_terms = unique_important_tokens(claim_text, mode=mode)
+    token_mode = _token_mode(mode)
+    claim_terms = unique_important_tokens(claim_text, mode=token_mode)
     if not claim_terms:
         return 0.0, []
 
-    evidence_terms = set(unique_important_tokens(evidence_text, mode=mode))
+    evidence_terms = set(unique_important_tokens(evidence_text, mode=token_mode))
     matched_canonical = [term for term in claim_terms if term in evidence_terms]
     coverage = len(matched_canonical) / len(claim_terms)
     union_size = len(set(claim_terms).union(evidence_terms)) or 1
     jaccard = len(matched_canonical) / union_size
 
     score = (0.78 * coverage) + (0.22 * jaccard)
-    if _compact_text(claim_text, mode=mode) and _compact_text(claim_text, mode=mode) in _compact_text(evidence_text, mode=mode):
+    if _compact_text(claim_text, mode=token_mode) and _compact_text(claim_text, mode=token_mode) in _compact_text(evidence_text, mode=token_mode):
         score += 0.12
 
     claim_numbers = extract_numbers(claim_text)
@@ -289,17 +291,21 @@ def lexical_score(claim_text: str, evidence_text: str, *, mode: str = "lexical")
         elif evidence_numbers:
             score -= 0.18
 
-    if mode == "semantic":
+    if _semantic_enabled(mode):
         score += _semantic_phrase_bonus(claim_text, evidence_text)
 
-    matched_terms = display_matched_terms(claim_text, evidence_terms, mode=mode)
+    score = round(max(0.0, min(1.0, score)), 3)
+    if _local_ml_enabled(mode):
+        score = local_ml_score_pair(claim_text, evidence_text, lexical_score=score)
+
+    matched_terms = display_matched_terms(claim_text, evidence_terms, mode=token_mode)
     return round(max(0.0, min(1.0, score)), 3), matched_terms
 
 
 def unique_important_tokens(text: str, *, mode: str = "lexical") -> list[str]:
     seen = set()
     tokens: list[str] = []
-    normalized_text = _semantic_text(text) if mode == "semantic" else str(text or "").lower()
+    normalized_text = _semantic_text(text) if _semantic_enabled(mode) else str(text or "").lower()
     for token in TOKEN_RE.findall(normalized_text):
         if token in STOPWORDS:
             continue
@@ -327,13 +333,13 @@ def display_matched_terms(claim_text: str, evidence_terms: set[str], *, mode: st
 
 def canonical_token(token: str, *, mode: str = "lexical") -> str:
     value = token.lower().strip()
-    if mode == "semantic":
+    if _semantic_enabled(mode):
         value = SEMANTIC_TOKEN_MAP.get(value, value)
     if value.endswith("ies") and len(value) > 4:
         return value[:-3] + "y"
-    if mode == "semantic" and value.endswith("ing") and len(value) > 5:
+    if _semantic_enabled(mode) and value.endswith("ing") and len(value) > 5:
         return value[:-3]
-    if mode == "semantic" and value.endswith("ed") and len(value) > 4:
+    if _semantic_enabled(mode) and value.endswith("ed") and len(value) > 4:
         return value[:-2]
     if value.endswith("s") and len(value) > 3 and not value.endswith("ss"):
         return value[:-1]
@@ -380,8 +386,20 @@ def _is_internal_period(text: str, index: int) -> bool:
 
 
 def _compact_text(text: str, *, mode: str = "lexical") -> str:
-    value = _semantic_text(text) if mode == "semantic" else str(text or "").lower()
+    value = _semantic_text(text) if _semantic_enabled(mode) else str(text or "").lower()
     return " ".join(TOKEN_RE.findall(value))
+
+
+def _local_ml_enabled(mode: str) -> bool:
+    return str(mode or "").strip().lower().replace("-", "_") == "local_ml"
+
+
+def _semantic_enabled(mode: str) -> bool:
+    return str(mode or "").strip().lower().replace("-", "_") in {"semantic", "local_ml"}
+
+
+def _token_mode(mode: str) -> str:
+    return "semantic" if _semantic_enabled(mode) else "lexical"
 
 
 SEMANTIC_TOKEN_MAP = {

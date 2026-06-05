@@ -59,6 +59,7 @@ class ClaimVerification:
     reason: str
     citation_status: str = "claim_has_no_citation"
     citation_source_id: str | None = None
+    judge: dict[str, object] | None = None
 
     def with_citation(self, *, status: str, source_id: str | None) -> "ClaimVerification":
         return ClaimVerification(
@@ -84,6 +85,44 @@ class ClaimVerification:
             reason=self.reason,
             citation_status=status,
             citation_source_id=source_id,
+            judge=dict(self.judge) if self.judge else None,
+        )
+
+    def with_judge(
+        self,
+        *,
+        verdict: str,
+        confidence: float,
+        reason: str,
+        matched_facts: list[str],
+        missing_facts: list[str],
+        conflicting_facts: list[str],
+        judge: dict[str, object],
+    ) -> "ClaimVerification":
+        return ClaimVerification(
+            claim_id=self.claim_id,
+            claim=self.claim,
+            verdict=verdict,
+            confidence=confidence,
+            best_context_id=self.best_context_id,
+            best_context_text=self.best_context_text,
+            best_score=self.best_score,
+            evidence=self.evidence,
+            evidence_span=dict(self.evidence_span) if self.evidence_span else None,
+            supporting_spans=[dict(item) for item in self.supporting_spans],
+            matched_terms=list(self.matched_terms),
+            required_facts=list(self.required_facts),
+            matched_facts=list(matched_facts),
+            missing_facts=list(missing_facts),
+            conflicting_facts=list(conflicting_facts),
+            required_fact_details=[dict(item) for item in self.required_fact_details],
+            matched_fact_details=[dict(item) for item in self.matched_fact_details],
+            missing_fact_details=[dict(item) for item in self.missing_fact_details],
+            conflicting_fact_details=[dict(item) for item in self.conflicting_fact_details],
+            reason=reason,
+            citation_status=self.citation_status,
+            citation_source_id=self.citation_source_id,
+            judge=dict(judge),
         )
 
     def to_dict(self) -> dict[str, object]:
@@ -110,6 +149,7 @@ class ClaimVerification:
             "reason": self.reason,
             "citation_status": self.citation_status,
             "citation_source_id": self.citation_source_id,
+            "judge": dict(self.judge) if self.judge else None,
         }
 
 
@@ -121,7 +161,8 @@ def classify_claim(
     mode: str = "lexical",
 ) -> ClaimVerification:
     fact_evidence = match.supporting_text or match.snippet
-    fact_mode = "semantic" if mode == "semantic" else "lexical"
+    normalized_mode = str(mode or "lexical").strip().lower().replace("-", "_")
+    fact_mode = "semantic" if normalized_mode in {"semantic", "local_ml"} else "lexical"
     fact_match = compare_facts(claim.text, fact_evidence, mode=fact_mode)
     contradiction_evidence = _contradiction_evidence_text(claim.text, match)
     contradicted = has_contexts and is_contradicted(claim.text, contradiction_evidence, match.score)
@@ -150,12 +191,18 @@ def classify_claim(
                 _join_facts(fact_match.missing_facts),
             )
         )
-    elif match.score >= SUPPORTED_THRESHOLD:
+    elif match.score >= SUPPORTED_THRESHOLD and normalized_mode != "local_ml":
         verdict = "supported"
         confidence = match.score
         reason = "The claim is supported by %s because the context states: %s" % (
             match.context_id,
             match.snippet,
+        )
+    elif match.score >= SUPPORTED_THRESHOLD and fact_match.coverage >= 0.4:
+        verdict = "partially_supported"
+        confidence = match.score
+        reason = (
+            "The local-ML evidence score is high, but required fact matching is incomplete; inspect the missing facts before treating this as supported."
         )
     elif match.score >= PARTIAL_THRESHOLD and len(match.matched_terms) >= 2:
         verdict = "partially_supported"

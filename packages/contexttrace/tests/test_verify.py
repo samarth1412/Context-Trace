@@ -8,6 +8,7 @@ from contexttrace.verify.benchmark import run_verify_benchmark
 from contexttrace.verify.claims import extract_claims
 from contexttrace.verify.evidence import find_best_evidence
 from contexttrace.verify.facts import compare_facts, extract_required_facts
+from contexttrace.verify.judges import JudgeVerdict
 from contexttrace.verify.report import VerifyReportGenerator
 from contexttrace.verify.schema import (
     RAGTrace,
@@ -18,6 +19,24 @@ from contexttrace.verify.schema import (
     load_trace_file,
 )
 from contexttrace.verify.spans import split_context_spans
+
+
+class StaticJudge:
+    def __init__(self, verdicts):
+        self.verdicts = list(verdicts)
+        self.calls = []
+
+    def verify_claim(self, *, query, claim, contexts):
+        self.calls.append(
+            {
+                "query": query,
+                "claim": claim,
+                "context_ids": [context.id for context in contexts],
+            }
+        )
+        if len(self.verdicts) == 1:
+            return self.verdicts[0]
+        return self.verdicts.pop(0)
 
 
 def test_verify_schema_loads_valid_trace(tmp_path):
@@ -334,6 +353,112 @@ def test_semantic_mode_supports_paraphrased_evidence():
     assert semantic["summary"]["mode"] == "semantic"
 
 
+def test_judge_mode_requires_a_judge_provider(monkeypatch):
+    monkeypatch.setenv("CONTEXTTRACE_JUDGE_PROVIDER", "local")
+    trace = RAGTrace(
+        query="What is the refund policy?",
+        answer="Refunds are allowed within 30 days.",
+        contexts=[
+            TraceContext(
+                id="policy",
+                text="Customers may request refunds within 30 days of purchase.",
+            )
+        ],
+    )
+
+    with pytest.raises(ValueError, match="requires a judge provider"):
+        verify_trace(trace, mode="judge")
+
+
+def test_judge_mode_overrides_heuristic_support_verdict():
+    trace = RAGTrace(
+        query="What is the refund policy?",
+        answer="Refunds are allowed within 30 days.",
+        contexts=[
+            TraceContext(
+                id="policy",
+                text="Customers may request refunds within 30 days of purchase.",
+            )
+        ],
+    )
+    judge = StaticJudge(
+        [
+            JudgeVerdict(
+                verdict="unsupported",
+                confidence=0.91,
+                reason="The evidence says may request, not allowed unconditionally.",
+                missing_facts=["allowed unconditionally"],
+                provider="unit",
+                model="static",
+            )
+        ]
+    )
+
+    result = verify_trace(trace, mode="judge", judge=judge)
+    claim = result["claims"][0]
+
+    assert claim["verdict"] == "unsupported"
+    assert claim["confidence"] == 0.91
+    assert claim["judge"]["provider"] == "unit"
+    assert claim["missing_facts"] == ["allowed unconditionally"]
+    assert result["summary"]["mode"] == "judge"
+    assert result["summary"]["unsupported"] == 1
+    assert judge.calls[0]["context_ids"] == ["policy"]
+
+
+def test_judge_mode_uses_judge_for_cited_source_support():
+    trace = RAGTrace(
+        query="What is the current refund window?",
+        answer="Refunds are allowed within 30 days of purchase.",
+        contexts=[
+            TraceContext(
+                id="policy_2024",
+                text="Customers may exchange eligible items within 14 days.",
+            ),
+            TraceContext(
+                id="policy_2026",
+                text="Customers may request refunds within 30 days of purchase.",
+            ),
+        ],
+        citations=[
+            TraceCitation(
+                claim="Refunds are allowed within 30 days of purchase.",
+                source_id="policy_2024",
+            )
+        ],
+    )
+    judge = StaticJudge(
+        [
+            JudgeVerdict(
+                verdict="supported",
+                confidence=0.98,
+                reason="The retrieved evidence supports the claim.",
+                matched_facts=["Refunds are allowed within 30 days of purchase"],
+                provider="unit",
+                model="static",
+            ),
+            JudgeVerdict(
+                verdict="unsupported",
+                confidence=0.95,
+                reason="The cited source discusses exchanges, not refunds.",
+                missing_facts=["refunds within 30 days"],
+                provider="unit",
+                model="static",
+            ),
+        ]
+    )
+
+    result = verify_trace(trace, mode="judge", judge=judge)
+    claim = result["claims"][0]
+
+    assert claim["verdict"] == "supported"
+    assert claim["citation_status"] == "claim_supported_by_different_source"
+    assert [call["context_ids"] for call in judge.calls] == [
+        ["policy_2024", "policy_2026"],
+        ["policy_2024"],
+    ]
+
+
 def test_citation_mismatch_detection():
     result = verify_trace(
         RAGTrace(
@@ -423,6 +548,39 @@ def test_contradicted_claim_root_cause_is_conflicting_contexts():
     assert claim["verdict"] == "contradicted"
     assert claim["root_cause"]["label"] == "conflicting_contexts"
     assert result["summary"]["primary_root_cause"] == "conflicting_contexts"
+
+
+@pytest.mark.parametrize(
+    ("answer", "context"),
+    [
+        (
+            "The Eiffel Tower is in Berlin.",
+            "The Eiffel Tower is in Paris. Berlin is in Germany.",
+        ),
+        (
+            "Alexander Dumas discovered penicillin.",
+            "Alexander Fleming discovered penicillin. Alexandre Dumas was a novelist.",
+        ),
+        (
+            "A causes B.",
+            "B causes A.",
+        ),
+    ],
+)
+def test_relation_conflicts_are_not_supported_by_token_overlap(answer, context):
+    result = verify_trace(
+        RAGTrace(
+            query="Check the factual relation.",
+            answer=answer,
+            contexts=[TraceContext(id="evidence", text=context)],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "contradicted"
+    assert claim["conflicting_facts"] == [answer.rstrip(".")]
+    assert "contradicted_answer" in result["summary"]["failure_types"]
 
 
 def test_should_abstain_detection_when_contexts_do_not_support_answer():
@@ -558,6 +716,81 @@ def test_verify_cli_fail_on_unsupported_sets_exit_code(tmp_path, capsys):
     assert main(["verify", str(trace_path), "--fail-on", "unsupported"]) == 1
 
     assert "unsupported claim detected" in capsys.readouterr().err
+
+
+def test_verify_cli_accepts_local_ml_mode(tmp_path, capsys, monkeypatch):
+    monkeypatch.delenv("CONTEXTTRACE_LOCAL_ML_MODEL_PATH", raising=False)
+    trace_path = tmp_path / "trace.json"
+    trace_path.write_text(
+        json.dumps(
+            {
+                "query": "Where does ContextTrace store traces?",
+                "answer": "ContextTrace stores traces in .contexttrace/contexttrace.db.",
+                "contexts": [
+                    {
+                        "id": "docs/local-mode.md",
+                        "text": "ContextTrace stores traces in .contexttrace/contexttrace.db.",
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    assert main(["verify", str(trace_path), "--mode", "local_ml", "--json"]) == 0
+
+    output = json.loads(capsys.readouterr().out)
+    assert output["summary"]["mode"] == "local_ml"
+    assert output["claims"][0]["verdict"] == "supported"
+
+
+def test_verify_cli_judge_mode_requires_provider(tmp_path, capsys, monkeypatch):
+    monkeypatch.setenv("CONTEXTTRACE_JUDGE_PROVIDER", "local")
+    trace_path = tmp_path / "trace.json"
+    trace_path.write_text(
+        json.dumps(
+            {
+                "query": "What is the refund policy?",
+                "answer": "Refunds are allowed within 30 days.",
+                "contexts": [
+                    {
+                        "id": "policy",
+                        "text": "Customers may request refunds within 30 days of purchase.",
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    assert main(["verify", str(trace_path), "--mode", "judge"]) == 1
+
+    assert "CONTEXTTRACE_JUDGE_PROVIDER=ollama" in capsys.readouterr().err
+
+
+def test_verify_cli_blocks_remote_judge_when_local_only(tmp_path, capsys, monkeypatch):
+    monkeypatch.setenv("CONTEXTTRACE_JUDGE_PROVIDER", "openai")
+    monkeypatch.setenv("CONTEXTTRACE_JUDGE_API_KEY", "test-key")
+    trace_path = tmp_path / "trace.json"
+    trace_path.write_text(
+        json.dumps(
+            {
+                "query": "What is the refund policy?",
+                "answer": "Refunds are allowed within 30 days.",
+                "contexts": [
+                    {
+                        "id": "policy",
+                        "text": "Customers may request refunds within 30 days of purchase.",
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    assert main(["verify", str(trace_path), "--mode", "judge"]) == 1
+
+    assert "only allows localhost judge URLs" in capsys.readouterr().err
 
 
 def test_verify_demo_fail_on_any_failure(capsys):

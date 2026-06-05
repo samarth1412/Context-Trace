@@ -6,6 +6,24 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-06-04
+
+### Added
+
+- First-class local judge providers for Ollama, LM Studio, vLLM, and local OpenAI-compatible servers.
+- `contexttrace judge-calibrate` for scoring a configured local judge against bundled golden RAG failure cases, including exact-match rate, contradiction recall, citation match, abstention match, and dangerous-miss rate.
+- Local JSON judge cache at `.contexttrace/judge_cache.json` with deterministic claim/context/model/prompt cache keys.
+- Local-only/offline enforcement that blocks remote judge URLs while `local_only: true` is active.
+- Optional `contexttrace[local-ml]` extra and `--mode local_ml` verifier mode with offline hash embeddings by default and local SentenceTransformers model-path support.
+- Role-aware semantic contradiction checks for location, attribution, causal direction, version, number, URL, and negation conflicts.
+- Adversarial verification benchmark cases for local-first privacy, endpoint, numeric, version, and relation mistakes.
+- OpenTelemetry export spans aligned with modern GenAI/OpenInference-style span kinds for retrieval, LLM answers, verification, and agent/tool events.
+
+### Changed
+
+- Judge docs and CLI help now present Ollama/local providers as the default higher-accuracy path, with remote judges explicitly opt-in.
+- `contexttrace init` writes local judge cache settings by default.
+
 ## [0.7.0] - 2026-06-04
 
 ### Added

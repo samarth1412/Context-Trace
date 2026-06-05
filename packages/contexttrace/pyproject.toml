@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "contexttrace"
-version = "0.7.0"
+version = "0.8.0"
 description = "Local-first SDK and CLI for RAG and agent reliability tracing, citation checks, and failure diagnosis."
 readme = "README.md"
 requires-python = ">=3.8"
@@ -61,6 +61,9 @@ llamaindex = [
     "llama-index-core>=0.10",
 ]
 local = []
+local-ml = [
+    "sentence-transformers>=2.7",
+]
 fastapi = [
     "fastapi>=0.110",
 ]
@@ -86,6 +89,7 @@ all = [
     "langgraph>=0.2",
     "llama-index-core>=0.10",
     "opentelemetry-api>=1.24",
+    "sentence-transformers>=2.7",
 ]
 test = [
     "pytest>=8.0",

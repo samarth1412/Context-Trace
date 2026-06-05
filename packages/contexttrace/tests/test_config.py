@@ -18,6 +18,11 @@ ENV_KEYS = (
     "CONTEXTTRACE_LOG_CHUNK_TEXT",
     "CONTEXTTRACE_LOG_ANSWER_TEXT",
     "CONTEXTTRACE_JUDGE_PROVIDER",
+    "CONTEXTTRACE_JUDGE_BASE_URL",
+    "CONTEXTTRACE_JUDGE_API_KEY",
+    "CONTEXTTRACE_JUDGE_MODEL",
+    "CONTEXTTRACE_JUDGE_CACHE",
+    "CONTEXTTRACE_JUDGE_CACHE_PATH",
     "CONTEXTTRACE_EVAL_ENDPOINT",
 )
 
@@ -43,6 +48,11 @@ def test_config_loads_file_env_and_direct_precedence(monkeypatch, tmp_path):
                 "log_chunk_text: false",
                 "log_answer_text: true",
                 "judge_provider: local",
+                "judge_base_url: http://file-judge/v1",
+                "judge_api_key: file_judge_key",
+                "judge_model: file-judge-model",
+                "judge_cache_enabled: false",
+                "judge_cache_path: file-store/judge_cache.json",
                 "eval_endpoint: http://file-rag/query",
             ]
         ),
@@ -73,6 +83,11 @@ def test_config_loads_file_env_and_direct_precedence(monkeypatch, tmp_path):
     assert config.log_chunk_text is False
     assert config.log_answer_text is True
     assert config.judge_provider == "local"
+    assert config.judge_base_url == "http://file-judge/v1"
+    assert config.judge_api_key == "file_judge_key"
+    assert config.judge_model == "file-judge-model"
+    assert config.judge_cache_enabled is False
+    assert config.judge_cache_path == "file-store/judge_cache.json"
     assert config.eval_endpoint == "http://file-rag/query"
 
 
@@ -85,3 +100,9 @@ def test_config_defaults_to_local_sqlite(monkeypatch):
     assert config.mode == "local"
     assert config.local_only is True
     assert Path(config.storage_path) == Path(".contexttrace/contexttrace.db")
+    assert config.judge_provider == "local"
+    assert config.judge_base_url == ""
+    assert config.judge_api_key is None
+    assert config.judge_model == ""
+    assert config.judge_cache_enabled is True
+    assert config.judge_cache_path == ".contexttrace/judge_cache.json"

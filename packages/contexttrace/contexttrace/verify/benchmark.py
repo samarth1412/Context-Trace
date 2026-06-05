@@ -6,6 +6,7 @@ from html import escape
 from pathlib import Path
 from typing import Any
 
+from contexttrace.verify.judges import ClaimJudge
 from contexttrace.verify.runner import verify_trace
 from contexttrace.verify.schema import RAGTrace, load_trace
 
@@ -41,7 +42,12 @@ def benchmark_cases(*, case_set: str = "contexttrace") -> list[VerifyBenchmarkCa
     ]
 
 
-def run_verify_benchmark(*, mode: str = "lexical", case_set: str = "contexttrace") -> dict[str, Any]:
+def run_verify_benchmark(
+    *,
+    mode: str = "lexical",
+    case_set: str = "contexttrace",
+    judge: ClaimJudge | None = None,
+) -> dict[str, Any]:
     rows = []
     labels = set()
     verdict_names = {"supported", "partially_supported", "unsupported", "contradicted", "unverifiable"}
@@ -52,7 +58,7 @@ def run_verify_benchmark(*, mode: str = "lexical", case_set: str = "contexttrace
     abstention_expected = 0
 
     for case in benchmark_cases(case_set=case_set):
-        result = verify_trace(case.trace, mode=mode)
+        result = verify_trace(case.trace, mode=mode, judge=judge)
         predicted = _predicted_labels(result)
         expected_verdict_counts = dict(case.expected_verdict_counts)
         predicted_verdict_counts = {

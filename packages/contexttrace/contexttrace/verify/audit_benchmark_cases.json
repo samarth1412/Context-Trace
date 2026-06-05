@@ -182,7 +182,7 @@
       "source": "docs/privacy.md",
       "note": "Privacy source was retrieved but omitted the no-network span.",
       "query": "Does ContextTrace require network calls in local mode?",
-      "answer": "ContextTrace does not make network calls unless an external judge provider or endpoint is configured.",
+      "answer": "ContextTrace does not make network calls unless a judge provider or endpoint is configured.",
       "retrieved_contexts": [
         {
           "id": "privacy_chunk",
@@ -194,7 +194,7 @@
         {
           "id": "privacy.md",
           "source_url": "https://github.com/samarth1412/Context-Trace",
-          "text": "ContextTrace does not make network calls unless you configure an external judge provider or point it at an endpoint you control."
+          "text": "ContextTrace does not make network calls unless you configure a judge provider or point it at an endpoint you control. Ollama and local OpenAI-compatible judge providers call localhost by default."
         }
       ],
       "expected_label": "chunking_issue"

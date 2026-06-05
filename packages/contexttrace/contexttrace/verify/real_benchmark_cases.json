@@ -209,6 +209,57 @@
       "expected_should_abstain": true
     },
     {
+      "id": "adversarial_entity_swap_location",
+      "source": "adversarial_relation_suite",
+      "note": "Entity swaps across overlapping evidence terms must not be marked supported.",
+      "query": "Where is the Eiffel Tower?",
+      "answer": "The Eiffel Tower is in Berlin.",
+      "contexts": [
+        {
+          "id": "adversarial_relation_location",
+          "source": "adversarial_relation_suite",
+          "text": "The Eiffel Tower is in Paris. Berlin is in Germany."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_should_abstain": true
+    },
+    {
+      "id": "adversarial_entity_swap_discovery",
+      "source": "adversarial_relation_suite",
+      "note": "Wrong subject attribution should be contradicted even when the same entity names appear nearby.",
+      "query": "Who discovered penicillin?",
+      "answer": "Alexander Dumas discovered penicillin.",
+      "contexts": [
+        {
+          "id": "adversarial_relation_discovery",
+          "source": "adversarial_relation_suite",
+          "text": "Alexander Fleming discovered penicillin. Alexandre Dumas was a novelist."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_should_abstain": true
+    },
+    {
+      "id": "adversarial_relation_direction_inversion",
+      "source": "adversarial_relation_suite",
+      "note": "Causal direction must be preserved; token overlap alone is not enough support.",
+      "query": "What causes B?",
+      "answer": "A causes B.",
+      "contexts": [
+        {
+          "id": "adversarial_relation_direction",
+          "source": "adversarial_relation_suite",
+          "text": "B causes A."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_should_abstain": true
+    },
+    {
       "id": "partial_cross_doc_overclaim",
       "source": "docs/integrations/langchain.md + docs/integrations/fastapi.md",
       "note": "A realistic mixed-source answer combines a supported LangChain fact with a FastAPI-only fact not present in retrieved LangChain context.",
@@ -692,6 +743,57 @@
           "id": "release/v0.2.0.md",
           "source": "release/v0.2.0.md",
           "text": "ContextTrace v0.2.0 adds local claim-level evidence verification for portable RAG traces. The release focuses on one core question: is each generated claim actually supported by retrieved evidence?"
+        }
+      ],
+      "expected_labels": ["should_have_abstained", "contradicted_answer"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_should_abstain": true
+    },
+    {
+      "id": "contradicted_llamaindex_external_services",
+      "source": "docs/integrations/llamaindex.md",
+      "note": "Negated local-first integration claim should not pass because of shared tokens.",
+      "query": "Does the LlamaIndex example require external services?",
+      "answer": "The LlamaIndex example uses external services.",
+      "contexts": [
+        {
+          "id": "docs/integrations/llamaindex.md",
+          "source": "docs/integrations/llamaindex.md",
+          "text": "Runnable Example: python examples/llamaindex_rag.py. The example uses mock nodes and local mode so it runs without external services."
+        }
+      ],
+      "expected_labels": ["should_have_abstained", "contradicted_answer"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_should_abstain": true
+    },
+    {
+      "id": "contradicted_default_retries",
+      "source": "contexttrace.yaml defaults",
+      "note": "Numeric config conflicts should be contradicted, not accepted via token overlap.",
+      "query": "What is the default retry count?",
+      "answer": "The default retry count is 5.",
+      "contexts": [
+        {
+          "id": "config_defaults",
+          "source": "contexttrace.yaml",
+          "text": "retries: 2 is the default config value."
+        }
+      ],
+      "expected_labels": ["should_have_abstained", "contradicted_answer"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_should_abstain": true
+    },
+    {
+      "id": "contradicted_viewer_port",
+      "source": "README.md#reports",
+      "note": "Wrong local viewer endpoint should be caught as a URL/number conflict.",
+      "query": "Where does the local viewer serve pages?",
+      "answer": "The local viewer serves pages at http://localhost:3000.",
+      "contexts": [
+        {
+          "id": "README.md#reports",
+          "source": "README.md",
+          "text": "The local viewer reads from .contexttrace/contexttrace.db and serves pages at: http://localhost:8765."
         }
       ],
       "expected_labels": ["should_have_abstained", "contradicted_answer"],

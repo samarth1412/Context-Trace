@@ -14,6 +14,14 @@ NUMBER_UNIT_RE = re.compile(
     r"\b\d+(?:\.\d+)?\s+(?:business\s+days?|days?|weeks?|months?|years?|ms|usd|dollars?)\b",
     re.IGNORECASE,
 )
+LOCATION_RELATION_RE = re.compile(
+    r"^(?P<subject>.+?)\s+(?:is|are|was|were)\s+(?P<predicate>in|at|inside|near|from|based in|located in)\s+(?P<object>.+)$",
+    re.IGNORECASE,
+)
+ACTIVE_RELATION_RE = re.compile(
+    r"^(?P<subject>.+?)\s+(?P<predicate>causes?|caused|leads to|results in|produces?|prevents?|requires?|discovered|discovers?|founded|created|creates|wrote|writes)\s+(?P<object>.+)$",
+    re.IGNORECASE,
+)
 NEGATION_RE = re.compile(r"\b(?:no|not|never|without|cannot|can't|prohibited|forbidden|disallowed)\b", re.IGNORECASE)
 WHITESPACE_RE = re.compile(r"\s+")
 LIST_VERB_RE = re.compile(
@@ -79,6 +87,13 @@ class RequiredFact:
 
 
 @dataclass(frozen=True)
+class RelationFact:
+    subject: str
+    predicate: str
+    object: str
+
+
+@dataclass(frozen=True)
 class FactMatch:
     required_facts: list[str]
     matched_facts: list[str]
@@ -140,6 +155,9 @@ def compare_facts(claim_text: str, evidence_text: str, *, mode: str = "lexical")
     numeric_conflict = _numeric_conflict(claim_text, evidence_text, mode=mode)
     if numeric_conflict is not None:
         conflicting_details.append(numeric_conflict)
+    relation_conflict = _relation_conflict(claim_text, evidence_text, mode=mode)
+    if relation_conflict is not None:
+        conflicting_details.append(relation_conflict)
 
     return FactMatch(
         required_facts=[fact.text for fact in required_details],
@@ -180,24 +198,36 @@ def _list_facts(claim: str) -> list[RequiredFact]:
 
 
 def _fact_supported(fact: str, evidence_text: str, *, mode: str) -> bool:
-    if _missing_exact_terms(fact, evidence_text):
+    relation = _extract_relation(fact)
+    units = _evidence_units(evidence_text)
+    if relation is not None and _any_relation_conflict(relation, units, mode=mode):
+        return False
+    if any(_fact_supported_by_unit(fact, unit, mode=mode) for unit in units):
+        return True
+    if relation is not None:
+        return False
+    return _fact_supported_by_unit(fact, evidence_text, mode=mode)
+
+
+def _fact_supported_by_unit(fact: str, evidence_unit: str, *, mode: str) -> bool:
+    if _missing_exact_terms(fact, evidence_unit):
         return False
 
     fact_tokens = _important_tokens(fact, mode=mode)
     if not fact_tokens:
         return False
-    evidence_tokens = set(_important_tokens(evidence_text, mode=mode))
+    evidence_tokens = set(_important_tokens(evidence_unit, mode=mode))
     matched = [token for token in fact_tokens if token in evidence_tokens]
     coverage = len(matched) / len(fact_tokens)
     if coverage >= 0.72:
         return True
 
     compact_fact = _compact(fact, mode=mode)
-    compact_evidence = _compact(evidence_text, mode=mode)
+    compact_evidence = _compact(evidence_unit, mode=mode)
     if compact_fact and compact_fact in compact_evidence:
         return True
 
-    if _list_item_supported(fact, evidence_text, evidence_tokens, mode=mode):
+    if _list_item_supported(fact, evidence_unit, evidence_tokens, mode=mode):
         return True
 
     return len(matched) >= 2 and coverage >= 0.62
@@ -313,6 +343,129 @@ def _numeric_conflict(claim_text: str, evidence_text: str, *, mode: str) -> Requ
     if claim_numbers.isdisjoint(evidence_numbers) and _anchor_overlap(claim_text, evidence_text, mode=mode) >= 0.65:
         return RequiredFact(text=", ".join(sorted(claim_numbers)), type="numeric")
     return None
+
+
+def _relation_conflict(claim_text: str, evidence_text: str, *, mode: str) -> RequiredFact | None:
+    relation = _extract_relation(claim_text)
+    if relation is None:
+        return None
+    if _any_relation_conflict(relation, _evidence_units(evidence_text), mode=mode):
+        return RequiredFact(text=_clean(claim_text).rstrip(".!?"), type="relation")
+    return None
+
+
+def _any_relation_conflict(
+    claim_relation: RelationFact,
+    evidence_units: list[str],
+    *,
+    mode: str,
+) -> bool:
+    return any(
+        _relations_conflict(claim_relation, evidence_relation, mode=mode)
+        for unit in evidence_units
+        for evidence_relation in [_extract_relation(unit)]
+        if evidence_relation is not None
+    )
+
+
+def _relations_conflict(claim: RelationFact, evidence: RelationFact, *, mode: str) -> bool:
+    if claim.predicate != evidence.predicate:
+        return False
+
+    subject_overlap = _bidirectional_phrase_overlap(claim.subject, evidence.subject, mode=mode)
+    object_overlap = _bidirectional_phrase_overlap(claim.object, evidence.object, mode=mode)
+    reversed_subject_overlap = _bidirectional_phrase_overlap(claim.subject, evidence.object, mode=mode)
+    reversed_object_overlap = _bidirectional_phrase_overlap(claim.object, evidence.subject, mode=mode)
+
+    if reversed_subject_overlap >= 0.72 and reversed_object_overlap >= 0.72:
+        return True
+    if subject_overlap >= 0.72 and object_overlap < 0.50:
+        return True
+    if object_overlap >= 0.72 and subject_overlap < 0.72:
+        return True
+    return False
+
+
+def _extract_relation(text: str) -> RelationFact | None:
+    value = _clean(text).rstrip(".!?")
+    for pattern in (LOCATION_RELATION_RE, ACTIVE_RELATION_RE):
+        match = pattern.match(value)
+        if match:
+            return RelationFact(
+                subject=_clean_relation_phrase(match.group("subject")),
+                predicate=_canonical_relation_predicate(match.group("predicate")),
+                object=_clean_relation_phrase(match.group("object")),
+            )
+    return None
+
+
+def _canonical_relation_predicate(value: str) -> str:
+    normalized = _clean(value).lower()
+    if normalized in {"is in", "are in", "was in", "were in", "located in", "based in", "inside"}:
+        return "in"
+    if normalized in {"causes", "caused"}:
+        return "cause"
+    if normalized == "leads to":
+        return "cause"
+    if normalized == "results in":
+        return "cause"
+    if normalized in {"produces", "produce"}:
+        return "produce"
+    if normalized in {"prevents", "prevent"}:
+        return "prevent"
+    if normalized in {"requires", "require"}:
+        return "require"
+    if normalized in {"discovers", "discovered"}:
+        return "discover"
+    if normalized == "founded":
+        return "found"
+    if normalized in {"created", "creates"}:
+        return "create"
+    if normalized in {"wrote", "writes"}:
+        return "write"
+    return normalized
+
+
+def _clean_relation_phrase(value: str) -> str:
+    cleaned = _clean(value).strip(" ,;:")
+    words = cleaned.split()
+    while len(words) > 1 and words[0].lower() in {"the", "a", "an"}:
+        words = words[1:]
+    return " ".join(words)
+
+
+def _bidirectional_phrase_overlap(left: str, right: str, *, mode: str) -> float:
+    return max(
+        _phrase_overlap(left, right, mode=mode),
+        _phrase_overlap(right, left, mode=mode),
+    )
+
+
+def _phrase_overlap(left: str, right: str, *, mode: str) -> float:
+    left_tokens = _relation_tokens(left, mode=mode)
+    right_tokens = set(_relation_tokens(right, mode=mode))
+    if not left_tokens:
+        return 0.0
+    return len([token for token in left_tokens if token in right_tokens]) / len(left_tokens)
+
+
+def _relation_tokens(text: str, *, mode: str) -> list[str]:
+    raw_tokens = [
+        token.strip("._-/").lower()
+        for token in TOKEN_RE.findall(_semantic_text(text) if mode == "semantic" else str(text or "").lower())
+    ]
+    output: list[str] = []
+    seen = set()
+    for token in raw_tokens:
+        if not token:
+            continue
+        if len(raw_tokens) > 1 and token in {"the", "a", "an"}:
+            continue
+        canonical = _canonical_token(token, mode=mode)
+        if canonical and canonical not in seen:
+            seen.add(canonical)
+            output.append(canonical)
+    return output
 
 
 def _anchor_overlap(claim_text: str, evidence_text: str, *, mode: str) -> float:

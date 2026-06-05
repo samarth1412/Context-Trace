@@ -7,33 +7,22 @@
 
 **Local-first evidence-chain debugging for RAG and AI agents.**
 
-ContextTrace helps developers find where a generated answer stopped being grounded in retrieved evidence. It is not a hosted dashboard and it is not a generic observability platform. It is a local SDK and CLI for inspecting the path from query to retrieved context to answer claims, citations, verdicts, and root causes.
+ContextTrace shows where an answer stopped being grounded:
 
 ```text
-query -> retrieved contexts -> answer -> claims -> evidence verdicts -> root cause
+query -> retrieved context -> answer claims -> citations -> verdicts -> root cause
 ```
 
-## Why It Exists
-
-RAG answers can look correct while still being unsupported:
-
-- the retriever misses the source that answers the question
-- the generator adds facts that are not in the context
-- citations point to sources that do not support the claim
-- stale or conflicting documents leak into the answer
-- the system should have abstained but answered anyway
-
-ContextTrace turns those failures into local JSON and HTML reports that say what broke and what to fix.
+It is a Python SDK and CLI, not a hosted dashboard. Traces, reports, judge cache, and SQLite state stay local by default.
 
 ## Install
 
 ```bash
 pip install contexttrace
-contexttrace --version
 contexttrace init
 ```
 
-For the latest unreleased features from this repository:
+Install from source for unreleased changes:
 
 ```bash
 git clone https://github.com/samarth1412/Context-Trace.git
@@ -43,42 +32,21 @@ pip install -e packages/contexttrace
 
 ## Quickstart
 
-Run a bundled claim-level verification demo:
-
 ```bash
 contexttrace verify-demo unsupported_claim --report
-```
-
-Run the local SDK demo and open a report:
-
-```bash
-contexttrace init
 contexttrace demo --dataset refund_policy
 contexttrace report --last --open
 ```
 
-By default, ContextTrace stores data locally in:
+Default local storage:
 
 ```text
 .contexttrace/contexttrace.db
 ```
 
-## Core Workflows
+## Verify A RAG Trace
 
-### 1. Verify Claim-Level Evidence
-
-Use `verify` when you already have a portable RAG artifact with a query, answer, retrieved contexts, and optional citations.
-
-```bash
-contexttrace verify trace.json
-contexttrace inspect trace.json
-contexttrace qa trace.json --corpus docs/ --report
-contexttrace verify trace.json --json
-contexttrace verify trace.json --report
-contexttrace verify trace.json --fail-on unsupported --fail-on citation_mismatch
-```
-
-Minimal input:
+Create a portable trace with a query, answer, retrieved contexts, and optional citations:
 
 ```json
 {
@@ -86,127 +54,77 @@ Minimal input:
   "answer": "Refunds are processed within 5 business days.",
   "contexts": [
     {
-      "id": "policy_2026",
+      "id": "policy",
       "text": "Customers may request refunds within 30 days of purchase."
     }
   ]
 }
 ```
 
-ContextTrace splits the answer into claims and classifies each claim as:
-
-- `supported`
-- `partially_supported`
-- `unsupported`
-- `unverifiable`
-- `contradicted`
-
-Use `inspect` before verification when you want to check trace shape, extracted claims, duplicate context IDs, citation references, and suggested next commands without running evidence scoring.
-
-Use `qa` when you want the full local evidence workflow in one command: inspect, verify, optional corpus audit, risk summary, and prioritized next actions.
-
-Capture RAG artifacts directly from common document objects:
-
-```python
-from contexttrace import capture_rag_trace, write_rag_trace
-
-trace = capture_rag_trace(
-    query=question,
-    answer=answer,
-    contexts=retrieved_docs,  # dicts or LangChain-style Documents
-    metadata={"system": "my-rag-app"},
-)
-write_rag_trace(trace, "trace.json")
-```
-
-It also checks citation status:
-
-- `citation_ok`
-- `cited_source_missing`
-- `cited_source_does_not_support_claim`
-- `claim_supported_by_different_source`
-- `claim_has_no_citation`
-
-### 2. Compare Two Verification Runs
-
-Use `compare` when you want to know whether a prompt, retriever, chunking, or model change made grounding worse.
+Run local evidence checks:
 
 ```bash
-contexttrace compare baseline.json current.json
-contexttrace compare baseline.json current.json --json
-contexttrace compare baseline.json current.json --report
-contexttrace compare baseline.json current.json --fail-on new_failure
+contexttrace inspect trace.json
+contexttrace verify trace.json --report
+contexttrace qa trace.json --corpus docs/ --report
 ```
 
-Run the bundled source-checkout example:
+ContextTrace classifies each claim as `supported`, `partially_supported`, `unsupported`, `unverifiable`, or `contradicted`, then explains the likely fix.
+
+## Local Verification Modes
+
+| Mode | Use When |
+| --- | --- |
+| `lexical` | Fast default checks with no optional dependencies. |
+| `semantic` | Local paraphrase and role-aware contradiction checks. |
+| `local_ml` | Offline hash-embedding similarity, optionally backed by a local SentenceTransformers model. |
+| `judge` | Higher-accuracy local LLM judging through Ollama, LM Studio, vLLM, or a local OpenAI-compatible server. |
+
+Run the stronger local non-LLM verifier:
 
 ```bash
-contexttrace compare examples/verify/compare_baseline.json examples/verify/compare_current_regression.json --report
+contexttrace verify trace.json --mode local_ml --report
+contexttrace verify-benchmark --mode local_ml --case-set all
 ```
 
-The comparison report shows support-rate deltas, new unsupported claims, citation regressions, resolved failures, and new root causes.
-
-### 3. RAG Regression Suites
-
-Use `suite` when you want to turn saved RAG failures into repeatable local regression tests. A suite case stores the original trace and replays the same query against your current endpoint. The run passes only when the current answer passes evidence QA and does not introduce claim-level regressions.
+Optional neural local-ML support never downloads models automatically:
 
 ```bash
-contexttrace suite create examples/suite/refund_processing_failure.json \
-  --name refund-suite \
-  --out .contexttrace/suites/refund-suite.json
-
-contexttrace suite run .contexttrace/suites/refund-suite.json \
-  --endpoint http://localhost:8000/query \
-  --report
-
-contexttrace suite add .contexttrace/suites/refund-suite.json traces/new_failure.json
-contexttrace suite list .contexttrace/suites/refund-suite.json
-contexttrace suite remove .contexttrace/suites/refund-suite.json old_case_id
-contexttrace suite report .contexttrace/suites/refund-suite_results.json
+pip install "contexttrace[local-ml]"
+set CONTEXTTRACE_LOCAL_ML_MODEL_PATH=C:\models\bge-small-en-v1.5
 ```
 
-This is the local CI workflow for RAG fixes: capture the failure, fix retrieval or generation, replay the case, and keep it in the suite so the issue does not come back.
-
-A GitHub Actions starter workflow is available at `examples/contexttrace-suite-ci.yml`.
-
-### 4. Audit Retrieval Failures
-
-Use `audit` when a claim failed and you want to know whether the evidence existed elsewhere in the corpus. The audit output includes a failure stage, evidence status, diagnostic signals, and prioritized next actions so you can tell whether the fix belongs in retrieval, reranking, chunking, generation, corpus coverage, or source freshness.
+Run a local judge with Ollama:
 
 ```bash
-contexttrace audit trace.json --corpus docs/
-contexttrace audit trace.json --corpus docs/ --json
+set CONTEXTTRACE_JUDGE_PROVIDER=ollama
+set CONTEXTTRACE_JUDGE_MODEL=llama3.1
+
+contexttrace verify trace.json --mode judge --report
+contexttrace judge-calibrate --case-set all --report
+```
+
+Remote judges are blocked while `local_only: true` is active. To use a remote judge, explicitly disable local-only mode and configure the provider/API key.
+
+## Diagnose And Regression-Test
+
+```bash
+# Find whether support existed elsewhere in the corpus.
 contexttrace audit trace.json --corpus docs/ --report
-contexttrace audit trace.json --corpus docs/ --fail-on retrieval_miss
+
+# Compare a baseline and current answer after a prompt, model, or retriever change.
+contexttrace compare baseline.json current.json --report
+
+# Turn saved failures into replayable endpoint tests.
+contexttrace suite create traces/failure.json --out contexttrace-suite.json
+contexttrace suite run contexttrace-suite.json --endpoint http://localhost:8000/query --report
 ```
 
-Run the bundled source-checkout example:
+Common root causes include `retrieval_miss`, `reranking_failure`, `chunking_issue`, `corpus_gap`, `answer_overreach`, `stale_source`, `citation_mismatch`, and `should_have_abstained`.
 
-```bash
-contexttrace audit examples/audit/retrieval_miss_trace.json --corpus examples/audit/corpus --report
-```
+## Capture Existing Systems
 
-Check the audit labels against bundled public-source OSS cases:
-
-```bash
-contexttrace audit-benchmark --case-set real --mode semantic --report
-```
-
-Audit labels:
-
-- `retrieval_miss`: supporting evidence exists in the corpus but was not retrieved
-- `reranking_failure`: a related source was retrieved too low in the context list
-- `chunking_issue`: a retrieved source is related, but the chunk omitted the supporting span
-- `corpus_gap`: neither retrieved contexts nor the broader corpus support the claim
-- `answer_overreach`: evidence supports part of the claim, but the answer added unsupported detail
-- `stale_source`: retrieved or corpus evidence conflicts with the answer
-- `insufficient_context`: available evidence is related but too weak or ambiguous
-
-`audit` is available in ContextTrace v0.5.0 and later.
-
-### 5. Evaluate An Existing RAG Endpoint
-
-Use `capture endpoint` when you want to inspect one live response from a running RAG API and save it as portable `contexttrace verify` JSON:
+Capture one live endpoint response:
 
 ```bash
 contexttrace capture endpoint \
@@ -220,53 +138,21 @@ contexttrace capture endpoint \
   --report
 ```
 
-If you already saved the RAG response JSON from logs or a failing run:
+Or capture artifacts from Python:
 
-```bash
-contexttrace capture response response.json \
-  --query "What is the refund policy?" \
-  --answer-path $.answer \
-  --contexts-path $.contexts \
-  --out traces/refund_trace.json \
-  --verify \
-  --report
+```python
+from contexttrace import capture_rag_trace, write_rag_trace
+
+trace = capture_rag_trace(
+    query=question,
+    answer=answer,
+    contexts=retrieved_docs,
+    metadata={"system": "support-rag"},
+)
+write_rag_trace(trace, "trace.json")
 ```
 
-Use `eval` when you want ContextTrace to call your RAG API across a dataset and create local traces:
-
-```bash
-contexttrace eval \
-  --dataset evals/questions.json \
-  --endpoint http://localhost:8000/query \
-  --method POST \
-  --input-key question \
-  --answer-path $.answer \
-  --contexts-path $.contexts \
-  --citations-path $.citations \
-  --fail-on "failure_rate>0.25"
-```
-
-Expected endpoint shape:
-
-```json
-{
-  "answer": "Refunds are available within 30 days.",
-  "contexts": [
-    {
-      "id": "refund_policy_1",
-      "text": "Customers may request a refund within 30 days of purchase."
-    }
-  ],
-  "citations": [
-    {
-      "claim": "Refunds are available within 30 days.",
-      "source_id": "refund_policy_1"
-    }
-  ]
-}
-```
-
-### 6. Instrument With The SDK
+## SDK Example
 
 ```python
 from contexttrace import ContextTrace
@@ -288,42 +174,7 @@ with ct.trace(query="What is the refund policy?") as trace:
     print(result["failure"]["failure_type"])
 ```
 
-## What ContextTrace Catches
-
-| Failure | What It Means |
-| --- | --- |
-| `unsupported_answer` | The answer contains a claim no retrieved context supports. |
-| `citation_mismatch` | The cited source does not support the cited claim. |
-| `should_have_abstained` | The answer gives a factual response when context is insufficient. |
-| `retrieval_miss` | Supporting evidence exists in the corpus but was not retrieved. |
-| `answer_overreach` | Retrieved context supports part of the answer, but the model added unsupported detail. |
-| `conflicting_sources` | Retrieved sources conflict with the generated claim. |
-
-## Reports
-
-ContextTrace writes self-contained local HTML reports. No CDN, hosted dashboard, or external service is required.
-
-```bash
-contexttrace verify-demo unsupported_claim --report --out reports/verify.html
-contexttrace compare examples/verify/compare_baseline.json examples/verify/compare_current_regression.json --report
-contexttrace viewer
-```
-
-The local viewer reads from `.contexttrace/contexttrace.db` and serves pages at:
-
-```text
-http://localhost:8765
-```
-
 ## Integrations
-
-- LangChain callback handler
-- LlamaIndex callback handler
-- FastAPI middleware and endpoint evaluation
-- LangGraph beta tracer
-- OpenTelemetry export
-
-Install optional integrations:
 
 ```bash
 pip install "contexttrace[langchain]"
@@ -334,44 +185,26 @@ pip install "contexttrace[otel]"
 pip install "contexttrace[all]"
 ```
 
+Includes LangChain, LlamaIndex, FastAPI, LangGraph, and OpenTelemetry hooks.
+
 ## Privacy
 
-Local mode is the default. ContextTrace does not require a hosted dashboard and does not make network calls unless you configure an external judge provider or point it at an endpoint you control.
-
-Privacy controls include:
+ContextTrace makes no network calls unless you point it at an endpoint or configure a judge provider. Local controls include:
 
 - `local_only: true`
 - `log_chunk_text: false`
 - `log_answer_text: false`
-- custom `storage_path`
+- `storage_path`
+- `judge_cache_enabled: true`
+- `judge_cache_path: .contexttrace/judge_cache.json`
 
-## Limitations
+## Limits
 
-- ContextTrace is diagnostic, not a guarantee of correctness.
-- Current verification uses local lexical heuristics by default.
-- Semantic mode uses local normalization, not embeddings or LLM reasoning.
-- Contradiction detection is conservative.
-- Claim extraction is rule-based.
-- Human review is still required for high-stakes domains.
-
-## Repository Layout
-
-```text
-packages/contexttrace   Python SDK, CLI, integrations, local SQLite store
-apps/api                Optional FastAPI API mode
-datasets/demo           Demo datasets
-benchmarks              Benchmark helpers
-docs                    Documentation and release assets
-examples                SDK, endpoint, verify, compare, and audit examples
-```
+ContextTrace is a diagnostic tool, not a correctness proof. Claim extraction is rule-based, contradiction detection is conservative, and high-stakes outputs still need human review.
 
 ## Links
 
-- GitHub: https://github.com/samarth1412/Context-Trace
 - PyPI: https://pypi.org/project/contexttrace/
+- Docs: [docs](docs)
 - Issues: https://github.com/samarth1412/Context-Trace/issues
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md). Security reports should follow [SECURITY.md](SECURITY.md).

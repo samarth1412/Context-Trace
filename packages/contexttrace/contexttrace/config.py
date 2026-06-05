@@ -32,6 +32,11 @@ class ContextTraceConfig:
     log_answer_text: bool = True
     eval_endpoint: Optional[str] = None
     judge_provider: str = "local"
+    judge_base_url: str = ""
+    judge_api_key: Optional[str] = None
+    judge_model: str = ""
+    judge_cache_enabled: bool = True
+    judge_cache_path: str = ".contexttrace/judge_cache.json"
 
 
 def load_config(
@@ -51,6 +56,11 @@ def load_config(
     log_answer_text: Optional[bool] = None,
     eval_endpoint: Optional[str] = None,
     judge_provider: Optional[str] = None,
+    judge_base_url: Optional[str] = None,
+    judge_api_key: Optional[str] = None,
+    judge_model: Optional[str] = None,
+    judge_cache_enabled: Optional[bool] = None,
+    judge_cache_path: Optional[str] = None,
     config_path: Optional[str] = None,
 ) -> ContextTraceConfig:
     file_values = _read_config_file(config_path)
@@ -170,6 +180,43 @@ def load_config(
                 "local",
             )
         ),
+        judge_base_url=str(
+            _first(
+                judge_base_url,
+                os.getenv("CONTEXTTRACE_JUDGE_BASE_URL"),
+                file_values.get("judge_base_url"),
+                "",
+            )
+        ),
+        judge_api_key=_first(
+            judge_api_key,
+            os.getenv("CONTEXTTRACE_JUDGE_API_KEY"),
+            file_values.get("judge_api_key"),
+        ),
+        judge_model=str(
+            _first(
+                judge_model,
+                os.getenv("CONTEXTTRACE_JUDGE_MODEL"),
+                file_values.get("judge_model"),
+                "",
+            )
+        ),
+        judge_cache_enabled=_as_bool(
+            _first(
+                judge_cache_enabled,
+                os.getenv("CONTEXTTRACE_JUDGE_CACHE"),
+                file_values.get("judge_cache_enabled"),
+                True,
+            )
+        ),
+        judge_cache_path=str(
+            _first(
+                judge_cache_path,
+                os.getenv("CONTEXTTRACE_JUDGE_CACHE_PATH"),
+                file_values.get("judge_cache_path"),
+                ".contexttrace/judge_cache.json",
+            )
+        ),
     )
 
     if resolved.mode not in {"hosted", "local"}:
@@ -192,6 +239,11 @@ def write_default_config(path: str = CONFIG_FILE, *, overwrite: bool = False) ->
                 "log_chunk_text: true",
                 "log_answer_text: true",
                 "judge_provider: local",
+                "judge_base_url: ''",
+                "judge_api_key: ''",
+                "judge_model: ''",
+                "judge_cache_enabled: true",
+                "judge_cache_path: .contexttrace/judge_cache.json",
                 "api_key: ''",
                 "base_url: ''",
                 "timeout: 30",

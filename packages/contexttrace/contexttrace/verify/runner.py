@@ -7,10 +7,15 @@ from contexttrace.verify.abstention import judge_abstention
 from contexttrace.verify.citations import (
     CITATION_OK,
     CLAIM_HAS_NO_CITATION,
+    CLAIM_SUPPORTED_BY_DIFFERENT_SOURCE,
+    CITED_SOURCE_DOES_NOT_SUPPORT,
+    CITED_SOURCE_MISSING,
     attach_citation_statuses,
+    find_citation_for_claim,
 )
 from contexttrace.verify.claims import extract_claims
 from contexttrace.verify.evidence import find_best_evidence
+from contexttrace.verify.judges import ClaimJudge, JudgeVerdict, build_judge_provider
 from contexttrace.verify.root_cause import (
     attach_root_causes,
     primary_root_cause,
@@ -20,27 +25,44 @@ from contexttrace.verify.schema import RAGTrace, load_trace_file
 from contexttrace.verify.verdicts import classify_claim
 
 
-def verify_trace_file(path: str | Path, *, mode: str = "lexical") -> dict[str, Any]:
-    return verify_trace(load_trace_file(path), mode=mode)
+def verify_trace_file(
+    path: str | Path,
+    *,
+    mode: str = "lexical",
+    judge: ClaimJudge | None = None,
+) -> dict[str, Any]:
+    return verify_trace(load_trace_file(path), mode=mode, judge=judge)
 
 
-def verify_trace(trace: RAGTrace, *, mode: str = "lexical") -> dict[str, Any]:
+def verify_trace(
+    trace: RAGTrace,
+    *,
+    mode: str = "lexical",
+    judge: ClaimJudge | None = None,
+) -> dict[str, Any]:
     mode = _normalize_mode(mode)
+    evidence_mode = _evidence_mode(mode)
+    judge = _resolve_judge(mode=mode, judge=judge)
     claims = extract_claims(trace.answer)
     verifications = []
     for claim in claims:
-        match = find_best_evidence(claim.text, trace.contexts, mode=mode)
+        match = find_best_evidence(claim.text, trace.contexts, mode=evidence_mode)
         verifications.append(
-            classify_claim(claim, match, has_contexts=bool(trace.contexts), mode=mode)
+            classify_claim(claim, match, has_contexts=bool(trace.contexts), mode=evidence_mode)
         )
 
-    verifications = attach_citation_statuses(claims, verifications, trace, mode=mode)
+    if judge is not None:
+        verifications = _apply_judge_verdicts(trace, claims, verifications, judge)
+
+    verifications = attach_citation_statuses(claims, verifications, trace, mode=evidence_mode)
+    if judge is not None:
+        verifications = _apply_judge_citation_statuses(trace, claims, verifications, judge, mode=evidence_mode)
     abstention = judge_abstention(
         query=trace.query,
         claims=claims,
         contexts=trace.contexts,
         verifications=verifications,
-        mode=mode,
+        mode=evidence_mode,
     )
     claim_results = attach_root_causes(
         [verification.to_dict() for verification in verifications],
@@ -70,10 +92,96 @@ def verify_trace(trace: RAGTrace, *, mode: str = "lexical") -> dict[str, Any]:
 
 
 def _normalize_mode(mode: str) -> str:
-    normalized = str(mode or "lexical").strip().lower()
-    if normalized not in {"lexical", "semantic"}:
-        raise ValueError("Verification mode must be lexical or semantic.")
+    normalized = str(mode or "lexical").strip().lower().replace("-", "_")
+    if normalized not in {"lexical", "semantic", "local_ml", "judge"}:
+        raise ValueError("Verification mode must be lexical, semantic, local_ml, or judge.")
     return normalized
+
+
+def _evidence_mode(mode: str) -> str:
+    return "semantic" if mode == "judge" else mode
+
+
+def _resolve_judge(*, mode: str, judge: ClaimJudge | None) -> ClaimJudge | None:
+    if mode != "judge":
+        return None
+    resolved = judge or build_judge_provider()
+    if resolved is None:
+        raise ValueError(
+            "mode='judge' requires a judge provider. Pass judge=..., set "
+            "CONTEXTTRACE_JUDGE_PROVIDER=ollama for local judging, or use mode='semantic'."
+        )
+    return resolved
+
+
+def _apply_judge_verdicts(
+    trace: RAGTrace,
+    claims: list[Any],
+    verifications: list[Any],
+    judge: ClaimJudge,
+) -> list[Any]:
+    updated = []
+    for claim, verification in zip(claims, verifications):
+        verdict = judge.verify_claim(
+            query=trace.query,
+            claim=claim.text,
+            contexts=trace.contexts,
+        )
+        updated.append(_verification_with_judge(verification, verdict))
+    return updated
+
+
+def _apply_judge_citation_statuses(
+    trace: RAGTrace,
+    claims: list[Any],
+    verifications: list[Any],
+    judge: ClaimJudge,
+    *,
+    mode: str,
+) -> list[Any]:
+    contexts_by_id = {context.id: context for context in trace.contexts}
+    updated = []
+    for claim, verification in zip(claims, verifications):
+        citation = find_citation_for_claim(claim.text, trace.citations, mode=mode)
+        if citation is None:
+            updated.append(verification.with_citation(status=CLAIM_HAS_NO_CITATION, source_id=None))
+            continue
+        cited_context = contexts_by_id.get(citation.source_id)
+        if cited_context is None:
+            updated.append(verification.with_citation(status=CITED_SOURCE_MISSING, source_id=citation.source_id))
+            continue
+
+        cited_verdict = judge.verify_claim(
+            query=trace.query,
+            claim=claim.text,
+            contexts=[cited_context],
+        )
+        if cited_verdict.verdict == "supported":
+            status = CITATION_OK
+        elif verification.verdict == "supported" and verification.best_context_id != citation.source_id:
+            status = CLAIM_SUPPORTED_BY_DIFFERENT_SOURCE
+        else:
+            status = CITED_SOURCE_DOES_NOT_SUPPORT
+        updated.append(verification.with_citation(status=status, source_id=citation.source_id))
+    return updated
+
+
+def _verification_with_judge(verification: Any, verdict: JudgeVerdict) -> Any:
+    return verification.with_judge(
+        verdict=verdict.verdict,
+        confidence=verdict.confidence,
+        reason="Judge verdict: %s" % verdict.reason,
+        matched_facts=verdict.matched_facts or list(verification.matched_facts),
+        missing_facts=verdict.missing_facts or ([] if verdict.verdict == "supported" else list(verification.missing_facts)),
+        conflicting_facts=verdict.conflicting_facts or ([] if verdict.verdict != "contradicted" else list(verification.conflicting_facts)),
+        judge={
+            "provider": verdict.provider,
+            "model": verdict.model,
+            "verdict": verdict.verdict,
+            "confidence": verdict.confidence,
+            "reason": verdict.reason,
+        },
+    )
 
 
 def _summary(verifications: list[Any], abstention: dict[str, object]) -> dict[str, object]:
