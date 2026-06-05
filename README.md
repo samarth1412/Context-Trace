@@ -146,7 +146,30 @@ contexttrace compare examples/verify/compare_baseline.json examples/verify/compa
 
 The comparison report shows support-rate deltas, new unsupported claims, citation regressions, resolved failures, and new root causes.
 
-### 3. Audit Retrieval Failures
+### 3. RAG Regression Suites
+
+Use `suite` when you want to turn saved RAG failures into repeatable local regression tests. A suite case stores the original trace and replays the same query against your current endpoint. The run passes only when the current answer passes evidence QA and does not introduce claim-level regressions.
+
+```bash
+contexttrace suite create examples/suite/refund_processing_failure.json \
+  --name refund-suite \
+  --out .contexttrace/suites/refund-suite.json
+
+contexttrace suite run .contexttrace/suites/refund-suite.json \
+  --endpoint http://localhost:8000/query \
+  --report
+
+contexttrace suite add .contexttrace/suites/refund-suite.json traces/new_failure.json
+contexttrace suite list .contexttrace/suites/refund-suite.json
+contexttrace suite remove .contexttrace/suites/refund-suite.json old_case_id
+contexttrace suite report .contexttrace/suites/refund-suite_results.json
+```
+
+This is the local CI workflow for RAG fixes: capture the failure, fix retrieval or generation, replay the case, and keep it in the suite so the issue does not come back.
+
+A GitHub Actions starter workflow is available at `examples/contexttrace-suite-ci.yml`.
+
+### 4. Audit Retrieval Failures
 
 Use `audit` when a claim failed and you want to know whether the evidence existed elsewhere in the corpus. The audit output includes a failure stage, evidence status, diagnostic signals, and prioritized next actions so you can tell whether the fix belongs in retrieval, reranking, chunking, generation, corpus coverage, or source freshness.
 
@@ -181,7 +204,7 @@ Audit labels:
 
 `audit` is available in ContextTrace v0.5.0 and later.
 
-### 4. Evaluate An Existing RAG Endpoint
+### 5. Evaluate An Existing RAG Endpoint
 
 Use `capture endpoint` when you want to inspect one live response from a running RAG API and save it as portable `contexttrace verify` JSON:
 
@@ -243,7 +266,7 @@ Expected endpoint shape:
 }
 ```
 
-### 5. Instrument With The SDK
+### 6. Instrument With The SDK
 
 ```python
 from contexttrace import ContextTrace

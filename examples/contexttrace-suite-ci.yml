@@ -1,0 +1,51 @@
+name: ContextTrace RAG Regression Suite
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  rag-regression-suite:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install ContextTrace
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install contexttrace
+
+      - name: Start local RAG app
+        run: |
+          # Replace this with your app startup command.
+          # The suite command expects an endpoint that returns answer, contexts, and optional citations.
+          python app.py &
+          sleep 5
+
+      - name: Run evidence regression suite
+        run: |
+          contexttrace suite run contexttrace-suite.json \
+            --endpoint http://127.0.0.1:8000/query \
+            --answer-path $.answer \
+            --contexts-path $.contexts \
+            --citations-path $.citations \
+            --out .contexttrace/suites/ci-suite-results.json \
+            --report \
+            --report-out .contexttrace/reports/ci-suite.html \
+            --fail-on failed_case \
+            --fail-on error
+
+      - name: Upload ContextTrace report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: contexttrace-suite-report
+          path: |
+            .contexttrace/suites/ci-suite-results.json
+            .contexttrace/reports/ci-suite.html

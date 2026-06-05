@@ -6,6 +6,16 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-06-04
+
+### Added
+
+- `contexttrace suite create` for turning saved portable RAG traces into local regression-suite cases.
+- `contexttrace suite run` for replaying saved queries against a RAG endpoint, running evidence QA, comparing against the baseline trace, and exiting non-zero when cases fail.
+- `contexttrace suite add`, `suite list`, `suite remove`, and `suite prune` for managing suite cases as failures are discovered, fixed, or retired.
+- `contexttrace suite report` for local HTML regression-suite reports with failed cases, resolved failures, and claim-level QA summaries.
+- Regression-suite examples, a GitHub Actions starter workflow, and validation-story docs for the saved-failure-to-CI workflow.
+
 ## [0.6.0] - 2026-06-04
 
 ### Added

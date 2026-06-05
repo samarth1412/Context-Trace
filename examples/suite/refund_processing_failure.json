@@ -1,0 +1,17 @@
+{
+  "query": "How long does refund processing take?",
+  "answer": "Refunds are processed within 5 business days.",
+  "contexts": [
+    {
+      "id": "refund_policy",
+      "text": "Customers may request refunds within 30 days of purchase.",
+      "metadata": {
+        "source": "refund_policy.md"
+      }
+    }
+  ],
+  "metadata": {
+    "run_id": "refund_processing_failure",
+    "system": "support-rag"
+  }
+}

@@ -42,6 +42,20 @@ from contexttrace.verify.compare_report import CompareReportGenerator
 from contexttrace.verify.qa import qa_failures, qa_trace
 from contexttrace.verify.qa_report import QAReportGenerator
 from contexttrace.verify.report import VerifyReportGenerator
+from contexttrace.verify.suite import (
+    add_trace_files_to_suite,
+    create_suite_from_trace_files,
+    list_suite_cases,
+    load_suite_file,
+    load_suite_result_file,
+    prune_suite_cases,
+    remove_suite_cases,
+    run_suite,
+    suite_failures,
+    write_suite_file,
+    write_suite_result,
+)
+from contexttrace.verify.suite_report import SuiteReportGenerator
 from contexttrace.verify.trace_inspect import inspect_trace
 from contexttrace.viewer import serve_viewer
 
@@ -377,6 +391,292 @@ def qa_command(
     for message in fail_messages:
         click.echo("QA failed: %s" % message, err=True)
     return 1 if fail_messages else 0
+
+
+@cli.group("suite")
+def suite_group() -> None:
+    """Create and run local RAG regression suites."""
+
+
+@suite_group.command("create")
+@click.argument("trace_json", nargs=-1, required=True)
+@click.option("--out", default="contexttrace-suite.json", show_default=True, help="Suite JSON file to write.")
+@click.option("--name", default=None, help="Suite name.")
+@click.option("--mode", default="lexical", show_default=True, type=click.Choice(["lexical", "semantic"]), help="Evidence scoring mode for baseline QA.")
+@click.option("--corpus", "corpus_path", default=None, help="Optional local corpus directory or file for baseline retrieval/corpus audit.")
+def suite_create_command(
+    trace_json: tuple[str, ...],
+    out: str,
+    name: Optional[str],
+    mode: str,
+    corpus_path: Optional[str],
+) -> int:
+    """Create a suite from saved portable RAG trace files."""
+
+    try:
+        suite = create_suite_from_trace_files(
+            trace_json,
+            name=name,
+            mode=mode,
+            corpus_path=corpus_path,
+        )
+        written = write_suite_file(suite, out)
+    except VerificationInputError as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    click.echo("Suite: %s" % written)
+    click.echo("Cases: %s" % len(suite.get("cases") or []))
+    click.echo("Policy: saved cases must pass on replay")
+    return 0
+
+
+@suite_group.command("add")
+@click.argument("suite_json")
+@click.argument("trace_json", nargs=-1, required=True)
+@click.option("--out", default=None, help="Suite JSON file to write. Defaults to overwriting suite_json.")
+@click.option("--mode", default=None, type=click.Choice(["lexical", "semantic"]), help="Evidence scoring mode for added baselines. Defaults to the suite mode.")
+@click.option("--corpus", "corpus_path", default=None, help="Optional local corpus directory or file for baseline retrieval/corpus audit.")
+@click.option("--replace", is_flag=True, help="Replace existing cases with the same generated case IDs.")
+def suite_add_command(
+    suite_json: str,
+    trace_json: tuple[str, ...],
+    out: Optional[str],
+    mode: Optional[str],
+    corpus_path: Optional[str],
+    replace: bool,
+) -> int:
+    """Add saved portable RAG traces to an existing suite."""
+
+    try:
+        suite = load_suite_file(suite_json)
+        result = add_trace_files_to_suite(
+            suite,
+            trace_json,
+            mode=mode,
+            corpus_path=corpus_path,
+            replace=replace,
+        )
+        written = write_suite_file(result["suite"], out or suite_json)
+    except VerificationInputError as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    click.echo("Suite: %s" % written)
+    click.echo("Added: %s" % len(result["added_case_ids"]))
+    if result["added_case_ids"]:
+        click.echo("Added case IDs: %s" % ", ".join(result["added_case_ids"]))
+    click.echo("Replaced: %s" % result["replaced"])
+    click.echo("Cases: %s" % len(result["suite"].get("cases") or []))
+    return 0
+
+
+@suite_group.command("list")
+@click.argument("suite_json")
+@click.option("--json", "json_output", is_flag=True, help="Print cases as JSON.")
+def suite_list_command(suite_json: str, json_output: bool) -> int:
+    """List cases in a local regression suite."""
+
+    try:
+        suite = load_suite_file(suite_json)
+        rows = list_suite_cases(suite)
+    except VerificationInputError as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    if json_output:
+        click.echo(json.dumps({"suite": suite.get("name"), "cases": rows}, indent=2))
+        return 0
+
+    click.echo("Suite: %s" % (suite.get("name") or suite_json))
+    click.echo("Cases: %s" % len(rows))
+    click.echo("id\tbaseline_risk\tbaseline_issue\tsupport_rate\tquery")
+    for row in rows:
+        click.echo(
+            "%s\t%s\t%s\t%s\t%s"
+            % (
+                row.get("id"),
+                row.get("baseline_risk_level") or "",
+                row.get("baseline_primary_issue") or "",
+                row.get("baseline_support_rate") if row.get("baseline_support_rate") is not None else "",
+                _preview(row.get("query"), limit=90),
+            )
+        )
+    return 0
+
+
+@suite_group.command("remove")
+@click.argument("suite_json")
+@click.argument("case_id", nargs=-1, required=True)
+@click.option("--out", default=None, help="Suite JSON file to write. Defaults to overwriting suite_json.")
+def suite_remove_command(suite_json: str, case_id: tuple[str, ...], out: Optional[str]) -> int:
+    """Remove one or more case IDs from a suite."""
+
+    try:
+        suite = load_suite_file(suite_json)
+        result = remove_suite_cases(suite, case_id)
+        written = write_suite_file(result["suite"], out or suite_json)
+    except VerificationInputError as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    click.echo("Suite: %s" % written)
+    click.echo("Removed: %s" % len(result["removed_case_ids"]))
+    if result["removed_case_ids"]:
+        click.echo("Removed case IDs: %s" % ", ".join(result["removed_case_ids"]))
+    if result["missing_case_ids"]:
+        click.echo("Missing case IDs: %s" % ", ".join(result["missing_case_ids"]))
+    click.echo("Cases: %s" % len(result["suite"].get("cases") or []))
+    return 1 if result["missing_case_ids"] else 0
+
+
+@suite_group.command("prune")
+@click.argument("suite_json")
+@click.option("--results", "results_json", required=True, help="Suite result JSON from `contexttrace suite run`.")
+@click.option("--status", "statuses", multiple=True, default=("passed",), show_default=True, help="Result status to remove. May be repeated.")
+@click.option("--out", default=None, help="Suite JSON file to write. Defaults to overwriting suite_json.")
+def suite_prune_command(
+    suite_json: str,
+    results_json: str,
+    statuses: tuple[str, ...],
+    out: Optional[str],
+) -> int:
+    """Remove cases by status from a saved suite result."""
+
+    try:
+        suite = load_suite_file(suite_json)
+        result_payload = load_suite_result_file(results_json)
+        result = prune_suite_cases(suite, result_payload, statuses=statuses)
+        written = write_suite_file(result["suite"], out or suite_json)
+    except VerificationInputError as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    click.echo("Suite: %s" % written)
+    click.echo("Pruned statuses: %s" % ", ".join(result["statuses"]))
+    click.echo("Removed: %s" % len(result["removed_case_ids"]))
+    if result["removed_case_ids"]:
+        click.echo("Removed case IDs: %s" % ", ".join(result["removed_case_ids"]))
+    click.echo("Cases: %s" % len(result["suite"].get("cases") or []))
+    return 0
+
+
+@suite_group.command("run")
+@click.argument("suite_json")
+@click.option("--endpoint", default=None, help="RAG endpoint URL. Defaults to config eval_endpoint.")
+@click.option("--method", default="POST", type=click.Choice(["GET", "POST"], case_sensitive=False), help="Endpoint method.")
+@click.option("--input-key", default="question", show_default=True, help="Request body/query key for the question.")
+@click.option("--answer-path", default="$.answer", show_default=True, help="JSONPath for answer extraction.")
+@click.option("--contexts-path", default="$.contexts", show_default=True, help="JSONPath for context extraction.")
+@click.option("--citations-path", default="$.citations", show_default=True, help="JSONPath for citation extraction.")
+@click.option("--metadata-path", default="$.metadata", show_default=True, help="JSONPath for response metadata extraction.")
+@click.option("--body-template", default=None, help="JSON body template. Use {{query}} where the question should be inserted.")
+@click.option("--endpoint-header", multiple=True, help="Header formatted as Name:Value. May be repeated.")
+@click.option("--timeout", default=30.0, show_default=True, type=float, help="Per-request timeout.")
+@click.option("--corpus", "corpus_path", default=None, help="Optional local corpus directory or file for retrieval/corpus audit.")
+@click.option("--out", default=None, help="Suite result JSON path.")
+@click.option("--json", "json_output", is_flag=True, help="Print the full suite result as JSON.")
+@click.option("--report", is_flag=True, help="Generate a local HTML suite report.")
+@click.option("--report-out", default=None, help="HTML report path. Implies --report when provided.")
+@click.option("--mode", default=None, type=click.Choice(["lexical", "semantic"]), help="Evidence scoring mode. Defaults to the suite mode.")
+@click.option("--fail-on", multiple=True, help="Fail on failed_case, regression, unsupported, should_abstain, high_risk, medium_risk, error, or any_failure.")
+@click.pass_context
+def suite_run_command(
+    ctx: click.Context,
+    suite_json: str,
+    endpoint: Optional[str],
+    method: str,
+    input_key: str,
+    answer_path: str,
+    contexts_path: str,
+    citations_path: str,
+    metadata_path: str,
+    body_template: Optional[str],
+    endpoint_header: tuple[str, ...],
+    timeout: float,
+    corpus_path: Optional[str],
+    out: Optional[str],
+    json_output: bool,
+    report: bool,
+    report_out: Optional[str],
+    mode: Optional[str],
+    fail_on: tuple[str, ...],
+) -> int:
+    """Replay a regression suite against a running RAG endpoint."""
+
+    config = _load(ctx)
+    resolved_endpoint = endpoint or config.eval_endpoint
+    if not resolved_endpoint:
+        raise click.ClickException("--endpoint or eval_endpoint in contexttrace.yaml is required.")
+
+    try:
+        suite = load_suite_file(suite_json)
+        body = json.loads(body_template) if body_template else None
+        result = run_suite(
+            suite,
+            endpoint=resolved_endpoint,
+            method=method,
+            headers=_parse_headers(list(endpoint_header)),
+            body_template=body,
+            input_key=input_key,
+            answer_path=answer_path,
+            contexts_path=contexts_path,
+            citations_path=citations_path,
+            metadata_path=metadata_path,
+            timeout=timeout,
+            corpus_path=corpus_path,
+            mode=mode,
+        )
+    except json.JSONDecodeError as exc:
+        raise click.ClickException(
+            "Invalid --body-template JSON at line %s column %s: %s"
+            % (exc.lineno, exc.colno, exc.msg)
+        ) from exc
+    except (RuntimeError, ValueError, VerificationInputError) as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    output_path = out or str(
+        Path(".contexttrace")
+        / "suites"
+        / ("%s_results.json" % _safe_filename(str(result.get("suite_name") or Path(suite_json).stem)))
+    )
+    written_result = write_suite_result(result, output_path)
+
+    written_report = None
+    if report or report_out:
+        report_path = report_out or str(
+            Path(".contexttrace")
+            / "reports"
+            / ("%s_suite.html" % _safe_filename(str(result.get("suite_name") or Path(suite_json).stem)))
+        )
+        written_report = SuiteReportGenerator().generate(result, path=report_path)
+
+    effective_fail_on = fail_on or ("failed_case", "error")
+    fail_messages = suite_failures(result, effective_fail_on)
+    if json_output:
+        if written_report:
+            click.echo("Report: %s" % written_report, err=True)
+        click.echo("Results: %s" % written_result, err=True)
+        click.echo(json.dumps(result, indent=2))
+        for message in fail_messages:
+            click.echo("Suite failed: %s" % message, err=True)
+        return 1 if fail_messages else 0
+
+    _print_suite_result(result, written_result=written_result, written_report=written_report)
+    for message in fail_messages:
+        click.echo("Suite failed: %s" % message, err=True)
+    return 1 if fail_messages else 0
+
+
+@suite_group.command("report")
+@click.argument("results_json")
+@click.option("--out", default=None, help="HTML report path.")
+def suite_report_command(results_json: str, out: Optional[str]) -> int:
+    """Generate a local HTML report from a suite result JSON file."""
+
+    try:
+        result = load_suite_result_file(results_json)
+    except VerificationInputError as exc:
+        raise click.ClickException(str(exc)) from exc
+    output_path = out or str(Path(".contexttrace") / "reports" / ("%s.html" % Path(results_json).stem))
+    written = SuiteReportGenerator().generate(result, path=output_path)
+    click.echo("Report: %s" % written)
+    return 0
 
 
 @cli.command("verify-demo")
@@ -1159,6 +1459,40 @@ def main(argv: Optional[list[str]] = None) -> int:
     except ValueError as exc:
         click.echo("ContextTrace failed: %s" % exc, err=True)
         return 2
+
+
+def _print_suite_result(
+    result: dict,
+    *,
+    written_result: str,
+    written_report: Optional[str],
+) -> None:
+    summary = result.get("summary") or {}
+    click.echo("Suite: %s" % result.get("suite_name"))
+    click.echo("Status: %s" % summary.get("status"))
+    click.echo("Cases: %s" % summary.get("total_cases"))
+    click.echo("Passed: %s" % summary.get("passed"))
+    click.echo("Failed: %s" % summary.get("failed"))
+    click.echo("Errors: %s" % summary.get("errors"))
+    click.echo("Regressions: %s" % summary.get("regressions"))
+    click.echo("Resolved failures: %s" % summary.get("resolved_failures"))
+    click.echo("Average support rate: %.3f" % float(summary.get("average_support_rate") or 0.0))
+    click.echo("Results: %s" % written_result)
+    if written_report:
+        click.echo("Report: %s" % written_report)
+
+    failed_cases = [case for case in result.get("cases") or [] if case.get("status") in {"failed", "error"}]
+    if failed_cases:
+        click.echo("Failed cases:")
+        for case in failed_cases:
+            failures = "; ".join(str(item) for item in case.get("failures") or []) or "unknown failure"
+            click.echo("- %s: %s" % (case.get("id"), failures))
+
+
+def _safe_filename(value: str) -> str:
+    cleaned = "".join(char if char.isalnum() or char in {"-", "_"} else "_" for char in value.strip().lower())
+    cleaned = "_".join(part for part in cleaned.split("_") if part)
+    return cleaned[:80] or "contexttrace"
 
 
 def _load(ctx: click.Context) -> ContextTraceConfig:

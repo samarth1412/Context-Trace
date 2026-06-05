@@ -119,6 +119,12 @@ contexttrace verify-benchmark --case-set external --mode semantic --report
 contexttrace compare baseline.json current.json
 contexttrace compare baseline.json current.json --report
 contexttrace compare baseline.json current.json --fail-on new_failure
+contexttrace suite create traces/*.json --out contexttrace-suite.json
+contexttrace suite add contexttrace-suite.json traces/new_failure.json
+contexttrace suite list contexttrace-suite.json
+contexttrace suite run contexttrace-suite.json --endpoint http://localhost:8000/query --report
+contexttrace suite prune contexttrace-suite.json --results .contexttrace/suites/contexttrace-regression-suite_results.json
+contexttrace suite report .contexttrace/suites/contexttrace-regression-suite_results.json
 contexttrace audit trace.json --corpus docs/
 contexttrace audit trace.json --corpus docs/ --report
 contexttrace audit trace.json --corpus docs/ --fail-on retrieval_miss
@@ -147,11 +153,13 @@ write_rag_trace(trace, "trace.json")
 
 Use `contexttrace compare baseline.json current.json` to diff two portable traces or saved `verify --json` outputs. It reports support-rate deltas, new unsupported claims, citation regressions, should-abstain flips, and new root causes, with `--fail-on` gates for CI.
 
+Use `contexttrace suite create`, `suite add`, and `suite run` to turn saved failures into replayable endpoint tests. Suite runs call your current RAG endpoint with the saved query, verify the new answer, compare it with the baseline trace, and exit non-zero when a saved failure still reproduces or a good case regresses. Use `suite list`, `suite remove`, and `suite prune` to manage the suite as failures are fixed or retired.
+
 Use `contexttrace audit trace.json --corpus docs/` to diagnose whether an unsupported claim failed because retrieval missed evidence, reranking buried it, chunking omitted the supporting span, the corpus lacks coverage, or generation overclaimed. Audit output includes failure stages, diagnostic signals, and prioritized next actions.
 
 Use `contexttrace audit-benchmark --case-set real --mode semantic` to test retrieval-audit labels against bundled public OSS documentation and GitHub issue snippets from Qdrant, Chroma, Haystack, LangChain, and ContextTrace docs.
 
-The v0.6.0 verifier uses local lexical heuristics by default. Claim extraction is rule-based, contradiction detection is conservative, and semantic or LLM-judge support can be added later.
+The v0.7.0 verifier uses local lexical heuristics by default. Claim extraction is rule-based, contradiction detection is conservative, and semantic or LLM-judge support can be added later.
 
 ## What It Catches
 

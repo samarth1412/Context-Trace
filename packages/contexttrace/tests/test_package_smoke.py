@@ -5,7 +5,7 @@ from contexttrace import AsyncContextTrace, ContextTrace, ReliabilityScorer
 
 
 def test_package_exports_core_public_api():
-    assert contexttrace.__version__ == "0.6.0"
+    assert contexttrace.__version__ == "0.7.0"
     assert ContextTrace is not None
     assert AsyncContextTrace is not None
     assert ReliabilityScorer().score(
