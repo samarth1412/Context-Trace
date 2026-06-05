@@ -12,6 +12,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Judge mode now sends selected evidence spans with char-offset metadata instead of broad retrieved contexts.
 - Optional `contexttrace[nli]` and `contexttrace[nli-onnx]` extras plus `--mode nli` for local claim-versus-span entailment and contradiction checks.
 - Local NLI model loading is explicit and offline-only through `CONTEXTTRACE_NLI_MODEL_PATH`; ContextTrace never downloads NLI models automatically.
+- `contexttrace nli-calibrate` for measuring local NLI exact-match rate, entailment precision, contradiction recall, dangerous false-green rate, citation match, and latency against bundled golden cases.
 
 ### Changed
 

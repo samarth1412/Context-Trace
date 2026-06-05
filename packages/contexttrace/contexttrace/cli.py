@@ -31,6 +31,7 @@ from contexttrace.verify import (
     audit_trace,
     build_judge_provider,
     run_judge_calibration,
+    run_nli_calibration,
     compare_failures,
     compare_trace_files,
     list_verify_demos,
@@ -38,6 +39,7 @@ from contexttrace.verify import (
     load_verify_demo,
     verify_trace,
     write_judge_calibration_report,
+    write_nli_calibration_report,
 )
 from contexttrace.verify.benchmark import run_verify_benchmark, write_verify_benchmark_report
 from contexttrace.verify.audit_benchmark import run_audit_benchmark, write_audit_benchmark_report
@@ -926,6 +928,93 @@ def judge_calibrate_command(
         click.echo("Report: %s" % written_report)
     for failure in result.get("failures") or []:
         click.echo("Calibration failed: %s" % failure, err=True)
+    return 1 if result.get("failures") else 0
+
+
+@cli.command("nli-calibrate")
+@click.option("--case-set", default="all", show_default=True, type=click.Choice(["contexttrace", "external", "all"]), help="Golden benchmark case set to run.")
+@click.option("--model-path", default=None, help="Local NLI model directory or .onnx file. Defaults to CONTEXTTRACE_NLI_MODEL_PATH.")
+@click.option("--tokenizer-path", default=None, help="Optional local tokenizer directory. Defaults to model path.")
+@click.option("--backend", default="auto", show_default=True, type=click.Choice(["auto", "transformers", "onnx"]), help="Local NLI backend.")
+@click.option("--max-length", default=512, show_default=True, type=int, help="Maximum NLI input token length.")
+@click.option("--json", "json_output", is_flag=True, help="Print calibration result as JSON.")
+@click.option("--report", is_flag=True, help="Generate a local HTML calibration report.")
+@click.option("--out", default=None, help="HTML calibration report path. Implies --report when provided.")
+@click.option("--min-exact-match-rate", default=0.8, show_default=True, type=float, help="Minimum acceptable failure-label exact match rate.")
+@click.option("--min-entailment-precision", default=0.85, show_default=True, type=float, help="Minimum acceptable supported-claim precision.")
+@click.option("--min-contradiction-recall", default=0.7, show_default=True, type=float, help="Minimum acceptable contradiction recall.")
+@click.option("--max-dangerous-miss-rate", default=0.05, show_default=True, type=float, help="Maximum allowed rate of risky cases predicted as no failure.")
+@click.option("--max-p95-latency-ms", default=0.0, show_default=True, type=float, help="Maximum p95 case latency in milliseconds. Use 0 to disable.")
+def nli_calibrate_command(
+    case_set: str,
+    model_path: Optional[str],
+    tokenizer_path: Optional[str],
+    backend: str,
+    max_length: int,
+    json_output: bool,
+    report: bool,
+    out: Optional[str],
+    min_exact_match_rate: float,
+    min_entailment_precision: float,
+    min_contradiction_recall: float,
+    max_dangerous_miss_rate: float,
+    max_p95_latency_ms: float,
+) -> int:
+    """Calibrate a local NLI model against golden RAG failure cases."""
+
+    result = run_nli_calibration(
+        model_path=model_path,
+        tokenizer_path=tokenizer_path,
+        backend=backend,
+        max_length=max_length,
+        case_set=case_set,
+        min_exact_match_rate=min_exact_match_rate,
+        min_entailment_precision=min_entailment_precision,
+        min_contradiction_recall=min_contradiction_recall,
+        max_dangerous_miss_rate=max_dangerous_miss_rate,
+        max_p95_latency_ms=max_p95_latency_ms,
+    )
+    written_report = None
+    if report or out:
+        nli_name = _safe_filename("%s_%s" % (
+            (result.get("nli") or {}).get("backend") or "nli",
+            (result.get("nli") or {}).get("model") or "model",
+        ))
+        output_path = out or str(Path(".contexttrace") / "reports" / ("nli_calibration_%s.html" % nli_name))
+        written_report = write_nli_calibration_report(result, path=output_path)
+    if json_output:
+        if written_report:
+            click.echo("Report: %s" % written_report, err=True)
+        click.echo(json.dumps(result, indent=2))
+        for failure in result.get("failures") or []:
+            click.echo("NLI calibration failed: %s" % failure, err=True)
+        return 1 if result.get("failures") else 0
+
+    scorecard = result["scorecard"]
+    click.echo("Status: %s" % result["status"])
+    click.echo("NLI: %s" % json.dumps(result.get("nli") or {}, sort_keys=True))
+    click.echo("Cases: %s" % result["cases"])
+    click.echo("Exact match rate: %.3f" % float(scorecard["exact_match_rate"]))
+    click.echo("Verdict match rate: %.3f" % float(scorecard["verdict_match_rate"]))
+    click.echo("Citation match rate: %.3f" % float(scorecard["citation_match_rate"]))
+    click.echo("Entailment precision: %.3f" % float(scorecard["entailment_precision"]))
+    click.echo("Entailment recall: %.3f" % float(scorecard["entailment_recall"]))
+    click.echo("Contradiction recall: %.3f" % float(scorecard["contradiction_recall"]))
+    click.echo("Unsupported-like recall: %.3f" % float(scorecard["unsupported_like_recall"]))
+    click.echo("Dangerous miss rate: %.3f" % float(scorecard["dangerous_miss_rate"]))
+    click.echo("Unsupported marked supported: %s" % int(scorecard["unsupported_as_supported_cases"]))
+    click.echo("Case latency p50/p95 ms: %.3f / %.3f" % (
+        float(scorecard["case_latency_p50_ms"]),
+        float(scorecard["case_latency_p95_ms"]),
+    ))
+    click.echo("NLI call latency p50/p95 ms: %.3f / %.3f" % (
+        float(scorecard["nli_call_latency_p50_ms"]),
+        float(scorecard["nli_call_latency_p95_ms"]),
+    ))
+    if written_report:
+        click.echo("Report: %s" % written_report)
+    for failure in result.get("failures") or []:
+        click.echo("NLI calibration failed: %s" % failure, err=True)
     return 1 if result.get("failures") else 0
 
 

@@ -90,6 +90,7 @@ Run local NLI when you want mechanical claim-versus-span entailment:
 pip install "contexttrace[nli]"
 set CONTEXTTRACE_NLI_MODEL_PATH=C:/models/deberta-v3-nli
 contexttrace verify trace.json --mode nli --report
+contexttrace nli-calibrate --case-set all --report
 ```
 
 Run a local judge with Ollama:

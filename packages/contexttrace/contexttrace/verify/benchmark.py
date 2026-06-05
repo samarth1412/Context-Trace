@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import time
 from dataclasses import dataclass
 from html import escape
 from pathlib import Path
@@ -47,6 +48,8 @@ def run_verify_benchmark(
     mode: str = "lexical",
     case_set: str = "contexttrace",
     judge: ClaimJudge | None = None,
+    nli: ClaimJudge | None = None,
+    time_cases: bool = False,
 ) -> dict[str, Any]:
     rows = []
     labels = set()
@@ -58,7 +61,9 @@ def run_verify_benchmark(
     abstention_expected = 0
 
     for case in benchmark_cases(case_set=case_set):
-        result = verify_trace(case.trace, mode=mode, judge=judge)
+        started = time.perf_counter()
+        result = verify_trace(case.trace, mode=mode, judge=judge, nli=nli)
+        latency_ms = round((time.perf_counter() - started) * 1000, 3)
         predicted = _predicted_labels(result)
         expected_verdict_counts = dict(case.expected_verdict_counts)
         predicted_verdict_counts = {
@@ -112,6 +117,7 @@ def run_verify_benchmark(
                 "summary": result.get("summary") or {},
                 "claims": result.get("claims") or [],
                 "abstention": result.get("abstention") or {},
+                **({"latency_ms": latency_ms} if time_cases else {}),
             }
         )
 

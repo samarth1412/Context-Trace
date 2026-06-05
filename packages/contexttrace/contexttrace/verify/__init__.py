@@ -28,6 +28,11 @@ from contexttrace.verify.calibration import (
     run_judge_calibration,
     write_judge_calibration_report,
 )
+from contexttrace.verify.nli_calibration import (
+    nli_calibration_failures,
+    run_nli_calibration,
+    write_nli_calibration_report,
+)
 from contexttrace.verify.local_ml import LocalMLError, local_ml_similarity
 from contexttrace.verify.local_nli import (
     LocalNLIError,
@@ -86,7 +91,9 @@ __all__ = [
     "qa_failures",
     "qa_trace",
     "run_judge_calibration",
+    "run_nli_calibration",
     "run_audit_benchmark",
+    "nli_calibration_failures",
     "source_status",
     "status_note",
     "support_status",
@@ -94,4 +101,5 @@ __all__ = [
     "verify_trace",
     "verify_trace_file",
     "write_judge_calibration_report",
+    "write_nli_calibration_report",
 ]
