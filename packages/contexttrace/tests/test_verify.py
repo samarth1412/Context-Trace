@@ -32,6 +32,8 @@ class StaticJudge:
                 "query": query,
                 "claim": claim,
                 "context_ids": [context.id for context in contexts],
+                "context_texts": [context.text for context in contexts],
+                "context_metadata": [dict(context.metadata) for context in contexts],
             }
         )
         if len(self.verdicts) == 1:
@@ -249,8 +251,35 @@ def test_supported_claim_classification():
     assert result["summary"]["failure_type"] == "no_failure_detected"
     assert result["summary"]["primary_root_cause"] == "no_failure_detected"
     assert result["claims"][0]["verdict"] == "supported"
+    assert result["claims"][0]["support_status"] == "grounded_by_span"
+    assert result["claims"][0]["truth_status"] == "not_assessed"
+    assert result["claims"][0]["source_status"] == "freshness_unknown"
+    assert "independently true" in result["claims"][0]["status_note"]
     assert result["claims"][0]["citation_status"] == "citation_ok"
     assert result["claims"][0]["root_cause"]["label"] == "no_failure_detected"
+
+
+def test_source_status_is_separate_from_grounding():
+    result = verify_trace(
+        RAGTrace(
+            query="What is the refund policy?",
+            answer="Refunds are allowed within 30 days.",
+            contexts=[
+                TraceContext(
+                    id="policy",
+                    text="Customers may request refunds within 30 days of purchase.",
+                    metadata={"source_status": "stale_source"},
+                )
+            ],
+        )
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["support_status"] == "grounded_by_span"
+    assert claim["truth_status"] == "not_assessed"
+    assert claim["source_status"] == "stale_source"
+    assert result["summary"]["source_status"] == "stale_source"
 
 
 def test_unsupported_claim_classification():
@@ -404,6 +433,44 @@ def test_judge_mode_overrides_heuristic_support_verdict():
     assert result["summary"]["mode"] == "judge"
     assert result["summary"]["unsupported"] == 1
     assert judge.calls[0]["context_ids"] == ["policy"]
+    assert judge.calls[0]["context_texts"] == ["Customers may request refunds within 30 days of purchase."]
+    assert judge.calls[0]["context_metadata"][0]["evidence_scope"] == "selected_span"
+
+
+def test_judge_mode_sees_selected_span_not_full_context():
+    trace = RAGTrace(
+        query="What is the refund policy?",
+        answer="Refunds are allowed within 30 days.",
+        contexts=[
+            TraceContext(
+                id="policy",
+                text=(
+                    "Shipping takes 5 business days. "
+                    "Customers may request refunds within 30 days of purchase. "
+                    "Managers review enterprise exceptions separately."
+                ),
+            )
+        ],
+    )
+    judge = StaticJudge(
+        [
+            JudgeVerdict(
+                verdict="supported",
+                confidence=0.93,
+                reason="The selected span supports the refund window.",
+                matched_facts=["refunds within 30 days"],
+                provider="unit",
+                model="static",
+            )
+        ]
+    )
+
+    result = verify_trace(trace, mode="judge", judge=judge)
+
+    assert result["claims"][0]["support_status"] == "grounded_by_span"
+    assert judge.calls[0]["context_texts"] == ["Customers may request refunds within 30 days of purchase."]
+    assert "Shipping takes" not in judge.calls[0]["context_texts"][0]
+    assert "Managers review" not in judge.calls[0]["context_texts"][0]
 
 
 def test_judge_mode_uses_judge_for_cited_source_support():
@@ -454,9 +521,11 @@ def test_judge_mode_uses_judge_for_cited_source_support():
     assert claim["verdict"] == "supported"
     assert claim["citation_status"] == "claim_supported_by_different_source"
     assert [call["context_ids"] for call in judge.calls] == [
-        ["policy_2024", "policy_2026"],
+        ["policy_2026"],
         ["policy_2024"],
     ]
+    assert judge.calls[0]["context_texts"] == ["Customers may request refunds within 30 days of purchase."]
+    assert judge.calls[1]["context_texts"] == ["Customers may exchange eligible items within 14 days."]
 
 
 def test_citation_mismatch_detection():
@@ -624,7 +693,10 @@ def test_report_generation(tmp_path):
     html = report_path.read_text(encoding="utf-8")
     assert "ContextTrace Verification Report" in html
     assert "Reliability Summary" in html
-    assert "Claim Support Overview" in html
+    assert "Claim Grounding Overview" in html
+    assert "Grounded means supported by the selected evidence span" in html
+    assert "grounded_by_span" in html
+    assert "not_assessed" in html
     assert "Raw JSON Summary" in html
     assert "<mark>refunds</mark>" in html
     assert "Matched facts" in html

@@ -7,7 +7,7 @@
 
 **Local-first evidence-chain debugging for RAG and AI agents.**
 
-ContextTrace shows where an answer stopped being grounded:
+ContextTrace shows where an answer stopped being grounded in the evidence you gave it:
 
 ```text
 query -> retrieved context -> answer claims -> citations -> verdicts -> root cause
@@ -69,7 +69,9 @@ contexttrace verify trace.json --report
 contexttrace qa trace.json --corpus docs/ --report
 ```
 
-ContextTrace classifies each claim as `supported`, `partially_supported`, `unsupported`, `unverifiable`, or `contradicted`, then explains the likely fix.
+ContextTrace classifies each claim as `supported`, `partially_supported`, `unsupported`, `unverifiable`, or `contradicted`, then exposes separate statuses for support, truth, source freshness, citation quality, and likely fix.
+
+Important: `supported` means grounded by the selected evidence span. It does not mean independently true, current, or authoritative.
 
 ## Local Verification Modes
 
@@ -78,7 +80,8 @@ ContextTrace classifies each claim as `supported`, `partially_supported`, `unsup
 | `lexical` | Fast default checks with no optional dependencies. |
 | `semantic` | Local paraphrase and role-aware contradiction checks. |
 | `local_ml` | Offline hash-embedding similarity, optionally backed by a local SentenceTransformers model. |
-| `judge` | Higher-accuracy local LLM judging through Ollama, LM Studio, vLLM, or a local OpenAI-compatible server. |
+| `nli` | Local claim+span entailment or contradiction with a local Transformers or ONNX NLI model. |
+| `judge` | Higher-accuracy local LLM judging through Ollama, LM Studio, vLLM, or a local OpenAI-compatible server. The judge sees selected evidence spans, not the full answer prose. |
 
 Run the stronger local non-LLM verifier:
 
@@ -91,7 +94,15 @@ Optional neural local-ML support never downloads models automatically:
 
 ```bash
 pip install "contexttrace[local-ml]"
-set CONTEXTTRACE_LOCAL_ML_MODEL_PATH=C:\models\bge-small-en-v1.5
+set CONTEXTTRACE_LOCAL_ML_MODEL_PATH=C:/models/bge-small-en-v1.5
+```
+
+Run local NLI when you want mechanical claim-versus-span entailment:
+
+```bash
+pip install "contexttrace[nli]"
+set CONTEXTTRACE_NLI_MODEL_PATH=C:/models/deberta-v3-nli
+contexttrace verify trace.json --mode nli --report
 ```
 
 Run a local judge with Ollama:
@@ -121,6 +132,8 @@ contexttrace suite run contexttrace-suite.json --endpoint http://localhost:8000/
 ```
 
 Common root causes include `retrieval_miss`, `reranking_failure`, `chunking_issue`, `corpus_gap`, `answer_overreach`, `stale_source`, `citation_mismatch`, and `should_have_abstained`.
+
+`support_status`, `truth_status`, and `source_status` stay separate so a claim can be grounded by a source while the source itself remains stale, wrong, or unassessed.
 
 ## Capture Existing Systems
 
@@ -200,7 +213,7 @@ ContextTrace makes no network calls unless you point it at an endpoint or config
 
 ## Limits
 
-ContextTrace is a diagnostic tool, not a correctness proof. Claim extraction is rule-based, contradiction detection is conservative, and high-stakes outputs still need human review.
+ContextTrace is a diagnostic tool, not a correctness proof. It verifies grounding against provided evidence; it does not certify real-world truth. Claim extraction is rule-based, contradiction detection is conservative, and high-stakes outputs still need human review.
 
 ## Links
 

@@ -42,12 +42,14 @@ def _summary_cards(summary: dict[str, Any]) -> str:
     cards = [
         ("Failure Type", summary.get("failure_type", "unknown")),
         ("Total Claims", summary.get("total_claims", 0)),
-        ("Supported", summary.get("supported", 0)),
+        ("Grounded Claims", summary.get("grounded_claims", summary.get("supported", 0))),
         ("Partially Supported", summary.get("partially_supported", 0)),
         ("Unsupported", summary.get("unsupported", 0)),
         ("Unverifiable", summary.get("unverifiable", 0)),
         ("Contradicted", summary.get("contradicted", 0)),
         ("Support Rate", summary.get("support_rate", 0)),
+        ("Truth Status", summary.get("truth_status", "not_assessed")),
+        ("Source Status", summary.get("source_status", "freshness_unknown")),
         ("Unsupported Claim Rate", summary.get("unsupported_claim_rate", 0)),
         ("Citation Mismatches", summary.get("citation_mismatches", 0)),
         ("Should Abstain", summary.get("should_abstain", False)),
@@ -66,7 +68,7 @@ def _summary_cards(summary: dict[str, Any]) -> str:
 
 def _claim_rows(claims: list[dict[str, Any]]) -> str:
     if not claims:
-        return "<tr><td colspan=\"7\" class=\"muted\">No factual claims were extracted.</td></tr>"
+        return "<tr><td colspan=\"10\" class=\"muted\">No factual claims were extracted.</td></tr>"
     rows = []
     for claim in claims:
         rows.append(
@@ -74,7 +76,10 @@ def _claim_rows(claims: list[dict[str, Any]]) -> str:
             <tr>
               <td>{claim_id}</td>
               <td>{claim}</td>
+              <td><span class="badge support-{support_class}">{support}</span></td>
               <td><span class="badge verdict-{verdict}">{verdict}</span></td>
+              <td>{truth}</td>
+              <td>{source}</td>
               <td>{confidence}</td>
               <td>{context_id}</td>
               <td><span class="badge citation-{citation}">{citation}</span></td>
@@ -83,7 +88,11 @@ def _claim_rows(claims: list[dict[str, Any]]) -> str:
             """.format(
                 claim_id=escape(_string(claim.get("claim_id"))),
                 claim=escape(_string(claim.get("claim"))),
+                support_class=escape(_css_token(claim.get("support_status"))),
+                support=escape(_string(claim.get("support_status"))),
                 verdict=escape(_string(claim.get("verdict"))),
+                truth=escape(_string(claim.get("truth_status"))),
+                source=escape(_string(claim.get("source_status"))),
                 confidence=escape(_string(claim.get("confidence"))),
                 context_id=escape(_string(claim.get("best_context_id"))),
                 citation=escape(_string(claim.get("citation_status"))),
@@ -103,6 +112,7 @@ def _evidence_cards(claims: list[dict[str, Any]]) -> str:
             <article class="item">
               <div class="item-meta">{claim_id} | {verdict} | score {score}</div>
               <h3>{claim}</h3>
+              <p><strong>Support status:</strong> {support_status} | <strong>Truth status:</strong> {truth_status} | <strong>Source status:</strong> {source_status}</p>
               <p class="muted">Evidence span: {span}</p>
               <p><strong>Supporting spans:</strong> {supporting_spans}</p>
               <p>{evidence}</p>
@@ -111,12 +121,16 @@ def _evidence_cards(claims: list[dict[str, Any]]) -> str:
               <p><strong>Missing facts:</strong> {missing_facts}</p>
               <p><strong>Root cause:</strong> {root_cause}</p>
               <p>{reason}</p>
+              <p class="muted">{status_note}</p>
             </article>
             """.format(
                 claim_id=escape(_string(claim.get("claim_id"))),
                 verdict=escape(_string(claim.get("verdict"))),
                 score=escape(_string(claim.get("best_score"))),
                 claim=escape(_string(claim.get("claim"))),
+                support_status=escape(_string(claim.get("support_status"))),
+                truth_status=escape(_string(claim.get("truth_status"))),
+                source_status=escape(_string(claim.get("source_status"))),
                 span=escape(_span_label(claim.get("evidence_span"))),
                 supporting_spans=_supporting_span_list(claim.get("supporting_spans") or []),
                 evidence=_highlight_terms(
@@ -128,6 +142,7 @@ def _evidence_cards(claims: list[dict[str, Any]]) -> str:
                 missing_facts=_fact_list(claim.get("missing_fact_details") or claim.get("missing_facts") or []),
                 root_cause=escape(_root_label(claim)),
                 reason=escape(_string(claim.get("reason"))),
+                status_note=escape(_string(claim.get("status_note"))),
             )
         )
     return "\n".join(cards)
@@ -196,7 +211,7 @@ def _root_causes(claims: list[dict[str, Any]]) -> str:
 def _citation_mismatches(claims: list[dict[str, Any]]) -> str:
     mismatches = [claim for claim in claims if claim.get("citation_status") != "citation_ok"]
     if not mismatches:
-        return "<p class=\"muted\">All supplied citations support their matched claims.</p>"
+        return "<p class=\"muted\">All supplied citations ground their matched claims. This is not an independent truth check.</p>"
     return "\n".join(
         """
         <article class="item">
@@ -325,6 +340,11 @@ def _root_label(claim: dict[str, Any]) -> str:
     if isinstance(root, dict):
         return _string(root.get("label")) or "unknown"
     return "unknown"
+
+
+def _css_token(value: Any) -> str:
+    token = _string(value).lower().replace("_", "-").replace(" ", "-")
+    return "".join(char for char in token if char.isalnum() or char == "-") or "unknown"
 
 
 def _fact_list(facts: list[Any]) -> str:
@@ -456,6 +476,13 @@ HTML_TEMPLATE = """<!doctype html>
       white-space: nowrap;
     }}
     .verdict-supported, .citation-citation_ok {{ color: var(--ok); background: #e9f7ef; }}
+    .support-grounded-by-span {{ color: var(--ok); background: #e9f7ef; }}
+    .support-grounded-without-span,
+    .support-partially-grounded-by-span,
+    .support-partially-grounded,
+    .support-insufficient-evidence {{ color: var(--warn); background: #fff7df; }}
+    .support-unsupported-by-retrieved-context,
+    .support-contradicted-by-evidence {{ color: var(--bad); background: #fdeceb; }}
     .verdict-unverifiable, .verdict-partially_supported, .citation-claim_has_no_citation {{ color: var(--warn); background: #fff7df; }}
     .verdict-unsupported, .verdict-contradicted,
     .citation-cited_source_missing,
@@ -483,6 +510,7 @@ HTML_TEMPLATE = """<!doctype html>
     <header>
       <h1>ContextTrace Verification Report</h1>
       <p class="muted">Local claim-level evidence verification for a portable RAG trace.</p>
+      <p class="muted">Grounded means supported by the selected evidence span. It does not mean independently true, current, or authoritative.</p>
     </header>
 
     <section>
@@ -504,13 +532,16 @@ HTML_TEMPLATE = """<!doctype html>
     </section>
 
     <section>
-      <h2>Claim Support Overview</h2>
+      <h2>Claim Grounding Overview</h2>
       <table>
         <thead>
           <tr>
             <th>ID</th>
             <th>Claim</th>
+            <th>Support Status</th>
             <th>Verdict</th>
+            <th>Truth</th>
+            <th>Source</th>
             <th>Confidence</th>
             <th>Best Context</th>
             <th>Citation</th>

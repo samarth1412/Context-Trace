@@ -162,7 +162,7 @@ def classify_claim(
 ) -> ClaimVerification:
     fact_evidence = match.supporting_text or match.snippet
     normalized_mode = str(mode or "lexical").strip().lower().replace("-", "_")
-    fact_mode = "semantic" if normalized_mode in {"semantic", "local_ml"} else "lexical"
+    fact_mode = "semantic" if normalized_mode in {"semantic", "local_ml", "nli"} else "lexical"
     fact_match = compare_facts(claim.text, fact_evidence, mode=fact_mode)
     contradiction_evidence = _contradiction_evidence_text(claim.text, match)
     contradicted = has_contexts and is_contradicted(claim.text, contradiction_evidence, match.score)

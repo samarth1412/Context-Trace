@@ -72,6 +72,9 @@ SAMPLE_QUESTIONS = [
     }
 ]
 
+BASIC_VERIFY_MODES = ["lexical", "semantic", "local_ml", "local-ml", "nli"]
+JUDGE_VERIFY_MODES = [*BASIC_VERIFY_MODES, "judge"]
+
 
 @click.group(context_settings={"help_option_names": ["-h", "--help"]})
 @click.option("--config", "config_path", default=None, help="Path to contexttrace.yaml.")
@@ -244,7 +247,7 @@ def report(
 @click.option("--json", "json_output", is_flag=True, help="Print the full verification result as JSON.")
 @click.option("--report", is_flag=True, help="Generate a local HTML verification report.")
 @click.option("--out", default=None, help="HTML report path. Implies --report when provided.")
-@click.option("--mode", default="lexical", show_default=True, type=click.Choice(["lexical", "semantic", "local_ml", "local-ml", "judge"]), help="Evidence scoring mode.")
+@click.option("--mode", default="lexical", show_default=True, type=click.Choice(JUDGE_VERIFY_MODES), help="Evidence scoring mode.")
 @click.option("--judge-provider", default=None, help="Judge provider for --mode judge, for example ollama or local_openai.")
 @click.option("--judge-base-url", default=None, help="Judge base URL. Defaults are local for ollama/local_openai/lmstudio/vllm.")
 @click.option("--judge-api-key", default=None, help="Judge API key. Optional for local providers; prefer CONTEXTTRACE_JUDGE_API_KEY in CI.")
@@ -354,7 +357,7 @@ def inspect_command(trace_json: str, json_output: bool) -> int:
 @click.option("--json", "json_output", is_flag=True, help="Print the full QA result as JSON.")
 @click.option("--report", is_flag=True, help="Generate a local HTML evidence QA report.")
 @click.option("--out", default=None, help="HTML report path. Implies --report when provided.")
-@click.option("--mode", default="lexical", show_default=True, type=click.Choice(["lexical", "semantic", "local_ml", "local-ml"]), help="Evidence scoring mode.")
+@click.option("--mode", default="lexical", show_default=True, type=click.Choice(BASIC_VERIFY_MODES), help="Evidence scoring mode.")
 @click.option("--fail-on", multiple=True, help="Fail on high_risk, medium_risk, any_risk, unsupported, should_abstain, audit_failure, or inspect_warning.")
 def qa_command(
     trace_json: str,
@@ -429,7 +432,7 @@ def suite_group() -> None:
 @click.argument("trace_json", nargs=-1, required=True)
 @click.option("--out", default="contexttrace-suite.json", show_default=True, help="Suite JSON file to write.")
 @click.option("--name", default=None, help="Suite name.")
-@click.option("--mode", default="lexical", show_default=True, type=click.Choice(["lexical", "semantic", "local_ml", "local-ml"]), help="Evidence scoring mode for baseline QA.")
+@click.option("--mode", default="lexical", show_default=True, type=click.Choice(BASIC_VERIFY_MODES), help="Evidence scoring mode for baseline QA.")
 @click.option("--corpus", "corpus_path", default=None, help="Optional local corpus directory or file for baseline retrieval/corpus audit.")
 def suite_create_command(
     trace_json: tuple[str, ...],
@@ -461,7 +464,7 @@ def suite_create_command(
 @click.argument("suite_json")
 @click.argument("trace_json", nargs=-1, required=True)
 @click.option("--out", default=None, help="Suite JSON file to write. Defaults to overwriting suite_json.")
-@click.option("--mode", default=None, type=click.Choice(["lexical", "semantic", "local_ml", "local-ml"]), help="Evidence scoring mode for added baselines. Defaults to the suite mode.")
+@click.option("--mode", default=None, type=click.Choice(BASIC_VERIFY_MODES), help="Evidence scoring mode for added baselines. Defaults to the suite mode.")
 @click.option("--corpus", "corpus_path", default=None, help="Optional local corpus directory or file for baseline retrieval/corpus audit.")
 @click.option("--replace", is_flag=True, help="Replace existing cases with the same generated case IDs.")
 def suite_add_command(
@@ -600,7 +603,7 @@ def suite_prune_command(
 @click.option("--json", "json_output", is_flag=True, help="Print the full suite result as JSON.")
 @click.option("--report", is_flag=True, help="Generate a local HTML suite report.")
 @click.option("--report-out", default=None, help="HTML report path. Implies --report when provided.")
-@click.option("--mode", default=None, type=click.Choice(["lexical", "semantic", "local_ml", "local-ml"]), help="Evidence scoring mode. Defaults to the suite mode.")
+@click.option("--mode", default=None, type=click.Choice(BASIC_VERIFY_MODES), help="Evidence scoring mode. Defaults to the suite mode.")
 @click.option("--fail-on", multiple=True, help="Fail on failed_case, regression, unsupported, should_abstain, high_risk, medium_risk, error, or any_failure.")
 @click.pass_context
 def suite_run_command(
@@ -711,7 +714,7 @@ def suite_report_command(results_json: str, out: Optional[str]) -> int:
 @click.option("--json", "json_output", is_flag=True, help="Print the full verification result as JSON.")
 @click.option("--report", is_flag=True, help="Generate a local HTML verification report.")
 @click.option("--out", default=None, help="HTML report path. Implies --report when provided.")
-@click.option("--mode", default="lexical", show_default=True, type=click.Choice(["lexical", "semantic", "local_ml", "local-ml", "judge"]), help="Evidence scoring mode.")
+@click.option("--mode", default="lexical", show_default=True, type=click.Choice(JUDGE_VERIFY_MODES), help="Evidence scoring mode.")
 @click.option("--judge-provider", default=None, help="Judge provider for --mode judge, for example ollama or local_openai.")
 @click.option("--judge-base-url", default=None, help="Judge base URL. Defaults are local for ollama/local_openai/lmstudio/vllm.")
 @click.option("--judge-api-key", default=None, help="Judge API key. Optional for local providers; prefer CONTEXTTRACE_JUDGE_API_KEY in CI.")
@@ -769,7 +772,7 @@ def verify_demo_command(
 
 
 @cli.command("verify-benchmark")
-@click.option("--mode", default="lexical", show_default=True, type=click.Choice(["lexical", "semantic", "local_ml", "local-ml", "judge"]), help="Evidence scoring mode.")
+@click.option("--mode", default="lexical", show_default=True, type=click.Choice(JUDGE_VERIFY_MODES), help="Evidence scoring mode.")
 @click.option("--case-set", default="contexttrace", show_default=True, type=click.Choice(["contexttrace", "external", "all"]), help="Benchmark case set to run.")
 @click.option("--json", "json_output", is_flag=True, help="Print benchmark results as JSON.")
 @click.option("--report", is_flag=True, help="Generate a local HTML benchmark report.")
@@ -927,7 +930,7 @@ def judge_calibrate_command(
 
 
 @cli.command("audit-benchmark")
-@click.option("--mode", default="semantic", show_default=True, type=click.Choice(["lexical", "semantic", "local_ml", "local-ml"]), help="Evidence scoring mode.")
+@click.option("--mode", default="semantic", show_default=True, type=click.Choice(BASIC_VERIFY_MODES), help="Evidence scoring mode.")
 @click.option("--case-set", default="real", show_default=True, type=click.Choice(["real"]), help="Benchmark case set to run.")
 @click.option("--json", "json_output", is_flag=True, help="Print audit benchmark results as JSON.")
 @click.option("--report", is_flag=True, help="Generate a local HTML audit benchmark report.")
@@ -987,7 +990,7 @@ def audit_benchmark_command(mode: str, case_set: str, json_output: bool, report:
 @click.option("--json", "json_output", is_flag=True, help="Print the full comparison result as JSON.")
 @click.option("--report", is_flag=True, help="Generate a local HTML regression report.")
 @click.option("--out", default=None, help="HTML report path. Implies --report when provided.")
-@click.option("--mode", default="lexical", show_default=True, type=click.Choice(["lexical", "semantic", "local_ml", "local-ml"]), help="Evidence scoring mode for raw trace inputs.")
+@click.option("--mode", default="lexical", show_default=True, type=click.Choice(BASIC_VERIFY_MODES), help="Evidence scoring mode for raw trace inputs.")
 @click.option("--fail-on", multiple=True, help="Fail on new_failure, new_unsupported, new_citation_mismatch, should_abstain_flip, support_rate_drop, new_root_cause, or any_regression.")
 def compare_command(
     baseline_json: str,
@@ -1048,7 +1051,7 @@ def compare_command(
 @click.option("--json", "json_output", is_flag=True, help="Print the full audit result as JSON.")
 @click.option("--report", is_flag=True, help="Generate a local HTML retrieval audit report.")
 @click.option("--out", default=None, help="HTML report path. Implies --report when provided.")
-@click.option("--mode", default="lexical", show_default=True, type=click.Choice(["lexical", "semantic", "local_ml", "local-ml"]), help="Evidence scoring mode.")
+@click.option("--mode", default="lexical", show_default=True, type=click.Choice(BASIC_VERIFY_MODES), help="Evidence scoring mode.")
 @click.option("--fail-on", multiple=True, help="Fail on retrieval_miss, reranking_failure, chunking_issue, corpus_gap, answer_overreach, stale_source, insufficient_context, or any_failure.")
 def audit_command(
     trace_json: str,
@@ -1132,7 +1135,7 @@ def capture_group() -> None:
 @click.option("--json", "json_output", is_flag=True, help="Print capture output as JSON.")
 @click.option("--report", is_flag=True, help="Generate a local HTML verification report. Implies --verify.")
 @click.option("--report-out", default=None, help="HTML report path. Implies --report and --verify when provided.")
-@click.option("--mode", default="lexical", show_default=True, type=click.Choice(["lexical", "semantic", "local_ml", "local-ml", "judge"]), help="Evidence scoring mode when verifying.")
+@click.option("--mode", default="lexical", show_default=True, type=click.Choice(JUDGE_VERIFY_MODES), help="Evidence scoring mode when verifying.")
 @click.option("--judge-provider", default=None, help="Judge provider for --mode judge, for example ollama or local_openai.")
 @click.option("--judge-base-url", default=None, help="Judge base URL. Defaults are local for ollama/local_openai/lmstudio/vllm.")
 @click.option("--judge-api-key", default=None, help="Judge API key. Optional for local providers; prefer CONTEXTTRACE_JUDGE_API_KEY in CI.")
@@ -1221,7 +1224,7 @@ def capture_endpoint_command(
 @click.option("--json", "json_output", is_flag=True, help="Print capture output as JSON.")
 @click.option("--report", is_flag=True, help="Generate a local HTML verification report. Implies --verify.")
 @click.option("--report-out", default=None, help="HTML report path. Implies --report and --verify when provided.")
-@click.option("--mode", default="lexical", show_default=True, type=click.Choice(["lexical", "semantic", "local_ml", "local-ml", "judge"]), help="Evidence scoring mode when verifying.")
+@click.option("--mode", default="lexical", show_default=True, type=click.Choice(JUDGE_VERIFY_MODES), help="Evidence scoring mode when verifying.")
 @click.option("--judge-provider", default=None, help="Judge provider for --mode judge, for example ollama or local_openai.")
 @click.option("--judge-base-url", default=None, help="Judge base URL. Defaults are local for ollama/local_openai/lmstudio/vllm.")
 @click.option("--judge-api-key", default=None, help="Judge API key. Optional for local providers; prefer CONTEXTTRACE_JUDGE_API_KEY in CI.")

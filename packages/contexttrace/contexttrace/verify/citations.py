@@ -82,7 +82,8 @@ def find_citation_for_claim(
 
 
 def _source_fully_supports_claim(claim_text: str, match: object, *, mode: str) -> bool:
-    fact_mode = "semantic" if mode == "semantic" else "lexical"
+    normalized_mode = str(mode or "").strip().lower().replace("-", "_")
+    fact_mode = "semantic" if normalized_mode in {"semantic", "local_ml", "nli"} else "lexical"
     fact_match = compare_facts(
         claim_text,
         str(getattr(match, "supporting_text", "") or getattr(match, "snippet", "")),

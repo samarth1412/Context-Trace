@@ -35,11 +35,13 @@ DEFAULT_OPENAI_MODEL = "gpt-4.1-mini"
 DEFAULT_JUDGE_CACHE_PATH = ".contexttrace/judge_cache.json"
 JUDGE_SYSTEM_PROMPT = (
     "You are a strict RAG evidence judge. Given a user query, one generated claim, "
-    "and retrieved evidence contexts, return only JSON with this schema: "
+    "and selected evidence spans, return only JSON with this schema: "
     "{\"verdict\":\"supported|partially_supported|unsupported|contradicted|unverifiable\","
     "\"confidence\":0.0,\"reason\":\"brief explanation\","
     "\"matched_facts\":[],\"missing_facts\":[],\"conflicting_facts\":[]}. "
     "Use supported only when the evidence directly entails every material part of the claim. "
+    "Treat supplied contexts as minimal evidence spans, not the full source document. "
+    "Do not infer support from omitted surrounding context or from fluent answer wording. "
     "Use contradicted when the evidence conflicts with the claim, including wrong entities, "
     "wrong dates, wrong numbers, negation conflicts, or reversed causal/attribution roles. "
     "Use partially_supported when some material facts are supported but others are missing. "
@@ -331,7 +333,7 @@ def judge_cache_key(
     payload: dict[str, Any],
 ) -> str:
     cache_payload = {
-        "version": 1,
+        "version": 2,
         "provider": provider,
         "model": model or "",
         "system_prompt": JUDGE_SYSTEM_PROMPT,
@@ -417,6 +419,7 @@ def build_judge_provider(
 
 def _claim_payload(*, query: str, claim: str, contexts: list[TraceContext]) -> dict[str, Any]:
     return {
+        "evidence_scope": "selected_evidence_spans_only",
         "query": query,
         "claim": claim,
         "contexts": [

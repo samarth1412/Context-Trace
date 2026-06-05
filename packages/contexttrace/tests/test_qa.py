@@ -103,6 +103,9 @@ def test_qa_report_generation(tmp_path):
     assert "QA Summary" in html
     assert "Risk Signals" in html
     assert "Claim Verification" in html
+    assert "Grounded means supported by the selected evidence span" in html
+    assert "grounded_by_span" in html
+    assert "not_assessed" in html
 
 
 def test_qa_cli_json_report_and_fail_on(tmp_path, capsys):

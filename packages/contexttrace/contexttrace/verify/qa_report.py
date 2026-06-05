@@ -41,7 +41,9 @@ def _summary_cards(summary: dict[str, Any]) -> str:
         ("Primary Issue", summary.get("primary_issue")),
         ("Corpus Audited", summary.get("corpus_audited")),
         ("Total Claims", summary.get("total_claims")),
-        ("Support Rate", summary.get("support_rate")),
+        ("Grounding Rate", summary.get("support_rate")),
+        ("Truth Status", "not_assessed"),
+        ("Source Freshness", "freshness_unknown"),
         ("Unsupported Rate", summary.get("unsupported_claim_rate")),
         ("Citation Mismatches", summary.get("citation_mismatches")),
         ("Should Abstain", summary.get("should_abstain")),
@@ -89,7 +91,7 @@ def _inspect_warnings(inspection: dict[str, Any]) -> str:
 
 def _verify_rows(claims: list[dict[str, Any]]) -> str:
     if not claims:
-        return "<tr><td colspan=\"6\" class=\"muted\">No factual claims were extracted.</td></tr>"
+        return "<tr><td colspan=\"9\" class=\"muted\">No factual claims were extracted.</td></tr>"
     rows = []
     for claim in claims:
         root = claim.get("root_cause") or {}
@@ -98,7 +100,10 @@ def _verify_rows(claims: list[dict[str, Any]]) -> str:
             <tr>
               <td>{claim_id}</td>
               <td>{claim}</td>
+              <td><span class="badge support-{support_class}">{support}</span></td>
               <td><span class="badge verdict-{verdict_class}">{verdict}</span></td>
+              <td>{truth}</td>
+              <td>{source}</td>
               <td>{citation}</td>
               <td>{context}</td>
               <td>{root}</td>
@@ -106,8 +111,12 @@ def _verify_rows(claims: list[dict[str, Any]]) -> str:
             """.format(
                 claim_id=escape(_string(claim.get("claim_id"))),
                 claim=escape(_string(claim.get("claim"))),
+                support_class=escape(_css_token(claim.get("support_status"))),
+                support=escape(_string(claim.get("support_status"))),
                 verdict_class=escape(_css_token(claim.get("verdict"))),
                 verdict=escape(_string(claim.get("verdict"))),
+                truth=escape(_string(claim.get("truth_status"))),
+                source=escape(_string(claim.get("source_status"))),
                 citation=escape(_string(claim.get("citation_status"))),
                 context=escape(_string(claim.get("best_context_id") or "none")),
                 root=escape(_string(root.get("label") or "none")),
@@ -265,6 +274,13 @@ HTML_TEMPLATE = """<!doctype html>
       white-space: nowrap;
     }}
     .verdict-supported {{ color: var(--ok); background: #e9f7ef; }}
+    .support-grounded-by-span {{ color: var(--ok); background: #e9f7ef; }}
+    .support-grounded-without-span,
+    .support-partially-grounded-by-span,
+    .support-partially-grounded,
+    .support-insufficient-evidence {{ color: var(--warn); background: #fff7df; }}
+    .support-unsupported-by-retrieved-context,
+    .support-contradicted-by-evidence {{ color: var(--bad); background: #fdeceb; }}
     .verdict-unsupported, .verdict-contradicted {{ color: var(--bad); background: #fdeceb; }}
     .verdict-partially-supported, .verdict-unverifiable {{ color: var(--warn); background: #fff7df; }}
     pre {{
@@ -283,6 +299,7 @@ HTML_TEMPLATE = """<!doctype html>
     <header>
       <h1>ContextTrace Evidence QA Report</h1>
       <p class="muted">Local end-to-end evidence QA: inspect, verify, audit, and risk summary.</p>
+      <p class="muted">Grounded means supported by the selected evidence span. It does not mean independently true, current, or authoritative.</p>
     </header>
 
     <section>
@@ -319,7 +336,10 @@ HTML_TEMPLATE = """<!doctype html>
           <tr>
             <th>Claim ID</th>
             <th>Claim</th>
+            <th>Support Status</th>
             <th>Verdict</th>
+            <th>Truth</th>
+            <th>Source</th>
             <th>Citation</th>
             <th>Best Context</th>
             <th>Root Cause</th>

@@ -14,14 +14,16 @@ from contexttrace.verify.citations import (
     find_citation_for_claim,
 )
 from contexttrace.verify.claims import extract_claims
-from contexttrace.verify.evidence import find_best_evidence
+from contexttrace.verify.evidence import find_best_evidence, score_claim_against_context
 from contexttrace.verify.judges import ClaimJudge, JudgeVerdict, build_judge_provider
+from contexttrace.verify.local_nli import LocalNLIError, build_nli_provider
 from contexttrace.verify.root_cause import (
     attach_root_causes,
     primary_root_cause,
     root_cause_summary,
 )
-from contexttrace.verify.schema import RAGTrace, load_trace_file
+from contexttrace.verify.schema import RAGTrace, TraceContext, load_trace_file
+from contexttrace.verify.statuses import attach_grounding_statuses
 from contexttrace.verify.verdicts import classify_claim
 
 
@@ -30,8 +32,9 @@ def verify_trace_file(
     *,
     mode: str = "lexical",
     judge: ClaimJudge | None = None,
+    nli: ClaimJudge | None = None,
 ) -> dict[str, Any]:
-    return verify_trace(load_trace_file(path), mode=mode, judge=judge)
+    return verify_trace(load_trace_file(path), mode=mode, judge=judge, nli=nli)
 
 
 def verify_trace(
@@ -39,10 +42,12 @@ def verify_trace(
     *,
     mode: str = "lexical",
     judge: ClaimJudge | None = None,
+    nli: ClaimJudge | None = None,
 ) -> dict[str, Any]:
     mode = _normalize_mode(mode)
     evidence_mode = _evidence_mode(mode)
     judge = _resolve_judge(mode=mode, judge=judge)
+    nli = _resolve_nli(mode=mode, nli=nli)
     claims = extract_claims(trace.answer)
     verifications = []
     for claim in claims:
@@ -53,10 +58,14 @@ def verify_trace(
 
     if judge is not None:
         verifications = _apply_judge_verdicts(trace, claims, verifications, judge)
+    elif nli is not None:
+        verifications = _apply_judge_verdicts(trace, claims, verifications, nli)
 
     verifications = attach_citation_statuses(claims, verifications, trace, mode=evidence_mode)
     if judge is not None:
         verifications = _apply_judge_citation_statuses(trace, claims, verifications, judge, mode=evidence_mode)
+    elif nli is not None:
+        verifications = _apply_judge_citation_statuses(trace, claims, verifications, nli, mode=evidence_mode)
     abstention = judge_abstention(
         query=trace.query,
         claims=claims,
@@ -68,9 +77,11 @@ def verify_trace(
         [verification.to_dict() for verification in verifications],
         abstention,
     )
+    claim_results = attach_grounding_statuses(claim_results, trace)
     summary = _summary(verifications, abstention)
     summary["root_causes"] = root_cause_summary(claim_results)
     summary["primary_root_cause"] = primary_root_cause(claim_results)
+    summary["source_status"] = _source_status_summary(claim_results)
     diagnostics = _diagnostics(verifications, abstention)
     summary.update(
         {
@@ -93,13 +104,13 @@ def verify_trace(
 
 def _normalize_mode(mode: str) -> str:
     normalized = str(mode or "lexical").strip().lower().replace("-", "_")
-    if normalized not in {"lexical", "semantic", "local_ml", "judge"}:
-        raise ValueError("Verification mode must be lexical, semantic, local_ml, or judge.")
+    if normalized not in {"lexical", "semantic", "local_ml", "judge", "nli"}:
+        raise ValueError("Verification mode must be lexical, semantic, local_ml, judge, or nli.")
     return normalized
 
 
 def _evidence_mode(mode: str) -> str:
-    return "semantic" if mode == "judge" else mode
+    return "semantic" if mode in {"judge", "nli"} else mode
 
 
 def _resolve_judge(*, mode: str, judge: ClaimJudge | None) -> ClaimJudge | None:
@@ -110,6 +121,21 @@ def _resolve_judge(*, mode: str, judge: ClaimJudge | None) -> ClaimJudge | None:
         raise ValueError(
             "mode='judge' requires a judge provider. Pass judge=..., set "
             "CONTEXTTRACE_JUDGE_PROVIDER=ollama for local judging, or use mode='semantic'."
+        )
+    return resolved
+
+
+def _resolve_nli(*, mode: str, nli: ClaimJudge | None) -> ClaimJudge | None:
+    if mode != "nli":
+        return None
+    try:
+        resolved = nli or build_nli_provider()
+    except LocalNLIError as exc:
+        raise ValueError(str(exc)) from exc
+    if resolved is None:
+        raise ValueError(
+            "mode='nli' requires CONTEXTTRACE_NLI_MODEL_PATH or nli=LocalNLIJudge(...). "
+            "ContextTrace never downloads NLI models automatically."
         )
     return resolved
 
@@ -125,7 +151,7 @@ def _apply_judge_verdicts(
         verdict = judge.verify_claim(
             query=trace.query,
             claim=claim.text,
-            contexts=trace.contexts,
+            contexts=_selected_span_contexts(verification),
         )
         updated.append(_verification_with_judge(verification, verdict))
     return updated
@@ -151,10 +177,11 @@ def _apply_judge_citation_statuses(
             updated.append(verification.with_citation(status=CITED_SOURCE_MISSING, source_id=citation.source_id))
             continue
 
+        cited_match = score_claim_against_context(claim.text, cited_context, mode=mode)
         cited_verdict = judge.verify_claim(
             query=trace.query,
             claim=claim.text,
-            contexts=[cited_context],
+            contexts=_span_contexts_from_match(cited_match),
         )
         if cited_verdict.verdict == "supported":
             status = CITATION_OK
@@ -180,8 +207,66 @@ def _verification_with_judge(verification: Any, verdict: JudgeVerdict) -> Any:
             "verdict": verdict.verdict,
             "confidence": verdict.confidence,
             "reason": verdict.reason,
+            "scope": "selected_evidence_spans",
+            "raw": dict(verdict.raw),
         },
     )
+
+
+def _selected_span_contexts(verification: Any) -> list[TraceContext]:
+    contexts = _span_contexts(list(getattr(verification, "supporting_spans", []) or []))
+    if contexts:
+        return contexts
+    evidence_span = getattr(verification, "evidence_span", None)
+    if isinstance(evidence_span, dict):
+        return _span_contexts([evidence_span])
+    return []
+
+
+def _span_contexts_from_match(match: Any) -> list[TraceContext]:
+    contexts = _span_contexts(list(getattr(match, "supporting_spans", []) or []))
+    if contexts:
+        return contexts
+    span = match.span_dict() if hasattr(match, "span_dict") else None
+    if isinstance(span, dict):
+        return _span_contexts([span])
+    return []
+
+
+def _span_contexts(spans: list[dict[str, Any]]) -> list[TraceContext]:
+    contexts: list[TraceContext] = []
+    seen = set()
+    for span in spans:
+        if not isinstance(span, dict):
+            continue
+        text = str(span.get("text") or "").strip()
+        context_id = str(span.get("context_id") or "").strip()
+        if not text or not context_id:
+            continue
+        key = (
+            context_id,
+            span.get("start_char"),
+            span.get("end_char"),
+            span.get("span_hash"),
+        )
+        if key in seen:
+            continue
+        seen.add(key)
+        contexts.append(
+            TraceContext(
+                id=context_id,
+                text=text,
+                metadata={
+                    "evidence_scope": "selected_span",
+                    "source_context_id": context_id,
+                    "start_char": span.get("start_char"),
+                    "end_char": span.get("end_char"),
+                    "span_hash": span.get("span_hash"),
+                    "score": span.get("score"),
+                },
+            )
+        )
+    return contexts
 
 
 def _summary(verifications: list[Any], abstention: dict[str, object]) -> dict[str, object]:
@@ -205,11 +290,36 @@ def _summary(verifications: list[Any], abstention: dict[str, object]) -> dict[st
     return {
         "total_claims": total,
         **counts,
+        "grounded_claims": counts["supported"],
+        "truth_status": "not_assessed",
+        "source_status": "freshness_unknown",
+        "truth_assessed": False,
+        "source_freshness_assessed": False,
         "support_rate": round(counts["supported"] / total, 3) if total else 1.0,
         "unsupported_claim_rate": round(unsupported_like / total, 3) if total else 0.0,
         "citation_mismatches": citation_mismatches,
         "should_abstain": bool(abstention.get("should_abstain")),
     }
+
+
+def _source_status_summary(claims: list[dict[str, Any]]) -> str:
+    statuses = {str(claim.get("source_status") or "") for claim in claims}
+    statuses.discard("")
+    if not statuses:
+        return "freshness_unknown"
+    priority = [
+        "cited_source_missing",
+        "stale_or_version_conflicted",
+        "stale_source",
+        "conflicting_source",
+        "no_source",
+    ]
+    for status in priority:
+        if status in statuses:
+            return status
+    if len(statuses) == 1:
+        return next(iter(statuses))
+    return "mixed"
 
 
 def _diagnostics(verifications: list[Any], abstention: dict[str, object]) -> dict[str, object]:

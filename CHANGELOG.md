@@ -6,6 +6,17 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+### Added
+
+- Claim output now separates `support_status`, `truth_status`, and `source_status` so grounded evidence is not presented as independent truth.
+- Judge mode now sends selected evidence spans with char-offset metadata instead of broad retrieved contexts.
+- Optional `contexttrace[nli]` and `contexttrace[nli-onnx]` extras plus `--mode nli` for local claim-versus-span entailment and contradiction checks.
+- Local NLI model loading is explicit and offline-only through `CONTEXTTRACE_NLI_MODEL_PATH`; ContextTrace never downloads NLI models automatically.
+
+### Changed
+
+- Verification and QA reports now say "grounded" for span-backed support and explicitly note that grounding is not a truth or freshness guarantee.
+
 ## [0.8.0] - 2026-06-04
 
 ### Added

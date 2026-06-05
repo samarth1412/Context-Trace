@@ -209,10 +209,11 @@ def score_claim_against_context(
     spans = split_context_spans(context)
     best_score = 0.0
     best_terms: list[str] = []
-    best_snippet = context.text.strip()
-    best_start: int | None = None
-    best_end: int | None = None
-    best_hash: str | None = None
+    fallback_span = spans[0] if spans else None
+    best_snippet = fallback_span.text.strip() if fallback_span is not None else context.text.strip()
+    best_start: int | None = fallback_span.start_char if fallback_span is not None else None
+    best_end: int | None = fallback_span.end_char if fallback_span is not None else None
+    best_hash: str | None = fallback_span.span_hash if fallback_span is not None else None
     span_candidates: list[dict[str, object]] = []
     for span in spans:
         score, terms = lexical_score(claim_text, span.text, mode=mode)
@@ -395,7 +396,7 @@ def _local_ml_enabled(mode: str) -> bool:
 
 
 def _semantic_enabled(mode: str) -> bool:
-    return str(mode or "").strip().lower().replace("-", "_") in {"semantic", "local_ml"}
+    return str(mode or "").strip().lower().replace("-", "_") in {"semantic", "local_ml", "nli"}
 
 
 def _token_mode(mode: str) -> str:
