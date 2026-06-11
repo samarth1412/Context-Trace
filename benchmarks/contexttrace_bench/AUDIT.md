@@ -66,4 +66,5 @@ python benchmarks/contexttrace_bench/run_contexttrace.py \
 | Date | Reviewer | Scope | Result | Notes |
 | --- | --- | --- | --- | --- |
 | 2026-06-11 | Codex automated audit | Structure, source URL reachability, candidate-input leakage, metric consistency | Passed | See [AUDIT_REPORT.md](AUDIT_REPORT.md). Human source/label/span review still required. |
+| 2026-06-11 | Codex assisted source review | Source excerpt exact/fuzzy matching and review of weak matches | Passed with limitations | No machine-actionable source, label, or span blockers found. Not independent human sign-off. |
 | Pending | Pending | 150-case source, label, diagnostic, and artifact audit | Pending | Required before frozen-split claim. |

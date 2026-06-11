@@ -1,9 +1,10 @@
 # ContextTrace-Diag-150 Automated Audit Report
 
 Date: 2026-06-11
-Commit audited: `bff8d37` plus candidate-input leakage fix
-Scope: `public_holdout` 150-case machine-assisted audit
-Status: Automated checks passed; human sign-off still required before frozen-split language.
+Commit audited: `512e138` plus source-review pass
+Scope: `public_holdout` 150-case machine-assisted audit and assisted source review
+Status: Automated checks and assisted source review passed; independent human
+sign-off still required before frozen-split language.
 
 ## Automated Checks
 
@@ -18,6 +19,29 @@ Status: Automated checks passed; human sign-off still required before frozen-spl
 | Candidate leakage keys | 0 |
 | ContextTrace benchmark passes | 150 / 150 |
 | ContextTrace benchmark misses | 0 |
+
+## Source Excerpt Review
+
+The source-review pass fetched public documentation pages and compared each
+context excerpt against the fetched page text with normalized exact matching,
+token containment, and shingle matching.
+
+| Check | Result |
+| --- | ---: |
+| Context excerpts reviewed | 170 |
+| Exact normalized page matches | 54 |
+| Fuzzy acceptable matches | 84 |
+| Assisted-review contexts | 32 |
+| Source-review blockers | 0 |
+
+The 32 assisted-review contexts were either tight paraphrases of current public
+documentation, snippets whose page text is heavily transformed by the docs
+renderer, or Milvus pages that block direct scraper content fetches with a
+redirect challenge. The Milvus pages remain official public documentation URLs
+and were discoverable through public search results during this review.
+
+No source, label, or evidence-span changes were made from this pass. This is
+still not an independent human review of source fairness.
 
 Candidate input leakage check recursively searched exported
 `candidate_inputs.jsonl` keys for expected/predicted labels, verdicts, root
