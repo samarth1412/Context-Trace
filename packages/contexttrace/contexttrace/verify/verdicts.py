@@ -292,7 +292,10 @@ def _core_overlap(claim_text: str, evidence_text: str) -> float:
 def _is_partially_supported(fact_match: object) -> bool:
     matched = list(getattr(fact_match, "matched_facts", []) or [])
     missing = list(getattr(fact_match, "missing_facts", []) or [])
+    required = list(getattr(fact_match, "required_facts", []) or [])
     coverage = float(getattr(fact_match, "coverage", 0.0) or 0.0)
+    if matched and missing and len(required) >= 3 and coverage >= 0.30:
+        return True
     return bool(matched and missing and coverage >= 0.4 and (len(matched) >= 2 or coverage >= 0.5))
 
 

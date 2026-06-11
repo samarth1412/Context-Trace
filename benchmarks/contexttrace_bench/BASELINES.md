@@ -1,0 +1,238 @@
+# Baseline Comparison Runbook
+
+This file tracks competitor and reference baseline work for ContextTrace-Bench.
+Rows should only be described as publishable after they cover the full benchmark
+case set and are scored by `run_contexttrace.py --candidate`.
+
+## Current Status
+
+| System | Runner or Adapter | Status | Publishable | Notes |
+| --- | --- | --- | --- | --- |
+| ContextTrace semantic verifier | `run_contexttrace.py --mode semantic` | Ready | Yes | Local-first product path. CI enforces default quality gates. |
+| RAGAS | `run_ragas.py` | Full OpenAI-backed candidate scored | Yes | `gpt-4.1-mini`, 500/500 rows, zero row errors. Faithfulness-only baseline; diagnostic fields are `N/A`. |
+| DeepEval | `run_deepeval.py` | Full OpenAI-backed candidate scored | Yes | `gpt-4.1-mini`, 500/500 rows, zero row errors. Faithfulness-only baseline; diagnostic fields are `N/A`. |
+| OpenAI diagnostic judge | `run_local_judge.py` | Expanded public holdout candidate scored | Holdout only | `gpt-4.1-mini`, 75/75 public-holdout rows, zero row errors. Reports failure labels, root cause, citations, and spans. |
+| OpenAI-compatible local judge | `run_local_judge.py` | Smoke run completed | No | Ollama `phi3:latest` produced 5 predictions. It is parseable but slow on this machine, so full 500-case execution is a multi-hour run. |
+| Phoenix | `adapt_candidate.py --preset phoenix` | Adapter ready | No | Requires exported Phoenix evaluator results. |
+| TruLens | `adapt_candidate.py --preset trulens` | Adapter ready | No | Requires exported TruLens evaluator results. |
+
+Latest scored leaderboard:
+
+| System | Cases | Failure Macro-F1 | Diagnostic Coverage |
+| --- | ---: | ---: | --- |
+| ContextTrace semantic verifier | 500 | 1.000 | Root cause, citation status, and evidence-span localization reported where supported. |
+| RAGAS `gpt-4.1-mini` | 500 | 0.200 | Faithfulness labels only; root cause, citation status, and spans are `N/A`. |
+| DeepEval `gpt-4.1-mini` | 500 | 0.069 | Faithfulness labels only; root cause, citation status, and spans are `N/A`. |
+
+Latest public holdout:
+
+| System | Cases | Failure Macro-F1 | Root Cause Accuracy | Citation Error F1 | Span Overlap |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| ContextTrace semantic verifier | 75 | 1.000 | 1.000 | 1.000 | 0.944 |
+| OpenAI diagnostic judge `gpt-4.1-mini` | 75 | 0.869 | 0.973 | 1.000 | 0.905 |
+
+The expanded public holdout is the first 75/150 milestone for
+ContextTrace-Diag-150. It now passes all labeled gates for the local semantic
+verifier across 75 cases and 74 evidence-span labels. The OpenAI diagnostic
+judge reported all 75 rows with zero row errors, with root-cause coverage on
+75/75 rows, citation-status coverage on 51/75 rows, and evidence-span coverage
+on 74/75 rows.
+
+## Full ContextTrace Run
+
+```bash
+python benchmarks/contexttrace_bench/run_contexttrace.py \
+  --mode semantic \
+  --case-set all \
+  --output-dir benchmarks/contexttrace_bench/out \
+  --enforce-sota-gates
+```
+
+Expected artifacts:
+
+- `benchmarks/contexttrace_bench/out/contexttrace_bench_results.json`
+- `benchmarks/contexttrace_bench/out/results.md`
+- `benchmarks/contexttrace_bench/out/leaderboard.md`
+- `benchmarks/contexttrace_bench/out/report.html`
+- `benchmarks/contexttrace_bench/out/candidate_inputs.jsonl`
+
+## Remote RAGAS And DeepEval Runs
+
+Use the helper script for full publishable rows:
+
+```powershell
+$env:OPENAI_API_KEY = "<your evaluator key>"
+.\benchmarks\contexttrace_bench\run_openai_baselines.ps1
+```
+
+Use a limited smoke run only to verify setup:
+
+```powershell
+$env:OPENAI_API_KEY = "<your evaluator key>"
+.\benchmarks\contexttrace_bench\run_openai_baselines.ps1 -Limit 5
+```
+
+Limited runs are not publishable because they do not cover all case IDs.
+
+The helper supports resumable checkpointed runs:
+
+```powershell
+.\benchmarks\contexttrace_bench\run_openai_baselines.ps1 `
+  -Resume `
+  -MaxWorkers 4 `
+  -ProgressEvery 25 `
+  -SkipInstall
+```
+
+`-Resume` reuses completed rows from the raw output files and retries missing or
+errored rows. `-MaxWorkers` controls concurrent evaluator calls; keep it low
+unless provider rate limits are known.
+
+Manual RAGAS run:
+
+```powershell
+$ragasVenv = Join-Path $env:TEMP "contexttrace-ragas"
+py -3.11 -m venv $ragasVenv
+& "$ragasVenv\Scripts\python.exe" -m pip install -r benchmarks/contexttrace_bench/requirements-ragas.txt
+& "$ragasVenv\Scripts\python.exe" benchmarks/contexttrace_bench/run_ragas.py `
+  --input benchmarks/contexttrace_bench/out/candidate_inputs.jsonl `
+  --candidate-output benchmarks/contexttrace_bench/out/ragas_predictions.json `
+  --model gpt-4.1-mini `
+  --resume `
+  --max-workers 4 `
+  --progress-every 25
+```
+
+Manual DeepEval run:
+
+```powershell
+$deepevalVenv = Join-Path $env:TEMP "contexttrace-deepeval"
+py -3.11 -m venv $deepevalVenv
+& "$deepevalVenv\Scripts\python.exe" -m pip install -r benchmarks/contexttrace_bench/requirements-deepeval.txt
+& "$deepevalVenv\Scripts\python.exe" benchmarks/contexttrace_bench/run_deepeval.py `
+  --input benchmarks/contexttrace_bench/out/candidate_inputs.jsonl `
+  --candidate-output benchmarks/contexttrace_bench/out/deepeval_predictions.json `
+  --model gpt-4.1-mini `
+  --resume `
+  --max-workers 4 `
+  --progress-every 25
+```
+
+Score full candidate rows:
+
+```bash
+python benchmarks/contexttrace_bench/run_contexttrace.py \
+  --mode semantic \
+  --case-set all \
+  --candidate benchmarks/contexttrace_bench/out/ragas_predictions.json \
+  --candidate benchmarks/contexttrace_bench/out/deepeval_predictions.json
+```
+
+## Local Judge Baseline
+
+Run against an OpenAI-compatible endpoint:
+
+```powershell
+$judgeVenv = Join-Path $env:TEMP "contexttrace-local-judge"
+py -3.11 -m venv $judgeVenv
+& "$judgeVenv\Scripts\python.exe" -m pip install -r benchmarks/contexttrace_bench/requirements-local-judge.txt
+& "$judgeVenv\Scripts\python.exe" benchmarks/contexttrace_bench/run_local_judge.py `
+  --input benchmarks/contexttrace_bench/out/candidate_inputs.jsonl `
+  --candidate-output benchmarks/contexttrace_bench/out/local_judge_predictions.json `
+  --base-url http://localhost:11434/v1 `
+  --model llama3.1:8b
+```
+
+Then score it:
+
+```bash
+python benchmarks/contexttrace_bench/run_contexttrace.py \
+  --mode semantic \
+  --case-set all \
+  --candidate benchmarks/contexttrace_bench/out/local_judge_predictions.json
+```
+
+Run the richer OpenAI diagnostic judge on the public holdout:
+
+```powershell
+$env:OPENAI_API_KEY = "<your evaluator key>"
+$judgeVenv = Join-Path $env:TEMP "contexttrace-local-judge"
+py -3.11 -m venv $judgeVenv
+& "$judgeVenv\Scripts\python.exe" -m pip install -r benchmarks/contexttrace_bench/requirements-local-judge.txt
+& "$judgeVenv\Scripts\python.exe" benchmarks/contexttrace_bench/run_local_judge.py `
+  --input benchmarks/contexttrace_bench/out/public_holdout/candidate_inputs.jsonl `
+  --raw-output benchmarks/contexttrace_bench/out/public_holdout/openai_diagnostic_judge_raw_results.json `
+  --candidate-output benchmarks/contexttrace_bench/out/public_holdout/openai_diagnostic_judge_predictions.json `
+  --base-url https://api.openai.com/v1 `
+  --model gpt-4.1-mini `
+  --system "OpenAI diagnostic judge" `
+  --max-workers 4 `
+  --progress-every 3 `
+  --request-timeout 90
+
+python benchmarks/contexttrace_bench/run_contexttrace.py `
+  --mode semantic `
+  --case-set public_holdout `
+  --no-generated-cases `
+  --output-dir benchmarks/contexttrace_bench/out/public_holdout `
+  --candidate benchmarks/contexttrace_bench/out/public_holdout/openai_diagnostic_judge_predictions.json
+```
+
+Current local smoke result:
+
+```bash
+python benchmarks/contexttrace_bench/run_contexttrace.py \
+  --mode semantic \
+  --case-set all \
+  --candidate benchmarks/contexttrace_bench/out/local_judge_phi3_smoke_predictions.json
+```
+
+- Candidate: `Ollama phi3 local judge`
+- Model: `phi3:latest`
+- Coverage: 5 submitted predictions out of 500 cases
+- Status: smoke only, not publishable
+- Observed smoke runtime: about 155 seconds for 5 cases
+
+Installed Ollama chat models at the time of the smoke run were `phi3:latest`,
+`llama3:latest`, and `mistral:latest`. Larger local models are expected to be
+slower unless hardware or serving settings change.
+
+## Phoenix And TruLens Exports
+
+Normalize Phoenix output:
+
+```bash
+python benchmarks/contexttrace_bench/adapt_candidate.py \
+  --input phoenix_results.json \
+  --output benchmarks/contexttrace_bench/out/phoenix_predictions.json \
+  --system Phoenix \
+  --preset phoenix \
+  --id-field id
+```
+
+Normalize TruLens output:
+
+```bash
+python benchmarks/contexttrace_bench/adapt_candidate.py \
+  --input trulens_results.json \
+  --output benchmarks/contexttrace_bench/out/trulens_predictions.json \
+  --system TruLens \
+  --preset trulens \
+  --id-field id
+```
+
+## Publishability Checklist
+
+For every public baseline row, record:
+
+- Runner or adapter command.
+- Python version, package versions, model name, and provider.
+- Full-case coverage, not a `-Limit` smoke run.
+- Candidate JSON path.
+- Scored leaderboard artifact path.
+- Known missing diagnostic fields shown as `N/A`.
+- Any estimated cost assumptions.
+
+Do not compare a faithfulness-only evaluator against root-cause, citation, or
+span-localization metrics as if those fields were attempted. Use the diagnostic
+coverage table for that distinction.

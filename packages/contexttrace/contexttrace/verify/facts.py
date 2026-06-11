@@ -23,13 +23,14 @@ ACTIVE_RELATION_RE = re.compile(
     re.IGNORECASE,
 )
 NEGATION_RE = re.compile(r"\b(?:no|not|never|without|cannot|can't|prohibited|forbidden|disallowed)\b", re.IGNORECASE)
+STRONG_NEGATION_RE = re.compile(r"\b(?:no|not|never|cannot|can't|prohibited|forbidden|disallowed)\b", re.IGNORECASE)
 WHITESPACE_RE = re.compile(r"\s+")
 LIST_VERB_RE = re.compile(
-    r"\b(?P<verb>captures?|stores?|adds?|includes?|checks?|detects?|verifies?|reports?|records?|logs?|supports?|keeps?|calls?|maps?|creates?|runs?|writes?|saves?|evaluates?)\b\s+(?P<tail>.+)",
+    r"\b(?P<verb>captures?|stores?|adds?|includes?|checks?|detects?|verifies?|reports?|records?|logs?|supports?|keeps?|calls?|maps?|creates?|runs?|writes?|saves?|evaluates?|gets?|fetches?|retrieves?|reranks?)\b\s+(?P<tail>.+)",
     re.IGNORECASE,
 )
 LIST_ITEM_RE = re.compile(
-    r"^(?P<verb>captures?|stores?|adds?|includes?|checks?|detects?|verifies?|reports?|records?|logs?|supports?|keeps?|calls?|maps?|creates?|runs?|writes?|saves?|evaluates?)\s+(?P<tail>.+)$",
+    r"^(?P<verb>captures?|stores?|adds?|includes?|checks?|detects?|verifies?|reports?|records?|logs?|supports?|keeps?|calls?|maps?|creates?|runs?|writes?|saves?|evaluates?|gets?|fetches?|retrieves?|reranks?)\s+(?P<tail>.+)$",
     re.IGNORECASE,
 )
 
@@ -74,6 +75,55 @@ PREDICATE_MARKERS = {
     "may",
     "might",
     "not",
+}
+
+LIST_VERB_TOKENS = {
+    "capture",
+    "captures",
+    "store",
+    "stores",
+    "add",
+    "adds",
+    "include",
+    "includes",
+    "check",
+    "checks",
+    "detect",
+    "detects",
+    "verify",
+    "verifies",
+    "report",
+    "reports",
+    "record",
+    "records",
+    "log",
+    "logs",
+    "support",
+    "supports",
+    "keep",
+    "keeps",
+    "call",
+    "calls",
+    "map",
+    "maps",
+    "create",
+    "creates",
+    "run",
+    "runs",
+    "write",
+    "writes",
+    "save",
+    "saves",
+    "evaluate",
+    "evaluates",
+    "get",
+    "gets",
+    "fetch",
+    "fetches",
+    "retrieve",
+    "retrieves",
+    "rerank",
+    "reranks",
 }
 
 
@@ -192,9 +242,16 @@ def _list_facts(claim: str) -> list[RequiredFact]:
     for part in parts:
         if _contains_predicate(part):
             facts.append(RequiredFact(text=part, type=_fact_type(part)))
+        elif _starts_with_list_verb(part):
+            facts.append(RequiredFact(text=part, type="predicate"))
         else:
             facts.append(RequiredFact(text="%s %s" % (verb, part), type="predicate"))
     return facts
+
+
+def _starts_with_list_verb(value: str) -> bool:
+    first = _clean_token(value.split()[0]) if value.split() else ""
+    return first in LIST_VERB_TOKENS
 
 
 def _fact_supported(fact: str, evidence_text: str, *, mode: str) -> bool:
@@ -295,13 +352,16 @@ def _token_overlap(claim_text: str, evidence_text: str, *, mode: str) -> float:
 
 
 def _has_negation_conflict(claim_text: str, evidence_text: str, *, mode: str) -> bool:
-    claim_negated = bool(NEGATION_RE.search(claim_text))
+    claim_polarity = _negation_polarity(claim_text)
     units = _evidence_units(evidence_text)
     if not units:
         return False
 
     same_polarity_support = any(
-        bool(NEGATION_RE.search(unit)) == claim_negated
+        (
+            _negation_polarity(unit) == claim_polarity
+            or _shares_non_strong_without_context(claim_text, unit)
+        )
         and _token_overlap(claim_text, unit, mode=mode) >= 0.40
         for unit in units
     )
@@ -309,10 +369,24 @@ def _has_negation_conflict(claim_text: str, evidence_text: str, *, mode: str) ->
         return False
 
     return any(
-        bool(NEGATION_RE.search(unit)) != claim_negated
-        and _token_overlap(claim_text, unit, mode=mode) >= 0.55
+        _negation_polarity(unit) != claim_polarity
+        and _token_overlap(claim_text, unit, mode=mode) >= 0.45
         for unit in units
     )
+
+
+def _negation_polarity(text: str) -> str:
+    if STRONG_NEGATION_RE.search(text):
+        return "strong_negated"
+    if NEGATION_RE.search(text):
+        return "weak_negated"
+    return "affirmative"
+
+
+def _shares_non_strong_without_context(claim_text: str, evidence_unit: str) -> bool:
+    claim = str(claim_text or "").lower()
+    unit = str(evidence_unit or "").lower()
+    return "without" in claim and "without" in unit and not STRONG_NEGATION_RE.search(claim)
 
 
 def _version_conflict(claim_text: str, evidence_text: str, *, mode: str) -> RequiredFact | None:
@@ -381,7 +455,9 @@ def _relations_conflict(claim: RelationFact, evidence: RelationFact, *, mode: st
         return True
     if subject_overlap >= 0.72 and object_overlap < 0.50:
         return True
-    if object_overlap >= 0.72 and subject_overlap < 0.72:
+    if object_overlap >= 0.72 and (
+        subject_overlap < 0.35 or _proper_name_conflict(claim.subject, evidence.subject)
+    ):
         return True
     return False
 
@@ -397,6 +473,24 @@ def _extract_relation(text: str) -> RelationFact | None:
                 object=_clean_relation_phrase(match.group("object")),
             )
     return None
+
+
+def _proper_name_conflict(left: str, right: str) -> bool:
+    left_names = _capitalized_name_tokens(left)
+    right_names = _capitalized_name_tokens(right)
+    if len(left_names) < 2 or len(right_names) < 2:
+        return False
+    if left_names[0].lower() != right_names[0].lower():
+        return False
+    return left_names[-1].lower() != right_names[-1].lower()
+
+
+def _capitalized_name_tokens(value: str) -> list[str]:
+    return [
+        token
+        for token in TOKEN_RE.findall(str(value or ""))
+        if token[:1].isupper() and token[1:].islower()
+    ]
 
 
 def _canonical_relation_predicate(value: str) -> str:
@@ -581,8 +675,47 @@ SEMANTIC_TOKEN_MAP = {
     "repayment": "refund",
     "id": "number",
     "identifier": "number",
+    "fetch": "retrieve",
+    "fetches": "retrieve",
+    "fetched": "retrieve",
+    "get": "retrieve",
+    "gets": "retrieve",
+    "retrieved": "retrieve",
+    "retrieves": "retrieve",
+    "retrieving": "retrieve",
     "retriever": "retrieval",
     "retrievers": "retrieval",
+    "generated": "generate",
+    "generates": "generate",
+    "generating": "generate",
+    "gave": "receive",
+    "give": "receive",
+    "given": "receive",
+    "gives": "receive",
+    "giving": "receive",
+    "received": "receive",
+    "receives": "receive",
+    "receiving": "receive",
+    "evaluated": "evaluate",
+    "evaluates": "evaluate",
+    "evaluating": "evaluate",
+    "recomputed": "recompute",
+    "recomputes": "recompute",
+    "recomputing": "recompute",
+    "reranked": "rerank",
+    "reranking": "rerank",
+    "reranks": "rerank",
+    "bm25f": "bm25",
+    "configured": "requested",
+    "fall": "fit",
+    "inside": "within",
+    "limit": "restrict",
+    "limited": "restrict",
+    "limiting": "restrict",
+    "limits": "restrict",
+    "requiring": "restrict",
+    "restricting": "restrict",
+    "restricts": "restrict",
     "five": "5",
     "thirty": "30",
     "fourteen": "14",

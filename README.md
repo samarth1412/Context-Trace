@@ -138,6 +138,52 @@ Common root causes include `retrieval_miss`, `reranking_failure`, `chunking_issu
 
 Source metadata can include `source_authority`, `source_timestamp`, `source_version`, `canonical`, or `canonical_source`. ContextTrace uses those local fields to flag `grounded_but_stale`, `grounded_but_conflicted`, `grounded_by_low_authority_source`, or `supported_by_canonical_source`.
 
+## ContextTrace-Bench
+
+ContextTrace-Bench is the repo-level benchmark for claim-level failure attribution,
+root-cause diagnosis, citation-error detection, and evidence-span localization.
+
+```bash
+python benchmarks/contexttrace_bench/run_contexttrace.py \
+  --mode semantic \
+  --case-set all \
+  --enforce-sota-gates
+```
+
+It writes reproducible JSON, Markdown, leaderboard, and static HTML artifacts to
+`benchmarks/contexttrace_bench/out/`. The default run targets 500 cases by adding
+deterministic generated variants to the curated real-doc cases.
+
+Run the separate public-doc holdout without generated variants:
+
+```bash
+python benchmarks/contexttrace_bench/run_contexttrace.py \
+  --mode semantic \
+  --case-set public_holdout \
+  --no-generated-cases \
+  --output-dir benchmarks/contexttrace_bench/out/public_holdout
+```
+
+Current holdout status is tracked in the baseline runbook. The holdout is kept
+outside the default 500-case run so it can expose external validation gaps
+without invalidating the main leaderboard rows.
+
+`candidate_inputs.jsonl` gives external evaluators the exact trace payloads to
+score. Candidate prediction JSON files can then be scored with `--candidate` to
+compare ContextTrace against external evaluators or internal baselines on the
+same labeled cases. Use `benchmarks/contexttrace_bench/adapt_candidate.py` to
+normalize generic evaluator output into the candidate schema.
+
+Methodology and baseline runbooks live in
+[`benchmarks/contexttrace_bench/METHODOLOGY.md`](benchmarks/contexttrace_bench/METHODOLOGY.md)
+and [`benchmarks/contexttrace_bench/BASELINES.md`](benchmarks/contexttrace_bench/BASELINES.md).
+The public holdout track is documented in
+[`benchmarks/contexttrace_bench/DIAG150.md`](benchmarks/contexttrace_bench/DIAG150.md).
+The Week 1 readiness checklist is in [`docs/sota-readiness.md`](docs/sota-readiness.md).
+Treat the default 500-case run as verifier-readiness evidence; publish full
+competitor rows and independent external dataset results before making broad
+state-of-the-art claims.
+
 ## Capture Existing Systems
 
 Capture one live endpoint response:

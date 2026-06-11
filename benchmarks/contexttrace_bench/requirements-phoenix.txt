@@ -1,0 +1,2 @@
+arize-phoenix-evals==3.0.0
+openai==2.41.0

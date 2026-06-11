@@ -21,7 +21,12 @@ BENCHMARK_CASE_FILES = {
         Path(__file__).with_name("external_benchmark_cases.json"),
         "real external OSS docs and public GitHub issues",
     ),
+    "public_holdout": (
+        Path(__file__).with_name("public_holdout_cases.json"),
+        "curated public holdout docs from RAG, vector database, observability, and evaluator projects",
+    ),
 }
+DEFAULT_ALL_CASE_SETS = ("contexttrace", "external")
 
 
 @dataclass(frozen=True)
@@ -211,7 +216,7 @@ def _case(item: dict[str, Any]) -> VerifyBenchmarkCase:
 
 def _case_items(case_set: str) -> list[dict[str, Any]]:
     normalized = _normalize_case_set(case_set)
-    names = list(BENCHMARK_CASE_FILES) if normalized == "all" else [normalized]
+    names = list(DEFAULT_ALL_CASE_SETS) if normalized == "all" else [normalized]
     items: list[dict[str, Any]] = []
     for name in names:
         path, _ = BENCHMARK_CASE_FILES[name]

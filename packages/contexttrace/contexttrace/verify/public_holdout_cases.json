@@ -1,0 +1,1753 @@
+{
+  "description": "Public holdout verification cases from third-party documentation. The cases are intentionally kept separate from the default all benchmark so public comparison rows remain stable unless this holdout is explicitly requested.",
+  "cases": [
+    {
+      "id": "holdout_otel_span_supported",
+      "source": "opentelemetry.io/docs/concepts/signals/traces",
+      "note": "Supported OpenTelemetry span claim from public docs.",
+      "query": "What information does an OpenTelemetry span carry?",
+      "answer": "An OpenTelemetry span records information about an operation, such as a request in a service.",
+      "contexts": [
+        {
+          "id": "otel_traces_concepts",
+          "source": "opentelemetry.io/docs/concepts/signals/traces",
+          "source_url": "https://opentelemetry.io/docs/concepts/signals/traces/",
+          "text": "OpenTelemetry tracing represents work as spans. A tracer creates spans that carry information about what is happening during an operation, such as a service request."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "An OpenTelemetry span records information about an operation, such as a request in a service.",
+          "source_id": "otel_traces_concepts"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_otel_exporter_partial_support",
+      "source": "opentelemetry.io/docs/concepts/signals/traces",
+      "note": "Partial support case where the answer adds an unsupported Kafka-only transport claim.",
+      "query": "Where can OpenTelemetry trace exporters send traces?",
+      "answer": "OpenTelemetry trace exporters can send traces to the Collector, stdout for debugging, or any backend, and they must always use Kafka.",
+      "contexts": [
+        {
+          "id": "otel_trace_exporters",
+          "source": "opentelemetry.io/docs/concepts/signals/traces",
+          "source_url": "https://opentelemetry.io/docs/concepts/signals/traces/",
+          "text": "Trace exporters send traces to a consumer. The consumer can be standard output for debugging, the OpenTelemetry Collector, or an open source or vendor backend."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 1, "unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_weaviate_hybrid_supported",
+      "source": "docs.weaviate.io/weaviate/search/hybrid",
+      "note": "Supported Weaviate hybrid search claim from public docs.",
+      "query": "What does Weaviate hybrid search combine?",
+      "answer": "Weaviate hybrid search combines vector search with keyword BM25F search and fuses the result sets.",
+      "contexts": [
+        {
+          "id": "weaviate_hybrid_search",
+          "source": "docs.weaviate.io/weaviate/search/hybrid",
+          "source_url": "https://docs.weaviate.io/weaviate/search/hybrid",
+          "text": "Hybrid search in Weaviate combines vector search and keyword search using BM25F. The system fuses both result sets, and the fusion method and weights can be configured."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Weaviate hybrid search combines vector search with keyword BM25F search and fuses the result sets.",
+          "source_id": "weaviate_hybrid_search"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_weaviate_hybrid_contradicted",
+      "source": "docs.weaviate.io/weaviate/search/hybrid",
+      "note": "Contradicted Weaviate hybrid search claim.",
+      "query": "Does Weaviate hybrid search use vector search?",
+      "answer": "Weaviate hybrid search never uses vector search; it only runs BM25 keyword search.",
+      "contexts": [
+        {
+          "id": "weaviate_hybrid_search",
+          "source": "docs.weaviate.io/weaviate/search/hybrid",
+          "source_url": "https://docs.weaviate.io/weaviate/search/hybrid",
+          "text": "Hybrid search in Weaviate combines vector search and keyword search using BM25F. The system fuses both result sets, and the fusion method and weights can be configured."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_llamaindex_retriever_supported",
+      "source": "developers.llamaindex.ai/python/framework/module_guides/querying/retriever",
+      "note": "Supported LlamaIndex retriever behavior from public docs.",
+      "query": "What does a LlamaIndex retriever return for a question?",
+      "answer": "A LlamaIndex retriever can retrieve relevant nodes from an index for a question.",
+      "contexts": [
+        {
+          "id": "llamaindex_retriever",
+          "source": "developers.llamaindex.ai/python/framework/module_guides/querying/retriever",
+          "source_url": "https://developers.llamaindex.ai/python/framework/module_guides/querying/retriever/",
+          "text": "A retriever is created from an index and retrieves relevant context for a question. The returned items are nodes selected for the query."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "A LlamaIndex retriever can retrieve relevant nodes from an index for a question.",
+          "source_id": "llamaindex_retriever"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_llamaindex_retriever_overclaim",
+      "source": "developers.llamaindex.ai/python/framework/module_guides/querying/retriever",
+      "note": "Partial support case where retrieval is supported but automatic reranking and document writing are not.",
+      "query": "What does a LlamaIndex retriever do?",
+      "answer": "A LlamaIndex retriever gets nodes from an index, reranks them, and writes the selected nodes back into the document store.",
+      "contexts": [
+        {
+          "id": "llamaindex_retriever",
+          "source": "developers.llamaindex.ai/python/framework/module_guides/querying/retriever",
+          "source_url": "https://developers.llamaindex.ai/python/framework/module_guides/querying/retriever/",
+          "text": "A retriever is created from an index and retrieves relevant context for a question. The returned items are nodes selected for the query."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"partially_supported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_milvus_range_search_supported",
+      "source": "milvus.io/docs/single-vector-search.md",
+      "note": "Supported Milvus range search behavior from public docs.",
+      "query": "What can Milvus range search restrict?",
+      "answer": "Milvus range search can restrict returned entities by requiring their distance or score to fall within a configured range.",
+      "contexts": [
+        {
+          "id": "milvus_range_search",
+          "source": "milvus.io/docs/single-vector-search.md",
+          "source_url": "https://milvus.io/docs/single-vector-search.md",
+          "text": "Milvus range search improves result relevance by limiting returned entities to embeddings whose distance or score fits inside the requested range."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Milvus range search can restrict returned entities by requiring their distance or score to fall within a configured range.",
+          "source_id": "milvus_range_search"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_milvus_wrong_source_citation",
+      "source": "milvus.io/docs/single-vector-search.md + docs.weaviate.io/weaviate/search/hybrid",
+      "note": "Answer is supported by Milvus context but cites unrelated Weaviate context.",
+      "query": "What can Milvus range search restrict?",
+      "answer": "Milvus range search can restrict returned entities by requiring their distance or score to fall within a configured range.",
+      "contexts": [
+        {
+          "id": "milvus_range_search",
+          "source": "milvus.io/docs/single-vector-search.md",
+          "source_url": "https://milvus.io/docs/single-vector-search.md",
+          "text": "Milvus range search improves result relevance by limiting returned entities to embeddings whose distance or score fits inside the requested range."
+        },
+        {
+          "id": "weaviate_hybrid_search",
+          "source": "docs.weaviate.io/weaviate/search/hybrid",
+          "source_url": "https://docs.weaviate.io/weaviate/search/hybrid",
+          "text": "Hybrid search in Weaviate combines vector search and keyword search using BM25F. The system fuses both result sets."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Milvus range search can restrict returned entities by requiring their distance or score to fall within a configured range.",
+          "source_id": "weaviate_hybrid_search"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["claim_supported_by_different_source"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_langchain_retriever_supported",
+      "source": "docs.langchain.com/oss/python/integrations/retrievers",
+      "note": "Supported LangChain retriever interface claim from public docs.",
+      "query": "What does a LangChain retriever return?",
+      "answer": "A LangChain retriever returns Document objects for an unstructured query.",
+      "contexts": [
+        {
+          "id": "langchain_retrievers",
+          "source": "docs.langchain.com/oss/python/integrations/retrievers",
+          "source_url": "https://docs.langchain.com/oss/python/integrations/retrievers",
+          "text": "A LangChain retriever is an interface that returns documents given an unstructured query. Retrievers accept a string query as input and return a list of Document objects as output."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "A LangChain retriever returns Document objects for an unstructured query.",
+          "source_id": "langchain_retrievers"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_langchain_retriever_contradicted",
+      "source": "docs.langchain.com/oss/python/integrations/retrievers",
+      "note": "Contradicted LangChain retriever storage requirement claim.",
+      "query": "Does a LangChain retriever need to store documents?",
+      "answer": "A LangChain retriever must store documents.",
+      "contexts": [
+        {
+          "id": "langchain_retrievers",
+          "source": "docs.langchain.com/oss/python/integrations/retrievers",
+          "source_url": "https://docs.langchain.com/oss/python/integrations/retrievers",
+          "text": "A LangChain retriever does not need to be able to store documents, only to return or retrieve them."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_langchain_retriever_partial_rerank",
+      "source": "docs.langchain.com/oss/python/integrations/retrievers",
+      "note": "Partial support case where retriever output is supported but mandatory cross-encoder reranking is not.",
+      "query": "What does a LangChain retriever do?",
+      "answer": "A LangChain retriever returns Document objects for an unstructured query. It always reranks results with a cross-encoder.",
+      "contexts": [
+        {
+          "id": "langchain_retrievers",
+          "source": "docs.langchain.com/oss/python/integrations/retrievers",
+          "source_url": "https://docs.langchain.com/oss/python/integrations/retrievers",
+          "text": "A LangChain retriever is an interface that returns documents given an unstructured query. Retrievers accept a string query as input and return a list of Document objects as output."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 1, "unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_haystack_pipeline_supported",
+      "source": "docs.haystack.deepset.ai/docs/pipelines",
+      "note": "Supported Haystack pipeline topology claim from public docs.",
+      "query": "What is a Haystack pipeline?",
+      "answer": "A Haystack pipeline is a directed multigraph of components and integrations.",
+      "contexts": [
+        {
+          "id": "haystack_pipelines",
+          "source": "docs.haystack.deepset.ai/docs/pipelines",
+          "source_url": "https://docs.haystack.deepset.ai/docs/pipelines",
+          "text": "Haystack pipelines are directed multigraphs of different Haystack components and integrations."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "A Haystack pipeline is a directed multigraph of components and integrations.",
+          "source_id": "haystack_pipelines"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_haystack_document_store_supported",
+      "source": "docs.haystack.deepset.ai/docs/document-store",
+      "note": "Supported Haystack Document Store claim from public docs.",
+      "query": "What does a Haystack Document Store do?",
+      "answer": "A Haystack Document Store stores Documents.",
+      "contexts": [
+        {
+          "id": "haystack_document_store",
+          "source": "docs.haystack.deepset.ai/docs/document-store",
+          "source_url": "https://docs.haystack.deepset.ai/docs/document-store",
+          "text": "A Document Store is an object that stores your Documents. In Haystack, a Document Store is different from a component because it does not have the run method."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "A Haystack Document Store stores Documents.",
+          "source_id": "haystack_document_store"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_haystack_document_writer_partial",
+      "source": "docs.haystack.deepset.ai/docs/documentwriter",
+      "note": "Partial support case where DocumentWriter behavior is supported but Slack delivery is invented.",
+      "query": "What does Haystack DocumentWriter do?",
+      "answer": "Haystack DocumentWriter writes documents into a Document Store. It sends each written document to Slack.",
+      "contexts": [
+        {
+          "id": "haystack_document_writer",
+          "source": "docs.haystack.deepset.ai/docs/documentwriter",
+          "source_url": "https://docs.haystack.deepset.ai/docs/documentwriter",
+          "text": "DocumentWriter writes a list of documents into a Document Store of your choice. It is typically used in an indexing pipeline as the final step after preprocessing documents and creating embeddings."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 1, "unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_qdrant_collection_supported",
+      "source": "qdrant.tech/documentation/manage-data/collections",
+      "note": "Supported Qdrant collection definition from public docs.",
+      "query": "What is a Qdrant collection?",
+      "answer": "A Qdrant collection is a named set of points with vectors and payload.",
+      "contexts": [
+        {
+          "id": "qdrant_collections",
+          "source": "qdrant.tech/documentation/manage-data/collections",
+          "source_url": "https://qdrant.tech/documentation/manage-data/collections/",
+          "text": "A collection is a named set of points, which are vectors with a payload, among which you can search."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "A Qdrant collection is a named set of points with vectors and payload.",
+          "source_id": "qdrant_collections"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_qdrant_payload_filter_supported",
+      "source": "qdrant.tech/documentation/manage-data/payload",
+      "note": "Supported Qdrant payload filtering claim from public docs.",
+      "query": "What is Qdrant payload used for?",
+      "answer": "Qdrant payload stores JSON information alongside vectors for filtering.",
+      "contexts": [
+        {
+          "id": "qdrant_payload",
+          "source": "qdrant.tech/documentation/manage-data/payload",
+          "source_url": "https://qdrant.tech/documentation/manage-data/payload/",
+          "text": "Qdrant payload is additional information stored along with vectors. Qdrant allows JSON payload data and supports filters during search based on payload values."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Qdrant payload stores JSON information alongside vectors for filtering.",
+          "source_id": "qdrant_payload"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_qdrant_point_contradicted",
+      "source": "qdrant.tech/documentation/manage-data/points",
+      "note": "Contradicted Qdrant point claim.",
+      "query": "Does a Qdrant point contain a vector?",
+      "answer": "A Qdrant point has no vector.",
+      "contexts": [
+        {
+          "id": "qdrant_points",
+          "source": "qdrant.tech/documentation/manage-data/points",
+          "source_url": "https://qdrant.tech/documentation/manage-data/points/",
+          "text": "A point is a record consisting of a vector and an optional payload. Qdrant searches among points grouped in one collection based on vector similarity."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_pinecone_record_metadata_supported",
+      "source": "docs.pinecone.io/guides/index-data/indexing-overview",
+      "note": "Supported Pinecone record schema claim from public docs.",
+      "query": "What must a Pinecone record contain?",
+      "answer": "A Pinecone record must contain an ID and a vector.",
+      "contexts": [
+        {
+          "id": "pinecone_indexing_overview",
+          "source": "docs.pinecone.io/guides/index-data/indexing-overview",
+          "source_url": "https://docs.pinecone.io/guides/index-data/indexing-overview",
+          "text": "Every record in a Pinecone index must contain an ID and a vector. You can also include metadata key-value pairs to store additional information."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "A Pinecone record must contain an ID and a vector.",
+          "source_id": "pinecone_indexing_overview"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_pinecone_metadata_filter_partial",
+      "source": "docs.pinecone.io/guides/search/filter-by-metadata",
+      "note": "Partial support case where metadata filtering is supported but automatic re-embedding is invented.",
+      "query": "What does Pinecone metadata filtering do?",
+      "answer": "A Pinecone metadata filter limits search to matching records. It re-embeds every record during search.",
+      "contexts": [
+        {
+          "id": "pinecone_metadata_filter",
+          "source": "docs.pinecone.io/guides/search/filter-by-metadata",
+          "source_url": "https://docs.pinecone.io/guides/search/filter-by-metadata",
+          "text": "When you search the Pinecone index, you can include a metadata filter to limit the search to records matching the filter expression."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 1, "unverifiable": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_pinecone_namespace_supported",
+      "source": "docs.pinecone.io/guides/index-data/indexing-overview",
+      "note": "Supported Pinecone namespace search claim from public docs.",
+      "query": "What happens when Pinecone search has no metadata filter?",
+      "answer": "A Pinecone search without metadata filters searches the entire namespace.",
+      "contexts": [
+        {
+          "id": "pinecone_indexing_overview",
+          "source": "docs.pinecone.io/guides/index-data/indexing-overview",
+          "source_url": "https://docs.pinecone.io/guides/index-data/indexing-overview",
+          "text": "When querying a Pinecone index, searches without metadata filters do not consider metadata and search the entire namespace."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "A Pinecone search without metadata filters searches the entire namespace.",
+          "source_id": "pinecone_indexing_overview"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_chroma_collection_supported",
+      "source": "docs.trychroma.com/docs/collections/manage-collections",
+      "note": "Supported Chroma collection definition from public docs.",
+      "query": "What is a Chroma collection?",
+      "answer": "A Chroma collection is the fundamental unit of storage and querying.",
+      "contexts": [
+        {
+          "id": "chroma_manage_collections",
+          "source": "docs.trychroma.com/docs/collections/manage-collections",
+          "source_url": "https://docs.trychroma.com/docs/collections/manage-collections",
+          "text": "Chroma lets you manage collections of embeddings using the collection primitive. Collections are the fundamental unit of storage and querying in Chroma."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "A Chroma collection is the fundamental unit of storage and querying.",
+          "source_id": "chroma_manage_collections"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_chroma_query_supported",
+      "source": "docs.trychroma.com/docs/querying-collections/query-and-get",
+      "note": "Supported Chroma query behavior from public docs.",
+      "query": "How does Chroma handle text queries?",
+      "answer": "Chroma embeds text queries with the collection embedding function before vector similarity search.",
+      "contexts": [
+        {
+          "id": "chroma_query_get",
+          "source": "docs.trychroma.com/docs/querying-collections/query-and-get",
+          "source_url": "https://docs.trychroma.com/docs/querying-collections/query-and-get",
+          "text": "Chroma uses the collection's embedding function to embed text queries and uses the output to run a vector similarity search against the collection."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Chroma embeds text queries with the collection embedding function before vector similarity search.",
+          "source_id": "chroma_query_get"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_chroma_update_contradicted",
+      "source": "docs.trychroma.com/docs/collections/update-data",
+      "note": "Contradicted Chroma update behavior claim.",
+      "query": "Does Chroma recompute embeddings when update documents omit embeddings?",
+      "answer": "Chroma never recomputes embeddings when documents are supplied without embeddings.",
+      "contexts": [
+        {
+          "id": "chroma_update_data",
+          "source": "docs.trychroma.com/docs/collections/update-data",
+          "source_url": "https://docs.trychroma.com/docs/collections/update-data",
+          "text": "If documents are supplied without corresponding embeddings, the embeddings will be recomputed with the collection's embedding function."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_ragas_faithfulness_supported",
+      "source": "docs.ragas.io/en/stable/concepts/metrics/available_metrics/faithfulness",
+      "note": "Supported RAGAS Faithfulness metric claim from public docs.",
+      "query": "What does RAGAS Faithfulness measure?",
+      "answer": "RAGAS Faithfulness measures factual consistency of a response with retrieved context.",
+      "contexts": [
+        {
+          "id": "ragas_faithfulness",
+          "source": "docs.ragas.io/en/stable/concepts/metrics/available_metrics/faithfulness",
+          "source_url": "https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/faithfulness/",
+          "text": "The RAGAS Faithfulness metric measures how factually consistent a response is with the retrieved context. A response is faithful if all its claims can be supported by the retrieved context."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "RAGAS Faithfulness measures factual consistency of a response with retrieved context.",
+          "source_id": "ragas_faithfulness"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_ragas_context_precision_supported",
+      "source": "docs.ragas.io/en/stable/concepts/metrics/available_metrics/context_precision",
+      "note": "Supported RAGAS Context Precision metric claim from public docs.",
+      "query": "What does RAGAS Context Precision evaluate?",
+      "answer": "RAGAS Context Precision evaluates whether relevant chunks are ranked higher than irrelevant ones.",
+      "contexts": [
+        {
+          "id": "ragas_context_precision",
+          "source": "docs.ragas.io/en/stable/concepts/metrics/available_metrics/context_precision",
+          "source_url": "https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/context_precision/",
+          "text": "Context Precision evaluates the retriever's ability to rank relevant chunks higher than irrelevant chunks for a given query in the retrieved context."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "RAGAS Context Precision evaluates whether relevant chunks are ranked higher than irrelevant ones.",
+          "source_id": "ragas_context_precision"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_ragas_answer_relevancy_contradicted",
+      "source": "docs.ragas.io/en/stable/concepts/metrics/available_metrics/answer_relevance",
+      "note": "Contradicted RAGAS Answer Relevancy factuality claim.",
+      "query": "Does RAGAS Answer Relevancy evaluate factual accuracy?",
+      "answer": "RAGAS Answer Relevancy evaluates factual accuracy.",
+      "contexts": [
+        {
+          "id": "ragas_answer_relevancy",
+          "source": "docs.ragas.io/en/stable/concepts/metrics/available_metrics/answer_relevance",
+          "source_url": "https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/answer_relevance/",
+          "text": "The Answer Relevancy metric measures how relevant a response is to the user input. It focuses on how well the answer matches the intent of the question without evaluating factual accuracy."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_deepeval_faithfulness_supported",
+      "source": "deepeval.com/docs/metrics-faithfulness",
+      "note": "Supported DeepEval Faithfulness metric claim from public docs.",
+      "query": "What does DeepEval faithfulness evaluate?",
+      "answer": "DeepEval faithfulness evaluates whether actual_output factually aligns with retrieval_context.",
+      "contexts": [
+        {
+          "id": "deepeval_faithfulness",
+          "source": "deepeval.com/docs/metrics-faithfulness",
+          "source_url": "https://deepeval.com/docs/metrics-faithfulness",
+          "text": "DeepEval's faithfulness metric uses LLM-as-a-judge to evaluate whether the actual_output factually aligns with the contents of the retrieval_context."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "DeepEval faithfulness evaluates whether actual_output factually aligns with retrieval_context.",
+          "source_id": "deepeval_faithfulness"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_deepeval_contextual_relevancy_supported",
+      "source": "deepeval.com/docs/metrics-contextual-relevancy",
+      "note": "Supported DeepEval Contextual Relevancy metric claim from public docs.",
+      "query": "What does DeepEval contextual relevancy evaluate?",
+      "answer": "DeepEval contextual relevancy evaluates retrieval_context relevance for a given input.",
+      "contexts": [
+        {
+          "id": "deepeval_contextual_relevancy",
+          "source": "deepeval.com/docs/metrics-contextual-relevancy",
+          "source_url": "https://deepeval.com/docs/metrics-contextual-relevancy",
+          "text": "The contextual relevancy metric uses LLM-as-a-judge to measure the relevance of the information presented in retrieval_context for a given input."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "DeepEval contextual relevancy evaluates retrieval_context relevance for a given input.",
+          "source_id": "deepeval_contextual_relevancy"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_deepeval_hallucination_partial",
+      "source": "deepeval.com/docs/metrics-hallucination",
+      "note": "Partial support case where hallucination comparison is supported but retrieval-context mutation is invented.",
+      "query": "What does DeepEval hallucination compare?",
+      "answer": "DeepEval hallucination compares actual_output to the provided context. It updates the retrieval context.",
+      "contexts": [
+        {
+          "id": "deepeval_hallucination",
+          "source": "deepeval.com/docs/metrics-hallucination",
+          "source_url": "https://deepeval.com/docs/metrics-hallucination",
+          "text": "The hallucination metric uses LLM-as-a-judge to determine whether an LLM generates factually correct information by comparing the actual_output to the provided context."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 1, "unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_otel_logs_supported",
+      "source": "opentelemetry.io/docs/concepts/signals/logs",
+      "note": "Supported OpenTelemetry log definition from public docs.",
+      "query": "What is an OpenTelemetry log?",
+      "answer": "An OpenTelemetry log is a timestamped text record with optional metadata.",
+      "contexts": [
+        {
+          "id": "otel_logs",
+          "source": "opentelemetry.io/docs/concepts/signals/logs",
+          "source_url": "https://opentelemetry.io/docs/concepts/signals/logs/",
+          "text": "A log is a timestamped text record, either structured or unstructured, with optional metadata."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "An OpenTelemetry log is a timestamped text record with optional metadata.",
+          "source_id": "otel_logs"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_otel_baggage_supported",
+      "source": "opentelemetry.io/docs/concepts/context-propagation",
+      "note": "Supported OpenTelemetry baggage propagation claim from public docs.",
+      "query": "What does OpenTelemetry baggage propagate?",
+      "answer": "OpenTelemetry baggage propagates arbitrary key-value pairs across service boundaries.",
+      "contexts": [
+        {
+          "id": "otel_baggage",
+          "source": "opentelemetry.io/docs/concepts/context-propagation",
+          "source_url": "https://opentelemetry.io/docs/concepts/context-propagation/",
+          "text": "Baggage allows you to propagate arbitrary key-value pairs. This data is propagated across service boundaries."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "OpenTelemetry baggage propagates arbitrary key-value pairs across service boundaries.",
+          "source_id": "otel_baggage"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_otel_resource_partial_encryption",
+      "source": "opentelemetry.io/docs/concepts/resources",
+      "note": "Partial support case where resource definition is supported but encryption is invented.",
+      "query": "What does an OpenTelemetry resource represent?",
+      "answer": "An OpenTelemetry resource represents the entity producing telemetry. It encrypts telemetry payloads by default.",
+      "contexts": [
+        {
+          "id": "otel_resources",
+          "source": "opentelemetry.io/docs/concepts/resources",
+          "source_url": "https://opentelemetry.io/docs/concepts/resources/",
+          "text": "A resource represents the entity producing telemetry as resource attributes. For example, a process producing telemetry in Kubernetes can include process name, pod name, namespace, and deployment name."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 1, "unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_otel_metrics_contradicted",
+      "source": "opentelemetry.io/docs/specs/otel/metrics",
+      "note": "Contradicted OpenTelemetry metrics API claim.",
+      "query": "Can the OpenTelemetry Metrics API capture raw measurements?",
+      "answer": "The OpenTelemetry Metrics API cannot capture raw measurements.",
+      "contexts": [
+        {
+          "id": "otel_metrics_api",
+          "source": "opentelemetry.io/docs/specs/otel/metrics",
+          "source_url": "https://opentelemetry.io/docs/specs/otel/metrics/",
+          "text": "The OpenTelemetry Metrics API serves two purposes: capturing raw measurements efficiently and decoupling instrumentation from the SDK."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_otel_baggage_wrong_source_citation",
+      "source": "opentelemetry.io/docs/concepts/context-propagation + opentelemetry.io/docs/concepts/signals/logs",
+      "note": "Answer is supported by baggage docs but cites logs docs.",
+      "query": "What does OpenTelemetry baggage propagate?",
+      "answer": "OpenTelemetry baggage propagates arbitrary key-value pairs across service boundaries.",
+      "contexts": [
+        {
+          "id": "otel_baggage",
+          "source": "opentelemetry.io/docs/concepts/context-propagation",
+          "source_url": "https://opentelemetry.io/docs/concepts/context-propagation/",
+          "text": "Baggage allows you to propagate arbitrary key-value pairs. This data is propagated across service boundaries."
+        },
+        {
+          "id": "otel_logs",
+          "source": "opentelemetry.io/docs/concepts/signals/logs",
+          "source_url": "https://opentelemetry.io/docs/concepts/signals/logs/",
+          "text": "A log is a timestamped text record, either structured or unstructured, with optional metadata."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "OpenTelemetry baggage propagates arbitrary key-value pairs across service boundaries.",
+          "source_id": "otel_logs"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["claim_supported_by_different_source"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_langchain_vectorstore_supported",
+      "source": "docs.langchain.com/oss/python/integrations/vectorstores",
+      "note": "Supported LangChain vector store interface claim.",
+      "query": "What can LangChain vector stores do?",
+      "answer": "LangChain vector stores store embedded data and perform similarity search.",
+      "contexts": [
+        {
+          "id": "langchain_vectorstores",
+          "source": "docs.langchain.com/oss/python/integrations/vectorstores",
+          "source_url": "https://docs.langchain.com/oss/python/integrations/vectorstores",
+          "text": "A vector store stores embedded data and performs similarity search. LangChain provides a unified interface for vector stores."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "LangChain vector stores store embedded data and perform similarity search.",
+          "source_id": "langchain_vectorstores"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_langchain_text_splitter_supported",
+      "source": "docs.langchain.com/oss/python/integrations/splitters",
+      "note": "Supported LangChain text splitter claim.",
+      "query": "What do LangChain text splitters do?",
+      "answer": "LangChain text splitters break large documents into smaller retrievable chunks.",
+      "contexts": [
+        {
+          "id": "langchain_text_splitters",
+          "source": "docs.langchain.com/oss/python/integrations/splitters",
+          "source_url": "https://docs.langchain.com/oss/python/integrations/splitters",
+          "text": "Text splitters break large docs into smaller chunks that will be retrievable individually and fit within model context window limit."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "LangChain text splitters break large documents into smaller retrievable chunks.",
+          "source_id": "langchain_text_splitters"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_langchain_chat_model_supported",
+      "source": "docs.langchain.com/oss/python/integrations/chat",
+      "note": "Supported LangChain chat model claim.",
+      "query": "What input and output do LangChain chat models use?",
+      "answer": "LangChain chat models use a sequence of messages as inputs and return messages as outputs.",
+      "contexts": [
+        {
+          "id": "langchain_chat_models",
+          "source": "docs.langchain.com/oss/python/integrations/chat",
+          "source_url": "https://docs.langchain.com/oss/python/integrations/chat",
+          "text": "Chat models are language models that use a sequence of messages as inputs and return messages as outputs."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "LangChain chat models use a sequence of messages as inputs and return messages as outputs.",
+          "source_id": "langchain_chat_models"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_langchain_structured_output_partial_xml",
+      "source": "docs.langchain.com/oss/python/langchain/structured-output",
+      "note": "Partial support case where structured output is supported but XML-only behavior is invented.",
+      "query": "What does LangChain structured output return?",
+      "answer": "LangChain structured output can return JSON objects, Pydantic models, or dataclasses. It only supports XML.",
+      "contexts": [
+        {
+          "id": "langchain_structured_output",
+          "source": "docs.langchain.com/oss/python/langchain/structured-output",
+          "source_url": "https://docs.langchain.com/oss/python/langchain/structured-output",
+          "text": "Structured output allows agents to return data in a specific, predictable format. Instead of parsing natural language responses, you get structured data in the form of JSON objects, Pydantic models, or dataclasses."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 1, "unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_langchain_vectorstore_delete_contradicted",
+      "source": "docs.langchain.com/oss/python/integrations/vectorstores",
+      "note": "Contradicted LangChain vector store deletion claim.",
+      "query": "Can LangChain vector stores delete stored documents?",
+      "answer": "LangChain vector stores cannot delete stored documents.",
+      "contexts": [
+        {
+          "id": "langchain_vectorstores",
+          "source": "docs.langchain.com/oss/python/integrations/vectorstores",
+          "source_url": "https://docs.langchain.com/oss/python/integrations/vectorstores",
+          "text": "LangChain provides a unified interface for vector stores, allowing you to add documents, delete stored documents by ID, and run similarity search."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_langchain_text_splitter_wrong_source_citation",
+      "source": "docs.langchain.com/oss/python/integrations/splitters + docs.langchain.com/oss/python/integrations/chat",
+      "note": "Answer is supported by text splitter docs but cites chat model docs.",
+      "query": "What do LangChain text splitters do?",
+      "answer": "LangChain text splitters break large documents into smaller retrievable chunks.",
+      "contexts": [
+        {
+          "id": "langchain_text_splitters",
+          "source": "docs.langchain.com/oss/python/integrations/splitters",
+          "source_url": "https://docs.langchain.com/oss/python/integrations/splitters",
+          "text": "Text splitters break large docs into smaller chunks that will be retrievable individually and fit within model context window limit."
+        },
+        {
+          "id": "langchain_chat_models",
+          "source": "docs.langchain.com/oss/python/integrations/chat",
+          "source_url": "https://docs.langchain.com/oss/python/integrations/chat",
+          "text": "Chat models are language models that use a sequence of messages as inputs and return messages as outputs."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "LangChain text splitters break large documents into smaller retrievable chunks.",
+          "source_id": "langchain_chat_models"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["claim_supported_by_different_source"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_haystack_retrievers_supported",
+      "source": "docs.haystack.deepset.ai/docs/retrievers",
+      "note": "Supported Haystack retriever claim.",
+      "query": "What do Haystack retrievers do?",
+      "answer": "Haystack retrievers select documents from a Document Store that match the user query.",
+      "contexts": [
+        {
+          "id": "haystack_retrievers",
+          "source": "docs.haystack.deepset.ai/docs/retrievers",
+          "source_url": "https://docs.haystack.deepset.ai/docs/retrievers",
+          "text": "Retrievers go through all the documents in a Document Store and select the ones that match the user query."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Haystack retrievers select documents from a Document Store that match the user query.",
+          "source_id": "haystack_retrievers"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_haystack_generators_supported",
+      "source": "docs.haystack.deepset.ai/docs/generators",
+      "note": "Supported Haystack generator claim.",
+      "query": "What are Haystack generators responsible for?",
+      "answer": "Haystack generators generate text after receiving a prompt.",
+      "contexts": [
+        {
+          "id": "haystack_generators",
+          "source": "docs.haystack.deepset.ai/docs/generators",
+          "source_url": "https://docs.haystack.deepset.ai/docs/generators",
+          "text": "Generators are responsible for generating text after you give them a prompt. They are specific for each LLM technology."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Haystack generators generate text after receiving a prompt.",
+          "source_id": "haystack_generators"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_haystack_document_splitter_supported",
+      "source": "docs.haystack.deepset.ai/docs/documentsplitter",
+      "note": "Supported Haystack DocumentSplitter claim.",
+      "query": "What does Haystack DocumentSplitter do?",
+      "answer": "Haystack DocumentSplitter divides text documents into shorter documents.",
+      "contexts": [
+        {
+          "id": "haystack_document_splitter",
+          "source": "docs.haystack.deepset.ai/docs/documentsplitter",
+          "source_url": "https://docs.haystack.deepset.ai/docs/documentsplitter",
+          "text": "DocumentSplitter divides a list of text documents into a list of shorter text documents."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Haystack DocumentSplitter divides text documents into shorter documents.",
+          "source_id": "haystack_document_splitter"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_haystack_rankers_supported",
+      "source": "docs.haystack.deepset.ai/docs/rankers",
+      "note": "Supported Haystack ranker claim.",
+      "query": "What do Haystack rankers do?",
+      "answer": "Haystack rankers order documents by given criteria to improve retrieval results.",
+      "contexts": [
+        {
+          "id": "haystack_rankers",
+          "source": "docs.haystack.deepset.ai/docs/rankers",
+          "source_url": "https://docs.haystack.deepset.ai/docs/rankers",
+          "text": "Rankers are a group of components that order Documents by given criteria. Their goal is to improve your document retrieval results."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Haystack rankers order documents by given criteria to improve retrieval results.",
+          "source_id": "haystack_rankers"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_haystack_document_store_run_contradicted",
+      "source": "docs.haystack.deepset.ai/docs/document-store",
+      "note": "Contradicted Haystack Document Store run method claim.",
+      "query": "Does a Haystack Document Store have the run method?",
+      "answer": "A Haystack Document Store has the run method.",
+      "contexts": [
+        {
+          "id": "haystack_document_store",
+          "source": "docs.haystack.deepset.ai/docs/document-store",
+          "source_url": "https://docs.haystack.deepset.ai/docs/document-store",
+          "text": "In Haystack, a Document Store is different from a component, as it does not have the run method."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_haystack_generator_partial_vectorstore",
+      "source": "docs.haystack.deepset.ai/docs/generators",
+      "note": "Partial support case where generation is supported but vector-store writing is invented.",
+      "query": "What does a Haystack generator output?",
+      "answer": "A Haystack generator creates text after a prompt. It writes the generated text into every vector store.",
+      "contexts": [
+        {
+          "id": "haystack_generators",
+          "source": "docs.haystack.deepset.ai/docs/generators",
+          "source_url": "https://docs.haystack.deepset.ai/docs/generators",
+          "text": "Generators are responsible for generating text after you give them a prompt. They are specific for each LLM technology."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 1, "unverifiable": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_qdrant_filtering_supported",
+      "source": "qdrant.tech/documentation/search/filtering",
+      "note": "Supported Qdrant filtering claim.",
+      "query": "What can Qdrant filters constrain?",
+      "answer": "Qdrant filters can impose conditions on payload and point IDs during search or retrieval.",
+      "contexts": [
+        {
+          "id": "qdrant_filtering",
+          "source": "qdrant.tech/documentation/search/filtering",
+          "source_url": "https://qdrant.tech/documentation/search/filtering/",
+          "text": "With Qdrant, you can set conditions when searching or retrieving points. For example, you can impose conditions on both the payload and the id of the point."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Qdrant filters can impose conditions on payload and point IDs during search or retrieval.",
+          "source_id": "qdrant_filtering"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_qdrant_quantization_supported",
+      "source": "qdrant.tech/documentation/manage-data/quantization",
+      "note": "Supported Qdrant product quantization claim.",
+      "query": "What does Qdrant product quantization do?",
+      "answer": "Qdrant product quantization compresses vectors to minimize memory usage.",
+      "contexts": [
+        {
+          "id": "qdrant_quantization",
+          "source": "qdrant.tech/documentation/manage-data/quantization",
+          "source_url": "https://qdrant.tech/documentation/manage-data/quantization/",
+          "text": "Product quantization is a method of compressing vectors to minimize their memory usage by dividing them into chunks and quantizing each segment individually."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Qdrant product quantization compresses vectors to minimize memory usage.",
+          "source_id": "qdrant_quantization"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_qdrant_snapshots_supported",
+      "source": "qdrant.tech/documentation/snapshots",
+      "note": "Supported Qdrant snapshot recovery claim.",
+      "query": "What can Qdrant snapshots do?",
+      "answer": "Qdrant snapshots can be used to recover a collection from a URL or local file.",
+      "contexts": [
+        {
+          "id": "qdrant_snapshots",
+          "source": "qdrant.tech/documentation/snapshots",
+          "source_url": "https://qdrant.tech/documentation/snapshots/",
+          "text": "To recover from a URL or local file, use the snapshot recovery endpoint. If the target collection does not exist, it will be created."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Qdrant snapshots can be used to recover a collection from a URL or local file.",
+          "source_id": "qdrant_snapshots"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_qdrant_hybrid_queries_supported",
+      "source": "qdrant.tech/documentation/search/hybrid-queries",
+      "note": "Supported Qdrant hybrid query fusion claim.",
+      "query": "What can Qdrant hybrid queries fuse?",
+      "answer": "Qdrant hybrid queries can fuse dense, sparse, and multivector results.",
+      "contexts": [
+        {
+          "id": "qdrant_hybrid_queries",
+          "source": "qdrant.tech/documentation/search/hybrid-queries",
+          "source_url": "https://qdrant.tech/documentation/search/hybrid-queries/",
+          "text": "Hybrid queries in Qdrant can fuse dense, sparse, and multivector results with RRF or DBSF."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Qdrant hybrid queries can fuse dense, sparse, and multivector results.",
+          "source_id": "qdrant_hybrid_queries"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_qdrant_filtering_partial_encryption",
+      "source": "qdrant.tech/documentation/search/filtering",
+      "note": "Partial support case where filtering is supported but encryption-key rotation is invented.",
+      "query": "What can Qdrant filters do?",
+      "answer": "Qdrant filters can impose conditions on payload values and point IDs. They rotate encryption keys for matching points.",
+      "contexts": [
+        {
+          "id": "qdrant_filtering",
+          "source": "qdrant.tech/documentation/search/filtering",
+          "source_url": "https://qdrant.tech/documentation/search/filtering/",
+          "text": "With Qdrant, you can set conditions when searching or retrieving points. For example, you can impose conditions on both the payload and the id of the point."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 1, "unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_qdrant_quantization_contradicted",
+      "source": "qdrant.tech/documentation/manage-data/quantization",
+      "note": "Contradicted Qdrant quantization compression claim.",
+      "query": "Does Qdrant product quantization compress vectors?",
+      "answer": "Qdrant product quantization does not compress vectors.",
+      "contexts": [
+        {
+          "id": "qdrant_quantization",
+          "source": "qdrant.tech/documentation/manage-data/quantization",
+          "source_url": "https://qdrant.tech/documentation/manage-data/quantization/",
+          "text": "Product quantization is a method of compressing vectors to minimize their memory usage."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_qdrant_snapshot_wrong_source_citation",
+      "source": "qdrant.tech/documentation/snapshots + qdrant.tech/documentation/manage-data/quantization",
+      "note": "Answer is supported by snapshot docs but cites quantization docs.",
+      "query": "What can Qdrant snapshots do?",
+      "answer": "Qdrant snapshots can be used to recover a collection from a URL or local file.",
+      "contexts": [
+        {
+          "id": "qdrant_snapshots",
+          "source": "qdrant.tech/documentation/snapshots",
+          "source_url": "https://qdrant.tech/documentation/snapshots/",
+          "text": "To recover from a URL or local file, use the snapshot recovery endpoint. If the target collection does not exist, it will be created."
+        },
+        {
+          "id": "qdrant_quantization",
+          "source": "qdrant.tech/documentation/manage-data/quantization",
+          "source_url": "https://qdrant.tech/documentation/manage-data/quantization/",
+          "text": "Product quantization is a method of compressing vectors to minimize their memory usage."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Qdrant snapshots can be used to recover a collection from a URL or local file.",
+          "source_id": "qdrant_quantization"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["claim_supported_by_different_source"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_pinecone_upsert_supported",
+      "source": "docs.pinecone.io/reference/api/2024-07/data-plane/upsert",
+      "note": "Supported Pinecone upsert claim.",
+      "query": "What does Pinecone upsert do?",
+      "answer": "Pinecone upsert writes vectors into a namespace.",
+      "contexts": [
+        {
+          "id": "pinecone_upsert",
+          "source": "docs.pinecone.io/reference/api/2024-07/data-plane/upsert",
+          "source_url": "https://docs.pinecone.io/reference/api/2024-07/data-plane/upsert",
+          "text": "The upsert operation writes vectors into a namespace. If a new value is upserted for an existing vector ID, it will overwrite the previous value."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Pinecone upsert writes vectors into a namespace.",
+          "source_id": "pinecone_upsert"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_pinecone_delete_metadata_supported",
+      "source": "docs.pinecone.io/guides/manage-data/delete-data",
+      "note": "Supported Pinecone metadata-delete claim.",
+      "query": "Can Pinecone delete records by metadata?",
+      "answer": "Pinecone can delete records from a namespace using a metadata filter expression.",
+      "contexts": [
+        {
+          "id": "pinecone_delete_data",
+          "source": "docs.pinecone.io/guides/manage-data/delete-data",
+          "source_url": "https://docs.pinecone.io/guides/manage-data/delete-data",
+          "text": "To delete records from a namespace based on their metadata values, pass a metadata filter expression to the delete operation."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Pinecone can delete records from a namespace using a metadata filter expression.",
+          "source_id": "pinecone_delete_data"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_pinecone_hybrid_search_supported",
+      "source": "docs.pinecone.io/guides/search/hybrid-search",
+      "note": "Supported Pinecone hybrid search claim.",
+      "query": "What can Pinecone hybrid search combine?",
+      "answer": "Pinecone hybrid search can combine dense vectors for semantic search with sparse vectors for lexical search.",
+      "contexts": [
+        {
+          "id": "pinecone_hybrid_search",
+          "source": "docs.pinecone.io/guides/search/hybrid-search",
+          "source_url": "https://docs.pinecone.io/guides/search/hybrid-search",
+          "text": "You can start with dense vectors for semantic search and add sparse vectors for lexical search later. You can do sparse-only queries and rerank at multiple levels."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Pinecone hybrid search can combine dense vectors for semantic search with sparse vectors for lexical search.",
+          "source_id": "pinecone_hybrid_search"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_pinecone_upsert_overwrite_contradicted",
+      "source": "docs.pinecone.io/reference/api/2024-07/data-plane/upsert",
+      "note": "Contradicted Pinecone upsert overwrite claim.",
+      "query": "Does Pinecone upsert overwrite an existing vector ID?",
+      "answer": "Pinecone upsert never overwrites an existing vector ID.",
+      "contexts": [
+        {
+          "id": "pinecone_upsert",
+          "source": "docs.pinecone.io/reference/api/2024-07/data-plane/upsert",
+          "source_url": "https://docs.pinecone.io/reference/api/2024-07/data-plane/upsert",
+          "text": "If a new value is upserted for an existing vector ID, it will overwrite the previous value."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_pinecone_sparse_only_contradicted",
+      "source": "docs.pinecone.io/guides/search/hybrid-search",
+      "note": "Contradicted Pinecone sparse-only query claim.",
+      "query": "Can Pinecone hybrid search do sparse-only queries?",
+      "answer": "Pinecone hybrid search cannot do sparse-only queries.",
+      "contexts": [
+        {
+          "id": "pinecone_hybrid_search",
+          "source": "docs.pinecone.io/guides/search/hybrid-search",
+          "source_url": "https://docs.pinecone.io/guides/search/hybrid-search",
+          "text": "Pinecone hybrid search can use dense vectors for semantic search, sparse vectors for lexical search, and sparse-only queries."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_pinecone_delete_wrong_source_citation",
+      "source": "docs.pinecone.io/guides/manage-data/delete-data + docs.pinecone.io/reference/api/2024-07/data-plane/upsert",
+      "note": "Answer is supported by delete docs but cites upsert docs.",
+      "query": "Can Pinecone delete records by metadata?",
+      "answer": "Pinecone can delete records from a namespace using a metadata filter expression.",
+      "contexts": [
+        {
+          "id": "pinecone_delete_data",
+          "source": "docs.pinecone.io/guides/manage-data/delete-data",
+          "source_url": "https://docs.pinecone.io/guides/manage-data/delete-data",
+          "text": "To delete records from a namespace based on their metadata values, pass a metadata filter expression to the delete operation."
+        },
+        {
+          "id": "pinecone_upsert",
+          "source": "docs.pinecone.io/reference/api/2024-07/data-plane/upsert",
+          "source_url": "https://docs.pinecone.io/reference/api/2024-07/data-plane/upsert",
+          "text": "The upsert operation writes vectors into a namespace."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Pinecone can delete records from a namespace using a metadata filter expression.",
+          "source_id": "pinecone_upsert"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["claim_supported_by_different_source"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_chroma_metadata_filter_supported",
+      "source": "docs.trychroma.com/docs/querying-collections/metadata-filtering",
+      "note": "Supported Chroma metadata filtering claim.",
+      "query": "What does Chroma's where argument do?",
+      "answer": "Chroma's where argument filters records by metadata in get and query.",
+      "contexts": [
+        {
+          "id": "chroma_metadata_filtering",
+          "source": "docs.trychroma.com/docs/querying-collections/metadata-filtering",
+          "source_url": "https://docs.trychroma.com/docs/querying-collections/metadata-filtering",
+          "text": "The where argument in get and query is used to filter records by their metadata."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Chroma's where argument filters records by metadata in get and query.",
+          "source_id": "chroma_metadata_filtering"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_chroma_delete_supported",
+      "source": "docs.trychroma.com/docs/collections/delete-data",
+      "note": "Supported Chroma delete claim.",
+      "query": "What happens when Chroma deletes items by ID?",
+      "answer": "Chroma delete removes the embeddings, documents, and metadata associated with the deleted item IDs.",
+      "contexts": [
+        {
+          "id": "chroma_delete_data",
+          "source": "docs.trychroma.com/docs/collections/delete-data",
+          "source_url": "https://docs.trychroma.com/docs/collections/delete-data",
+          "text": "Chroma supports deleting items from a collection by id using delete. The embeddings, documents, and metadata associated with each item will be deleted."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Chroma delete removes the embeddings, documents, and metadata associated with the deleted item IDs.",
+          "source_id": "chroma_delete_data"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_chroma_embedding_functions_supported",
+      "source": "docs.trychroma.com/docs/embeddings/embedding-functions",
+      "note": "Supported Chroma embedding function claim.",
+      "query": "When can Chroma use embedding functions?",
+      "answer": "Chroma embedding functions can be used when calling add, update, upsert, or query.",
+      "contexts": [
+        {
+          "id": "chroma_embedding_functions",
+          "source": "docs.trychroma.com/docs/embeddings/embedding-functions",
+          "source_url": "https://docs.trychroma.com/docs/embeddings/embedding-functions",
+          "text": "Embedding functions can be linked to a collection and used whenever you call add, update, upsert or query."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Chroma embedding functions can be used when calling add, update, upsert, or query.",
+          "source_id": "chroma_embedding_functions"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_chroma_delete_where_contradicted",
+      "source": "docs.trychroma.com/docs/collections/delete-data",
+      "note": "Contradicted Chroma delete where-filter claim.",
+      "query": "Can Chroma delete use a where filter?",
+      "answer": "Chroma delete cannot use a where filter.",
+      "contexts": [
+        {
+          "id": "chroma_delete_data",
+          "source": "docs.trychroma.com/docs/collections/delete-data",
+          "source_url": "https://docs.trychroma.com/docs/collections/delete-data",
+          "text": "Chroma delete supports the where filter. It will delete all items in the collection that match the where filter."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_chroma_embedding_partial_delete",
+      "source": "docs.trychroma.com/docs/embeddings/embedding-functions",
+      "note": "Partial support case where embedding-function usage is supported but record deletion is invented.",
+      "query": "How does Chroma use embedding functions?",
+      "answer": "Chroma embedding functions can be linked to a collection and used for add, update, upsert, or query. They delete records automatically.",
+      "contexts": [
+        {
+          "id": "chroma_embedding_functions",
+          "source": "docs.trychroma.com/docs/embeddings/embedding-functions",
+          "source_url": "https://docs.trychroma.com/docs/embeddings/embedding-functions",
+          "text": "Embedding functions can be linked to a collection and used whenever you call add, update, upsert or query."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 2, "unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_weaviate_filters_supported",
+      "source": "docs.weaviate.io/weaviate/search/filters",
+      "note": "Supported Weaviate filter claim.",
+      "query": "What do Weaviate filters do?",
+      "answer": "Weaviate filters include or exclude objects from a result set based on conditions.",
+      "contexts": [
+        {
+          "id": "weaviate_filters",
+          "source": "docs.weaviate.io/weaviate/search/filters",
+          "source_url": "https://docs.weaviate.io/weaviate/search/filters",
+          "text": "Filters let you include, or exclude, particular objects from your result set based on provided conditions."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Weaviate filters include or exclude objects from a result set based on conditions.",
+          "source_id": "weaviate_filters"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_weaviate_reranking_supported",
+      "source": "docs.weaviate.io/weaviate/search/rerank",
+      "note": "Supported Weaviate reranking claim.",
+      "query": "What do Weaviate reranking modules do?",
+      "answer": "Weaviate reranking modules reorder search results using a different set of criteria or algorithm.",
+      "contexts": [
+        {
+          "id": "weaviate_rerank",
+          "source": "docs.weaviate.io/weaviate/search/rerank",
+          "source_url": "https://docs.weaviate.io/weaviate/search/rerank",
+          "text": "Reranking modules reorder the search result set according to a different set of criteria or a different algorithm."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Weaviate reranking modules reorder search results using a different set of criteria or algorithm.",
+          "source_id": "weaviate_rerank"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_weaviate_rag_supported",
+      "source": "docs.weaviate.io/weaviate/search/generative",
+      "note": "Supported Weaviate RAG query claim.",
+      "query": "What are the two parts of a Weaviate RAG query?",
+      "answer": "A Weaviate RAG query consists of a search query and a prompt for the model.",
+      "contexts": [
+        {
+          "id": "weaviate_generative",
+          "source": "docs.weaviate.io/weaviate/search/generative",
+          "source_url": "https://docs.weaviate.io/weaviate/search/generative",
+          "text": "In Weaviate, a RAG query consists of two parts: a search query, and a prompt for the model."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "A Weaviate RAG query consists of a search query and a prompt for the model.",
+          "source_id": "weaviate_generative"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_weaviate_multitenancy_supported",
+      "source": "docs.weaviate.io/weaviate/manage-collections/multi-tenancy",
+      "note": "Supported Weaviate multi-tenancy isolation claim.",
+      "query": "What does Weaviate multi-tenancy provide?",
+      "answer": "Weaviate multi-tenancy provides data isolation by storing each tenant on a separate shard.",
+      "contexts": [
+        {
+          "id": "weaviate_multitenancy",
+          "source": "docs.weaviate.io/weaviate/manage-collections/multi-tenancy",
+          "source_url": "https://docs.weaviate.io/weaviate/manage-collections/multi-tenancy",
+          "text": "Multi-tenancy provides data isolation. Each tenant is stored on a separate shard. Data stored in one tenant is not visible to another tenant."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Weaviate multi-tenancy provides data isolation by storing each tenant on a separate shard.",
+          "source_id": "weaviate_multitenancy"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_weaviate_filters_contradicted",
+      "source": "docs.weaviate.io/weaviate/search/filters",
+      "note": "Contradicted Weaviate filter behavior claim.",
+      "query": "Do Weaviate filters include or exclude objects?",
+      "answer": "Weaviate filters do not include or exclude objects from result sets.",
+      "contexts": [
+        {
+          "id": "weaviate_filters",
+          "source": "docs.weaviate.io/weaviate/search/filters",
+          "source_url": "https://docs.weaviate.io/weaviate/search/filters",
+          "text": "Filters let you include, or exclude, particular objects from your result set based on provided conditions."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_milvus_scalar_filter_supported",
+      "source": "milvus.io/docs/boolean.md",
+      "note": "Supported Milvus scalar filtering claim.",
+      "query": "How does Milvus conduct scalar filtering?",
+      "answer": "Milvus conducts scalar filtering by searching with predicates.",
+      "contexts": [
+        {
+          "id": "milvus_scalar_filter",
+          "source": "milvus.io/docs/boolean.md",
+          "source_url": "https://milvus.io/docs/boolean.md",
+          "text": "Milvus conducts scalar filtering by searching with predicates. A predicate expression returns either TRUE or FALSE."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Milvus conducts scalar filtering by searching with predicates.",
+          "source_id": "milvus_scalar_filter"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_milvus_full_text_supported",
+      "source": "milvus.io/docs/full-text-search.md",
+      "note": "Supported Milvus full-text search claim.",
+      "query": "What does Milvus full text search retrieve?",
+      "answer": "Milvus full text search retrieves documents containing specific terms or phrases and ranks results by relevance.",
+      "contexts": [
+        {
+          "id": "milvus_full_text_search",
+          "source": "milvus.io/docs/full-text-search.md",
+          "source_url": "https://milvus.io/docs/full-text-search.md",
+          "text": "Full text search retrieves documents containing specific terms or phrases in text datasets, then ranks the results based on relevance."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Milvus full text search retrieves documents containing specific terms or phrases and ranks results by relevance.",
+          "source_id": "milvus_full_text_search"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_milvus_reranking_supported",
+      "source": "milvus.io/docs/reranking.md",
+      "note": "Supported Milvus reranking claim.",
+      "query": "What does Milvus hybrid search use reranking for?",
+      "answer": "Milvus hybrid search uses reranking strategies to refine results from multiple AnnSearchRequest instances.",
+      "contexts": [
+        {
+          "id": "milvus_reranking",
+          "source": "milvus.io/docs/reranking.md",
+          "source_url": "https://milvus.io/docs/reranking.md",
+          "text": "Milvus enables hybrid search capabilities using the hybrid_search API, incorporating sophisticated reranking strategies to refine search results from multiple AnnSearchRequest instances."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Milvus hybrid search uses reranking strategies to refine results from multiple AnnSearchRequest instances.",
+          "source_id": "milvus_reranking"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_milvus_full_text_contradicted",
+      "source": "milvus.io/docs/full-text-search.md",
+      "note": "Contradicted Milvus full-text search claim.",
+      "query": "Can Milvus full text search retrieve documents containing specific terms?",
+      "answer": "Milvus full text search cannot retrieve documents containing specific terms or phrases.",
+      "contexts": [
+        {
+          "id": "milvus_full_text_search",
+          "source": "milvus.io/docs/full-text-search.md",
+          "source_url": "https://milvus.io/docs/full-text-search.md",
+          "text": "Full text search retrieves documents containing specific terms or phrases in text datasets, then ranks the results based on relevance."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_milvus_reranking_wrong_source_citation",
+      "source": "milvus.io/docs/reranking.md + milvus.io/docs/boolean.md",
+      "note": "Answer is supported by reranking docs but cites scalar filtering docs.",
+      "query": "What does Milvus hybrid search use reranking for?",
+      "answer": "Milvus hybrid search uses reranking strategies to refine results from multiple AnnSearchRequest instances.",
+      "contexts": [
+        {
+          "id": "milvus_reranking",
+          "source": "milvus.io/docs/reranking.md",
+          "source_url": "https://milvus.io/docs/reranking.md",
+          "text": "Milvus enables hybrid search capabilities using the hybrid_search API, incorporating sophisticated reranking strategies to refine search results from multiple AnnSearchRequest instances."
+        },
+        {
+          "id": "milvus_scalar_filter",
+          "source": "milvus.io/docs/boolean.md",
+          "source_url": "https://milvus.io/docs/boolean.md",
+          "text": "Milvus conducts scalar filtering by searching with predicates. A predicate expression returns either TRUE or FALSE."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Milvus hybrid search uses reranking strategies to refine results from multiple AnnSearchRequest instances.",
+          "source_id": "milvus_scalar_filter"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["claim_supported_by_different_source"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_no_context_should_abstain",
+      "source": "public docs holdout empty retrieval",
+      "note": "No retrieved evidence is available, so an answer with specific public-doc claims should abstain.",
+      "query": "What does Weaviate hybrid search combine?",
+      "answer": "Weaviate hybrid search combines vector search with keyword BM25F search and fuses both result sets.",
+      "contexts": [],
+      "expected_labels": ["should_have_abstained", "unsupported_answer"],
+      "expected_verdict_counts": {"unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    }
+  ]
+}
