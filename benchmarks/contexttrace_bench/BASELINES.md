@@ -11,7 +11,7 @@ case set and are scored by `run_contexttrace.py --candidate`.
 | ContextTrace semantic verifier | `run_contexttrace.py --mode semantic` | Ready | Yes | Local-first product path. CI enforces default quality gates. |
 | RAGAS | `run_ragas.py` | Full OpenAI-backed candidate scored | Yes | `gpt-4.1-mini`, 500/500 rows, zero row errors. Faithfulness-only baseline; diagnostic fields are `N/A`. |
 | DeepEval | `run_deepeval.py` | Full OpenAI-backed candidate scored | Yes | `gpt-4.1-mini`, 500/500 rows, zero row errors. Faithfulness-only baseline; diagnostic fields are `N/A`. |
-| OpenAI diagnostic judge | `run_local_judge.py` | Expanded public holdout candidate scored | Holdout only | `gpt-4.1-mini`, 75/75 public-holdout rows, zero row errors. Reports failure labels, root cause, citations, and spans. |
+| OpenAI diagnostic judge | `run_local_judge.py` | Expanded public holdout candidate scored | Holdout only | `gpt-4.1-mini`, 150/150 public-holdout rows, zero row errors. Reports failure labels, root cause, citations, and spans. |
 | OpenAI-compatible local judge | `run_local_judge.py` | Smoke run completed | No | Ollama `phi3:latest` produced 5 predictions. It is parseable but slow on this machine, so full 500-case execution is a multi-hour run. |
 | Phoenix | `adapt_candidate.py --preset phoenix` | Adapter ready | No | Requires exported Phoenix evaluator results. |
 | TruLens | `adapt_candidate.py --preset trulens` | Adapter ready | No | Requires exported TruLens evaluator results. |
@@ -28,15 +28,15 @@ Latest public holdout:
 
 | System | Cases | Failure Macro-F1 | Root Cause Accuracy | Citation Error F1 | Span Overlap |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| ContextTrace semantic verifier | 75 | 1.000 | 1.000 | 1.000 | 0.944 |
-| OpenAI diagnostic judge `gpt-4.1-mini` | 75 | 0.869 | 0.973 | 1.000 | 0.905 |
+| ContextTrace semantic verifier | 150 | 1.000 | 1.000 | 1.000 | 0.950 |
+| OpenAI diagnostic judge `gpt-4.1-mini` | 150 | 0.931 | 0.953 | 1.000 | 0.921 |
 
-The expanded public holdout is the first 75/150 milestone for
-ContextTrace-Diag-150. It now passes all labeled gates for the local semantic
-verifier across 75 cases and 74 evidence-span labels. The OpenAI diagnostic
-judge reported all 75 rows with zero row errors, with root-cause coverage on
-75/75 rows, citation-status coverage on 51/75 rows, and evidence-span coverage
-on 74/75 rows.
+The expanded public holdout has reached the 150-case ContextTrace-Diag-150
+target. It passes all labeled gates for the local semantic verifier across 150
+cases and 149 evidence-span labels. The OpenAI diagnostic judge reported all
+150 rows with zero row errors, with root-cause coverage on 150/150 rows,
+citation-status coverage on 103/150 rows, and evidence-span coverage on 149/150
+rows.
 
 ## Full ContextTrace Run
 

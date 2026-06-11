@@ -21,12 +21,16 @@ Completed in the repo:
   Phoenix, and TruLens rows.
 - Full OpenAI-backed RAGAS and DeepEval baseline rows were collected with
   `gpt-4.1-mini` across all 500 benchmark cases.
-- A separate `public_holdout` case set was added and expanded to 75 cases from
+- A separate `public_holdout` case set was added and expanded to 150 cases from
   OpenTelemetry, Weaviate, LlamaIndex, Milvus, LangChain, Haystack, Qdrant,
-  Pinecone, Chroma, RAGAS, and DeepEval public docs. It is excluded from `all`
-  by design and is the first 75/150 milestone for ContextTrace-Diag-150.
+  Pinecone, Chroma, RAGAS, DeepEval, LangSmith, Phoenix, TruLens, DSPy,
+  LanceDB, Elasticsearch, Redis, pgvector, OpenSearch, MongoDB Vector Search,
+  Azure AI Search, Vespa, OpenAI Evals, and Guardrails public docs. It is
+  excluded from `all` by design and has reached the ContextTrace-Diag-150 target.
 - A richer OpenAI diagnostic judge baseline was run on the public holdout with
   `gpt-4.1-mini`.
+- `benchmarks/contexttrace_bench/AUDIT.md` defines the human sign-off checklist
+  required before calling the holdout frozen.
 - The remote baseline runners now support resumable checkpoints and bounded
   evaluator concurrency.
 - Documentation links now point reviewers to methodology and baseline status.
@@ -35,6 +39,8 @@ Still pending for Week 1:
 
 - Run a full local/OpenAI-compatible judge baseline if local runtime is
   acceptable.
+- Complete human audit sign-off for ContextTrace-Diag-150 before using
+  frozen-split language.
 - Review generated `leaderboard.md` and `report.html` before using them in public
   material.
 
@@ -42,18 +48,18 @@ Current baseline status:
 
 - ContextTrace semantic verifier: 500 cases, failure macro-F1 `1.000`,
   root-cause accuracy `1.000`, citation error F1 `1.000`, evidence span
-  overlap `0.863`.
+  overlap `0.862`.
 - RAGAS with `gpt-4.1-mini`: 500 cases, zero row errors, failure macro-F1
   `0.200`. Diagnostic attribution fields are `N/A`.
 - DeepEval with `gpt-4.1-mini`: 500 cases, zero row errors, failure macro-F1
   `0.069`. Diagnostic attribution fields are `N/A`.
-- Public holdout, ContextTrace semantic verifier: 75 cases, failure macro-F1
+- Public holdout, ContextTrace semantic verifier: 150 cases, failure macro-F1
   `1.000`, claim-verdict macro-F1 `1.000`, root-cause accuracy `1.000`,
-  citation error F1 `1.000`, evidence span overlap `0.944` across 74
+  citation error F1 `1.000`, evidence span overlap `0.950` across 149
   span-labeled cases.
-- Public holdout, OpenAI diagnostic judge with `gpt-4.1-mini`: 75 cases, zero
-  row errors, failure macro-F1 `0.869`, root-cause accuracy `0.973`, citation
-  error F1 `1.000`, evidence span overlap `0.905`.
+- Public holdout, OpenAI diagnostic judge with `gpt-4.1-mini`: 150 cases, zero
+  row errors, failure macro-F1 `0.931`, root-cause accuracy `0.953`, citation
+  error F1 `1.000`, evidence span overlap `0.921`.
 - Ollama is reachable locally and `phi3:latest` completed a 5-case local-judge
   smoke run. The smoke took about 155 seconds, making a full 500-case run a
   multi-hour local job on this machine.
@@ -100,6 +106,8 @@ $env:OPENAI_API_KEY = "<your evaluator key>"
 - CI is green.
 - Current ContextTrace-Bench artifacts are available.
 - Public docs include methodology and limitations.
+- Public docs link the ContextTrace-Diag-150 audit checklist and do not call the
+  split frozen until sign-off is complete.
 - At least one full competitor row is scored, or the baseline status explicitly
   says why it is pending.
 - No public copy makes a broad SOTA claim without the evidence above.

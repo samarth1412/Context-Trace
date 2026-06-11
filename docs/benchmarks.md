@@ -62,6 +62,7 @@ Before using these results publicly, read:
 - [ContextTrace-Bench methodology](../benchmarks/contexttrace_bench/METHODOLOGY.md)
 - [Baseline comparison runbook](../benchmarks/contexttrace_bench/BASELINES.md)
 - [ContextTrace-Diag-150 tracker](../benchmarks/contexttrace_bench/DIAG150.md)
+- [ContextTrace-Diag-150 audit checklist](../benchmarks/contexttrace_bench/AUDIT.md)
 - [SOTA readiness checklist](sota-readiness.md)
 
 The benchmark is a reproducible verifier-readiness benchmark. Passing its gates
@@ -87,12 +88,13 @@ python benchmarks/contexttrace_bench/run_contexttrace.py \
 
 Current holdout status: ContextTrace scores `1.000` failure macro-F1, `1.000`
 claim-verdict macro-F1, `1.000` root-cause accuracy, and `1.000` citation
-error F1 on 75 public-doc cases with 74 span-labeled cases. The OpenAI
-diagnostic judge `gpt-4.1-mini` row scores `0.869` failure macro-F1, `0.973`
-root-cause accuracy, `1.000` citation error F1, and `0.905` evidence-span
-overlap on the same split. This holdout is the first 75/150 milestone for
-ContextTrace-Diag-150 and is intentionally excluded from the default 500-case
-`all` run.
+error F1 on 150 public-doc cases with 149 span-labeled cases. The OpenAI
+diagnostic judge `gpt-4.1-mini` row scores `0.931` failure macro-F1, `0.953`
+root-cause accuracy, `1.000` citation error F1, and `0.921` evidence-span
+overlap on the same split. This holdout has reached the 150-case
+ContextTrace-Diag-150 target and is intentionally excluded from the default
+500-case `all` run; call it frozen only after the human audit checklist is
+complete.
 
 Core metrics:
 

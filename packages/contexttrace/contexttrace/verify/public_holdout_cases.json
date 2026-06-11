@@ -1738,6 +1738,1791 @@
       "expected_should_abstain": false
     },
     {
+      "id": "holdout_langsmith_evaluation_workflow_supported",
+      "source": "docs.langchain.com/langsmith/evaluation",
+      "note": "Supported LangSmith evaluation workflow claim.",
+      "query": "What are the main steps in a LangSmith evaluation workflow?",
+      "answer": "LangSmith evaluations start by creating a dataset, defining evaluators, and running an experiment.",
+      "contexts": [
+        {
+          "id": "langsmith_evaluation_workflow",
+          "source": "docs.langchain.com/langsmith/evaluation",
+          "source_url": "https://docs.langchain.com/langsmith/evaluation",
+          "text": "LangSmith evaluations start by creating a dataset, defining evaluators, and running an experiment."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "LangSmith evaluations start by creating a dataset, defining evaluators, and running an experiment.",
+          "source_id": "langsmith_evaluation_workflow"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_langsmith_evaluators_supported",
+      "source": "docs.langchain.com/langsmith/evaluators",
+      "note": "Supported LangSmith workspace evaluator claim.",
+      "query": "How are LangSmith evaluators managed?",
+      "answer": "LangSmith evaluators are workspace-level resources that can be attached to multiple tracing projects and datasets.",
+      "contexts": [
+        {
+          "id": "langsmith_evaluators",
+          "source": "docs.langchain.com/langsmith/evaluators",
+          "source_url": "https://docs.langchain.com/langsmith/evaluators",
+          "text": "Evaluators in LangSmith are workspace-level resources. You can attach a single evaluator to multiple tracing projects and datasets."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "LangSmith evaluators are workspace-level resources that can be attached to multiple tracing projects and datasets.",
+          "source_id": "langsmith_evaluators"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_langsmith_dataset_partial_prompt_rewrite",
+      "source": "docs.langchain.com/langsmith/evaluation",
+      "note": "Partial support case where dataset creation is supported but automatic prompt rewriting is invented.",
+      "query": "How can LangSmith evaluation datasets be created?",
+      "answer": "LangSmith datasets can be created from manually curated test cases. They automatically rewrite production prompts.",
+      "contexts": [
+        {
+          "id": "langsmith_evaluation_workflow",
+          "source": "docs.langchain.com/langsmith/evaluation",
+          "source_url": "https://docs.langchain.com/langsmith/evaluation",
+          "text": "Create a dataset with examples from manually curated test cases, historical production traces, or synthetic data generation."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 1, "unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_langsmith_llm_judge_contradicted",
+      "source": "docs.langchain.com/langsmith/evaluation",
+      "note": "Contradicted LangSmith LLM-as-judge claim.",
+      "query": "Can LangSmith evaluations use LLM-as-judge evaluators?",
+      "answer": "LangSmith evaluations cannot use LLM-as-judge evaluators.",
+      "contexts": [
+        {
+          "id": "langsmith_evaluation_workflow",
+          "source": "docs.langchain.com/langsmith/evaluation",
+          "source_url": "https://docs.langchain.com/langsmith/evaluation",
+          "text": "LangSmith evaluators can score performance using human review, code rules, LLM-as-judge, or pairwise comparison."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_langsmith_evaluator_wrong_source_citation",
+      "source": "docs.langchain.com/langsmith/evaluators + docs.langchain.com/langsmith/evaluation",
+      "note": "Answer is supported by evaluator docs but cites evaluation workflow docs.",
+      "query": "How are LangSmith evaluators managed?",
+      "answer": "LangSmith evaluators are workspace-level resources that can be attached to multiple tracing projects and datasets.",
+      "contexts": [
+        {
+          "id": "langsmith_evaluators",
+          "source": "docs.langchain.com/langsmith/evaluators",
+          "source_url": "https://docs.langchain.com/langsmith/evaluators",
+          "text": "Evaluators in LangSmith are workspace-level resources. You can attach a single evaluator to multiple tracing projects and datasets."
+        },
+        {
+          "id": "langsmith_evaluation_workflow",
+          "source": "docs.langchain.com/langsmith/evaluation",
+          "source_url": "https://docs.langchain.com/langsmith/evaluation",
+          "text": "LangSmith evaluations start by creating a dataset, defining evaluators, and running an experiment."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "LangSmith evaluators are workspace-level resources that can be attached to multiple tracing projects and datasets.",
+          "source_id": "langsmith_evaluation_workflow"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["claim_supported_by_different_source"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_phoenix_tracing_supported",
+      "source": "arize.com/docs/phoenix",
+      "note": "Supported Phoenix tracing claim.",
+      "query": "What can Phoenix traces capture?",
+      "answer": "Phoenix traces capture model calls, retrieval, tool use, and custom logic.",
+      "contexts": [
+        {
+          "id": "phoenix_tracing",
+          "source": "arize.com/docs/phoenix",
+          "source_url": "https://arize.com/docs/phoenix",
+          "text": "Tracing lets you see what happened during a single run of your AI application. A trace captures model calls, retrieval, tool use, and custom logic."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Phoenix traces capture model calls, retrieval, tool use, and custom logic.",
+          "source_id": "phoenix_tracing"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_phoenix_otlp_supported",
+      "source": "arize.com/docs/phoenix",
+      "note": "Supported Phoenix OTLP ingestion claim.",
+      "query": "How can Phoenix receive traces?",
+      "answer": "Phoenix accepts traces over OpenTelemetry OTLP.",
+      "contexts": [
+        {
+          "id": "phoenix_tracing",
+          "source": "arize.com/docs/phoenix",
+          "source_url": "https://arize.com/docs/phoenix",
+          "text": "Phoenix accepts traces over OpenTelemetry (OTLP) and provides auto-instrumentation for popular frameworks, providers, and languages."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Phoenix accepts traces over OpenTelemetry OTLP.",
+          "source_id": "phoenix_tracing"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_phoenix_dataset_partial_delete",
+      "source": "arize.com/docs/phoenix/datasets-and-experiments/overview-datasets",
+      "note": "Partial support case where Phoenix dataset inputs are supported but automatic span deletion is invented.",
+      "query": "What do Phoenix datasets contain?",
+      "answer": "Phoenix datasets contain examples with inputs and optional reference outputs. They delete production spans automatically.",
+      "contexts": [
+        {
+          "id": "phoenix_datasets",
+          "source": "arize.com/docs/phoenix/datasets-and-experiments/overview-datasets",
+          "source_url": "https://arize.com/docs/phoenix/datasets-and-experiments/overview-datasets",
+          "text": "Datasets are collections of examples that provide the inputs and, optionally, expected reference outputs for assessing your application."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 1, "unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_phoenix_retrieval_contradicted",
+      "source": "arize.com/docs/phoenix",
+      "note": "Contradicted Phoenix tracing retrieval claim.",
+      "query": "Can Phoenix traces capture retrieval?",
+      "answer": "Phoenix traces cannot capture retrieval.",
+      "contexts": [
+        {
+          "id": "phoenix_tracing",
+          "source": "arize.com/docs/phoenix",
+          "source_url": "https://arize.com/docs/phoenix",
+          "text": "A trace captures model calls, retrieval, tool use, and custom logic so you can debug behavior and understand where time is spent."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_phoenix_dataset_wrong_source_citation",
+      "source": "arize.com/docs/phoenix/datasets-and-experiments/overview-datasets + arize.com/docs/phoenix",
+      "note": "Answer is supported by Phoenix dataset docs but cites tracing docs.",
+      "query": "What do Phoenix datasets contain?",
+      "answer": "Phoenix datasets contain examples with inputs and optional reference outputs.",
+      "contexts": [
+        {
+          "id": "phoenix_datasets",
+          "source": "arize.com/docs/phoenix/datasets-and-experiments/overview-datasets",
+          "source_url": "https://arize.com/docs/phoenix/datasets-and-experiments/overview-datasets",
+          "text": "Datasets are collections of examples that provide the inputs and, optionally, expected reference outputs for assessing your application."
+        },
+        {
+          "id": "phoenix_tracing",
+          "source": "arize.com/docs/phoenix",
+          "source_url": "https://arize.com/docs/phoenix",
+          "text": "A trace captures model calls, retrieval, tool use, and custom logic so you can debug behavior and understand where time is spent."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Phoenix datasets contain examples with inputs and optional reference outputs.",
+          "source_id": "phoenix_tracing"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["claim_supported_by_different_source"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_trulens_rag_triad_supported",
+      "source": "www.trulens.org/getting_started/core_concepts/rag_triad",
+      "note": "Supported TruLens RAG triad claim.",
+      "query": "What evaluations make up the TruLens RAG triad?",
+      "answer": "The TruLens RAG triad is made up of context relevance, groundedness, and answer relevance.",
+      "contexts": [
+        {
+          "id": "trulens_rag_triad",
+          "source": "www.trulens.org/getting_started/core_concepts/rag_triad",
+          "source_url": "https://www.trulens.org/getting_started/core_concepts/rag_triad/",
+          "text": "The RAG triad is made up of three evaluations: context relevance, groundedness, and answer relevance."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "The TruLens RAG triad is made up of context relevance, groundedness, and answer relevance.",
+          "source_id": "trulens_rag_triad"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_trulens_feedback_functions_supported",
+      "source": "www.trulens.org/getting_started/core_concepts/feedback_functions",
+      "note": "Supported TruLens feedback functions claim.",
+      "query": "What kinds of feedback functions does TruLens provide?",
+      "answer": "TruLens provides feedback functions such as groundedness NLI, sentiment, language match, and moderation.",
+      "contexts": [
+        {
+          "id": "trulens_feedback_functions",
+          "source": "www.trulens.org/getting_started/core_concepts/feedback_functions",
+          "source_url": "https://www.trulens.org/getting_started/core_concepts/feedback_functions/",
+          "text": "TruLens provides feedback functions such as groundedness NLI, sentiment, language match, moderation, and more."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "TruLens provides feedback functions such as groundedness NLI, sentiment, language match, and moderation.",
+          "source_id": "trulens_feedback_functions"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_trulens_rag_triad_partial_guarantee",
+      "source": "www.trulens.org/getting_started/core_concepts/rag_triad",
+      "note": "Partial support case where the triad is supported but a hallucination-free guarantee is invented.",
+      "query": "What does the TruLens RAG triad evaluate?",
+      "answer": "The TruLens RAG triad evaluates context relevance, groundedness, and answer relevance. It guarantees every LLM app is hallucination-free.",
+      "contexts": [
+        {
+          "id": "trulens_rag_triad",
+          "source": "www.trulens.org/getting_started/core_concepts/rag_triad",
+          "source_url": "https://www.trulens.org/getting_started/core_concepts/rag_triad/",
+          "text": "The RAG triad is made up of three evaluations: context relevance, groundedness, and answer relevance."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 1, "unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_trulens_groundedness_contradicted",
+      "source": "www.trulens.org/getting_started/core_concepts/rag_triad",
+      "note": "Contradicted TruLens groundedness claim.",
+      "query": "Does the TruLens RAG triad include groundedness?",
+      "answer": "The TruLens RAG triad does not include groundedness.",
+      "contexts": [
+        {
+          "id": "trulens_rag_triad",
+          "source": "www.trulens.org/getting_started/core_concepts/rag_triad",
+          "source_url": "https://www.trulens.org/getting_started/core_concepts/rag_triad/",
+          "text": "The RAG triad is made up of three evaluations: context relevance, groundedness, and answer relevance."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_trulens_feedback_wrong_source_citation",
+      "source": "www.trulens.org/getting_started/core_concepts/feedback_functions + www.trulens.org/getting_started/core_concepts/rag_triad",
+      "note": "Answer is supported by feedback-function docs but cites RAG triad docs.",
+      "query": "What kinds of feedback functions does TruLens provide?",
+      "answer": "TruLens provides feedback functions such as groundedness NLI, sentiment, language match, and moderation.",
+      "contexts": [
+        {
+          "id": "trulens_feedback_functions",
+          "source": "www.trulens.org/getting_started/core_concepts/feedback_functions",
+          "source_url": "https://www.trulens.org/getting_started/core_concepts/feedback_functions/",
+          "text": "TruLens provides feedback functions such as groundedness NLI, sentiment, language match, moderation, and more."
+        },
+        {
+          "id": "trulens_rag_triad",
+          "source": "www.trulens.org/getting_started/core_concepts/rag_triad",
+          "source_url": "https://www.trulens.org/getting_started/core_concepts/rag_triad/",
+          "text": "The RAG triad is made up of three evaluations: context relevance, groundedness, and answer relevance."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "TruLens provides feedback functions such as groundedness NLI, sentiment, language match, and moderation.",
+          "source_id": "trulens_rag_triad"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["claim_supported_by_different_source"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_dspy_signatures_supported",
+      "source": "dspy.ai",
+      "note": "Supported DSPy signatures claim.",
+      "query": "How does DSPy express tasks?",
+      "answer": "DSPy lets you express tasks as structured signatures, not prompts.",
+      "contexts": [
+        {
+          "id": "dspy_overview",
+          "source": "dspy.ai",
+          "source_url": "https://dspy.ai/",
+          "text": "DSPy is a Python framework for building AI systems. It lets you express tasks as structured signatures, not prompts."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "DSPy lets you express tasks as structured signatures, not prompts.",
+          "source_id": "dspy_overview"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_dspy_assertions_supported",
+      "source": "dspy.ai/faqs",
+      "note": "Supported DSPy assertions claim.",
+      "query": "What can DSPy Assert and Suggest define?",
+      "answer": "DSPy Assert and Suggest can define constraints within a DSPy program.",
+      "contexts": [
+        {
+          "id": "dspy_assertions",
+          "source": "dspy.ai/faqs",
+          "source_url": "https://dspy.ai/faqs/",
+          "text": "Use dspy.Assert and dspy.Suggest to define constraints within your DSPy program."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "DSPy Assert and Suggest can define constraints within a DSPy program.",
+          "source_id": "dspy_assertions"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_dspy_optimizers_partial_dns",
+      "source": "github.com/stanfordnlp/dspy",
+      "note": "Partial support case where DSPy optimization is supported but DNS deployment is invented.",
+      "query": "What can DSPy optimize?",
+      "answer": "DSPy offers algorithms for optimizing prompts and weights. It provisions Kubernetes load balancers.",
+      "contexts": [
+        {
+          "id": "dspy_github_overview",
+          "source": "github.com/stanfordnlp/dspy",
+          "source_url": "https://github.com/stanfordnlp/dspy",
+          "text": "DSPy offers algorithms for optimizing prompts and weights for modular AI systems."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 1, "unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_dspy_prompts_contradicted",
+      "source": "dspy.ai",
+      "note": "Contradicted DSPy structured-signature claim.",
+      "query": "Does DSPy require tasks to be expressed as hand-written prompts?",
+      "answer": "DSPy requires tasks to be expressed only as hand-written prompts instead of structured signatures.",
+      "contexts": [
+        {
+          "id": "dspy_overview",
+          "source": "dspy.ai",
+          "source_url": "https://dspy.ai/",
+          "text": "DSPy lets you express tasks as structured signatures, not prompts."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_dspy_assertions_wrong_source_citation",
+      "source": "dspy.ai/faqs + dspy.ai",
+      "note": "Answer is supported by DSPy FAQ but cites overview docs.",
+      "query": "What can DSPy Assert and Suggest define?",
+      "answer": "DSPy Assert and Suggest can define constraints within a DSPy program.",
+      "contexts": [
+        {
+          "id": "dspy_assertions",
+          "source": "dspy.ai/faqs",
+          "source_url": "https://dspy.ai/faqs/",
+          "text": "Use dspy.Assert and dspy.Suggest to define constraints within your DSPy program."
+        },
+        {
+          "id": "dspy_overview",
+          "source": "dspy.ai",
+          "source_url": "https://dspy.ai/",
+          "text": "DSPy is a Python framework for building AI systems with structured signatures."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "DSPy Assert and Suggest can define constraints within a DSPy program.",
+          "source_id": "dspy_overview"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["claim_supported_by_different_source"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_lancedb_search_supported",
+      "source": "docs.lancedb.com",
+      "note": "Supported LanceDB search modes claim.",
+      "query": "What search modes does LanceDB support?",
+      "answer": "LanceDB supports vector search, full-text search, and hybrid search with secondary indexes.",
+      "contexts": [
+        {
+          "id": "lancedb_overview",
+          "source": "docs.lancedb.com",
+          "source_url": "https://docs.lancedb.com/",
+          "text": "LanceDB supports vector search, full-text search, and hybrid search with secondary indexes."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "LanceDB supports vector search, full-text search, and hybrid search with secondary indexes.",
+          "source_id": "lancedb_overview"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_lancedb_full_text_filter_supported",
+      "source": "docs.lancedb.com/search/full-text-search",
+      "note": "Supported LanceDB full-text filtering claim.",
+      "query": "Can LanceDB full-text search use filters?",
+      "answer": "LanceDB full-text search supports filtering with pre-filtering and post-filtering using where syntax.",
+      "contexts": [
+        {
+          "id": "lancedb_full_text_search",
+          "source": "docs.lancedb.com/search/full-text-search",
+          "source_url": "https://docs.lancedb.com/search/full-text-search",
+          "text": "LanceDB full text search supports filtering search results by a condition. Both pre-filtering and post-filtering are supported using where syntax."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "LanceDB full-text search supports filtering with pre-filtering and post-filtering using where syntax.",
+          "source_id": "lancedb_full_text_search"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_lancedb_vector_partial_encryption",
+      "source": "docs.lancedb.com/search/vector-search",
+      "note": "Partial support case where vector postfiltering is supported but automatic encryption is invented.",
+      "query": "What does LanceDB vector-search postfiltering do?",
+      "answer": "LanceDB postfiltering searches the full dataset first and then applies metadata filters. It encrypts every vector automatically.",
+      "contexts": [
+        {
+          "id": "lancedb_vector_search",
+          "source": "docs.lancedb.com/search/vector-search",
+          "source_url": "https://docs.lancedb.com/search/vector-search",
+          "text": "Use postfiltering to prioritize vector similarity by searching the full dataset first, then applying metadata filters to the top results."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 1, "unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_lancedb_full_text_filter_contradicted",
+      "source": "docs.lancedb.com/search/full-text-search",
+      "note": "Contradicted LanceDB full-text filtering claim.",
+      "query": "Can LanceDB full-text search use filters?",
+      "answer": "LanceDB full-text search cannot use filtering conditions.",
+      "contexts": [
+        {
+          "id": "lancedb_full_text_search",
+          "source": "docs.lancedb.com/search/full-text-search",
+          "source_url": "https://docs.lancedb.com/search/full-text-search",
+          "text": "LanceDB full text search supports filtering search results by a condition. Both pre-filtering and post-filtering are supported."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_lancedb_full_text_wrong_source_citation",
+      "source": "docs.lancedb.com/search/full-text-search + docs.lancedb.com/search/vector-search",
+      "note": "Answer is supported by full-text docs but cites vector-search docs.",
+      "query": "Can LanceDB full-text search use filters?",
+      "answer": "LanceDB full-text search supports filtering with pre-filtering and post-filtering using where syntax.",
+      "contexts": [
+        {
+          "id": "lancedb_full_text_search",
+          "source": "docs.lancedb.com/search/full-text-search",
+          "source_url": "https://docs.lancedb.com/search/full-text-search",
+          "text": "LanceDB full text search supports filtering search results by a condition. Both pre-filtering and post-filtering are supported using where syntax."
+        },
+        {
+          "id": "lancedb_vector_search",
+          "source": "docs.lancedb.com/search/vector-search",
+          "source_url": "https://docs.lancedb.com/search/vector-search",
+          "text": "Use postfiltering to prioritize vector similarity by searching the full dataset first, then applying metadata filters to the top results."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "LanceDB full-text search supports filtering with pre-filtering and post-filtering using where syntax.",
+          "source_id": "lancedb_vector_search"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["claim_supported_by_different_source"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_elasticsearch_knn_supported",
+      "source": "elastic.co/docs/solutions/search/vector/knn",
+      "note": "Supported Elasticsearch kNN definition claim.",
+      "query": "What does Elasticsearch kNN search find?",
+      "answer": "Elasticsearch kNN search finds the k nearest vectors to a query vector using a similarity metric.",
+      "contexts": [
+        {
+          "id": "elasticsearch_knn",
+          "source": "elastic.co/docs/solutions/search/vector/knn",
+          "source_url": "https://www.elastic.co/docs/solutions/search/vector/knn",
+          "text": "A k-nearest neighbor search finds the k nearest vectors to a query vector using a similarity metric such as cosine or L2 norm."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Elasticsearch kNN search finds the k nearest vectors to a query vector using a similarity metric.",
+          "source_id": "elasticsearch_knn"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_elasticsearch_semantic_supported",
+      "source": "elastic.co/docs/solutions/search/vector/knn",
+      "note": "Supported Elasticsearch semantic search claim.",
+      "query": "What can Elasticsearch kNN retrieve results based on?",
+      "answer": "Elasticsearch kNN can retrieve results based on semantic meaning rather than exact keyword matches.",
+      "contexts": [
+        {
+          "id": "elasticsearch_knn",
+          "source": "elastic.co/docs/solutions/search/vector/knn",
+          "source_url": "https://www.elastic.co/docs/solutions/search/vector/knn",
+          "text": "With Elasticsearch kNN search, you can retrieve results based on semantic meaning rather than exact keyword matches."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Elasticsearch kNN can retrieve results based on semantic meaning rather than exact keyword matches.",
+          "source_id": "elasticsearch_knn"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_elasticsearch_knn_partial_mapping",
+      "source": "elastic.co/docs/solutions/search/vector/knn",
+      "note": "Partial support case where semantic text search is supported but mapping rewrites are invented.",
+      "query": "What is a common use case for Elasticsearch kNN?",
+      "answer": "Common use cases for Elasticsearch kNN vector similarity search include semantic text search. It rewrites index mappings automatically for every query.",
+      "contexts": [
+        {
+          "id": "elasticsearch_knn",
+          "source": "elastic.co/docs/solutions/search/vector/knn",
+          "source_url": "https://www.elastic.co/docs/solutions/search/vector/knn",
+          "text": "Common use cases for kNN vector similarity search include semantic text search, image and video similarity, and recommendations."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 1, "unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_elasticsearch_keyword_contradicted",
+      "source": "elastic.co/docs/solutions/search/vector/knn",
+      "note": "Contradicted Elasticsearch semantic search claim.",
+      "query": "Does Elasticsearch kNN only support exact keyword matches?",
+      "answer": "Elasticsearch kNN search does not retrieve results based on semantic meaning.",
+      "contexts": [
+        {
+          "id": "elasticsearch_knn",
+          "source": "elastic.co/docs/solutions/search/vector/knn",
+          "source_url": "https://www.elastic.co/docs/solutions/search/vector/knn",
+          "text": "With Elasticsearch kNN search, you can retrieve results based on semantic meaning rather than exact keyword matches."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_elasticsearch_knn_wrong_source_citation",
+      "source": "elastic.co/docs/solutions/search/vector/knn + elastic.co/search-labs/blog/hybrid-search-elasticsearch",
+      "note": "Answer is supported by kNN docs but cites Elastic hybrid-search blog context.",
+      "query": "What does Elasticsearch kNN search find?",
+      "answer": "Elasticsearch kNN search finds the k nearest vectors to a query vector using a similarity metric.",
+      "contexts": [
+        {
+          "id": "elasticsearch_knn",
+          "source": "elastic.co/docs/solutions/search/vector/knn",
+          "source_url": "https://www.elastic.co/docs/solutions/search/vector/knn",
+          "text": "A k-nearest neighbor search finds the k nearest vectors to a query vector using a similarity metric such as cosine or L2 norm."
+        },
+        {
+          "id": "elasticsearch_hybrid",
+          "source": "elastic.co/search-labs/blog/hybrid-search-elasticsearch",
+          "source_url": "https://www.elastic.co/search-labs/blog/hybrid-search-elasticsearch",
+          "text": "Elasticsearch hybrid search can combine sparse and dense vector spaces using scoring and ranking methods such as Reciprocal Rank Fusion."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Elasticsearch kNN search finds the k nearest vectors to a query vector using a similarity metric.",
+          "source_id": "elasticsearch_hybrid"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["claim_supported_by_different_source"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_redis_vector_concepts_supported",
+      "source": "redis.io/docs/latest/develop/ai/search-and-query/vectors",
+      "note": "Supported Redis vector query strategies claim.",
+      "query": "What vector query strategies does Redis support?",
+      "answer": "Redis supports k-nearest neighbor, vector range queries, and metadata filters for vector fields.",
+      "contexts": [
+        {
+          "id": "redis_vector_concepts",
+          "source": "redis.io/docs/latest/develop/ai/search-and-query/vectors",
+          "source_url": "https://redis.io/docs/latest/develop/ai/search-and-query/vectors/",
+          "text": "Redis supports advanced querying strategies with vector fields including k-nearest neighbor, vector range queries, and metadata filters."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Redis supports k-nearest neighbor, vector range queries, and metadata filters for vector fields.",
+          "source_id": "redis_vector_concepts"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_redis_ft_search_knn_supported",
+      "source": "redis.io/docs/latest/develop/ai/search-and-query/query/vector-search",
+      "note": "Supported Redis FT.SEARCH KNN query claim.",
+      "query": "What does a Redis FT.SEARCH KNN query include?",
+      "answer": "A Redis FT.SEARCH KNN query includes the number of nearest neighbors, the vector field name, and the vector binary representation.",
+      "contexts": [
+        {
+          "id": "redis_vector_search",
+          "source": "redis.io/docs/latest/develop/ai/search-and-query/query/vector-search",
+          "source_url": "https://redis.io/docs/latest/develop/ai/search-and-query/query/vector-search/",
+          "text": "For KNN, FT.SEARCH needs the number of nearest neighbors, the vector field name, and the vector's binary representation."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "A Redis FT.SEARCH KNN query includes the number of nearest neighbors, the vector field name, and the vector binary representation.",
+          "source_id": "redis_vector_search"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_redis_vector_partial_training",
+      "source": "redis.io/docs/latest/develop/ai/search-and-query/vectors",
+      "note": "Partial support case where metadata filters are supported but per-query neural training is invented.",
+      "query": "What filtering can Redis vector search use?",
+      "answer": "Redis supports advanced querying strategies with vector fields including metadata filters. It provisions Kubernetes load balancers.",
+      "contexts": [
+        {
+          "id": "redis_vector_concepts",
+          "source": "redis.io/docs/latest/develop/ai/search-and-query/vectors",
+          "source_url": "https://redis.io/docs/latest/develop/ai/search-and-query/vectors/",
+          "text": "Redis supports advanced querying strategies with vector fields including k-nearest neighbor, vector range queries, and metadata filters."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 1, "unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_redis_knn_contradicted",
+      "source": "redis.io/docs/latest/develop/ai/search-and-query/vectors",
+      "note": "Contradicted Redis KNN support claim.",
+      "query": "Does Redis support KNN vector queries?",
+      "answer": "Redis vector fields do not include k-nearest neighbor queries.",
+      "contexts": [
+        {
+          "id": "redis_vector_concepts",
+          "source": "redis.io/docs/latest/develop/ai/search-and-query/vectors",
+          "source_url": "https://redis.io/docs/latest/develop/ai/search-and-query/vectors/",
+          "text": "Redis supports advanced querying strategies with vector fields including k-nearest neighbor, vector range queries, and metadata filters."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_redis_ft_search_wrong_source_citation",
+      "source": "redis.io/docs/latest/develop/ai/search-and-query/query/vector-search + redis.io/docs/latest/develop/ai/search-and-query/vectors",
+      "note": "Answer is supported by Redis FT.SEARCH docs but cites broader vector concepts.",
+      "query": "What does a Redis FT.SEARCH KNN query include?",
+      "answer": "A Redis FT.SEARCH KNN query includes the number of nearest neighbors, the vector field name, and the vector binary representation.",
+      "contexts": [
+        {
+          "id": "redis_vector_search",
+          "source": "redis.io/docs/latest/develop/ai/search-and-query/query/vector-search",
+          "source_url": "https://redis.io/docs/latest/develop/ai/search-and-query/query/vector-search/",
+          "text": "For KNN, FT.SEARCH needs the number of nearest neighbors, the vector field name, and the vector's binary representation."
+        },
+        {
+          "id": "redis_vector_concepts",
+          "source": "redis.io/docs/latest/develop/ai/search-and-query/vectors",
+          "source_url": "https://redis.io/docs/latest/develop/ai/search-and-query/vectors/",
+          "text": "Redis supports vector range queries and metadata filters for vector fields."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "A Redis FT.SEARCH KNN query includes the number of nearest neighbors, the vector field name, and the vector binary representation.",
+          "source_id": "redis_vector_concepts"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["claim_supported_by_different_source"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_pgvector_exact_supported",
+      "source": "github.com/pgvector/pgvector",
+      "note": "Supported pgvector exact search claim.",
+      "query": "What search does pgvector perform by default?",
+      "answer": "By default, pgvector performs exact nearest neighbor search with perfect recall.",
+      "contexts": [
+        {
+          "id": "pgvector_indexing",
+          "source": "github.com/pgvector/pgvector",
+          "source_url": "https://github.com/pgvector/pgvector",
+          "text": "By default, pgvector performs exact nearest neighbor search, which provides perfect recall."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "By default, pgvector performs exact nearest neighbor search with perfect recall.",
+          "source_id": "pgvector_indexing"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_pgvector_hnsw_supported",
+      "source": "github.com/pgvector/pgvector/blob/master/README.md",
+      "note": "Supported pgvector HNSW tradeoff claim.",
+      "query": "What are pgvector HNSW index tradeoffs?",
+      "answer": "A pgvector HNSW index creates a multilayer graph and has better query performance than IVFFlat, but slower build times and more memory use.",
+      "contexts": [
+        {
+          "id": "pgvector_hnsw",
+          "source": "github.com/pgvector/pgvector/blob/master/README.md",
+          "source_url": "https://github.com/pgvector/pgvector/blob/master/README.md",
+          "text": "An HNSW index creates a multilayer graph. It has better query performance than IVFFlat, but has slower build times and uses more memory."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "A pgvector HNSW index creates a multilayer graph and has better query performance than IVFFlat, but slower build times and more memory use.",
+          "source_id": "pgvector_hnsw"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_pgvector_ivfflat_partial_encryption",
+      "source": "github.com/pgvector/pgvector",
+      "note": "Partial support case where IVFFlat behavior is supported but automatic encryption is invented.",
+      "query": "How does pgvector IVFFlat work?",
+      "answer": "A pgvector IVFFlat index divides vectors into lists and searches a subset of those lists. It encrypts embeddings automatically.",
+      "contexts": [
+        {
+          "id": "pgvector_ivfflat",
+          "source": "github.com/pgvector/pgvector",
+          "source_url": "https://github.com/pgvector/pgvector",
+          "text": "An IVFFlat index divides vectors into lists, and then searches a subset of those lists that are closest to the query vector."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 1, "unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_pgvector_exact_contradicted",
+      "source": "github.com/pgvector/pgvector",
+      "note": "Contradicted pgvector exact search claim.",
+      "query": "Does pgvector perform exact nearest neighbor search by default?",
+      "answer": "pgvector cannot perform exact nearest neighbor search by default.",
+      "contexts": [
+        {
+          "id": "pgvector_indexing",
+          "source": "github.com/pgvector/pgvector",
+          "source_url": "https://github.com/pgvector/pgvector",
+          "text": "By default, pgvector performs exact nearest neighbor search, which provides perfect recall."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_pgvector_hnsw_wrong_source_citation",
+      "source": "github.com/pgvector/pgvector/blob/master/README.md",
+      "note": "Answer is supported by HNSW docs but cites IVFFlat docs.",
+      "query": "What does a pgvector HNSW index create?",
+      "answer": "A pgvector HNSW index creates a multilayer graph.",
+      "contexts": [
+        {
+          "id": "pgvector_hnsw",
+          "source": "github.com/pgvector/pgvector/blob/master/README.md",
+          "source_url": "https://github.com/pgvector/pgvector/blob/master/README.md",
+          "text": "An HNSW index creates a multilayer graph."
+        },
+        {
+          "id": "pgvector_ivfflat",
+          "source": "github.com/pgvector/pgvector",
+          "source_url": "https://github.com/pgvector/pgvector",
+          "text": "An IVFFlat index divides vectors into lists and searches a subset of those lists."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "A pgvector HNSW index creates a multilayer graph.",
+          "source_id": "pgvector_ivfflat"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["claim_supported_by_different_source"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_opensearch_knn_supported",
+      "source": "docs.opensearch.org/latest/vector-search/vector-search-techniques",
+      "note": "Supported OpenSearch k-NN vector search claim.",
+      "query": "What does OpenSearch k-NN search find?",
+      "answer": "OpenSearch k-NN search finds the k neighbors closest to a query point across an index of vectors.",
+      "contexts": [
+        {
+          "id": "opensearch_vector_techniques",
+          "source": "docs.opensearch.org/latest/vector-search/vector-search-techniques",
+          "source_url": "https://docs.opensearch.org/latest/vector-search/vector-search-techniques/index/",
+          "text": "OpenSearch implements vector search as k-nearest neighbors, or k-NN, search. k-NN search finds the k neighbors closest to a query point across an index of vectors."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "OpenSearch k-NN search finds the k neighbors closest to a query point across an index of vectors.",
+          "source_id": "opensearch_vector_techniques"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_opensearch_filtering_supported",
+      "source": "docs.opensearch.org/latest/vector-search/filter-search-knn",
+      "note": "Supported OpenSearch efficient filtering claim.",
+      "query": "How does efficient OpenSearch k-NN filtering work?",
+      "answer": "Efficient OpenSearch k-NN filtering applies filtering during vector search.",
+      "contexts": [
+        {
+          "id": "opensearch_filtering",
+          "source": "docs.opensearch.org/latest/vector-search/filter-search-knn",
+          "source_url": "https://docs.opensearch.org/latest/vector-search/filter-search-knn/index/",
+          "text": "Efficient k-nearest neighbors filtering applies filtering during the vector search, as opposed to before or after the vector search."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Efficient OpenSearch k-NN filtering applies filtering during vector search.",
+          "source_id": "opensearch_filtering"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_opensearch_approx_partial_sql",
+      "source": "docs.opensearch.org/latest/vector-search/vector-search-techniques/approximate-knn",
+      "note": "Partial support case where index.knn is supported but SQL index creation is invented.",
+      "query": "What is needed to use OpenSearch approximate k-NN?",
+      "answer": "To use OpenSearch approximate search, create a vector index with index.knn set to true. It provisions Kubernetes load balancers.",
+      "contexts": [
+        {
+          "id": "opensearch_approx_knn",
+          "source": "docs.opensearch.org/latest/vector-search/vector-search-techniques/approximate-knn",
+          "source_url": "https://docs.opensearch.org/latest/vector-search/vector-search-techniques/approximate-knn/",
+          "text": "To use approximate search, create a vector index with index.knn set to true. This setting tells OpenSearch to create native library indexes for the index."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 1, "unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_opensearch_knn_contradicted",
+      "source": "docs.opensearch.org/latest/vector-search/vector-search-techniques",
+      "note": "Contradicted OpenSearch k-NN vector search claim.",
+      "query": "Is OpenSearch vector search implemented as k-NN search?",
+      "answer": "OpenSearch vector search is not k-nearest neighbor search.",
+      "contexts": [
+        {
+          "id": "opensearch_vector_techniques",
+          "source": "docs.opensearch.org/latest/vector-search/vector-search-techniques",
+          "source_url": "https://docs.opensearch.org/latest/vector-search/vector-search-techniques/index/",
+          "text": "OpenSearch implements vector search as k-nearest neighbors, or k-NN, search."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_opensearch_filter_wrong_source_citation",
+      "source": "docs.opensearch.org/latest/vector-search/filter-search-knn + docs.opensearch.org/latest/vector-search/vector-search-techniques",
+      "note": "Answer is supported by filtering docs but cites vector-techniques docs.",
+      "query": "How does efficient OpenSearch k-NN filtering work?",
+      "answer": "Efficient OpenSearch k-NN filtering applies filtering during vector search.",
+      "contexts": [
+        {
+          "id": "opensearch_filtering",
+          "source": "docs.opensearch.org/latest/vector-search/filter-search-knn",
+          "source_url": "https://docs.opensearch.org/latest/vector-search/filter-search-knn/index/",
+          "text": "Efficient k-nearest neighbors filtering applies filtering during the vector search, as opposed to before or after the vector search."
+        },
+        {
+          "id": "opensearch_vector_techniques",
+          "source": "docs.opensearch.org/latest/vector-search/vector-search-techniques",
+          "source_url": "https://docs.opensearch.org/latest/vector-search/vector-search-techniques/index/",
+          "text": "OpenSearch implements vector search as k-nearest neighbors, or k-NN, search."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Efficient OpenSearch k-NN filtering applies filtering during vector search.",
+          "source_id": "opensearch_vector_techniques"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["claim_supported_by_different_source"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_mongodb_vector_overview_supported",
+      "source": "mongodb.com/docs/vector-search",
+      "note": "Supported MongoDB Vector Search overview claim.",
+      "query": "What can MongoDB Vector Search combine?",
+      "answer": "MongoDB Vector Search can combine vector search with full-text search and filters on collection fields.",
+      "contexts": [
+        {
+          "id": "mongodb_vector_overview",
+          "source": "mongodb.com/docs/vector-search",
+          "source_url": "https://www.mongodb.com/docs/vector-search/",
+          "text": "MongoDB Vector Search enables you to query data based on semantic meaning, combine vector search with full-text search, and filter your queries on other fields in your collection."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "MongoDB Vector Search can combine vector search with full-text search and filters on collection fields.",
+          "source_id": "mongodb_vector_overview"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_mongodb_vector_filter_supported",
+      "source": "mongodb.com/docs/vector-search/query/aggregation-stages/vector-search-stage",
+      "note": "Supported MongoDB vector-search filter claim.",
+      "query": "Can MongoDB vector search use $and in a filter?",
+      "answer": "MongoDB vector search can use the $and MQL operator to specify an array of filters in one query.",
+      "contexts": [
+        {
+          "id": "mongodb_vector_filter",
+          "source": "mongodb.com/docs/vector-search/query/aggregation-stages/vector-search-stage",
+          "source_url": "https://www.mongodb.com/docs/vector-search/query/aggregation-stages/vector-search-stage/",
+          "text": "You can use the $and MQL operator to specify an array of filters in a single query."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "MongoDB vector search can use the $and MQL operator to specify an array of filters in one query.",
+          "source_id": "mongodb_vector_filter"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_mongodb_vector_partial_external_service",
+      "source": "mongodb.com/docs/vector-search",
+      "note": "Partial support case where field filtering is supported but a separate service claim is invented.",
+      "query": "What can MongoDB Vector Search filter on?",
+      "answer": "MongoDB Vector Search can filter queries on fields in a collection. It stores vectors only in a separate non-MongoDB service.",
+      "contexts": [
+        {
+          "id": "mongodb_vector_overview",
+          "source": "mongodb.com/docs/vector-search",
+          "source_url": "https://www.mongodb.com/docs/vector-search/",
+          "text": "MongoDB Vector Search enables you to search and index vector data alongside your other MongoDB data and filter queries on other fields in your collection."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 1, "unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_mongodb_full_text_contradicted",
+      "source": "mongodb.com/docs/vector-search",
+      "note": "Contradicted MongoDB full-text combination claim.",
+      "query": "Can MongoDB Vector Search combine vector search with full-text search?",
+      "answer": "MongoDB Vector Search cannot combine vector search with full-text search.",
+      "contexts": [
+        {
+          "id": "mongodb_vector_overview",
+          "source": "mongodb.com/docs/vector-search",
+          "source_url": "https://www.mongodb.com/docs/vector-search/",
+          "text": "MongoDB Vector Search enables you to combine vector search with full-text search."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_mongodb_filter_wrong_source_citation",
+      "source": "mongodb.com/docs/vector-search/query/aggregation-stages/vector-search-stage + mongodb.com/docs/vector-search",
+      "note": "Answer is supported by MongoDB filter docs but cites overview docs.",
+      "query": "Can MongoDB vector search use $and in a filter?",
+      "answer": "MongoDB vector search can use the $and MQL operator to specify an array of filters in one query.",
+      "contexts": [
+        {
+          "id": "mongodb_vector_filter",
+          "source": "mongodb.com/docs/vector-search/query/aggregation-stages/vector-search-stage",
+          "source_url": "https://www.mongodb.com/docs/vector-search/query/aggregation-stages/vector-search-stage/",
+          "text": "You can use the $and MQL operator to specify an array of filters in a single query."
+        },
+        {
+          "id": "mongodb_vector_overview",
+          "source": "mongodb.com/docs/vector-search",
+          "source_url": "https://www.mongodb.com/docs/vector-search/",
+          "text": "MongoDB Vector Search can query data based on semantic meaning and combine vector search with full-text search."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "MongoDB vector search can use the $and MQL operator to specify an array of filters in one query.",
+          "source_id": "mongodb_vector_overview"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["claim_supported_by_different_source"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_azure_hybrid_search_supported",
+      "source": "learn.microsoft.com/azure/search/hybrid-search-overview",
+      "note": "Supported Azure AI Search hybrid search claim.",
+      "query": "What does Azure AI Search hybrid search combine?",
+      "answer": "Azure AI Search hybrid search combines vector and full-text queries in a single request.",
+      "contexts": [
+        {
+          "id": "azure_hybrid_search",
+          "source": "learn.microsoft.com/azure/search/hybrid-search-overview",
+          "source_url": "https://learn.microsoft.com/en-us/azure/search/hybrid-search-overview",
+          "text": "Hybrid search in Azure AI Search combines vector and full-text queries in a single request for more relevant results."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Azure AI Search hybrid search combines vector and full-text queries in a single request.",
+          "source_id": "azure_hybrid_search"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_azure_rrf_supported",
+      "source": "learn.microsoft.com/azure/search/hybrid-search-how-to-query",
+      "note": "Supported Azure AI Search RRF claim.",
+      "query": "How does Azure AI Search combine hybrid results?",
+      "answer": "The results are merged and reordered using Reciprocal Rank Fusion.",
+      "contexts": [
+        {
+          "id": "azure_hybrid_query",
+          "source": "learn.microsoft.com/azure/search/hybrid-search-how-to-query",
+          "source_url": "https://learn.microsoft.com/en-us/azure/search/hybrid-search-how-to-query",
+          "text": "Hybrid search combines text and vector queries in a single search request. The results are merged and reordered using Reciprocal Rank Fusion."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "The results are merged and reordered using Reciprocal Rank Fusion.",
+          "source_id": "azure_hybrid_query"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 2},
+      "expected_citation_statuses": ["citation_ok", "citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_azure_hybrid_partial_redis",
+      "source": "learn.microsoft.com/azure/search/hybrid-search-overview",
+      "note": "Partial support case where filtering support is supported but Redis storage is invented.",
+      "query": "What capabilities can Azure AI Search hybrid queries use?",
+      "answer": "Azure AI Search hybrid queries can use filtering, faceting, sorting, scoring profiles, and semantic ranking. They store embeddings in Redis automatically.",
+      "contexts": [
+        {
+          "id": "azure_hybrid_search",
+          "source": "learn.microsoft.com/azure/search/hybrid-search-overview",
+          "source_url": "https://learn.microsoft.com/en-us/azure/search/hybrid-search-overview",
+          "text": "Hybrid queries can take advantage of text-based functionality like filtering, faceting, sorting, scoring profiles, and semantic ranking while executing similarity search against vectors."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 1, "unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_azure_parallel_contradicted",
+      "source": "learn.microsoft.com/azure/search/hybrid-search-overview",
+      "note": "Contradicted Azure hybrid parallel execution claim.",
+      "query": "How does Azure AI Search run full-text and vector search in hybrid search?",
+      "answer": "Azure AI Search hybrid search does not run full-text search and vector search in parallel.",
+      "contexts": [
+        {
+          "id": "azure_hybrid_search",
+          "source": "learn.microsoft.com/azure/search/hybrid-search-overview",
+          "source_url": "https://learn.microsoft.com/en-us/azure/search/hybrid-search-overview",
+          "text": "Hybrid search runs full-text search and vector search in parallel and merges results from each query by using Reciprocal Rank Fusion."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_azure_rrf_wrong_source_citation",
+      "source": "learn.microsoft.com/azure/search/hybrid-search-how-to-query + learn.microsoft.com/azure/search/search-get-started-vector",
+      "note": "Answer is supported by hybrid query docs but cites vector quickstart docs.",
+      "query": "How does Azure AI Search combine hybrid results?",
+      "answer": "Azure AI Search hybrid search merges and reorders text and vector results using Reciprocal Rank Fusion.",
+      "contexts": [
+        {
+          "id": "azure_hybrid_query",
+          "source": "learn.microsoft.com/azure/search/hybrid-search-how-to-query",
+          "source_url": "https://learn.microsoft.com/en-us/azure/search/hybrid-search-how-to-query",
+          "text": "Hybrid search combines text and vector queries in a single search request. The results are merged and reordered using Reciprocal Rank Fusion."
+        },
+        {
+          "id": "azure_vector_quickstart",
+          "source": "learn.microsoft.com/azure/search/search-get-started-vector",
+          "source_url": "https://learn.microsoft.com/en-us/azure/search/search-get-started-vector",
+          "text": "The vector search quickstart uses the Azure AI Search client library to create, load, and query a vector index."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Azure AI Search hybrid search merges and reorders text and vector results using Reciprocal Rank Fusion.",
+          "source_id": "azure_vector_quickstart"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["claim_supported_by_different_source"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_vespa_hybrid_supported",
+      "source": "docs.vespa.ai/en/learn/tutorials/hybrid-search.html",
+      "note": "Supported Vespa hybrid search claim.",
+      "query": "What approaches does the Vespa hybrid-search tutorial combine?",
+      "answer": "The Vespa hybrid-search tutorial combines lexical and embedding-based approaches.",
+      "contexts": [
+        {
+          "id": "vespa_hybrid_search",
+          "source": "docs.vespa.ai/en/learn/tutorials/hybrid-search.html",
+          "source_url": "https://docs.vespa.ai/en/learn/tutorials/hybrid-search.html",
+          "text": "This tutorial demonstrates building a hybrid search application with Vespa that leverages both lexical and embedding-based approaches."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "The Vespa hybrid-search tutorial combines lexical and embedding-based approaches.",
+          "source_id": "vespa_hybrid_search"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_vespa_nearest_neighbor_supported",
+      "source": "docs.vespa.ai/en/querying/nearest-neighbor-search-guide.html",
+      "note": "Supported Vespa nearest-neighbor operator claim.",
+      "query": "What does the Vespa nearest-neighbor search guide cover?",
+      "answer": "The Vespa nearest-neighbor search guide covers using the nearest neighbor operator and combining it with other query operators.",
+      "contexts": [
+        {
+          "id": "vespa_nearest_neighbor",
+          "source": "docs.vespa.ai/en/querying/nearest-neighbor-search-guide.html",
+          "source_url": "https://docs.vespa.ai/en/querying/nearest-neighbor-search-guide.html",
+          "text": "The guide introduces using Vespa nearest neighbor search query operator and how to combine nearest neighbor search with other Vespa query operators."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "The Vespa nearest-neighbor search guide covers using the nearest neighbor operator and combining it with other query operators.",
+          "source_id": "vespa_nearest_neighbor"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_vespa_candidate_partial_exact",
+      "source": "docs.vespa.ai/en/querying/nearest-neighbor-search-guide.html",
+      "note": "Partial support case where candidate retrievers are supported but exact-only search is invented.",
+      "query": "What can Vespa candidate retrievers be used in?",
+      "answer": "Vespa candidate retrievers can be used in a multiphase ranking funnel. They always run only exact search.",
+      "contexts": [
+        {
+          "id": "vespa_nearest_neighbor",
+          "source": "docs.vespa.ai/en/querying/nearest-neighbor-search-guide.html",
+          "source_url": "https://docs.vespa.ai/en/querying/nearest-neighbor-search-guide.html",
+          "text": "The guide covers diverse, efficient candidate retrievers that can be used as candidate retrievers in a multiphase ranking funnel."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 1, "unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_vespa_hybrid_contradicted",
+      "source": "docs.vespa.ai/en/learn/tutorials/hybrid-search.html",
+      "note": "Contradicted Vespa hybrid lexical-only claim.",
+      "query": "Does Vespa hybrid search use only lexical search?",
+      "answer": "Vespa hybrid search does not leverage both lexical and embedding-based approaches.",
+      "contexts": [
+        {
+          "id": "vespa_hybrid_search",
+          "source": "docs.vespa.ai/en/learn/tutorials/hybrid-search.html",
+          "source_url": "https://docs.vespa.ai/en/learn/tutorials/hybrid-search.html",
+          "text": "This tutorial demonstrates building a hybrid search application with Vespa that leverages both lexical and embedding-based approaches."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_vespa_nearest_wrong_source_citation",
+      "source": "docs.vespa.ai/en/querying/nearest-neighbor-search-guide.html + docs.vespa.ai/en/learn/tutorials/hybrid-search.html",
+      "note": "Answer is supported by nearest-neighbor docs but cites hybrid tutorial docs.",
+      "query": "What does the Vespa nearest-neighbor search guide cover?",
+      "answer": "The Vespa nearest-neighbor search guide covers using the nearest neighbor operator and combining it with other query operators.",
+      "contexts": [
+        {
+          "id": "vespa_nearest_neighbor",
+          "source": "docs.vespa.ai/en/querying/nearest-neighbor-search-guide.html",
+          "source_url": "https://docs.vespa.ai/en/querying/nearest-neighbor-search-guide.html",
+          "text": "The guide introduces using Vespa nearest neighbor search query operator and how to combine nearest neighbor search with other Vespa query operators."
+        },
+        {
+          "id": "vespa_hybrid_search",
+          "source": "docs.vespa.ai/en/learn/tutorials/hybrid-search.html",
+          "source_url": "https://docs.vespa.ai/en/learn/tutorials/hybrid-search.html",
+          "text": "This tutorial demonstrates building a hybrid search application with Vespa that leverages both lexical and embedding-based approaches."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "The Vespa nearest-neighbor search guide covers using the nearest neighbor operator and combining it with other query operators.",
+          "source_id": "vespa_hybrid_search"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["claim_supported_by_different_source"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_openai_evals_supported",
+      "source": "developers.openai.com/api/docs/guides/evals",
+      "note": "Supported OpenAI evals purpose claim.",
+      "query": "What do OpenAI evals test?",
+      "answer": "OpenAI evals test model outputs against style and content criteria that you specify.",
+      "contexts": [
+        {
+          "id": "openai_evals",
+          "source": "developers.openai.com/api/docs/guides/evals",
+          "source_url": "https://developers.openai.com/api/docs/guides/evals",
+          "text": "Evaluations, often called evals, test model outputs to ensure they meet style and content criteria that you specify."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "OpenAI evals test model outputs against style and content criteria that you specify.",
+          "source_id": "openai_evals"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_openai_graders_supported",
+      "source": "developers.openai.com/api/docs/guides/graders",
+      "note": "Supported OpenAI graders claim.",
+      "query": "What are OpenAI graders used for?",
+      "answer": "OpenAI graders evaluate model performance against reference answers.",
+      "contexts": [
+        {
+          "id": "openai_graders",
+          "source": "developers.openai.com/api/docs/guides/graders",
+          "source_url": "https://developers.openai.com/api/docs/guides/graders",
+          "text": "Graders are a way to evaluate your model's performance against reference answers."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "OpenAI graders evaluate model performance against reference answers.",
+          "source_id": "openai_graders"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_openai_evals_partial_deploy",
+      "source": "developers.openai.com/api/docs/guides/evals",
+      "note": "Partial support case where evals purpose is supported but deployment is invented.",
+      "query": "What do OpenAI evals help with?",
+      "answer": "OpenAI evals help you understand how LLM applications perform against expectations. They deploy applications to Kubernetes automatically.",
+      "contexts": [
+        {
+          "id": "openai_evals",
+          "source": "developers.openai.com/api/docs/guides/evals",
+          "source_url": "https://developers.openai.com/api/docs/guides/evals",
+          "text": "Writing evals helps you understand how your LLM applications are performing against your expectations, especially when upgrading or trying new models."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 1, "unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_openai_variability_contradicted",
+      "source": "developers.openai.com/api/docs/guides/evaluation-best-practices",
+      "note": "Contradicted OpenAI eval variability claim.",
+      "query": "Why are evals useful for generative AI systems?",
+      "answer": "Generative AI is not variable.",
+      "contexts": [
+        {
+          "id": "openai_eval_best_practices",
+          "source": "developers.openai.com/api/docs/guides/evaluation-best-practices",
+          "source_url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+          "text": "Generative AI is variable. Evaluations are a way to test your AI system despite this variability."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_openai_graders_wrong_source_citation",
+      "source": "developers.openai.com/api/docs/guides/graders + developers.openai.com/api/docs/guides/evals",
+      "note": "Answer is supported by graders docs but cites evals docs.",
+      "query": "What are OpenAI graders used for?",
+      "answer": "OpenAI graders evaluate model performance against reference answers.",
+      "contexts": [
+        {
+          "id": "openai_graders",
+          "source": "developers.openai.com/api/docs/guides/graders",
+          "source_url": "https://developers.openai.com/api/docs/guides/graders",
+          "text": "Graders are a way to evaluate your model's performance against reference answers."
+        },
+        {
+          "id": "openai_evals",
+          "source": "developers.openai.com/api/docs/guides/evals",
+          "source_url": "https://developers.openai.com/api/docs/guides/evals",
+          "text": "Evaluations test model outputs to ensure they meet style and content criteria that you specify."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "OpenAI graders evaluate model performance against reference answers.",
+          "source_id": "openai_evals"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["claim_supported_by_different_source"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_guardrails_io_guards_supported",
+      "source": "github.com/guardrails-ai/guardrails",
+      "note": "Supported Guardrails input/output guards claim.",
+      "query": "What do Guardrails input and output guards do?",
+      "answer": "Guardrails input and output guards detect, quantify, and mitigate specific risks.",
+      "contexts": [
+        {
+          "id": "guardrails_overview",
+          "source": "github.com/guardrails-ai/guardrails",
+          "source_url": "https://github.com/guardrails-ai/guardrails",
+          "text": "Guardrails runs Input and Output Guards in your application that detect, quantify, and mitigate specific types of risks."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Guardrails input and output guards detect, quantify, and mitigate specific risks.",
+          "source_id": "guardrails_overview"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_guardrails_validators_supported",
+      "source": "guardrailsai.com/guardrails/docs/concepts/validators",
+      "note": "Supported Guardrails custom validators claim.",
+      "query": "What can custom Guardrails validators do?",
+      "answer": "Custom Guardrails validators can extend Guardrails beyond the Hub.",
+      "contexts": [
+        {
+          "id": "guardrails_validators",
+          "source": "guardrailsai.com/guardrails/docs/concepts/validators",
+          "source_url": "https://guardrailsai.com/guardrails/docs/concepts/validators",
+          "text": "Custom validators can extend the ability of Guardrails beyond the hub."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Custom Guardrails validators can extend Guardrails beyond the Hub.",
+          "source_id": "guardrails_validators"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_guardrails_structured_partial_runtime",
+      "source": "github.com/guardrails-ai/guardrails",
+      "note": "Partial support case where structured-data support is supported but deterministic replacement is invented.",
+      "query": "What else does Guardrails help generate?",
+      "answer": "Guardrails helps generate structured data from LLMs. It replaces all model calls with deterministic code.",
+      "contexts": [
+        {
+          "id": "guardrails_overview",
+          "source": "github.com/guardrails-ai/guardrails",
+          "source_url": "https://github.com/guardrails-ai/guardrails",
+          "text": "Guardrails helps you generate structured data from LLMs."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 1, "unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_guardrails_io_contradicted",
+      "source": "github.com/guardrails-ai/guardrails",
+      "note": "Contradicted Guardrails input/output guards claim.",
+      "query": "Can Guardrails run input and output guards?",
+      "answer": "Guardrails cannot run input or output guards.",
+      "contexts": [
+        {
+          "id": "guardrails_overview",
+          "source": "github.com/guardrails-ai/guardrails",
+          "source_url": "https://github.com/guardrails-ai/guardrails",
+          "text": "Guardrails runs Input and Output Guards in your application."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_guardrails_validators_wrong_source_citation",
+      "source": "guardrailsai.com/guardrails/docs/concepts/validators + github.com/guardrails-ai/guardrails",
+      "note": "Answer is supported by validator docs but cites overview docs.",
+      "query": "What can custom Guardrails validators do?",
+      "answer": "Custom Guardrails validators can extend Guardrails beyond the Hub.",
+      "contexts": [
+        {
+          "id": "guardrails_validators",
+          "source": "guardrailsai.com/guardrails/docs/concepts/validators",
+          "source_url": "https://guardrailsai.com/guardrails/docs/concepts/validators",
+          "text": "Custom validators can extend the ability of Guardrails beyond the hub."
+        },
+        {
+          "id": "guardrails_overview",
+          "source": "github.com/guardrails-ai/guardrails",
+          "source_url": "https://github.com/guardrails-ai/guardrails",
+          "text": "Guardrails runs Input and Output Guards in your application and helps generate structured data from LLMs."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "Custom Guardrails validators can extend Guardrails beyond the Hub.",
+          "source_id": "guardrails_overview"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["claim_supported_by_different_source"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_llamaindex_observability_supported",
+      "source": "developers.llamaindex.ai/python/framework/module_guides/observability",
+      "note": "Supported LlamaIndex observability claim.",
+      "query": "What does LlamaIndex observability help developers build?",
+      "answer": "LlamaIndex observability helps developers build principled LLM applications in production settings.",
+      "contexts": [
+        {
+          "id": "llamaindex_observability",
+          "source": "developers.llamaindex.ai/python/framework/module_guides/observability",
+          "source_url": "https://developers.llamaindex.ai/python/framework/module_guides/observability/",
+          "text": "LlamaIndex provides one-click observability to allow you to build principled LLM applications in a production setting."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "LlamaIndex observability helps developers build principled LLM applications in production settings.",
+          "source_id": "llamaindex_observability"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_llamaindex_evaluation_supported",
+      "source": "developers.llamaindex.ai/python/framework/optimizing/evaluation/evaluation",
+      "note": "Supported LlamaIndex evaluation diagnostics claim.",
+      "query": "Why does LlamaIndex discuss evaluation?",
+      "answer": "LlamaIndex evaluation provides tools for identifying issues and receiving useful diagnostic signals.",
+      "contexts": [
+        {
+          "id": "llamaindex_evaluation",
+          "source": "developers.llamaindex.ai/python/framework/optimizing/evaluation/evaluation",
+          "source_url": "https://developers.llamaindex.ai/python/framework/optimizing/evaluation/evaluation/",
+          "text": "LlamaIndex aims to provide tools to make identifying issues and receiving useful diagnostic signals easy."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "LlamaIndex evaluation provides tools for identifying issues and receiving useful diagnostic signals.",
+          "source_id": "llamaindex_evaluation"
+        }
+      ],
+      "expected_labels": ["no_failure_detected"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["citation_ok"],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_llamaindex_observability_partial_sqlite",
+      "source": "developers.llamaindex.ai/python/framework/understanding/tracing_and_debugging/tracing_and_debugging",
+      "note": "Partial support case where partner observability integrations are supported but SQLite-only storage is invented.",
+      "query": "What can LlamaIndex observability integrate with?",
+      "answer": "LlamaIndex observability can integrate with partner observability and evaluation tools. It stores traces only in SQLite.",
+      "contexts": [
+        {
+          "id": "llamaindex_tracing_debugging",
+          "source": "developers.llamaindex.ai/python/framework/understanding/tracing_and_debugging/tracing_and_debugging",
+          "source_url": "https://developers.llamaindex.ai/python/framework/understanding/tracing_and_debugging/tracing_and_debugging/",
+          "text": "LlamaIndex observability lets you integrate with observability and evaluation tools offered by partners."
+        }
+      ],
+      "expected_labels": ["partial_support"],
+      "expected_verdict_counts": {"supported": 1, "unsupported": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": false
+    },
+    {
+      "id": "holdout_llamaindex_debug_contradicted",
+      "source": "developers.llamaindex.ai/python/framework/understanding/tracing_and_debugging/tracing_and_debugging",
+      "note": "Contradicted LlamaIndex observability debug/evaluate claim.",
+      "query": "Can LlamaIndex observability help debug and evaluate components?",
+      "answer": "LlamaIndex observability cannot help debug or evaluate components.",
+      "contexts": [
+        {
+          "id": "llamaindex_tracing_debugging",
+          "source": "developers.llamaindex.ai/python/framework/understanding/tracing_and_debugging/tracing_and_debugging",
+          "source_url": "https://developers.llamaindex.ai/python/framework/understanding/tracing_and_debugging/tracing_and_debugging/",
+          "text": "LlamaIndex observability lets you observe, debug, and evaluate your system as a whole and for each component."
+        }
+      ],
+      "expected_labels": ["contradicted_answer", "should_have_abstained"],
+      "expected_verdict_counts": {"contradicted": 1},
+      "expected_citation_statuses": [],
+      "expected_should_abstain": true
+    },
+    {
+      "id": "holdout_llamaindex_evaluation_wrong_source_citation",
+      "source": "developers.llamaindex.ai/python/framework/optimizing/evaluation/evaluation + developers.llamaindex.ai/python/framework/module_guides/observability",
+      "note": "Answer is supported by evaluation docs but cites observability docs.",
+      "query": "Why does LlamaIndex discuss evaluation?",
+      "answer": "LlamaIndex evaluation provides tools for identifying issues and receiving useful diagnostic signals.",
+      "contexts": [
+        {
+          "id": "llamaindex_evaluation",
+          "source": "developers.llamaindex.ai/python/framework/optimizing/evaluation/evaluation",
+          "source_url": "https://developers.llamaindex.ai/python/framework/optimizing/evaluation/evaluation/",
+          "text": "LlamaIndex aims to provide tools to make identifying issues and receiving useful diagnostic signals easy."
+        },
+        {
+          "id": "llamaindex_observability",
+          "source": "developers.llamaindex.ai/python/framework/module_guides/observability",
+          "source_url": "https://developers.llamaindex.ai/python/framework/module_guides/observability/",
+          "text": "LlamaIndex provides one-click observability to build principled LLM applications in production settings."
+        }
+      ],
+      "citations": [
+        {
+          "claim": "LlamaIndex evaluation provides tools for identifying issues and receiving useful diagnostic signals.",
+          "source_id": "llamaindex_observability"
+        }
+      ],
+      "expected_labels": ["citation_mismatch"],
+      "expected_verdict_counts": {"supported": 1},
+      "expected_citation_statuses": ["claim_supported_by_different_source"],
+      "expected_should_abstain": false
+    },
+    {
       "id": "holdout_no_context_should_abstain",
       "source": "public docs holdout empty retrieval",
       "note": "No retrieved evidence is available, so an answer with specific public-doc claims should abstain.",

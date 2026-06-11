@@ -22,7 +22,8 @@ Read [METHODOLOGY.md](METHODOLOGY.md) before using results in launch material.
 It documents label sources, generated-case limits, metrics, quality gates, and
 the public claim policy. Use [BASELINES.md](BASELINES.md) to collect publishable
 RAGAS, DeepEval, local-judge, Phoenix, or TruLens comparison rows. The
-`public_holdout` track is documented in [DIAG150.md](DIAG150.md).
+`public_holdout` track is documented in [DIAG150.md](DIAG150.md), and the
+required human audit pass is tracked in [AUDIT.md](AUDIT.md).
 
 Run it from the repo root:
 
@@ -59,12 +60,13 @@ python benchmarks/contexttrace_bench/run_contexttrace.py \
 
 Current holdout status: ContextTrace semantic verifier scores `1.000` failure
 macro-F1, `1.000` claim-verdict macro-F1, `1.000` root-cause accuracy,
-`1.000` citation error F1, and `0.944` span overlap on 75 public-doc cases with
-74 span-labeled cases. An OpenAI diagnostic judge baseline using
-`gpt-4.1-mini` scores `0.869` failure macro-F1, `0.973` root-cause accuracy,
-`1.000` citation error F1, and `0.905` span overlap on the same split. The
-holdout is the first 75/150 milestone for ContextTrace-Diag-150 and is
-intentionally not included in `--case-set all`.
+`1.000` citation error F1, and `0.950` span overlap on 150 public-doc cases with
+149 span-labeled cases. An OpenAI diagnostic judge baseline using
+`gpt-4.1-mini` scores `0.931` failure macro-F1, `0.953` root-cause accuracy,
+`1.000` citation error F1, and `0.921` span overlap on the same split. The
+holdout has reached the 150-case ContextTrace-Diag-150 target and is
+intentionally not included in `--case-set all`; call it frozen only after the
+human audit checklist is complete.
 
 Enforce the current SOTA readiness gates:
 

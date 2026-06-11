@@ -31,9 +31,13 @@ that a retrieval or generation stack is state of the art.
 `public_holdout`
 : A separate curated public-doc holdout from OpenTelemetry, Weaviate,
   LlamaIndex, Milvus, LangChain, Haystack, Qdrant, Pinecone, Chroma, RAGAS,
-  and DeepEval docs. This case set is intentionally not included in `all` so
-  the default 500-case leaderboard remains stable while holdout regressions stay
-  visible. It is currently the 75/150 milestone for ContextTrace-Diag-150.
+  DeepEval, LangSmith, Phoenix, TruLens, DSPy, LanceDB, Elasticsearch, Redis,
+  pgvector, OpenSearch, MongoDB Vector Search, Azure AI Search, Vespa, OpenAI
+  Evals, and Guardrails docs. This case set is intentionally not included in
+  `all` so the default 500-case leaderboard remains stable while holdout
+  regressions stay visible. It has reached the 150-case ContextTrace-Diag-150
+  target and requires the [human audit checklist](AUDIT.md) before being called
+  frozen.
 
 The default repo-level run adds deterministic generated variants until the target
 case count is reached. Generated variants are useful for regression pressure:
@@ -56,9 +60,10 @@ python benchmarks/contexttrace_bench/run_contexttrace.py \
 Labels come from two sources:
 
 - Bundled verifier benchmark cases define expected failure labels, claim-verdict
-  counts, and citation statuses.
-- `labels.json` adds expected primary root causes and evidence spans for metrics
-  that are not encoded in older verifier fixtures.
+  counts, citation statuses, primary root causes, and evidence spans when the
+  fixture supports those fields.
+- `labels.json` adds expected primary root causes and evidence spans for older
+  verifier fixtures that predate the richer benchmark metadata.
 
 The harness intentionally keeps `candidate_inputs.jsonl` label-free. External
 evaluators receive only the case ID, trace payload, source metadata, and variant
@@ -149,9 +154,8 @@ fully reproducible competitor runs.
 - Evidence-span scoring uses token overlap rather than human judgment.
 - Candidate adapters infer labels from evaluator-specific scores when the
   external evaluator does not natively expose ContextTrace labels.
-- The public holdout is still an in-progress 75/150 ContextTrace-Diag-150
-  milestone; it is a readiness signal, not a statistically powered external
-  benchmark.
+- The public holdout has reached the 150-case ContextTrace-Diag-150 target, but
+  it still needs human audit sign-off before being described as frozen.
 - Current benchmark artifacts are generated in `benchmarks/contexttrace_bench/out/`
   and published by CI artifacts rather than committed to source control.
 
@@ -166,4 +170,5 @@ Before publishing a Week 1 credibility update, produce:
 - `candidate_inputs.jsonl`
 - At least one competitor smoke candidate, or a documented reason it is pending
   such as missing evaluator credentials.
+- The ContextTrace-Diag-150 human audit status from [AUDIT.md](AUDIT.md).
 - A clear limitations paragraph wherever results are shown publicly.

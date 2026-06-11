@@ -164,9 +164,9 @@ python benchmarks/contexttrace_bench/run_contexttrace.py \
   --output-dir benchmarks/contexttrace_bench/out/public_holdout
 ```
 
-Current holdout status is tracked in the baseline runbook. The holdout is kept
-outside the default 500-case run so it can expose external validation gaps
-without invalidating the main leaderboard rows.
+Current 150-case holdout status is tracked in the baseline runbook. The holdout
+is kept outside the default 500-case run so it can expose external validation
+gaps without invalidating the main leaderboard rows.
 
 `candidate_inputs.jsonl` gives external evaluators the exact trace payloads to
 score. Candidate prediction JSON files can then be scored with `--candidate` to
@@ -179,6 +179,8 @@ Methodology and baseline runbooks live in
 and [`benchmarks/contexttrace_bench/BASELINES.md`](benchmarks/contexttrace_bench/BASELINES.md).
 The public holdout track is documented in
 [`benchmarks/contexttrace_bench/DIAG150.md`](benchmarks/contexttrace_bench/DIAG150.md).
+Human audit criteria for calling that split frozen are in
+[`benchmarks/contexttrace_bench/AUDIT.md`](benchmarks/contexttrace_bench/AUDIT.md).
 The Week 1 readiness checklist is in [`docs/sota-readiness.md`](docs/sota-readiness.md).
 Treat the default 500-case run as verifier-readiness evidence; publish full
 competitor rows and independent external dataset results before making broad
