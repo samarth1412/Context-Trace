@@ -93,7 +93,9 @@ def test_contexttrace_bench_markdown_outputs(tmp_path) -> None:
     assert "SOTA Readiness Gates" in (tmp_path / "report.html").read_text(encoding="utf-8")
     candidate_inputs = (tmp_path / "candidate_inputs.jsonl").read_text(encoding="utf-8").splitlines()
     assert candidate_inputs
-    assert "expected" not in json.loads(candidate_inputs[0])
+    candidate_input = json.loads(candidate_inputs[0])
+    assert "expected" not in candidate_input
+    assert "note" not in candidate_input
 
 
 def test_contexttrace_bench_scores_candidate_predictions(tmp_path) -> None:

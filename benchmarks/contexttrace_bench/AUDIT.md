@@ -2,7 +2,8 @@
 
 Use this checklist before calling `public_holdout` a frozen public diagnostic
 split. The goal is to verify label quality, source grounding, and reproducible
-reporting, not to tune the verifier.
+reporting, not to tune the verifier. The automated audit report is tracked in
+[AUDIT_REPORT.md](AUDIT_REPORT.md).
 
 ## Case Source Audit
 
@@ -64,4 +65,5 @@ python benchmarks/contexttrace_bench/run_contexttrace.py \
 
 | Date | Reviewer | Scope | Result | Notes |
 | --- | --- | --- | --- | --- |
+| 2026-06-11 | Codex automated audit | Structure, source URL reachability, candidate-input leakage, metric consistency | Passed | See [AUDIT_REPORT.md](AUDIT_REPORT.md). Human source/label/span review still required. |
 | Pending | Pending | 150-case source, label, diagnostic, and artifact audit | Pending | Required before frozen-split claim. |

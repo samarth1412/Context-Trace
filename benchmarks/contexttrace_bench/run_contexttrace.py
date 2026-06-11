@@ -222,7 +222,6 @@ def render_candidate_inputs_jsonl(result: dict[str, Any]) -> str:
                 {
                     "id": row.get("id"),
                     "source": row.get("source"),
-                    "note": row.get("note"),
                     "generated": bool(row.get("generated")),
                     "variant_type": row.get("variant_type"),
                     "base_case_id": row.get("base_case_id"),
