@@ -164,11 +164,15 @@ Human evidence-span review uses a separate JSONL queue:
 ```bash
 python benchmarks/contexttrace_bench/ragtruth_review.py build-queue \
   --case-pack benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
-  --output benchmarks/contexttrace_bench/out/ragtruth_review_queue.jsonl
+  --output benchmarks/contexttrace_bench/out/ragtruth_review_queue.jsonl \
+  --suggest-source-spans \
+  --max-suggestions 3
 ```
 
-Reviewers fill `source_evidence_spans`, set `review_status` to `reviewed`,
-`accepted`, or `approved`, and then apply the file:
+`--suggest-source-spans` pre-populates scored context snippets for reviewer
+convenience. These suggestions are not accepted evidence until a reviewer copies
+the correct text into `source_evidence_spans`, sets `review_status` to
+`reviewed`, `accepted`, or `approved`, and applies the file:
 
 ```bash
 python benchmarks/contexttrace_bench/ragtruth_review.py apply \

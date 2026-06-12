@@ -43,9 +43,10 @@ Completed in the repo:
   candidate-input artifacts as built-in benchmark runs.
 - `ragtruth_review.py` can generate a human-review queue and apply reviewed
   source evidence spans back into a reviewed RAGTruth case pack.
-- A 20-row official RAGTruth test-split smoke run was built, scored, and queued
-  for review from the raw GitHub dataset files. The result is smoke-only and not
-  publishable until issue #7 evidence mapping is complete.
+- A 50-row official RAGTruth test-split smoke run was built, scored, and queued
+  for review from the raw GitHub dataset files. The 15 hallucination review rows
+  now include deterministic source-span suggestions. The result is smoke-only
+  and not publishable until issue #7 evidence mapping is complete.
 - Documentation links now point reviewers to methodology and baseline status.
 
 Still pending for Week 1:

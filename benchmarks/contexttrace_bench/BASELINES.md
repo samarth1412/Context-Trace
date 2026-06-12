@@ -15,7 +15,7 @@ case set and are scored by `run_contexttrace.py --candidate`.
 | OpenAI-compatible local judge | `run_local_judge.py` | Smoke run completed | No | Ollama `phi3:latest` produced 5 predictions. It is parseable but slow on this machine, so full 500-case execution is a multi-hour run. |
 | Phoenix | `adapt_candidate.py --preset phoenix` | Adapter ready | No | Requires exported Phoenix evaluator results. |
 | TruLens | `adapt_candidate.py --preset trulens` | Adapter ready | No | Requires exported TruLens evaluator results. |
-| RAGTruth external validation | `ragtruth_adapter.py`, `ragtruth_review.py`, `run_contexttrace.py --case-pack` | Official raw-file smoke verified | No | 20-row test-split smoke builds, scores, and generates a review queue. Requires issue #7 human mapping from answer-side spans to source evidence spans before publishable span claims. |
+| RAGTruth external validation | `ragtruth_adapter.py`, `ragtruth_review.py`, `run_contexttrace.py --case-pack` | Official raw-file smoke verified | No | 50-row test-split smoke builds, scores, and generates a 15-row review queue with source-span suggestions. Requires issue #7 human mapping from answer-side spans to source evidence spans before publishable span claims. |
 
 Latest scored leaderboard:
 
@@ -248,7 +248,9 @@ Prepare the human evidence-span review queue and apply reviewed mappings:
 ```bash
 python benchmarks/contexttrace_bench/ragtruth_review.py build-queue \
   --case-pack benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
-  --output benchmarks/contexttrace_bench/out/ragtruth_review_queue.jsonl
+  --output benchmarks/contexttrace_bench/out/ragtruth_review_queue.jsonl \
+  --suggest-source-spans \
+  --max-suggestions 3
 
 python benchmarks/contexttrace_bench/ragtruth_review.py apply \
   --case-pack benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \

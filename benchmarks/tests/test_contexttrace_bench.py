@@ -343,6 +343,13 @@ def test_ragtruth_review_queue_and_mapping_updates_case_pack() -> None:
     assert queue[0]["review_status"] == "needs_review"
     assert queue[0]["answer_hallucination_spans"][0]["text"] == "Gaza Strip"
     assert queue[0]["source_contexts"][0]["source_id"] == "11316"
+    assert queue[0]["source_evidence_span_suggestions"] == []
+
+    suggested_queue = build_review_queue(case_pack, suggest_source_spans=True, max_suggestions=1)
+    assert suggested_queue[0]["source_evidence_span_suggestions"]
+    assert suggested_queue[0]["source_evidence_span_suggestions"][0]["source_id"] == "11316"
+    assert "East Jerusalem" in suggested_queue[0]["source_evidence_span_suggestions"][0]["text"]
+    assert suggested_queue[0]["source_evidence_spans"] == []
 
     queue[0]["review_status"] = "reviewed"
     queue[0]["reviewer"] = "unit-test"
