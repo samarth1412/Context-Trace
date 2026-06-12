@@ -113,11 +113,15 @@ Outputs:
 - `results.md`
 - `leaderboard.md`
 - `report.html`
+- `error_analysis.json`
+- `error_analysis.md`
 - `candidate_inputs.jsonl`
 
 The JSON, Markdown, and HTML reports include deterministic 95% case-bootstrap
 confidence intervals and a per-label precision/recall/F1 breakdown for the
-headline verifier metrics.
+headline verifier metrics. The error-analysis artifacts add confusion pairs,
+root-cause confusion, false-positive labels, dangerous false greens, and the
+highest-priority cases to inspect.
 
 External evaluators can be compared by supplying candidate prediction JSON files
 with `--candidate`. This produces leaderboard rows only after the competitor

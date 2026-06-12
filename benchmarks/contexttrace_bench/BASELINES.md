@@ -43,7 +43,7 @@ Latest RAGTruth assisted review pilot:
 
 | System | Cases | Reviewed Span Rows | Failure Macro-F1 | Root Cause Accuracy | Citation Error F1 | Span Overlap |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| ContextTrace semantic verifier on RAGTruth test-split smoke | 50 | 15 | 0.150 | 0.280 | 1.000 | 0.882 |
+| ContextTrace semantic verifier on RAGTruth test-split smoke | 50 | 15 | 0.172 | 0.340 | 1.000 | 0.882 |
 
 This pilot uses official RAGTruth `response.jsonl` and `source_info.jsonl`
 files stored outside the repo under ignored benchmark output. The 15 reviewed
@@ -69,6 +69,8 @@ Expected artifacts:
 - `benchmarks/contexttrace_bench/out/results.md`
 - `benchmarks/contexttrace_bench/out/leaderboard.md`
 - `benchmarks/contexttrace_bench/out/report.html`
+- `benchmarks/contexttrace_bench/out/error_analysis.json`
+- `benchmarks/contexttrace_bench/out/error_analysis.md`
 - `benchmarks/contexttrace_bench/out/candidate_inputs.jsonl`
 
 ## Remote RAGAS And DeepEval Runs

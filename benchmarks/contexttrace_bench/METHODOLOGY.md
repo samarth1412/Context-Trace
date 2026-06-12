@@ -228,6 +228,8 @@ Before publishing a Week 1 credibility update, produce:
 - `results.md`
 - `leaderboard.md`
 - `report.html`
+- `error_analysis.json`
+- `error_analysis.md`
 - `candidate_inputs.jsonl`
 - At least one competitor smoke candidate, or a documented reason it is pending
   such as missing evaluator credentials.

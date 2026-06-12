@@ -34,7 +34,8 @@ Completed in the repo:
 - The remote baseline runners now support resumable checkpoints and bounded
   evaluator concurrency.
 - Benchmark artifacts now include deterministic 95% case-bootstrap confidence
-  intervals and per-label breakdowns for the headline metrics.
+  intervals, per-label breakdowns for the headline metrics, and error-analysis
+  JSON/Markdown with confusion pairs and cases to inspect.
 - A RAGTruth external-validation adapter scaffold can build a ContextTrace-style
   case pack from `response.jsonl` and `source_info.jsonl`, with answer-side
   hallucination spans preserved for human evidence-span mapping.
@@ -49,9 +50,10 @@ Completed in the repo:
   and not publishable until issue #7 evidence mapping is complete.
 - An assisted source-evidence review pilot mapped those 15 RAGTruth
   hallucination rows and rescored the 50-row test-split smoke. Span overlap is
-  now measurable at `0.882` across 15 reviewed rows, but failure macro-F1 remains
-  `0.150` and root-cause accuracy remains `0.280`, so this is workflow evidence,
-  not a publishable external benchmark claim.
+  now measurable at `0.882` across 15 reviewed rows. The current calibrated
+  semantic verifier scores failure macro-F1 `0.172` and root-cause accuracy
+  `0.340`, so this is workflow/calibration evidence, not a publishable external
+  benchmark claim.
 - Documentation links now point reviewers to methodology and baseline status.
 
 Still pending for Week 1:
@@ -88,7 +90,7 @@ Current baseline status:
   error F1 `1.000`, evidence span overlap `0.921`.
 - RAGTruth assisted review pilot, ContextTrace semantic verifier: 50 official
   test-split smoke cases, 15 assisted-reviewed source-evidence rows, failure
-  macro-F1 `0.150`, root-cause accuracy `0.280`, citation error F1 `1.000`,
+  macro-F1 `0.172`, root-cause accuracy `0.340`, citation error F1 `1.000`,
   evidence span overlap `0.882` across the 15 reviewed rows. This is not
   publishable without independent sign-off and broader coverage.
 - Ollama is reachable locally and `phi3:latest` completed a 5-case local-judge

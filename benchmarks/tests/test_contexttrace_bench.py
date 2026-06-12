@@ -6,8 +6,10 @@ from benchmarks.contexttrace_bench.adapt_candidate import adapt_candidate_rows
 from benchmarks.contexttrace_bench.baseline_common import load_candidate_inputs, write_json
 from benchmarks.contexttrace_bench.run_deepeval import build_deepeval_rows
 from benchmarks.contexttrace_bench.run_contexttrace import (
+    build_error_analysis,
     main as run_contexttrace_main,
     quality_gate_failures,
+    render_error_analysis_markdown,
     render_html_report,
     render_leaderboard_markdown,
     render_results_markdown,
@@ -83,6 +85,8 @@ def test_contexttrace_bench_markdown_outputs(tmp_path) -> None:
     assert paths["results_md"].endswith("results.md")
     assert paths["leaderboard_md"].endswith("leaderboard.md")
     assert paths["report_html"].endswith("report.html")
+    assert paths["error_analysis_json"].endswith("error_analysis.json")
+    assert paths["error_analysis_md"].endswith("error_analysis.md")
     assert paths["candidate_inputs_jsonl"].endswith("candidate_inputs.jsonl")
 
     results_md = render_results_markdown(result)
@@ -103,11 +107,28 @@ def test_contexttrace_bench_markdown_outputs(tmp_path) -> None:
     assert "ContextTrace-Bench Results" in (tmp_path / "results.md").read_text(encoding="utf-8")
     assert "ContextTrace-Bench Leaderboard" in (tmp_path / "leaderboard.md").read_text(encoding="utf-8")
     assert "SOTA Readiness Gates" in (tmp_path / "report.html").read_text(encoding="utf-8")
+    assert "ContextTrace-Bench Error Analysis" in (tmp_path / "error_analysis.md").read_text(encoding="utf-8")
+    error_analysis = json.loads((tmp_path / "error_analysis.json").read_text(encoding="utf-8"))
+    assert "confusion" in error_analysis
+    assert "cases_to_review" in error_analysis
     candidate_inputs = (tmp_path / "candidate_inputs.jsonl").read_text(encoding="utf-8").splitlines()
     assert candidate_inputs
     candidate_input = json.loads(candidate_inputs[0])
     assert "expected" not in candidate_input
     assert "note" not in candidate_input
+
+
+def test_contexttrace_bench_error_analysis_summarizes_misses() -> None:
+    result = run_contexttrace_benchmark(mode="semantic", case_set="external")
+    analysis = build_error_analysis(result)
+    markdown = render_error_analysis_markdown(analysis)
+
+    assert analysis["case_count"] == result["summary"]["cases"]
+    assert analysis["confusion"]
+    assert analysis["root_cause_confusion"]
+    assert "ContextTrace-Bench Error Analysis" in markdown
+    assert "Confusion Matrix" in markdown
+    assert "Cases To Review" in markdown
 
 
 def test_contexttrace_bench_scores_candidate_predictions(tmp_path) -> None:

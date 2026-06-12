@@ -587,6 +587,89 @@ def test_semantic_mode_supports_prompt_receiving_paraphrase():
     assert result["summary"]["failure_types"] == ["no_failure_detected"]
 
 
+def test_semantic_mode_does_not_treat_not_only_as_contradiction():
+    result = verify_trace(
+        RAGTrace(
+            query="What constrains defamation law?",
+            answer="Defamation law is balanced against First Amendment and Virginia Constitution speech protections.",
+            contexts=[
+                TraceContext(
+                    id="defamation",
+                    text=(
+                        "Of course, the law of defamation must be balanced against the freedom of speech "
+                        "protected under not only the First Amendment to the United States Constitution, "
+                        "but also the Virginia Constitution."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert result["claims"][0]["verdict"] == "supported"
+    assert result["claims"][0]["conflicting_facts"] == []
+    assert "contradicted_answer" not in result["summary"]["failure_types"]
+
+
+def test_semantic_mode_ignores_negated_aside_when_affirmative_clause_supports_claim():
+    result = verify_trace(
+        RAGTrace(
+            query="Were the Hawks players arrested?",
+            answer="Pero Antic and Thabo Sefolosha were arrested on obstruction and disorderly conduct charges.",
+            contexts=[
+                TraceContext(
+                    id="nba_arrests",
+                    text=(
+                        "A knife was recovered, a suspect was arrested and two individuals not involved "
+                        "in the dispute -- the Hawks' Pero Antic, 32, and Thabo Sefolosha, 30 -- were "
+                        "arrested on charges of obstructing governmental administration and disorderly conduct."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert result["claims"][0]["verdict"] != "contradicted"
+    assert result["claims"][0]["conflicting_facts"] == []
+    assert "contradicted_answer" not in result["summary"]["failure_types"]
+
+
+def test_semantic_mode_supports_news_paraphrases():
+    discharged = verify_trace(
+        RAGTrace(
+            query="What happened after King's hospitalization?",
+            answer="King has been discharged from the hospital.",
+            contexts=[
+                TraceContext(
+                    id="bb_king",
+                    text='"I\'m feeling much better and am leaving the hospital today," King said.',
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+    plant = verify_trace(
+        RAGTrace(
+            query="Why did the Broken Arrow site close?",
+            answer="The Broken Arrow plant is shutting down to investigate contamination.",
+            contexts=[
+                TraceContext(
+                    id="blue_bell",
+                    text=(
+                        'The company is shutting down the Broken Arrow facility "out of an abundance '
+                        'of caution" to search for a possible cause of contamination.'
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert discharged["claims"][0]["verdict"] == "supported"
+    assert plant["claims"][0]["verdict"] == "supported"
+
+
 def test_relation_matching_allows_partial_subject_overlap_for_same_object():
     result = verify_trace(
         RAGTrace(

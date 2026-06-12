@@ -150,11 +150,11 @@ python benchmarks/contexttrace_bench/run_contexttrace.py \
   --enforce-sota-gates
 ```
 
-It writes reproducible JSON, Markdown, leaderboard, and static HTML artifacts to
-`benchmarks/contexttrace_bench/out/`. The default run targets 500 cases by adding
-deterministic generated variants to the curated real-doc cases. Reports include
-deterministic 95% case-bootstrap confidence intervals and per-label breakdowns
-for the headline verifier metrics.
+It writes reproducible JSON, Markdown, leaderboard, static HTML, candidate-input,
+and error-analysis artifacts to `benchmarks/contexttrace_bench/out/`. The default
+run targets 500 cases by adding deterministic generated variants to the curated
+real-doc cases. Reports include deterministic 95% case-bootstrap confidence
+intervals and per-label breakdowns for the headline verifier metrics.
 
 Run the separate public-doc holdout without generated variants:
 

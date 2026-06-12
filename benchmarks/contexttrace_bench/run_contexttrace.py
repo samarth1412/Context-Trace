@@ -5,6 +5,7 @@ import json
 import random
 import sys
 import time
+from collections import Counter
 from html import escape
 from pathlib import Path
 from typing import Any
@@ -235,18 +236,25 @@ def write_benchmark_outputs(
     results_md_path = output_path / "results.md"
     leaderboard_path = output_path / "leaderboard.md"
     report_html_path = output_path / "report.html"
+    error_analysis_json_path = output_path / "error_analysis.json"
+    error_analysis_md_path = output_path / "error_analysis.md"
     baselines_path = output_path / "baseline_results.json"
     candidate_inputs_path = output_path / "candidate_inputs.jsonl"
+    error_analysis = build_error_analysis(result)
     result_path.write_text(json.dumps(result, indent=2, sort_keys=True), encoding="utf-8")
     results_md_path.write_text(render_results_markdown(result), encoding="utf-8")
     leaderboard_path.write_text(render_leaderboard_markdown(result, baseline_results=baseline_results), encoding="utf-8")
     report_html_path.write_text(render_html_report(result, baseline_results=baseline_results), encoding="utf-8")
+    error_analysis_json_path.write_text(json.dumps(error_analysis, indent=2, sort_keys=True), encoding="utf-8")
+    error_analysis_md_path.write_text(render_error_analysis_markdown(error_analysis), encoding="utf-8")
     candidate_inputs_path.write_text(render_candidate_inputs_jsonl(result), encoding="utf-8")
     paths = {
         "json": str(result_path),
         "results_md": str(results_md_path),
         "leaderboard_md": str(leaderboard_path),
         "report_html": str(report_html_path),
+        "error_analysis_json": str(error_analysis_json_path),
+        "error_analysis_md": str(error_analysis_md_path),
         "candidate_inputs_jsonl": str(candidate_inputs_path),
     }
     if baseline_results is not None:
@@ -325,6 +333,165 @@ def render_candidate_inputs_jsonl(result: dict[str, Any]) -> str:
             )
         )
     return "\n".join(lines) + ("\n" if lines else "")
+
+
+def build_error_analysis(result: dict[str, Any], *, max_cases: int = 25) -> dict[str, Any]:
+    rows = [row for row in result.get("rows") or [] if isinstance(row, dict)]
+    misses = [row for row in rows if not row.get("benchmark_pass")]
+    label_misses = [
+        row
+        for row in rows
+        if set(row.get("expected") or []) != set(row.get("predicted") or [])
+    ]
+    review_rows = label_misses or misses
+    confusion_counter = Counter((_labels_key(row.get("expected")), _labels_key(row.get("predicted"))) for row in rows)
+    root_counter = Counter(
+        (
+            str(row.get("expected_primary_root_cause") or ""),
+            str(row.get("predicted_primary_root_cause") or _predicted_primary_root_cause(row)),
+        )
+        for row in rows
+        if row.get("expected_primary_root_cause") or row.get("predicted_primary_root_cause")
+    )
+    false_positive_counter = Counter(
+        label
+        for row in rows
+        if set(row.get("expected") or []) == {"no_failure_detected"}
+        for label in row.get("predicted") or []
+        if label != "no_failure_detected"
+    )
+    dangerous_false_greens = [
+        _case_review_item(row)
+        for row in rows
+        if set(row.get("expected") or []) != {"no_failure_detected"}
+        and set(row.get("predicted") or []) == {"no_failure_detected"}
+    ][:max_cases]
+    return {
+        "benchmark": result.get("benchmark"),
+        "mode": result.get("mode"),
+        "case_set": result.get("case_set"),
+        "case_count": len(rows),
+        "benchmark_miss_count": len(misses),
+        "label_miss_count": len(label_misses),
+        "confusion": _counter_rows(confusion_counter, ("expected", "predicted")),
+        "root_cause_confusion": _counter_rows(root_counter, ("expected_root_cause", "predicted_root_cause")),
+        "false_positive_labels": [
+            {"label": label, "count": count}
+            for label, count in sorted(false_positive_counter.items(), key=lambda item: (-item[1], item[0]))
+        ],
+        "dangerous_false_greens": dangerous_false_greens,
+        "top_missing_facts": _top_claim_facts(misses, "missing_facts"),
+        "top_conflicting_facts": _top_claim_facts(misses, "conflicting_facts"),
+        "cases_to_review": [_case_review_item(row) for row in review_rows[:max_cases]],
+    }
+
+
+def render_error_analysis_markdown(analysis: dict[str, Any]) -> str:
+    lines = [
+        "# ContextTrace-Bench Error Analysis",
+        "",
+        "- Benchmark: `%s`" % analysis.get("benchmark"),
+        "- Mode: `%s`" % analysis.get("mode"),
+        "- Case set: `%s`" % analysis.get("case_set"),
+        "- Cases: `%s`" % analysis.get("case_count"),
+        "- Benchmark misses: `%s`" % analysis.get("benchmark_miss_count"),
+        "- Label misses: `%s`" % analysis.get("label_miss_count"),
+        "",
+        "## Confusion Matrix",
+        "",
+        "| Expected | Predicted | Count |",
+        "| --- | --- | ---: |",
+    ]
+    for row in analysis.get("confusion") or []:
+        lines.append("| `%s` | `%s` | %s |" % (row["expected"], row["predicted"], row["count"]))
+    lines.extend(["", "## Root-Cause Confusion", "", "| Expected Root | Predicted Root | Count |", "| --- | --- | ---: |"])
+    for row in analysis.get("root_cause_confusion") or []:
+        lines.append(
+            "| `%s` | `%s` | %s |"
+            % (row["expected_root_cause"], row["predicted_root_cause"], row["count"])
+        )
+    lines.extend(["", "## False-Positive Labels", "", "| Label | Count |", "| --- | ---: |"])
+    false_positive_labels = analysis.get("false_positive_labels") or []
+    if false_positive_labels:
+        for row in false_positive_labels:
+            lines.append("| `%s` | %s |" % (row["label"], row["count"]))
+    else:
+        lines.append("| `none` | 0 |")
+    lines.extend(["", "## Cases To Review", ""])
+    cases = analysis.get("cases_to_review") or []
+    if not cases:
+        lines.append("No benchmark misses under the current labeled checks.")
+    for row in cases:
+        lines.append(
+            "- `%s`: expected `%s`, predicted `%s`, root `%s -> %s`"
+            % (
+                row.get("id"),
+                row.get("expected"),
+                row.get("predicted"),
+                row.get("expected_primary_root_cause"),
+                row.get("predicted_primary_root_cause"),
+            )
+        )
+        if row.get("first_failed_claim"):
+            lines.append("  Claim: %s" % row["first_failed_claim"])
+        if row.get("missing_facts"):
+            lines.append("  Missing: %s" % "; ".join(row["missing_facts"]))
+        if row.get("conflicting_facts"):
+            lines.append("  Conflicting: %s" % "; ".join(row["conflicting_facts"]))
+    return "\n".join(lines) + "\n"
+
+
+def _labels_key(labels: Any) -> str:
+    values = [str(label) for label in labels or [] if str(label)]
+    return ", ".join(values) if values else "none"
+
+
+def _counter_rows(counter: Counter[tuple[str, str]], keys: tuple[str, str]) -> list[dict[str, Any]]:
+    first_key, second_key = keys
+    return [
+        {first_key: first, second_key: second, "count": count}
+        for (first, second), count in sorted(counter.items(), key=lambda item: (-item[1], item[0][0], item[0][1]))
+    ]
+
+
+def _top_claim_facts(rows: list[dict[str, Any]], key: str, *, limit: int = 12) -> list[dict[str, Any]]:
+    counter: Counter[str] = Counter()
+    for row in rows:
+        for claim in row.get("claims") or []:
+            if not isinstance(claim, dict):
+                continue
+            for fact in claim.get(key) or []:
+                normalized = " ".join(str(fact).split())
+                if normalized:
+                    counter[normalized] += 1
+    return [
+        {"fact": fact, "count": count}
+        for fact, count in sorted(counter.items(), key=lambda item: (-item[1], item[0]))[:limit]
+    ]
+
+
+def _case_review_item(row: dict[str, Any]) -> dict[str, Any]:
+    failed_claim = _first_failed_claim(row)
+    return {
+        "id": row.get("id"),
+        "base_case_id": row.get("base_case_id"),
+        "expected": list(row.get("expected") or []),
+        "predicted": list(row.get("predicted") or []),
+        "expected_primary_root_cause": row.get("expected_primary_root_cause"),
+        "predicted_primary_root_cause": row.get("predicted_primary_root_cause") or _predicted_primary_root_cause(row),
+        "first_failed_claim": failed_claim.get("claim") if failed_claim else "",
+        "first_failed_verdict": failed_claim.get("verdict") if failed_claim else "",
+        "missing_facts": list(failed_claim.get("missing_facts") or []) if failed_claim else [],
+        "conflicting_facts": list(failed_claim.get("conflicting_facts") or []) if failed_claim else [],
+        "evidence": failed_claim.get("evidence") if failed_claim else "",
+    }
+
+
+def _first_failed_claim(row: dict[str, Any]) -> dict[str, Any]:
+    for claim in row.get("claims") or []:
+        if isinstance(claim, dict) and claim.get("verdict") != "supported":
+            return claim
+    return {}
 
 
 def quality_gate_results(
@@ -2231,6 +2398,7 @@ def main(argv: list[str] | None = None) -> int:
         print("Results: %s" % paths["results_md"])
         print("Leaderboard: %s" % paths["leaderboard_md"])
         print("Report: %s" % paths["report_html"])
+        print("Error analysis: %s" % paths["error_analysis_md"])
         print("Candidate inputs: %s" % paths["candidate_inputs_jsonl"])
         for baseline in baseline_results:
             baseline_summary = baseline["summary"]

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 
 from contexttrace.verify.claims import Claim
@@ -256,6 +257,8 @@ def is_contradicted(claim_text: str, evidence_text: str, score: float) -> bool:
         return False
 
     if _has_negation(claim_text) != _has_negation(evidence_text) and _core_overlap(claim_text, evidence_text) >= 0.55:
+        if _has_affirmative_supporting_clause(claim_text, evidence_text):
+            return False
         return True
 
     claim_numbers = set(extract_numbers(claim_text))
@@ -267,11 +270,35 @@ def is_contradicted(claim_text: str, evidence_text: str, score: float) -> bool:
 
 
 def _has_negation(text: str) -> bool:
-    tokens = {token.lower() for token in str(text or "").replace("n't", " not").split()}
+    normalized_text = _neutralize_non_negating_phrases(str(text or "").replace("n't", " not"))
+    tokens = {token.lower() for token in normalized_text.split()}
     normalized = " ".join(tokens)
-    if "not allowed" in str(text or "").lower() or "not eligible" in str(text or "").lower():
+    if "not allowed" in normalized_text.lower() or "not eligible" in normalized_text.lower():
         return True
     return any(token.strip(".,;:!?()[]{}\"'") in NEGATION_TERMS for token in tokens) or " not " in normalized
+
+
+def _neutralize_non_negating_phrases(text: str) -> str:
+    value = str(text or "")
+    return value.replace("not only", "also").replace("Not only", "Also")
+
+
+def _has_affirmative_supporting_clause(claim_text: str, evidence_text: str) -> bool:
+    if _has_negation(claim_text):
+        return False
+    supporting_text = " ".join(
+        clause for clause in _evidence_clauses(evidence_text) if not _has_negation(clause)
+    )
+    return bool(supporting_text and _core_overlap(claim_text, supporting_text) >= 0.55)
+
+
+def _evidence_clauses(text: str) -> list[str]:
+    clauses = [
+        clause.strip()
+        for clause in re.split(r"--|;|,|\band\b|\bbut\b", str(text or ""))
+        if clause.strip()
+    ]
+    return clauses or [str(text or "")]
 
 
 def _contradiction_evidence_text(claim_text: str, match: EvidenceMatch) -> str:

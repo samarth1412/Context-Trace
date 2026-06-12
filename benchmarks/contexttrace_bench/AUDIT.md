@@ -55,8 +55,9 @@ python benchmarks/contexttrace_bench/run_contexttrace.py \
 
 - Rerun the OpenAI diagnostic judge or clearly mark the row stale.
 - Confirm `leaderboard.md`, `results.md`, `report.html`,
-  `contexttrace_bench_results.json`, and `baseline_results.json` agree on case
-  counts and headline metrics.
+  `contexttrace_bench_results.json`, `error_analysis.md`,
+  `error_analysis.json`, and `baseline_results.json` agree on case counts,
+  headline metrics, and miss/confusion counts.
 - Confirm diagnostic coverage tables show missing fields as coverage counts or
   `N/A`, not as attempted failures.
 - Record reviewer, date, command SHA, and any changed labels.
