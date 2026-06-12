@@ -254,6 +254,15 @@ python benchmarks/contexttrace_bench/ragtruth_adapter.py \
   --split test
 ```
 
+Score the adapted pack with the same benchmark reports:
+
+```bash
+python benchmarks/contexttrace_bench/run_contexttrace.py \
+  --mode semantic \
+  --case-pack benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
+  --output-dir benchmarks/contexttrace_bench/out/ragtruth
+```
+
 RAGTruth labels answer-side hallucination spans. The adapter preserves those
 spans in metadata and maps answer-level labels into the ContextTrace taxonomy,
 but it leaves `expected_evidence_spans` empty until a human curator maps the

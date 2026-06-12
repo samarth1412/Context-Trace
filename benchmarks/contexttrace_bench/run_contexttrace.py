@@ -17,7 +17,7 @@ if str(PACKAGE_ROOT) not in sys.path:
 
 from contexttrace.verify.benchmark import benchmark_cases, run_verify_benchmark  # noqa: E402
 from contexttrace.verify.runner import verify_trace  # noqa: E402
-from contexttrace.verify.schema import RAGTrace, TraceCitation, TraceContext  # noqa: E402
+from contexttrace.verify.schema import RAGTrace, TraceCitation, TraceContext, load_trace  # noqa: E402
 
 
 DEFAULT_LABELS_PATH = Path(__file__).with_name("labels.json")
@@ -72,6 +72,7 @@ def run_contexttrace_benchmark(
     *,
     mode: str = "semantic",
     case_set: str = "all",
+    case_pack_path: str | Path | None = None,
     labels_path: str | Path = DEFAULT_LABELS_PATH,
     estimated_cost_per_trace_usd: float = 0.0,
     include_generated_cases: bool = True,
@@ -79,6 +80,16 @@ def run_contexttrace_benchmark(
     bootstrap_samples: int = DEFAULT_BOOTSTRAP_SAMPLES,
     bootstrap_seed: int = DEFAULT_BOOTSTRAP_SEED,
 ) -> dict[str, Any]:
+    if case_pack_path is not None:
+        return run_contexttrace_case_pack(
+            case_pack_path=case_pack_path,
+            mode=mode,
+            labels_path=labels_path,
+            estimated_cost_per_trace_usd=estimated_cost_per_trace_usd,
+            bootstrap_samples=bootstrap_samples,
+            bootstrap_seed=bootstrap_seed,
+        )
+
     verifier_result = run_verify_benchmark(
         mode=mode,
         case_set=case_set,
@@ -143,6 +154,70 @@ def run_contexttrace_benchmark(
             key: value
             for key, value in verifier_result.items()
             if key not in {"rows"}
+        },
+    }
+
+
+def run_contexttrace_case_pack(
+    *,
+    case_pack_path: str | Path,
+    mode: str = "semantic",
+    labels_path: str | Path = DEFAULT_LABELS_PATH,
+    estimated_cost_per_trace_usd: float = 0.0,
+    bootstrap_samples: int = DEFAULT_BOOTSTRAP_SAMPLES,
+    bootstrap_seed: int = DEFAULT_BOOTSTRAP_SEED,
+) -> dict[str, Any]:
+    payload = _load_case_pack(case_pack_path)
+    raw_cases = payload.get("cases") or []
+    if not isinstance(raw_cases, list):
+        raise ValueError("ContextTrace case pack must contain a cases list.")
+    base_rows = [
+        _run_case_pack_case(item, mode=mode, dataset=str(payload.get("dataset") or "external_case_pack"))
+        for item in raw_cases
+        if isinstance(item, dict)
+    ]
+    labels = _load_labels(labels_path)
+    rows = [
+        _enrich_row(row, labels.get(str(row.get("id"))) or {})
+        for row in base_rows
+    ]
+    verifier_like = _verifier_like_from_rows(rows)
+    summary = _summary(
+        verifier_like,
+        rows,
+        estimated_cost_per_trace_usd=estimated_cost_per_trace_usd,
+    )
+    confidence_intervals = _confidence_intervals(
+        rows,
+        estimated_cost_per_trace_usd=estimated_cost_per_trace_usd,
+        samples=bootstrap_samples,
+        seed=bootstrap_seed,
+    )
+    return {
+        "benchmark": "ContextTrace-Bench",
+        "version": 2,
+        "mode": mode,
+        "case_set": "external_case_pack",
+        "case_source": _case_pack_source(payload, case_pack_path),
+        "case_pack_path": str(case_pack_path),
+        "case_pack_dataset": str(payload.get("dataset") or ""),
+        "case_pack_adapter": str(payload.get("adapter") or ""),
+        "base_cases": len(base_rows),
+        "generated_cases": 0,
+        "target_cases": len(base_rows),
+        "summary": summary,
+        "confidence_intervals": confidence_intervals,
+        "per_label": verifier_like["per_label"],
+        "rows": rows,
+        "labels_path": str(labels_path),
+        "verifier_result": {
+            "mode": mode,
+            "case_set": "external_case_pack",
+            "case_source": _case_pack_source(payload, case_pack_path),
+            "cases": len(base_rows),
+            "exact_match_rate": verifier_like["exact_match_rate"],
+            "verdict_match_rate": verifier_like["verdict_match_rate"],
+            "per_label": verifier_like["per_label"],
         },
     }
 
@@ -1048,6 +1123,166 @@ def _generated_rows(
     return generated
 
 
+def _load_case_pack(path: str | Path) -> dict[str, Any]:
+    case_pack_path = Path(path)
+    payload = json.loads(case_pack_path.read_text(encoding="utf-8-sig"))
+    if not isinstance(payload, dict):
+        raise ValueError("ContextTrace case pack must be a JSON object.")
+    return payload
+
+
+def _case_pack_source(payload: dict[str, Any], path: str | Path) -> str:
+    description = str(payload.get("description") or "").strip()
+    dataset = str(payload.get("dataset") or "external case pack").strip()
+    if description:
+        return "%s from %s" % (description, path)
+    return "%s from %s" % (dataset, path)
+
+
+def _run_case_pack_case(item: dict[str, Any], *, mode: str, dataset: str) -> dict[str, Any]:
+    trace = _trace_from_case_pack_item(item, dataset=dataset)
+    started = time.perf_counter()
+    result = verify_trace(trace, mode=mode)
+    latency_ms = round((time.perf_counter() - started) * 1000, 3)
+    predicted = _predicted_labels_from_result(result)
+    expected = {str(label) for label in item.get("expected_labels") or item.get("expected") or []}
+    expected = expected or {"no_failure_detected"}
+    expected_verdict_counts = _expected_verdict_counts_from_item(item, expected)
+    predicted_verdict_counts = {
+        verdict: int((result.get("summary") or {}).get(verdict) or 0)
+        for verdict in VERDICT_NAMES
+    }
+    expected_citations = [str(status) for status in item.get("expected_citation_statuses") or []]
+    predicted_citations = [
+        str(claim.get("citation_status"))
+        for claim in result.get("claims") or []
+        if claim.get("citation_status")
+    ]
+    expected_abstain = item.get("expected_should_abstain")
+    predicted_abstain = bool((result.get("abstention") or {}).get("should_abstain"))
+    return {
+        "id": str(item.get("id") or ""),
+        "source": str(item.get("source") or dataset),
+        "note": str(item.get("note") or ""),
+        "generated": False,
+        "variant_type": "external_case_pack",
+        "base_case_id": str(item.get("id") or ""),
+        "trace": trace.to_dict(),
+        "expected": sorted(expected),
+        "predicted": sorted(predicted),
+        "exact_match": predicted == expected,
+        "expected_verdict_counts": expected_verdict_counts,
+        "predicted_verdict_counts": {
+            key: value for key, value in sorted(predicted_verdict_counts.items())
+        },
+        "verdict_match": _counts_match(expected_verdict_counts, predicted_verdict_counts),
+        "expected_citation_statuses": expected_citations,
+        "predicted_citation_statuses": predicted_citations,
+        "citation_match": (expected_citations == predicted_citations) if expected_citations else None,
+        "expected_should_abstain": expected_abstain,
+        "predicted_should_abstain": predicted_abstain,
+        "abstention_match": (expected_abstain == predicted_abstain) if expected_abstain is not None else None,
+        "expected_primary_root_cause": str(
+            item.get("expected_primary_root_cause")
+            or _derive_expected_root_cause(
+                {
+                    "expected": sorted(expected),
+                    "expected_citation_statuses": expected_citations,
+                }
+            )
+        ),
+        "expected_evidence_spans": [str(span) for span in item.get("expected_evidence_spans") or []],
+        "summary": result.get("summary") or {},
+        "claims": result.get("claims") or [],
+        "abstention": result.get("abstention") or {},
+        "latency_ms": latency_ms,
+        "case_pack_metadata": _case_pack_metadata(item),
+    }
+
+
+def _trace_from_case_pack_item(item: dict[str, Any], *, dataset: str) -> RAGTrace:
+    trace_payload = {
+        "query": str(item.get("query") or ""),
+        "answer": str(item.get("answer") or ""),
+        "contexts": [
+            _case_pack_context(context)
+            for context in item.get("contexts") or []
+            if isinstance(context, dict)
+        ],
+        "citations": [
+            _case_pack_citation(citation)
+            for citation in item.get("citations") or []
+            if isinstance(citation, dict)
+        ],
+        "metadata": {
+            "benchmark_case_id": str(item.get("id") or ""),
+            "benchmark_source": str(item.get("source") or dataset),
+            "external_case_pack": True,
+            "external_case_pack_dataset": dataset,
+        },
+    }
+    return load_trace(trace_payload, source="case pack case %s" % str(item.get("id") or "unknown"))
+
+
+def _case_pack_context(context: dict[str, Any]) -> dict[str, Any]:
+    metadata = dict(context.get("metadata") or {})
+    metadata.update(
+        {
+            key: value
+            for key, value in context.items()
+            if key not in {"id", "text", "metadata"}
+        }
+    )
+    return {
+        "id": str(context.get("id") or ""),
+        "text": str(context.get("text") or ""),
+        "metadata": metadata,
+    }
+
+
+def _case_pack_citation(citation: dict[str, Any]) -> dict[str, Any]:
+    metadata = dict(citation.get("metadata") or {})
+    metadata.update(
+        {
+            key: value
+            for key, value in citation.items()
+            if key not in {"claim", "source_id", "source_chunk_id", "chunk_id", "metadata"}
+        }
+    )
+    payload = {
+        "claim": str(citation.get("claim") or ""),
+        "source_id": str(citation.get("source_id") or citation.get("source_chunk_id") or citation.get("chunk_id") or ""),
+    }
+    if metadata:
+        payload["metadata"] = metadata
+    return payload
+
+
+def _case_pack_metadata(item: dict[str, Any]) -> dict[str, Any]:
+    metadata = {
+        key: value
+        for key, value in item.items()
+        if key.endswith("_metadata") or key in {"dataset_metadata"}
+    }
+    return metadata
+
+
+def _expected_verdict_counts_from_item(item: dict[str, Any], expected: set[str]) -> dict[str, int]:
+    raw_counts = item.get("expected_verdict_counts") or {}
+    counts = {verdict: int(raw_counts.get(verdict) or 0) for verdict in VERDICT_NAMES}
+    if any(counts.values()):
+        return counts
+    if "contradicted_answer" in expected:
+        counts["contradicted"] = 1
+    elif "partial_support" in expected:
+        counts["partially_supported"] = 1
+    elif "unsupported_answer" in expected or "should_have_abstained" in expected:
+        counts["unsupported"] = 1
+    else:
+        counts["supported"] = 1
+    return counts
+
+
 def _uncited_supported_variant(case: Any, distractors: list[Any]) -> dict[str, Any] | None:
     if not case.trace.contexts:
         return None
@@ -1886,6 +2121,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run ContextTrace-Bench.")
     parser.add_argument("--mode", default="semantic", choices=["lexical", "semantic", "local_ml"])
     parser.add_argument("--case-set", default="all", choices=["contexttrace", "external", "public_holdout", "all"])
+    parser.add_argument("--case-pack", default=None, help="External ContextTrace case-pack JSON to run instead of a built-in case set.")
     parser.add_argument("--labels", default=str(DEFAULT_LABELS_PATH))
     parser.add_argument("--output-dir", default=str(DEFAULT_OUTPUT_DIR))
     parser.add_argument("--estimated-cost-per-trace-usd", default=0.0, type=float)
@@ -1910,6 +2146,7 @@ def main(argv: list[str] | None = None) -> int:
     result = run_contexttrace_benchmark(
         mode=args.mode,
         case_set=args.case_set,
+        case_pack_path=args.case_pack,
         labels_path=args.labels,
         estimated_cost_per_trace_usd=args.estimated_cost_per_trace_usd,
         include_generated_cases=not args.no_generated_cases,

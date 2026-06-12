@@ -6,10 +6,12 @@ from benchmarks.contexttrace_bench.adapt_candidate import adapt_candidate_rows
 from benchmarks.contexttrace_bench.baseline_common import load_candidate_inputs, write_json
 from benchmarks.contexttrace_bench.run_deepeval import build_deepeval_rows
 from benchmarks.contexttrace_bench.run_contexttrace import (
+    main as run_contexttrace_main,
     quality_gate_failures,
     render_html_report,
     render_leaderboard_markdown,
     render_results_markdown,
+    run_contexttrace_case_pack,
     run_contexttrace_benchmark,
     score_candidate_predictions,
     write_benchmark_outputs,
@@ -303,6 +305,105 @@ def test_ragtruth_adapter_builds_contexttrace_case_pack() -> None:
     assert case["expected_verdict_counts"]["partially_supported"] == 1
     assert case["expected_evidence_spans"] == []
     assert case["ragtruth_metadata"]["answer_hallucination_spans"][0]["text"] == "Gaza Strip"
+
+
+def test_contexttrace_bench_runs_external_case_pack(tmp_path) -> None:
+    case_pack = adapt_ragtruth_rows(
+        [
+            {
+                "id": "supported",
+                "source_id": "policy",
+                "labels": [],
+                "quality": "good",
+                "response": "Refunds are available within 30 days.",
+            }
+        ],
+        source_rows=[
+            {
+                "source_id": "policy",
+                "task_type": "QA",
+                "source": "fixture",
+                "source_info": {
+                    "question": "What does the policy say about refunds?",
+                    "passages": "Refunds are available within 30 days.",
+                },
+                "prompt": "Answer from the policy.",
+            }
+        ],
+    )
+    case_pack_path = tmp_path / "ragtruth_case_pack.json"
+    case_pack_path.write_text(json.dumps(case_pack), encoding="utf-8")
+
+    result = run_contexttrace_case_pack(
+        mode="semantic",
+        case_pack_path=case_pack_path,
+        bootstrap_samples=25,
+    )
+    paths = write_benchmark_outputs(result, output_dir=tmp_path / "out")
+
+    assert result["case_set"] == "external_case_pack"
+    assert result["case_pack_dataset"] == "RAGTruth"
+    assert result["summary"]["cases"] == 1
+    assert result["summary"]["failure_label_macro_f1"] == 1.0
+    assert result["confidence_intervals"]["failure_label_macro_f1"]["samples"] == 25
+    assert result["rows"][0]["variant_type"] == "external_case_pack"
+    assert result["rows"][0]["case_pack_metadata"]["ragtruth_metadata"]["response_id"] == "supported"
+
+    candidate_inputs = (tmp_path / "out" / "candidate_inputs.jsonl").read_text(encoding="utf-8").splitlines()
+    assert candidate_inputs
+    candidate_input = json.loads(candidate_inputs[0])
+    assert candidate_input["trace"]["contexts"][0]["metadata"]["source_id"] == "policy"
+    assert "ragtruth_metadata" not in json.dumps(candidate_input)
+    assert paths["results_md"].endswith("results.md")
+
+
+def test_contexttrace_bench_cli_scores_external_case_pack(tmp_path) -> None:
+    case_pack = {
+        "description": "Tiny external case pack fixture.",
+        "dataset": "fixture",
+        "adapter": "unit_test",
+        "cases": [
+            {
+                "id": "case-supported",
+                "source": "fixture",
+                "query": "What does the policy say about refunds?",
+                "answer": "Refunds are available within 30 days.",
+                "contexts": [
+                    {
+                        "id": "policy",
+                        "text": "Refunds are available within 30 days.",
+                        "source_id": "policy",
+                    }
+                ],
+                "expected_labels": ["no_failure_detected"],
+                "expected_verdict_counts": {"supported": 1},
+                "expected_primary_root_cause": "no_failure_detected",
+                "expected_evidence_spans": ["Refunds are available within 30 days."],
+            }
+        ],
+    }
+    case_pack_path = tmp_path / "case_pack.json"
+    output_dir = tmp_path / "out"
+    case_pack_path.write_text(json.dumps(case_pack), encoding="utf-8")
+
+    assert run_contexttrace_main(
+        [
+            "--mode",
+            "semantic",
+            "--case-pack",
+            str(case_pack_path),
+            "--output-dir",
+            str(output_dir),
+            "--bootstrap-samples",
+            "10",
+        ]
+    ) == 0
+
+    payload = json.loads((output_dir / "contexttrace_bench_results.json").read_text(encoding="utf-8"))
+    assert payload["case_set"] == "external_case_pack"
+    assert payload["case_pack_dataset"] == "fixture"
+    assert payload["summary"]["failure_label_macro_f1"] == 1.0
+    assert "Confidence Intervals" in (output_dir / "results.md").read_text(encoding="utf-8")
 
 
 def test_local_judge_output_normalization() -> None:
