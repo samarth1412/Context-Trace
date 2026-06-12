@@ -159,6 +159,25 @@ The generated `candidate_inputs.jsonl` contains only trace payloads and safe
 source metadata. It does not include expected labels, notes, or RAGTruth
 hallucination annotations.
 
+Human evidence-span review uses a separate JSONL queue:
+
+```bash
+python benchmarks/contexttrace_bench/ragtruth_review.py build-queue \
+  --case-pack benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
+  --output benchmarks/contexttrace_bench/out/ragtruth_review_queue.jsonl
+```
+
+Reviewers fill `source_evidence_spans`, set `review_status` to `reviewed`,
+`accepted`, or `approved`, and then apply the file:
+
+```bash
+python benchmarks/contexttrace_bench/ragtruth_review.py apply \
+  --case-pack benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
+  --review benchmarks/contexttrace_bench/out/ragtruth_reviewed.jsonl \
+  --output benchmarks/contexttrace_bench/out/ragtruth_reviewed_case_pack.json \
+  --require-reviewed
+```
+
 Do not treat an adapted RAGTruth case pack as a frozen benchmark split until:
 
 - The source files, commit or dataset version, and adapter command are recorded.

@@ -15,7 +15,7 @@ case set and are scored by `run_contexttrace.py --candidate`.
 | OpenAI-compatible local judge | `run_local_judge.py` | Smoke run completed | No | Ollama `phi3:latest` produced 5 predictions. It is parseable but slow on this machine, so full 500-case execution is a multi-hour run. |
 | Phoenix | `adapt_candidate.py --preset phoenix` | Adapter ready | No | Requires exported Phoenix evaluator results. |
 | TruLens | `adapt_candidate.py --preset trulens` | Adapter ready | No | Requires exported TruLens evaluator results. |
-| RAGTruth external validation | `ragtruth_adapter.py` | Case-pack scaffold ready | No | Requires official `response.jsonl` plus `source_info.jsonl`, then human mapping from answer-side spans to source evidence spans. |
+| RAGTruth external validation | `ragtruth_adapter.py`, `ragtruth_review.py`, `run_contexttrace.py --case-pack` | Official raw-file smoke verified | No | 20-row test-split smoke builds, scores, and generates a review queue. Requires issue #7 human mapping from answer-side spans to source evidence spans before publishable span claims. |
 
 Latest scored leaderboard:
 
@@ -241,6 +241,20 @@ python benchmarks/contexttrace_bench/run_contexttrace.py \
   --mode semantic \
   --case-pack benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
   --output-dir benchmarks/contexttrace_bench/out/ragtruth
+```
+
+Prepare the human evidence-span review queue and apply reviewed mappings:
+
+```bash
+python benchmarks/contexttrace_bench/ragtruth_review.py build-queue \
+  --case-pack benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
+  --output benchmarks/contexttrace_bench/out/ragtruth_review_queue.jsonl
+
+python benchmarks/contexttrace_bench/ragtruth_review.py apply \
+  --case-pack benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
+  --review benchmarks/contexttrace_bench/out/ragtruth_reviewed.jsonl \
+  --output benchmarks/contexttrace_bench/out/ragtruth_reviewed_case_pack.json \
+  --require-reviewed
 ```
 
 RAGTruth labels answer-side hallucination spans. The adapter maps no-span rows

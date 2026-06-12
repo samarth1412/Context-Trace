@@ -178,9 +178,10 @@ normalize generic evaluator output into the candidate schema.
 
 For external dataset scaffolding, `benchmarks/contexttrace_bench/ragtruth_adapter.py`
 builds a ContextTrace-style case pack from RAGTruth `response.jsonl` and
-`source_info.jsonl`. Score it with `run_contexttrace.py --case-pack`. Treat that
-output as review input until answer-side hallucination spans are manually mapped
-to source evidence spans.
+`source_info.jsonl`. Score it with `run_contexttrace.py --case-pack`, and use
+`benchmarks/contexttrace_bench/ragtruth_review.py` to generate and apply the
+human evidence-span review queue. Treat unreviewed output as review input until
+answer-side hallucination spans are manually mapped to source evidence spans.
 
 Methodology and baseline runbooks live in
 [`benchmarks/contexttrace_bench/METHODOLOGY.md`](benchmarks/contexttrace_bench/METHODOLOGY.md)

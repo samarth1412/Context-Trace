@@ -208,6 +208,7 @@ def run_contexttrace_case_pack(
         "summary": summary,
         "confidence_intervals": confidence_intervals,
         "per_label": verifier_like["per_label"],
+        "limitations": _case_pack_limitations(payload),
         "rows": rows,
         "labels_path": str(labels_path),
         "verifier_result": {
@@ -383,6 +384,18 @@ def render_results_markdown(result: dict[str, Any]) -> str:
     for key in SUMMARY_KEYS:
         lines.append("| `%s` | %s |" % (key, _metric_display(summary.get(key))))
 
+    limitations = [str(item) for item in result.get("limitations") or [] if str(item).strip()]
+    if limitations:
+        lines.extend(
+            [
+                "",
+                "## Limitations",
+                "",
+            ]
+        )
+        for limitation in limitations:
+            lines.append("- %s" % limitation)
+
     confidence_rows = _confidence_interval_rows(result)
     lines.extend(
         [
@@ -550,6 +563,7 @@ def render_html_report(
         case_set=escape(str(result.get("case_set") or "")),
         case_source=escape(str(result.get("case_source") or "")),
         summary_cards=_html_summary_cards(summary),
+        limitations=_html_limitations(result),
         confidence_interval_rows=_html_confidence_interval_rows(result),
         per_label_rows=_html_per_label_rows(result),
         gate_rows=_html_gate_rows(quality_gate_results(result)),
@@ -860,6 +874,19 @@ def _html_summary_cards(summary: dict[str, Any]) -> str:
     )
 
 
+def _html_limitations(result: dict[str, Any]) -> str:
+    limitations = [str(item) for item in result.get("limitations") or [] if str(item).strip()]
+    if not limitations:
+        return ""
+    items = "\n".join("<li>%s</li>" % escape(limitation) for limitation in limitations)
+    return """
+    <section>
+      <h2>Limitations</h2>
+      <ul>{items}</ul>
+    </section>
+    """.format(items=items)
+
+
 def _html_confidence_interval_rows(result: dict[str, Any]) -> str:
     rows = _confidence_interval_rows(result)
     if not rows:
@@ -1051,6 +1078,7 @@ def _raw_report_summary(result: dict[str, Any]) -> dict[str, Any]:
         "summary": result.get("summary"),
         "confidence_intervals": result.get("confidence_intervals"),
         "per_label": result.get("per_label"),
+        "limitations": result.get("limitations"),
         "quality_gates": quality_gate_results(result),
         "misses": [
             {
@@ -1137,6 +1165,23 @@ def _case_pack_source(payload: dict[str, Any], path: str | Path) -> str:
     if description:
         return "%s from %s" % (description, path)
     return "%s from %s" % (dataset, path)
+
+
+def _case_pack_limitations(payload: dict[str, Any]) -> list[str]:
+    limitations = [
+        str(item)
+        for item in payload.get("limitations") or []
+        if str(item).strip()
+    ]
+    notes = [str(item) for item in payload.get("notes") or [] if str(item).strip()]
+    if str(payload.get("dataset") or "").lower() == "ragtruth":
+        limitations.append(
+            "RAGTruth labels answer-side hallucination spans; source-side evidence spans require human mapping before span-localization claims."
+        )
+    limitations.append(
+        "External case-pack results validate this dataset and adapter path only; they are not general RAG-evaluation SOTA proof."
+    )
+    return _dedupe([*limitations, *notes])
 
 
 def _run_case_pack_case(item: dict[str, Any], *, mode: str, dataset: str) -> dict[str, Any]:
@@ -1857,6 +1902,12 @@ def _metric_display(value: Any) -> str:
     return str(value)
 
 
+def _metric_print_display(value: Any) -> str:
+    if value is None:
+        return "N/A"
+    return "%.3f" % float(value)
+
+
 def _percentile(values: list[float], percentile: float) -> float:
     if not values:
         return 0.0
@@ -1999,6 +2050,8 @@ HTML_TEMPLATE = """<!doctype html>
       <h2>Summary</h2>
       <div class="summary">{summary_cards}</div>
     </section>
+
+    {limitations}
 
     <section>
       <h2>Confidence Intervals</h2>
@@ -2167,14 +2220,14 @@ def main(argv: list[str] | None = None) -> int:
         print("Cases: %s" % summary["cases"])
         print("Base cases: %s" % result["base_cases"])
         print("Generated cases: %s" % result["generated_cases"])
-        print("Failure macro-F1: %.3f" % float(summary["failure_label_macro_f1"]))
+        print("Failure macro-F1: %s" % _metric_print_display(summary.get("failure_label_macro_f1")))
         failure_ci = (result.get("confidence_intervals") or {}).get("failure_label_macro_f1") or {}
         if failure_ci:
             print("Failure macro-F1 95%% CI: %s to %s" % (failure_ci.get("low"), failure_ci.get("high")))
-        print("Root-cause accuracy: %.3f" % float(summary["root_cause_accuracy"]))
-        print("Citation error F1: %.3f" % float(summary["citation_error_f1"]))
-        print("Evidence span overlap: %.3f" % float(summary["evidence_span_overlap"]))
-        print("Latency p95 ms: %.3f" % float(summary["latency_p95_ms"]))
+        print("Root-cause accuracy: %s" % _metric_print_display(summary.get("root_cause_accuracy")))
+        print("Citation error F1: %s" % _metric_print_display(summary.get("citation_error_f1")))
+        print("Evidence span overlap: %s" % _metric_print_display(summary.get("evidence_span_overlap")))
+        print("Latency p95 ms: %s" % _metric_print_display(summary.get("latency_p95_ms")))
         print("Results: %s" % paths["results_md"])
         print("Leaderboard: %s" % paths["leaderboard_md"])
         print("Report: %s" % paths["report_html"])

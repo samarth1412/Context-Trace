@@ -17,6 +17,7 @@ from benchmarks.contexttrace_bench.run_contexttrace import (
     write_benchmark_outputs,
 )
 from benchmarks.contexttrace_bench.ragtruth_adapter import adapt_ragtruth_rows
+from benchmarks.contexttrace_bench.ragtruth_review import apply_review_mappings, build_review_queue
 from benchmarks.contexttrace_bench.run_ragas import build_ragas_rows
 from benchmarks.contexttrace_bench.run_local_judge import _judge_prompt, _normalize_judge_output
 
@@ -307,6 +308,57 @@ def test_ragtruth_adapter_builds_contexttrace_case_pack() -> None:
     assert case["ragtruth_metadata"]["answer_hallucination_spans"][0]["text"] == "Gaza Strip"
 
 
+def test_ragtruth_review_queue_and_mapping_updates_case_pack() -> None:
+    case_pack = adapt_ragtruth_rows(
+        [
+            {
+                "id": "1472",
+                "source_id": "11316",
+                "labels": [
+                    {
+                        "start": 219,
+                        "end": 229,
+                        "text": "Gaza Strip",
+                        "label_type": "Evident Baseless Info",
+                    }
+                ],
+                "quality": "good",
+                "response": "The answer adds Gaza Strip.",
+            }
+        ],
+        source_rows=[
+            {
+                "source_id": "11316",
+                "task_type": "Summary",
+                "source": "CNN/DM",
+                "source_info": "The source article mentions East Jerusalem, not Gaza Strip.",
+                "prompt": "Summarize the following news.",
+            }
+        ],
+    )
+
+    queue = build_review_queue(case_pack)
+    assert len(queue) == 1
+    assert queue[0]["case_id"] == "ragtruth_1472"
+    assert queue[0]["review_status"] == "needs_review"
+    assert queue[0]["answer_hallucination_spans"][0]["text"] == "Gaza Strip"
+    assert queue[0]["source_contexts"][0]["source_id"] == "11316"
+
+    queue[0]["review_status"] = "reviewed"
+    queue[0]["reviewer"] = "unit-test"
+    queue[0]["reviewed_at"] = "2026-06-12"
+    queue[0]["source_evidence_spans"] = ["The source article mentions East Jerusalem, not Gaza Strip."]
+    reviewed = apply_review_mappings(case_pack, queue, require_reviewed=True, review_file="review.jsonl")
+
+    assert reviewed["review"]["status"] == "reviewed"
+    assert reviewed["review"]["reviewed_cases"] == 1
+    reviewed_case = reviewed["cases"][0]
+    assert reviewed_case["expected_evidence_spans"] == ["The source article mentions East Jerusalem, not Gaza Strip."]
+    assert reviewed_case["review_metadata"]["reviewed"] is True
+    assert reviewed_case["review_metadata"]["reviewer"] == "unit-test"
+    assert "human review artifacts" in reviewed["limitations"][0]
+
+
 def test_contexttrace_bench_runs_external_case_pack(tmp_path) -> None:
     case_pack = adapt_ragtruth_rows(
         [
@@ -345,6 +397,7 @@ def test_contexttrace_bench_runs_external_case_pack(tmp_path) -> None:
     assert result["case_pack_dataset"] == "RAGTruth"
     assert result["summary"]["cases"] == 1
     assert result["summary"]["failure_label_macro_f1"] == 1.0
+    assert result["limitations"]
     assert result["confidence_intervals"]["failure_label_macro_f1"]["samples"] == 25
     assert result["rows"][0]["variant_type"] == "external_case_pack"
     assert result["rows"][0]["case_pack_metadata"]["ragtruth_metadata"]["response_id"] == "supported"
@@ -354,6 +407,8 @@ def test_contexttrace_bench_runs_external_case_pack(tmp_path) -> None:
     candidate_input = json.loads(candidate_inputs[0])
     assert candidate_input["trace"]["contexts"][0]["metadata"]["source_id"] == "policy"
     assert "ragtruth_metadata" not in json.dumps(candidate_input)
+    assert "Limitations" in (tmp_path / "out" / "results.md").read_text(encoding="utf-8")
+    assert "Limitations" in (tmp_path / "out" / "report.html").read_text(encoding="utf-8")
     assert paths["results_md"].endswith("results.md")
 
 
