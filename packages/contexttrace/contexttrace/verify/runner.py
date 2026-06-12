@@ -331,15 +331,16 @@ def _source_status_summary(claims: list[dict[str, Any]]) -> str:
 
 def _diagnostics(verifications: list[Any], abstention: dict[str, object]) -> dict[str, object]:
     failure_types: list[str] = []
+    partial_answer = bool(abstention.get("partial_answer"))
     if abstention.get("should_abstain"):
         failure_types.append("should_have_abstained")
     if any(item.verdict == "contradicted" for item in verifications):
         failure_types.append("contradicted_answer")
-    if any(item.verdict == "unsupported" for item in verifications):
+    if any(item.verdict == "unsupported" for item in verifications) and not partial_answer:
         failure_types.append("unsupported_answer")
-    if any(item.verdict == "partially_supported" for item in verifications):
+    if partial_answer or any(item.verdict == "partially_supported" for item in verifications):
         failure_types.append("partial_support")
-    if any(item.verdict == "unverifiable" for item in verifications):
+    if any(item.verdict == "unverifiable" for item in verifications) and not partial_answer:
         failure_types.append("insufficient_context")
     if any(
         item.citation_status not in {CITATION_OK, CLAIM_HAS_NO_CITATION}

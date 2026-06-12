@@ -775,7 +775,7 @@ def verify_demo_command(
 
 @cli.command("verify-benchmark")
 @click.option("--mode", default="lexical", show_default=True, type=click.Choice(JUDGE_VERIFY_MODES), help="Evidence scoring mode.")
-@click.option("--case-set", default="contexttrace", show_default=True, type=click.Choice(["contexttrace", "external", "all"]), help="Benchmark case set to run.")
+@click.option("--case-set", default="contexttrace", show_default=True, type=click.Choice(["contexttrace", "external", "public_holdout", "all"]), help="Benchmark case set to run.")
 @click.option("--json", "json_output", is_flag=True, help="Print benchmark results as JSON.")
 @click.option("--report", is_flag=True, help="Generate a local HTML benchmark report.")
 @click.option("--out", default=None, help="HTML benchmark report path. Implies --report when provided.")
@@ -855,7 +855,7 @@ def verify_benchmark_command(
 
 
 @cli.command("judge-calibrate")
-@click.option("--case-set", default="all", show_default=True, type=click.Choice(["contexttrace", "external", "all"]), help="Golden benchmark case set to run.")
+@click.option("--case-set", default="all", show_default=True, type=click.Choice(["contexttrace", "external", "public_holdout", "all"]), help="Golden benchmark case set to run.")
 @click.option("--json", "json_output", is_flag=True, help="Print calibration result as JSON.")
 @click.option("--report", is_flag=True, help="Generate a local HTML calibration report.")
 @click.option("--out", default=None, help="HTML calibration report path. Implies --report when provided.")
@@ -932,7 +932,7 @@ def judge_calibrate_command(
 
 
 @cli.command("nli-calibrate")
-@click.option("--case-set", default="all", show_default=True, type=click.Choice(["contexttrace", "external", "all"]), help="Golden benchmark case set to run.")
+@click.option("--case-set", default="all", show_default=True, type=click.Choice(["contexttrace", "external", "public_holdout", "all"]), help="Golden benchmark case set to run.")
 @click.option("--model-path", default=None, help="Local NLI model directory or .onnx file. Defaults to CONTEXTTRACE_NLI_MODEL_PATH.")
 @click.option("--tokenizer-path", default=None, help="Optional local tokenizer directory. Defaults to model path.")
 @click.option("--backend", default="auto", show_default=True, type=click.Choice(["auto", "transformers", "onnx"]), help="Local NLI backend.")

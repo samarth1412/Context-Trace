@@ -32,9 +32,20 @@ def judge_abstention(
         [
             item
             for item in verifications
-            if item.verdict in {"unsupported", "contradicted"}
+            if item.verdict in {"unsupported", "contradicted", "unverifiable"}
         ]
     )
+    contradicted = len([item for item in verifications if item.verdict == "contradicted"])
+
+    if supported > 0 and unsupported_like > 0 and contradicted == 0:
+        return {
+            "should_abstain": False,
+            "partial_answer": True,
+            "reason": (
+                "The answer mixes supported claims with unsupported details; it should remove "
+                "or qualify unsupported details rather than fully abstain."
+            ),
+        }
 
     query_match = find_best_evidence(query, contexts, mode=mode)
     if supported == 0 and query_match.score < 0.18:

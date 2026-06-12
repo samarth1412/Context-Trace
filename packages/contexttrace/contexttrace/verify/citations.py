@@ -42,7 +42,12 @@ def attach_citation_statuses(
             continue
 
         cited_match = score_claim_against_context(claim.text, cited_context, mode=mode)
-        if _source_fully_supports_claim(claim.text, cited_match, mode=mode):
+        if _source_fully_supports_claim(
+            claim.text,
+            cited_match,
+            mode=mode,
+            allow_supported_score_fallback=verification.best_context_id == citation.source_id,
+        ):
             status = CITATION_OK
         elif verification.verdict == "supported" and verification.best_context_id != citation.source_id:
             status = CLAIM_SUPPORTED_BY_DIFFERENT_SOURCE
@@ -81,7 +86,13 @@ def find_citation_for_claim(
     return best if best_score >= 0.55 else None
 
 
-def _source_fully_supports_claim(claim_text: str, match: object, *, mode: str) -> bool:
+def _source_fully_supports_claim(
+    claim_text: str,
+    match: object,
+    *,
+    mode: str,
+    allow_supported_score_fallback: bool = False,
+) -> bool:
     normalized_mode = str(mode or "").strip().lower().replace("-", "_")
     fact_mode = "semantic" if normalized_mode in {"semantic", "local_ml", "nli"} else "lexical"
     fact_match = compare_facts(
@@ -92,8 +103,25 @@ def _source_fully_supports_claim(claim_text: str, match: object, *, mode: str) -
     if fact_match.conflicting_facts:
         return False
     if fact_match.required_facts:
-        return not fact_match.missing_facts and float(getattr(match, "score", 0.0) or 0.0) >= 0.35
+        critical_missing = any(
+            _fact_type(fact) in {"path", "version", "numeric"}
+            for fact in getattr(fact_match, "missing_fact_details", []) or []
+        )
+        return (
+            not fact_match.missing_facts
+            and float(getattr(match, "score", 0.0) or 0.0) >= 0.35
+        ) or (
+            allow_supported_score_fallback
+            and not critical_missing
+            and is_supported_match(claim_text, match)
+        )
     return is_supported_match(claim_text, match)
+
+
+def _fact_type(fact: object) -> str:
+    if isinstance(fact, dict):
+        return str(fact.get("type") or "")
+    return str(getattr(fact, "type", "") or "")
 
 
 def _normalize_text(text: str) -> str:

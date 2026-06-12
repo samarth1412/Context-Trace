@@ -28,6 +28,28 @@ jobs:
       - name: Run tests
         run: python -m pytest -q
 
+      - name: Run ContextTrace-Bench
+        run: |
+          python benchmarks/contexttrace_bench/run_contexttrace.py \
+            --mode semantic \
+            --case-set all \
+            --output-dir benchmarks/contexttrace_bench/out \
+            --enforce-sota-gates
+
+      - name: Upload ContextTrace-Bench artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: contexttrace-bench
+          path: |
+            benchmarks/contexttrace_bench/out/contexttrace_bench_results.json
+            benchmarks/contexttrace_bench/out/results.md
+            benchmarks/contexttrace_bench/out/leaderboard.md
+            benchmarks/contexttrace_bench/out/report.html
+            benchmarks/contexttrace_bench/out/candidate_inputs.jsonl
+            benchmarks/contexttrace_bench/METHODOLOGY.md
+            benchmarks/contexttrace_bench/BASELINES.md
+
       - name: Build SDK package
         run: |
           python -m pip install build

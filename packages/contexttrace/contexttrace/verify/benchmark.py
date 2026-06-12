@@ -21,7 +21,12 @@ BENCHMARK_CASE_FILES = {
         Path(__file__).with_name("external_benchmark_cases.json"),
         "real external OSS docs and public GitHub issues",
     ),
+    "public_holdout": (
+        Path(__file__).with_name("public_holdout_cases.json"),
+        "curated public holdout docs from RAG, vector database, observability, and evaluator projects",
+    ),
 }
+DEFAULT_ALL_CASE_SETS = ("contexttrace", "external")
 
 
 @dataclass(frozen=True)
@@ -32,6 +37,8 @@ class VerifyBenchmarkCase:
     expected_verdict_counts: dict[str, int]
     expected_citation_statuses: list[str]
     expected_should_abstain: bool | None
+    expected_primary_root_cause: str
+    expected_evidence_spans: list[str]
     source: str
     note: str
 
@@ -114,6 +121,8 @@ def run_verify_benchmark(
                 "expected_should_abstain": expected_abstain,
                 "predicted_should_abstain": predicted_abstain,
                 "abstention_match": (expected_abstain == predicted_abstain) if expected_abstain is not None else None,
+                "expected_primary_root_cause": case.expected_primary_root_cause,
+                "expected_evidence_spans": list(case.expected_evidence_spans),
                 "summary": result.get("summary") or {},
                 "claims": result.get("claims") or [],
                 "abstention": result.get("abstention") or {},
@@ -175,6 +184,8 @@ def render_verify_benchmark_report(result: dict[str, Any]) -> str:
 
 
 def _case(item: dict[str, Any]) -> VerifyBenchmarkCase:
+    expected_labels = set(item.get("expected_labels") or [])
+    expected_citation_statuses = list(item.get("expected_citation_statuses") or [])
     contexts = [
         {
             "id": context["id"],
@@ -200,18 +211,52 @@ def _case(item: dict[str, Any]) -> VerifyBenchmarkCase:
     return VerifyBenchmarkCase(
         id=str(item["id"]),
         trace=trace,
-        expected_labels=set(item.get("expected_labels") or []),
+        expected_labels=expected_labels,
         expected_verdict_counts=dict(item.get("expected_verdict_counts") or {}),
-        expected_citation_statuses=list(item.get("expected_citation_statuses") or []),
+        expected_citation_statuses=expected_citation_statuses,
         expected_should_abstain=item.get("expected_should_abstain"),
+        expected_primary_root_cause=str(
+            item.get("expected_primary_root_cause")
+            or _expected_primary_root_cause(expected_labels, expected_citation_statuses)
+        ),
+        expected_evidence_spans=_expected_evidence_spans(item),
         source=str(item.get("source") or ""),
         note=str(item.get("note") or ""),
     )
 
 
+def _expected_primary_root_cause(expected_labels: set[str], expected_citation_statuses: list[str]) -> str:
+    if "no_failure_detected" in expected_labels:
+        return "no_failure_detected"
+    if "citation_mismatch" in expected_labels:
+        if "cited_source_missing" in expected_citation_statuses:
+            return "missing_cited_source"
+        return "wrong_source_cited"
+    if "partial_support" in expected_labels:
+        return "answer_overreach"
+    if "contradicted_answer" in expected_labels:
+        return "conflicting_contexts"
+    if "should_have_abstained" in expected_labels:
+        return "should_have_abstained"
+    if "unsupported_answer" in expected_labels:
+        return "answer_overreach"
+    return ""
+
+
+def _expected_evidence_spans(item: dict[str, Any]) -> list[str]:
+    explicit = item.get("expected_evidence_spans")
+    if isinstance(explicit, list):
+        return [str(span) for span in explicit if str(span).strip()]
+    contexts = item.get("contexts") or []
+    if not contexts:
+        return []
+    text = contexts[0].get("text") if isinstance(contexts[0], dict) else None
+    return [str(text)] if text and str(text).strip() else []
+
+
 def _case_items(case_set: str) -> list[dict[str, Any]]:
     normalized = _normalize_case_set(case_set)
-    names = list(BENCHMARK_CASE_FILES) if normalized == "all" else [normalized]
+    names = list(DEFAULT_ALL_CASE_SETS) if normalized == "all" else [normalized]
     items: list[dict[str, Any]] = []
     for name in names:
         path, _ = BENCHMARK_CASE_FILES[name]

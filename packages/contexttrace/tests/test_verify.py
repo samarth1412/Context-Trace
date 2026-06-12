@@ -466,6 +466,80 @@ def test_partial_support_includes_matched_and_missing_facts():
     assert claim["missing_fact_details"][0]["type"] == "predicate"
 
 
+def test_partial_answer_can_include_unverifiable_detail():
+    result = verify_trace(
+        RAGTrace(
+            query="What does Pinecone metadata filtering do?",
+            answer=(
+                "A Pinecone metadata filter limits search to matching records. "
+                "It re-embeds every record during search."
+            ),
+            contexts=[
+                TraceContext(
+                    id="pinecone_metadata_filter",
+                    text=(
+                        "When you search the Pinecone index, you can include a metadata filter "
+                        "to limit the search to records matching the filter expression."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert [claim["verdict"] for claim in result["claims"]] == ["supported", "unverifiable"]
+    assert result["abstention"]["partial_answer"] is True
+    assert result["abstention"]["should_abstain"] is False
+    assert result["summary"]["failure_types"] == ["partial_support"]
+    assert result["claims"][1]["root_cause"]["label"] == "answer_overreach"
+
+
+def test_conditional_without_does_not_create_negation_conflict():
+    result = verify_trace(
+        RAGTrace(
+            query="What happens when Pinecone search has no metadata filter?",
+            answer="A Pinecone search without metadata filters searches the entire namespace.",
+            contexts=[
+                TraceContext(
+                    id="pinecone_indexing_overview",
+                    text=(
+                        "When querying a Pinecone index, searches without metadata filters "
+                        "do not consider metadata and search the entire namespace."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert result["claims"][0]["verdict"] == "supported"
+    assert result["claims"][0]["conflicting_facts"] == []
+    assert result["summary"]["failure_type"] == "no_failure_detected"
+
+
+def test_strong_negation_conflicts_with_affirmative_evidence():
+    result = verify_trace(
+        RAGTrace(
+            query="Does Chroma recompute embeddings when update documents omit embeddings?",
+            answer="Chroma never recomputes embeddings when documents are supplied without embeddings.",
+            contexts=[
+                TraceContext(
+                    id="chroma_update_data",
+                    text=(
+                        "If documents are supplied without corresponding embeddings, "
+                        "the embeddings will be recomputed with the collection's embedding function."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert result["claims"][0]["verdict"] == "contradicted"
+    assert result["claims"][0]["root_cause"]["label"] == "conflicting_contexts"
+    assert "contradicted_answer" in result["summary"]["failure_types"]
+
+
 def test_semantic_mode_supports_paraphrased_evidence():
     trace = RAGTrace(
         query="What is the refund policy?",
@@ -484,6 +558,63 @@ def test_semantic_mode_supports_paraphrased_evidence():
     assert lexical["claims"][0]["verdict"] != "supported"
     assert semantic["claims"][0]["verdict"] == "supported"
     assert semantic["summary"]["mode"] == "semantic"
+
+
+def test_semantic_mode_supports_prompt_receiving_paraphrase():
+    result = verify_trace(
+        RAGTrace(
+            query="What does a Haystack generator output?",
+            answer="Haystack generators generate text after receiving a prompt.",
+            contexts=[
+                TraceContext(
+                    id="haystack_generators",
+                    text="Generators are responsible for generating text after you give them a prompt.",
+                )
+            ],
+            citations=[
+                TraceCitation(
+                    claim="Haystack generators generate text after receiving a prompt.",
+                    source_id="haystack_generators",
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["citation_status"] == "citation_ok"
+    assert result["summary"]["failure_types"] == ["no_failure_detected"]
+
+
+def test_relation_matching_allows_partial_subject_overlap_for_same_object():
+    result = verify_trace(
+        RAGTrace(
+            query="What does Pinecone upsert do?",
+            answer="Pinecone upsert writes vectors into a namespace.",
+            contexts=[
+                TraceContext(
+                    id="pinecone_upsert",
+                    text=(
+                        "The upsert operation writes vectors into a namespace. "
+                        "If a new value is upserted for an existing vector ID, it will overwrite the previous value."
+                    ),
+                )
+            ],
+            citations=[
+                TraceCitation(
+                    claim="Pinecone upsert writes vectors into a namespace.",
+                    source_id="pinecone_upsert",
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["citation_status"] == "citation_ok"
+    assert claim["conflicting_facts"] == []
 
 
 def test_judge_mode_requires_a_judge_provider(monkeypatch):
@@ -715,6 +846,27 @@ def test_contradicted_claim_root_cause_is_conflicting_contexts():
                 )
             ],
         )
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "contradicted"
+    assert claim["root_cause"]["label"] == "conflicting_contexts"
+    assert result["summary"]["primary_root_cause"] == "conflicting_contexts"
+
+
+def test_version_contradiction_without_stale_source_is_conflicting_contexts():
+    result = verify_trace(
+        RAGTrace(
+            query="Which release added local claim-level evidence verification?",
+            answer="ContextTrace v0.1.0 adds local claim-level evidence verification for portable RAG traces.",
+            contexts=[
+                TraceContext(
+                    id="release_v020",
+                    text="ContextTrace v0.2.0 adds local claim-level evidence verification for portable RAG traces.",
+                )
+            ],
+        ),
+        mode="semantic",
     )
 
     claim = result["claims"][0]
@@ -1006,6 +1158,23 @@ def test_verify_benchmark_external_case_set_scores_real_oss_cases():
     assert any("github.com/chroma-core" in row["source"] for row in result["rows"])
 
 
+def test_verify_benchmark_public_holdout_case_set_is_separate():
+    result = run_verify_benchmark(mode="semantic", case_set="public_holdout")
+    all_result = run_verify_benchmark(mode="semantic", case_set="all")
+
+    assert result["case_set"] == "public_holdout"
+    assert result["case_source"] == "curated public holdout docs from RAG, vector database, observability, and evaluator projects"
+    assert result["cases"] >= 30
+    assert all_result["case_set"] == "all"
+    assert not any(str(row["id"]).startswith("holdout_") for row in all_result["rows"])
+    assert any("opentelemetry.io" in row["source"] for row in result["rows"])
+    assert any("docs.weaviate.io" in row["source"] for row in result["rows"])
+    assert any("docs.pinecone.io" in row["source"] for row in result["rows"])
+    assert any("deepeval.com" in row["source"] for row in result["rows"])
+    assert result["citation_match_rate"] == 1.0
+    assert result["exact_match_rate"] >= 0.9
+
+
 def test_verify_benchmark_cli_json(capsys):
     assert main(["verify-benchmark", "--mode", "semantic", "--json"]) == 0
 
@@ -1021,6 +1190,14 @@ def test_verify_benchmark_cli_external_case_set_json(capsys):
     output = json.loads(capsys.readouterr().out)
     assert output["case_set"] == "external"
     assert output["case_source"] == "real external OSS docs and public GitHub issues"
+
+
+def test_verify_benchmark_cli_public_holdout_case_set_json(capsys):
+    assert main(["verify-benchmark", "--case-set", "public_holdout", "--mode", "semantic", "--json"]) == 0
+
+    output = json.loads(capsys.readouterr().out)
+    assert output["case_set"] == "public_holdout"
+    assert output["cases"] >= 30
 
 
 def test_verify_benchmark_cli_report(tmp_path, capsys):

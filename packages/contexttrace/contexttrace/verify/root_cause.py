@@ -140,7 +140,7 @@ def diagnose_claim(claim: dict[str, Any], abstention: dict[str, Any]) -> dict[st
         )
 
     if verdict == "contradicted":
-        label = STALE_CONTEXT if _looks_stale_fact(conflicting_fact_values) else CONFLICTING_CONTEXTS
+        label = STALE_CONTEXT if _has_stale_source_signal(source_status, source_assessment) else CONFLICTING_CONTEXTS
         return _diagnosis(
             label=label,
             reason=(
@@ -154,6 +154,15 @@ def diagnose_claim(claim: dict[str, Any], abstention: dict[str, Any]) -> dict[st
         )
 
     if verdict == "unsupported":
+        if bool(abstention.get("partial_answer")):
+            return _diagnosis(
+                label=ANSWER_OVERREACH,
+                reason="The answer contains supported information but adds an unsupported detail.",
+                suggested_fix="Remove the unsupported detail or retrieve evidence that supports it.",
+                missing_fact=missing_fact or _string(claim.get("claim")),
+                closest_context_id=closest_context_id,
+                closest_evidence=closest_evidence,
+            )
         if bool(abstention.get("should_abstain")):
             return _diagnosis(
                 label=SHOULD_HAVE_ABSTAINED,
@@ -188,6 +197,15 @@ def diagnose_claim(claim: dict[str, Any], abstention: dict[str, Any]) -> dict[st
         )
 
     if verdict == "unverifiable":
+        if bool(abstention.get("partial_answer")):
+            return _diagnosis(
+                label=ANSWER_OVERREACH,
+                reason="The answer contains supported information but adds an unverifiable detail.",
+                suggested_fix="Remove the unverifiable detail or retrieve evidence that supports it.",
+                missing_fact=missing_fact or _string(claim.get("claim")),
+                closest_context_id=closest_context_id,
+                closest_evidence=closest_evidence,
+            )
         return _diagnosis(
             label=INSUFFICIENT_CONTEXT,
             reason="The closest retrieved context overlaps with the claim but is too weak or ambiguous.",
@@ -247,14 +265,10 @@ def _first_fact(facts: list[Any]) -> str | None:
     return None
 
 
-def _looks_stale_fact(facts: list[Any]) -> bool:
-    for fact in facts:
-        if isinstance(fact, dict) and _string(fact.get("type")) == "version":
-            return True
-        value = _string(fact).lower()
-        if value.startswith("v") and any(char.isdigit() for char in value):
-            return True
-    return False
+def _has_stale_source_signal(source_status: str, source_assessment: dict[str, Any]) -> bool:
+    if source_status == "grounded_but_stale":
+        return True
+    return bool(source_assessment.get("newer_related_sources"))
 
 
 def _first_source_signal(signals: list[Any]) -> dict[str, Any]:
