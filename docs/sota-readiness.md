@@ -47,15 +47,21 @@ Completed in the repo:
   for review from the raw GitHub dataset files. The 15 hallucination review rows
   now include deterministic source-span suggestions. The result is smoke-only
   and not publishable until issue #7 evidence mapping is complete.
+- An assisted source-evidence review pilot mapped those 15 RAGTruth
+  hallucination rows and rescored the 50-row test-split smoke. Span overlap is
+  now measurable at `0.882` across 15 reviewed rows, but failure macro-F1 remains
+  `0.150` and root-cause accuracy remains `0.280`, so this is workflow evidence,
+  not a publishable external benchmark claim.
 - Documentation links now point reviewers to methodology and baseline status.
 
 Still pending for Week 1:
 
 - Run a full local/OpenAI-compatible judge baseline if local runtime is
   acceptable.
-- Human-map RAGTruth answer-side hallucination spans to source-side evidence
-  spans before using it for publishable span-localization claims. This is
-  tracked in GitHub issue #7.
+- Get independent human sign-off for the RAGTruth source-evidence mappings and
+  expand beyond the 50-row smoke before using it for publishable
+  span-localization or external-dataset claims. This is tracked in GitHub issue
+  #7.
 - Create full external dataset validation tracks for RAGTruth, RAGChecker, CRAG,
   and ARES before making broad SOTA claims. RAGChecker, CRAG, and ARES follow-up
   work is tracked in GitHub issues #3, #4, and #5.
@@ -80,6 +86,11 @@ Current baseline status:
 - Public holdout, OpenAI diagnostic judge with `gpt-4.1-mini`: 150 cases, zero
   row errors, failure macro-F1 `0.931`, root-cause accuracy `0.953`, citation
   error F1 `1.000`, evidence span overlap `0.921`.
+- RAGTruth assisted review pilot, ContextTrace semantic verifier: 50 official
+  test-split smoke cases, 15 assisted-reviewed source-evidence rows, failure
+  macro-F1 `0.150`, root-cause accuracy `0.280`, citation error F1 `1.000`,
+  evidence span overlap `0.882` across the 15 reviewed rows. This is not
+  publishable without independent sign-off and broader coverage.
 - Ollama is reachable locally and `phi3:latest` completed a 5-case local-judge
   smoke run. The smoke took about 155 seconds, making a full 500-case run a
   multi-hour local job on this machine.

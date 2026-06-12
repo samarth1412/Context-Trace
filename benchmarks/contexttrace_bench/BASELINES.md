@@ -15,7 +15,7 @@ case set and are scored by `run_contexttrace.py --candidate`.
 | OpenAI-compatible local judge | `run_local_judge.py` | Smoke run completed | No | Ollama `phi3:latest` produced 5 predictions. It is parseable but slow on this machine, so full 500-case execution is a multi-hour run. |
 | Phoenix | `adapt_candidate.py --preset phoenix` | Adapter ready | No | Requires exported Phoenix evaluator results. |
 | TruLens | `adapt_candidate.py --preset trulens` | Adapter ready | No | Requires exported TruLens evaluator results. |
-| RAGTruth external validation | `ragtruth_adapter.py`, `ragtruth_review.py`, `run_contexttrace.py --case-pack` | Official raw-file smoke verified | No | 50-row test-split smoke builds, scores, and generates a 15-row review queue with source-span suggestions. Requires issue #7 human mapping from answer-side spans to source evidence spans before publishable span claims. |
+| RAGTruth external validation | `ragtruth_adapter.py`, `ragtruth_review.py`, `run_contexttrace.py --case-pack` | Official raw-file assisted pilot scored | No | 50-row test-split smoke builds, scores, and maps the 15 hallucination rows with assisted source-span review. Requires independent human sign-off and broader coverage before publishable external-dataset claims. |
 
 Latest scored leaderboard:
 
@@ -38,6 +38,20 @@ cases and 149 evidence-span labels. The OpenAI diagnostic judge reported all
 150 rows with zero row errors, with root-cause coverage on 150/150 rows,
 citation-status coverage on 103/150 rows, and evidence-span coverage on 149/150
 rows.
+
+Latest RAGTruth assisted review pilot:
+
+| System | Cases | Reviewed Span Rows | Failure Macro-F1 | Root Cause Accuracy | Citation Error F1 | Span Overlap |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| ContextTrace semantic verifier on RAGTruth test-split smoke | 50 | 15 | 0.150 | 0.280 | 1.000 | 0.882 |
+
+This pilot uses official RAGTruth `response.jsonl` and `source_info.jsonl`
+files stored outside the repo under ignored benchmark output. The 15 reviewed
+rows are an assisted source-evidence mapping pass, not independent human
+sign-off. Treat the result as a workflow validation artifact: it proves the
+adapter, review queue, apply step, and source-span scoring path work end to end,
+while the low failure macro-F1 and root-cause accuracy show the RAGTruth
+taxonomy mapping/calibration still needs work before any SOTA claim.
 
 ## Full ContextTrace Run
 
