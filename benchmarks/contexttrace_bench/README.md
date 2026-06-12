@@ -263,6 +263,25 @@ python benchmarks/contexttrace_bench/run_contexttrace.py \
   --output-dir benchmarks/contexttrace_bench/out/ragtruth
 ```
 
+Build a human-review queue for source evidence mapping:
+
+```bash
+python benchmarks/contexttrace_bench/ragtruth_review.py build-queue \
+  --case-pack benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
+  --output benchmarks/contexttrace_bench/out/ragtruth_review_queue.jsonl
+```
+
+After review, apply rows marked `reviewed`, `accepted`, or `approved` with
+`source_evidence_spans` filled:
+
+```bash
+python benchmarks/contexttrace_bench/ragtruth_review.py apply \
+  --case-pack benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
+  --review benchmarks/contexttrace_bench/out/ragtruth_reviewed.jsonl \
+  --output benchmarks/contexttrace_bench/out/ragtruth_reviewed_case_pack.json \
+  --require-reviewed
+```
+
 RAGTruth labels answer-side hallucination spans. The adapter preserves those
 spans in metadata and maps answer-level labels into the ContextTrace taxonomy,
 but it leaves `expected_evidence_spans` empty until a human curator maps the
