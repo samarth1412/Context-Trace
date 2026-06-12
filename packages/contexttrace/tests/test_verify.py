@@ -670,6 +670,100 @@ def test_semantic_mode_supports_news_paraphrases():
     assert plant["claims"][0]["verdict"] == "supported"
 
 
+def test_semantic_mode_supports_distributed_news_evidence():
+    result = verify_trace(
+        RAGTrace(
+            query="What terror arrests happened this week?",
+            answer=(
+                "Three women were arrested this week on terror charges, including two in New York "
+                "who were accused of planning to build an explosive device for attacks in the US."
+            ),
+            contexts=[
+                TraceContext(
+                    id="terror_arrests",
+                    text=(
+                        "She's one of three women arrested this week on terror charges. "
+                        "On Thursday, Noelle Velentzas and Asia Siddiqui were arrested in New York "
+                        "and accused of planning to build an explosive device for attacks in the United States, "
+                        "federal prosecutors said."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["missing_facts"] == []
+
+
+def test_semantic_mode_treats_negated_truth_phrase_as_support():
+    result = verify_trace(
+        RAGTrace(
+            query="Could the Rolling Stone article be considered false by law?",
+            answer="The Rolling Stone article presented as fact could potentially be deemed false by the law.",
+            contexts=[
+                TraceContext(
+                    id="defamation",
+                    text=(
+                        "But the Rolling Stone article certainly purported to be fact, "
+                        'and it apparently is not exactly what the law considers "true."'
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["conflicting_facts"] == []
+
+
+def test_semantic_mode_supports_not_disclosed_paraphrase():
+    result = verify_trace(
+        RAGTrace(
+            query="Were settlement details disclosed?",
+            answer="No further details of the settlement have been disclosed.",
+            contexts=[
+                TraceContext(
+                    id="settlement",
+                    text=(
+                        "She didn't disclose the details of the settlement other than saying that "
+                        "one important aspect of it was an apology."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["missing_facts"] == []
+
+
+def test_semantic_mode_keeps_direct_negation_contradiction():
+    result = verify_trace(
+        RAGTrace(
+            query="Can the document store run pipelines?",
+            answer="A Haystack Document Store has a run method.",
+            contexts=[
+                TraceContext(
+                    id="haystack_docs",
+                    text="Document Stores do not have a run method and are not pipeline components.",
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "contradicted"
+    assert "contradicted_answer" in result["summary"]["failure_types"]
+
+
 def test_relation_matching_allows_partial_subject_overlap_for_same_object():
     result = verify_trace(
         RAGTrace(

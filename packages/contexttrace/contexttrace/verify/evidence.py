@@ -428,6 +428,10 @@ SEMANTIC_TOKEN_MAP = {
     "generated": "generate",
     "generates": "generate",
     "generating": "generate",
+    "create": "generate",
+    "created": "generate",
+    "creates": "generate",
+    "creating": "generate",
     "gave": "receive",
     "give": "receive",
     "given": "receive",
@@ -451,6 +455,14 @@ SEMANTIC_TOKEN_MAP = {
     "facility": "plant",
     "facilities": "plant",
     "inside": "within",
+    "consider": "deem",
+    "considered": "deem",
+    "considers": "deem",
+    "considering": "deem",
+    "disclose": "disclose",
+    "disclosed": "disclose",
+    "discloses": "disclose",
+    "disclosing": "disclose",
     "investigate": "search",
     "investigated": "search",
     "investigating": "search",
@@ -479,6 +491,10 @@ SEMANTIC_TOKEN_MAP = {
     "photo": "picture",
     "pictured": "picture",
     "image": "picture",
+    "presented": "purport",
+    "presents": "purport",
+    "purported": "purport",
+    "purports": "purport",
     "five": "5",
     "thirty": "30",
     "fourteen": "14",
@@ -493,11 +509,14 @@ SEMANTIC_PHRASES = (
     ("business day", "business days"),
     ("order id", "order number"),
     ("proof of purchase", "proof"),
+    ("united states", "us"),
+    ("not exactly what the law considers true", "false by the law"),
+    ('not exactly what the law considers "true', "false by the law"),
 )
 
 
 def _semantic_text(text: str) -> str:
-    value = str(text or "").lower()
+    value = _normalize_negation_text(text).lower()
     for source, replacement in SEMANTIC_PHRASES:
         value = value.replace(source, replacement)
     return value
@@ -511,3 +530,9 @@ def _semantic_phrase_bonus(claim_text: str, evidence_text: str) -> float:
         if replacement in claim and replacement in evidence:
             bonus += 0.03
     return min(0.09, bonus)
+
+
+def _normalize_negation_text(text: str) -> str:
+    value = str(text or "")
+    value = re.sub(r"\bcan['’]?t\b", "cannot", value, flags=re.IGNORECASE)
+    return re.sub(r"\b([A-Za-z]+)n['’]t\b", r"\1 not", value)
