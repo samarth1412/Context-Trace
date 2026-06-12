@@ -93,6 +93,11 @@ Current baseline status:
   macro-F1 `0.172`, root-cause accuracy `0.340`, citation error F1 `1.000`,
   evidence span overlap `0.882` across the 15 reviewed rows. This is not
   publishable without independent sign-off and broader coverage.
+- RAGTruth assisted review pilot, OpenAI diagnostic judge with `gpt-4.1-mini`:
+  50 official test-split smoke cases, zero row errors, failure macro-F1 `0.272`,
+  root-cause accuracy `0.660`, citation error F1 `1.000`, evidence span overlap
+  `0.592`, and dangerous false-green rate `0.260`. This is useful calibration
+  evidence, but it is too under-sensitive to use as a publishable external row.
 - Ollama is reachable locally and `phi3:latest` completed a 5-case local-judge
   smoke run. The smoke took about 155 seconds, making a full 500-case run a
   multi-hour local job on this machine.
