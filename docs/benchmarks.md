@@ -183,6 +183,15 @@ python benchmarks/contexttrace_bench/ragtruth_adapter.py \
 The adapter preserves RAGTruth answer-side hallucination spans, but publishable
 span-localization claims still require human mapping to source evidence spans.
 
+Score the adapted case pack through the same report path:
+
+```bash
+python benchmarks/contexttrace_bench/run_contexttrace.py \
+  --mode semantic \
+  --case-pack benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
+  --output-dir benchmarks/contexttrace_bench/out/ragtruth
+```
+
 For full runs, prefer the resumable checkpointed path:
 
 ```powershell

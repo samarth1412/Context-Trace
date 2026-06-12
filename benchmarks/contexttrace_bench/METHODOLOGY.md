@@ -146,6 +146,19 @@ adapter preserves answer-side hallucination spans in metadata and leaves
 `expected_evidence_spans` empty until human review maps them back to supporting
 or contradicting source spans.
 
+External case packs are scored with the same harness and report format:
+
+```bash
+python benchmarks/contexttrace_bench/run_contexttrace.py \
+  --mode semantic \
+  --case-pack benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
+  --output-dir benchmarks/contexttrace_bench/out/ragtruth
+```
+
+The generated `candidate_inputs.jsonl` contains only trace payloads and safe
+source metadata. It does not include expected labels, notes, or RAGTruth
+hallucination annotations.
+
 Do not treat an adapted RAGTruth case pack as a frozen benchmark split until:
 
 - The source files, commit or dataset version, and adapter command are recorded.

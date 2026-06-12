@@ -234,6 +234,15 @@ python benchmarks/contexttrace_bench/ragtruth_adapter.py \
   --split test
 ```
 
+Score the adapted case pack:
+
+```bash
+python benchmarks/contexttrace_bench/run_contexttrace.py \
+  --mode semantic \
+  --case-pack benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
+  --output-dir benchmarks/contexttrace_bench/out/ragtruth
+```
+
 RAGTruth labels answer-side hallucination spans. The adapter maps no-span rows
 to `no_failure_detected`, evident conflict spans to `contradicted_answer`, and
 other hallucination spans to `partial_support`, while preserving the original

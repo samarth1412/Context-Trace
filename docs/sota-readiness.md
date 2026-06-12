@@ -38,12 +38,18 @@ Completed in the repo:
 - A RAGTruth external-validation adapter scaffold can build a ContextTrace-style
   case pack from `response.jsonl` and `source_info.jsonl`, with answer-side
   hallucination spans preserved for human evidence-span mapping.
+- External case packs can now be scored through `run_contexttrace.py --case-pack`
+  and produce the same JSON, Markdown, HTML, confidence interval, and
+  candidate-input artifacts as built-in benchmark runs.
 - Documentation links now point reviewers to methodology and baseline status.
 
 Still pending for Week 1:
 
 - Run a full local/OpenAI-compatible judge baseline if local runtime is
   acceptable.
+- Human-map RAGTruth answer-side hallucination spans to source-side evidence
+  spans before using it for publishable span-localization claims. This is
+  tracked in GitHub issue #7.
 - Create full external dataset validation tracks for RAGTruth, RAGChecker, CRAG,
   and ARES before making broad SOTA claims. RAGChecker, CRAG, and ARES follow-up
   work is tracked in GitHub issues #3, #4, and #5.
