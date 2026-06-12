@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import random
 import sys
 import time
 from html import escape
@@ -22,6 +23,8 @@ from contexttrace.verify.schema import RAGTrace, TraceCitation, TraceContext  # 
 DEFAULT_LABELS_PATH = Path(__file__).with_name("labels.json")
 DEFAULT_OUTPUT_DIR = Path(__file__).with_name("out")
 DEFAULT_TARGET_CASES = 500
+DEFAULT_BOOTSTRAP_SAMPLES = 400
+DEFAULT_BOOTSTRAP_SEED = 20260612
 BAD_CITATION_STATUSES = {
     "cited_source_missing",
     "cited_source_does_not_support_claim",
@@ -55,6 +58,14 @@ DEFAULT_QUALITY_GATES = {
     "evidence_span_overlap": (">=", 0.75),
     "dangerous_false_green_rate": ("<=", 0.01),
 }
+CONFIDENCE_INTERVAL_METRICS = (
+    "failure_label_macro_f1",
+    "claim_verdict_macro_f1",
+    "root_cause_accuracy",
+    "citation_error_f1",
+    "evidence_span_overlap",
+    "dangerous_false_green_rate",
+)
 
 
 def run_contexttrace_benchmark(
@@ -65,6 +76,8 @@ def run_contexttrace_benchmark(
     estimated_cost_per_trace_usd: float = 0.0,
     include_generated_cases: bool = True,
     target_cases: int = DEFAULT_TARGET_CASES,
+    bootstrap_samples: int = DEFAULT_BOOTSTRAP_SAMPLES,
+    bootstrap_seed: int = DEFAULT_BOOTSTRAP_SEED,
 ) -> dict[str, Any]:
     verifier_result = run_verify_benchmark(
         mode=mode,
@@ -97,15 +110,17 @@ def run_contexttrace_benchmark(
         _enrich_row(row, labels.get(str(row.get("id"))) or {})
         for row in [*base_rows, *generated_rows]
     ]
-    verifier_like = {
-        "exact_match_rate": _rate([bool(row.get("exact_match")) for row in rows]),
-        "verdict_match_rate": _rate([bool(row.get("verdict_match")) for row in rows]),
-        "per_label": _per_label_metrics(rows),
-    }
+    verifier_like = _verifier_like_from_rows(rows)
     summary = _summary(
         verifier_like,
         rows,
         estimated_cost_per_trace_usd=estimated_cost_per_trace_usd,
+    )
+    confidence_intervals = _confidence_intervals(
+        rows,
+        estimated_cost_per_trace_usd=estimated_cost_per_trace_usd,
+        samples=bootstrap_samples,
+        seed=bootstrap_seed,
     )
     case_source = verifier_result.get("case_source")
     if generated_rows:
@@ -120,6 +135,8 @@ def run_contexttrace_benchmark(
         "generated_cases": len(generated_rows),
         "target_cases": target_cases if include_generated_cases else len(base_rows),
         "summary": summary,
+        "confidence_intervals": confidence_intervals,
+        "per_label": verifier_like["per_label"],
         "rows": rows,
         "labels_path": str(labels_path),
         "verifier_result": {
@@ -177,20 +194,21 @@ def score_candidate_predictions(reference_result: dict[str, Any], candidate: dic
         prediction = predictions.get(str(reference_row.get("id"))) or {}
         rows.append(_score_candidate_row(reference_row, prediction))
 
-    per_label = _per_label_metrics(rows)
-    verifier_like = {
-        "exact_match_rate": _rate([bool(row.get("exact_match")) for row in rows]),
-        "verdict_match_rate": _rate([bool(row.get("verdict_match")) for row in rows]),
-        "per_label": per_label,
-    }
+    verifier_like = _verifier_like_from_rows(rows)
     estimated_cost = _candidate_cost_per_trace(candidate, rows)
     summary = _summary(verifier_like, rows, estimated_cost_per_trace_usd=estimated_cost)
+    confidence_intervals = _confidence_intervals(
+        rows,
+        estimated_cost_per_trace_usd=estimated_cost,
+    )
     return {
         "benchmark": reference_result.get("benchmark", "ContextTrace-Bench"),
         "system": str(candidate.get("system") or candidate.get("name") or "candidate"),
         "version": str(candidate.get("version") or ""),
         "status": "scored",
         "summary": summary,
+        "confidence_intervals": confidence_intervals,
+        "per_label": verifier_like["per_label"],
         "coverage": {
             "reference_cases": len(reference_result.get("rows") or []),
             "submitted_predictions": len(predictions),
@@ -289,6 +307,57 @@ def render_results_markdown(result: dict[str, Any]) -> str:
     ]
     for key in SUMMARY_KEYS:
         lines.append("| `%s` | %s |" % (key, _metric_display(summary.get(key))))
+
+    confidence_rows = _confidence_interval_rows(result)
+    lines.extend(
+        [
+            "",
+            "## Confidence Intervals",
+            "",
+            "| Metric | Estimate | 95% CI | Resamples |",
+            "| --- | ---: | ---: | ---: |",
+        ]
+    )
+    if confidence_rows:
+        for row in confidence_rows:
+            lines.append(
+                "| `%s` | %s | %s | %s |"
+                % (
+                    row["metric"],
+                    _metric_display(row["estimate"]),
+                    _confidence_interval_display(row),
+                    _metric_display(row["samples"]),
+                )
+            )
+    else:
+        lines.append("| N/A | N/A | N/A | N/A |")
+
+    per_label_rows = _per_label_rows(result)
+    lines.extend(
+        [
+            "",
+            "## Failure Label Breakdown",
+            "",
+            "| Label | Precision | Recall | F1 | TP | FP | FN |",
+            "| --- | ---: | ---: | ---: | ---: | ---: | ---: |",
+        ]
+    )
+    if per_label_rows:
+        for row in per_label_rows:
+            lines.append(
+                "| `%s` | %s | %s | %s | %s | %s | %s |"
+                % (
+                    row["label"],
+                    _metric_display(row["precision"]),
+                    _metric_display(row["recall"]),
+                    _metric_display(row["f1"]),
+                    _metric_display(row["tp"]),
+                    _metric_display(row["fp"]),
+                    _metric_display(row["fn"]),
+                )
+            )
+    else:
+        lines.append("| N/A | N/A | N/A | N/A | N/A | N/A | N/A |")
 
     lines.extend(
         [
@@ -406,6 +475,8 @@ def render_html_report(
         case_set=escape(str(result.get("case_set") or "")),
         case_source=escape(str(result.get("case_source") or "")),
         summary_cards=_html_summary_cards(summary),
+        confidence_interval_rows=_html_confidence_interval_rows(result),
+        per_label_rows=_html_per_label_rows(result),
         gate_rows=_html_gate_rows(quality_gate_results(result)),
         leaderboard_rows=_html_leaderboard_rows(result, baseline_results or []),
         diagnostic_coverage_rows=_html_diagnostic_coverage_rows(result, baseline_results or []),
@@ -446,6 +517,51 @@ def _coverage_display(summary: dict[str, Any], field: str) -> str:
     if cases is None:
         return str(reported)
     return "%s / %s" % (reported, cases)
+
+
+def _confidence_interval_rows(result: dict[str, Any]) -> list[dict[str, Any]]:
+    intervals = result.get("confidence_intervals") or {}
+    rows = []
+    for metric in CONFIDENCE_INTERVAL_METRICS:
+        interval = intervals.get(metric)
+        if not isinstance(interval, dict):
+            continue
+        rows.append(
+            {
+                "metric": metric,
+                "estimate": interval.get("estimate"),
+                "low": interval.get("low"),
+                "high": interval.get("high"),
+                "samples": interval.get("samples"),
+            }
+        )
+    return rows
+
+
+def _confidence_interval_display(row: dict[str, Any]) -> str:
+    low = row.get("low")
+    high = row.get("high")
+    if low is None or high is None:
+        return "N/A"
+    return "%s to %s" % (_metric_display(low), _metric_display(high))
+
+
+def _per_label_rows(result: dict[str, Any]) -> list[dict[str, Any]]:
+    per_label = result.get("per_label") or _per_label_metrics(result.get("rows") or [])
+    rows = []
+    for label, metrics in sorted(per_label.items()):
+        rows.append(
+            {
+                "label": label,
+                "precision": metrics.get("precision"),
+                "recall": metrics.get("recall"),
+                "f1": metrics.get("f1"),
+                "tp": metrics.get("tp"),
+                "fp": metrics.get("fp"),
+                "fn": metrics.get("fn"),
+            }
+        )
+    return rows
 
 
 def _candidate_prediction_index(candidate: dict[str, Any]) -> dict[str, dict[str, Any]]:
@@ -566,6 +682,61 @@ def _candidate_cost_per_trace(candidate: dict[str, Any], rows: list[dict[str, An
     return sum(costs) / len(costs) if costs else 0.0
 
 
+def _verifier_like_from_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    return {
+        "exact_match_rate": _rate([bool(row.get("exact_match")) for row in rows]),
+        "verdict_match_rate": _rate([bool(row.get("verdict_match")) for row in rows]),
+        "per_label": _per_label_metrics(rows),
+    }
+
+
+def _confidence_intervals(
+    rows: list[dict[str, Any]],
+    *,
+    estimated_cost_per_trace_usd: float,
+    samples: int = DEFAULT_BOOTSTRAP_SAMPLES,
+    seed: int = DEFAULT_BOOTSTRAP_SEED,
+) -> dict[str, dict[str, Any]]:
+    if not rows or int(samples or 0) <= 0:
+        return {}
+
+    rng = random.Random(seed)
+    sample_count = int(samples)
+    metric_values: dict[str, list[float]] = {metric: [] for metric in CONFIDENCE_INTERVAL_METRICS}
+    for _ in range(sample_count):
+        sample_rows = [rows[rng.randrange(len(rows))] for _ in rows]
+        sample_summary = _summary(
+            _verifier_like_from_rows(sample_rows),
+            sample_rows,
+            estimated_cost_per_trace_usd=estimated_cost_per_trace_usd,
+        )
+        for metric in CONFIDENCE_INTERVAL_METRICS:
+            value = sample_summary.get(metric)
+            if value is not None:
+                metric_values[metric].append(float(value))
+
+    point_summary = _summary(
+        _verifier_like_from_rows(rows),
+        rows,
+        estimated_cost_per_trace_usd=estimated_cost_per_trace_usd,
+    )
+    intervals: dict[str, dict[str, Any]] = {}
+    for metric, values in metric_values.items():
+        estimate = point_summary.get(metric)
+        if estimate is None or not values:
+            continue
+        intervals[metric] = {
+            "estimate": estimate,
+            "low": _percentile(values, 2.5),
+            "high": _percentile(values, 97.5),
+            "level": 0.95,
+            "method": "case_bootstrap",
+            "samples": len(values),
+            "seed": seed,
+        }
+    return intervals
+
+
 def _per_label_metrics(rows: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     labels = sorted(
         {
@@ -611,6 +782,56 @@ def _html_summary_cards(summary: dict[str, Any]) -> str:
         </div>
         """.format(label=escape(str(label)), value=escape(_metric_display(value)))
         for label, value in cards
+    )
+
+
+def _html_confidence_interval_rows(result: dict[str, Any]) -> str:
+    rows = _confidence_interval_rows(result)
+    if not rows:
+        return "<tr><td colspan=\"4\" class=\"muted\">No confidence intervals were computed.</td></tr>"
+    return "\n".join(
+        """
+        <tr>
+          <td>{metric}</td>
+          <td>{estimate}</td>
+          <td>{interval}</td>
+          <td>{samples}</td>
+        </tr>
+        """.format(
+            metric=escape(str(row["metric"])),
+            estimate=escape(_metric_display(row["estimate"])),
+            interval=escape(_confidence_interval_display(row)),
+            samples=escape(_metric_display(row["samples"])),
+        )
+        for row in rows
+    )
+
+
+def _html_per_label_rows(result: dict[str, Any]) -> str:
+    rows = _per_label_rows(result)
+    if not rows:
+        return "<tr><td colspan=\"7\" class=\"muted\">No label metrics.</td></tr>"
+    return "\n".join(
+        """
+        <tr>
+          <td>{label}</td>
+          <td>{precision}</td>
+          <td>{recall}</td>
+          <td>{f1}</td>
+          <td>{tp}</td>
+          <td>{fp}</td>
+          <td>{fn}</td>
+        </tr>
+        """.format(
+            label=escape(str(row["label"])),
+            precision=escape(_metric_display(row["precision"])),
+            recall=escape(_metric_display(row["recall"])),
+            f1=escape(_metric_display(row["f1"])),
+            tp=escape(_metric_display(row["tp"])),
+            fp=escape(_metric_display(row["fp"])),
+            fn=escape(_metric_display(row["fn"])),
+        )
+        for row in rows
     )
 
 
@@ -753,6 +974,8 @@ def _raw_report_summary(result: dict[str, Any]) -> dict[str, Any]:
         "base_cases": result.get("base_cases"),
         "generated_cases": result.get("generated_cases"),
         "summary": result.get("summary"),
+        "confidence_intervals": result.get("confidence_intervals"),
+        "per_label": result.get("per_label"),
         "quality_gates": quality_gate_results(result),
         "misses": [
             {
@@ -1399,7 +1622,7 @@ def _metric_display(value: Any) -> str:
     return str(value)
 
 
-def _percentile(values: list[float], percentile: int) -> float:
+def _percentile(values: list[float], percentile: float) -> float:
     if not values:
         return 0.0
     ranked = sorted(values)
@@ -1543,6 +1766,39 @@ HTML_TEMPLATE = """<!doctype html>
     </section>
 
     <section>
+      <h2>Confidence Intervals</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Estimate</th>
+            <th>95% CI</th>
+            <th>Resamples</th>
+          </tr>
+        </thead>
+        <tbody>{confidence_interval_rows}</tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Failure Label Breakdown</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Label</th>
+            <th>Precision</th>
+            <th>Recall</th>
+            <th>F1</th>
+            <th>TP</th>
+            <th>FP</th>
+            <th>FN</th>
+          </tr>
+        </thead>
+        <tbody>{per_label_rows}</tbody>
+      </table>
+    </section>
+
+    <section>
       <h2>SOTA Readiness Gates</h2>
       <table>
         <thead>
@@ -1634,6 +1890,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output-dir", default=str(DEFAULT_OUTPUT_DIR))
     parser.add_argument("--estimated-cost-per-trace-usd", default=0.0, type=float)
     parser.add_argument("--target-cases", default=DEFAULT_TARGET_CASES, type=int, help="Target case count after generated variants.")
+    parser.add_argument("--bootstrap-samples", default=DEFAULT_BOOTSTRAP_SAMPLES, type=int, help="Case-bootstrap resamples for 95%% confidence intervals.")
+    parser.add_argument("--bootstrap-seed", default=DEFAULT_BOOTSTRAP_SEED, type=int, help="Deterministic seed for bootstrap confidence intervals.")
     parser.add_argument("--no-generated-cases", action="store_true", help="Run only curated benchmark cases.")
     parser.add_argument(
         "--candidate",
@@ -1656,6 +1914,8 @@ def main(argv: list[str] | None = None) -> int:
         estimated_cost_per_trace_usd=args.estimated_cost_per_trace_usd,
         include_generated_cases=not args.no_generated_cases,
         target_cases=args.target_cases,
+        bootstrap_samples=args.bootstrap_samples,
+        bootstrap_seed=args.bootstrap_seed,
     )
     baseline_results = [score_candidate_file(result, candidate_path) for candidate_path in args.candidate]
     paths = write_benchmark_outputs(result, output_dir=args.output_dir, baseline_results=baseline_results or None)
@@ -1671,6 +1931,9 @@ def main(argv: list[str] | None = None) -> int:
         print("Base cases: %s" % result["base_cases"])
         print("Generated cases: %s" % result["generated_cases"])
         print("Failure macro-F1: %.3f" % float(summary["failure_label_macro_f1"]))
+        failure_ci = (result.get("confidence_intervals") or {}).get("failure_label_macro_f1") or {}
+        if failure_ci:
+            print("Failure macro-F1 95%% CI: %s to %s" % (failure_ci.get("low"), failure_ci.get("high")))
         print("Root-cause accuracy: %.3f" % float(summary["root_cause_accuracy"]))
         print("Citation error F1: %.3f" % float(summary["citation_error_f1"]))
         print("Evidence span overlap: %.3f" % float(summary["evidence_span_overlap"]))

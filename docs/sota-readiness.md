@@ -33,12 +33,20 @@ Completed in the repo:
   required before calling the holdout frozen.
 - The remote baseline runners now support resumable checkpoints and bounded
   evaluator concurrency.
+- Benchmark artifacts now include deterministic 95% case-bootstrap confidence
+  intervals and per-label breakdowns for the headline metrics.
+- A RAGTruth external-validation adapter scaffold can build a ContextTrace-style
+  case pack from `response.jsonl` and `source_info.jsonl`, with answer-side
+  hallucination spans preserved for human evidence-span mapping.
 - Documentation links now point reviewers to methodology and baseline status.
 
 Still pending for Week 1:
 
 - Run a full local/OpenAI-compatible judge baseline if local runtime is
   acceptable.
+- Create full external dataset validation tracks for RAGTruth, RAGChecker, CRAG,
+  and ARES before making broad SOTA claims. RAGChecker, CRAG, and ARES follow-up
+  work is tracked in GitHub issues #3, #4, and #5.
 - Complete human audit sign-off for ContextTrace-Diag-150 before using
   frozen-split language.
 - Review generated `leaderboard.md` and `report.html` before using them in public
@@ -76,8 +84,8 @@ Avoid:
 
 > ContextTrace is the state-of-the-art RAG evaluation framework.
 
-That broader claim needs independent public datasets, frozen holdout splits,
-confidence intervals, and full competitor rows.
+That broader claim still needs independent public datasets, audited frozen
+holdout language, interval-aware reporting, and full competitor rows.
 
 ## Week 1 Verification Commands
 
