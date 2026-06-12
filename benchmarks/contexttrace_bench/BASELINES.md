@@ -11,7 +11,7 @@ case set and are scored by `run_contexttrace.py --candidate`.
 | ContextTrace semantic verifier | `run_contexttrace.py --mode semantic` | Ready | Yes | Local-first product path. CI enforces default quality gates. |
 | RAGAS | `run_ragas.py` | Full OpenAI-backed candidate scored | Yes | `gpt-4.1-mini`, 500/500 rows, zero row errors. Faithfulness-only baseline; diagnostic fields are `N/A`. |
 | DeepEval | `run_deepeval.py` | Full OpenAI-backed candidate scored | Yes | `gpt-4.1-mini`, 500/500 rows, zero row errors. Faithfulness-only baseline; diagnostic fields are `N/A`. |
-| OpenAI diagnostic judge | `run_local_judge.py` | Expanded public holdout candidate scored | Holdout only | `gpt-4.1-mini`, 150/150 public-holdout rows, zero row errors. Reports failure labels, root cause, citations, and spans. |
+| OpenAI diagnostic judge | `run_local_judge.py` | Expanded public holdout and RAGTruth smoke candidates scored | Holdout only | `gpt-4.1-mini`, 150/150 public-holdout rows and 50/50 RAGTruth smoke rows, zero row errors. The RAGTruth smoke is calibration-only because it has high dangerous false-green rate. |
 | OpenAI-compatible local judge | `run_local_judge.py` | Smoke run completed | No | Ollama `phi3:latest` produced 5 predictions. It is parseable but slow on this machine, so full 500-case execution is a multi-hour run. |
 | Phoenix | `adapt_candidate.py --preset phoenix` | Adapter ready | No | Requires exported Phoenix evaluator results. |
 | TruLens | `adapt_candidate.py --preset trulens` | Adapter ready | No | Requires exported TruLens evaluator results. |
@@ -41,9 +41,10 @@ rows.
 
 Latest RAGTruth assisted review pilot:
 
-| System | Cases | Reviewed Span Rows | Failure Macro-F1 | Root Cause Accuracy | Citation Error F1 | Span Overlap |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| ContextTrace semantic verifier on RAGTruth test-split smoke | 50 | 15 | 0.172 | 0.340 | 1.000 | 0.882 |
+| System | Cases | Reviewed Span Rows | Failure Macro-F1 | Root Cause Accuracy | Dangerous False Green | Citation Error F1 | Span Overlap |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| ContextTrace semantic verifier on RAGTruth test-split smoke | 50 | 15 | 0.172 | 0.340 | 0.000 | 1.000 | 0.882 |
+| OpenAI diagnostic judge `gpt-4.1-mini` on RAGTruth test-split smoke | 50 | 15 | 0.272 | 0.660 | 0.260 | 1.000 | 0.592 |
 
 This pilot uses official RAGTruth `response.jsonl` and `source_info.jsonl`
 files stored outside the repo under ignored benchmark output. The 15 reviewed
@@ -51,7 +52,10 @@ rows are an assisted source-evidence mapping pass, not independent human
 sign-off. Treat the result as a workflow validation artifact: it proves the
 adapter, review queue, apply step, and source-span scoring path work end to end,
 while the low failure macro-F1 and root-cause accuracy show the RAGTruth
-taxonomy mapping/calibration still needs work before any SOTA claim.
+taxonomy mapping/calibration still needs work before any SOTA claim. The OpenAI
+judge is useful as a contrastive calibration target, but it labeled 46/50 rows
+as `no_failure_detected`, so its `0.260` dangerous false-green rate blocks any
+publishable claim from this smoke.
 
 ## Full ContextTrace Run
 
@@ -281,6 +285,34 @@ other hallucination spans to `partial_support`, while preserving the original
 spans in `ragtruth_metadata.answer_hallucination_spans`. A publishable external
 validation run still needs human mapping from those answer spans to source-side
 evidence spans before using evidence-span overlap.
+
+Run the OpenAI diagnostic judge on a reviewed RAGTruth smoke pack for calibration
+only:
+
+```powershell
+$env:OPENAI_API_KEY = "<your evaluator key>"
+$judgeVenv = Join-Path $env:TEMP "contexttrace-openai-judge"
+py -3.11 -m venv $judgeVenv
+& "$judgeVenv\Scripts\python.exe" -m pip install -r benchmarks/contexttrace_bench/requirements-local-judge.txt
+& "$judgeVenv\Scripts\python.exe" benchmarks/contexttrace_bench/run_local_judge.py `
+  --input benchmarks/contexttrace_bench/out/ragtruth_official/reviewed_assisted_test50_calibrated/candidate_inputs.jsonl `
+  --raw-output benchmarks/contexttrace_bench/out/ragtruth_official/openai_judge_test50_raw_results.json `
+  --candidate-output benchmarks/contexttrace_bench/out/ragtruth_official/openai_judge_test50_predictions.json `
+  --base-url https://api.openai.com/v1 `
+  --model gpt-4.1-mini `
+  --system "OpenAI diagnostic judge on RAGTruth assisted pilot" `
+  --max-workers 4 `
+  --progress-every 10 `
+  --request-timeout 90 `
+  --resume
+
+python benchmarks/contexttrace_bench/run_contexttrace.py `
+  --mode semantic `
+  --case-pack benchmarks/contexttrace_bench/out/ragtruth_official/ragtruth_reviewed_case_pack_test50_assisted.json `
+  --output-dir benchmarks/contexttrace_bench/out/ragtruth_official/openai_judge_test50_scored `
+  --bootstrap-samples 100 `
+  --candidate benchmarks/contexttrace_bench/out/ragtruth_official/openai_judge_test50_predictions.json
+```
 
 ## Publishability Checklist
 
