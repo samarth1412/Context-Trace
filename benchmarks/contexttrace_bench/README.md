@@ -268,7 +268,9 @@ Build a human-review queue for source evidence mapping:
 ```bash
 python benchmarks/contexttrace_bench/ragtruth_review.py build-queue \
   --case-pack benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
-  --output benchmarks/contexttrace_bench/out/ragtruth_review_queue.jsonl
+  --output benchmarks/contexttrace_bench/out/ragtruth_review_queue.jsonl \
+  --suggest-source-spans \
+  --max-suggestions 3
 ```
 
 After review, apply rows marked `reviewed`, `accepted`, or `approved` with

@@ -21,6 +21,8 @@ def build_review_queue(
     case_pack: dict[str, Any],
     *,
     include_supported: bool = False,
+    suggest_source_spans: bool = False,
+    max_suggestions: int = 3,
 ) -> list[dict[str, Any]]:
     rows = []
     for case in case_pack.get("cases") or []:
@@ -29,7 +31,14 @@ def build_review_queue(
         spans = ((case.get("ragtruth_metadata") or {}).get("answer_hallucination_spans") or [])
         if not include_supported and not spans:
             continue
-        rows.append(_review_row(case, spans))
+        rows.append(
+            _review_row(
+                case,
+                spans,
+                suggest_source_spans=suggest_source_spans,
+                max_suggestions=max_suggestions,
+            )
+        )
     return rows
 
 
@@ -122,7 +131,22 @@ def write_json(payload: dict[str, Any], path: str | Path) -> str:
     return str(output_path)
 
 
-def _review_row(case: dict[str, Any], spans: list[dict[str, Any]]) -> dict[str, Any]:
+def _review_row(
+    case: dict[str, Any],
+    spans: list[dict[str, Any]],
+    *,
+    suggest_source_spans: bool,
+    max_suggestions: int,
+) -> dict[str, Any]:
+    source_contexts = [
+        {
+            "id": context.get("id"),
+            "text": context.get("text"),
+            "source_id": context.get("source_id") or (context.get("metadata") or {}).get("source_id"),
+        }
+        for context in case.get("contexts") or []
+        if isinstance(context, dict)
+    ]
     return {
         "case_id": str(case.get("id") or ""),
         "review_status": "needs_review",
@@ -136,15 +160,12 @@ def _review_row(case: dict[str, Any], spans: list[dict[str, Any]]) -> dict[str, 
         "expected_primary_root_cause": case.get("expected_primary_root_cause"),
         "expected_verdict_counts": dict(case.get("expected_verdict_counts") or {}),
         "answer_hallucination_spans": spans,
-        "source_contexts": [
-            {
-                "id": context.get("id"),
-                "text": context.get("text"),
-                "source_id": context.get("source_id") or (context.get("metadata") or {}).get("source_id"),
-            }
-            for context in case.get("contexts") or []
-            if isinstance(context, dict)
-        ],
+        "source_contexts": source_contexts,
+        "source_evidence_span_suggestions": (
+            _source_span_suggestions(case, spans, source_contexts, max_suggestions=max_suggestions)
+            if suggest_source_spans
+            else []
+        ),
         "source_evidence_spans": [],
         "taxonomy_override": {
             "expected_labels": [],
@@ -219,6 +240,145 @@ def _dedupe(values: list[str]) -> list[str]:
     return output
 
 
+def _source_span_suggestions(
+    case: dict[str, Any],
+    spans: list[dict[str, Any]],
+    source_contexts: list[dict[str, Any]],
+    *,
+    max_suggestions: int,
+) -> list[dict[str, Any]]:
+    if not spans or not source_contexts or max_suggestions <= 0:
+        return []
+    answer = str(case.get("answer") or "")
+    candidates = []
+    for span in spans:
+        label_text = str(span.get("text") or "")
+        query = _suggestion_query(answer, span)
+        for context in source_contexts:
+            for sentence in _sentence_windows(str(context.get("text") or "")):
+                score = _overlap_score(query, sentence)
+                if score <= 0.0:
+                    continue
+                candidates.append(
+                    {
+                        "context_id": context.get("id"),
+                        "source_id": context.get("source_id"),
+                        "text": sentence,
+                        "score": score,
+                        "answer_span_text": label_text,
+                        "label_type": str(span.get("label_type") or ""),
+                    }
+                )
+    candidates = sorted(
+        candidates,
+        key=lambda item: (
+            -float(item["score"]),
+            str(item["context_id"] or ""),
+            str(item["text"]),
+        ),
+    )
+    deduped = []
+    seen = set()
+    for candidate in candidates:
+        key = (candidate.get("context_id"), " ".join(str(candidate.get("text") or "").split()).lower())
+        if key in seen:
+            continue
+        seen.add(key)
+        deduped.append(candidate)
+        if len(deduped) >= max_suggestions:
+            break
+    return deduped
+
+
+def _suggestion_query(answer: str, span: dict[str, Any]) -> str:
+    label_text = str(span.get("text") or "")
+    start = _int_or_none(span.get("start"))
+    end = _int_or_none(span.get("end"))
+    if start is None or end is None or not answer:
+        return label_text
+    left = max(start - 120, 0)
+    right = min(end + 120, len(answer))
+    return "%s %s" % (label_text, answer[left:right])
+
+
+def _sentence_windows(text: str) -> list[str]:
+    sentences: list[str] = []
+    current = []
+    for char in text:
+        current.append(char)
+        if char in ".!?\n":
+            sentence = "".join(current).strip()
+            if sentence:
+                sentences.append(sentence)
+            current = []
+    tail = "".join(current).strip()
+    if tail:
+        sentences.append(tail)
+
+    windows = []
+    for index, sentence in enumerate(sentences):
+        windows.append(sentence)
+        if index + 1 < len(sentences):
+            windows.append("%s %s" % (sentence, sentences[index + 1]))
+    return _dedupe(windows)
+
+
+def _overlap_score(left: str, right: str) -> float:
+    left_tokens = _important_tokens(left)
+    right_tokens = _important_tokens(right)
+    if not left_tokens or not right_tokens:
+        return 0.0
+    overlap = len(set(left_tokens) & set(right_tokens))
+    if not overlap:
+        return 0.0
+    precision = overlap / len(set(right_tokens))
+    recall = overlap / len(set(left_tokens))
+    return round((2 * precision * recall / (precision + recall)), 3) if precision + recall else 0.0
+
+
+def _important_tokens(value: str) -> list[str]:
+    stopwords = {
+        "a",
+        "an",
+        "and",
+        "are",
+        "as",
+        "at",
+        "be",
+        "but",
+        "by",
+        "for",
+        "from",
+        "in",
+        "is",
+        "it",
+        "of",
+        "on",
+        "or",
+        "that",
+        "the",
+        "this",
+        "to",
+        "was",
+        "were",
+        "with",
+    }
+    tokens = []
+    for raw in str(value or "").split():
+        token = raw.strip(".,:;!?()[]{}\"'").lower()
+        if len(token) < 3 or token in stopwords:
+            continue
+        tokens.append(token)
+    return tokens
+
+
+def _int_or_none(value: Any) -> int | None:
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Build or apply RAGTruth human-review mappings.")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -227,6 +387,8 @@ def main(argv: list[str] | None = None) -> int:
     queue_parser.add_argument("--case-pack", required=True)
     queue_parser.add_argument("--output", required=True)
     queue_parser.add_argument("--include-supported", action="store_true")
+    queue_parser.add_argument("--suggest-source-spans", action="store_true", help="Prefill scored source-evidence suggestions for reviewers.")
+    queue_parser.add_argument("--max-suggestions", default=3, type=int, help="Maximum source-evidence suggestions per review row.")
 
     apply_parser = subparsers.add_parser("apply", help="Apply reviewed source evidence spans to a RAGTruth case pack.")
     apply_parser.add_argument("--case-pack", required=True)
@@ -236,7 +398,12 @@ def main(argv: list[str] | None = None) -> int:
 
     args = parser.parse_args(argv)
     if args.command == "build-queue":
-        rows = build_review_queue(load_case_pack(args.case_pack), include_supported=args.include_supported)
+        rows = build_review_queue(
+            load_case_pack(args.case_pack),
+            include_supported=args.include_supported,
+            suggest_source_spans=args.suggest_source_spans,
+            max_suggestions=args.max_suggestions,
+        )
         written = write_jsonl(rows, args.output)
         print("Wrote %s" % written)
         print("Review rows: %s" % len(rows))

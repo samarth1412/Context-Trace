@@ -197,7 +197,9 @@ Create and apply the human review queue before using source-span metrics:
 ```bash
 python benchmarks/contexttrace_bench/ragtruth_review.py build-queue \
   --case-pack benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
-  --output benchmarks/contexttrace_bench/out/ragtruth_review_queue.jsonl
+  --output benchmarks/contexttrace_bench/out/ragtruth_review_queue.jsonl \
+  --suggest-source-spans \
+  --max-suggestions 3
 
 python benchmarks/contexttrace_bench/ragtruth_review.py apply \
   --case-pack benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
