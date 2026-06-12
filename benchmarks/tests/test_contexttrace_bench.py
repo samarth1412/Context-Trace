@@ -14,6 +14,7 @@ from benchmarks.contexttrace_bench.run_contexttrace import (
     score_candidate_predictions,
     write_benchmark_outputs,
 )
+from benchmarks.contexttrace_bench.ragtruth_adapter import adapt_ragtruth_rows
 from benchmarks.contexttrace_bench.run_ragas import build_ragas_rows
 from benchmarks.contexttrace_bench.run_local_judge import _judge_prompt, _normalize_judge_output
 
@@ -39,6 +40,10 @@ def test_contexttrace_bench_reports_sota_metrics() -> None:
     assert summary["latency_p95_ms"] >= summary["latency_p50_ms"]
     assert summary["cost_per_100_traces_usd"] == 0.0
     assert summary["dangerous_false_green_rate"] == 0.0
+    assert result["confidence_intervals"]["failure_label_macro_f1"]["low"] <= summary["failure_label_macro_f1"]
+    assert result["confidence_intervals"]["failure_label_macro_f1"]["high"] >= summary["failure_label_macro_f1"]
+    assert result["confidence_intervals"]["failure_label_macro_f1"]["samples"] == 400
+    assert result["per_label"]["no_failure_detected"]["f1"] >= 0.8
     assert quality_gate_failures(result) == []
 
     labeled = [row for row in result["rows"] if row["expected_evidence_spans"]]
@@ -82,10 +87,14 @@ def test_contexttrace_bench_markdown_outputs(tmp_path) -> None:
     html_report = render_html_report(result)
     assert "ContextTrace-Bench Results" in results_md
     assert "failure_label_macro_f1" in results_md
+    assert "Confidence Intervals" in results_md
+    assert "Failure Label Breakdown" in results_md
     assert "SOTA Readiness Gates" in results_md
     assert "ContextTrace-Bench Leaderboard" in leaderboard_md
     assert "ContextTrace" in leaderboard_md
     assert "ContextTrace-Bench" in html_report
+    assert "Confidence Intervals" in html_report
+    assert "Failure Label Breakdown" in html_report
     assert "SOTA Readiness Gates" in html_report
 
     assert "ContextTrace-Bench Results" in (tmp_path / "results.md").read_text(encoding="utf-8")
@@ -125,6 +134,9 @@ def test_contexttrace_bench_scores_candidate_predictions(tmp_path) -> None:
     assert baseline["system"] == "Example baseline"
     assert baseline["coverage"]["matched_predictions"] == result["summary"]["cases"]
     assert baseline["summary"]["failure_label_macro_f1"] == 1.0
+    assert baseline["confidence_intervals"]["failure_label_macro_f1"]["low"] == 1.0
+    assert baseline["confidence_intervals"]["failure_label_macro_f1"]["high"] == 1.0
+    assert baseline["per_label"]["no_failure_detected"]["f1"] == 1.0
     assert baseline["summary"]["root_cause_accuracy"] == 1.0
     assert baseline["summary"]["root_cause_reported_cases"] == result["summary"]["cases"]
     assert baseline["summary"]["citation_status_reported_cases"] == result["summary"]["cases"]
@@ -239,6 +251,58 @@ def test_baseline_runners_build_external_eval_rows(tmp_path) -> None:
     raw_path = write_json({"rows": ragas_rows}, tmp_path / "raw.json")
     assert json.loads((tmp_path / "raw.json").read_text(encoding="utf-8"))["rows"][0]["id"] == "case-1"
     assert raw_path.endswith("raw.json")
+
+
+def test_ragtruth_adapter_builds_contexttrace_case_pack() -> None:
+    case_pack = adapt_ragtruth_rows(
+        [
+            {
+                "id": "1472",
+                "source_id": "11316",
+                "model": "mistral-7B-instruct",
+                "labels": [
+                    {
+                        "start": 219,
+                        "end": 229,
+                        "text": "Gaza Strip",
+                        "label_type": "Evident Baseless Info",
+                    }
+                ],
+                "split": "train",
+                "quality": "good",
+                "response": "The answer adds Gaza Strip.",
+            },
+            {
+                "id": "skip-quality",
+                "source_id": "11316",
+                "labels": [],
+                "quality": "truncated",
+                "response": "truncated",
+            },
+        ],
+        source_rows=[
+            {
+                "source_id": "11316",
+                "task_type": "Summary",
+                "source": "CNN/DM",
+                "source_info": "The source article mentions East Jerusalem.",
+                "prompt": "Summarize the following news.",
+            }
+        ],
+    )
+
+    assert case_pack["dataset"] == "RAGTruth"
+    assert case_pack["stats"]["input_responses"] == 2
+    assert case_pack["stats"]["output_cases"] == 1
+    assert case_pack["stats"]["skipped_filtered"] == 1
+    case = case_pack["cases"][0]
+    assert case["id"] == "ragtruth_1472"
+    assert case["query"] == "Summarize the following news."
+    assert case["contexts"][0]["text"] == "The source article mentions East Jerusalem."
+    assert case["expected_labels"] == ["partial_support"]
+    assert case["expected_verdict_counts"]["partially_supported"] == 1
+    assert case["expected_evidence_spans"] == []
+    assert case["ragtruth_metadata"]["answer_hallucination_spans"][0]["text"] == "Gaza Strip"
 
 
 def test_local_judge_output_normalization() -> None:

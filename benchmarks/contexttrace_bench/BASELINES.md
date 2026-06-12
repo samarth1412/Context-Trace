@@ -15,6 +15,7 @@ case set and are scored by `run_contexttrace.py --candidate`.
 | OpenAI-compatible local judge | `run_local_judge.py` | Smoke run completed | No | Ollama `phi3:latest` produced 5 predictions. It is parseable but slow on this machine, so full 500-case execution is a multi-hour run. |
 | Phoenix | `adapt_candidate.py --preset phoenix` | Adapter ready | No | Requires exported Phoenix evaluator results. |
 | TruLens | `adapt_candidate.py --preset trulens` | Adapter ready | No | Requires exported TruLens evaluator results. |
+| RAGTruth external validation | `ragtruth_adapter.py` | Case-pack scaffold ready | No | Requires official `response.jsonl` plus `source_info.jsonl`, then human mapping from answer-side spans to source evidence spans. |
 
 Latest scored leaderboard:
 
@@ -220,6 +221,25 @@ python benchmarks/contexttrace_bench/adapt_candidate.py \
   --preset trulens \
   --id-field id
 ```
+
+## RAGTruth External Validation
+
+Build the first external dataset case pack from RAGTruth exports:
+
+```bash
+python benchmarks/contexttrace_bench/ragtruth_adapter.py \
+  --response path/to/response.jsonl \
+  --source-info path/to/source_info.jsonl \
+  --output benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
+  --split test
+```
+
+RAGTruth labels answer-side hallucination spans. The adapter maps no-span rows
+to `no_failure_detected`, evident conflict spans to `contradicted_answer`, and
+other hallucination spans to `partial_support`, while preserving the original
+spans in `ragtruth_metadata.answer_hallucination_spans`. A publishable external
+validation run still needs human mapping from those answer spans to source-side
+evidence spans before using evidence-span overlap.
 
 ## Publishability Checklist
 

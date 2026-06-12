@@ -39,6 +39,12 @@ Outputs are written to `benchmarks/contexttrace_bench/out/` by default:
 - `report.html`
 - `candidate_inputs.jsonl`
 
+`contexttrace_bench_results.json`, `results.md`, and `report.html` include
+deterministic 95% case-bootstrap confidence intervals for the headline quality
+metrics plus a per-label precision/recall/F1 breakdown. Use the interval lower
+bound, not only the point estimate, when deciding whether a result is ready for
+public SOTA positioning.
+
 The default run targets 500 total cases. Use `--no-generated-cases` to inspect
 only the curated source cases, or `--target-cases 750` to generate a larger
 derived benchmark.
@@ -234,6 +240,25 @@ For remote OpenAI comparison runs, keep the product path local and isolate the
 optional evaluator dependencies in a temporary environment. RAGAS and DeepEval
 currently have different transitive dependency constraints, so install them in
 separate venvs when collecting publishable comparison rows.
+
+## External Dataset Scaffolding
+
+The RAGTruth adapter creates a ContextTrace-style case pack from the official
+`response.jsonl` and `source_info.jsonl` exports:
+
+```bash
+python benchmarks/contexttrace_bench/ragtruth_adapter.py \
+  --response path/to/response.jsonl \
+  --source-info path/to/source_info.jsonl \
+  --output benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
+  --split test
+```
+
+RAGTruth labels answer-side hallucination spans. The adapter preserves those
+spans in metadata and maps answer-level labels into the ContextTrace taxonomy,
+but it leaves `expected_evidence_spans` empty until a human curator maps the
+answer-side spans to source evidence. Treat this as external-validation
+scaffolding, not a publishable leaderboard row by itself.
 
 The helper script below builds the optional temp venvs, runs both remote
 evaluators, and scores the full leaderboard. It reads `OPENAI_API_KEY` from the

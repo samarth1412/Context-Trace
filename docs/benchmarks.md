@@ -115,6 +115,10 @@ Outputs:
 - `report.html`
 - `candidate_inputs.jsonl`
 
+The JSON, Markdown, and HTML reports include deterministic 95% case-bootstrap
+confidence intervals and a per-label precision/recall/F1 breakdown for the
+headline verifier metrics.
+
 External evaluators can be compared by supplying candidate prediction JSON files
 with `--candidate`. This produces leaderboard rows only after the competitor
 predictions have been scored against the same case IDs and labels.
@@ -165,6 +169,19 @@ identical:
 Diagnostic metrics are scored only when a candidate reports them. Generic
 faithfulness evaluators should show `N/A` for root cause, citation status, and
 evidence spans rather than `0.0`.
+
+RAGTruth external validation starts with a case-pack adapter:
+
+```bash
+python benchmarks/contexttrace_bench/ragtruth_adapter.py \
+  --response path/to/response.jsonl \
+  --source-info path/to/source_info.jsonl \
+  --output benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
+  --split test
+```
+
+The adapter preserves RAGTruth answer-side hallucination spans, but publishable
+span-localization claims still require human mapping to source evidence spans.
 
 For full runs, prefer the resumable checkpointed path:
 

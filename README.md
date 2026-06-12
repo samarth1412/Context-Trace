@@ -152,7 +152,9 @@ python benchmarks/contexttrace_bench/run_contexttrace.py \
 
 It writes reproducible JSON, Markdown, leaderboard, and static HTML artifacts to
 `benchmarks/contexttrace_bench/out/`. The default run targets 500 cases by adding
-deterministic generated variants to the curated real-doc cases.
+deterministic generated variants to the curated real-doc cases. Reports include
+deterministic 95% case-bootstrap confidence intervals and per-label breakdowns
+for the headline verifier metrics.
 
 Run the separate public-doc holdout without generated variants:
 
@@ -173,6 +175,11 @@ score. Candidate prediction JSON files can then be scored with `--candidate` to
 compare ContextTrace against external evaluators or internal baselines on the
 same labeled cases. Use `benchmarks/contexttrace_bench/adapt_candidate.py` to
 normalize generic evaluator output into the candidate schema.
+
+For external dataset scaffolding, `benchmarks/contexttrace_bench/ragtruth_adapter.py`
+builds a ContextTrace-style case pack from RAGTruth `response.jsonl` and
+`source_info.jsonl`. Treat that output as review input until answer-side
+hallucination spans are manually mapped to source evidence spans.
 
 Methodology and baseline runbooks live in
 [`benchmarks/contexttrace_bench/METHODOLOGY.md`](benchmarks/contexttrace_bench/METHODOLOGY.md)
