@@ -357,6 +357,13 @@ def _has_negation_conflict(claim_text: str, evidence_text: str, *, mode: str) ->
     if not units:
         return False
 
+    if claim_polarity == "affirmative" and any(
+        _token_overlap(claim_text, _non_negated_clause_text(unit), mode=mode) >= 0.65
+        for unit in units
+        if _non_negated_clause_text(unit)
+    ):
+        return False
+
     same_polarity_support = any(
         (
             _negation_polarity(unit) == claim_polarity
@@ -376,11 +383,17 @@ def _has_negation_conflict(claim_text: str, evidence_text: str, *, mode: str) ->
 
 
 def _negation_polarity(text: str) -> str:
-    if STRONG_NEGATION_RE.search(text):
+    normalized = _neutralize_non_negating_phrases(text)
+    if STRONG_NEGATION_RE.search(normalized):
         return "strong_negated"
-    if NEGATION_RE.search(text):
+    if NEGATION_RE.search(normalized):
         return "weak_negated"
     return "affirmative"
+
+
+def _neutralize_non_negating_phrases(text: str) -> str:
+    value = str(text or "")
+    return re.sub(r"\bnot\s+only\b", "also", value, flags=re.IGNORECASE)
 
 
 def _shares_non_strong_without_context(claim_text: str, evidence_unit: str) -> bool:
@@ -606,6 +619,20 @@ def _evidence_units(text: str) -> list[str]:
     return units or [value]
 
 
+def _evidence_clauses(text: str) -> list[str]:
+    return [
+        clause.strip()
+        for clause in re.split(r"--|;|,|\band\b|\bbut\b", str(text or ""))
+        if clause.strip()
+    ] or [str(text or "")]
+
+
+def _non_negated_clause_text(text: str) -> str:
+    return " ".join(
+        clause for clause in _evidence_clauses(text) if _negation_polarity(clause) == "affirmative"
+    )
+
+
 def _is_internal_period(text: str, index: int) -> bool:
     previous = text[index - 1] if index > 0 else ""
     next_char = text[index + 1] if index + 1 < len(text) else ""
@@ -708,7 +735,15 @@ SEMANTIC_TOKEN_MAP = {
     "bm25f": "bm25",
     "configured": "requested",
     "fall": "fit",
+    "facility": "plant",
+    "facilities": "plant",
     "inside": "within",
+    "investigate": "search",
+    "investigated": "search",
+    "investigating": "search",
+    "investigation": "search",
+    "investigations": "search",
+    "searching": "search",
     "limit": "restrict",
     "limited": "restrict",
     "limiting": "restrict",
@@ -716,6 +751,18 @@ SEMANTIC_TOKEN_MAP = {
     "requiring": "restrict",
     "restricting": "restrict",
     "restricts": "restrict",
+    "discharged": "leave",
+    "released": "leave",
+    "leaving": "leave",
+    "left": "leave",
+    "declared": "announced",
+    "announce": "announced",
+    "announces": "announced",
+    "announcing": "announced",
+    "candidacy": "campaign",
+    "photo": "picture",
+    "pictured": "picture",
+    "image": "picture",
     "five": "5",
     "thirty": "30",
     "fourteen": "14",

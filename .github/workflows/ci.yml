@@ -46,6 +46,8 @@ jobs:
             benchmarks/contexttrace_bench/out/results.md
             benchmarks/contexttrace_bench/out/leaderboard.md
             benchmarks/contexttrace_bench/out/report.html
+            benchmarks/contexttrace_bench/out/error_analysis.json
+            benchmarks/contexttrace_bench/out/error_analysis.md
             benchmarks/contexttrace_bench/out/candidate_inputs.jsonl
             benchmarks/contexttrace_bench/METHODOLOGY.md
             benchmarks/contexttrace_bench/BASELINES.md

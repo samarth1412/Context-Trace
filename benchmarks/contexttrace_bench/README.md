@@ -37,13 +37,17 @@ Outputs are written to `benchmarks/contexttrace_bench/out/` by default:
 - `results.md`
 - `leaderboard.md`
 - `report.html`
+- `error_analysis.json`
+- `error_analysis.md`
 - `candidate_inputs.jsonl`
 
 `contexttrace_bench_results.json`, `results.md`, and `report.html` include
 deterministic 95% case-bootstrap confidence intervals for the headline quality
-metrics plus a per-label precision/recall/F1 breakdown. Use the interval lower
-bound, not only the point estimate, when deciding whether a result is ready for
-public SOTA positioning.
+metrics plus a per-label precision/recall/F1 breakdown. `error_analysis.md` and
+`error_analysis.json` summarize confusion pairs, root-cause confusion,
+false-positive labels, dangerous false greens, and cases to inspect. Use the
+interval lower bound, not only the point estimate, when deciding whether a result
+is ready for public SOTA positioning.
 
 The default run targets 500 total cases. Use `--no-generated-cases` to inspect
 only the curated source cases, or `--target-cases 750` to generate a larger
