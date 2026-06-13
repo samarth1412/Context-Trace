@@ -288,6 +288,24 @@ python benchmarks/contexttrace_bench/ragtruth_workflow.py \
   --stratify-by task_type,source,expected_label,model
 ```
 
+After review, rerun the same wrapper with the reviewed JSONL to validate,
+apply, score, and update the manifest. Use `--allow-missing-source-spans` only
+when reviewed rows explain that no fair source-side span exists:
+
+```bash
+python benchmarks/contexttrace_bench/ragtruth_workflow.py \
+  --response benchmarks/contexttrace_bench/out/ragtruth_official/response.jsonl \
+  --source-info benchmarks/contexttrace_bench/out/ragtruth_official/source_info.jsonl \
+  --output-dir benchmarks/contexttrace_bench/out/ragtruth_test200_review \
+  --split test \
+  --quality good \
+  --sample-size 200 \
+  --sample-seed 13 \
+  --stratify-by task_type,source,expected_label,model \
+  --review benchmarks/contexttrace_bench/out/ragtruth_test200_review/ragtruth_reviewed.jsonl \
+  --allow-missing-source-spans
+```
+
 Score the adapted pack with the same benchmark reports:
 
 ```bash
@@ -325,6 +343,10 @@ python benchmarks/contexttrace_bench/ragtruth_review.py validate \
   --require-reviewed \
   --require-source-spans
 ```
+
+Omit `--require-source-spans` only for reviewed rows whose notes explain that no
+fair source-side span exists; those rows stay reviewed but are excluded from
+source-span-overlap labels.
 
 After review, apply rows marked `reviewed`, `accepted`, or `approved` with
 `source_evidence_spans` filled:

@@ -15,7 +15,7 @@ case set and are scored by `run_contexttrace.py --candidate`.
 | OpenAI-compatible local judge | `run_local_judge.py` | Smoke run completed | No | Ollama `phi3:latest` produced 5 predictions. It is parseable but slow on this machine, so full 500-case execution is a multi-hour run. |
 | Phoenix | `adapt_candidate.py --preset phoenix` | Adapter ready | No | Requires exported Phoenix evaluator results. |
 | TruLens | `adapt_candidate.py --preset trulens` | Adapter ready | No | Requires exported TruLens evaluator results. |
-| RAGTruth external validation | `ragtruth_adapter.py`, `ragtruth_review.py`, `run_contexttrace.py --case-pack` | Official raw-file assisted pilot scored | No | 50-row test-split smoke builds, scores, and maps the 15 hallucination rows with assisted source-span review. Requires independent human sign-off and broader coverage before publishable external-dataset claims. |
+| RAGTruth external validation | `ragtruth_adapter.py`, `ragtruth_review.py`, `ragtruth_workflow.py`, `run_contexttrace.py --case-pack` | 200-case stratified assisted workflow scored | No | Deterministic test-split sample scored with 88 GPT-5.1-assisted review rows; 76 rows have source evidence spans and 12 are intentionally source-less. Requires independent human sign-off and calibration before publishable external-dataset claims. |
 
 Latest scored leaderboard:
 
@@ -43,19 +43,24 @@ Latest RAGTruth assisted review pilot:
 
 | System | Cases | Reviewed Span Rows | Failure Macro-F1 | Root Cause Accuracy | Dangerous False Green | Citation Error F1 | Span Overlap |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| ContextTrace semantic verifier on RAGTruth stratified test sample | 200 | 76 | 0.150 | 0.255 | 0.025 | 1.000 | 0.555 |
 | ContextTrace semantic verifier on RAGTruth test-split smoke | 50 | 15 | 0.181 | 0.400 | 0.000 | 1.000 | 0.883 |
 | OpenAI diagnostic judge `gpt-4.1-mini` on RAGTruth test-split smoke | 50 | 15 | 0.272 | 0.660 | 0.260 | 1.000 | 0.592 |
 
-This pilot uses official RAGTruth `response.jsonl` and `source_info.jsonl`
-files stored outside the repo under ignored benchmark output. The 15 reviewed
-rows are an assisted source-evidence mapping pass, not independent human
-sign-off. Treat the result as a workflow validation artifact: it proves the
-adapter, review queue, apply step, and source-span scoring path work end to end,
-while the low failure macro-F1 and root-cause accuracy show the RAGTruth
-taxonomy mapping/calibration still needs work before any SOTA claim. The OpenAI
-judge is useful as a contrastive calibration target, but it labeled 46/50 rows
-as `no_failure_detected`, so its `0.260` dangerous false-green rate blocks any
-publishable claim from this smoke.
+These pilots use official RAGTruth `response.jsonl` and `source_info.jsonl`
+files stored outside the repo under ignored benchmark output. The latest
+200-case row uses `sample_size=200`, `sample_seed=13`, and
+`stratify_by=task_type,source,expected_label,model`; it reviewed all 88
+hallucination rows with a GPT-5.1-assisted source pass, validated with zero
+errors, and allowed 12 rows with no fair source-side evidence span. These are
+assisted review artifacts, not independent human sign-off. Treat the result as
+workflow and calibration evidence: it proves the adapter, review queue, apply
+step, manifest, and source-span scoring path work end to end, while the low
+failure macro-F1 and root-cause accuracy show the RAGTruth taxonomy
+mapping/calibration still needs work before any SOTA claim. The OpenAI judge is
+useful as a contrastive calibration target, but its 50-row smoke labeled 46/50
+rows as `no_failure_detected`, so its `0.260` dangerous false-green rate blocks
+any publishable claim from that smoke.
 
 ## Full ContextTrace Run
 
@@ -284,6 +289,25 @@ python benchmarks/contexttrace_bench/ragtruth_workflow.py \
   --stratify-by task_type,source,expected_label,model
 ```
 
+After review, rerun the wrapper with the reviewed JSONL so validation,
+application, scoring, and the manifest stay together. Use
+`--allow-missing-source-spans` only for reviewed rows where no fair source-side
+span exists:
+
+```bash
+python benchmarks/contexttrace_bench/ragtruth_workflow.py \
+  --response benchmarks/contexttrace_bench/out/ragtruth_official/response.jsonl \
+  --source-info benchmarks/contexttrace_bench/out/ragtruth_official/source_info.jsonl \
+  --output-dir benchmarks/contexttrace_bench/out/ragtruth_test200_review \
+  --split test \
+  --quality good \
+  --sample-size 200 \
+  --sample-seed 13 \
+  --stratify-by task_type,source,expected_label,model \
+  --review benchmarks/contexttrace_bench/out/ragtruth_test200_review/ragtruth_reviewed.jsonl \
+  --allow-missing-source-spans
+```
+
 Score the adapted case pack:
 
 ```bash
@@ -319,6 +343,10 @@ python benchmarks/contexttrace_bench/ragtruth_review.py apply \
   --output benchmarks/contexttrace_bench/out/ragtruth_reviewed_case_pack.json \
   --require-reviewed
 ```
+
+Omit `--require-source-spans` only when reviewed notes explain that no fair
+source-side span exists; those rows are reviewed but excluded from
+evidence-span-overlap labels.
 
 RAGTruth labels answer-side hallucination spans. The adapter maps no-span rows
 to `no_failure_detected`, evident conflict spans to `contradicted_answer`, and

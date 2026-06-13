@@ -637,27 +637,32 @@ def test_ragtruth_review_workflow_validates_and_applies_review(tmp_path) -> None
     response_path = tmp_path / "response.jsonl"
     source_path = tmp_path / "source_info.jsonl"
     review_path = tmp_path / "review.jsonl"
-    response_path.write_text(
-        json.dumps(
-            {
-                "id": "overreach",
-                "source_id": "policy",
-                "labels": [
-                    {
-                        "start": 0,
-                        "end": 10,
-                        "text": "cash refund",
-                        "label_type": "Evident Baseless Info",
-                    }
-                ],
-                "split": "test",
-                "quality": "good",
-                "response": "Cash refunds are available.",
-            }
-        )
-        + "\n",
-        encoding="utf-8",
-    )
+    response_rows = [
+        {
+            "id": "supported",
+            "source_id": "policy",
+            "labels": [],
+            "split": "test",
+            "quality": "good",
+            "response": "Store credit is available within 30 days.",
+        },
+        {
+            "id": "overreach",
+            "source_id": "policy",
+            "labels": [
+                {
+                    "start": 0,
+                    "end": 10,
+                    "text": "cash refund",
+                    "label_type": "Evident Baseless Info",
+                }
+            ],
+            "split": "test",
+            "quality": "good",
+            "response": "Cash refunds are available.",
+        },
+    ]
+    response_path.write_text("\n".join(json.dumps(row) for row in response_rows) + "\n", encoding="utf-8")
     source_path.write_text(
         json.dumps(
             {
@@ -694,7 +699,7 @@ def test_ragtruth_review_workflow_validates_and_applies_review(tmp_path) -> None
         response_path=response_path,
         source_info_path=source_path,
         output_dir=tmp_path / "workflow_reviewed",
-        sample_size=1,
+        sample_size=2,
         sample_seed=7,
         stratify_by=["expected_label"],
         review_path=review_path,
@@ -706,7 +711,12 @@ def test_ragtruth_review_workflow_validates_and_applies_review(tmp_path) -> None
     assert manifest["review"]["errors"] == 0
     assert Path(manifest["artifacts"]["review_validation"]).exists()
     reviewed = json.loads(Path(manifest["artifacts"]["reviewed_case_pack"]).read_text(encoding="utf-8"))
-    assert reviewed["cases"][0]["expected_evidence_spans"] == ["Store credit is available within 30 days."]
+    assert reviewed["review"]["status"] == "reviewed"
+    assert reviewed["review"]["reviewed_cases"] == 1
+    assert reviewed["review"]["required_review_cases"] == 1
+    reviewed_cases = {case["id"]: case for case in reviewed["cases"]}
+    assert reviewed_cases["ragtruth_overreach"]["expected_evidence_spans"] == ["Store credit is available within 30 days."]
+    assert "review_metadata" not in reviewed_cases["ragtruth_supported"]
 
 
 def test_contexttrace_bench_runs_external_case_pack(tmp_path) -> None:
