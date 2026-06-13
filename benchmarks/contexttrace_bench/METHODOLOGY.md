@@ -146,6 +146,24 @@ adapter preserves answer-side hallucination spans in metadata and leaves
 `expected_evidence_spans` empty until human review maps them back to supporting
 or contradicting source spans.
 
+For a broader RAGTruth review packet, prefer deterministic stratified sampling
+over taking the first rows from the export:
+
+```bash
+python benchmarks/contexttrace_bench/ragtruth_adapter.py \
+  --response benchmarks/contexttrace_bench/out/ragtruth_official/response.jsonl \
+  --source-info benchmarks/contexttrace_bench/out/ragtruth_official/source_info.jsonl \
+  --output benchmarks/contexttrace_bench/out/ragtruth_case_pack_test200_stratified.json \
+  --split test \
+  --quality good \
+  --sample-size 200 \
+  --sample-seed 13 \
+  --stratify-by task_type,source,expected_label,model
+```
+
+Record `sample_size`, `sample_seed`, and `stratify_by` from the case-pack
+`stats.sampling` block with any reviewed result so the split is reproducible.
+
 External case packs are scored with the same harness and report format:
 
 ```bash

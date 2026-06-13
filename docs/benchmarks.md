@@ -184,6 +184,21 @@ python benchmarks/contexttrace_bench/ragtruth_adapter.py \
   --split test
 ```
 
+For larger review rounds, use deterministic stratified sampling instead of the
+first rows from the export:
+
+```bash
+python benchmarks/contexttrace_bench/ragtruth_adapter.py \
+  --response benchmarks/contexttrace_bench/out/ragtruth_official/response.jsonl \
+  --source-info benchmarks/contexttrace_bench/out/ragtruth_official/source_info.jsonl \
+  --output benchmarks/contexttrace_bench/out/ragtruth_case_pack_test200_stratified.json \
+  --split test \
+  --quality good \
+  --sample-size 200 \
+  --sample-seed 13 \
+  --stratify-by task_type,source,expected_label,model
+```
+
 The adapter preserves RAGTruth answer-side hallucination spans, but publishable
 span-localization claims still require human mapping to source evidence spans.
 

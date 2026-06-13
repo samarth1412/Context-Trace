@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import math
 from pathlib import Path
 from typing import Any
 
@@ -22,6 +24,9 @@ def adapt_ragtruth_rows(
     split: str | None = None,
     quality: str | None = "good",
     limit: int | None = None,
+    sample_size: int | None = None,
+    sample_seed: int = 13,
+    stratify_by: list[str] | None = None,
 ) -> dict[str, Any]:
     """Convert RAGTruth response/source exports into a ContextTrace case pack.
 
@@ -31,8 +36,11 @@ def adapt_ragtruth_rows(
     source evidence spans.
     """
 
+    if limit is not None and sample_size is not None:
+        raise ValueError("Use either limit or sample_size, not both.")
+
     sources = _source_index(source_rows or [])
-    cases = []
+    eligible_rows: list[dict[str, Any]] = []
     skipped_missing_source = 0
     skipped_filtered = 0
     for index, row in enumerate(response_rows):
@@ -47,9 +55,42 @@ def adapt_ragtruth_rows(
         if not case["contexts"]:
             skipped_missing_source += 1
             continue
-        cases.append(case)
-        if limit is not None and len(cases) >= int(limit):
-            break
+        eligible_rows.append(
+            {
+                "index": index,
+                "row": row,
+                "source_row": source_row or {},
+                "case": case,
+            }
+        )
+
+    sampling: dict[str, Any] = {"method": "none"}
+    if sample_size is not None:
+        selected_rows = _stratified_sample(
+            eligible_rows,
+            sample_size=int(sample_size),
+            seed=int(sample_seed),
+            stratify_by=stratify_by or _default_stratify_fields(),
+        )
+        sampling = {
+            "method": "stratified",
+            "sample_size": int(sample_size),
+            "sample_seed": int(sample_seed),
+            "stratify_by": stratify_by or _default_stratify_fields(),
+            "eligible_cases": len(eligible_rows),
+            "strata": _stratum_count(eligible_rows, stratify_by or _default_stratify_fields()),
+        }
+    elif limit is not None:
+        selected_rows = eligible_rows[: int(limit)]
+        sampling = {
+            "method": "first_n",
+            "limit": int(limit),
+            "eligible_cases": len(eligible_rows),
+        }
+    else:
+        selected_rows = eligible_rows
+
+    cases = [item["case"] for item in selected_rows]
 
     return {
         "description": (
@@ -66,14 +107,17 @@ def adapt_ragtruth_rows(
         "cases": cases,
         "stats": {
             "input_responses": len(response_rows),
+            "eligible_cases": len(eligible_rows),
             "output_cases": len(cases),
             "skipped_filtered": skipped_filtered,
             "skipped_missing_source": skipped_missing_source,
+            "sampling": sampling,
         },
         "notes": [
             "RAGTruth publishes response.jsonl and source_info.jsonl separately, joined by source_id.",
             "labels are answer-side hallucination spans; expected_evidence_spans require human curation before span-overlap claims.",
             "good-quality rows without hallucination spans map to no_failure_detected; span-labeled rows map to partial_support or contradicted_answer.",
+            "stratified samples are deterministic and should record sample_size, sample_seed, and stratify_by fields before review.",
         ],
     }
 
@@ -209,6 +253,124 @@ def _source_index(rows: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     }
 
 
+def _stratified_sample(
+    rows: list[dict[str, Any]],
+    *,
+    sample_size: int,
+    seed: int,
+    stratify_by: list[str],
+) -> list[dict[str, Any]]:
+    if sample_size <= 0:
+        return []
+    if sample_size >= len(rows):
+        return list(rows)
+
+    strata: dict[tuple[str, ...], list[dict[str, Any]]] = {}
+    for item in rows:
+        key = _stratum_key(item["row"], item["source_row"], item["case"], stratify_by=stratify_by)
+        strata.setdefault(key, []).append(item)
+
+    quotas = _stratified_quotas(
+        {key: len(values) for key, values in strata.items()},
+        sample_size=sample_size,
+    )
+    selected = []
+    for key, quota in quotas.items():
+        if quota <= 0:
+            continue
+        ordered = sorted(
+            strata[key],
+            key=lambda item: _stable_sample_key(item["row"], item["index"], seed=seed),
+        )
+        selected.extend(ordered[:quota])
+    return sorted(selected, key=lambda item: int(item["index"]))
+
+
+def _stratified_quotas(stratum_sizes: dict[tuple[str, ...], int], *, sample_size: int) -> dict[tuple[str, ...], int]:
+    if not stratum_sizes or sample_size <= 0:
+        return {}
+    total = sum(stratum_sizes.values())
+    if sample_size >= total:
+        return dict(stratum_sizes)
+
+    quotas = {key: 0 for key in stratum_sizes}
+    remaining = sample_size
+    if sample_size >= len(stratum_sizes):
+        for key in stratum_sizes:
+            quotas[key] = 1
+        remaining -= len(stratum_sizes)
+
+    capacities = {key: stratum_sizes[key] - quotas[key] for key in stratum_sizes}
+    capacity_total = sum(capacities.values())
+    if remaining <= 0 or capacity_total <= 0:
+        return quotas
+
+    remainders = []
+    for key, capacity in capacities.items():
+        if capacity <= 0:
+            remainders.append((0.0, key))
+            continue
+        desired = remaining * (capacity / capacity_total)
+        extra = min(capacity, int(math.floor(desired)))
+        quotas[key] += extra
+        remainders.append((desired - extra, key))
+
+    assigned = sum(quotas.values())
+    for _, key in sorted(remainders, key=lambda item: (-item[0], item[1])):
+        if assigned >= sample_size:
+            break
+        if quotas[key] >= stratum_sizes[key]:
+            continue
+        quotas[key] += 1
+        assigned += 1
+    return quotas
+
+
+def _stratum_key(
+    row: dict[str, Any],
+    source_row: dict[str, Any],
+    case: dict[str, Any],
+    *,
+    stratify_by: list[str],
+) -> tuple[str, ...]:
+    values = []
+    for field in stratify_by:
+        normalized = str(field or "").strip()
+        if normalized == "task_type":
+            values.append(str(source_row.get("task_type") or "unknown"))
+        elif normalized == "source":
+            values.append(str(source_row.get("source") or "unknown"))
+        elif normalized in {"expected_label", "label"}:
+            values.append(",".join(case.get("expected_labels") or []) or "unknown")
+        elif normalized == "model":
+            values.append(str(row.get("model") or "unknown"))
+        elif normalized == "quality":
+            values.append(str(row.get("quality") or "unknown"))
+        elif normalized == "split":
+            values.append(str(row.get("split") or "unknown"))
+        else:
+            values.append(str(row.get(normalized) or source_row.get(normalized) or "unknown"))
+    return tuple(values) or ("all",)
+
+
+def _stable_sample_key(row: dict[str, Any], index: int, *, seed: int) -> str:
+    identity = "%s:%s:%s" % (seed, row.get("id", ""), index)
+    return hashlib.sha256(identity.encode("utf-8")).hexdigest()
+
+
+def _default_stratify_fields() -> list[str]:
+    return ["task_type", "source", "expected_label", "model"]
+
+
+def _stratum_count(rows: list[dict[str, Any]], stratify_by: list[str]) -> int:
+    return len(
+        {
+            _stratum_key(item["row"], item["source_row"], item["case"], stratify_by=stratify_by)
+            for item in rows
+        }
+    )
+
+
 def _query_text(
     response_row: dict[str, Any],
     source_row: dict[str, Any],
@@ -258,19 +420,32 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--split", default=None, help="Optional RAGTruth split filter, such as train or test.")
     parser.add_argument("--quality", default="good", help="Quality filter. Use 'any' to keep all rows.")
     parser.add_argument("--limit", default=None, type=int, help="Optional maximum number of output cases.")
+    parser.add_argument("--sample-size", default=None, type=int, help="Optional deterministic stratified sample size.")
+    parser.add_argument("--sample-seed", default=13, type=int, help="Seed for deterministic stratified sampling.")
+    parser.add_argument(
+        "--stratify-by",
+        default="task_type,source,expected_label,model",
+        help="Comma-separated fields for stratified sampling.",
+    )
     args = parser.parse_args(argv)
 
     quality = None if str(args.quality).lower() == "any" else args.quality
+    stratify_by = [field.strip() for field in str(args.stratify_by or "").split(",") if field.strip()]
     case_pack = adapt_ragtruth_rows(
         load_rows(args.response),
         source_rows=load_rows(args.source_info),
         split=args.split,
         quality=quality,
         limit=args.limit,
+        sample_size=args.sample_size,
+        sample_seed=args.sample_seed,
+        stratify_by=stratify_by or None,
     )
     written = write_case_pack(case_pack, args.output)
     print("Wrote %s" % written)
     print("Cases: %s" % len(case_pack["cases"]))
+    print("Eligible cases: %s" % case_pack["stats"]["eligible_cases"])
+    print("Sampling: %s" % json.dumps(case_pack["stats"]["sampling"], sort_keys=True))
     print("Skipped missing source: %s" % case_pack["stats"]["skipped_missing_source"])
     return 0
 
