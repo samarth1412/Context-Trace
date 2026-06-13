@@ -179,6 +179,111 @@ def build_review_packet(
     return "\n".join(lines).rstrip() + "\n"
 
 
+def validate_review_mappings(
+    case_pack: dict[str, Any],
+    review_rows: list[dict[str, Any]],
+    *,
+    require_reviewed: bool = False,
+    require_source_spans: bool = False,
+) -> dict[str, Any]:
+    cases_by_id = {
+        str(case.get("id") or ""): case
+        for case in case_pack.get("cases") or []
+        if isinstance(case, dict) and case.get("id")
+    }
+    required_case_ids = {
+        case_id
+        for case_id, case in cases_by_id.items()
+        if ((case.get("ragtruth_metadata") or {}).get("answer_hallucination_spans") or [])
+    }
+    seen_case_ids: set[str] = set()
+    errors: list[dict[str, str]] = []
+    warnings: list[dict[str, str]] = []
+    row_results: list[dict[str, Any]] = []
+
+    for index, row in enumerate(review_rows, start=1):
+        if not isinstance(row, dict):
+            errors.append(_validation_item("", "row_type", "Review row %s is not a JSON object." % index))
+            continue
+        case_id = str(row.get("case_id") or row.get("id") or "")
+        row_errors: list[str] = []
+        row_warnings: list[str] = []
+        if not case_id:
+            row_errors.append("Missing case_id.")
+        elif case_id in seen_case_ids:
+            row_errors.append("Duplicate review row for case_id %s." % case_id)
+        else:
+            seen_case_ids.add(case_id)
+
+        case = cases_by_id.get(case_id)
+        if case_id and case is None:
+            row_errors.append("Review row case_id is not present in the case pack.")
+
+        status = str(row.get("review_status") or "").strip().lower()
+        reviewed = status in REVIEWED_STATUSES
+        if require_reviewed and not reviewed:
+            row_errors.append("Review status must be one of %s." % ", ".join(sorted(REVIEWED_STATUSES)))
+        if reviewed:
+            if not str(row.get("reviewer") or "").strip():
+                row_errors.append("Reviewed row must include reviewer.")
+            if not str(row.get("reviewed_at") or "").strip():
+                row_errors.append("Reviewed row must include reviewed_at.")
+
+        answer_spans = _answer_spans_for_validation(row, case)
+        source_spans = [str(span) for span in row.get("source_evidence_spans") or [] if str(span).strip()]
+        if reviewed and require_source_spans and answer_spans and not source_spans:
+            row_errors.append("Reviewed row with answer hallucination spans must include source_evidence_spans.")
+        if source_spans:
+            context_texts = _source_context_texts_for_validation(row, case)
+            for span in source_spans:
+                if not _span_in_contexts(span, context_texts):
+                    row_errors.append("source_evidence_spans entry is not found in the source contexts: %s" % span)
+        elif reviewed and answer_spans:
+            row_warnings.append("Reviewed hallucination row has no source_evidence_spans.")
+
+        for message in row_errors:
+            errors.append(_validation_item(case_id, "row", message))
+        for message in row_warnings:
+            warnings.append(_validation_item(case_id, "row", message))
+
+        row_results.append(
+            {
+                "case_id": case_id,
+                "reviewed": reviewed,
+                "answer_hallucination_span_count": len(answer_spans),
+                "source_evidence_span_count": len(source_spans),
+                "error_count": len(row_errors),
+                "warning_count": len(row_warnings),
+            }
+        )
+
+    missing_required = sorted(required_case_ids - seen_case_ids)
+    for case_id in missing_required:
+        item = _validation_item(case_id, "missing_review", "Missing review row for hallucination case.")
+        if require_reviewed:
+            errors.append(item)
+        else:
+            warnings.append(item)
+
+    reviewed_rows = sum(1 for row in row_results if row["reviewed"])
+    source_span_rows = sum(1 for row in row_results if row["source_evidence_span_count"] > 0)
+    return {
+        "valid": not errors,
+        "review_rows": len(row_results),
+        "reviewed_rows": reviewed_rows,
+        "required_review_rows": len(required_case_ids),
+        "missing_required_review_rows": missing_required,
+        "source_span_rows": source_span_rows,
+        "errors": errors,
+        "warnings": warnings,
+        "rows": row_results,
+        "requirements": {
+            "require_reviewed": require_reviewed,
+            "require_source_spans": require_source_spans,
+        },
+    }
+
+
 def _review_row(
     case: dict[str, Any],
     spans: list[dict[str, Any]],
@@ -559,6 +664,55 @@ def _markdown_text(value: Any) -> str:
     return str(value or "").replace("\r\n", "\n").replace("\r", "\n")
 
 
+def _answer_spans_for_validation(row: dict[str, Any], case: dict[str, Any] | None) -> list[dict[str, Any]]:
+    row_spans = row.get("answer_hallucination_spans") or []
+    if row_spans:
+        return [span for span in row_spans if isinstance(span, dict)]
+    if case is None:
+        return []
+    return [
+        span
+        for span in ((case.get("ragtruth_metadata") or {}).get("answer_hallucination_spans") or [])
+        if isinstance(span, dict)
+    ]
+
+
+def _source_context_texts_for_validation(row: dict[str, Any], case: dict[str, Any] | None) -> list[str]:
+    row_contexts = [
+        str(context.get("text") or "")
+        for context in row.get("source_contexts") or []
+        if isinstance(context, dict) and str(context.get("text") or "").strip()
+    ]
+    if row_contexts:
+        return row_contexts
+    if case is None:
+        return []
+    return [
+        str(context.get("text") or "")
+        for context in case.get("contexts") or []
+        if isinstance(context, dict) and str(context.get("text") or "").strip()
+    ]
+
+
+def _span_in_contexts(span: str, context_texts: list[str]) -> bool:
+    normalized_span = _normalize_review_text(span)
+    if not normalized_span:
+        return False
+    return any(normalized_span in _normalize_review_text(context) for context in context_texts)
+
+
+def _normalize_review_text(value: str) -> str:
+    return " ".join(str(value or "").casefold().split())
+
+
+def _validation_item(case_id: str, check: str, message: str) -> dict[str, str]:
+    return {
+        "case_id": case_id,
+        "check": check,
+        "message": message,
+    }
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Build or apply RAGTruth human-review mappings.")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -581,6 +735,13 @@ def main(argv: list[str] | None = None) -> int:
     packet_parser.add_argument("--output", required=True)
     packet_parser.add_argument("--title", default="RAGTruth Human Evidence Review Packet")
     packet_parser.add_argument("--context-char-limit", default=6000, type=int)
+
+    validate_parser = subparsers.add_parser("validate", help="Validate a reviewed RAGTruth JSONL file.")
+    validate_parser.add_argument("--case-pack", required=True)
+    validate_parser.add_argument("--review", required=True)
+    validate_parser.add_argument("--output")
+    validate_parser.add_argument("--require-reviewed", action="store_true")
+    validate_parser.add_argument("--require-source-spans", action="store_true")
 
     args = parser.parse_args(argv)
     if args.command == "build-queue":
@@ -606,6 +767,23 @@ def main(argv: list[str] | None = None) -> int:
         print("Wrote %s" % written)
         print("Review rows: %s" % len(rows))
         return 0
+
+    if args.command == "validate":
+        report = validate_review_mappings(
+            load_case_pack(args.case_pack),
+            load_jsonl(args.review),
+            require_reviewed=args.require_reviewed,
+            require_source_spans=args.require_source_spans,
+        )
+        if args.output:
+            written = write_json(report, args.output)
+            print("Wrote %s" % written)
+        print("Valid: %s" % str(report["valid"]).lower())
+        print("Review rows: %s" % report["review_rows"])
+        print("Reviewed rows: %s" % report["reviewed_rows"])
+        print("Errors: %s" % len(report["errors"]))
+        print("Warnings: %s" % len(report["warnings"]))
+        return 0 if report["valid"] else 1
 
     reviewed = apply_review_mappings(
         load_case_pack(args.case_pack),

@@ -23,6 +23,7 @@ from benchmarks.contexttrace_bench.ragtruth_review import (
     apply_review_mappings,
     build_review_packet,
     build_review_queue,
+    validate_review_mappings,
 )
 from benchmarks.contexttrace_bench.run_ragas import build_ragas_rows
 from benchmarks.contexttrace_bench.run_local_judge import _judge_prompt, _normalize_judge_output
@@ -436,6 +437,69 @@ def test_ragtruth_review_packet_renders_human_checklist() -> None:
     assert "East Jerusalem" in packet
     assert "source_evidence_spans" in packet
     assert "Truncated in packet: `yes`" in packet
+
+
+def test_ragtruth_review_validation_checks_signoff_and_source_spans() -> None:
+    case_pack = adapt_ragtruth_rows(
+        [
+            {
+                "id": "1472",
+                "source_id": "11316",
+                "labels": [
+                    {
+                        "start": 219,
+                        "end": 229,
+                        "text": "Gaza Strip",
+                        "label_type": "Evident Baseless Info",
+                    }
+                ],
+                "quality": "good",
+                "response": "The answer adds Gaza Strip.",
+            }
+        ],
+        source_rows=[
+            {
+                "source_id": "11316",
+                "task_type": "Summary",
+                "source": "CNN/DM",
+                "source_info": "The source article mentions East Jerusalem, not Gaza Strip.",
+                "prompt": "Summarize the following news.",
+            }
+        ],
+    )
+    queue = build_review_queue(case_pack)
+    queue[0]["review_status"] = "reviewed"
+    queue[0]["reviewer"] = "reviewer-a"
+    queue[0]["reviewed_at"] = "2026-06-13"
+    queue[0]["source_evidence_spans"] = ["The source article mentions East Jerusalem, not Gaza Strip."]
+
+    valid = validate_review_mappings(
+        case_pack,
+        queue,
+        require_reviewed=True,
+        require_source_spans=True,
+    )
+
+    assert valid["valid"] is True
+    assert valid["reviewed_rows"] == 1
+    assert valid["source_span_rows"] == 1
+    assert valid["errors"] == []
+
+    invalid_queue = build_review_queue(case_pack)
+    invalid_queue[0]["review_status"] = "reviewed"
+    invalid_queue[0]["source_evidence_spans"] = ["A span that is not in the source."]
+    invalid = validate_review_mappings(
+        case_pack,
+        invalid_queue,
+        require_reviewed=True,
+        require_source_spans=True,
+    )
+
+    assert invalid["valid"] is False
+    messages = [error["message"] for error in invalid["errors"]]
+    assert "Reviewed row must include reviewer." in messages
+    assert "Reviewed row must include reviewed_at." in messages
+    assert any("not found in the source contexts" in message for message in messages)
 
 
 def test_contexttrace_bench_runs_external_case_pack(tmp_path) -> None:

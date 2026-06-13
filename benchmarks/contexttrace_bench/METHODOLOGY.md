@@ -184,8 +184,21 @@ python benchmarks/contexttrace_bench/ragtruth_review.py build-packet \
 The packet contains reviewer instructions, a checklist, answer-side
 hallucination spans, suggested source snippets, and source-context excerpts.
 It is a human review aid; the JSONL queue remains the machine-readable artifact.
-After review, set `review_status` to `reviewed`, `accepted`, or `approved`, then
-apply the file:
+After review, set `review_status` to `reviewed`, `accepted`, or `approved`,
+then validate the reviewed JSONL before applying it:
+
+```bash
+python benchmarks/contexttrace_bench/ragtruth_review.py validate \
+  --case-pack benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
+  --review benchmarks/contexttrace_bench/out/ragtruth_reviewed.jsonl \
+  --output benchmarks/contexttrace_bench/out/ragtruth_review_validation.json \
+  --require-reviewed \
+  --require-source-spans
+```
+
+The strict validation command fails if reviewed rows are missing reviewer
+metadata, review dates, source evidence spans, or source spans that do not occur
+in the provided source contexts. After validation passes, apply the file:
 
 ```bash
 python benchmarks/contexttrace_bench/ragtruth_review.py apply \

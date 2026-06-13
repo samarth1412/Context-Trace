@@ -285,6 +285,17 @@ python benchmarks/contexttrace_bench/ragtruth_review.py build-packet \
   --output benchmarks/contexttrace_bench/out/ragtruth_review_packet.md
 ```
 
+Validate reviewed rows before applying them:
+
+```bash
+python benchmarks/contexttrace_bench/ragtruth_review.py validate \
+  --case-pack benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
+  --review benchmarks/contexttrace_bench/out/ragtruth_reviewed.jsonl \
+  --output benchmarks/contexttrace_bench/out/ragtruth_review_validation.json \
+  --require-reviewed \
+  --require-source-spans
+```
+
 After review, apply rows marked `reviewed`, `accepted`, or `approved` with
 `source_evidence_spans` filled:
 
