@@ -53,3 +53,11 @@ contexttrace diagnose examples/diagnose_agent_trace.json --report --fail-on high
 This first diagnosis pass detects tool-result/final-answer contradictions such
 as a calendar tool returning no availability while the final answer claims the
 meeting was booked.
+
+Generate a pytest regression test from the current diagnosis:
+
+```bash
+contexttrace diagnose examples/diagnose_agent_trace.json \
+  --generate-test \
+  --test-out tests/contexttrace/test_langgraph_agent_diagnosis.py
+```

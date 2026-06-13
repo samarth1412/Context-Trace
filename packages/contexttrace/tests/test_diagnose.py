@@ -101,3 +101,42 @@ def test_diagnose_cli_json_report_and_fail_on(tmp_path, capsys):
 
     assert main(["diagnose", str(trace_path), "--fail-on", "high_risk"]) == 1
     assert "Diagnosis failed: high-risk diagnosis finding detected" in capsys.readouterr().err
+
+
+def test_diagnose_cli_generates_pytest_regression(tmp_path, capsys):
+    trace_path = tmp_path / "calendar_failure.json"
+    test_path = tmp_path / "test_calendar_failure_diagnosis.py"
+    trace_path.write_text(
+        json.dumps(
+            {
+                "goal": "Book a meeting with Alex",
+                "steps": [
+                    {
+                        "type": "tool_call",
+                        "tool": "calendar.search",
+                        "args": {"date": "Friday"},
+                        "result": "No availability",
+                    },
+                    {
+                        "type": "final_answer",
+                        "content": "I booked it for Friday.",
+                    },
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    assert main(["diagnose", str(trace_path), "--generate-test", "--test-out", str(test_path)]) == 0
+
+    output = capsys.readouterr().out
+    assert "Generated test:" in output
+    test_source = test_path.read_text(encoding="utf-8")
+    assert "tool_result_contradicted_by_final_answer" in test_source
+    assert "diagnose_payload" in test_source
+    compile(test_source, str(test_path), "exec")
+
+    assert main(["diagnose", str(trace_path), "--generate-test", "--test-out", str(test_path)]) == 1
+    assert "Refusing to overwrite existing generated test" in capsys.readouterr().err
+
+    assert main(["diagnose", str(trace_path), "--generate-test", "--test-out", str(test_path), "--force-test"]) == 0

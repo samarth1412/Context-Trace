@@ -91,6 +91,16 @@ contexttrace diagnose examples/diagnose_agent_trace.json --report --fail-on high
 The diagnosis flags `tool_result_contradicted_by_final_answer` and suggests
 gating final-answer generation on tool-result status.
 
+Turn that diagnosis into a CI regression test:
+
+```bash
+contexttrace diagnose examples/diagnose_agent_trace.json \
+  --generate-test \
+  --test-out tests/contexttrace/test_calendar_agent_diagnosis.py
+
+pytest tests/contexttrace/test_calendar_agent_diagnosis.py
+```
+
 ## Local Verification Modes
 
 | Mode | Use When |

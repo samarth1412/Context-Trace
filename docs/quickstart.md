@@ -108,6 +108,15 @@ Agent traces can use the same command:
 contexttrace diagnose examples/diagnose_agent_trace.json --report --fail-on high_risk
 ```
 
+Generate a pytest regression from the diagnosis:
+
+```bash
+contexttrace diagnose examples/diagnose_agent_trace.json \
+  --generate-test \
+  --test-out tests/contexttrace/test_calendar_agent_diagnosis.py
+pytest tests/contexttrace/test_calendar_agent_diagnosis.py
+```
+
 Run the complete evidence QA workflow:
 
 ```bash
