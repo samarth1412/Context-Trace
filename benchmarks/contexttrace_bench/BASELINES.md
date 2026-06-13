@@ -254,6 +254,21 @@ python benchmarks/contexttrace_bench/ragtruth_adapter.py \
   --split test
 ```
 
+For the next broader review round, build a deterministic stratified sample and
+record the sampling metadata from `stats.sampling`:
+
+```bash
+python benchmarks/contexttrace_bench/ragtruth_adapter.py \
+  --response benchmarks/contexttrace_bench/out/ragtruth_official/response.jsonl \
+  --source-info benchmarks/contexttrace_bench/out/ragtruth_official/source_info.jsonl \
+  --output benchmarks/contexttrace_bench/out/ragtruth_case_pack_test200_stratified.json \
+  --split test \
+  --quality good \
+  --sample-size 200 \
+  --sample-seed 13 \
+  --stratify-by task_type,source,expected_label,model
+```
+
 Score the adapted case pack:
 
 ```bash

@@ -334,6 +334,74 @@ def test_ragtruth_adapter_builds_contexttrace_case_pack() -> None:
     assert case["ragtruth_metadata"]["answer_hallucination_spans"][0]["text"] == "Gaza Strip"
 
 
+def test_ragtruth_adapter_builds_deterministic_stratified_sample() -> None:
+    response_rows = [
+        {
+            "id": str(index),
+            "source_id": "summary" if index % 2 == 0 else "qa",
+            "model": "model-a" if index < 4 else "model-b",
+            "labels": (
+                [
+                    {
+                        "start": 0,
+                        "end": 5,
+                        "text": "wrong",
+                        "label_type": "Evident Conflict" if index in {2, 6} else "Evident Baseless Info",
+                    }
+                ]
+                if index in {1, 2, 5, 6}
+                else []
+            ),
+            "split": "test",
+            "quality": "good",
+            "response": "Response %s" % index,
+        }
+        for index in range(8)
+    ]
+    source_rows = [
+        {
+            "source_id": "summary",
+            "task_type": "Summary",
+            "source": "CNN/DM",
+            "source_info": "Summary source text.",
+            "prompt": "Summarize.",
+        },
+        {
+            "source_id": "qa",
+            "task_type": "QA",
+            "source": "MARCO",
+            "source_info": {"question": "Question?", "passages": "QA source text."},
+        },
+    ]
+
+    first = adapt_ragtruth_rows(
+        response_rows,
+        source_rows=source_rows,
+        split="test",
+        sample_size=3,
+        sample_seed=99,
+        stratify_by=["expected_label"],
+    )
+    second = adapt_ragtruth_rows(
+        response_rows,
+        source_rows=source_rows,
+        split="test",
+        sample_size=3,
+        sample_seed=99,
+        stratify_by=["expected_label"],
+    )
+
+    assert [case["id"] for case in first["cases"]] == [case["id"] for case in second["cases"]]
+    assert first["stats"]["output_cases"] == 3
+    assert first["stats"]["eligible_cases"] == 8
+    assert first["stats"]["sampling"]["method"] == "stratified"
+    assert first["stats"]["sampling"]["sample_seed"] == 99
+    labels = {tuple(case["expected_labels"]) for case in first["cases"]}
+    assert ("no_failure_detected",) in labels
+    assert ("partial_support",) in labels
+    assert ("contradicted_answer",) in labels
+
+
 def test_ragtruth_review_queue_and_mapping_updates_case_pack() -> None:
     case_pack = adapt_ragtruth_rows(
         [
