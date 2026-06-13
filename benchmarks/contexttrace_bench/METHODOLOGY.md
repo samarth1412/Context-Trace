@@ -164,6 +164,39 @@ python benchmarks/contexttrace_bench/ragtruth_adapter.py \
 Record `sample_size`, `sample_seed`, and `stratify_by` from the case-pack
 `stats.sampling` block with any reviewed result so the split is reproducible.
 
+The recommended path is to generate the case pack, review queue, reviewer
+packet, and workflow manifest together:
+
+```bash
+python benchmarks/contexttrace_bench/ragtruth_workflow.py \
+  --response benchmarks/contexttrace_bench/out/ragtruth_official/response.jsonl \
+  --source-info benchmarks/contexttrace_bench/out/ragtruth_official/source_info.jsonl \
+  --output-dir benchmarks/contexttrace_bench/out/ragtruth_test200_review \
+  --split test \
+  --quality good \
+  --sample-size 200 \
+  --sample-seed 13 \
+  --stratify-by task_type,source,expected_label,model
+```
+
+After independent review fills `source_evidence_spans`, rerun with `--review`.
+The workflow will validate the reviewed JSONL, apply mappings, score the
+reviewed case pack, and record artifact paths plus scoring summary in
+`ragtruth_workflow_manifest.json`:
+
+```bash
+python benchmarks/contexttrace_bench/ragtruth_workflow.py \
+  --response benchmarks/contexttrace_bench/out/ragtruth_official/response.jsonl \
+  --source-info benchmarks/contexttrace_bench/out/ragtruth_official/source_info.jsonl \
+  --output-dir benchmarks/contexttrace_bench/out/ragtruth_test200_review \
+  --split test \
+  --quality good \
+  --sample-size 200 \
+  --sample-seed 13 \
+  --stratify-by task_type,source,expected_label,model \
+  --review benchmarks/contexttrace_bench/out/ragtruth_test200_review/ragtruth_reviewed.jsonl
+```
+
 External case packs are scored with the same harness and report format:
 
 ```bash

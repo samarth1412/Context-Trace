@@ -269,6 +269,21 @@ python benchmarks/contexttrace_bench/ragtruth_adapter.py \
   --stratify-by task_type,source,expected_label,model
 ```
 
+Or build the sampled case pack, review queue, review packet, and manifest in one
+workflow run:
+
+```bash
+python benchmarks/contexttrace_bench/ragtruth_workflow.py \
+  --response benchmarks/contexttrace_bench/out/ragtruth_official/response.jsonl \
+  --source-info benchmarks/contexttrace_bench/out/ragtruth_official/source_info.jsonl \
+  --output-dir benchmarks/contexttrace_bench/out/ragtruth_test200_review \
+  --split test \
+  --quality good \
+  --sample-size 200 \
+  --sample-seed 13 \
+  --stratify-by task_type,source,expected_label,model
+```
+
 Score the adapted case pack:
 
 ```bash

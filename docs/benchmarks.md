@@ -199,6 +199,21 @@ python benchmarks/contexttrace_bench/ragtruth_adapter.py \
   --stratify-by task_type,source,expected_label,model
 ```
 
+The workflow wrapper creates the sampled case pack, review queue, packet, and
+manifest together:
+
+```bash
+python benchmarks/contexttrace_bench/ragtruth_workflow.py \
+  --response benchmarks/contexttrace_bench/out/ragtruth_official/response.jsonl \
+  --source-info benchmarks/contexttrace_bench/out/ragtruth_official/source_info.jsonl \
+  --output-dir benchmarks/contexttrace_bench/out/ragtruth_test200_review \
+  --split test \
+  --quality good \
+  --sample-size 200 \
+  --sample-seed 13 \
+  --stratify-by task_type,source,expected_label,model
+```
+
 The adapter preserves RAGTruth answer-side hallucination spans, but publishable
 span-localization claims still require human mapping to source evidence spans.
 
