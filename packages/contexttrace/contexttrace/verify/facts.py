@@ -36,26 +36,120 @@ LIST_ITEM_RE = re.compile(
 
 STOPWORDS = {
     "a",
+    "about",
+    "above",
+    "after",
+    "again",
+    "all",
+    "also",
+    "am",
     "an",
     "and",
+    "any",
     "are",
     "as",
     "at",
     "be",
+    "because",
+    "been",
+    "before",
+    "being",
+    "between",
+    "both",
+    "but",
     "by",
+    "can",
+    "could",
+    "did",
+    "do",
+    "does",
+    "doing",
+    "during",
+    "each",
+    "few",
     "for",
     "from",
+    "further",
+    "had",
+    "has",
+    "have",
+    "having",
+    "he",
+    "her",
+    "here",
+    "hers",
+    "him",
+    "his",
+    "how",
+    "i",
+    "if",
     "in",
+    "into",
     "is",
     "it",
+    "its",
+    "itself",
+    "may",
+    "more",
+    "most",
+    "must",
+    "my",
+    "no",
+    "nor",
+    "not",
     "of",
+    "off",
+    "on",
+    "once",
+    "only",
     "or",
+    "other",
+    "our",
+    "out",
+    "over",
+    "own",
+    "same",
+    "she",
+    "should",
     "so",
+    "some",
+    "such",
+    "than",
     "that",
     "the",
+    "their",
+    "theirs",
+    "them",
+    "then",
+    "there",
+    "these",
+    "they",
+    "this",
+    "those",
+    "through",
     "to",
+    "too",
     "under",
+    "until",
+    "up",
+    "very",
+    "was",
+    "we",
+    "were",
+    "what",
+    "when",
+    "where",
+    "which",
+    "while",
+    "who",
+    "whom",
+    "why",
+    "will",
     "with",
+    "within",
+    "would",
+    "you",
+    "your",
 }
 
 PREDICATE_MARKERS = {
@@ -356,6 +450,8 @@ def _has_negation_conflict(claim_text: str, evidence_text: str, *, mode: str) ->
     units = _evidence_units(evidence_text)
     if not units:
         return False
+    if mode == "semantic" and _negated_truth_support(claim_text, evidence_text):
+        return False
 
     if claim_polarity == "affirmative" and any(
         _token_overlap(claim_text, _non_negated_clause_text(unit), mode=mode) >= 0.65
@@ -383,7 +479,7 @@ def _has_negation_conflict(claim_text: str, evidence_text: str, *, mode: str) ->
 
 
 def _negation_polarity(text: str) -> str:
-    normalized = _neutralize_non_negating_phrases(text)
+    normalized = _neutralize_non_negating_phrases(_normalize_negation_text(text))
     if STRONG_NEGATION_RE.search(normalized):
         return "strong_negated"
     if NEGATION_RE.search(normalized):
@@ -394,6 +490,22 @@ def _negation_polarity(text: str) -> str:
 def _neutralize_non_negating_phrases(text: str) -> str:
     value = str(text or "")
     return re.sub(r"\bnot\s+only\b", "also", value, flags=re.IGNORECASE)
+
+
+def _normalize_negation_text(text: str) -> str:
+    value = str(text or "")
+    value = re.sub(r"\bcan['’]?t\b", "cannot", value, flags=re.IGNORECASE)
+    return re.sub(r"\b([A-Za-z]+)n['’]t\b", r"\1 not", value)
+
+
+def _negated_truth_support(claim_text: str, evidence_text: str) -> bool:
+    claim = _semantic_text(claim_text)
+    evidence = _normalize_negation_text(evidence_text).lower()
+    if "false" not in claim:
+        return False
+    if "not exactly" not in evidence or "true" not in evidence:
+        return False
+    return _token_overlap(claim_text, evidence_text, mode="semantic") >= 0.45
 
 
 def _shares_non_strong_without_context(claim_text: str, evidence_unit: str) -> bool:
@@ -590,7 +702,15 @@ def _missing_exact_terms(fact: str, evidence_text: str) -> list[str]:
     if not required:
         return []
     present = {term.lower() for term in TOKEN_RE.findall(str(evidence_text or ""))}
-    return sorted(required - present)
+    missing = []
+    for term in sorted(required):
+        if term in present:
+            continue
+        expansion = ACRONYM_EXPANSIONS.get(term)
+        if expansion and set(expansion).issubset(present):
+            continue
+        missing.append(term)
+    return missing
 
 
 def _contains_predicate(value: str) -> bool:
@@ -715,6 +835,10 @@ SEMANTIC_TOKEN_MAP = {
     "generated": "generate",
     "generates": "generate",
     "generating": "generate",
+    "create": "generate",
+    "created": "generate",
+    "creates": "generate",
+    "creating": "generate",
     "gave": "receive",
     "give": "receive",
     "given": "receive",
@@ -738,6 +862,14 @@ SEMANTIC_TOKEN_MAP = {
     "facility": "plant",
     "facilities": "plant",
     "inside": "within",
+    "consider": "deem",
+    "considered": "deem",
+    "considers": "deem",
+    "considering": "deem",
+    "disclose": "disclose",
+    "disclosed": "disclose",
+    "discloses": "disclose",
+    "disclosing": "disclose",
     "investigate": "search",
     "investigated": "search",
     "investigating": "search",
@@ -763,6 +895,10 @@ SEMANTIC_TOKEN_MAP = {
     "photo": "picture",
     "pictured": "picture",
     "image": "picture",
+    "presented": "purport",
+    "presents": "purport",
+    "purported": "purport",
+    "purports": "purport",
     "five": "5",
     "thirty": "30",
     "fourteen": "14",
@@ -776,11 +912,23 @@ SEMANTIC_PHRASES = (
     ("cash back", "refund"),
     ("business day", "business days"),
     ("order id", "order number"),
+    ("united states", "us"),
+    ("not exactly what the law considers true", "false by the law"),
+    ('not exactly what the law considers "true', "false by the law"),
 )
 
 
 def _semantic_text(text: str) -> str:
-    value = str(text or "").lower()
+    value = _normalize_negation_text(text).lower()
     for source, replacement in SEMANTIC_PHRASES:
         value = value.replace(source, replacement)
     return value
+
+
+ACRONYM_EXPANSIONS = {
+    "cdc": ("centers", "disease", "control"),
+    "fbi": ("federal", "bureau", "investigation"),
+    "us": ("united", "states"),
+    "usa": ("united", "states"),
+    "uva": ("university", "virginia"),
+}

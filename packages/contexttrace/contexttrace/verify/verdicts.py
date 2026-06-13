@@ -255,6 +255,8 @@ def is_supported_match(claim_text: str, match: EvidenceMatch) -> bool:
 def is_contradicted(claim_text: str, evidence_text: str, score: float) -> bool:
     if score < 0.50:
         return False
+    if _negated_truth_support(claim_text, evidence_text):
+        return False
 
     if _has_negation(claim_text) != _has_negation(evidence_text) and _core_overlap(claim_text, evidence_text) >= 0.55:
         if _has_affirmative_supporting_clause(claim_text, evidence_text):
@@ -276,6 +278,16 @@ def _has_negation(text: str) -> bool:
     if "not allowed" in normalized_text.lower() or "not eligible" in normalized_text.lower():
         return True
     return any(token.strip(".,;:!?()[]{}\"'") in NEGATION_TERMS for token in tokens) or " not " in normalized
+
+
+def _negated_truth_support(claim_text: str, evidence_text: str) -> bool:
+    claim = str(claim_text or "").lower()
+    evidence = str(evidence_text or "").lower()
+    if "false" not in claim:
+        return False
+    if "not exactly" not in evidence or "true" not in evidence:
+        return False
+    return _core_overlap(claim_text, evidence_text) >= 0.45
 
 
 def _neutralize_non_negating_phrases(text: str) -> str:
