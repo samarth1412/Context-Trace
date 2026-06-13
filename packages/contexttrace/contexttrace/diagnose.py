@@ -26,6 +26,37 @@ def diagnose_trace_file(path: str | Path, *, mode: str = "semantic") -> dict[str
     return diagnose_payload(payload, mode=mode, trace_path=str(trace_path))
 
 
+def write_diagnosis_regression_test(
+    trace_path: str | Path,
+    result: dict[str, Any],
+    *,
+    output_path: str | Path | None = None,
+    mode: str = "semantic",
+    overwrite: bool = False,
+) -> str:
+    input_path = Path(trace_path)
+    try:
+        payload = json.loads(input_path.read_text(encoding="utf-8"))
+    except OSError as exc:
+        raise DiagnoseInputError("Could not read trace file %s: %s" % (input_path, exc)) from exc
+    except json.JSONDecodeError as exc:
+        raise DiagnoseInputError(
+            "Invalid JSON in %s at line %s column %s: %s"
+            % (input_path, exc.lineno, exc.colno, exc.msg)
+        ) from exc
+
+    if output_path is None:
+        output = Path("tests") / "contexttrace" / ("test_%s_diagnosis.py" % _safe_identifier(input_path.stem))
+    else:
+        output = Path(output_path)
+    if output.exists() and not overwrite:
+        raise DiagnoseInputError("Refusing to overwrite existing generated test %s. Pass --force-test to replace it." % output)
+
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(_regression_test_source(payload, result, mode=mode, test_name=input_path.stem), encoding="utf-8")
+    return str(output)
+
+
 def diagnose_payload(payload: dict[str, Any], *, mode: str = "semantic", trace_path: str | None = None) -> dict[str, Any]:
     if not isinstance(payload, dict):
         raise DiagnoseInputError("Trace payload must be a JSON object.")
@@ -72,6 +103,62 @@ def diagnose_failures(result: dict[str, Any], fail_on: tuple[str, ...]) -> list[
         elif rule not in {"any", "any_issue", "failure", "high_risk", "agent_failure", "rag_failure"}:
             messages.append("unknown --fail-on rule %s" % raw_rule)
     return messages
+
+
+def _regression_test_source(
+    payload: dict[str, Any],
+    result: dict[str, Any],
+    *,
+    mode: str,
+    test_name: str,
+) -> str:
+    summary = result.get("summary") or {}
+    findings = result.get("findings") or []
+    expected_failure_types = list(summary.get("failure_types") or [])
+    expected_finding_types = sorted({str(item.get("type")) for item in findings if item.get("type")})
+    expected_finding_sources = sorted({str(item.get("source")) for item in findings if item.get("source")})
+    payload_json = json.dumps(payload, indent=2, sort_keys=True, ensure_ascii=True)
+    function_name = "test_%s_diagnosis_regression" % _safe_identifier(test_name)
+    lines = [
+        "import json",
+        "",
+        "from contexttrace.diagnose import diagnose_payload",
+        "",
+        "",
+        "TRACE_PAYLOAD = json.loads(%r)" % payload_json,
+        "EXPECTED_STATUS = %r" % str(summary.get("status") or ""),
+        "EXPECTED_PRIMARY_ISSUE = %r" % str(summary.get("primary_issue") or ""),
+        "EXPECTED_FAILURE_TYPES = %r" % expected_failure_types,
+        "EXPECTED_FINDING_TYPES = %r" % expected_finding_types,
+        "EXPECTED_FINDING_SOURCES = %r" % expected_finding_sources,
+        "",
+        "",
+        "def %s():" % function_name,
+        "    result = diagnose_payload(TRACE_PAYLOAD, mode=%r)" % mode,
+        "    assert result[\"summary\"][\"status\"] == EXPECTED_STATUS",
+        "    assert result[\"summary\"][\"primary_issue\"] == EXPECTED_PRIMARY_ISSUE",
+        "    failure_types = set(result[\"summary\"].get(\"failure_types\") or [])",
+        "    assert set(EXPECTED_FAILURE_TYPES).issubset(failure_types)",
+        "    finding_types = {item.get(\"type\") for item in result.get(\"findings\") or [] if item.get(\"type\")}",
+        "    finding_sources = {item.get(\"source\") for item in result.get(\"findings\") or [] if item.get(\"source\")}",
+        "    if EXPECTED_FINDING_TYPES:",
+        "        assert set(EXPECTED_FINDING_TYPES).issubset(finding_types)",
+        "    else:",
+        "        assert result.get(\"findings\") == []",
+        "    assert set(EXPECTED_FINDING_SOURCES).issubset(finding_sources)",
+        "",
+    ]
+    return "\n".join(lines)
+
+
+def _safe_identifier(value: str) -> str:
+    cleaned = "".join(char.lower() if char.isalnum() else "_" for char in str(value or "trace"))
+    cleaned = "_".join(part for part in cleaned.split("_") if part)
+    if not cleaned:
+        cleaned = "trace"
+    if cleaned[0].isdigit():
+        cleaned = "trace_%s" % cleaned
+    return cleaned[:80]
 
 
 def _rag_trace_from_payload(payload: dict[str, Any]) -> RAGTrace | None:

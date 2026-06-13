@@ -3,7 +3,7 @@ from contexttrace.capture import capture_rag_trace, langchain_documents_to_conte
 from contexttrace.capture_endpoint import EndpointCapture, capture_endpoint_trace, capture_response_trace
 from contexttrace.client import AsyncContextTrace, ContextTrace
 from contexttrace.config import ContextTraceConfig
-from contexttrace.diagnose import diagnose_payload, diagnose_trace_file
+from contexttrace.diagnose import diagnose_payload, diagnose_trace_file, write_diagnosis_regression_test
 from contexttrace.diagnose_report import DiagnoseReportGenerator
 from contexttrace.errors import (
     ContextTraceConfigError,
@@ -42,6 +42,7 @@ __all__ = [
     "capture_response_trace",
     "diagnose_payload",
     "diagnose_trace_file",
+    "write_diagnosis_regression_test",
     "export_contexttrace_trace",
     "langchain_documents_to_contexts",
     "write_rag_trace",

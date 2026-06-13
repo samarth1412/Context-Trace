@@ -19,7 +19,12 @@ from contexttrace.client import ContextTrace
 from contexttrace.config import ContextTraceConfig, load_config, write_default_config
 from contexttrace.demo import run_demo_dataset
 from contexttrace.demo_data import list_demo_datasets
-from contexttrace.diagnose import DiagnoseInputError, diagnose_failures, diagnose_trace_file
+from contexttrace.diagnose import (
+    DiagnoseInputError,
+    diagnose_failures,
+    diagnose_trace_file,
+    write_diagnosis_regression_test,
+)
 from contexttrace.diagnose_report import DiagnoseReportGenerator
 from contexttrace.endpoint_eval import run_endpoint_eval
 from contexttrace.errors import ContextTraceError
@@ -362,6 +367,9 @@ def inspect_command(trace_json: str, json_output: bool) -> int:
 @click.option("--out", default=None, help="HTML report path. Implies --report when provided.")
 @click.option("--mode", default="semantic", show_default=True, type=click.Choice(BASIC_VERIFY_MODES), help="RAG evidence scoring mode when the trace has query/answer/contexts.")
 @click.option("--fail-on", multiple=True, help="Fail on any_issue, high_risk, agent_failure, rag_failure, or a specific failure type.")
+@click.option("--generate-test", is_flag=True, help="Write a pytest regression test for the current diagnosis.")
+@click.option("--test-out", default=None, help="Generated pytest path. Defaults to tests/contexttrace/test_<trace>_diagnosis.py.")
+@click.option("--force-test", is_flag=True, help="Overwrite an existing generated pytest file.")
 def diagnose_command(
     trace_json: str,
     json_output: bool,
@@ -369,6 +377,9 @@ def diagnose_command(
     out: Optional[str],
     mode: str,
     fail_on: tuple[str, ...],
+    generate_test: bool,
+    test_out: Optional[str],
+    force_test: bool,
 ) -> int:
     """Diagnose RAG or agent trace failures and localize the likely root cause."""
 
@@ -382,10 +393,25 @@ def diagnose_command(
         output_path = out or str(Path(".contexttrace") / "reports" / ("%s_diagnose.html" % Path(trace_json).stem))
         written_report = DiagnoseReportGenerator().generate(result, path=output_path)
 
+    generated_test = None
+    if generate_test or test_out:
+        try:
+            generated_test = write_diagnosis_regression_test(
+                trace_json,
+                result,
+                output_path=test_out,
+                mode=mode,
+                overwrite=force_test,
+            )
+        except DiagnoseInputError as exc:
+            raise click.ClickException(str(exc)) from exc
+
     fail_messages = diagnose_failures(result, fail_on)
     if json_output:
         if written_report:
             click.echo("Report: %s" % written_report, err=True)
+        if generated_test:
+            click.echo("Generated test: %s" % generated_test, err=True)
         click.echo(json.dumps(result, indent=2))
         for message in fail_messages:
             click.echo("Diagnosis failed: %s" % message, err=True)
@@ -408,6 +434,8 @@ def diagnose_command(
             click.echo("- %s" % action)
     if written_report:
         click.echo("Report: %s" % written_report)
+    if generated_test:
+        click.echo("Generated test: %s" % generated_test)
     for message in fail_messages:
         click.echo("Diagnosis failed: %s" % message, err=True)
     return 1 if fail_messages else 0
