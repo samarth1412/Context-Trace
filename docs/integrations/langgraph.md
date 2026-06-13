@@ -41,3 +41,15 @@ The wrapper supports sync and async node functions. Exceptions are logged as age
 python examples/langgraph_agent_trace.py
 ```
 
+## Diagnose Agent Failures
+
+For portable agent traces, run the same local diagnosis workflow used for RAG
+traces:
+
+```bash
+contexttrace diagnose examples/diagnose_agent_trace.json --report --fail-on high_risk
+```
+
+This first diagnosis pass detects tool-result/final-answer contradictions such
+as a calendar tool returning no availability while the final answer claims the
+meeting was booked.

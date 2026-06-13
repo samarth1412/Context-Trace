@@ -66,12 +66,43 @@ Run local evidence checks:
 ```bash
 contexttrace inspect trace.json
 contexttrace verify trace.json --report
+contexttrace diagnose trace.json --report
 contexttrace qa trace.json --corpus docs/ --report
 ```
 
 ContextTrace classifies each claim as `supported`, `partially_supported`, `unsupported`, `unverifiable`, or `contradicted`, then exposes separate statuses for support, truth, source freshness, citation quality, and likely fix.
 
 Important: `supported` means grounded by the selected evidence span. It does not mean independently true, current, or authoritative.
+
+## Diagnose An Agent Trace
+
+`diagnose` also accepts agent step traces and localizes tool/final-answer
+failures:
+
+```json
+{
+  "goal": "Book a meeting with Alex",
+  "steps": [
+    {
+      "type": "tool_call",
+      "tool": "calendar.search",
+      "args": {"date": "Friday"},
+      "result": "No availability"
+    },
+    {
+      "type": "final_answer",
+      "content": "I booked it for Friday."
+    }
+  ]
+}
+```
+
+```bash
+contexttrace diagnose examples/diagnose_agent_trace.json --report --fail-on high_risk
+```
+
+The diagnosis flags `tool_result_contradicted_by_final_answer` and suggests
+gating final-answer generation on tool-result status.
 
 ## Local Verification Modes
 

@@ -19,6 +19,8 @@ from contexttrace.client import ContextTrace
 from contexttrace.config import ContextTraceConfig, load_config, write_default_config
 from contexttrace.demo import run_demo_dataset
 from contexttrace.demo_data import list_demo_datasets
+from contexttrace.diagnose import DiagnoseInputError, diagnose_failures, diagnose_trace_file
+from contexttrace.diagnose_report import DiagnoseReportGenerator
 from contexttrace.endpoint_eval import run_endpoint_eval
 from contexttrace.errors import ContextTraceError
 from contexttrace.regression import BENCHMARK_STRATEGIES, run_local_benchmark
@@ -351,6 +353,64 @@ def inspect_command(trace_json: str, json_output: bool) -> int:
     for command in result["suggested_next_commands"]:
         click.echo("- %s" % command)
     return 0
+
+
+@cli.command("diagnose")
+@click.argument("trace_json")
+@click.option("--json", "json_output", is_flag=True, help="Print the full diagnosis result as JSON.")
+@click.option("--report", is_flag=True, help="Generate a local HTML diagnosis report.")
+@click.option("--out", default=None, help="HTML report path. Implies --report when provided.")
+@click.option("--mode", default="semantic", show_default=True, type=click.Choice(BASIC_VERIFY_MODES), help="RAG evidence scoring mode when the trace has query/answer/contexts.")
+@click.option("--fail-on", multiple=True, help="Fail on any_issue, high_risk, agent_failure, rag_failure, or a specific failure type.")
+def diagnose_command(
+    trace_json: str,
+    json_output: bool,
+    report: bool,
+    out: Optional[str],
+    mode: str,
+    fail_on: tuple[str, ...],
+) -> int:
+    """Diagnose RAG or agent trace failures and localize the likely root cause."""
+
+    try:
+        result = diagnose_trace_file(trace_json, mode=mode)
+    except DiagnoseInputError as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    written_report = None
+    if report or out:
+        output_path = out or str(Path(".contexttrace") / "reports" / ("%s_diagnose.html" % Path(trace_json).stem))
+        written_report = DiagnoseReportGenerator().generate(result, path=output_path)
+
+    fail_messages = diagnose_failures(result, fail_on)
+    if json_output:
+        if written_report:
+            click.echo("Report: %s" % written_report, err=True)
+        click.echo(json.dumps(result, indent=2))
+        for message in fail_messages:
+            click.echo("Diagnosis failed: %s" % message, err=True)
+        return 1 if fail_messages else 0
+
+    summary = result["summary"]
+    click.echo("Status: %s" % summary["status"])
+    click.echo("Trace type: %s" % result["trace_type"])
+    click.echo("Primary issue: %s" % summary["primary_issue"])
+    click.echo("Failure types: %s" % ", ".join(summary.get("failure_types") or []))
+    click.echo("Findings: %s" % summary["total_findings"])
+    click.echo("High-risk findings: %s" % summary["high_risk_findings"])
+    if summary.get("rag_support_rate") is not None:
+        click.echo("RAG support rate: %.3f" % float(summary.get("rag_support_rate") or 0.0))
+    click.echo("Suggested fix: %s" % summary["suggested_fix"])
+    next_actions = result.get("next_actions") or []
+    if next_actions:
+        click.echo("Next actions:")
+        for action in next_actions:
+            click.echo("- %s" % action)
+    if written_report:
+        click.echo("Report: %s" % written_report)
+    for message in fail_messages:
+        click.echo("Diagnosis failed: %s" % message, err=True)
+    return 1 if fail_messages else 0
 
 
 @cli.command("qa")
