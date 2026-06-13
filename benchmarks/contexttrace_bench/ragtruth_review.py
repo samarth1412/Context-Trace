@@ -56,13 +56,17 @@ def apply_review_mappings(
     }
     updated_cases = []
     reviewed_count = 0
+    required_review_count = 0
     for case in case_pack.get("cases") or []:
         if not isinstance(case, dict):
             continue
         case_id = str(case.get("id") or "")
+        requires_review = bool(((case.get("ragtruth_metadata") or {}).get("answer_hallucination_spans") or []))
+        if requires_review:
+            required_review_count += 1
         review = reviews_by_case.get(case_id)
         if review is None:
-            if require_reviewed:
+            if require_reviewed and requires_review:
                 raise ValueError("Missing review row for case %s." % case_id)
             updated_cases.append(dict(case))
             continue
@@ -78,8 +82,9 @@ def apply_review_mappings(
     output = dict(case_pack)
     output["cases"] = updated_cases
     output["review"] = {
-        "status": "reviewed" if reviewed_count == len(updated_cases) and updated_cases else "partial",
+        "status": "reviewed" if reviewed_count >= required_review_count else "partial",
         "reviewed_cases": reviewed_count,
+        "required_review_cases": required_review_count,
         "total_cases": len(updated_cases),
         "review_file": str(review_file) if review_file else "",
         "applied_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),

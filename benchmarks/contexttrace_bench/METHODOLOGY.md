@@ -194,8 +194,15 @@ python benchmarks/contexttrace_bench/ragtruth_workflow.py \
   --sample-size 200 \
   --sample-seed 13 \
   --stratify-by task_type,source,expected_label,model \
-  --review benchmarks/contexttrace_bench/out/ragtruth_test200_review/ragtruth_reviewed.jsonl
+  --review benchmarks/contexttrace_bench/out/ragtruth_test200_review/ragtruth_reviewed.jsonl \
+  --allow-missing-source-spans
 ```
+
+Use `--allow-missing-source-spans` only when the reviewed JSONL explicitly
+marks rows where no fair source-side span exists; those rows remain reviewed
+but do not contribute to evidence-span-overlap labels. Keep strict source-span
+validation for review rounds where every hallucination row has a copied source
+evidence span.
 
 External case packs are scored with the same harness and report format:
 

@@ -46,24 +46,29 @@ Completed in the repo:
   source evidence spans back into a reviewed RAGTruth case pack.
 - A 50-row official RAGTruth test-split smoke run was built, scored, and queued
   for review from the raw GitHub dataset files. The 15 hallucination review rows
-  now include deterministic source-span suggestions. The result is smoke-only
-  and not publishable until issue #7 evidence mapping is complete.
-- An assisted source-evidence review pilot mapped those 15 RAGTruth
-  hallucination rows and rescored the 50-row test-split smoke. Span overlap is
-  now measurable at `0.883` across 15 reviewed rows. The current calibrated
-  semantic verifier scores failure macro-F1 `0.181` and root-cause accuracy
-  `0.400`, so this is workflow/calibration evidence, not a publishable external
-  benchmark claim.
+  include deterministic source-span suggestions.
+- A 200-case deterministic RAGTruth test-split sample now runs through
+  `ragtruth_workflow.py` end to end: case pack, review queue, review packet,
+  manifest, reviewed-case-pack application, and scored outputs.
+- A GPT-5.1-assisted source-evidence review mapped all 88 hallucination rows in
+  that 200-case sample. It validated with zero errors; 76 rows have source
+  evidence spans, and 12 rows are intentionally source-less because no fair
+  source-side span exists. This is assisted review, not independent human
+  sign-off.
+- The current semantic verifier scores failure macro-F1 `0.150`, root-cause
+  accuracy `0.255`, dangerous false-green rate `0.025`, and evidence span
+  overlap `0.555` on that 200-case RAGTruth sample, so RAGTruth is now a
+  concrete calibration target rather than a publishable external benchmark
+  claim.
 - Documentation links now point reviewers to methodology and baseline status.
 
 Still pending for Week 1:
 
 - Broaden judge baselines beyond the current public-holdout and RAGTruth smoke
   runs if local runtime is acceptable.
-- Get independent human sign-off for the RAGTruth source-evidence mappings and
-  expand beyond the 50-row smoke before using it for publishable
-  span-localization or external-dataset claims. This is tracked in GitHub issue
-  #7.
+- Get independent human sign-off for the 200-case RAGTruth source-evidence
+  mappings before using it for publishable span-localization or
+  external-dataset claims. This is tracked in GitHub issue #7.
 - Create full external dataset validation tracks for RAGTruth, RAGChecker, CRAG,
   and ARES before making broad SOTA claims. RAGChecker, CRAG, and ARES follow-up
   work is tracked in GitHub issues #3, #4, and #5.
@@ -88,11 +93,12 @@ Current baseline status:
 - Public holdout, OpenAI diagnostic judge with `gpt-4.1-mini`: 150 cases, zero
   row errors, failure macro-F1 `0.931`, root-cause accuracy `0.953`, citation
   error F1 `1.000`, evidence span overlap `0.921`.
-- RAGTruth assisted review pilot, ContextTrace semantic verifier: 50 official
-  test-split smoke cases, 15 assisted-reviewed source-evidence rows, failure
-  macro-F1 `0.181`, root-cause accuracy `0.400`, citation error F1 `1.000`,
-  evidence span overlap `0.883` across the 15 reviewed rows. This is not
-  publishable without independent sign-off and broader coverage.
+- RAGTruth assisted review pilot, ContextTrace semantic verifier: 200 official
+  test-split stratified cases, 88 assisted-reviewed hallucination rows, 76
+  rows with source evidence spans, failure macro-F1 `0.150`, root-cause
+  accuracy `0.255`, citation error F1 `1.000`, evidence span overlap `0.555`,
+  and dangerous false-green rate `0.025`. This is not publishable without
+  independent sign-off and calibration.
 - RAGTruth assisted review pilot, OpenAI diagnostic judge with `gpt-4.1-mini`:
   50 official test-split smoke cases, zero row errors, failure macro-F1 `0.272`,
   root-cause accuracy `0.660`, citation error F1 `1.000`, evidence span overlap
