@@ -276,6 +276,13 @@ python benchmarks/contexttrace_bench/ragtruth_review.py build-packet \
   --review-queue benchmarks/contexttrace_bench/out/ragtruth_review_queue.jsonl \
   --output benchmarks/contexttrace_bench/out/ragtruth_review_packet.md
 
+python benchmarks/contexttrace_bench/ragtruth_review.py validate \
+  --case-pack benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
+  --review benchmarks/contexttrace_bench/out/ragtruth_reviewed.jsonl \
+  --output benchmarks/contexttrace_bench/out/ragtruth_review_validation.json \
+  --require-reviewed \
+  --require-source-spans
+
 python benchmarks/contexttrace_bench/ragtruth_review.py apply \
   --case-pack benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
   --review benchmarks/contexttrace_bench/out/ragtruth_reviewed.jsonl \
