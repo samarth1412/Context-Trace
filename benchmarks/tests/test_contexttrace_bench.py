@@ -19,7 +19,11 @@ from benchmarks.contexttrace_bench.run_contexttrace import (
     write_benchmark_outputs,
 )
 from benchmarks.contexttrace_bench.ragtruth_adapter import adapt_ragtruth_rows
-from benchmarks.contexttrace_bench.ragtruth_review import apply_review_mappings, build_review_queue
+from benchmarks.contexttrace_bench.ragtruth_review import (
+    apply_review_mappings,
+    build_review_packet,
+    build_review_queue,
+)
 from benchmarks.contexttrace_bench.run_ragas import build_ragas_rows
 from benchmarks.contexttrace_bench.run_local_judge import _judge_prompt, _normalize_judge_output
 
@@ -385,6 +389,53 @@ def test_ragtruth_review_queue_and_mapping_updates_case_pack() -> None:
     assert reviewed_case["review_metadata"]["reviewed"] is True
     assert reviewed_case["review_metadata"]["reviewer"] == "unit-test"
     assert "human review artifacts" in reviewed["limitations"][0]
+
+
+def test_ragtruth_review_packet_renders_human_checklist() -> None:
+    case_pack = adapt_ragtruth_rows(
+        [
+            {
+                "id": "1472",
+                "source_id": "11316",
+                "labels": [
+                    {
+                        "start": 219,
+                        "end": 229,
+                        "text": "Gaza Strip",
+                        "label_type": "Evident Baseless Info",
+                    }
+                ],
+                "quality": "good",
+                "response": "The answer adds Gaza Strip.",
+            }
+        ],
+        source_rows=[
+            {
+                "source_id": "11316",
+                "task_type": "Summary",
+                "source": "CNN/DM",
+                "source_info": "The source article mentions East Jerusalem, not Gaza Strip. More source text follows.",
+                "prompt": "Summarize the following news.",
+            }
+        ],
+    )
+    queue = build_review_queue(case_pack, suggest_source_spans=True, max_suggestions=1)
+
+    packet = build_review_packet(
+        queue,
+        title="Unit Review Packet",
+        generated_at="2026-06-12T00:00:00+00:00",
+        context_char_limit=48,
+    )
+
+    assert "# Unit Review Packet" in packet
+    assert "Review rows: `1`" in packet
+    assert "## Reviewer Checklist" in packet
+    assert "## Case 1: `ragtruth_1472`" in packet
+    assert "Gaza Strip" in packet
+    assert "East Jerusalem" in packet
+    assert "source_evidence_spans" in packet
+    assert "Truncated in packet: `yes`" in packet
 
 
 def test_contexttrace_bench_runs_external_case_pack(tmp_path) -> None:
