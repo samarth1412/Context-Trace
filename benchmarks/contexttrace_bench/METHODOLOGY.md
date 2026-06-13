@@ -171,8 +171,21 @@ python benchmarks/contexttrace_bench/ragtruth_review.py build-queue \
 
 `--suggest-source-spans` pre-populates scored context snippets for reviewer
 convenience. These suggestions are not accepted evidence until a reviewer copies
-the correct text into `source_evidence_spans`, sets `review_status` to
-`reviewed`, `accepted`, or `approved`, and applies the file:
+the correct text into `source_evidence_spans`. Build a reviewer-facing Markdown
+packet from the queue when the mapping needs independent sign-off:
+
+```bash
+python benchmarks/contexttrace_bench/ragtruth_review.py build-packet \
+  --review-queue benchmarks/contexttrace_bench/out/ragtruth_review_queue.jsonl \
+  --output benchmarks/contexttrace_bench/out/ragtruth_review_packet.md \
+  --context-char-limit 6000
+```
+
+The packet contains reviewer instructions, a checklist, answer-side
+hallucination spans, suggested source snippets, and source-context excerpts.
+It is a human review aid; the JSONL queue remains the machine-readable artifact.
+After review, set `review_status` to `reviewed`, `accepted`, or `approved`, then
+apply the file:
 
 ```bash
 python benchmarks/contexttrace_bench/ragtruth_review.py apply \

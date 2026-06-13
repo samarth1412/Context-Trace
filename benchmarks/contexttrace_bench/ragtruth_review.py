@@ -131,6 +131,54 @@ def write_json(payload: dict[str, Any], path: str | Path) -> str:
     return str(output_path)
 
 
+def write_text(payload: str, path: str | Path) -> str:
+    output_path = Path(path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(payload, encoding="utf-8")
+    return str(output_path)
+
+
+def build_review_packet(
+    review_rows: list[dict[str, Any]],
+    *,
+    title: str = "RAGTruth Human Evidence Review Packet",
+    generated_at: str | None = None,
+    context_char_limit: int = 6000,
+) -> str:
+    generated = generated_at or datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+    context_limit = max(0, int(context_char_limit))
+    rows = [row for row in review_rows if isinstance(row, dict)]
+    lines = [
+        "# %s" % _markdown_text(title),
+        "",
+        "- Generated at: `%s`" % _markdown_text(generated),
+        "- Review rows: `%s`" % len(rows),
+        "",
+        "## Reviewer Instructions",
+        "",
+        "For each case, inspect the answer-side hallucination spans against the source contexts. "
+        "Copy only minimal source text that supports, contradicts, or bounds the labeled answer span into "
+        "`source_evidence_spans` in the JSONL review file. Do not accept machine suggestions unless the "
+        "source text actually supports the mapping.",
+        "",
+        "Use `review_status: reviewed`, `accepted`, or `approved` only after checking the source text. "
+        "Use `taxonomy_override` when the adapted label or root cause does not match the evidence.",
+        "",
+        "## Reviewer Checklist",
+        "",
+        "- Confirm the source context belongs to the same RAGTruth `source_id` as the response.",
+        "- Verify each answer hallucination span against source text, not against the model answer alone.",
+        "- Prefer the shortest source evidence span that preserves the needed meaning.",
+        "- Leave `source_evidence_spans` empty and add `review_notes` if no source span can fairly support the mapping.",
+        "- Check whether `expected_labels`, `expected_primary_root_cause`, or `expected_verdict_counts` need a taxonomy override.",
+        "- Record reviewer identity and review date before applying the reviewed JSONL.",
+        "",
+    ]
+    for index, row in enumerate(rows, start=1):
+        lines.extend(_review_packet_case(row, index=index, context_char_limit=context_limit))
+    return "\n".join(lines).rstrip() + "\n"
+
+
 def _review_row(
     case: dict[str, Any],
     spans: list[dict[str, Any]],
@@ -379,6 +427,138 @@ def _int_or_none(value: Any) -> int | None:
         return None
 
 
+def _review_packet_case(row: dict[str, Any], *, index: int, context_char_limit: int) -> list[str]:
+    case_id = str(row.get("case_id") or row.get("id") or "case_%s" % index)
+    lines = [
+        "## Case %s: `%s`" % (index, _markdown_text(case_id)),
+        "",
+        "| Field | Value |",
+        "| --- | --- |",
+        "| Review status | `%s` |" % _markdown_cell(row.get("review_status") or ""),
+        "| Source | %s |" % _markdown_cell(row.get("source") or ""),
+        "| Expected labels | `%s` |" % _markdown_cell(", ".join(str(item) for item in row.get("expected_labels") or [])),
+        "| Expected root cause | `%s` |" % _markdown_cell(row.get("expected_primary_root_cause") or ""),
+        "",
+        "### Query",
+        "",
+        _code_block(row.get("query") or ""),
+        "",
+        "### Answer",
+        "",
+        _code_block(row.get("answer") or ""),
+        "",
+        "### Answer Hallucination Spans",
+        "",
+    ]
+    spans = [span for span in row.get("answer_hallucination_spans") or [] if isinstance(span, dict)]
+    if spans:
+        lines.extend(
+            [
+                "| # | Label Type | Offsets | Text |",
+                "| ---: | --- | --- | --- |",
+            ]
+        )
+        for span_index, span in enumerate(spans, start=1):
+            offsets = "%s-%s" % (span.get("start", ""), span.get("end", ""))
+            lines.append(
+                "| %s | %s | `%s` | %s |"
+                % (
+                    span_index,
+                    _markdown_cell(span.get("label_type") or ""),
+                    _markdown_cell(offsets),
+                    _markdown_cell(span.get("text") or ""),
+                )
+            )
+    else:
+        lines.append("_No answer-side hallucination spans on this row._")
+    lines.extend(["", "### Source Evidence Suggestions", ""])
+    suggestions = [
+        suggestion
+        for suggestion in row.get("source_evidence_span_suggestions") or []
+        if isinstance(suggestion, dict)
+    ]
+    if suggestions:
+        lines.extend(
+            [
+                "| # | Score | Context | Answer Span | Suggested Source Text |",
+                "| ---: | ---: | --- | --- | --- |",
+            ]
+        )
+        for suggestion_index, suggestion in enumerate(suggestions, start=1):
+            lines.append(
+                "| %s | `%s` | `%s` | %s | %s |"
+                % (
+                    suggestion_index,
+                    _markdown_cell(suggestion.get("score") or ""),
+                    _markdown_cell(suggestion.get("context_id") or ""),
+                    _markdown_cell(suggestion.get("answer_span_text") or ""),
+                    _markdown_cell(suggestion.get("text") or ""),
+                )
+            )
+    else:
+        lines.append("_No machine suggestions were generated for this row._")
+
+    lines.extend(["", "### Source Contexts", ""])
+    contexts = [context for context in row.get("source_contexts") or [] if isinstance(context, dict)]
+    if contexts:
+        for context in contexts:
+            context_id = str(context.get("id") or "")
+            source_id = str(context.get("source_id") or "")
+            text = str(context.get("text") or "")
+            excerpt, truncated = _truncate_for_packet(text, context_char_limit)
+            lines.extend(
+                [
+                    "#### Context `%s`" % _markdown_text(context_id),
+                    "",
+                    "- RAGTruth source id: `%s`" % _markdown_text(source_id),
+                    "- Truncated in packet: `%s`" % ("yes" if truncated else "no"),
+                    "",
+                    _code_block(excerpt),
+                    "",
+                ]
+            )
+    else:
+        lines.append("_No source contexts are available for this row._")
+        lines.append("")
+
+    lines.extend(
+        [
+            "### Review Output Fields",
+            "",
+            "Fill these fields in the JSONL row after review:",
+            "",
+            "- `review_status`",
+            "- `reviewer`",
+            "- `reviewed_at`",
+            "- `review_notes`",
+            "- `source_evidence_spans`",
+            "- `taxonomy_override` if needed",
+            "",
+        ]
+    )
+    return lines
+
+
+def _truncate_for_packet(value: str, limit: int) -> tuple[str, bool]:
+    text = str(value or "")
+    if limit <= 0 or len(text) <= limit:
+        return text, False
+    return text[:limit].rstrip() + "\n[truncated]", True
+
+
+def _code_block(value: Any) -> str:
+    text = str(value or "").replace("```", "` ` `")
+    return "```text\n%s\n```" % text
+
+
+def _markdown_cell(value: Any) -> str:
+    return _markdown_text(value).replace("|", "\\|").replace("\n", "<br>")
+
+
+def _markdown_text(value: Any) -> str:
+    return str(value or "").replace("\r\n", "\n").replace("\r", "\n")
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Build or apply RAGTruth human-review mappings.")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -396,6 +576,12 @@ def main(argv: list[str] | None = None) -> int:
     apply_parser.add_argument("--output", required=True)
     apply_parser.add_argument("--require-reviewed", action="store_true")
 
+    packet_parser = subparsers.add_parser("build-packet", help="Build a Markdown packet from a JSONL review queue.")
+    packet_parser.add_argument("--review-queue", "--input", dest="review_queue", required=True)
+    packet_parser.add_argument("--output", required=True)
+    packet_parser.add_argument("--title", default="RAGTruth Human Evidence Review Packet")
+    packet_parser.add_argument("--context-char-limit", default=6000, type=int)
+
     args = parser.parse_args(argv)
     if args.command == "build-queue":
         rows = build_review_queue(
@@ -405,6 +591,18 @@ def main(argv: list[str] | None = None) -> int:
             max_suggestions=args.max_suggestions,
         )
         written = write_jsonl(rows, args.output)
+        print("Wrote %s" % written)
+        print("Review rows: %s" % len(rows))
+        return 0
+
+    if args.command == "build-packet":
+        rows = load_jsonl(args.review_queue)
+        packet = build_review_packet(
+            rows,
+            title=args.title,
+            context_char_limit=args.context_char_limit,
+        )
+        written = write_text(packet, args.output)
         print("Wrote %s" % written)
         print("Review rows: %s" % len(rows))
         return 0

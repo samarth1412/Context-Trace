@@ -277,6 +277,14 @@ python benchmarks/contexttrace_bench/ragtruth_review.py build-queue \
   --max-suggestions 3
 ```
 
+Build a reviewer-facing Markdown packet for independent sign-off:
+
+```bash
+python benchmarks/contexttrace_bench/ragtruth_review.py build-packet \
+  --review-queue benchmarks/contexttrace_bench/out/ragtruth_review_queue.jsonl \
+  --output benchmarks/contexttrace_bench/out/ragtruth_review_packet.md
+```
+
 After review, apply rows marked `reviewed`, `accepted`, or `approved` with
 `source_evidence_spans` filled:
 
