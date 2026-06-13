@@ -96,6 +96,18 @@ Inspect a portable trace before deeper debugging:
 contexttrace inspect traces/refund_trace.json
 ```
 
+Localize the likely root cause:
+
+```bash
+contexttrace diagnose traces/refund_trace.json --report --fail-on any_issue
+```
+
+Agent traces can use the same command:
+
+```bash
+contexttrace diagnose examples/diagnose_agent_trace.json --report --fail-on high_risk
+```
+
 Run the complete evidence QA workflow:
 
 ```bash

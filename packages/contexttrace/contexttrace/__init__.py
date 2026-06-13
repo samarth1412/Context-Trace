@@ -3,6 +3,8 @@ from contexttrace.capture import capture_rag_trace, langchain_documents_to_conte
 from contexttrace.capture_endpoint import EndpointCapture, capture_endpoint_trace, capture_response_trace
 from contexttrace.client import AsyncContextTrace, ContextTrace
 from contexttrace.config import ContextTraceConfig
+from contexttrace.diagnose import diagnose_payload, diagnose_trace_file
+from contexttrace.diagnose_report import DiagnoseReportGenerator
 from contexttrace.errors import (
     ContextTraceConfigError,
     ContextTraceError,
@@ -29,6 +31,7 @@ __all__ = [
     "ContextTraceLocalError",
     "ContextTraceLangGraphTracer",
     "ContextTraceLlamaIndexCallbackHandler",
+    "DiagnoseReportGenerator",
     "EndpointCapture",
     "OpenTelemetryExporter",
     "ReliabilityScore",
@@ -37,6 +40,8 @@ __all__ = [
     "capture_rag_trace",
     "capture_endpoint_trace",
     "capture_response_trace",
+    "diagnose_payload",
+    "diagnose_trace_file",
     "export_contexttrace_trace",
     "langchain_documents_to_contexts",
     "write_rag_trace",
