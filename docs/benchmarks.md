@@ -118,6 +118,18 @@ python benchmarks/contexttrace_bench/audit_diag150.py \
   --require-human-signoff
 ```
 
+Create a bundle for reviewer handoff or launch evidence:
+
+```bash
+python benchmarks/contexttrace_bench/audit_diag150.py \
+  --output-dir benchmarks/contexttrace_bench/out/public_holdout \
+  --bundle-dir benchmarks/contexttrace_bench/out/diag150_release_bundle
+```
+
+The bundle includes copied artifacts, `manifest.json`, SHA256 checksums, and a
+bundle README. It is marked `review_pending` until the completed human-review
+file passes the strict sign-off gate.
+
 Core metrics:
 
 - `failure_label_macro_f1`

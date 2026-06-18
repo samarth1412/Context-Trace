@@ -85,6 +85,17 @@ python benchmarks/contexttrace_bench/audit_diag150.py \
   --require-human-signoff
 ```
 
+- Create the reproducible release bundle:
+
+```bash
+python benchmarks/contexttrace_bench/audit_diag150.py \
+  --output-dir benchmarks/contexttrace_bench/out/public_holdout \
+  --bundle-dir benchmarks/contexttrace_bench/out/diag150_release_bundle
+```
+
+The bundle contains copied artifacts, `manifest.json`, SHA256 checksums, and a
+README. It remains `review_pending` until the strict human sign-off gate passes.
+
 - Rerun the OpenAI diagnostic judge or clearly mark the row stale.
 - Confirm `leaderboard.md`, `results.md`, `report.html`,
   `contexttrace_bench_results.json`, `error_analysis.md`,

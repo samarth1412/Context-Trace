@@ -100,6 +100,20 @@ python benchmarks/contexttrace_bench/audit_diag150.py \
   --require-human-signoff
 ```
 
+Create a release bundle for reviewers or launch evidence:
+
+```bash
+python benchmarks/contexttrace_bench/audit_diag150.py \
+  --output-dir benchmarks/contexttrace_bench/out/public_holdout \
+  --bundle-dir benchmarks/contexttrace_bench/out/diag150_release_bundle
+```
+
+The bundle copies the benchmark report, leaderboard, audit packet, validation
+JSON, candidate inputs, and audit report into one folder with `manifest.json`,
+SHA256 checksums, and a bundle README. It is marked `review_pending` until a
+completed independent review file passes `--require-human-signoff`; only then is
+the bundle marked `freeze_ready`.
+
 Enforce the current SOTA readiness gates:
 
 ```bash

@@ -41,6 +41,10 @@ Completed in the repo:
   JSON/Markdown packets, a human-review template, and validator output for case
   counts, source URL presence, evidence-span grounding, candidate-input leakage,
   artifact alignment, and independent sign-off completeness.
+- The same audit command can generate a reproducible release bundle with copied
+  artifacts, `manifest.json`, SHA256 checksums, and a bundle README. Bundles are
+  marked `review_pending`, `freeze_ready`, or `validation_failed` based on audit
+  validation and human sign-off state.
 - A RAGTruth external-validation adapter scaffold can build a ContextTrace-style
   case pack from `response.jsonl` and `source_info.jsonl`, with answer-side
   hallucination spans preserved for human evidence-span mapping.
@@ -138,6 +142,7 @@ python benchmarks/contexttrace_bench/run_contexttrace.py --mode semantic --case-
 python benchmarks/contexttrace_bench/run_contexttrace.py --mode semantic --case-set public_holdout --no-generated-cases --output-dir benchmarks/contexttrace_bench/out/public_holdout
 python benchmarks/contexttrace_bench/audit_diag150.py --output-dir benchmarks/contexttrace_bench/out/public_holdout
 python benchmarks/contexttrace_bench/audit_diag150.py --output-dir benchmarks/contexttrace_bench/out/public_holdout --review-file benchmarks/contexttrace_bench/out/public_holdout/diag150_human_review_template.json --require-human-signoff
+python benchmarks/contexttrace_bench/audit_diag150.py --output-dir benchmarks/contexttrace_bench/out/public_holdout --bundle-dir benchmarks/contexttrace_bench/out/diag150_release_bundle
 ```
 
 Remote baseline smoke test:
