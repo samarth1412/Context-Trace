@@ -6,6 +6,8 @@ from pathlib import Path
 from benchmarks.contexttrace_bench.adapt_candidate import adapt_candidate_rows
 from benchmarks.contexttrace_bench.audit_diag150 import (
     build_diag150_audit_packet,
+    build_human_review_template,
+    load_human_review_file,
     render_audit_packet_markdown,
     validate_diag150_audit_packet,
     write_diag150_audit_artifacts,
@@ -122,9 +124,121 @@ def test_diag150_audit_packet_validates_public_holdout() -> None:
     assert validation["status"] == "passed"
     assert validation["summary"]["errors"] == 0
     assert validation["summary"]["warnings"] == 1
-    assert validation["warnings"][0]["name"] == "independent_human_signoff_pending"
+    assert validation["warnings"][0]["name"] == "independent_human_signoff_complete"
     assert "ContextTrace-Diag-150 Audit Packet" in markdown
     assert "Reviewer Signoff" in markdown
+
+
+def test_diag150_audit_accepts_complete_independent_signoff(tmp_path) -> None:
+    result = run_contexttrace_benchmark(
+        mode="semantic",
+        case_set="public_holdout",
+        include_generated_cases=False,
+        bootstrap_samples=10,
+    )
+    candidate_inputs = [
+        json.loads(line)
+        for line in render_candidate_inputs_jsonl(result).splitlines()
+        if line.strip()
+    ]
+    packet = build_diag150_audit_packet(
+        result,
+        candidate_inputs=candidate_inputs,
+        commit="test-sha",
+        generated_at="2026-06-18T00:00:00+00:00",
+    )
+    review_template = build_human_review_template(packet)
+    for case in review_template["cases"]:
+        case.update(
+            {
+                "status": "signed_off",
+                "source_url_opened": True,
+                "context_fair": True,
+                "label_correct": True,
+                "evidence_span_minimal": True,
+                "reviewer": "independent-reviewer",
+                "reviewed_at": "2026-06-18",
+                "notes": "",
+            }
+        )
+    review_path = tmp_path / "diag150_human_review_template.json"
+    review_path.write_text(json.dumps(review_template), encoding="utf-8")
+    human_reviews = load_human_review_file(review_path)
+
+    signed_packet = build_diag150_audit_packet(
+        result,
+        candidate_inputs=candidate_inputs,
+        human_reviews=human_reviews,
+        commit="test-sha",
+        generated_at="2026-06-18T00:00:00+00:00",
+    )
+    validation = validate_diag150_audit_packet(
+        signed_packet,
+        result=result,
+        candidate_inputs=candidate_inputs,
+        require_human_signoff=True,
+    )
+
+    assert validation["status"] == "passed"
+    assert validation["summary"]["errors"] == 0
+    assert validation["summary"]["warnings"] == 0
+    assert all(case["human_review"]["status"] == "signed_off" for case in signed_packet["cases"])
+
+
+def test_diag150_audit_rejects_human_review_blockers() -> None:
+    result = run_contexttrace_benchmark(
+        mode="semantic",
+        case_set="public_holdout",
+        include_generated_cases=False,
+        bootstrap_samples=10,
+    )
+    candidate_inputs = [
+        json.loads(line)
+        for line in render_candidate_inputs_jsonl(result).splitlines()
+        if line.strip()
+    ]
+    packet = build_diag150_audit_packet(
+        result,
+        candidate_inputs=candidate_inputs,
+        commit="test-sha",
+        generated_at="2026-06-18T00:00:00+00:00",
+    )
+    review_template = build_human_review_template(packet)
+    for case in review_template["cases"]:
+        case.update(
+            {
+                "status": "signed_off",
+                "source_url_opened": True,
+                "context_fair": True,
+                "label_correct": True,
+                "evidence_span_minimal": True,
+                "reviewer": "independent-reviewer",
+                "reviewed_at": "2026-06-18",
+                "notes": "",
+            }
+        )
+    review_template["cases"][0]["status"] = "needs_changes"
+    review_template["cases"][0]["context_fair"] = False
+    review_template["cases"][0]["notes"] = "Source excerpt needs review."
+    human_reviews = {case["id"]: case for case in review_template["cases"]}
+
+    signed_packet = build_diag150_audit_packet(
+        result,
+        candidate_inputs=candidate_inputs,
+        human_reviews=human_reviews,
+        commit="test-sha",
+        generated_at="2026-06-18T00:00:00+00:00",
+    )
+    validation = validate_diag150_audit_packet(
+        signed_packet,
+        result=result,
+        candidate_inputs=candidate_inputs,
+        require_human_signoff=True,
+    )
+
+    assert validation["status"] == "failed"
+    assert any(check["name"] == "human_review_blockers" for check in validation["errors"])
+    assert any(check["name"] == "independent_human_signoff_complete" for check in validation["errors"])
 
 
 def test_diag150_audit_validator_rejects_candidate_label_leakage() -> None:

@@ -16,12 +16,14 @@ python benchmarks/contexttrace_bench/audit_diag150.py \
 ```
 
 It writes `diag150_audit_packet.json`, `diag150_audit_packet.md`,
-`diag150_audit_validation.json`, and an artifact-local `AUDIT_REPORT.md`.
+`diag150_human_review_template.json`, `diag150_audit_validation.json`, and an
+artifact-local `AUDIT_REPORT.md`.
 The validator checks case count, unique case IDs, generated-case exclusion,
 required label coverage, root-cause taxonomy, source URL presence,
 evidence-span grounding in context text, benchmark pass status, candidate-input
-ID alignment, and candidate-input label leakage. It intentionally leaves
-independent case-level human sign-off as a warning, not an automated pass.
+ID alignment, candidate-input label leakage, review blockers, and independent
+sign-off completeness. By default, incomplete human sign-off is a warning; use
+`--review-file ... --require-human-signoff` to make it a hard frozen-split gate.
 
 ## Automated Checks
 

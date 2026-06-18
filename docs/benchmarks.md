@@ -108,6 +108,16 @@ case-level labels, root causes, evidence spans, source URLs, benchmark
 predictions, blank human-review fields, and a JSON validator report for
 candidate-input leakage and artifact consistency.
 
+After an independent reviewer fills the generated
+`diag150_human_review_template.json`, enforce sign-off completeness:
+
+```bash
+python benchmarks/contexttrace_bench/audit_diag150.py \
+  --output-dir benchmarks/contexttrace_bench/out/public_holdout \
+  --review-file benchmarks/contexttrace_bench/out/public_holdout/diag150_human_review_template.json \
+  --require-human-signoff
+```
+
 Core metrics:
 
 - `failure_label_macro_f1`

@@ -44,6 +44,15 @@ The packet includes every case, source URL, expected label, root-cause label,
 evidence span, benchmark prediction, and blank human sign-off fields. The
 validator checks structural consistency, source URL presence, evidence-span
 grounding, candidate-input label leakage, case counts, and artifact alignment.
+It also writes `diag150_human_review_template.json`; after an independent
+reviewer fills it, enforce frozen-split readiness with:
+
+```bash
+python benchmarks/contexttrace_bench/audit_diag150.py \
+  --output-dir benchmarks/contexttrace_bench/out/public_holdout \
+  --review-file benchmarks/contexttrace_bench/out/public_holdout/diag150_human_review_template.json \
+  --require-human-signoff
+```
 
 ## Publication Policy
 

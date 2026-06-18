@@ -80,6 +80,13 @@ HUMAN_SIGNOFF_FIELDS = (
     "reviewed_at",
     "notes",
 )
+HUMAN_SIGNOFF_BOOLEAN_FIELDS = (
+    "source_url_opened",
+    "context_fair",
+    "label_correct",
+    "evidence_span_minimal",
+)
+HUMAN_REVIEW_BLOCKING_STATUSES = {"needs_changes", "rejected"}
 
 
 def load_benchmark_result(path: str | Path) -> dict[str, Any]:
@@ -103,10 +110,32 @@ def load_candidate_inputs(path: str | Path) -> list[dict[str, Any]]:
     return rows
 
 
+def load_human_review_file(path: str | Path) -> dict[str, dict[str, Any]]:
+    review_path = Path(path)
+    payload = json.loads(review_path.read_text(encoding="utf-8-sig"))
+    if not isinstance(payload, dict):
+        raise ValueError("Human review file must contain a JSON object.")
+    cases = payload.get("cases") or []
+    if not isinstance(cases, list):
+        raise ValueError("Human review file must contain a cases list.")
+    reviews: dict[str, dict[str, Any]] = {}
+    for index, item in enumerate(cases, start=1):
+        if not isinstance(item, dict):
+            raise ValueError("Human review case %s must be a JSON object." % index)
+        case_id = str(item.get("id") or "").strip()
+        if not case_id:
+            raise ValueError("Human review case %s is missing id." % index)
+        if case_id in reviews:
+            raise ValueError("Human review file repeats case id %s." % case_id)
+        reviews[case_id] = dict(item)
+    return reviews
+
+
 def build_diag150_audit_packet(
     result: dict[str, Any],
     *,
     candidate_inputs: list[dict[str, Any]] | None = None,
+    human_reviews: dict[str, dict[str, Any]] | None = None,
     artifact_paths: dict[str, str] | None = None,
     reviewer: str = "Pending",
     audit_status: str = "pending_human_signoff",
@@ -114,7 +143,13 @@ def build_diag150_audit_packet(
     generated_at: str | None = None,
 ) -> dict[str, Any]:
     rows = [row for row in result.get("rows") or [] if isinstance(row, dict)]
-    cases = [_audit_case(row) for row in rows]
+    cases = []
+    for row in rows:
+        case = _audit_case(row)
+        review = (human_reviews or {}).get(str(case.get("id") or ""))
+        if review is not None:
+            case["human_review"] = _normalized_human_review(review)
+        cases.append(case)
     label_distribution = Counter(label for row in rows for label in row.get("expected") or [])
     label_set_distribution = Counter(_label_set_key(row.get("expected") or []) for row in rows)
     source_family_distribution = Counter(
@@ -156,6 +191,7 @@ def validate_diag150_audit_packet(
     result: dict[str, Any] | None = None,
     candidate_inputs: list[dict[str, Any]] | None = None,
     required_case_count: int = REQUIRED_CASE_COUNT,
+    require_human_signoff: bool = False,
 ) -> dict[str, Any]:
     checks: list[dict[str, Any]] = []
     cases = [case for case in packet.get("cases") or [] if isinstance(case, dict)]
@@ -212,13 +248,29 @@ def validate_diag150_audit_packet(
     signed_cases = [
         case.get("id")
         for case in cases
-        if (case.get("human_review") or {}).get("status") == "signed_off"
+        if _human_review_signed_off(case.get("human_review") or {})
+    ]
+    review_blockers = [
+        {
+            "case_id": case.get("id"),
+            "status": (case.get("human_review") or {}).get("status"),
+            "notes": (case.get("human_review") or {}).get("notes"),
+        }
+        for case in cases
+        if _human_review_blocked(case.get("human_review") or {})
     ]
     _add_check(
         checks,
-        "independent_human_signoff_pending",
+        "human_review_blockers",
+        not review_blockers,
+        "error",
+        review_blockers[:25],
+    )
+    _add_check(
+        checks,
+        "independent_human_signoff_complete",
         len(signed_cases) == len(cases),
-        "warning",
+        "error" if require_human_signoff else "warning",
         {"signed_off": len(signed_cases), "required": len(cases)},
     )
 
@@ -238,6 +290,34 @@ def validate_diag150_audit_packet(
         "checks": checks,
         "errors": errors,
         "warnings": warnings,
+    }
+
+
+def build_human_review_template(packet: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "benchmark": packet.get("benchmark"),
+        "case_set": packet.get("case_set"),
+        "audit_packet_commit": packet.get("commit"),
+        "audit_packet_generated_at": packet.get("generated_at"),
+        "instructions": (
+            "Fill every case with status signed_off only after opening the source URL, "
+            "checking context fairness, confirming labels, and confirming the evidence span. "
+            "Use status needs_changes for any blocker; do not edit benchmark labels in this file."
+        ),
+        "cases": [
+            {
+                "id": case.get("id"),
+                "status": "pending",
+                "source_url_opened": None,
+                "context_fair": None,
+                "label_correct": None,
+                "evidence_span_minimal": None,
+                "reviewer": "",
+                "reviewed_at": "",
+                "notes": "",
+            }
+            for case in packet.get("cases") or []
+        ],
     }
 
 
@@ -298,6 +378,8 @@ def render_audit_report_markdown(packet: dict[str, Any], validation: dict[str, A
     status = "Passed automated validation; independent human sign-off still required."
     if validation.get("status") != "passed":
         status = "Failed automated validation; fix blockers before human sign-off."
+    elif _validation_check_passed(validation, "independent_human_signoff_complete"):
+        status = "Passed automated validation and independent human sign-off is complete."
     lines = [
         "# ContextTrace-Diag-150 Automated Audit Report",
         "",
@@ -361,11 +443,13 @@ def write_diag150_audit_artifacts(
     *,
     output_dir: str | Path = DEFAULT_AUDIT_OUTPUT_DIR,
     candidate_inputs: list[dict[str, Any]] | None = None,
+    human_reviews: dict[str, dict[str, Any]] | None = None,
     artifact_paths: dict[str, str] | None = None,
     reviewer: str = "Pending",
     audit_status: str = "pending_human_signoff",
     commit: str | None = None,
     update_report_path: str | Path | None = None,
+    require_human_signoff: bool = False,
 ) -> dict[str, str]:
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
@@ -378,24 +462,39 @@ def write_diag150_audit_artifacts(
     packet = build_diag150_audit_packet(
         result,
         candidate_inputs=candidate_inputs,
+        human_reviews=human_reviews,
         artifact_paths=artifact_paths,
         reviewer=reviewer,
         audit_status=audit_status,
         commit=commit,
     )
-    validation = validate_diag150_audit_packet(packet, result=result, candidate_inputs=candidate_inputs)
+    if human_reviews is not None:
+        packet["status"] = (
+            "human_signed_off"
+            if all(_human_review_signed_off(case.get("human_review") or {}) for case in packet.get("cases") or [])
+            else "human_review_incomplete"
+        )
+    validation = validate_diag150_audit_packet(
+        packet,
+        result=result,
+        candidate_inputs=candidate_inputs,
+        require_human_signoff=require_human_signoff,
+    )
     packet_json_path = output_path / "diag150_audit_packet.json"
     packet_md_path = output_path / "diag150_audit_packet.md"
+    review_template_path = output_path / "diag150_human_review_template.json"
     validation_path = output_path / "diag150_audit_validation.json"
     report_path = output_path / "AUDIT_REPORT.md"
     packet_json_path.write_text(json.dumps(packet, indent=2, sort_keys=True), encoding="utf-8")
     packet_md_path.write_text(render_audit_packet_markdown(packet), encoding="utf-8")
+    review_template_path.write_text(json.dumps(build_human_review_template(packet), indent=2, sort_keys=True), encoding="utf-8")
     validation_path.write_text(json.dumps(validation, indent=2, sort_keys=True), encoding="utf-8")
     report = render_audit_report_markdown(packet, validation)
     report_path.write_text(report, encoding="utf-8")
     paths = {
         "audit_packet_json": str(packet_json_path),
         "audit_packet_md": str(packet_md_path),
+        "human_review_template_json": str(review_template_path),
         "audit_validation_json": str(validation_path),
         "audit_report_md": str(report_path),
     }
@@ -417,6 +516,44 @@ def current_git_commit() -> str:
     except (OSError, subprocess.CalledProcessError):
         return "unknown"
     return completed.stdout.strip() or "unknown"
+
+
+def _normalized_human_review(review: dict[str, Any]) -> dict[str, Any]:
+    normalized = {
+        "status": str(review.get("status") or "pending"),
+        "source_url_opened": review.get("source_url_opened"),
+        "context_fair": review.get("context_fair"),
+        "label_correct": review.get("label_correct"),
+        "evidence_span_minimal": review.get("evidence_span_minimal"),
+        "reviewer": str(review.get("reviewer") or ""),
+        "reviewed_at": str(review.get("reviewed_at") or ""),
+        "notes": str(review.get("notes") or ""),
+    }
+    return normalized
+
+
+def _human_review_signed_off(review: dict[str, Any]) -> bool:
+    if str(review.get("status") or "") != "signed_off":
+        return False
+    if not str(review.get("reviewer") or "").strip():
+        return False
+    if not str(review.get("reviewed_at") or "").strip():
+        return False
+    return all(review.get(field) is True for field in HUMAN_SIGNOFF_BOOLEAN_FIELDS)
+
+
+def _human_review_blocked(review: dict[str, Any]) -> bool:
+    status = str(review.get("status") or "")
+    if status in HUMAN_REVIEW_BLOCKING_STATUSES:
+        return True
+    return any(review.get(field) is False for field in HUMAN_SIGNOFF_BOOLEAN_FIELDS)
+
+
+def _validation_check_passed(validation: dict[str, Any], name: str) -> bool:
+    for check in validation.get("checks") or []:
+        if check.get("name") == name:
+            return check.get("status") == "passed"
+    return False
 
 
 def _audit_case(row: dict[str, Any]) -> dict[str, Any]:
@@ -586,6 +723,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output-dir", default=str(DEFAULT_AUDIT_OUTPUT_DIR))
     parser.add_argument("--results", default=None, help="Existing contexttrace_bench_results.json path.")
     parser.add_argument("--candidate-inputs", default=None, help="Existing candidate_inputs.jsonl path.")
+    parser.add_argument("--review-file", default=None, help="Completed diag150_human_review_template.json with independent signoff fields filled.")
+    parser.add_argument("--require-human-signoff", action="store_true", help="Fail validation unless every case has complete independent signoff.")
     parser.add_argument("--regenerate", action="store_true", help="Regenerate the public_holdout benchmark artifacts before auditing.")
     parser.add_argument("--bootstrap-samples", default=400, type=int, help="Bootstrap samples when --regenerate is used.")
     parser.add_argument("--reviewer", default="Pending")
@@ -612,14 +751,21 @@ def main(argv: list[str] | None = None) -> int:
     candidate_inputs = load_candidate_inputs(candidate_path) if candidate_path.exists() else None
     if candidate_path.exists():
         artifact_paths["candidate_inputs_jsonl"] = str(candidate_path)
+    human_reviews = None
+    if args.review_file:
+        review_path = Path(args.review_file)
+        human_reviews = load_human_review_file(review_path)
+        artifact_paths["human_review_file"] = str(review_path)
 
     paths = write_diag150_audit_artifacts(
         result,
         output_dir=output_dir,
         candidate_inputs=candidate_inputs,
+        human_reviews=human_reviews,
         artifact_paths=artifact_paths,
         reviewer=args.reviewer,
         audit_status=args.audit_status,
+        require_human_signoff=args.require_human_signoff,
         update_report_path=DEFAULT_CANONICAL_REPORT_PATH if args.update_report else None,
     )
     validation = json.loads(Path(paths["audit_validation_json"]).read_text(encoding="utf-8"))
