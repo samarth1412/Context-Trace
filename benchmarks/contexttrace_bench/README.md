@@ -114,6 +114,20 @@ SHA256 checksums, and a bundle README. It is marked `review_pending` until a
 completed independent review file passes `--require-human-signoff`; only then is
 the bundle marked `freeze_ready`.
 
+Run the complete release evidence workflow in one command:
+
+```bash
+python benchmarks/contexttrace_bench/diag150_release_workflow.py \
+  --output-dir benchmarks/contexttrace_bench/out/public_holdout \
+  --bundle-dir benchmarks/contexttrace_bench/out/diag150_release_bundle
+```
+
+This regenerates the holdout benchmark, scores any known candidate prediction
+files already present in the output directory, refreshes the audit packet, writes
+the release bundle, and prints the final status. Add `--review-file ...` and
+`--require-human-signoff` after independent review to make frozen-split
+readiness a hard gate.
+
 Enforce the current SOTA readiness gates:
 
 ```bash
