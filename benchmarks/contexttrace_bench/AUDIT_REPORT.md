@@ -6,6 +6,23 @@ Scope: `public_holdout` 150-case machine-assisted audit and assisted source revi
 Status: Automated checks and assisted source review passed; independent human
 sign-off still required before frozen-split language.
 
+## Machine-Checkable Packet
+
+ContextTrace-Diag-150 now has a reproducible audit packet generator:
+
+```bash
+python benchmarks/contexttrace_bench/audit_diag150.py \
+  --output-dir benchmarks/contexttrace_bench/out/public_holdout
+```
+
+It writes `diag150_audit_packet.json`, `diag150_audit_packet.md`,
+`diag150_audit_validation.json`, and an artifact-local `AUDIT_REPORT.md`.
+The validator checks case count, unique case IDs, generated-case exclusion,
+required label coverage, root-cause taxonomy, source URL presence,
+evidence-span grounding in context text, benchmark pass status, candidate-input
+ID alignment, and candidate-input label leakage. It intentionally leaves
+independent case-level human sign-off as a warning, not an automated pass.
+
 ## Automated Checks
 
 | Check | Result |
