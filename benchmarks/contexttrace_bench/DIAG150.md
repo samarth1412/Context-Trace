@@ -54,6 +54,17 @@ python benchmarks/contexttrace_bench/audit_diag150.py \
   --require-human-signoff
 ```
 
+Create a release bundle with copied artifacts, checksums, and a manifest:
+
+```bash
+python benchmarks/contexttrace_bench/audit_diag150.py \
+  --output-dir benchmarks/contexttrace_bench/out/public_holdout \
+  --bundle-dir benchmarks/contexttrace_bench/out/diag150_release_bundle
+```
+
+The bundle status is `review_pending`, `freeze_ready`, or `validation_failed`
+depending on the audit validation and human sign-off state.
+
 ## Publication Policy
 
 Do not describe this as a broad state-of-the-art result until all are true:

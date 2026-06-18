@@ -25,6 +25,18 @@ ID alignment, candidate-input label leakage, review blockers, and independent
 sign-off completeness. By default, incomplete human sign-off is a warning; use
 `--review-file ... --require-human-signoff` to make it a hard frozen-split gate.
 
+The audit command can also write a release bundle with copied artifacts,
+`manifest.json`, SHA256 checksums, and a bundle README:
+
+```bash
+python benchmarks/contexttrace_bench/audit_diag150.py \
+  --output-dir benchmarks/contexttrace_bench/out/public_holdout \
+  --bundle-dir benchmarks/contexttrace_bench/out/diag150_release_bundle
+```
+
+The bundle status remains `review_pending` until the strict independent sign-off
+gate passes.
+
 ## Automated Checks
 
 | Check | Result |

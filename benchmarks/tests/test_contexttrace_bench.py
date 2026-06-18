@@ -11,6 +11,7 @@ from benchmarks.contexttrace_bench.audit_diag150 import (
     render_audit_packet_markdown,
     validate_diag150_audit_packet,
     write_diag150_audit_artifacts,
+    write_diag150_release_bundle,
 )
 from benchmarks.contexttrace_bench.baseline_common import load_candidate_inputs, write_json
 from benchmarks.contexttrace_bench.run_deepeval import build_deepeval_rows
@@ -296,6 +297,94 @@ def test_diag150_audit_artifacts_are_written(tmp_path) -> None:
     assert packet["case_count"] == 150
     assert validation["status"] == "passed"
     assert "Automated Audit Report" in (tmp_path / "AUDIT_REPORT.md").read_text(encoding="utf-8")
+
+
+def test_diag150_release_bundle_marks_review_pending(tmp_path) -> None:
+    result = run_contexttrace_benchmark(
+        mode="semantic",
+        case_set="public_holdout",
+        include_generated_cases=False,
+        bootstrap_samples=10,
+    )
+    artifact_dir = tmp_path / "artifacts"
+    write_benchmark_outputs(result, output_dir=artifact_dir)
+    write_diag150_audit_artifacts(result, output_dir=artifact_dir, commit="test-sha")
+
+    paths = write_diag150_release_bundle(
+        output_dir=artifact_dir,
+        bundle_dir=tmp_path / "bundle",
+    )
+
+    manifest = json.loads((tmp_path / "bundle" / "manifest.json").read_text(encoding="utf-8"))
+    readme = (tmp_path / "bundle" / "README.md").read_text(encoding="utf-8")
+    assert paths["manifest_json"].endswith("manifest.json")
+    assert manifest["bundle_status"] == "review_pending"
+    assert manifest["human_signoff_complete"] is False
+    assert manifest["missing_required_artifacts"] == []
+    assert any(artifact["path"] == "diag150_audit_packet.md" for artifact in manifest["artifacts"])
+    assert all(len(artifact["sha256"]) == 64 for artifact in manifest["artifacts"])
+    assert "reviewer handoff" in readme
+
+
+def test_diag150_release_bundle_marks_freeze_ready_with_signoff(tmp_path) -> None:
+    result = run_contexttrace_benchmark(
+        mode="semantic",
+        case_set="public_holdout",
+        include_generated_cases=False,
+        bootstrap_samples=10,
+    )
+    candidate_inputs = [
+        json.loads(line)
+        for line in render_candidate_inputs_jsonl(result).splitlines()
+        if line.strip()
+    ]
+    packet = build_diag150_audit_packet(
+        result,
+        candidate_inputs=candidate_inputs,
+        commit="test-sha",
+        generated_at="2026-06-18T00:00:00+00:00",
+    )
+    review_template = build_human_review_template(packet)
+    for case in review_template["cases"]:
+        case.update(
+            {
+                "status": "signed_off",
+                "source_url_opened": True,
+                "context_fair": True,
+                "label_correct": True,
+                "evidence_span_minimal": True,
+                "reviewer": "independent-reviewer",
+                "reviewed_at": "2026-06-18",
+                "notes": "",
+            }
+        )
+    review_path = tmp_path / "completed_review.json"
+    review_path.write_text(json.dumps(review_template), encoding="utf-8")
+    human_reviews = load_human_review_file(review_path)
+    artifact_dir = tmp_path / "artifacts"
+    write_benchmark_outputs(result, output_dir=artifact_dir)
+    write_diag150_audit_artifacts(
+        result,
+        output_dir=artifact_dir,
+        candidate_inputs=candidate_inputs,
+        human_reviews=human_reviews,
+        commit="test-sha",
+        require_human_signoff=True,
+    )
+
+    write_diag150_release_bundle(
+        output_dir=artifact_dir,
+        bundle_dir=tmp_path / "bundle",
+        review_file=review_path,
+        require_human_signoff=True,
+    )
+
+    manifest = json.loads((tmp_path / "bundle" / "manifest.json").read_text(encoding="utf-8"))
+    readme = (tmp_path / "bundle" / "README.md").read_text(encoding="utf-8")
+    assert manifest["bundle_status"] == "freeze_ready"
+    assert manifest["human_signoff_complete"] is True
+    assert any(artifact["path"] == "diag150_human_review_signoff.json" for artifact in manifest["artifacts"])
+    assert "passed automated validation and independent human signoff" in readme
 
 
 def test_contexttrace_bench_markdown_outputs(tmp_path) -> None:

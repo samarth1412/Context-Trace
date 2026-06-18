@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import shutil
 import subprocess
 from collections import Counter
 from datetime import datetime, timezone
@@ -26,6 +28,7 @@ except ModuleNotFoundError:  # pragma: no cover
 
 
 DEFAULT_AUDIT_OUTPUT_DIR = DEFAULT_OUTPUT_DIR / "public_holdout"
+DEFAULT_RELEASE_BUNDLE_DIR = DEFAULT_OUTPUT_DIR / "diag150_release_bundle"
 DEFAULT_RESULTS_PATH = DEFAULT_AUDIT_OUTPUT_DIR / "contexttrace_bench_results.json"
 DEFAULT_CANDIDATE_INPUTS_PATH = DEFAULT_AUDIT_OUTPUT_DIR / "candidate_inputs.jsonl"
 DEFAULT_CANONICAL_REPORT_PATH = Path(__file__).with_name("AUDIT_REPORT.md")
@@ -87,6 +90,25 @@ HUMAN_SIGNOFF_BOOLEAN_FIELDS = (
     "evidence_span_minimal",
 )
 HUMAN_REVIEW_BLOCKING_STATUSES = {"needs_changes", "rejected"}
+RELEASE_BUNDLE_ARTIFACTS = (
+    "contexttrace_bench_results.json",
+    "results.md",
+    "leaderboard.md",
+    "report.html",
+    "error_analysis.json",
+    "error_analysis.md",
+    "candidate_inputs.jsonl",
+    "diag150_audit_packet.json",
+    "diag150_audit_packet.md",
+    "diag150_human_review_template.json",
+    "diag150_audit_validation.json",
+    "AUDIT_REPORT.md",
+)
+OPTIONAL_RELEASE_BUNDLE_ARTIFACTS = (
+    "baseline_results.json",
+    "openai_diagnostic_judge_predictions.json",
+    "openai_diagnostic_judge_raw_results.json",
+)
 
 
 def load_benchmark_result(path: str | Path) -> dict[str, Any]:
@@ -505,6 +527,200 @@ def write_diag150_audit_artifacts(
     return paths
 
 
+def write_diag150_release_bundle(
+    *,
+    output_dir: str | Path = DEFAULT_AUDIT_OUTPUT_DIR,
+    bundle_dir: str | Path = DEFAULT_RELEASE_BUNDLE_DIR,
+    review_file: str | Path | None = None,
+    require_human_signoff: bool = False,
+) -> dict[str, str]:
+    source_dir = Path(output_dir)
+    bundle_path = Path(bundle_dir)
+    bundle_path.mkdir(parents=True, exist_ok=True)
+    validation_path = source_dir / "diag150_audit_validation.json"
+    packet_path = source_dir / "diag150_audit_packet.json"
+    if not validation_path.exists():
+        raise FileNotFoundError("Missing audit validation artifact: %s" % validation_path)
+    if not packet_path.exists():
+        raise FileNotFoundError("Missing audit packet artifact: %s" % packet_path)
+
+    validation = json.loads(validation_path.read_text(encoding="utf-8"))
+    packet = json.loads(packet_path.read_text(encoding="utf-8"))
+    artifacts = []
+    missing_required = []
+    for name in RELEASE_BUNDLE_ARTIFACTS:
+        source = source_dir / name
+        if not source.exists():
+            missing_required.append(name)
+            continue
+        artifacts.append(_copy_bundle_artifact(source, bundle_path / name, required=True))
+    if review_file is not None:
+        review_source = Path(review_file)
+        if review_source.exists():
+            artifacts.append(_copy_bundle_artifact(review_source, bundle_path / "diag150_human_review_signoff.json", required=True))
+        else:
+            missing_required.append(str(review_source))
+    for name in OPTIONAL_RELEASE_BUNDLE_ARTIFACTS:
+        source = source_dir / name
+        if source.exists():
+            artifacts.append(_copy_bundle_artifact(source, bundle_path / name, required=False))
+
+    human_signoff_complete = _validation_check_passed(validation, "independent_human_signoff_complete")
+    if missing_required:
+        bundle_status = "validation_failed"
+    elif validation.get("status") != "passed":
+        bundle_status = "validation_failed"
+    elif human_signoff_complete:
+        bundle_status = "freeze_ready"
+    else:
+        bundle_status = "review_pending"
+    if require_human_signoff and not human_signoff_complete:
+        bundle_status = "validation_failed"
+
+    manifest = {
+        "benchmark": "ContextTrace-Diag-150",
+        "bundle_version": 1,
+        "bundle_status": bundle_status,
+        "generated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
+        "commit": packet.get("commit") or current_git_commit(),
+        "case_set": packet.get("case_set"),
+        "case_count": packet.get("case_count"),
+        "source_output_dir": str(source_dir),
+        "require_human_signoff": bool(require_human_signoff),
+        "human_signoff_complete": bool(human_signoff_complete),
+        "validation_status": validation.get("status"),
+        "validation_summary": validation.get("summary") or {},
+        "missing_required_artifacts": missing_required,
+        "summary": packet.get("summary") or {},
+        "confidence_intervals": packet.get("confidence_intervals") or {},
+        "artifacts": artifacts,
+        "claim_policy": _bundle_claim_policy(bundle_status),
+    }
+    manifest_path = bundle_path / "manifest.json"
+    readme_path = bundle_path / "README.md"
+    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
+    readme_path.write_text(render_release_bundle_readme(manifest), encoding="utf-8")
+    return {
+        "bundle_dir": str(bundle_path),
+        "manifest_json": str(manifest_path),
+        "readme_md": str(readme_path),
+    }
+
+
+def render_release_bundle_readme(manifest: dict[str, Any]) -> str:
+    status = manifest.get("bundle_status")
+    lines = [
+        "# ContextTrace-Diag-150 Release Bundle",
+        "",
+        "Status: `%s`" % status,
+        "Commit: `%s`" % manifest.get("commit"),
+        "Case set: `%s`" % manifest.get("case_set"),
+        "Cases: `%s`" % manifest.get("case_count"),
+        "Generated: `%s`" % manifest.get("generated_at"),
+        "",
+        "## Claim Policy",
+        "",
+        _bundle_claim_policy(str(status)),
+        "",
+        "## Headline Metrics",
+        "",
+        "| Metric | Value |",
+        "| --- | ---: |",
+        "| Failure macro-F1 | %s |" % _manifest_metric(manifest, "failure_label_macro_f1"),
+        "| Claim-verdict macro-F1 | %s |" % _manifest_metric(manifest, "claim_verdict_macro_f1"),
+        "| Root-cause accuracy | %s |" % _manifest_metric(manifest, "root_cause_accuracy"),
+        "| Citation error F1 | %s |" % _manifest_metric(manifest, "citation_error_f1"),
+        "| Evidence span overlap | %s |" % _manifest_metric(manifest, "evidence_span_overlap"),
+        "| Dangerous false-green rate | %s |" % _manifest_metric(manifest, "dangerous_false_green_rate"),
+        "",
+        "## Validation",
+        "",
+        "- Validation status: `%s`" % manifest.get("validation_status"),
+        "- Human signoff complete: `%s`" % manifest.get("human_signoff_complete"),
+        "- Required human signoff: `%s`" % manifest.get("require_human_signoff"),
+        "- Missing required artifacts: `%s`" % len(manifest.get("missing_required_artifacts") or []),
+        "",
+        "## Artifacts",
+        "",
+        "| File | Bytes | SHA256 | Required |",
+        "| --- | ---: | --- | --- |",
+    ]
+    for artifact in manifest.get("artifacts") or []:
+        lines.append(
+            "| `%s` | %s | `%s` | `%s` |"
+            % (
+                artifact.get("path"),
+                artifact.get("bytes"),
+                artifact.get("sha256"),
+                artifact.get("required"),
+            )
+        )
+    lines.extend(
+        [
+            "",
+            "## Reproduce",
+            "",
+            "```bash",
+            "python benchmarks/contexttrace_bench/run_contexttrace.py \\",
+            "  --mode semantic \\",
+            "  --case-set public_holdout \\",
+            "  --no-generated-cases \\",
+            "  --output-dir benchmarks/contexttrace_bench/out/public_holdout",
+            "python benchmarks/contexttrace_bench/audit_diag150.py \\",
+            "  --output-dir benchmarks/contexttrace_bench/out/public_holdout \\",
+            "  --bundle-dir benchmarks/contexttrace_bench/out/diag150_release_bundle",
+            "```",
+            "",
+        ]
+    )
+    return "\n".join(lines)
+
+
+def _copy_bundle_artifact(source: Path, destination: Path, *, required: bool) -> dict[str, Any]:
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(source, destination)
+    return {
+        "name": source.name,
+        "path": destination.name,
+        "source_path": str(source),
+        "bytes": destination.stat().st_size,
+        "sha256": _sha256_file(destination),
+        "required": bool(required),
+    }
+
+
+def _sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _bundle_claim_policy(status: str) -> str:
+    if status == "freeze_ready":
+        return (
+            "This bundle passed automated validation and independent human signoff. "
+            "It can support frozen ContextTrace-Diag-150 split language, but broad SOTA "
+            "claims still require external dataset validation and competitor rows."
+        )
+    if status == "review_pending":
+        return (
+            "This bundle passed automated validation, but independent human signoff is pending. "
+            "Use it for reviewer handoff and reproducibility, not frozen-split or broad SOTA claims."
+        )
+    return (
+        "This bundle did not pass the required validation gates. Do not use it for public claims."
+    )
+
+
+def _manifest_metric(manifest: dict[str, Any], key: str) -> str:
+    value = (manifest.get("summary") or {}).get(key)
+    if isinstance(value, float):
+        return "%.3f" % value
+    return str(value)
+
+
 def current_git_commit() -> str:
     try:
         completed = subprocess.run(
@@ -725,6 +941,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--candidate-inputs", default=None, help="Existing candidate_inputs.jsonl path.")
     parser.add_argument("--review-file", default=None, help="Completed diag150_human_review_template.json with independent signoff fields filled.")
     parser.add_argument("--require-human-signoff", action="store_true", help="Fail validation unless every case has complete independent signoff.")
+    parser.add_argument("--bundle-dir", default=None, help="Write a Diag-150 release bundle with copied artifacts, checksums, manifest, and README.")
     parser.add_argument("--regenerate", action="store_true", help="Regenerate the public_holdout benchmark artifacts before auditing.")
     parser.add_argument("--bootstrap-samples", default=400, type=int, help="Bootstrap samples when --regenerate is used.")
     parser.add_argument("--reviewer", default="Pending")
@@ -771,6 +988,16 @@ def main(argv: list[str] | None = None) -> int:
     validation = json.loads(Path(paths["audit_validation_json"]).read_text(encoding="utf-8"))
     print("Audit packet: %s" % paths["audit_packet_md"])
     print("Validation: %s" % paths["audit_validation_json"])
+    bundle_paths = None
+    if args.bundle_dir:
+        bundle_paths = write_diag150_release_bundle(
+            output_dir=output_dir,
+            bundle_dir=args.bundle_dir,
+            review_file=args.review_file,
+            require_human_signoff=args.require_human_signoff,
+        )
+        print("Release bundle: %s" % bundle_paths["bundle_dir"])
+        print("Bundle manifest: %s" % bundle_paths["manifest_json"])
     print("Status: %s" % validation.get("status"))
     return 1 if validation.get("status") != "passed" else 0
 
