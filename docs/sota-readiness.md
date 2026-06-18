@@ -38,9 +38,9 @@ Completed in the repo:
   JSON/Markdown with confusion pairs and cases to inspect.
 - ContextTrace-Diag-150 now has a machine-checkable audit packet generator:
   `benchmarks/contexttrace_bench/audit_diag150.py`. It emits reviewer-ready
-  JSON/Markdown packets plus validator output for case counts, source URL
-  presence, evidence-span grounding, candidate-input leakage, and artifact
-  alignment.
+  JSON/Markdown packets, a human-review template, and validator output for case
+  counts, source URL presence, evidence-span grounding, candidate-input leakage,
+  artifact alignment, and independent sign-off completeness.
 - A RAGTruth external-validation adapter scaffold can build a ContextTrace-style
   case pack from `response.jsonl` and `source_info.jsonl`, with answer-side
   hallucination spans preserved for human evidence-span mapping.
@@ -79,7 +79,8 @@ Still pending for Week 1:
   work is tracked in GitHub issues #3, #4, and #5.
 - Complete human audit sign-off for ContextTrace-Diag-150 before using
   frozen-split language. Use `audit_diag150.py` to generate the reviewer packet
-  and validation artifacts before the independent review.
+  and validation artifacts before the independent review, then rerun it with
+  `--review-file` and `--require-human-signoff`.
 - Review generated `leaderboard.md` and `report.html` before using them in public
   material.
 
@@ -136,6 +137,7 @@ python -m pytest benchmarks/tests/test_contexttrace_bench.py packages/contexttra
 python benchmarks/contexttrace_bench/run_contexttrace.py --mode semantic --case-set all --enforce-sota-gates
 python benchmarks/contexttrace_bench/run_contexttrace.py --mode semantic --case-set public_holdout --no-generated-cases --output-dir benchmarks/contexttrace_bench/out/public_holdout
 python benchmarks/contexttrace_bench/audit_diag150.py --output-dir benchmarks/contexttrace_bench/out/public_holdout
+python benchmarks/contexttrace_bench/audit_diag150.py --output-dir benchmarks/contexttrace_bench/out/public_holdout --review-file benchmarks/contexttrace_bench/out/public_holdout/diag150_human_review_template.json --require-human-signoff
 ```
 
 Remote baseline smoke test:

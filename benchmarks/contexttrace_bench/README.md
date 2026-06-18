@@ -86,9 +86,19 @@ python benchmarks/contexttrace_bench/audit_diag150.py \
 ```
 
 This writes `diag150_audit_packet.json`, `diag150_audit_packet.md`,
-`diag150_audit_validation.json`, and an artifact-local `AUDIT_REPORT.md`. Use
-the Markdown packet for case-level sign-off and the validation JSON to prove the
-candidate input export has not leaked labels.
+`diag150_human_review_template.json`, `diag150_audit_validation.json`, and an
+artifact-local `AUDIT_REPORT.md`. Use the Markdown packet for case-level
+sign-off and the validation JSON to prove the candidate input export has not
+leaked labels.
+
+After independent review, validate the completed sign-off file:
+
+```bash
+python benchmarks/contexttrace_bench/audit_diag150.py \
+  --output-dir benchmarks/contexttrace_bench/out/public_holdout \
+  --review-file benchmarks/contexttrace_bench/out/public_holdout/diag150_human_review_template.json \
+  --require-human-signoff
+```
 
 Enforce the current SOTA readiness gates:
 

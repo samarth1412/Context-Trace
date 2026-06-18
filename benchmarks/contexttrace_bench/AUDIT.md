@@ -64,11 +64,26 @@ This writes:
 
 - `diag150_audit_packet.json`
 - `diag150_audit_packet.md`
+- `diag150_human_review_template.json`
 - `diag150_audit_validation.json`
 - `AUDIT_REPORT.md`
 
 Use `diag150_audit_packet.md` for case-by-case human review and keep
 `diag150_audit_validation.json` with the benchmark artifacts.
+
+- Have an independent reviewer fill `diag150_human_review_template.json`. Every
+  case must use `status: "signed_off"`, set all boolean checks to `true`, and
+  include `reviewer` plus `reviewed_at`. Any `needs_changes`, `rejected`, or
+  `false` check blocks frozen-split status.
+
+- Validate the completed review file with strict sign-off enforcement:
+
+```bash
+python benchmarks/contexttrace_bench/audit_diag150.py \
+  --output-dir benchmarks/contexttrace_bench/out/public_holdout \
+  --review-file benchmarks/contexttrace_bench/out/public_holdout/diag150_human_review_template.json \
+  --require-human-signoff
+```
 
 - Rerun the OpenAI diagnostic judge or clearly mark the row stale.
 - Confirm `leaderboard.md`, `results.md`, `report.html`,
