@@ -41,6 +41,10 @@ from benchmarks.contexttrace_bench.ragtruth_review import (
     validate_review_mappings,
 )
 from benchmarks.contexttrace_bench.ragtruth_workflow import run_ragtruth_review_workflow
+from benchmarks.contexttrace_bench.ragtruth_release_workflow import (
+    render_workflow_summary as render_ragtruth_release_summary,
+    run_ragtruth_release_workflow,
+)
 from benchmarks.contexttrace_bench.run_ragas import build_ragas_rows
 from benchmarks.contexttrace_bench.run_local_judge import _judge_prompt, _normalize_judge_output
 
@@ -1084,6 +1088,168 @@ def test_ragtruth_review_workflow_validates_and_applies_review(tmp_path) -> None
     reviewed_cases = {case["id"]: case for case in reviewed["cases"]}
     assert reviewed_cases["ragtruth_overreach"]["expected_evidence_spans"] == ["Store credit is available within 30 days."]
     assert "review_metadata" not in reviewed_cases["ragtruth_supported"]
+
+
+def test_ragtruth_release_workflow_builds_review_pending_bundle(tmp_path) -> None:
+    response_path = tmp_path / "response.jsonl"
+    source_path = tmp_path / "source_info.jsonl"
+    response_path.write_text(
+        "\n".join(
+            json.dumps(row)
+            for row in [
+                {
+                    "id": "supported",
+                    "source_id": "policy",
+                    "labels": [],
+                    "split": "test",
+                    "quality": "good",
+                    "response": "Store credit is available within 30 days.",
+                },
+                {
+                    "id": "overreach",
+                    "source_id": "policy",
+                    "labels": [
+                        {
+                            "start": 0,
+                            "end": 10,
+                            "text": "cash refund",
+                            "label_type": "Evident Baseless Info",
+                        }
+                    ],
+                    "split": "test",
+                    "quality": "good",
+                    "response": "Cash refunds are available.",
+                },
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    source_path.write_text(
+        json.dumps(
+            {
+                "source_id": "policy",
+                "task_type": "QA",
+                "source": "fixture",
+                "source_info": {
+                    "question": "What does the policy say?",
+                    "passages": "Store credit is available within 30 days.",
+                },
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    summary = run_ragtruth_release_workflow(
+        response_path=response_path,
+        source_info_path=source_path,
+        output_dir=tmp_path / "ragtruth",
+        bundle_dir=tmp_path / "bundle",
+        sample_size=2,
+        sample_seed=7,
+        stratify_by=["expected_label"],
+        bootstrap_samples=10,
+    )
+    rendered = render_ragtruth_release_summary(summary)
+    manifest = json.loads((tmp_path / "bundle" / "manifest.json").read_text(encoding="utf-8"))
+
+    assert summary["status"] == "review_pending"
+    assert summary["workflow_status"] == "needs_review"
+    assert summary["case_count"] == 2
+    assert manifest["bundle_status"] == "review_pending"
+    assert any(artifact["path"] == "ragtruth_review_packet.md" for artifact in manifest["artifacts"])
+    assert "RAGTruth release workflow" in rendered
+
+
+def test_ragtruth_release_workflow_scores_reviewed_calibration_bundle(tmp_path) -> None:
+    response_path = tmp_path / "response.jsonl"
+    source_path = tmp_path / "source_info.jsonl"
+    review_path = tmp_path / "review.jsonl"
+    response_path.write_text(
+        "\n".join(
+            json.dumps(row)
+            for row in [
+                {
+                    "id": "supported",
+                    "source_id": "policy",
+                    "labels": [],
+                    "split": "test",
+                    "quality": "good",
+                    "response": "Store credit is available within 30 days.",
+                },
+                {
+                    "id": "overreach",
+                    "source_id": "policy",
+                    "labels": [
+                        {
+                            "start": 0,
+                            "end": 10,
+                            "text": "cash refund",
+                            "label_type": "Evident Baseless Info",
+                        }
+                    ],
+                    "split": "test",
+                    "quality": "good",
+                    "response": "Cash refunds are available.",
+                },
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    source_path.write_text(
+        json.dumps(
+            {
+                "source_id": "policy",
+                "task_type": "QA",
+                "source": "fixture",
+                "source_info": {
+                    "question": "What does the policy say?",
+                    "passages": "Store credit is available within 30 days.",
+                },
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    review_path.write_text(
+        json.dumps(
+            {
+                "case_id": "ragtruth_overreach",
+                "review_status": "reviewed",
+                "reviewer": "unit-test",
+                "reviewed_at": "2026-06-18",
+                "source_evidence_spans": ["Store credit is available within 30 days."],
+                "expected_labels": ["partial_support"],
+                "expected_primary_root_cause": "answer_overreach",
+                "expected_verdict_counts": {"partially_supported": 1},
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    summary = run_ragtruth_release_workflow(
+        response_path=response_path,
+        source_info_path=source_path,
+        output_dir=tmp_path / "ragtruth",
+        bundle_dir=tmp_path / "bundle",
+        review_path=review_path,
+        sample_size=2,
+        sample_seed=7,
+        stratify_by=["expected_label"],
+        bootstrap_samples=10,
+    )
+    manifest = json.loads((tmp_path / "bundle" / "manifest.json").read_text(encoding="utf-8"))
+
+    assert summary["status"] == "calibration_only"
+    assert summary["workflow_status"] == "scored"
+    assert summary["baseline_count"] == 0
+    assert manifest["bundle_status"] == "calibration_only"
+    assert manifest["score"]["summary"]["cases"] == 2
+    assert any(artifact["path"] == "scored/contexttrace_bench_results.json" for artifact in manifest["artifacts"])
+    assert any(artifact["path"] == "ragtruth_review_signoff.jsonl" for artifact in manifest["artifacts"])
 
 
 def test_contexttrace_bench_runs_external_case_pack(tmp_path) -> None:

@@ -356,6 +356,24 @@ python benchmarks/contexttrace_bench/ragtruth_workflow.py \
   --allow-missing-source-spans
 ```
 
+Create the RAGTruth release bundle in one command:
+
+```bash
+python benchmarks/contexttrace_bench/ragtruth_release_workflow.py \
+  --response benchmarks/contexttrace_bench/out/ragtruth_official/response.jsonl \
+  --source-info benchmarks/contexttrace_bench/out/ragtruth_official/source_info.jsonl \
+  --output-dir benchmarks/contexttrace_bench/out/ragtruth_release \
+  --bundle-dir benchmarks/contexttrace_bench/out/ragtruth_release_bundle \
+  --review benchmarks/contexttrace_bench/out/ragtruth_release/ragtruth_reviewed.jsonl \
+  --allow-missing-source-spans
+```
+
+Bundle statuses are intentionally conservative: `review_pending` means source
+evidence review is not applied, `calibration_only` means the run is reviewed and
+scored but not strict independent external validation, `publishable` means
+strict independent review and scoring passed for RAGTruth-specific claims, and
+`validation_failed` means review, scoring, or artifact checks failed.
+
 Score the adapted pack with the same benchmark reports:
 
 ```bash

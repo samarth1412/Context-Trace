@@ -280,6 +280,27 @@ python benchmarks/contexttrace_bench/ragtruth_workflow.py \
   --allow-missing-source-spans
 ```
 
+Create the RAGTruth release bundle after review:
+
+```bash
+python benchmarks/contexttrace_bench/ragtruth_release_workflow.py \
+  --response benchmarks/contexttrace_bench/out/ragtruth_official/response.jsonl \
+  --source-info benchmarks/contexttrace_bench/out/ragtruth_official/source_info.jsonl \
+  --output-dir benchmarks/contexttrace_bench/out/ragtruth_release \
+  --bundle-dir benchmarks/contexttrace_bench/out/ragtruth_release_bundle \
+  --review benchmarks/contexttrace_bench/out/ragtruth_release/ragtruth_reviewed.jsonl \
+  --allow-missing-source-spans
+```
+
+The bundle status is conservative:
+
+- `review_pending`: source-evidence review has not been applied.
+- `calibration_only`: reviewed/scored, but not strict independent external
+  validation, for example assisted review or intentionally missing source spans.
+- `publishable`: strict independent review, source-span requirements, scoring,
+  and artifact validation passed.
+- `validation_failed`: review, scoring, or artifact checks failed.
+
 The adapter preserves RAGTruth answer-side hallucination spans, but publishable
 span-localization claims still require human mapping to source evidence spans.
 

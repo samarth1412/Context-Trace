@@ -68,6 +68,12 @@ Completed in the repo:
   evidence spans, and 12 rows are intentionally source-less because no fair
   source-side span exists. This is assisted review, not independent human
   sign-off.
+- RAGTruth now has a release workflow,
+  `benchmarks/contexttrace_bench/ragtruth_release_workflow.py`, that adapts the
+  dataset, validates/applies reviewed source-evidence mappings, scores
+  ContextTrace, optionally scores existing candidate rows, and writes a
+  checksummed release bundle. Bundle statuses are `review_pending`,
+  `calibration_only`, `publishable`, or `validation_failed`.
 - The current semantic verifier scores failure macro-F1 `0.150`, root-cause
   accuracy `0.255`, dangerous false-green rate `0.025`, and evidence span
   overlap `0.555` on that 200-case RAGTruth sample, so RAGTruth is now a
@@ -81,7 +87,8 @@ Still pending for Week 1:
   runs if local runtime is acceptable.
 - Get independent human sign-off for the 200-case RAGTruth source-evidence
   mappings before using it for publishable span-localization or
-  external-dataset claims. This is tracked in GitHub issue #7.
+  external-dataset claims. Until then, the RAGTruth release bundle should remain
+  `calibration_only`. This is tracked in GitHub issue #7.
 - Create full external dataset validation tracks for RAGTruth, RAGChecker, CRAG,
   and ARES before making broad SOTA claims. RAGChecker, CRAG, and ARES follow-up
   work is tracked in GitHub issues #3, #4, and #5.
