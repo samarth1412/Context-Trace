@@ -4,11 +4,18 @@ import json
 from pathlib import Path
 
 from benchmarks.contexttrace_bench.adapt_candidate import adapt_candidate_rows
+from benchmarks.contexttrace_bench.audit_diag150 import (
+    build_diag150_audit_packet,
+    render_audit_packet_markdown,
+    validate_diag150_audit_packet,
+    write_diag150_audit_artifacts,
+)
 from benchmarks.contexttrace_bench.baseline_common import load_candidate_inputs, write_json
 from benchmarks.contexttrace_bench.run_deepeval import build_deepeval_rows
 from benchmarks.contexttrace_bench.run_contexttrace import (
     build_error_analysis,
     main as run_contexttrace_main,
+    render_candidate_inputs_jsonl,
     quality_gate_failures,
     render_error_analysis_markdown,
     render_html_report,
@@ -81,6 +88,100 @@ def test_contexttrace_bench_runs_public_holdout_without_generated_cases() -> Non
     assert summary["evidence_span_labeled_cases"] >= 25
     assert summary["dangerous_false_green_rate"] == 0.0
     assert any(row["id"] == "holdout_milvus_wrong_source_citation" for row in result["rows"])
+
+
+def test_diag150_audit_packet_validates_public_holdout() -> None:
+    result = run_contexttrace_benchmark(
+        mode="semantic",
+        case_set="public_holdout",
+        include_generated_cases=False,
+        bootstrap_samples=10,
+    )
+    candidate_inputs = [
+        json.loads(line)
+        for line in render_candidate_inputs_jsonl(result).splitlines()
+        if line.strip()
+    ]
+
+    packet = build_diag150_audit_packet(
+        result,
+        candidate_inputs=candidate_inputs,
+        commit="test-sha",
+        generated_at="2026-06-18T00:00:00+00:00",
+    )
+    validation = validate_diag150_audit_packet(packet, result=result, candidate_inputs=candidate_inputs)
+    markdown = render_audit_packet_markdown(packet)
+
+    assert packet["benchmark"] == "ContextTrace-Diag-150"
+    assert packet["case_set"] == "public_holdout"
+    assert packet["case_count"] == 150
+    assert packet["generated_cases"] == 0
+    assert packet["label_distribution"]["no_failure_detected"] >= 1
+    assert packet["label_distribution"]["citation_mismatch"] >= 1
+    assert packet["candidate_input_rows"] == 150
+    assert validation["status"] == "passed"
+    assert validation["summary"]["errors"] == 0
+    assert validation["summary"]["warnings"] == 1
+    assert validation["warnings"][0]["name"] == "independent_human_signoff_pending"
+    assert "ContextTrace-Diag-150 Audit Packet" in markdown
+    assert "Reviewer Signoff" in markdown
+
+
+def test_diag150_audit_validator_rejects_candidate_label_leakage() -> None:
+    result = run_contexttrace_benchmark(
+        mode="semantic",
+        case_set="public_holdout",
+        include_generated_cases=False,
+        bootstrap_samples=10,
+    )
+    candidate_inputs = [
+        json.loads(line)
+        for line in render_candidate_inputs_jsonl(result).splitlines()
+        if line.strip()
+    ]
+    candidate_inputs[0]["expected_labels"] = ["no_failure_detected"]
+    packet = build_diag150_audit_packet(
+        result,
+        candidate_inputs=candidate_inputs,
+        commit="test-sha",
+        generated_at="2026-06-18T00:00:00+00:00",
+    )
+
+    validation = validate_diag150_audit_packet(packet, result=result, candidate_inputs=candidate_inputs)
+
+    assert validation["status"] == "failed"
+    assert any(check["name"] == "candidate_inputs_hide_labels" for check in validation["errors"])
+
+
+def test_diag150_audit_artifacts_are_written(tmp_path) -> None:
+    result = run_contexttrace_benchmark(
+        mode="semantic",
+        case_set="public_holdout",
+        include_generated_cases=False,
+        bootstrap_samples=10,
+    )
+    candidate_inputs = [
+        json.loads(line)
+        for line in render_candidate_inputs_jsonl(result).splitlines()
+        if line.strip()
+    ]
+
+    paths = write_diag150_audit_artifacts(
+        result,
+        output_dir=tmp_path,
+        candidate_inputs=candidate_inputs,
+        commit="test-sha",
+    )
+
+    assert "audit_packet_json" in paths
+    assert "audit_packet_md" in paths
+    assert "audit_validation_json" in paths
+    assert "audit_report_md" in paths
+    packet = json.loads((tmp_path / "diag150_audit_packet.json").read_text(encoding="utf-8"))
+    validation = json.loads((tmp_path / "diag150_audit_validation.json").read_text(encoding="utf-8"))
+    assert packet["case_count"] == 150
+    assert validation["status"] == "passed"
+    assert "Automated Audit Report" in (tmp_path / "AUDIT_REPORT.md").read_text(encoding="utf-8")
 
 
 def test_contexttrace_bench_markdown_outputs(tmp_path) -> None:

@@ -36,6 +36,11 @@ Completed in the repo:
 - Benchmark artifacts now include deterministic 95% case-bootstrap confidence
   intervals, per-label breakdowns for the headline metrics, and error-analysis
   JSON/Markdown with confusion pairs and cases to inspect.
+- ContextTrace-Diag-150 now has a machine-checkable audit packet generator:
+  `benchmarks/contexttrace_bench/audit_diag150.py`. It emits reviewer-ready
+  JSON/Markdown packets plus validator output for case counts, source URL
+  presence, evidence-span grounding, candidate-input leakage, and artifact
+  alignment.
 - A RAGTruth external-validation adapter scaffold can build a ContextTrace-style
   case pack from `response.jsonl` and `source_info.jsonl`, with answer-side
   hallucination spans preserved for human evidence-span mapping.
@@ -73,7 +78,8 @@ Still pending for Week 1:
   and ARES before making broad SOTA claims. RAGChecker, CRAG, and ARES follow-up
   work is tracked in GitHub issues #3, #4, and #5.
 - Complete human audit sign-off for ContextTrace-Diag-150 before using
-  frozen-split language.
+  frozen-split language. Use `audit_diag150.py` to generate the reviewer packet
+  and validation artifacts before the independent review.
 - Review generated `leaderboard.md` and `report.html` before using them in public
   material.
 
@@ -129,6 +135,7 @@ holdout language, interval-aware reporting, and full competitor rows.
 python -m pytest benchmarks/tests/test_contexttrace_bench.py packages/contexttrace/tests/test_verify.py -q
 python benchmarks/contexttrace_bench/run_contexttrace.py --mode semantic --case-set all --enforce-sota-gates
 python benchmarks/contexttrace_bench/run_contexttrace.py --mode semantic --case-set public_holdout --no-generated-cases --output-dir benchmarks/contexttrace_bench/out/public_holdout
+python benchmarks/contexttrace_bench/audit_diag150.py --output-dir benchmarks/contexttrace_bench/out/public_holdout
 ```
 
 Remote baseline smoke test:

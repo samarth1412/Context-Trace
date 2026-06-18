@@ -53,6 +53,23 @@ python benchmarks/contexttrace_bench/run_contexttrace.py \
   --output-dir benchmarks/contexttrace_bench/out/public_holdout
 ```
 
+- Generate the machine-checkable audit packet and validator output:
+
+```bash
+python benchmarks/contexttrace_bench/audit_diag150.py \
+  --output-dir benchmarks/contexttrace_bench/out/public_holdout
+```
+
+This writes:
+
+- `diag150_audit_packet.json`
+- `diag150_audit_packet.md`
+- `diag150_audit_validation.json`
+- `AUDIT_REPORT.md`
+
+Use `diag150_audit_packet.md` for case-by-case human review and keep
+`diag150_audit_validation.json` with the benchmark artifacts.
+
 - Rerun the OpenAI diagnostic judge or clearly mark the row stale.
 - Confirm `leaderboard.md`, `results.md`, `report.html`,
   `contexttrace_bench_results.json`, `error_analysis.md`,

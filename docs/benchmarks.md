@@ -96,6 +96,18 @@ ContextTrace-Diag-150 target and is intentionally excluded from the default
 500-case `all` run; call it frozen only after the human audit checklist is
 complete.
 
+Generate the Diag-150 audit packet after the holdout run:
+
+```bash
+python benchmarks/contexttrace_bench/audit_diag150.py \
+  --output-dir benchmarks/contexttrace_bench/out/public_holdout
+```
+
+The audit packet is the reviewer handoff for frozen-split sign-off. It includes
+case-level labels, root causes, evidence spans, source URLs, benchmark
+predictions, blank human-review fields, and a JSON validator report for
+candidate-input leakage and artifact consistency.
+
 Core metrics:
 
 - `failure_label_macro_f1`

@@ -78,6 +78,18 @@ holdout has reached the 150-case ContextTrace-Diag-150 target and is
 intentionally not included in `--case-set all`; call it frozen only after the
 human audit checklist is complete.
 
+Generate the machine-checkable Diag-150 audit packet:
+
+```bash
+python benchmarks/contexttrace_bench/audit_diag150.py \
+  --output-dir benchmarks/contexttrace_bench/out/public_holdout
+```
+
+This writes `diag150_audit_packet.json`, `diag150_audit_packet.md`,
+`diag150_audit_validation.json`, and an artifact-local `AUDIT_REPORT.md`. Use
+the Markdown packet for case-level sign-off and the validation JSON to prove the
+candidate input export has not leaked labels.
+
 Enforce the current SOTA readiness gates:
 
 ```bash

@@ -33,6 +33,18 @@ evidence spans for 149/150 rows.
 Human audit criteria are tracked in [AUDIT.md](AUDIT.md). Do not describe the
 split as frozen until that checklist is complete.
 
+Generate the reviewer packet and structural validator output with:
+
+```bash
+python benchmarks/contexttrace_bench/audit_diag150.py \
+  --output-dir benchmarks/contexttrace_bench/out/public_holdout
+```
+
+The packet includes every case, source URL, expected label, root-cause label,
+evidence span, benchmark prediction, and blank human sign-off fields. The
+validator checks structural consistency, source URL presence, evidence-span
+grounding, candidate-input label leakage, case counts, and artifact alignment.
+
 ## Publication Policy
 
 Do not describe this as a broad state-of-the-art result until all are true:
