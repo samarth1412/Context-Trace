@@ -96,6 +96,18 @@ python benchmarks/contexttrace_bench/audit_diag150.py \
 The bundle contains copied artifacts, `manifest.json`, SHA256 checksums, and a
 README. It remains `review_pending` until the strict human sign-off gate passes.
 
+- Or run the full release evidence workflow in one command:
+
+```bash
+python benchmarks/contexttrace_bench/diag150_release_workflow.py \
+  --output-dir benchmarks/contexttrace_bench/out/public_holdout \
+  --bundle-dir benchmarks/contexttrace_bench/out/diag150_release_bundle
+```
+
+This regenerates the holdout run, scores known candidate prediction files when
+present, refreshes audit artifacts, writes the release bundle, and prints the
+final status.
+
 - Rerun the OpenAI diagnostic judge or clearly mark the row stale.
 - Confirm `leaderboard.md`, `results.md`, `report.html`,
   `contexttrace_bench_results.json`, `error_analysis.md`,

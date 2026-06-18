@@ -14,6 +14,10 @@ from benchmarks.contexttrace_bench.audit_diag150 import (
     write_diag150_release_bundle,
 )
 from benchmarks.contexttrace_bench.baseline_common import load_candidate_inputs, write_json
+from benchmarks.contexttrace_bench.diag150_release_workflow import (
+    render_workflow_summary,
+    run_diag150_release_workflow,
+)
 from benchmarks.contexttrace_bench.run_deepeval import build_deepeval_rows
 from benchmarks.contexttrace_bench.run_contexttrace import (
     build_error_analysis,
@@ -385,6 +389,65 @@ def test_diag150_release_bundle_marks_freeze_ready_with_signoff(tmp_path) -> Non
     assert manifest["human_signoff_complete"] is True
     assert any(artifact["path"] == "diag150_human_review_signoff.json" for artifact in manifest["artifacts"])
     assert "passed automated validation and independent human signoff" in readme
+
+
+def test_diag150_release_workflow_generates_review_pending_bundle(tmp_path) -> None:
+    summary = run_diag150_release_workflow(
+        output_dir=tmp_path / "public_holdout",
+        bundle_dir=tmp_path / "bundle",
+        auto_candidates=False,
+        bootstrap_samples=10,
+    )
+    rendered = render_workflow_summary(summary)
+
+    assert summary["status"] == "review_pending"
+    assert summary["case_count"] == 150
+    assert summary["baseline_count"] == 0
+    assert summary["manifest"]["bundle_status"] == "review_pending"
+    assert Path(summary["bundle_paths"]["manifest_json"]).exists()
+    assert "ContextTrace-Diag-150 release workflow" in rendered
+    assert "Status: review_pending" in rendered
+
+
+def test_diag150_release_workflow_scores_existing_candidate_rows(tmp_path) -> None:
+    seed_result = run_contexttrace_benchmark(
+        mode="semantic",
+        case_set="public_holdout",
+        include_generated_cases=False,
+        bootstrap_samples=10,
+    )
+    output_dir = tmp_path / "public_holdout"
+    output_dir.mkdir(parents=True)
+    candidate = {
+        "system": "Example diagnostic judge",
+        "version": "fixture",
+        "predictions": [
+            {
+                "id": row["id"],
+                "predicted": row["expected"],
+                "predicted_verdict_counts": row["expected_verdict_counts"],
+                "predicted_citation_statuses": row["expected_citation_statuses"],
+                "predicted_primary_root_cause": row["expected_primary_root_cause"],
+                "predicted_evidence_spans": row["expected_evidence_spans"],
+            }
+            for row in seed_result["rows"]
+        ],
+    }
+    candidate_path = output_dir / "openai_diagnostic_judge_predictions.json"
+    candidate_path.write_text(json.dumps(candidate), encoding="utf-8")
+
+    summary = run_diag150_release_workflow(
+        output_dir=output_dir,
+        bundle_dir=tmp_path / "bundle",
+        bootstrap_samples=10,
+    )
+
+    assert summary["status"] == "review_pending"
+    assert summary["baseline_count"] == 1
+    assert summary["candidate_files"] == [str(candidate_path)]
+    baseline_results = json.loads((output_dir / "baseline_results.json").read_text(encoding="utf-8"))
+    assert baseline_results[0]["system"] == "Example diagnostic judge"
+    assert any(artifact["path"] == "baseline_results.json" for artifact in summary["manifest"]["artifacts"])
 
 
 def test_contexttrace_bench_markdown_outputs(tmp_path) -> None:

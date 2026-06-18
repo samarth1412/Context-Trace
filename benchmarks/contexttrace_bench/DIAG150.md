@@ -65,6 +65,14 @@ python benchmarks/contexttrace_bench/audit_diag150.py \
 The bundle status is `review_pending`, `freeze_ready`, or `validation_failed`
 depending on the audit validation and human sign-off state.
 
+Run the full release evidence path in one command:
+
+```bash
+python benchmarks/contexttrace_bench/diag150_release_workflow.py \
+  --output-dir benchmarks/contexttrace_bench/out/public_holdout \
+  --bundle-dir benchmarks/contexttrace_bench/out/diag150_release_bundle
+```
+
 ## Publication Policy
 
 Do not describe this as a broad state-of-the-art result until all are true:

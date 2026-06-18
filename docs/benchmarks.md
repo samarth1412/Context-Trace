@@ -130,6 +130,19 @@ The bundle includes copied artifacts, `manifest.json`, SHA256 checksums, and a
 bundle README. It is marked `review_pending` until the completed human-review
 file passes the strict sign-off gate.
 
+Run the full Diag-150 release evidence workflow in one command:
+
+```bash
+python benchmarks/contexttrace_bench/diag150_release_workflow.py \
+  --output-dir benchmarks/contexttrace_bench/out/public_holdout \
+  --bundle-dir benchmarks/contexttrace_bench/out/diag150_release_bundle
+```
+
+The workflow regenerates the public holdout, scores available candidate
+prediction files in the output directory, refreshes audit artifacts, writes the
+release bundle, and prints `review_pending`, `freeze_ready`, or
+`validation_failed`.
+
 Core metrics:
 
 - `failure_label_macro_f1`
