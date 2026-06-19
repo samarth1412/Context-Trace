@@ -160,7 +160,10 @@ py -3.11 -m venv $ragcheckerVenv
   --candidate-output benchmarks/contexttrace_bench/out/ragchecker_predictions.json `
   --extractor-name openai/gpt-4.1-mini `
   --checker-name openai/gpt-4.1-mini `
-  --use-response-as-gt
+  --use-response-as-gt `
+  --chunk-size 25 `
+  --resume `
+  --progress-every 25
 ```
 
 `--use-response-as-gt` makes a setup/proxy row only. Publishable RAGChecker

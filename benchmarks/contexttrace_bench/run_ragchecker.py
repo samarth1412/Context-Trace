@@ -5,7 +5,7 @@ import json
 import sys
 import time
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 if str(SCRIPT_DIR) not in sys.path:
@@ -14,6 +14,7 @@ if str(SCRIPT_DIR) not in sys.path:
 from adapt_candidate import adapt_candidate_rows, write_candidate  # noqa: E402
 from baseline_common import (  # noqa: E402
     load_candidate_inputs,
+    load_raw_rows,
     response,
     trace_payload,
     user_input,
@@ -78,6 +79,9 @@ def run_ragchecker_baseline(
     batch_size_checker: int = 32,
     faithfulness_threshold: float = 0.75,
     context_recall_threshold: float = 0.50,
+    existing_rows: list[dict[str, Any]] | None = None,
+    chunk_size: int = 0,
+    progress_callback: Callable[[list[dict[str, Any]], int, int], None] | None = None,
 ) -> dict[str, Any]:
     input_rows = build_ragchecker_rows(
         candidate_inputs,
@@ -92,18 +96,61 @@ def run_ragchecker_baseline(
             % missing_gt
         )
 
+    total = len(input_rows)
+    outputs: list[dict[str, Any] | None] = [None] * total
+    completed_by_id = {
+        str(row.get("query_id") or row.get("id")): row
+        for row in (existing_rows or [])
+        if (row.get("query_id") or row.get("id")) and not row.get("error")
+    }
+    pending: list[tuple[int, dict[str, Any]]] = []
+    for index, row in enumerate(input_rows):
+        existing = completed_by_id.get(row["query_id"])
+        if existing is None:
+            pending.append((index, row))
+        else:
+            outputs[index] = existing
+
+    completed = total - len(pending)
+    if progress_callback and completed:
+        progress_callback(_completed_rows(outputs), completed, total)
+
     started = time.perf_counter()
-    raw_payload = _evaluate_ragchecker_rows(
-        input_rows,
-        extractor_name=extractor_name,
-        checker_name=checker_name,
-        metrics=metrics,
-        batch_size_extractor=batch_size_extractor,
-        batch_size_checker=batch_size_checker,
-    )
-    rows = _ragchecker_result_rows(raw_payload)
-    for row in rows:
-        row.setdefault("latency_ms", None)
+    raw_outputs: list[dict[str, Any]] = []
+    run_chunk_size = max(1, int(chunk_size or len(pending) or 1))
+    for chunk in _chunks(pending, run_chunk_size):
+        chunk_started = time.perf_counter()
+        raw_payload = _evaluate_ragchecker_rows(
+            [row for _, row in chunk],
+            extractor_name=extractor_name,
+            checker_name=checker_name,
+            metrics=metrics,
+            batch_size_extractor=batch_size_extractor,
+            batch_size_checker=batch_size_checker,
+        )
+        raw_outputs.append(raw_payload)
+        by_query_id = {
+            str(row.get("query_id") or row.get("id")): row
+            for row in _ragchecker_result_rows(raw_payload)
+            if row.get("query_id") or row.get("id")
+        }
+        chunk_latency_ms = round((time.perf_counter() - chunk_started) * 1000, 3)
+        for index, input_row in chunk:
+            output = by_query_id.get(input_row["query_id"])
+            if output is None:
+                output = {
+                    "query_id": input_row["query_id"],
+                    "error": "RAGChecker did not return a row for this query_id.",
+                }
+            output.setdefault("latency_ms", None)
+            output["chunk_latency_ms"] = chunk_latency_ms
+            outputs[index] = output
+            completed += 1
+        if progress_callback:
+            progress_callback(_completed_rows(outputs), completed, total)
+
+    rows = _completed_rows(outputs)
+    raw_payload = raw_outputs[0] if len(raw_outputs) == 1 else _aggregate_ragchecker_payload(rows)
     candidate = adapt_ragchecker_result_rows(
         rows,
         version=_version_label(extractor_name=extractor_name, checker_name=checker_name),
@@ -119,6 +166,7 @@ def run_ragchecker_baseline(
         "rows": rows,
         "ragchecker_input": {"results": input_rows},
         "ragchecker_output": raw_payload,
+        "ragchecker_outputs": raw_outputs,
         "candidate": candidate,
         "notes": [
             "RAGChecker reports per-case metrics under each result.metrics object.",
@@ -126,6 +174,7 @@ def run_ragchecker_baseline(
                 "ContextTrace-Bench maps metrics.faithfulness to unsupported_answer "
                 "and metrics.claim_recall to should_have_abstained."
             ),
+            "Chunked runs report aggregate metrics as mean per-row percentages.",
         ],
     }
 
@@ -137,6 +186,59 @@ def load_ragchecker_output(path: str | Path) -> dict[str, Any]:
     if isinstance(payload, list):
         return {"results": [row for row in payload if isinstance(row, dict)]}
     raise ValueError("Could not parse RAGChecker output from %s." % path)
+
+
+def _completed_rows(rows: list[dict[str, Any] | None]) -> list[dict[str, Any]]:
+    return [row for row in rows if row is not None]
+
+
+def _chunks(items: list[tuple[int, dict[str, Any]]], size: int) -> list[list[tuple[int, dict[str, Any]]]]:
+    return [items[index : index + size] for index in range(0, len(items), size)]
+
+
+def _aggregate_ragchecker_payload(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    return {
+        "results": rows,
+        "metrics": {
+            "overall_metrics": {
+                "precision": _mean_metric_percent(rows, "precision"),
+                "recall": _mean_metric_percent(rows, "recall"),
+                "f1": _mean_metric_percent(rows, "f1"),
+            },
+            "retriever_metrics": {
+                "claim_recall": _mean_metric_percent(rows, "claim_recall"),
+                "context_precision": _mean_metric_percent(rows, "context_precision"),
+            },
+            "generator_metrics": {
+                "context_utilization": _mean_metric_percent(rows, "context_utilization"),
+                "faithfulness": _mean_metric_percent(rows, "faithfulness"),
+                "hallucination": _mean_metric_percent(rows, "hallucination"),
+                "noise_sensitivity_in_irrelevant": _mean_metric_percent(
+                    rows,
+                    "noise_sensitivity_in_irrelevant",
+                ),
+                "noise_sensitivity_in_relevant": _mean_metric_percent(
+                    rows,
+                    "noise_sensitivity_in_relevant",
+                ),
+                "self_knowledge": _mean_metric_percent(rows, "self_knowledge"),
+            },
+        },
+    }
+
+
+def _mean_metric_percent(rows: list[dict[str, Any]], metric: str) -> float | None:
+    values = []
+    for row in rows:
+        metrics = row.get("metrics") if isinstance(row.get("metrics"), dict) else {}
+        value = metrics.get(metric)
+        try:
+            values.append(float(value))
+        except (TypeError, ValueError):
+            continue
+    if not values:
+        return None
+    return round((sum(values) / len(values)) * 100, 1)
 
 
 def _retrieved_context(row: dict[str, Any]) -> list[dict[str, str]]:
@@ -316,6 +418,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--batch-size-checker", default=32, type=int)
     parser.add_argument("--faithfulness-threshold", default=0.75, type=float)
     parser.add_argument("--context-recall-threshold", default=0.50, type=float)
+    parser.add_argument("--chunk-size", default=0, type=int, help="Evaluate rows in checkpointable chunks.")
+    parser.add_argument("--progress-every", default=25, type=int, help="Write partial outputs every N completed rows.")
+    parser.add_argument("--resume", action="store_true", help="Reuse completed rows from --raw-output.")
     args = parser.parse_args(argv)
 
     if args.from_ragchecker_output:
@@ -357,6 +462,42 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 2
 
+    last_written = 0
+
+    def write_progress(rows: list[dict[str, Any]], completed: int, total: int) -> None:
+        nonlocal last_written
+        if args.progress_every <= 0:
+            return
+        if completed != total and completed - last_written < args.progress_every:
+            return
+        last_written = completed
+        candidate = adapt_ragchecker_result_rows(
+            rows,
+            version=_version_label(
+                extractor_name=args.extractor_name,
+                checker_name=args.checker_name,
+            ),
+            faithfulness_threshold=args.faithfulness_threshold,
+            context_recall_threshold=args.context_recall_threshold,
+        )
+        write_json(
+            {
+                "system": "RAGChecker",
+                "extractor_name": args.extractor_name,
+                "checker_name": args.checker_name,
+                "metrics": args.metrics,
+                "rows": rows,
+                "ragchecker_output": _aggregate_ragchecker_payload(rows),
+                "notes": [
+                    "Partial progress may be present while the runner is still active.",
+                    "Chunked runs report aggregate metrics as mean per-row percentages.",
+                ],
+            },
+            args.raw_output,
+        )
+        write_candidate(candidate, args.candidate_output)
+        print("RAGChecker progress: %s/%s" % (completed, total), flush=True)
+
     result = run_ragchecker_baseline(
         candidate_inputs,
         extractor_name=args.extractor_name,
@@ -368,6 +509,9 @@ def main(argv: list[str] | None = None) -> int:
         batch_size_checker=args.batch_size_checker,
         faithfulness_threshold=args.faithfulness_threshold,
         context_recall_threshold=args.context_recall_threshold,
+        existing_rows=load_raw_rows(args.raw_output) if args.resume else None,
+        chunk_size=args.chunk_size,
+        progress_callback=write_progress,
     )
     raw_path = write_json(
         {

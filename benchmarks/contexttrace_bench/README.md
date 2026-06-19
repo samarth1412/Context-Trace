@@ -221,7 +221,10 @@ python benchmarks/contexttrace_bench/run_ragchecker.py \
   --candidate-output benchmarks/contexttrace_bench/out/ragchecker_predictions.json \
   --extractor-name openai/gpt-4.1-mini \
   --checker-name openai/gpt-4.1-mini \
-  --use-response-as-gt
+  --use-response-as-gt \
+  --chunk-size 25 \
+  --resume \
+  --progress-every 25
 ```
 
 Then score the candidates:
@@ -526,7 +529,10 @@ $env:OPENAI_API_KEY = "<your OpenAI API key>"
   --candidate-output benchmarks/contexttrace_bench/out/ragchecker_predictions.json `
   --extractor-name openai/gpt-4.1-mini `
   --checker-name openai/gpt-4.1-mini `
-  --use-response-as-gt
+  --use-response-as-gt `
+  --chunk-size 25 `
+  --resume `
+  --progress-every 25
 ```
 
 The default benchmark now meets the 500-case bar. Publish full competitor rows
