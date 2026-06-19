@@ -74,6 +74,10 @@ Completed in the repo:
   ContextTrace, optionally scores existing candidate rows, and writes a
   checksummed release bundle. Bundle statuses are `review_pending`,
   `calibration_only`, `publishable`, or `validation_failed`.
+- RAGTruth scored bundles now include `ragtruth_error_analysis.json` and
+  `ragtruth_error_analysis.md`, which convert the assisted run into concrete
+  calibration targets by task, source dataset, model, label type, expected
+  label, root-cause confusion, and source-span localization quality.
 - The current semantic verifier scores failure macro-F1 `0.150`, root-cause
   accuracy `0.255`, dangerous false-green rate `0.025`, and evidence span
   overlap `0.555` on that 200-case RAGTruth sample, so RAGTruth is now a
@@ -85,6 +89,9 @@ Still pending for Week 1:
 
 - Broaden judge baselines beyond the current public-holdout and RAGTruth smoke
   runs if local runtime is acceptable.
+- Use the RAGTruth error-analysis report to prioritize taxonomy mapping,
+  partial-support handling, contradicted-answer handling, and source-span
+  localization before rerunning external validation.
 - Get independent human sign-off for the 200-case RAGTruth source-evidence
   mappings before using it for publishable span-localization or
   external-dataset claims. Until then, the RAGTruth release bundle should remain

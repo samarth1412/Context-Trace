@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 try:  # pragma: no cover - exercised when run as a script from this directory
+    from benchmarks.contexttrace_bench.ragtruth_error_analysis import write_ragtruth_error_analysis
     from benchmarks.contexttrace_bench.ragtruth_workflow import run_ragtruth_review_workflow
     from benchmarks.contexttrace_bench.run_contexttrace import (
         score_candidate_file,
@@ -17,6 +18,7 @@ try:  # pragma: no cover - exercised when run as a script from this directory
     )
     from benchmarks.contexttrace_bench.ragtruth_review import write_json
 except ModuleNotFoundError:  # pragma: no cover
+    from ragtruth_error_analysis import write_ragtruth_error_analysis  # type: ignore
     from ragtruth_workflow import run_ragtruth_review_workflow  # type: ignore
     from run_contexttrace import (  # type: ignore
         score_candidate_file,
@@ -52,6 +54,8 @@ BUNDLE_SCORED = (
     "report.html",
     "error_analysis.json",
     "error_analysis.md",
+    "ragtruth_error_analysis.json",
+    "ragtruth_error_analysis.md",
     "candidate_inputs.jsonl",
 )
 
@@ -120,6 +124,13 @@ def run_ragtruth_release_workflow(
                 output_dir=score_output_dir,
                 baseline_results=baseline_results or None,
             )
+            reviewed_case_pack_payload = json.loads(Path(reviewed_case_pack).read_text(encoding="utf-8"))
+            ragtruth_error_paths = write_ragtruth_error_analysis(
+                score_result,
+                reviewed_case_pack_payload,
+                output_dir=score_output_dir,
+            )
+            score_paths.update(ragtruth_error_paths)
             manifest["status"] = "scored"
             manifest["artifacts"]["score_output_dir"] = str(score_output_dir)
             manifest["artifacts"]["score_paths"] = dict(score_paths)
