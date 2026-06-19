@@ -50,7 +50,10 @@ from benchmarks.contexttrace_bench.ragtruth_release_workflow import (
     run_ragtruth_release_workflow,
 )
 from benchmarks.contexttrace_bench.run_ragas import build_ragas_rows
-from benchmarks.contexttrace_bench.run_ragchecker import build_ragchecker_rows
+from benchmarks.contexttrace_bench.run_ragchecker import (
+    build_ragchecker_rows,
+    load_reference_answers,
+)
 from benchmarks.contexttrace_bench.run_local_judge import _judge_prompt, _normalize_judge_output
 
 
@@ -636,6 +639,54 @@ def test_contexttrace_bench_adapts_ragchecker_rows() -> None:
     assert candidate["predictions"][0]["predicted"] == ["no_failure_detected"]
     assert candidate["predictions"][1]["id"] == "case-unsupported"
     assert candidate["predictions"][1]["predicted"] == ["should_have_abstained", "unsupported_answer"]
+
+
+def test_ragchecker_rows_use_reference_sidecar(tmp_path) -> None:
+    references_path = tmp_path / "references.jsonl"
+    references_path.write_text(
+        json.dumps({"case_id": "case-1", "reference": "Policy refunds last 30 days."}) + "\n",
+        encoding="utf-8",
+    )
+    references = load_reference_answers(
+        references_path,
+        id_field="case_id",
+        answer_field="reference",
+    )
+    rows = build_ragchecker_rows(
+        [
+            {
+                "id": "case-1",
+                "trace": {
+                    "query": "What does the policy say?",
+                    "answer": "Refunds are available within 60 days.",
+                    "contexts": [
+                        {
+                            "id": "policy",
+                            "text": "Customers may request refunds within 30 days.",
+                        }
+                    ],
+                },
+            }
+        ],
+        reference_answers=references,
+        use_response_as_gt=True,
+    )
+
+    assert rows[0]["gt_answer"] == "Policy refunds last 30 days."
+    assert rows[0]["response"] == "Refunds are available within 60 days."
+
+
+def test_ragchecker_reference_loader_accepts_json_map(tmp_path) -> None:
+    references_path = tmp_path / "references.json"
+    references_path.write_text(
+        json.dumps({"case-1": "Reference one", "case-2": {"gt_answer": "Reference two"}}),
+        encoding="utf-8",
+    )
+
+    assert load_reference_answers(references_path) == {
+        "case-1": "Reference one",
+        "case-2": "Reference two",
+    }
 
 
 def test_baseline_runners_build_external_eval_rows(tmp_path) -> None:

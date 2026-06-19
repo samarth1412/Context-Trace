@@ -31,6 +31,7 @@ DEFAULT_CANDIDATE_OUTPUT = SCRIPT_DIR / "out" / "ragchecker_predictions.json"
 def build_ragchecker_rows(
     candidate_inputs: list[dict[str, Any]],
     *,
+    reference_answers: dict[str, str] | None = None,
     gt_answer_field: str | None = None,
     use_response_as_gt: bool = False,
 ) -> list[dict[str, Any]]:
@@ -40,6 +41,7 @@ def build_ragchecker_rows(
             "query": user_input(row),
             "gt_answer": _reference_answer(
                 row,
+                reference_answers=reference_answers,
                 gt_answer_field=gt_answer_field,
                 use_response_as_gt=use_response_as_gt,
             ),
@@ -73,6 +75,7 @@ def run_ragchecker_baseline(
     extractor_name: str,
     checker_name: str,
     metrics: str = "all_metrics",
+    reference_answers: dict[str, str] | None = None,
     gt_answer_field: str | None = None,
     use_response_as_gt: bool = False,
     batch_size_extractor: int = 32,
@@ -85,6 +88,7 @@ def run_ragchecker_baseline(
 ) -> dict[str, Any]:
     input_rows = build_ragchecker_rows(
         candidate_inputs,
+        reference_answers=reference_answers,
         gt_answer_field=gt_answer_field,
         use_response_as_gt=use_response_as_gt,
     )
@@ -92,7 +96,8 @@ def run_ragchecker_baseline(
     if missing_gt:
         raise ValueError(
             "RAGChecker requires gt_answer for every row. Missing %s gt_answer values; "
-            "provide --gt-answer-field or use --use-response-as-gt for a comparison-only proxy."
+            "provide --reference-file, --gt-answer-field, or use --use-response-as-gt "
+            "for a comparison-only proxy."
             % missing_gt
         )
 
@@ -188,6 +193,67 @@ def load_ragchecker_output(path: str | Path) -> dict[str, Any]:
     raise ValueError("Could not parse RAGChecker output from %s." % path)
 
 
+def load_reference_answers(
+    path: str | Path,
+    *,
+    id_field: str = "id",
+    answer_field: str = "gt_answer",
+) -> dict[str, str]:
+    input_path = Path(path)
+    if input_path.suffix.lower() == ".jsonl":
+        rows = [
+            item
+            for item in (
+                json.loads(line)
+                for line in input_path.read_text(encoding="utf-8-sig").splitlines()
+                if line.strip()
+            )
+            if isinstance(item, dict)
+        ]
+        return _reference_answers_from_rows(rows, id_field=id_field, answer_field=answer_field)
+
+    payload = json.loads(input_path.read_text(encoding="utf-8-sig"))
+    if isinstance(payload, list):
+        return _reference_answers_from_rows(payload, id_field=id_field, answer_field=answer_field)
+    if isinstance(payload, dict):
+        for key in ("references", "rows", "results", "cases"):
+            rows = payload.get(key)
+            if isinstance(rows, list):
+                return _reference_answers_from_rows(rows, id_field=id_field, answer_field=answer_field)
+        references = {}
+        for key, value in payload.items():
+            if isinstance(value, dict):
+                answer = _get_path(value, answer_field)
+            else:
+                answer = value
+            if str(key).strip() and answer is not None and str(answer).strip():
+                references[str(key)] = str(answer)
+        return references
+    raise ValueError("Could not parse reference answers from %s." % input_path)
+
+
+def _reference_answers_from_rows(
+    rows: list[Any],
+    *,
+    id_field: str,
+    answer_field: str,
+) -> dict[str, str]:
+    references = {}
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        case_id = _get_path(row, id_field)
+        answer = _get_path(row, answer_field)
+        if (
+            case_id is not None
+            and str(case_id).strip()
+            and answer is not None
+            and str(answer).strip()
+        ):
+            references[str(case_id)] = str(answer)
+    return references
+
+
 def _completed_rows(rows: list[dict[str, Any] | None]) -> list[dict[str, Any]]:
     return [row for row in rows if row is not None]
 
@@ -269,9 +335,14 @@ def _retrieved_context(row: dict[str, Any]) -> list[dict[str, str]]:
 def _reference_answer(
     row: dict[str, Any],
     *,
+    reference_answers: dict[str, str] | None,
     gt_answer_field: str | None,
     use_response_as_gt: bool,
 ) -> str:
+    case_id = str(row.get("id") or "")
+    if reference_answers is not None and case_id in reference_answers:
+        return reference_answers[case_id]
+
     if gt_answer_field:
         value = _get_path(row, gt_answer_field)
         if value is not None and str(value).strip():
@@ -407,6 +478,13 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--extractor-name", default=None, help="RAGChecker claim extractor model/provider name.")
     parser.add_argument("--checker-name", default=None, help="RAGChecker claim checker model/provider name.")
     parser.add_argument("--metrics", default="all_metrics", help="RAGChecker metrics group, for example all_metrics.")
+    parser.add_argument(
+        "--reference-file",
+        default=None,
+        help="JSON/JSONL sidecar with real gt_answer values keyed by case ID.",
+    )
+    parser.add_argument("--reference-id-field", default="id", help="Dotted ID field for --reference-file rows.")
+    parser.add_argument("--reference-answer-field", default="gt_answer", help="Dotted answer field for --reference-file rows.")
     parser.add_argument("--gt-answer-field", default=None, help="Optional dotted field path for gt_answer.")
     parser.add_argument(
         "--use-response-as-gt",
@@ -440,8 +518,18 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     candidate_inputs = load_candidate_inputs(args.input, limit=args.limit)
+    reference_answers = (
+        load_reference_answers(
+            args.reference_file,
+            id_field=args.reference_id_field,
+            answer_field=args.reference_answer_field,
+        )
+        if args.reference_file
+        else None
+    )
     input_rows = build_ragchecker_rows(
         candidate_inputs,
+        reference_answers=reference_answers,
         gt_answer_field=args.gt_answer_field,
         use_response_as_gt=args.use_response_as_gt,
     )
@@ -503,6 +591,7 @@ def main(argv: list[str] | None = None) -> int:
         extractor_name=args.extractor_name,
         checker_name=args.checker_name,
         metrics=args.metrics,
+        reference_answers=reference_answers,
         gt_answer_field=args.gt_answer_field,
         use_response_as_gt=args.use_response_as_gt,
         batch_size_extractor=args.batch_size_extractor,

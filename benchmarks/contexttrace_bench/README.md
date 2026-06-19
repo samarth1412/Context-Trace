@@ -217,11 +217,13 @@ python benchmarks/contexttrace_bench/run_deepeval.py \
 
 python benchmarks/contexttrace_bench/run_ragchecker.py \
   --input benchmarks/contexttrace_bench/out/candidate_inputs.jsonl \
+  --reference-file path/to/reference_answers.jsonl \
+  --reference-id-field id \
+  --reference-answer-field gt_answer \
   --ragchecker-input-output benchmarks/contexttrace_bench/out/ragchecker_input.json \
   --candidate-output benchmarks/contexttrace_bench/out/ragchecker_predictions.json \
   --extractor-name openai/gpt-4.1-mini \
   --checker-name openai/gpt-4.1-mini \
-  --use-response-as-gt \
   --chunk-size 25 \
   --resume \
   --progress-every 25
@@ -242,8 +244,9 @@ The RAGAS, DeepEval, and RAGChecker runners require those packages and a
 configured evaluator LLM. By default they emit faithfulness-style predictions;
 root-cause, citation, and evidence-span fields remain unreported unless the
 candidate JSON explicitly provides them. RAGChecker also requires `gt_answer`;
-use `--use-response-as-gt` only for comparison-only smoke/proxy rows, or supply
-a real reference field with `--gt-answer-field` for publishable rows. The pinned
+publishable rows should pass `--reference-file` with rows like
+`{"id": "case-id", "gt_answer": "reference answer"}`. Use
+`--use-response-as-gt` only for comparison-only smoke/proxy rows. The pinned
 RAGChecker package requires Python 3.9 or newer; the examples use an isolated
 Python 3.11 venv.
 
@@ -525,11 +528,13 @@ py -3.11 -m venv $ragcheckerVenv
 $env:OPENAI_API_KEY = "<your OpenAI API key>"
 & "$ragcheckerVenv\Scripts\python.exe" benchmarks/contexttrace_bench/run_ragchecker.py `
   --input benchmarks/contexttrace_bench/out/candidate_inputs.jsonl `
+  --reference-file path/to/reference_answers.jsonl `
+  --reference-id-field id `
+  --reference-answer-field gt_answer `
   --ragchecker-input-output benchmarks/contexttrace_bench/out/ragchecker_input.json `
   --candidate-output benchmarks/contexttrace_bench/out/ragchecker_predictions.json `
   --extractor-name openai/gpt-4.1-mini `
   --checker-name openai/gpt-4.1-mini `
-  --use-response-as-gt `
   --chunk-size 25 `
   --resume `
   --progress-every 25

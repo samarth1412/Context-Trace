@@ -11,7 +11,7 @@ case set and are scored by `run_contexttrace.py --candidate`.
 | ContextTrace semantic verifier | `run_contexttrace.py --mode semantic` | Ready | Yes | Local-first product path. CI enforces default quality gates. |
 | RAGAS | `run_ragas.py` | Full OpenAI-backed candidate scored | Yes | `gpt-4.1-mini`, 500/500 rows, zero row errors. Faithfulness-only baseline; diagnostic fields are `N/A`. |
 | DeepEval | `run_deepeval.py` | Full OpenAI-backed candidate scored | Yes | `gpt-4.1-mini`, 500/500 rows, zero row errors. Faithfulness-only baseline; diagnostic fields are `N/A`. |
-| RAGChecker | `run_ragchecker.py`, `adapt_candidate.py --preset ragchecker` | 50-row OpenAI proxy smoke scored | No | Requires Python 3.9+ and `gt_answer` per row. The `--use-response-as-gt` smoke verified runner/checkpointing but is not publishable and showed high dangerous false-green rate. |
+| RAGChecker | `run_ragchecker.py`, `adapt_candidate.py --preset ragchecker` | 50-row OpenAI proxy smoke scored; reference sidecar ready | No | Requires Python 3.9+ and `gt_answer` per row. The `--use-response-as-gt` smoke verified runner/checkpointing but is not publishable; publishable runs should use `--reference-file`. |
 | OpenAI diagnostic judge | `run_local_judge.py` | Expanded public holdout and RAGTruth smoke candidates scored | Holdout only | `gpt-4.1-mini`, 150/150 public-holdout rows and 50/50 RAGTruth smoke rows, zero row errors. The RAGTruth smoke is calibration-only because it has high dangerous false-green rate. |
 | OpenAI-compatible local judge | `run_local_judge.py` | Smoke run completed | No | Ollama `phi3:latest` produced 5 predictions. It is parseable but slow on this machine, so full 500-case execution is a multi-hour run. |
 | Phoenix | `adapt_candidate.py --preset phoenix` | Adapter ready | No | Requires exported Phoenix evaluator results. |
@@ -36,8 +36,8 @@ The RAGChecker smoke wrote `ragchecker_raw_results.json` and
 `ragchecker_predictions.json` under ignored benchmark output. It validated the
 native input builder, official RAGChecker API path, candidate adapter, and
 `--resume` checkpointing. Do not scale this proxy mode into a publishable row;
-use a real reference answer field through `--gt-answer-field` before spending on
-a full 500-case RAGChecker comparison.
+use a real reference answer sidecar through `--reference-file` before spending
+on a full 500-case RAGChecker comparison.
 
 Latest public holdout:
 
@@ -169,19 +169,22 @@ py -3.11 -m venv $ragcheckerVenv
 & "$ragcheckerVenv\Scripts\python.exe" -m spacy download en_core_web_sm
 & "$ragcheckerVenv\Scripts\python.exe" benchmarks/contexttrace_bench/run_ragchecker.py `
   --input benchmarks/contexttrace_bench/out/candidate_inputs.jsonl `
+  --reference-file path/to/reference_answers.jsonl `
+  --reference-id-field id `
+  --reference-answer-field gt_answer `
   --ragchecker-input-output benchmarks/contexttrace_bench/out/ragchecker_input.json `
   --candidate-output benchmarks/contexttrace_bench/out/ragchecker_predictions.json `
   --extractor-name openai/gpt-4.1-mini `
   --checker-name openai/gpt-4.1-mini `
-  --use-response-as-gt `
   --chunk-size 25 `
   --resume `
   --progress-every 25
 ```
 
 `--use-response-as-gt` makes a setup/proxy row only. Publishable RAGChecker
-comparisons need a real reference answer field supplied with `--gt-answer-field`
-or an official RAGChecker output adapted with `--from-ragchecker-output`.
+comparisons need a real reference answer sidecar supplied with
+`--reference-file` or an official RAGChecker output adapted with
+`--from-ragchecker-output`.
 
 Score full candidate rows:
 

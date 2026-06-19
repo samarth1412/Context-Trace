@@ -208,11 +208,13 @@ python benchmarks/contexttrace_bench/run_deepeval.py \
 
 python benchmarks/contexttrace_bench/run_ragchecker.py \
   --input benchmarks/contexttrace_bench/out/candidate_inputs.jsonl \
+  --reference-file path/to/reference_answers.jsonl \
+  --reference-id-field id \
+  --reference-answer-field gt_answer \
   --ragchecker-input-output benchmarks/contexttrace_bench/out/ragchecker_input.json \
   --candidate-output benchmarks/contexttrace_bench/out/ragchecker_predictions.json \
   --extractor-name openai/gpt-4.1-mini \
   --checker-name openai/gpt-4.1-mini \
-  --use-response-as-gt \
   --chunk-size 25 \
   --resume \
   --progress-every 25
@@ -223,10 +225,11 @@ configure the external evaluator separately, then feed the produced candidate JS
 back into `run_contexttrace.py --candidate`.
 
 RAGChecker requires `gt_answer` for each row. ContextTrace candidate inputs hide
-benchmark answers, so `--use-response-as-gt` is a comparison-only proxy for
-setup and smoke runs; publishable RAGChecker rows should use an external
-reference field supplied with `--gt-answer-field`. The pinned RAGChecker package
-requires Python 3.9 or newer; the examples use an isolated Python 3.11 venv.
+benchmark answers, so publishable RAGChecker rows should use `--reference-file`
+with rows like `{"id": "case-id", "gt_answer": "reference answer"}`.
+`--use-response-as-gt` is only a comparison-only proxy for setup and smoke runs.
+The pinned RAGChecker package requires Python 3.9 or newer; the examples use an
+isolated Python 3.11 venv.
 
 OpenAI, RAGAS, DeepEval, and RAGChecker are comparison-only paths. The verifier
 and benchmark harness remain local-first; remote evaluator APIs are used only
@@ -418,11 +421,13 @@ py -3.11 -m venv $ragcheckerVenv
 $env:OPENAI_API_KEY = "<your OpenAI API key>"
 & "$ragcheckerVenv\Scripts\python.exe" benchmarks/contexttrace_bench/run_ragchecker.py `
   --input benchmarks/contexttrace_bench/out/candidate_inputs.jsonl `
+  --reference-file path/to/reference_answers.jsonl `
+  --reference-id-field id `
+  --reference-answer-field gt_answer `
   --ragchecker-input-output benchmarks/contexttrace_bench/out/ragchecker_input.json `
   --candidate-output benchmarks/contexttrace_bench/out/ragchecker_predictions.json `
   --extractor-name openai/gpt-4.1-mini `
   --checker-name openai/gpt-4.1-mini `
-  --use-response-as-gt `
   --chunk-size 25 `
   --resume `
   --progress-every 25
