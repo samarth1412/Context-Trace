@@ -163,7 +163,7 @@ def _case_from_response(
     source_info = _first_value(source_row or {}, ["source_info"])
     query = _query_text(row, source_row or {}, source_info, source_id=source_id)
     context_text = _context_text(source_info)
-    expected_labels, expected_verdict_counts, root_cause = _expected_outcome(row.get("labels") or [])
+    expected_labels, root_cause = _expected_outcome(row.get("labels") or [])
     answer_spans = _answer_spans(row.get("labels") or [])
     context = (
         [
@@ -193,7 +193,8 @@ def _case_from_response(
         "contexts": context,
         "citations": [],
         "expected_labels": expected_labels,
-        "expected_verdict_counts": expected_verdict_counts,
+        "expected_verdict_scope": "answer_label",
+        "expected_verdict_counts": {},
         "expected_citation_statuses": [],
         "expected_should_abstain": False,
         "expected_primary_root_cause": root_cause,
@@ -209,20 +210,16 @@ def _case_from_response(
     }
 
 
-def _expected_outcome(labels: Any) -> tuple[list[str], dict[str, int], str]:
+def _expected_outcome(labels: Any) -> tuple[list[str], str]:
     span_labels = [label for label in labels if isinstance(label, dict)] if isinstance(labels, list) else []
-    counts = dict(DEFAULT_VERDICT_COUNTS)
     if not span_labels:
-        counts["supported"] = 1
-        return ["no_failure_detected"], counts, "no_failure_detected"
+        return ["no_failure_detected"], "no_failure_detected"
 
     label_types = [str(label.get("label_type") or "").lower() for label in span_labels]
     if any("conflict" in label_type or "contradict" in label_type for label_type in label_types):
-        counts["contradicted"] = 1
-        return ["contradicted_answer"], counts, "conflicting_contexts"
+        return ["contradicted_answer"], "conflicting_contexts"
 
-    counts["partially_supported"] = 1
-    return ["partial_support"], counts, "answer_overreach"
+    return ["partial_support"], "answer_overreach"
 
 
 def _answer_spans(labels: Any) -> list[dict[str, Any]]:

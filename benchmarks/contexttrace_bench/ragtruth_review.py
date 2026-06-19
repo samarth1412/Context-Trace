@@ -343,7 +343,14 @@ def _case_with_review(case: dict[str, Any], review: dict[str, Any], *, reviewed:
     labels = _labels_from_review(review, override)
     if labels:
         updated["expected_labels"] = labels
-        updated["expected_verdict_counts"] = _verdict_counts_from_review(review, override, labels)
+        updated["expected_verdict_counts"] = _verdict_counts_from_review(
+            review,
+            override,
+            labels,
+            default_scope=str(updated.get("expected_verdict_scope") or ""),
+        )
+        if updated["expected_verdict_counts"]:
+            updated["expected_verdict_scope"] = "claim_counts"
     root_cause = str(override.get("expected_primary_root_cause") or review.get("expected_primary_root_cause") or "").strip()
     if root_cause:
         updated["expected_primary_root_cause"] = root_cause
@@ -370,11 +377,16 @@ def _verdict_counts_from_review(
     review: dict[str, Any],
     override: dict[str, Any],
     labels: list[str],
+    *,
+    default_scope: str = "",
 ) -> dict[str, int]:
-    raw_counts = override.get("expected_verdict_counts") or review.get("expected_verdict_counts") or {}
+    default_is_answer_level = str(default_scope or "").strip().lower() == "answer_label"
+    raw_counts = override.get("expected_verdict_counts") or ({} if default_is_answer_level else review.get("expected_verdict_counts") or {})
     counts = {verdict: int(raw_counts.get(verdict) or 0) for verdict in DEFAULT_VERDICT_COUNTS}
     if any(counts.values()):
         return counts
+    if default_is_answer_level:
+        return {}
     labels_set = set(labels)
     if "contradicted_answer" in labels_set:
         counts["contradicted"] = 1

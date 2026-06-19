@@ -77,7 +77,10 @@ Failure label macro-F1
 
 Claim verdict macro-F1
 : Macro-F1 over claim verdict counts: `supported`, `partially_supported`,
-  `unsupported`, `contradicted`, and `unverifiable`.
+  `unsupported`, `contradicted`, and `unverifiable`. External case-pack rows can
+  mark `expected_verdict_scope: answer_label` when the source dataset labels
+  answer-level outcomes but does not provide claim-level verdict counts; those
+  rows are excluded from claim-verdict metrics.
 
 Root-cause accuracy
 : Exact match for the expected primary root-cause label on cases with root-cause
@@ -145,6 +148,10 @@ ContextTrace-Bench scores source-side evidence localization. For that reason the
 adapter preserves answer-side hallucination spans in metadata and leaves
 `expected_evidence_spans` empty until human review maps them back to supporting
 or contradicting source spans.
+It also uses `expected_verdict_scope: answer_label` by default, so claim-verdict
+count metrics are not inferred from RAGTruth answer-level labels. Reviewers can
+opt individual rows into strict claim-count scoring with
+`taxonomy_override.expected_verdict_counts`.
 
 For a broader RAGTruth review packet, prefer deterministic stratified sampling
 over taking the first rows from the export:

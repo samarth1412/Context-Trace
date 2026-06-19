@@ -374,6 +374,11 @@ scored but not strict independent external validation, `publishable` means
 strict independent review and scoring passed for RAGTruth-specific claims, and
 `validation_failed` means review, scoring, or artifact checks failed.
 
+RAGTruth rows use `expected_verdict_scope: answer_label` unless a reviewer
+explicitly supplies `taxonomy_override.expected_verdict_counts`. This avoids
+inventing claim-level verdict counts from answer-side hallucination labels while
+still allowing strict claim-count checks for curated overrides.
+
 Scored RAGTruth bundles include `scored/ragtruth_error_analysis.json` and
 `scored/ragtruth_error_analysis.md`. The reports rank dangerous false greens,
 partial-support misses, contradicted-answer misses, source-span localization

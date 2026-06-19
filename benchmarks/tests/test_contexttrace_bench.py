@@ -706,7 +706,8 @@ def test_ragtruth_adapter_builds_contexttrace_case_pack() -> None:
     assert case["query"] == "Summarize the following news."
     assert case["contexts"][0]["text"] == "The source article mentions East Jerusalem."
     assert case["expected_labels"] == ["partial_support"]
-    assert case["expected_verdict_counts"]["partially_supported"] == 1
+    assert case["expected_verdict_scope"] == "answer_label"
+    assert case["expected_verdict_counts"] == {}
     assert case["expected_evidence_spans"] == []
     assert case["ragtruth_metadata"]["answer_hallucination_spans"][0]["text"] == "Gaza Strip"
 
@@ -1091,6 +1092,8 @@ def test_ragtruth_review_workflow_validates_and_applies_review(tmp_path) -> None
     assert reviewed["review"]["required_review_cases"] == 1
     reviewed_cases = {case["id"]: case for case in reviewed["cases"]}
     assert reviewed_cases["ragtruth_overreach"]["expected_evidence_spans"] == ["Store credit is available within 30 days."]
+    assert reviewed_cases["ragtruth_overreach"]["expected_verdict_scope"] == "answer_label"
+    assert reviewed_cases["ragtruth_overreach"]["expected_verdict_counts"] == {}
     assert "review_metadata" not in reviewed_cases["ragtruth_supported"]
 
 
@@ -1392,9 +1395,14 @@ def test_contexttrace_bench_runs_external_case_pack(tmp_path) -> None:
     assert result["case_pack_dataset"] == "RAGTruth"
     assert result["summary"]["cases"] == 1
     assert result["summary"]["failure_label_macro_f1"] == 1.0
+    assert result["summary"]["claim_verdict_macro_f1"] is None
+    assert result["summary"]["claim_verdict_match_rate"] is None
     assert result["limitations"]
     assert result["confidence_intervals"]["failure_label_macro_f1"]["samples"] == 25
+    assert "claim_verdict_macro_f1" not in result["confidence_intervals"]
     assert result["rows"][0]["variant_type"] == "external_case_pack"
+    assert result["rows"][0]["expected_verdict_scope"] == "answer_label"
+    assert result["rows"][0]["verdict_match"] is None
     assert result["rows"][0]["case_pack_metadata"]["ragtruth_metadata"]["response_id"] == "supported"
 
     candidate_inputs = (tmp_path / "out" / "candidate_inputs.jsonl").read_text(encoding="utf-8").splitlines()
@@ -1453,6 +1461,8 @@ def test_contexttrace_bench_cli_scores_external_case_pack(tmp_path) -> None:
     assert payload["case_set"] == "external_case_pack"
     assert payload["case_pack_dataset"] == "fixture"
     assert payload["summary"]["failure_label_macro_f1"] == 1.0
+    assert payload["summary"]["claim_verdict_macro_f1"] == 1.0
+    assert payload["summary"]["claim_verdict_match_rate"] == 1.0
     assert "Confidence Intervals" in (output_dir / "results.md").read_text(encoding="utf-8")
 
 

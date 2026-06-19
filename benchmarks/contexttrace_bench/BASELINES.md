@@ -57,7 +57,9 @@ assisted review artifacts, not independent human sign-off. Treat the result as
 workflow and calibration evidence: it proves the adapter, review queue, apply
 step, manifest, and source-span scoring path work end to end, while the low
 failure macro-F1 and root-cause accuracy show the RAGTruth taxonomy
-mapping/calibration still needs work before any SOTA claim. The OpenAI judge is
+mapping/calibration still needs work before any SOTA claim. RAGTruth rows use
+answer-level verdict scope by default; claim-count metrics apply only to rows
+with explicit reviewer taxonomy overrides. The OpenAI judge is
 useful as a contrastive calibration target, but its 50-row smoke labeled 46/50
 rows as `no_failure_detected`, so its `0.260` dangerous false-green rate blocks
 any publishable claim from that smoke.
