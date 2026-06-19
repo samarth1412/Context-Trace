@@ -192,6 +192,13 @@ def classify_claim(
                 _join_facts(fact_match.missing_facts),
             )
         )
+    elif match.score >= SUPPORTED_THRESHOLD and fact_match.missing_facts:
+        verdict = "partially_supported"
+        confidence = match.score
+        reason = (
+            "The strongest evidence has high lexical or semantic overlap, but required fact "
+            "matching is incomplete; inspect the missing facts before treating this as supported."
+        )
     elif match.score >= SUPPORTED_THRESHOLD and normalized_mode != "local_ml":
         verdict = "supported"
         confidence = match.score

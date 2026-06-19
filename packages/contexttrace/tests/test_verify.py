@@ -211,6 +211,17 @@ def test_fact_matching_supports_list_items_with_equivalent_list_header():
     assert match.matched_fact_details[0].type == "predicate"
 
 
+def test_fact_matching_splits_while_contrast_claims():
+    match = compare_facts(
+        "Adverb clauses modify verbs, adjectives, or another adverbs, while adjective clauses modify nouns or pronouns.",
+        "An adverb clause is a dependent clause that modifies a verb, adjective or another adverb.",
+        mode="semantic",
+    )
+
+    assert match.matched_facts == ["Adverb clauses modify verbs, adjectives, or another adverbs"]
+    assert match.missing_facts == ["adjective clauses modify nouns or pronouns"]
+
+
 def test_evidence_matching_finds_best_context_and_terms():
     contexts = [
         TraceContext(id="shipping", text="Standard shipping takes 3 to 5 business days."),
@@ -431,6 +442,30 @@ def test_partially_supported_claim_classification():
     assert "evidence_span" in result["claims"][0]
     assert result["claims"][0]["root_cause"]["label"] == "answer_overreach"
     assert result["summary"]["root_causes"]["answer_overreach"] == 1
+
+
+def test_high_overlap_missing_fact_is_not_marked_supported():
+    result = verify_trace(
+        RAGTrace(
+            query="What is the trial status?",
+            answer="The first clinical trial focusing on recurrent ovarian cancer is currently underway.",
+            contexts=[
+                TraceContext(
+                    id="trial",
+                    text=(
+                        "The first clinical trial will focus on recurrent ovarian cancer, "
+                        "with human trials expected to begin within five years."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "contradicted"
+    assert claim["conflicting_fact_details"][0]["type"] == "temporal_status"
+    assert "contradicted_answer" in result["summary"]["failure_types"]
 
 
 def test_partial_support_includes_matched_and_missing_facts():
@@ -1082,6 +1117,30 @@ def test_relation_conflicts_are_not_supported_by_token_overlap(answer, context):
     claim = result["claims"][0]
     assert claim["verdict"] == "contradicted"
     assert claim["conflicting_facts"] == [answer.rstrip(".")]
+    assert "contradicted_answer" in result["summary"]["failure_types"]
+
+
+def test_led_by_conflict_is_not_supported_by_shared_player_stats():
+    result = verify_trace(
+        RAGTrace(
+            query="Who led Duke?",
+            answer="Duke won against Michigan State 81-61, led by Jahlil Okafor's 18 points and 10 rebounds.",
+            contexts=[
+                TraceContext(
+                    id="final_four",
+                    text=(
+                        "Freshman Justise Winslow led Duke with 19 points while national freshman "
+                        "of the year Jahlil Okafor had 18 points, 10 of which came in the first half."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "contradicted"
+    assert claim["conflicting_fact_details"][0]["type"] == "relation"
     assert "contradicted_answer" in result["summary"]["failure_types"]
 
 

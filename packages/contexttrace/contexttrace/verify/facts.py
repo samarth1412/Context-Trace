@@ -19,7 +19,20 @@ LOCATION_RELATION_RE = re.compile(
     re.IGNORECASE,
 )
 ACTIVE_RELATION_RE = re.compile(
-    r"^(?P<subject>.+?)\s+(?P<predicate>causes?|caused|leads to|results in|produces?|prevents?|requires?|discovered|discovers?|founded|created|creates|wrote|writes)\s+(?P<object>.+)$",
+    r"^(?P<subject>.+?)\s+(?P<predicate>causes?|caused|leads to|led|leads|results in|produces?|prevents?|requires?|modifies?|discovered|discovers?|founded|created|creates|wrote|writes)\s+(?P<object>.+)$",
+    re.IGNORECASE,
+)
+LEAD_BY_RE = re.compile(r"\bled\s+by\s+(?P<leader>[A-Z][A-Za-z.'-]+(?:\s+[A-Z][A-Za-z.'-]+)+)", re.IGNORECASE)
+ACTIVE_LEAD_RE = re.compile(
+    r"\b(?P<leader>[A-Z][A-Za-z.'-]+(?:\s+[A-Z][A-Za-z.'-]+)+)\s+led\s+(?P<target>[A-Z][A-Za-z0-9&.'-]+)",
+    re.IGNORECASE,
+)
+CURRENT_STATUS_RE = re.compile(
+    r"\b(?:currently\s+underway|is\s+underway|are\s+underway|has\s+begun|have\s+begun|has\s+started|have\s+started)\b",
+    re.IGNORECASE,
+)
+FUTURE_STATUS_RE = re.compile(
+    r"\b(?:will\s+(?:focus|begin|start|launch)|expected\s+to\s+begin|expected\s+to\s+start|within\s+\w+\s+years?)\b",
     re.IGNORECASE,
 )
 NEGATION_RE = re.compile(r"\b(?:no|not|never|without|cannot|can't|prohibited|forbidden|disallowed)\b", re.IGNORECASE)
@@ -265,6 +278,7 @@ def extract_required_fact_details(claim_text: str) -> list[RequiredFact]:
         return []
 
     facts: list[RequiredFact] = []
+    facts.extend(_contrast_facts(claim))
     facts.extend(_list_facts(claim))
     if not facts:
         facts.append(RequiredFact(text=claim, type=_fact_type(claim)))
@@ -299,9 +313,15 @@ def compare_facts(claim_text: str, evidence_text: str, *, mode: str = "lexical")
     numeric_conflict = _numeric_conflict(claim_text, evidence_text, mode=mode)
     if numeric_conflict is not None:
         conflicting_details.append(numeric_conflict)
+    status_conflict = _status_conflict(claim_text, evidence_text)
+    if status_conflict is not None:
+        conflicting_details.append(status_conflict)
     relation_conflict = _relation_conflict(claim_text, evidence_text, mode=mode)
     if relation_conflict is not None:
         conflicting_details.append(relation_conflict)
+    lead_conflict = _lead_relation_conflict(claim_text, evidence_text, mode=mode)
+    if lead_conflict is not None:
+        conflicting_details.append(lead_conflict)
 
     return FactMatch(
         required_facts=[fact.text for fact in required_details],
@@ -313,6 +333,41 @@ def compare_facts(claim_text: str, evidence_text: str, *, mode: str = "lexical")
         missing_fact_details=missing_details,
         conflicting_fact_details=conflicting_details,
     )
+
+
+def _contrast_facts(claim: str) -> list[RequiredFact]:
+    if not re.search(r"\bwhile\b", claim, flags=re.IGNORECASE):
+        return []
+    parts = [
+        _clean(part.strip(" ,;"))
+        for part in re.split(r"\bwhile\b", claim, flags=re.IGNORECASE)
+        if _clean(part.strip(" ,;"))
+    ]
+    if len(parts) <= 1:
+        return []
+
+    facts: list[RequiredFact] = []
+    for part in parts:
+        for segment in _split_contrast_segment(part):
+            if segment:
+                facts.append(RequiredFact(text=segment, type=_fact_type(segment)))
+    return facts if len(facts) > 1 else []
+
+
+def _split_contrast_segment(segment: str) -> list[str]:
+    value = _clean(segment)
+    if not value:
+        return []
+    match = re.search(r"\b(?P<verb>modifies?|modify)\b\s+(?P<tail>.+)$", value, flags=re.IGNORECASE)
+    if not match:
+        return [value]
+
+    subject = value[: match.start("verb")].strip(" ,;")
+    verb = match.group("verb")
+    tail = match.group("tail").strip(" ,;")
+    if not subject or not tail:
+        return [value]
+    return ["%s %s %s" % (subject, verb, tail)]
 
 
 def _list_facts(claim: str) -> list[RequiredFact]:
@@ -362,6 +417,11 @@ def _fact_supported(fact: str, evidence_text: str, *, mode: str) -> bool:
 
 def _fact_supported_by_unit(fact: str, evidence_unit: str, *, mode: str) -> bool:
     if _missing_exact_terms(fact, evidence_unit):
+        for scoped_fact in _scope_variants(fact):
+            if scoped_fact == _clean(fact) or _missing_exact_terms(scoped_fact, evidence_unit):
+                continue
+            if _fact_supported_by_unit(scoped_fact, evidence_unit, mode=mode):
+                return True
         return False
 
     fact_tokens = _important_tokens(fact, mode=mode)
@@ -381,7 +441,74 @@ def _fact_supported_by_unit(fact: str, evidence_unit: str, *, mode: str) -> bool
     if _list_item_supported(fact, evidence_unit, evidence_tokens, mode=mode):
         return True
 
+    for scoped_fact in _scope_variants(fact):
+        if scoped_fact != _clean(fact) and _fact_supported_by_unit(scoped_fact, evidence_unit, mode=mode):
+            return True
+
     return len(matched) >= 2 and coverage >= 0.62
+
+
+def _drop_leading_scope(fact: str) -> str:
+    variants = _scope_variants(fact)
+    return variants[0] if variants else _clean(fact).rstrip(".!?")
+
+
+def _scope_variants(fact: str) -> list[str]:
+    value = _clean(fact).rstrip(".!?")
+    variants: list[str] = []
+    scoped = re.sub(r"^in\s+[A-Z][A-Za-z0-9_.-]+(?:\s+issue\s+\d+)?,\s*", "", value, flags=re.IGNORECASE)
+    if scoped != value:
+        variants.append(scoped)
+
+    words = value.split()
+    if len(words) >= 4:
+        first = words[0].strip(" ,;:")
+        if _looks_like_scope_token(first):
+            variants.append(" ".join(words[1:]))
+
+        for index, word in enumerate(words[:4]):
+            token = word.strip(" ,;:")
+            if index == 0 or not _looks_like_scope_token(token):
+                continue
+            variants.append(" ".join([*words[:index], *words[index + 1 :]]))
+
+        prefix_end = _leading_scope_phrase_end(words)
+        if prefix_end > 1 and prefix_end < len(words):
+            variants.append(" ".join(words[prefix_end:]))
+
+    output: list[str] = []
+    seen = set()
+    for variant in variants:
+        cleaned = _clean(variant).rstrip(".!?")
+        if cleaned and cleaned != value and cleaned.lower() not in seen:
+            seen.add(cleaned.lower())
+            output.append(cleaned)
+    return output
+
+
+def _looks_like_scope_token(token: str) -> bool:
+    value = token.strip(" ,;:")
+    if not value or "-" in value:
+        return False
+    if value.isupper() and len(value) >= 2:
+        return True
+    return any(char.isupper() for char in value[1:])
+
+
+def _leading_scope_phrase_end(words: list[str]) -> int:
+    prefix: list[str] = []
+    has_scope_marker = False
+    for word in words[:5]:
+        token = word.strip(" ,;:")
+        if not token:
+            break
+        if not (token[:1].isupper() or token.isupper()):
+            break
+        prefix.append(token)
+        has_scope_marker = has_scope_marker or _looks_like_scope_token(token)
+    if len(prefix) < 2 or not has_scope_marker:
+        return 0
+    return len(prefix)
 
 
 def _list_item_supported(
@@ -553,6 +680,53 @@ def _relation_conflict(claim_text: str, evidence_text: str, *, mode: str) -> Req
     return None
 
 
+def _status_conflict(claim_text: str, evidence_text: str) -> RequiredFact | None:
+    if not CURRENT_STATUS_RE.search(str(claim_text or "")):
+        return None
+    if not FUTURE_STATUS_RE.search(str(evidence_text or "")):
+        return None
+    return RequiredFact(text=_clean(claim_text).rstrip(".!?"), type="temporal_status")
+
+
+def _lead_relation_conflict(claim_text: str, evidence_text: str, *, mode: str) -> RequiredFact | None:
+    claim = str(claim_text or "")
+    evidence = str(evidence_text or "")
+    claim_leader = _passive_leader(claim)
+    evidence_leader = _active_leader(evidence)
+    if not claim_leader or not evidence_leader:
+        return None
+    if _bidirectional_phrase_overlap(claim_leader, evidence_leader, mode=mode) >= 0.72:
+        return None
+    target = _lead_target(claim)
+    if target and _phrase_overlap(target, evidence, mode=mode) < 0.35:
+        return None
+    return RequiredFact(text=_clean(claim_text).rstrip(".!?"), type="relation")
+
+
+def _passive_leader(text: str) -> str:
+    match = LEAD_BY_RE.search(str(text or ""))
+    if not match:
+        return ""
+    return _clean_relation_phrase(match.group("leader").split("'")[0])
+
+
+def _active_leader(text: str) -> str:
+    match = ACTIVE_LEAD_RE.search(str(text or ""))
+    if not match:
+        return ""
+    return _clean_relation_phrase(match.group("leader"))
+
+
+def _lead_target(text: str) -> str:
+    before = str(text or "").split("led by", 1)[0]
+    candidates = [
+        token
+        for token in TOKEN_RE.findall(before)
+        if token[:1].isupper() and token.lower() not in {"the", "in", "on", "at"}
+    ]
+    return candidates[0] if candidates else ""
+
+
 def _any_relation_conflict(
     claim_relation: RelationFact,
     evidence_units: list[str],
@@ -580,6 +754,8 @@ def _relations_conflict(claim: RelationFact, evidence: RelationFact, *, mode: st
         return True
     if subject_overlap >= 0.72 and object_overlap < 0.50:
         return True
+    if _same_relation_head_with_different_modifier(claim.subject, evidence.subject, mode=mode) and object_overlap < 0.50:
+        return True
     if object_overlap >= 0.72 and (
         subject_overlap < 0.35 or _proper_name_conflict(claim.subject, evidence.subject)
     ):
@@ -598,6 +774,14 @@ def _extract_relation(text: str) -> RelationFact | None:
                 object=_clean_relation_phrase(match.group("object")),
             )
     return None
+
+
+def _same_relation_head_with_different_modifier(left: str, right: str, *, mode: str) -> bool:
+    left_tokens = _relation_tokens(left, mode=mode)
+    right_tokens = _relation_tokens(right, mode=mode)
+    if len(left_tokens) < 2 or len(right_tokens) < 2:
+        return False
+    return left_tokens[-1] == right_tokens[-1] and left_tokens[0] != right_tokens[0]
 
 
 def _proper_name_conflict(left: str, right: str) -> bool:
@@ -626,6 +810,10 @@ def _canonical_relation_predicate(value: str) -> str:
         return "cause"
     if normalized == "leads to":
         return "cause"
+    if normalized in {"led", "leads"}:
+        return "lead"
+    if normalized in {"modifies", "modify"}:
+        return "modify"
     if normalized == "results in":
         return "cause"
     if normalized in {"produces", "produce"}:
@@ -701,7 +889,15 @@ def _missing_exact_terms(fact: str, evidence_text: str) -> list[str]:
     required = {term.lower() for term in ACRONYM_RE.findall(str(fact or ""))}
     if not required:
         return []
-    present = {term.lower() for term in TOKEN_RE.findall(str(evidence_text or ""))}
+    evidence_values = [str(evidence_text or ""), _semantic_text(evidence_text)]
+    present = {term.lower() for value in evidence_values for term in TOKEN_RE.findall(value)}
+    present.update(
+        part.lower()
+        for value in evidence_values
+        for token in TOKEN_RE.findall(value)
+        for part in re.split(r"[-_./]", token)
+        if part
+    )
     missing = []
     for term in sorted(required):
         if term in present:
@@ -818,6 +1014,8 @@ SEMANTIC_TOKEN_MAP = {
     "reimbursements": "refund",
     "return": "refund",
     "returns": "refund",
+    "included": "include",
+    "including": "include",
     "repay": "refund",
     "repayment": "refund",
     "id": "number",
@@ -832,6 +1030,8 @@ SEMANTIC_TOKEN_MAP = {
     "retrieving": "retrieve",
     "retriever": "retrieval",
     "retrievers": "retrieval",
+    "returned": "return",
+    "returning": "return",
     "generated": "generate",
     "generates": "generate",
     "generating": "generate",
@@ -853,6 +1053,10 @@ SEMANTIC_TOKEN_MAP = {
     "recomputed": "recompute",
     "recomputes": "recompute",
     "recomputing": "recompute",
+    "fuse": "combine",
+    "fused": "combine",
+    "fuses": "combine",
+    "fusing": "combine",
     "reranked": "rerank",
     "reranking": "rerank",
     "reranks": "rerank",
@@ -912,6 +1116,8 @@ SEMANTIC_PHRASES = (
     ("cash back", "refund"),
     ("business day", "business days"),
     ("order id", "order number"),
+    ("k-nearest neighbors", "k-nn"),
+    ("k-nearest neighbor", "k-nn"),
     ("united states", "us"),
     ("not exactly what the law considers true", "false by the law"),
     ('not exactly what the law considers "true', "false by the law"),
