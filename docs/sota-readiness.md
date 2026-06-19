@@ -78,6 +78,11 @@ Completed in the repo:
   `ragtruth_error_analysis.md`, which convert the assisted run into concrete
   calibration targets by task, source dataset, model, label type, expected
   label, root-cause confusion, and source-span localization quality.
+- RAGTruth scoring now treats verdict counts as answer-level by default instead
+  of inventing one expected claim verdict from each answer-level label.
+  Claim-count metrics are scored only for explicit reviewer taxonomy overrides;
+  on the 200-case assisted run this reduced error-analysis misses from `199` to
+  `164` without changing the conservative `calibration_only` status.
 - The current semantic verifier scores failure macro-F1 `0.150`, root-cause
   accuracy `0.255`, dangerous false-green rate `0.025`, and evidence span
   overlap `0.555` on that 200-case RAGTruth sample, so RAGTruth is now a

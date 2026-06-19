@@ -861,11 +861,13 @@ def _score_candidate_row(reference_row: dict[str, Any], prediction: dict[str, An
     )
     expected_verdict_counts = dict(reference_row.get("expected_verdict_counts") or {})
     predicted_verdict_counts = _candidate_verdict_counts(prediction)
+    verdict_match = _verdict_counts_match(expected_verdict_counts, predicted_verdict_counts)
     root_cause_match = (predicted_root == expected_root) if expected_root and root_reported else None
     span_overlap = _span_overlap(expected_spans, predicted_spans) if span_reported else None
     citation_counts = _citation_error_counts(expected_citations, predicted_citations) if citation_reported else None
     benchmark_pass = set(expected_labels) == set(predicted_labels)
-    benchmark_pass = benchmark_pass and _counts_match(expected_verdict_counts, predicted_verdict_counts)
+    if verdict_match is not None:
+        benchmark_pass = benchmark_pass and bool(verdict_match)
     if root_cause_match is not None:
         benchmark_pass = benchmark_pass and bool(root_cause_match)
     if expected_citations and citation_reported:
@@ -881,7 +883,8 @@ def _score_candidate_row(reference_row: dict[str, Any], prediction: dict[str, An
         "exact_match": set(expected_labels) == set(predicted_labels),
         "expected_verdict_counts": expected_verdict_counts,
         "predicted_verdict_counts": predicted_verdict_counts,
-        "verdict_match": _counts_match(expected_verdict_counts, predicted_verdict_counts),
+        "verdict_match": verdict_match,
+        "expected_verdict_scope": reference_row.get("expected_verdict_scope") or "claim_counts",
         "expected_citation_statuses": expected_citations,
         "predicted_citation_statuses": predicted_citations,
         "citation_match": (expected_citations == predicted_citations) if expected_citations else None,
@@ -939,9 +942,10 @@ def _candidate_cost_per_trace(candidate: dict[str, Any], rows: list[dict[str, An
 
 
 def _verifier_like_from_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    verdict_rows = [row for row in rows if row.get("verdict_match") is not None]
     return {
         "exact_match_rate": _rate([bool(row.get("exact_match")) for row in rows]),
-        "verdict_match_rate": _rate([bool(row.get("verdict_match")) for row in rows]),
+        "verdict_match_rate": _rate([bool(row.get("verdict_match")) for row in verdict_rows]) if verdict_rows else None,
         "per_label": _per_label_metrics(rows),
     }
 
@@ -1364,6 +1368,7 @@ def _run_case_pack_case(item: dict[str, Any], *, mode: str, dataset: str) -> dic
         verdict: int((result.get("summary") or {}).get(verdict) or 0)
         for verdict in VERDICT_NAMES
     }
+    verdict_match = _verdict_counts_match(expected_verdict_counts, predicted_verdict_counts)
     expected_citations = [str(status) for status in item.get("expected_citation_statuses") or []]
     predicted_citations = [
         str(claim.get("citation_status"))
@@ -1387,7 +1392,8 @@ def _run_case_pack_case(item: dict[str, Any], *, mode: str, dataset: str) -> dic
         "predicted_verdict_counts": {
             key: value for key, value in sorted(predicted_verdict_counts.items())
         },
-        "verdict_match": _counts_match(expected_verdict_counts, predicted_verdict_counts),
+        "verdict_match": verdict_match,
+        "expected_verdict_scope": _expected_verdict_scope(item),
         "expected_citation_statuses": expected_citations,
         "predicted_citation_statuses": predicted_citations,
         "citation_match": (expected_citations == predicted_citations) if expected_citations else None,
@@ -1480,6 +1486,8 @@ def _case_pack_metadata(item: dict[str, Any]) -> dict[str, Any]:
 
 
 def _expected_verdict_counts_from_item(item: dict[str, Any], expected: set[str]) -> dict[str, int]:
+    if _expected_verdict_scope(item) == "answer_label":
+        return {}
     raw_counts = item.get("expected_verdict_counts") or {}
     counts = {verdict: int(raw_counts.get(verdict) or 0) for verdict in VERDICT_NAMES}
     if any(counts.values()):
@@ -1493,6 +1501,11 @@ def _expected_verdict_counts_from_item(item: dict[str, Any], expected: set[str])
     else:
         counts["supported"] = 1
     return counts
+
+
+def _expected_verdict_scope(item: dict[str, Any]) -> str:
+    scope = str(item.get("expected_verdict_scope") or "").strip().lower()
+    return "answer_label" if scope == "answer_label" else "claim_counts"
 
 
 def _uncited_supported_variant(case: Any, distractors: list[Any]) -> dict[str, Any] | None:
@@ -1855,7 +1868,9 @@ def _enrich_row(row: dict[str, Any], labels: dict[str, Any]) -> dict[str, Any]:
         row.get("expected_citation_statuses") or [],
         row.get("predicted_citation_statuses") or [],
     )
-    benchmark_pass = bool(row.get("exact_match")) and bool(row.get("verdict_match"))
+    benchmark_pass = bool(row.get("exact_match"))
+    if row.get("verdict_match") is not None:
+        benchmark_pass = benchmark_pass and bool(row.get("verdict_match"))
     if root_cause_match is not None:
         benchmark_pass = benchmark_pass and bool(root_cause_match)
     return {
@@ -1984,13 +1999,22 @@ def _counts_match(expected: dict[str, Any], predicted: dict[str, Any]) -> bool:
     return True
 
 
-def _verdict_macro_f1(rows: list[dict[str, Any]]) -> float:
+def _verdict_counts_match(expected: dict[str, Any], predicted: dict[str, Any]) -> bool | None:
+    if not expected:
+        return None
+    return _counts_match(expected, predicted)
+
+
+def _verdict_macro_f1(rows: list[dict[str, Any]]) -> float | None:
+    scored_rows = [row for row in rows if row.get("expected_verdict_counts")]
+    if not scored_rows:
+        return None
     scores = []
     for verdict in VERDICT_NAMES:
         tp = 0
         fp = 0
         fn = 0
-        for row in rows:
+        for row in scored_rows:
             expected = int((row.get("expected_verdict_counts") or {}).get(verdict) or 0)
             predicted = int((row.get("predicted_verdict_counts") or {}).get(verdict) or 0)
             tp += min(expected, predicted)

@@ -303,6 +303,10 @@ The bundle status is conservative:
 
 The adapter preserves RAGTruth answer-side hallucination spans, but publishable
 span-localization claims still require human mapping to source evidence spans.
+RAGTruth cases use `expected_verdict_scope: answer_label` by default because the
+dataset does not provide claim-level verdict counts. Claim-verdict metrics are
+scored only for rows where a reviewer explicitly supplies
+`taxonomy_override.expected_verdict_counts`.
 When scoring completes, the release bundle also includes
 `scored/ragtruth_error_analysis.json` and
 `scored/ragtruth_error_analysis.md`. These reports group misses by task type,
