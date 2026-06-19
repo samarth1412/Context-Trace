@@ -4,6 +4,76 @@ This document keeps ContextTrace's public positioning tied to reproducible
 evidence. The goal is to become a credible state-of-the-art product/library
 without making claims before the benchmark support exists.
 
+## Reality Check: Not SOTA Yet
+
+As of June 19, 2026, ContextTrace has a credible benchmark and release-evidence
+pipeline, but it is not yet defensible as a broad state-of-the-art RAG
+evaluation product.
+
+The reason is external validity. The verifier is strong on the built-in
+500-case benchmark and the 150-case public holdout, but the latest 200-case
+RAGTruth assisted run is still calibration-only:
+
+- Failure macro-F1: `0.270`
+- Root-cause accuracy: `0.360`
+- Dangerous false-green rate: `0.005`
+- Evidence-span overlap: `0.555`
+- Claim-verdict macro-F1: `0.141` where claim-level overrides exist
+
+That is not SOTA. It is useful evidence that the harness, review workflow, and
+error-analysis path work, but the product still needs material verifier-quality
+work on external datasets before public SOTA positioning is honest.
+
+## SOTA Gate
+
+Do not claim broad SOTA until all of these are true:
+
+- At least two external datasets are scored end to end with documented adapters,
+  frozen inputs, and reproducible commands.
+- The primary external run is independently reviewed, not only assisted.
+- RAGTruth or equivalent external failure macro-F1 is at least `0.75`.
+- External dangerous false-green rate is at most `0.01`.
+- Root-cause accuracy on external labeled failures is at least `0.70`.
+- Evidence-span overlap on independently reviewed source spans is at least
+  `0.70`.
+- Full competitor rows are scored on the same IDs, with unsupported diagnostic
+  fields shown as `N/A`.
+
+Until then, the correct claim is benchmarked and local-first, not SOTA.
+
+## Next Milestone: External Accuracy Sprint
+
+Stop prioritizing new wrappers unless they unblock a publishable external run.
+The next engineering milestone is to make the RAGTruth 200-case sample a strong
+calibration target:
+
+1. Triage the latest RAGTruth error-analysis rows by expected label and root
+   cause.
+2. Fix the largest false-green and wrong-taxonomy clusters first.
+3. Add focused tests that reproduce each corrected external miss in the local
+   verifier.
+4. Rerun the same deterministic RAGTruth release workflow.
+5. Promote the result only if failure macro-F1 and root-cause accuracy move
+   materially without regressing the public holdout gates.
+
+Immediate targets from the latest error analysis:
+
+- `no_failure_detected -> answer_overreach`: 67 cases. The verifier is
+  over-flagging many supported RAGTruth rows, especially answer-level rows with
+  no hallucination span.
+- `no_failure_detected -> conflicting_contexts`: 25 cases. Conflict detection is
+  too eager on some supported rows.
+- `conflicting_contexts -> answer_overreach`: 22 cases, concentrated in
+  Data2txt/Yelp. These are contradicted-answer misses.
+- `answer_overreach -> conflicting_contexts`: 13 cases. These are
+  partial-support misses being treated as contradictions.
+- Source-span localization misses: 47 cases, mostly Data2txt/Yelp conflict
+  rows.
+
+The first implementation pass should target these clusters in that order. The
+single dangerous false green, `ragtruth_16056`, should stay tracked, but it does
+not dominate the current quality gap.
+
 ## Week 1: Credibility Foundation
 
 Week 1 is about making the current verifier benchmark reproducible, publishable,
@@ -83,8 +153,8 @@ Completed in the repo:
   Claim-count metrics are scored only for explicit reviewer taxonomy overrides;
   on the 200-case assisted run this reduced error-analysis misses from `199` to
   `164` without changing the conservative `calibration_only` status.
-- The current semantic verifier scores failure macro-F1 `0.150`, root-cause
-  accuracy `0.255`, dangerous false-green rate `0.025`, and evidence span
+- The current semantic verifier scores failure macro-F1 `0.270`, root-cause
+  accuracy `0.360`, dangerous false-green rate `0.005`, and evidence span
   overlap `0.555` on that 200-case RAGTruth sample, so RAGTruth is now a
   concrete calibration target rather than a publishable external benchmark
   claim.
@@ -129,9 +199,9 @@ Current baseline status:
   error F1 `1.000`, evidence span overlap `0.921`.
 - RAGTruth assisted review pilot, ContextTrace semantic verifier: 200 official
   test-split stratified cases, 88 assisted-reviewed hallucination rows, 76
-  rows with source evidence spans, failure macro-F1 `0.150`, root-cause
-  accuracy `0.255`, citation error F1 `1.000`, evidence span overlap `0.555`,
-  and dangerous false-green rate `0.025`. This is not publishable without
+  rows with source evidence spans, failure macro-F1 `0.270`, root-cause
+  accuracy `0.360`, citation error F1 `1.000`, evidence span overlap `0.555`,
+  and dangerous false-green rate `0.005`. This is not publishable without
   independent sign-off and calibration.
 - RAGTruth assisted review pilot, OpenAI diagnostic judge with `gpt-4.1-mini`:
   50 official test-split smoke cases, zero row errors, failure macro-F1 `0.272`,
