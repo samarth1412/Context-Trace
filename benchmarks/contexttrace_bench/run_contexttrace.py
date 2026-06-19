@@ -1360,7 +1360,10 @@ def _run_case_pack_case(item: dict[str, Any], *, mode: str, dataset: str) -> dic
     started = time.perf_counter()
     result = verify_trace(trace, mode=mode)
     latency_ms = round((time.perf_counter() - started) * 1000, 3)
-    predicted = _predicted_labels_from_result(result)
+    raw_predicted = _predicted_labels_from_result(result)
+    expected_verdict_scope = _expected_verdict_scope(item)
+    answer_label_projection = _answer_label_projection(raw_predicted, result, dataset=dataset, scope=expected_verdict_scope)
+    predicted = set(answer_label_projection["labels"]) if answer_label_projection else raw_predicted
     expected = {str(label) for label in item.get("expected_labels") or item.get("expected") or []}
     expected = expected or {"no_failure_detected"}
     expected_verdict_counts = _expected_verdict_counts_from_item(item, expected)
@@ -1387,13 +1390,15 @@ def _run_case_pack_case(item: dict[str, Any], *, mode: str, dataset: str) -> dic
         "trace": trace.to_dict(),
         "expected": sorted(expected),
         "predicted": sorted(predicted),
+        "raw_predicted": sorted(raw_predicted) if answer_label_projection else None,
+        "answer_label_projection": answer_label_projection,
         "exact_match": predicted == expected,
         "expected_verdict_counts": expected_verdict_counts,
         "predicted_verdict_counts": {
             key: value for key, value in sorted(predicted_verdict_counts.items())
         },
         "verdict_match": verdict_match,
-        "expected_verdict_scope": _expected_verdict_scope(item),
+        "expected_verdict_scope": expected_verdict_scope,
         "expected_citation_statuses": expected_citations,
         "predicted_citation_statuses": predicted_citations,
         "citation_match": (expected_citations == predicted_citations) if expected_citations else None,
@@ -1774,6 +1779,47 @@ def _predicted_labels_from_result(result: dict[str, Any]) -> set[str]:
     return labels or {"no_failure_detected"}
 
 
+def _answer_label_projection(
+    raw_labels: set[str],
+    result: dict[str, Any],
+    *,
+    dataset: str,
+    scope: str,
+) -> dict[str, Any] | None:
+    if str(dataset or "").lower() != "ragtruth":
+        return None
+
+    labels = set(raw_labels or set())
+    if not labels or labels == {"no_failure_detected"}:
+        projected = {"no_failure_detected"}
+        reason = "raw_no_failure"
+    elif "citation_mismatch" in labels:
+        projected = {"citation_mismatch"}
+        reason = "citation_mismatch_priority"
+    elif "contradicted_answer" in labels:
+        projected = {"contradicted_answer"}
+        reason = "answer_level_contradiction_priority"
+    elif labels.intersection({"unsupported_answer", "insufficient_context", "should_have_abstained"}):
+        projected = {"partial_support"}
+        reason = "answer_level_mixed_or_missing_support"
+    elif "partial_support" in labels:
+        projected = {"partial_support"}
+        reason = "answer_level_partial_support"
+    else:
+        projected = labels
+        reason = "unchanged"
+
+    return {
+        "scope": "answer_label",
+        "dataset": "RAGTruth",
+        "verdict_scope": scope,
+        "raw_labels": sorted(labels),
+        "labels": sorted(projected),
+        "reason": reason,
+        "raw_failure_type": str((result.get("summary") or {}).get("failure_type") or ""),
+    }
+
+
 def _expected_claim_count(case: Any) -> int:
     return max(sum(int(value) for value in case.expected_verdict_counts.values()), 1)
 
@@ -1944,6 +1990,11 @@ def _summary(
 
 
 def _predicted_primary_root_cause(row: dict[str, Any]) -> str:
+    projection = row.get("answer_label_projection")
+    if isinstance(projection, dict):
+        projected_root = _root_cause_from_answer_labels(set(projection.get("labels") or []))
+        if projected_root:
+            return projected_root
     summary = row.get("summary") or {}
     primary = summary.get("primary_root_cause")
     if primary:
@@ -1953,6 +2004,20 @@ def _predicted_primary_root_cause(row: dict[str, Any]) -> str:
         if isinstance(root, dict) and root.get("label"):
             return str(root["label"])
     return "unknown"
+
+
+def _root_cause_from_answer_labels(labels: set[str]) -> str:
+    if "no_failure_detected" in labels:
+        return "no_failure_detected"
+    if "citation_mismatch" in labels:
+        return "wrong_source_cited"
+    if "contradicted_answer" in labels:
+        return "conflicting_contexts"
+    if labels.intersection({"partial_support", "unsupported", "unsupported_answer"}):
+        return "answer_overreach"
+    if "should_have_abstained" in labels:
+        return "should_have_abstained"
+    return ""
 
 
 def _derive_expected_root_cause(row: dict[str, Any]) -> str:

@@ -1415,6 +1415,49 @@ def test_contexttrace_bench_runs_external_case_pack(tmp_path) -> None:
     assert paths["results_md"].endswith("results.md")
 
 
+def test_ragtruth_answer_label_projection_collapses_raw_claim_labels(tmp_path) -> None:
+    case_pack = {
+        "dataset": "RAGTruth",
+        "cases": [
+            {
+                "id": "answer_scope_conflict",
+                "source": "RAGTruth/QA/fixture",
+                "query": "What is the refund policy?",
+                "answer": (
+                    "Customers cannot request refunds within 30 days. "
+                    "VIP customers receive cash refunds."
+                ),
+                "contexts": [
+                    {
+                        "id": "policy",
+                        "text": "Customers may request refunds within 30 days of purchase.",
+                    }
+                ],
+                "expected_labels": ["contradicted_answer"],
+                "expected_verdict_scope": "answer_label",
+                "expected_verdict_counts": {},
+                "expected_primary_root_cause": "conflicting_contexts",
+            }
+        ],
+    }
+    case_pack_path = tmp_path / "ragtruth_case_pack.json"
+    case_pack_path.write_text(json.dumps(case_pack), encoding="utf-8")
+
+    result = run_contexttrace_case_pack(
+        mode="semantic",
+        case_pack_path=case_pack_path,
+        bootstrap_samples=5,
+    )
+
+    row = result["rows"][0]
+    assert row["raw_predicted"] == ["contradicted_answer", "partial_support", "should_have_abstained"]
+    assert row["predicted"] == ["contradicted_answer"]
+    assert row["answer_label_projection"]["reason"] == "answer_level_contradiction_priority"
+    assert row["exact_match"] is True
+    assert row["predicted_primary_root_cause"] == "conflicting_contexts"
+    assert result["summary"]["failure_label_exact_match_rate"] == 1.0
+
+
 def test_contexttrace_bench_cli_scores_external_case_pack(tmp_path) -> None:
     case_pack = {
         "description": "Tiny external case pack fixture.",
