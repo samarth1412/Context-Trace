@@ -34,6 +34,10 @@ from benchmarks.contexttrace_bench.run_contexttrace import (
     write_benchmark_outputs,
 )
 from benchmarks.contexttrace_bench.ragtruth_adapter import adapt_ragtruth_rows
+from benchmarks.contexttrace_bench.ragtruth_error_analysis import (
+    build_ragtruth_error_analysis,
+    render_ragtruth_error_analysis_markdown,
+)
 from benchmarks.contexttrace_bench.ragtruth_review import (
     apply_review_mappings,
     build_review_packet,
@@ -1249,7 +1253,105 @@ def test_ragtruth_release_workflow_scores_reviewed_calibration_bundle(tmp_path) 
     assert manifest["bundle_status"] == "calibration_only"
     assert manifest["score"]["summary"]["cases"] == 2
     assert any(artifact["path"] == "scored/contexttrace_bench_results.json" for artifact in manifest["artifacts"])
+    assert any(artifact["path"] == "scored/ragtruth_error_analysis.json" for artifact in manifest["artifacts"])
+    assert any(artifact["path"] == "scored/ragtruth_error_analysis.md" for artifact in manifest["artifacts"])
     assert any(artifact["path"] == "ragtruth_review_signoff.jsonl" for artifact in manifest["artifacts"])
+
+
+def test_ragtruth_error_analysis_groups_calibration_targets() -> None:
+    case_pack = {
+        "dataset": "RAGTruth",
+        "cases": [
+            {
+                "id": "ragtruth_supported",
+                "source": "RAGTruth/QA/fixture",
+                "contexts": [{"task_type": "QA", "text": "Store credit is available within 30 days."}],
+                "ragtruth_metadata": {
+                    "response_id": "supported",
+                    "source_id": "policy",
+                    "model": "gpt-fixture",
+                    "answer_hallucination_spans": [],
+                },
+            },
+            {
+                "id": "ragtruth_overreach",
+                "source": "RAGTruth/QA/fixture",
+                "contexts": [{"task_type": "QA", "text": "Store credit is available within 30 days."}],
+                "expected_evidence_spans": ["Store credit is available within 30 days."],
+                "ragtruth_metadata": {
+                    "response_id": "overreach",
+                    "source_id": "policy",
+                    "model": "gpt-fixture",
+                    "answer_hallucination_spans": [
+                        {
+                            "start": 0,
+                            "end": 10,
+                            "text": "cash refund",
+                            "label_type": "Evident Baseless Info",
+                        }
+                    ],
+                },
+                "review_metadata": {
+                    "review_status": "reviewed",
+                    "reviewer": "unit-test",
+                    "source_evidence_span_count": 1,
+                },
+            },
+        ],
+    }
+    result = {
+        "summary": {
+            "failure_label_macro_f1": 0.25,
+            "root_cause_accuracy": 0.5,
+            "evidence_span_overlap": 0.1,
+            "dangerous_false_green_rate": 0.5,
+        },
+        "rows": [
+            {
+                "id": "ragtruth_supported",
+                "expected": ["no_failure_detected"],
+                "predicted": ["no_failure_detected"],
+                "expected_primary_root_cause": "no_failure_detected",
+                "predicted_primary_root_cause": "no_failure_detected",
+                "expected_evidence_spans": [],
+                "predicted_evidence_spans": [],
+                "evidence_span_overlap": None,
+                "verdict_match": True,
+                "benchmark_pass": True,
+            },
+            {
+                "id": "ragtruth_overreach",
+                "expected": ["partial_support"],
+                "predicted": ["no_failure_detected"],
+                "expected_primary_root_cause": "answer_overreach",
+                "predicted_primary_root_cause": "no_failure_detected",
+                "expected_evidence_spans": ["Store credit is available within 30 days."],
+                "predicted_evidence_spans": ["Cash refunds are available."],
+                "evidence_span_overlap": 0.1,
+                "verdict_match": False,
+                "benchmark_pass": False,
+            },
+        ],
+    }
+
+    analysis = build_ragtruth_error_analysis(result, case_pack, max_cases=5)
+    rendered = render_ragtruth_error_analysis_markdown(analysis)
+
+    assert analysis["case_count"] == 2
+    assert analysis["summary"]["misses"] == 1
+    assert analysis["summary"]["dangerous_false_greens"] == 1
+    assert analysis["summary"]["root_cause_misses"] == 1
+    assert analysis["summary"]["span_localization_misses"] == 1
+    assert analysis["calibration_targets"]["dangerous_false_greens"][0]["id"] == "ragtruth_overreach"
+    assert any(group["value"] == "QA" and group["misses"] == 1 for group in analysis["groups"]["task_type"])
+    assert any(group["value"] == "Evident Baseless Info" for group in analysis["groups"]["label_type"])
+    assert {
+        "expected": "answer_overreach",
+        "predicted": "no_failure_detected",
+        "count": 1,
+    } in analysis["groups"]["root_cause_confusion"]
+    assert "RAGTruth Error Analysis" in rendered
+    assert "Top Calibration Targets" in rendered
 
 
 def test_contexttrace_bench_runs_external_case_pack(tmp_path) -> None:

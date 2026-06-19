@@ -374,6 +374,12 @@ scored but not strict independent external validation, `publishable` means
 strict independent review and scoring passed for RAGTruth-specific claims, and
 `validation_failed` means review, scoring, or artifact checks failed.
 
+Scored RAGTruth bundles include `scored/ragtruth_error_analysis.json` and
+`scored/ragtruth_error_analysis.md`. The reports rank dangerous false greens,
+partial-support misses, contradicted-answer misses, source-span localization
+misses, and root-cause misses, then group them by task/source/model/label
+facets for calibration planning.
+
 Score the adapted pack with the same benchmark reports:
 
 ```bash

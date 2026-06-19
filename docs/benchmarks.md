@@ -303,6 +303,12 @@ The bundle status is conservative:
 
 The adapter preserves RAGTruth answer-side hallucination spans, but publishable
 span-localization claims still require human mapping to source evidence spans.
+When scoring completes, the release bundle also includes
+`scored/ragtruth_error_analysis.json` and
+`scored/ragtruth_error_analysis.md`. These reports group misses by task type,
+source dataset, model, RAGTruth label type, expected label, root-cause
+confusion, and span-localization quality so calibration work can target the
+largest blockers before any publishable external-validation claim.
 
 Score the adapted case pack through the same report path:
 
