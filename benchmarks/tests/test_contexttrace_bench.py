@@ -50,6 +50,7 @@ from benchmarks.contexttrace_bench.ragtruth_release_workflow import (
     run_ragtruth_release_workflow,
 )
 from benchmarks.contexttrace_bench.run_ragas import build_ragas_rows
+from benchmarks.contexttrace_bench.run_ragchecker import build_ragchecker_rows
 from benchmarks.contexttrace_bench.run_local_judge import _judge_prompt, _normalize_judge_output
 
 
@@ -614,6 +615,29 @@ def test_contexttrace_bench_adapts_candidate_rows() -> None:
     assert candidate["predictions"][1]["predicted_evidence_spans"] == ["closest span"]
 
 
+def test_contexttrace_bench_adapts_ragchecker_rows() -> None:
+    candidate = adapt_candidate_rows(
+        [
+            {
+                "query_id": "case-supported",
+                "metrics": {"faithfulness": 0.96, "claim_recall": 0.90},
+            },
+            {
+                "query_id": "case-unsupported",
+                "metrics": {"faithfulness": 0.30, "claim_recall": 0.20},
+            },
+        ],
+        system="RAGChecker",
+        preset="ragchecker",
+    )
+
+    assert candidate["adapter_preset"] == "ragchecker"
+    assert candidate["predictions"][0]["id"] == "case-supported"
+    assert candidate["predictions"][0]["predicted"] == ["no_failure_detected"]
+    assert candidate["predictions"][1]["id"] == "case-unsupported"
+    assert candidate["predictions"][1]["predicted"] == ["should_have_abstained", "unsupported_answer"]
+
+
 def test_baseline_runners_build_external_eval_rows(tmp_path) -> None:
     input_path = tmp_path / "candidate_inputs.jsonl"
     rows = [
@@ -636,6 +660,7 @@ def test_baseline_runners_build_external_eval_rows(tmp_path) -> None:
     loaded = load_candidate_inputs(input_path)
     ragas_rows = build_ragas_rows(loaded)
     deepeval_rows = build_deepeval_rows(loaded)
+    ragchecker_rows = build_ragchecker_rows(loaded, use_response_as_gt=True)
 
     assert ragas_rows == [
         {
@@ -651,6 +676,20 @@ def test_baseline_runners_build_external_eval_rows(tmp_path) -> None:
             "input": "What does the policy say?",
             "actual_output": "Refunds are available within 30 days.",
             "retrieval_context": ["Customers may request refunds within 30 days."],
+        }
+    ]
+    assert ragchecker_rows == [
+        {
+            "query_id": "case-1",
+            "query": "What does the policy say?",
+            "gt_answer": "Refunds are available within 30 days.",
+            "response": "Refunds are available within 30 days.",
+            "retrieved_context": [
+                {
+                    "doc_id": "policy",
+                    "text": "Customers may request refunds within 30 days.",
+                }
+            ],
         }
     ]
 

@@ -23,6 +23,11 @@ PRESETS = {
         "faithfulness_field": "faithfulness_score",
         "context_recall_field": "contextual_recall",
     },
+    "ragchecker": {
+        "id_field": "query_id",
+        "faithfulness_field": "metrics.faithfulness",
+        "context_recall_field": "metrics.claim_recall",
+    },
     "phoenix": {
         "faithfulness_field": "faithfulness_score",
         "context_recall_field": "retrieval_relevance",
@@ -63,6 +68,8 @@ def adapt_candidate_rows(
     predictions = []
     for row in rows:
         case_id = _get(row, id_field)
+        if case_id is None and preset_values.get("id_field"):
+            case_id = _get(row, preset_values.get("id_field"))
         if case_id is None:
             continue
         labels = _labels_from_row(

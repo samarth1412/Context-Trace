@@ -11,6 +11,7 @@ case set and are scored by `run_contexttrace.py --candidate`.
 | ContextTrace semantic verifier | `run_contexttrace.py --mode semantic` | Ready | Yes | Local-first product path. CI enforces default quality gates. |
 | RAGAS | `run_ragas.py` | Full OpenAI-backed candidate scored | Yes | `gpt-4.1-mini`, 500/500 rows, zero row errors. Faithfulness-only baseline; diagnostic fields are `N/A`. |
 | DeepEval | `run_deepeval.py` | Full OpenAI-backed candidate scored | Yes | `gpt-4.1-mini`, 500/500 rows, zero row errors. Faithfulness-only baseline; diagnostic fields are `N/A`. |
+| RAGChecker | `run_ragchecker.py`, `adapt_candidate.py --preset ragchecker` | Runner and adapter ready | No | Requires Python 3.9+ and `gt_answer` per row; use `--use-response-as-gt` only for smoke/proxy rows or supply a real reference field with `--gt-answer-field`. |
 | OpenAI diagnostic judge | `run_local_judge.py` | Expanded public holdout and RAGTruth smoke candidates scored | Holdout only | `gpt-4.1-mini`, 150/150 public-holdout rows and 50/50 RAGTruth smoke rows, zero row errors. The RAGTruth smoke is calibration-only because it has high dangerous false-green rate. |
 | OpenAI-compatible local judge | `run_local_judge.py` | Smoke run completed | No | Ollama `phi3:latest` produced 5 predictions. It is parseable but slow on this machine, so full 500-case execution is a multi-hour run. |
 | Phoenix | `adapt_candidate.py --preset phoenix` | Adapter ready | No | Requires exported Phoenix evaluator results. |
@@ -146,6 +147,26 @@ py -3.11 -m venv $deepevalVenv
   --progress-every 25
 ```
 
+Manual RAGChecker run:
+
+```powershell
+$ragcheckerVenv = Join-Path $env:TEMP "contexttrace-ragchecker"
+py -3.11 -m venv $ragcheckerVenv
+& "$ragcheckerVenv\Scripts\python.exe" -m pip install -r benchmarks/contexttrace_bench/requirements-ragchecker.txt
+& "$ragcheckerVenv\Scripts\python.exe" -m spacy download en_core_web_sm
+& "$ragcheckerVenv\Scripts\python.exe" benchmarks/contexttrace_bench/run_ragchecker.py `
+  --input benchmarks/contexttrace_bench/out/candidate_inputs.jsonl `
+  --ragchecker-input-output benchmarks/contexttrace_bench/out/ragchecker_input.json `
+  --candidate-output benchmarks/contexttrace_bench/out/ragchecker_predictions.json `
+  --extractor-name openai/gpt-4.1-mini `
+  --checker-name openai/gpt-4.1-mini `
+  --use-response-as-gt
+```
+
+`--use-response-as-gt` makes a setup/proxy row only. Publishable RAGChecker
+comparisons need a real reference answer field supplied with `--gt-answer-field`
+or an official RAGChecker output adapted with `--from-ragchecker-output`.
+
 Score full candidate rows:
 
 ```bash
@@ -153,7 +174,8 @@ python benchmarks/contexttrace_bench/run_contexttrace.py \
   --mode semantic \
   --case-set all \
   --candidate benchmarks/contexttrace_bench/out/ragas_predictions.json \
-  --candidate benchmarks/contexttrace_bench/out/deepeval_predictions.json
+  --candidate benchmarks/contexttrace_bench/out/deepeval_predictions.json \
+  --candidate benchmarks/contexttrace_bench/out/ragchecker_predictions.json
 ```
 
 ## Local Judge Baseline

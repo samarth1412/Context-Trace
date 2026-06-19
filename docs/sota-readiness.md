@@ -17,8 +17,8 @@ Completed in the repo:
   inputs, methodology, and baseline runbook.
 - `METHODOLOGY.md` defines case sets, labels, metrics, quality gates,
   limitations, and public claim policy.
-- `BASELINES.md` defines how to collect publishable RAGAS, DeepEval, local-judge,
-  Phoenix, and TruLens rows.
+- `BASELINES.md` defines how to collect publishable RAGAS, DeepEval, RAGChecker,
+  local-judge, Phoenix, and TruLens rows.
 - Full OpenAI-backed RAGAS and DeepEval baseline rows were collected with
   `gpt-4.1-mini` across all 500 benchmark cases.
 - A separate `public_holdout` case set was added and expanded to 150 cases from

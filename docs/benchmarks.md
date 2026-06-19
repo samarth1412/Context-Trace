@@ -188,12 +188,12 @@ python benchmarks/contexttrace_bench/adapt_candidate.py \
   --labels-field predicted_labels
 ```
 
-Presets for `ragas`, `deepeval`, `phoenix`, and `trulens` provide common score
-field names, but the adapter remains dependency-free. It does not claim a
-leaderboard result until the resulting candidate JSON is scored by the benchmark
-harness.
+Presets for `ragas`, `deepeval`, `ragchecker`, `phoenix`, and `trulens` provide
+common score field names, but the adapter remains dependency-free. It does not
+claim a leaderboard result until the resulting candidate JSON is scored by the
+benchmark harness.
 
-Optional direct runners are available for RAGAS and DeepEval:
+Optional direct runners are available for RAGAS, DeepEval, and RAGChecker:
 
 ```bash
 python benchmarks/contexttrace_bench/run_ragas.py \
@@ -205,17 +205,31 @@ python benchmarks/contexttrace_bench/run_deepeval.py \
   --input benchmarks/contexttrace_bench/out/candidate_inputs.jsonl \
   --candidate-output benchmarks/contexttrace_bench/out/deepeval_predictions.json \
   --model gpt-4.1-mini
+
+python benchmarks/contexttrace_bench/run_ragchecker.py \
+  --input benchmarks/contexttrace_bench/out/candidate_inputs.jsonl \
+  --ragchecker-input-output benchmarks/contexttrace_bench/out/ragchecker_input.json \
+  --candidate-output benchmarks/contexttrace_bench/out/ragchecker_predictions.json \
+  --extractor-name openai/gpt-4.1-mini \
+  --checker-name openai/gpt-4.1-mini \
+  --use-response-as-gt
 ```
 
 These scripts intentionally stay outside package dependencies. Install and
 configure the external evaluator separately, then feed the produced candidate JSON
 back into `run_contexttrace.py --candidate`.
 
-OpenAI, RAGAS, and DeepEval are comparison-only paths. The verifier and benchmark
-harness remain local-first; remote evaluator APIs are used only when you decide to
-publish competitor rows. Use the pinned optional requirement files in separate
-temporary venvs because the current RAGAS and DeepEval dependency graphs are not
-identical:
+RAGChecker requires `gt_answer` for each row. ContextTrace candidate inputs hide
+benchmark answers, so `--use-response-as-gt` is a comparison-only proxy for
+setup and smoke runs; publishable RAGChecker rows should use an external
+reference field supplied with `--gt-answer-field`. The pinned RAGChecker package
+requires Python 3.9 or newer; the examples use an isolated Python 3.11 venv.
+
+OpenAI, RAGAS, DeepEval, and RAGChecker are comparison-only paths. The verifier
+and benchmark harness remain local-first; remote evaluator APIs are used only
+when you decide to publish competitor rows. Use the pinned optional requirement
+files in separate temporary venvs because these evaluator dependency graphs are
+not identical:
 
 Diagnostic metrics are scored only when a candidate reports them. Generic
 faithfulness evaluators should show `N/A` for root cause, citation status, and
@@ -393,6 +407,19 @@ $env:OPENAI_API_KEY = "<your OpenAI API key>"
   --resume `
   --max-workers 4 `
   --progress-every 25
+
+$ragcheckerVenv = Join-Path $env:TEMP "contexttrace-ragchecker"
+py -3.11 -m venv $ragcheckerVenv
+& "$ragcheckerVenv\Scripts\python.exe" -m pip install -r benchmarks/contexttrace_bench/requirements-ragchecker.txt
+& "$ragcheckerVenv\Scripts\python.exe" -m spacy download en_core_web_sm
+$env:OPENAI_API_KEY = "<your OpenAI API key>"
+& "$ragcheckerVenv\Scripts\python.exe" benchmarks/contexttrace_bench/run_ragchecker.py `
+  --input benchmarks/contexttrace_bench/out/candidate_inputs.jsonl `
+  --ragchecker-input-output benchmarks/contexttrace_bench/out/ragchecker_input.json `
+  --candidate-output benchmarks/contexttrace_bench/out/ragchecker_predictions.json `
+  --extractor-name openai/gpt-4.1-mini `
+  --checker-name openai/gpt-4.1-mini `
+  --use-response-as-gt
 ```
 
 Local evaluator baseline:
@@ -408,5 +435,6 @@ py -3.11 -m venv $judgeVenv
   --model llama3.1:8b
 ```
 
-Phoenix and TruLens comparison rows can be adapted from their exported evaluator
-results with `--preset phoenix` and `--preset trulens`.
+RAGChecker, Phoenix, and TruLens comparison rows can be adapted from exported
+evaluator results with `--preset ragchecker`, `--preset phoenix`, and
+`--preset trulens`.

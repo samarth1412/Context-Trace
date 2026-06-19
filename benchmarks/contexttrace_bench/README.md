@@ -21,7 +21,7 @@ are useful for comparing local verifier modes and future baselines:
 Read [METHODOLOGY.md](METHODOLOGY.md) before using results in launch material.
 It documents label sources, generated-case limits, metrics, quality gates, and
 the public claim policy. Use [BASELINES.md](BASELINES.md) to collect publishable
-RAGAS, DeepEval, local-judge, Phoenix, or TruLens comparison rows. The
+RAGAS, DeepEval, RAGChecker, local-judge, Phoenix, or TruLens comparison rows. The
 `public_holdout` track is documented in [DIAG150.md](DIAG150.md), and the
 required human audit pass is tracked in [AUDIT.md](AUDIT.md).
 
@@ -150,7 +150,7 @@ Default gates:
 
 Competitor or internal evaluator rows are scored from candidate prediction JSON
 files. This keeps the leaderboard reproducible without requiring optional RAGAS,
-DeepEval, Phoenix, or TruLens dependencies in the benchmark harness.
+DeepEval, RAGChecker, Phoenix, or TruLens dependencies in the benchmark harness.
 
 `candidate_inputs.jsonl` contains the case IDs and trace payloads external
 systems should evaluate. It intentionally omits expected labels.
@@ -181,7 +181,8 @@ python benchmarks/contexttrace_bench/run_contexttrace.py \
   --mode semantic \
   --case-set all \
   --candidate ragas_predictions.json \
-  --candidate deepeval_predictions.json
+  --candidate deepeval_predictions.json \
+  --candidate ragchecker_predictions.json
 ```
 
 Normalize generic evaluator output into candidate JSON:
@@ -213,6 +214,14 @@ python benchmarks/contexttrace_bench/run_deepeval.py \
   --resume \
   --max-workers 4 \
   --progress-every 25
+
+python benchmarks/contexttrace_bench/run_ragchecker.py \
+  --input benchmarks/contexttrace_bench/out/candidate_inputs.jsonl \
+  --ragchecker-input-output benchmarks/contexttrace_bench/out/ragchecker_input.json \
+  --candidate-output benchmarks/contexttrace_bench/out/ragchecker_predictions.json \
+  --extractor-name openai/gpt-4.1-mini \
+  --checker-name openai/gpt-4.1-mini \
+  --use-response-as-gt
 ```
 
 Then score the candidates:
@@ -222,13 +231,18 @@ python benchmarks/contexttrace_bench/run_contexttrace.py \
   --mode semantic \
   --case-set all \
   --candidate benchmarks/contexttrace_bench/out/ragas_predictions.json \
-  --candidate benchmarks/contexttrace_bench/out/deepeval_predictions.json
+  --candidate benchmarks/contexttrace_bench/out/deepeval_predictions.json \
+  --candidate benchmarks/contexttrace_bench/out/ragchecker_predictions.json
 ```
 
-The RAGAS and DeepEval runners require those packages and a configured evaluator
-LLM. By default they emit faithfulness-style predictions; root-cause, citation,
-and evidence-span fields remain unreported unless the candidate JSON explicitly
-provides them.
+The RAGAS, DeepEval, and RAGChecker runners require those packages and a
+configured evaluator LLM. By default they emit faithfulness-style predictions;
+root-cause, citation, and evidence-span fields remain unreported unless the
+candidate JSON explicitly provides them. RAGChecker also requires `gt_answer`;
+use `--use-response-as-gt` only for comparison-only smoke/proxy rows, or supply
+a real reference field with `--gt-answer-field` for publishable rows. The pinned
+RAGChecker package requires Python 3.9 or newer; the examples use an isolated
+Python 3.11 venv.
 
 Leaderboard diagnostic metrics use `N/A` when a candidate does not report that
 field. Those fields are not counted as attempted failures; the separate
@@ -272,7 +286,16 @@ py -3.11 -m venv $judgeVenv
   --progress-every 3
 ```
 
-Phoenix and TruLens outputs can be normalized with the built-in adapter presets:
+RAGChecker, Phoenix, and TruLens outputs can be normalized with the built-in
+adapter presets:
+
+```bash
+python benchmarks/contexttrace_bench/adapt_candidate.py \
+  --input ragchecker_output.json \
+  --output benchmarks/contexttrace_bench/out/ragchecker_predictions.json \
+  --system RAGChecker \
+  --preset ragchecker
+```
 
 ```bash
 python benchmarks/contexttrace_bench/adapt_candidate.py \
@@ -291,9 +314,9 @@ python benchmarks/contexttrace_bench/adapt_candidate.py \
 ```
 
 For remote OpenAI comparison runs, keep the product path local and isolate the
-optional evaluator dependencies in a temporary environment. RAGAS and DeepEval
-currently have different transitive dependency constraints, so install them in
-separate venvs when collecting publishable comparison rows.
+optional evaluator dependencies in a temporary environment. RAGAS, DeepEval, and
+RAGChecker currently have different transitive dependency constraints, so
+install them in separate venvs when collecting publishable comparison rows.
 
 ## External Dataset Scaffolding
 
@@ -491,6 +514,19 @@ $env:OPENAI_API_KEY = "<your OpenAI API key>"
   --resume `
   --max-workers 4 `
   --progress-every 25
+
+$ragcheckerVenv = Join-Path $env:TEMP "contexttrace-ragchecker"
+py -3.11 -m venv $ragcheckerVenv
+& "$ragcheckerVenv\Scripts\python.exe" -m pip install -r benchmarks/contexttrace_bench/requirements-ragchecker.txt
+& "$ragcheckerVenv\Scripts\python.exe" -m spacy download en_core_web_sm
+$env:OPENAI_API_KEY = "<your OpenAI API key>"
+& "$ragcheckerVenv\Scripts\python.exe" benchmarks/contexttrace_bench/run_ragchecker.py `
+  --input benchmarks/contexttrace_bench/out/candidate_inputs.jsonl `
+  --ragchecker-input-output benchmarks/contexttrace_bench/out/ragchecker_input.json `
+  --candidate-output benchmarks/contexttrace_bench/out/ragchecker_predictions.json `
+  --extractor-name openai/gpt-4.1-mini `
+  --checker-name openai/gpt-4.1-mini `
+  --use-response-as-gt
 ```
 
 The default benchmark now meets the 500-case bar. Publish full competitor rows

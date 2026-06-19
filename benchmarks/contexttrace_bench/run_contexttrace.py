@@ -268,8 +268,9 @@ def write_benchmark_outputs(
 def score_candidate_predictions(reference_result: dict[str, Any], candidate: dict[str, Any]) -> dict[str, Any]:
     """Score a third-party or hand-written benchmark candidate against ContextTrace-Bench.
 
-    The candidate format is intentionally small so RAGAS, DeepEval, Phoenix, TruLens,
-    or an internal evaluator can be adapted without depending on those packages here.
+    The candidate format is intentionally small so RAGAS, DeepEval, RAGChecker,
+    Phoenix, TruLens, or an internal evaluator can be adapted without depending
+    on those packages here.
     """
 
     predictions = _candidate_prediction_index(candidate)

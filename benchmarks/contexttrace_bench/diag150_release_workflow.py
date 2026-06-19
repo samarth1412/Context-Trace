@@ -43,6 +43,7 @@ DEFAULT_CANDIDATE_FILENAMES = (
     "openai_diagnostic_judge_predictions.json",
     "ragas_predictions.json",
     "deepeval_predictions.json",
+    "ragchecker_predictions.json",
     "local_judge_predictions.json",
     "phoenix_predictions.json",
     "trulens_predictions.json",
