@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+import unicodedata
 from dataclasses import dataclass
 from typing import Iterable
 
@@ -472,6 +473,10 @@ SEMANTIC_TOKEN_MAP = {
     "fits": "fill",
     "fitting": "fill",
     "levels": "level",
+    "cafe-style": "cafe",
+    "baked": "bakery",
+    "bakeries": "bakery",
+    "dishes": "dish",
     "features": "show",
     "featuring": "show",
     "featured": "show",
@@ -575,6 +580,7 @@ SEMANTIC_PHRASES = (
 
 def _semantic_text(text: str) -> str:
     value = _normalize_negation_text(text).lower()
+    value = unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode("ascii")
     for source, replacement in SEMANTIC_PHRASES:
         value = value.replace(source, replacement)
     return value

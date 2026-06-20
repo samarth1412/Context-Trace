@@ -181,6 +181,56 @@ def test_claim_extraction_strips_structured_overview_prefixes():
     ]
 
 
+def test_claim_extraction_strips_passage_boilerplate_prefixes():
+    claims = extract_claims(
+        "Based on the given passages, PSA levels refer to the amount of prostate-specific antigen present in a man's blood."
+    )
+
+    assert [claim.text for claim in claims] == [
+        "PSA levels refer to the amount of prostate-specific antigen present in a man's blood."
+    ]
+
+
+def test_claim_extraction_skips_numbered_list_markers_after_boilerplate():
+    claims = extract_claims(
+        "Based on the given passages, the proper way to dispose of a worn US flag is to either: "
+        "1. Burn it in a peaceful manner. 2. Perform a proper ceremony."
+    )
+
+    assert [claim.text for claim in claims] == [
+        "Burn it in a peaceful manner.",
+        "Perform a proper ceremony.",
+    ]
+
+
+def test_claim_extraction_strips_how_to_boilerplate_prefixes():
+    claims = extract_claims(
+        "Sure, here's how to clean the dryer vent based on the given passages: "
+        "To clean the dryer vent, you should follow these steps: 1. Locate the dryer vent cover."
+    )
+
+    assert [claim.text for claim in claims] == ["Locate the dryer vent cover."]
+
+
+def test_claim_extraction_skips_option_answer_meta_sentence():
+    claims = extract_claims(
+        "Therefore, the answer is: \"Option 1 or Option 2.\" Burn it in a peaceful manner."
+    )
+
+    assert [claim.text for claim in claims] == ["Burn it in a peaceful manner."]
+
+
+def test_claim_extraction_preserves_us_abbreviation_in_boilerplate_prefix():
+    claims = extract_claims(
+        "Here's a brief answer to the question \"change of address u.s. postal service\" based on the given passages: "
+        "To change your address with the U.S. Postal Service, visit the USPS website."
+    )
+
+    assert [claim.text for claim in claims] == [
+        "To change your address with the U.S. Postal Service, visit the USPS website."
+    ]
+
+
 def test_context_span_extraction_preserves_offsets_and_hashes():
     context = TraceContext(
         id="docs/local-mode.md",
@@ -1011,6 +1061,164 @@ def test_semantic_mode_uses_structured_json_attributes_for_support():
     assert claim["conflicting_facts"] == []
 
 
+def test_semantic_mode_uses_structured_json_category_phrases_for_support():
+    result = verify_trace(
+        RAGTrace(
+            query="What does the cafe offer?",
+            answer="It offers a variety of cuisines including Italian, Mediterranean, and cafe-style dishes.",
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "categories": "Italian, Cafes, Mediterranean, Restaurants",
+                            "name": "Cafe Lido",
+                            "city": "Santa Barbara",
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["missing_facts"] == []
+
+
+def test_semantic_mode_uses_structured_json_amenity_aliases_for_support():
+    result = verify_trace(
+        RAGTrace(
+            query="What amenities are available?",
+            answer=(
+                "Notable amenities include business parking with garage and street options, "
+                "reservations, outdoor seating, takeaway service, and suitability for groups."
+            ),
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "attributes": {
+                                "BusinessParking": {
+                                    "garage": True,
+                                    "lot": False,
+                                    "street": True,
+                                    "valet": False,
+                                    "validated": False,
+                                },
+                                "OutdoorSeating": True,
+                                "RestaurantsGoodForGroups": True,
+                                "RestaurantsReservations": True,
+                                "RestaurantsTakeOut": True,
+                            }
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["missing_facts"] == []
+    assert claim["conflicting_facts"] == []
+
+
+def test_semantic_mode_uses_structured_json_hours_for_support():
+    daily = verify_trace(
+        RAGTrace(
+            query="When is the restaurant open?",
+            answer="The restaurant is open from 11:00 am to 9:00 pm every day of the week.",
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "hours": {
+                                "Monday": "11:0-21:0",
+                                "Tuesday": "11:0-21:0",
+                                "Wednesday": "11:0-21:0",
+                                "Thursday": "11:0-21:0",
+                                "Friday": "11:0-21:0",
+                                "Saturday": "11:0-21:0",
+                                "Sunday": "11:0-21:0",
+                            }
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+    extended_weekend = verify_trace(
+        RAGTrace(
+            query="When is the brewpub open?",
+            answer=(
+                "It operates from 11:30 to 19:30 from Monday to Sunday, "
+                "with extended hours until 20:00 on Fridays and Saturdays."
+            ),
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "hours": {
+                                "Monday": "11:30-19:30",
+                                "Tuesday": "11:30-19:30",
+                                "Wednesday": "11:30-19:30",
+                                "Thursday": "11:30-19:30",
+                                "Friday": "11:30-20:0",
+                                "Saturday": "11:30-20:0",
+                                "Sunday": "11:30-19:30",
+                            }
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert daily["claims"][0]["verdict"] == "supported"
+    assert daily["claims"][0]["conflicting_facts"] == []
+    assert extended_weekend["claims"][0]["verdict"] == "supported"
+    assert extended_weekend["claims"][0]["conflicting_facts"] == []
+
+
+def test_semantic_mode_uses_structured_json_day_specific_hours_for_support():
+    result = verify_trace(
+        RAGTrace(
+            query="When does the club operate?",
+            answer=(
+                "The business operates on Tuesdays from 6:00 PM to 1:00 AM, "
+                "Fridays from 6:00 PM to 11:00 PM, and Saturdays from 1:00 PM to 11:00 PM."
+            ),
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "hours": {
+                                "Tuesday": "18:0-1:0",
+                                "Friday": "18:0-23:0",
+                                "Saturday": "13:0-23:0",
+                            }
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["conflicting_facts"] == []
+
+
 def test_semantic_mode_uses_structured_json_attributes_for_conflict():
     result = verify_trace(
         RAGTrace(
@@ -1060,6 +1268,38 @@ def test_semantic_mode_does_not_let_json_false_values_contradict_supported_field
                                 "WiFi": "no",
                             },
                             "categories": "Dive Bars, Bars",
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["conflicting_facts"] == []
+
+
+def test_semantic_mode_does_not_conflict_specific_negated_parking_options():
+    result = verify_trace(
+        RAGTrace(
+            query="What parking is available?",
+            answer="Street parking is available, but there is no garage, validated parking, lot, or valet service.",
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "attributes": {
+                                "BusinessParking": {
+                                    "garage": False,
+                                    "lot": False,
+                                    "street": True,
+                                    "valet": False,
+                                    "validated": False,
+                                }
+                            }
                         }
                     ),
                 )

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import re
+import unicodedata
 from dataclasses import dataclass
 from functools import lru_cache
 
@@ -324,9 +325,10 @@ def compare_facts(claim_text: str, evidence_text: str, *, mode: str = "lexical")
     version_conflict = _version_conflict(claim_text, evidence_text, mode=mode)
     if version_conflict is not None:
         conflicting_details.append(version_conflict)
-    numeric_conflict = _numeric_conflict(claim_text, evidence_text, mode=mode)
-    if numeric_conflict is not None:
-        conflicting_details.append(numeric_conflict)
+    if not (structured_dict and _structured_hours_supports_fact(claim_text, structured_data)):
+        numeric_conflict = _numeric_conflict(claim_text, evidence_text, mode=mode)
+        if numeric_conflict is not None:
+            conflicting_details.append(numeric_conflict)
     for structured_conflict in _structured_value_conflicts(claim_text, evidence_text):
         conflicting_details.append(structured_conflict)
     status_conflict = _status_conflict(claim_text, evidence_text)
@@ -421,20 +423,20 @@ def _starts_with_list_verb(value: str) -> bool:
 
 STRUCTURED_FEATURES = (
     ("wifi", ("wifi", "wi-fi", "wireless internet"), (("attributes", "WiFi"),)),
-    ("validated parking", ("validated parking", "parking validation"), (("attributes", "BusinessParking", "validated"),)),
-    ("garage parking", ("garage parking", "parking garage"), (("attributes", "BusinessParking", "garage"),)),
+    ("validated parking", ("validated parking", "parking validation", "validated"), (("attributes", "BusinessParking", "validated"),)),
+    ("garage parking", ("garage parking", "parking garage", "garage"), (("attributes", "BusinessParking", "garage"),)),
     ("lot parking", ("lot parking", "parking lot"), (("attributes", "BusinessParking", "lot"),)),
-    ("street parking", ("street parking",), (("attributes", "BusinessParking", "street"),)),
-    ("valet parking", ("valet parking",), (("attributes", "BusinessParking", "valet"),)),
+    ("street parking", ("street parking", "street options"), (("attributes", "BusinessParking", "street"),)),
+    ("valet parking", ("valet parking", "valet service"), (("attributes", "BusinessParking", "valet"),)),
     (
         "reservations",
         ("reservations", "reservation", "takes reservations", "take reservations", "accepts reservations"),
         (("attributes", "RestaurantsReservations"),),
     ),
     ("outdoor seating", ("outdoor seating", "outside seating", "patio seating"), (("attributes", "OutdoorSeating"),)),
-    ("takeout", ("takeout", "take out", "take-out"), (("attributes", "RestaurantsTakeOut"),)),
+    ("takeout", ("takeout", "take out", "take-out", "takeaway", "takeaway service"), (("attributes", "RestaurantsTakeOut"),)),
     ("music", ("music", "live music"), (("attributes", "Music"),)),
-    ("good for groups", ("good for groups", "larger groups", "large groups"), (("attributes", "RestaurantsGoodForGroups"),)),
+    ("good for groups", ("good for groups", "larger groups", "large groups", "suitable for groups", "suitable for group", "suitability for groups", "group gatherings"), (("attributes", "RestaurantsGoodForGroups"),)),
     ("casual ambience", ("casual", "casual atmosphere", "casual ambiance", "casual ambience"), (("attributes", "Ambience", "casual"),)),
     ("classy ambience", ("classy", "classy atmosphere", "classy ambiance", "classy ambience"), (("attributes", "Ambience", "classy"),)),
     ("divey ambience", ("divey", "dive bar", "divey atmosphere", "divey ambiance"), (("attributes", "Ambience", "divey"),)),
@@ -473,6 +475,8 @@ def _fact_supported_by_structured_data(fact: str, evidence_text: str) -> bool:
         return False
     fact_text = _semantic_text(fact)
 
+    if _structured_hours_supports_fact(fact_text, data):
+        return True
     mentioned_features = [
         (phrases, paths)
         for _, phrases, paths in STRUCTURED_FEATURES
@@ -587,10 +591,13 @@ def _claim_denies_any(text: str, phrases: tuple[str, ...]) -> bool:
 
 
 def _claim_denies_parking(text: str) -> bool:
+    normalized = str(text or "").lower()
+    if re.search(r"\b(?:garage|lot|street|valet|validated)\b", normalized):
+        return False
     return bool(
         re.search(
             r"\b(?:no|not|without|lacks?|lack)\b.{0,45}\b(?:parking|parking\s+facilities)\b",
-            str(text or "").lower(),
+            normalized,
         )
     )
 
@@ -604,7 +611,9 @@ def _structured_parking_has_available_option(data: dict[str, object]) -> bool:
 
 def _structured_hours_conflict(claim_text: str, data: dict[str, object]) -> RequiredFact | None:
     claim = str(claim_text or "").lower()
-    if "open" not in claim and "hours" not in claim:
+    if not _structured_claim_mentions_hours(claim):
+        return None
+    if _structured_hours_supports_fact(claim, data):
         return None
     claim_range = _claim_time_range(claim)
     if claim_range is None:
@@ -628,6 +637,126 @@ def _structured_hours_conflict(claim_text: str, data: dict[str, object]) -> Requ
     if any(start == claim_start or end != claim_end for start, end in ranges):
         return RequiredFact(text="hours", type="structured_value")
     return None
+
+
+def _structured_claim_mentions_hours(text: str) -> bool:
+    return bool(
+        re.search(
+            r"\b(?:open|hours?|operates?|operation|daily|every\s+day|monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b",
+            str(text or ""),
+            flags=re.IGNORECASE,
+        )
+    )
+
+
+def _structured_hours_supports_fact(fact_text: str, data: dict[str, object]) -> bool:
+    claim = str(fact_text or "").lower()
+    if not _structured_claim_mentions_hours(claim):
+        return False
+    hours_by_day = _structured_hours_by_day(data)
+    if not hours_by_day:
+        return False
+
+    day_ranges = _claim_day_time_ranges(claim)
+    if day_ranges:
+        return all(hours_by_day.get(day) == claimed_range for day, claimed_range in day_ranges.items())
+
+    claim_range = _claim_time_range(claim)
+    if claim_range is None:
+        return False
+
+    extended = _claim_extended_hours(claim, claim_range)
+    if extended is not None:
+        extended_days, extended_range = extended
+        return all(
+            actual_range == (extended_range if day in extended_days else claim_range)
+            for day, actual_range in hours_by_day.items()
+        )
+
+    ranges = set(hours_by_day.values())
+    if _claim_implies_uniform_hours(claim):
+        return ranges == {claim_range}
+    return claim_range in ranges
+
+
+def _structured_hours_by_day(data: dict[str, object]) -> dict[str, tuple[int, int]]:
+    hours = data.get("hours")
+    if not isinstance(hours, dict):
+        return {}
+    output: dict[str, tuple[int, int]] = {}
+    for day, value in hours.items():
+        parsed = _structured_time_range(str(value or ""))
+        if parsed is None:
+            continue
+        normalized_day = _normalize_day_name(str(day or ""))
+        if normalized_day:
+            output[normalized_day] = parsed
+    return output
+
+
+DAY_ALIASES = {
+    "monday": "monday",
+    "mondays": "monday",
+    "tuesday": "tuesday",
+    "tuesdays": "tuesday",
+    "wednesday": "wednesday",
+    "wednesdays": "wednesday",
+    "thursday": "thursday",
+    "thursdays": "thursday",
+    "friday": "friday",
+    "fridays": "friday",
+    "saturday": "saturday",
+    "saturdays": "saturday",
+    "sunday": "sunday",
+    "sundays": "sunday",
+}
+
+
+def _normalize_day_name(value: str) -> str:
+    return DAY_ALIASES.get(str(value or "").strip().lower(), "")
+
+
+def _claim_day_time_ranges(text: str) -> dict[str, tuple[int, int]]:
+    output: dict[str, tuple[int, int]] = {}
+    pattern = re.compile(
+        r"\b(?P<day>monday|mondays|tuesday|tuesdays|wednesday|wednesdays|thursday|thursdays|friday|fridays|saturday|saturdays|sunday|sundays)\b"
+        r"[^.]{0,45}?\bfrom\s+(?P<start>\d{1,2}(?::\d{1,2})?\s*(?:am|pm)?)\s*(?:to|-|until)\s+"
+        r"(?P<end>\d{1,2}(?::\d{1,2})?\s*(?:am|pm)?)",
+        flags=re.IGNORECASE,
+    )
+    for match in pattern.finditer(str(text or "")):
+        day = _normalize_day_name(match.group("day"))
+        start = _parse_time_of_day(match.group("start"))
+        end = _parse_time_of_day(match.group("end"))
+        if day and start is not None and end is not None:
+            output[day] = (start, end)
+    return output
+
+
+def _claim_extended_hours(text: str, base_range: tuple[int, int]) -> tuple[set[str], tuple[int, int]] | None:
+    match = re.search(
+        r"\bextended\s+hours?\s+until\s+(?P<end>\d{1,2}(?::\d{1,2})?\s*(?:am|pm)?)\s+on\s+(?P<days>[^.]+)",
+        str(text or ""),
+        flags=re.IGNORECASE,
+    )
+    if not match:
+        return None
+    end = _parse_time_of_day(match.group("end"))
+    if end is None:
+        return None
+    days = {
+        normalized
+        for token in re.findall(
+            r"\b(?:monday|mondays|tuesday|tuesdays|wednesday|wednesdays|thursday|thursdays|friday|fridays|saturday|saturdays|sunday|sundays)\b",
+            match.group("days"),
+            flags=re.IGNORECASE,
+        )
+        for normalized in [_normalize_day_name(token)]
+        if normalized
+    }
+    if not days:
+        return None
+    return days, (base_range[0], end)
 
 
 def _claim_implies_uniform_hours(text: str) -> bool:
@@ -691,15 +820,68 @@ def _category_supports_fact(fact_text: str, data: dict[str, object]) -> bool:
     categories = str(data.get("categories") or "").lower()
     if not categories:
         return False
+    if _structured_number_mismatch(fact_text, data):
+        return False
+    if ("star" in fact_text or "rating" in fact_text) and not _rating_supports_fact(fact_text, data):
+        return False
     category_tokens = set(_important_tokens(categories, mode="semantic"))
-    fact_tokens = set(_important_tokens(fact_text, mode="semantic"))
+    fact_tokens = {
+        token
+        for token in _important_tokens(fact_text, mode="semantic")
+        if token not in CATEGORY_GENERIC_TOKENS
+    }
     if not category_tokens or not fact_tokens:
         return False
     category_overlap = category_tokens.intersection(fact_tokens)
+    if not category_overlap:
+        return False
     coverage = len(category_overlap) / len(fact_tokens)
-    if {"restaurant", "bar", "food", "cuisine"}.intersection(fact_tokens) and category_overlap and coverage >= 0.45:
+    if _mentions_category_context(fact_text) and len(category_overlap) >= 2 and coverage >= 0.40:
+        return True
+    if _mentions_category_context(fact_text) and len(category_overlap) == len(fact_tokens) and len(fact_tokens) <= 3:
         return True
     return len(category_overlap) >= 2 and coverage >= 0.45
+
+
+CATEGORY_GENERIC_TOKENS = {
+    "blend",
+    "business",
+    "cuisine",
+    "dish",
+    "food",
+    "good",
+    "include",
+    "local",
+    "mix",
+    "offer",
+    "option",
+    "restaurant",
+    "serve",
+    "service",
+    "specialize",
+    "style",
+    "unique",
+    "variety",
+    "well",
+}
+
+
+def _mentions_category_context(text: str) -> bool:
+    return bool(
+        re.search(
+            r"\b(?:categories?|cuisines?|restaurants?|bars?|baker(?:y|ies)|brew(?:ery|eries|pubs?)|brunch|breakfast|food|dishes|options|specializes?|serves?|offers?)\b",
+            str(text or ""),
+            flags=re.IGNORECASE,
+        )
+    )
+
+
+def _structured_number_mismatch(fact_text: str, data: dict[str, object]) -> bool:
+    fact_numbers = set(NUMBER_RE.findall(str(fact_text or "")))
+    if not fact_numbers:
+        return False
+    evidence_numbers = set(NUMBER_RE.findall(json.dumps(data, sort_keys=True)))
+    return bool(fact_numbers - evidence_numbers)
 
 
 def _rating_supports_fact(fact_text: str, data: dict[str, object]) -> bool:
@@ -1401,6 +1583,10 @@ SEMANTIC_TOKEN_MAP = {
     "fits": "fill",
     "fitting": "fill",
     "levels": "level",
+    "cafe-style": "cafe",
+    "baked": "bakery",
+    "bakeries": "bakery",
+    "dishes": "dish",
     "features": "show",
     "featuring": "show",
     "featured": "show",
@@ -1506,6 +1692,7 @@ SEMANTIC_PHRASES = (
 
 def _semantic_text(text: str) -> str:
     value = _normalize_negation_text(text).lower()
+    value = unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode("ascii")
     for source, replacement in SEMANTIC_PHRASES:
         value = value.replace(source, replacement)
     return value

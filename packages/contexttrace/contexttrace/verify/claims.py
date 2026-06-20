@@ -80,34 +80,63 @@ def extract_claims(answer: str) -> list[Claim]:
     claims: list[Claim] = []
     for sentence in sentences:
         sentence = _clean_sentence(sentence)
-        if not sentence or _is_filler(sentence):
+        if not sentence or _is_filler(sentence) or _is_non_claim_marker(sentence):
             continue
         for atomic in _atomic_claims(sentence):
-            if atomic and not _is_filler(atomic):
+            if atomic and not _is_filler(atomic) and not _is_non_claim_marker(atomic):
                 claims.append(Claim(id="claim_%s" % (len(claims) + 1), text=atomic))
     return claims
 
 
 def _clean_sentence(value: str) -> str:
     cleaned = _WHITESPACE_RE.sub(" ", value).strip()
+    cleaned = re.sub(r"^[\"'“”]\s+", "", cleaned)
     cleaned = cleaned.strip("-* \t")
     return _strip_generated_claim_prefix(cleaned)
 
 
 def _strip_generated_claim_prefix(value: str) -> str:
     match = re.match(
-        r"^(?:here(?:'s| is)\s+(?:(?:a|the)\s+)?summary(?:\s+of\s+the\s+article)?(?:\s+(?:in|within)\s+\d+\s+words)?|"
+        r"^(?:sure,?\s+)?(?:here(?:'s| is)\s+(?:how\s+(?:to|you\s+can)[^:]{0,180}|(?:(?:a|the|an|my)\s+)?(?:brief\s+)?(?:summary|answer|overview)(?:\s+of\s+the\s+article)?(?:\s+to\s+the\s+question\s+\"[^\"]+\")?(?:\s+based\s+on\s+the\s+(?:provided|given)\s+passages?)?(?:\s+(?:in|within)\s+\d+\s+words)?)|"
         r"based\s+on\s+the\s+provided\s+structured\s+data[^:]{0,120}|"
+        r"based\s+on\s+the\s+(?:provided|given)\s+passages?[^:]{0,160}|"
         r"based\s+on\s+the\s+provided\s+context[^:]{0,120})\s*:\s*(?P<claim>.+)$",
         value,
         flags=re.IGNORECASE,
     )
-    if not match:
+    if match:
+        claim = match.group("claim").strip()
+        if _is_non_claim_marker(claim):
+            return ""
+        if len(claim.split()) >= 3:
+            return claim
         return value
-    claim = match.group("claim").strip()
-    if len(claim.split()) < 3:
-        return value
-    return claim
+
+    comma_match = re.match(
+        r"^(?:based\s+on\s+the\s+(?:provided|given)\s+passages?|based\s+on\s+the\s+provided\s+context)\s*,\s*(?P<claim>.+)$",
+        value,
+        flags=re.IGNORECASE,
+    )
+    if comma_match:
+        claim = comma_match.group("claim").strip()
+        if len(claim.split()) >= 3:
+            return claim
+    return value
+
+
+def _is_non_claim_marker(value: str) -> bool:
+    normalized = value.strip().strip(".:;,)").strip()
+    if re.fullmatch(r"(?:option\s*)?(?:step\s*)?\d+", normalized, flags=re.IGNORECASE):
+        return True
+    if re.search(r"\bfollow\s+(?:these\s+)?steps\s*:\s*(?:step\s*)?\d+$", normalized, flags=re.IGNORECASE):
+        return True
+    return bool(
+        re.fullmatch(
+            r"(?:therefore,\s*)?the\s+answer\s+is\s*:?\s*\"?option\s*\d+(?:\s+or\s+option\s*\d+)+\"?",
+            normalized,
+            flags=re.IGNORECASE,
+        )
+    )
 
 
 def _split_sentences(text: str) -> list[str]:
@@ -131,6 +160,8 @@ def _split_sentences(text: str) -> list[str]:
 def _is_internal_period(text: str, index: int) -> bool:
     previous = text[index - 1] if index > 0 else ""
     next_char = text[index + 1] if index + 1 < len(text) else ""
+    if text[: index + 1].lower().endswith(("u.s.", "u.k.")):
+        return True
     if previous.isdigit() and next_char.isdigit():
         return True
     if previous.isalnum() and next_char.isalnum():
