@@ -92,7 +92,8 @@ def _clean_sentence(value: str) -> str:
     cleaned = _WHITESPACE_RE.sub(" ", value).strip()
     cleaned = re.sub(r"^[\"'“”]\s+", "", cleaned)
     cleaned = cleaned.strip("-* \t")
-    return _strip_generated_claim_prefix(cleaned)
+    cleaned = _strip_generated_claim_prefix(cleaned)
+    return _strip_discourse_prefix(cleaned)
 
 
 def _strip_generated_claim_prefix(value: str) -> str:
@@ -125,7 +126,9 @@ def _strip_generated_claim_prefix(value: str) -> str:
 
 
 def _is_non_claim_marker(value: str) -> bool:
-    normalized = value.strip().strip(".:;,)").strip()
+    normalized = value.strip().strip(".:;,)\"'“”").strip()
+    if not normalized or not re.search(r"[A-Za-z0-9]", normalized):
+        return True
     if re.fullmatch(r"(?:option\s*)?(?:step\s*)?\d+", normalized, flags=re.IGNORECASE):
         return True
     if re.search(r"\bfollow\s+(?:these\s+)?steps\s*:\s*(?:step\s*)?\d+$", normalized, flags=re.IGNORECASE):
@@ -137,6 +140,16 @@ def _is_non_claim_marker(value: str) -> bool:
             flags=re.IGNORECASE,
         )
     )
+
+
+def _strip_discourse_prefix(value: str) -> str:
+    cleaned = re.sub(
+        r"^(?:\((?:passage|source)\s+\d+\)\s*)?(?:(?:therefore|in\s+conclusion|overall|note)\s*[:,]\s*)+",
+        "",
+        str(value or "").strip(),
+        flags=re.IGNORECASE,
+    ).strip()
+    return cleaned or value
 
 
 def _split_sentences(text: str) -> list[str]:

@@ -253,7 +253,7 @@ def score_claim_against_context(
     )
 
 
-def _rank_spans(spans: list[dict[str, object]], *, limit: int = 4) -> list[dict[str, object]]:
+def _rank_spans(spans: list[dict[str, object]], *, limit: int = 8) -> list[dict[str, object]]:
     unique: dict[str, dict[str, object]] = {}
     for span in spans:
         key = str(span.get("span_hash") or "%s:%s:%s" % (span.get("context_id"), span.get("start_char"), span.get("end_char")))
@@ -473,6 +473,17 @@ SEMANTIC_TOKEN_MAP = {
     "fits": "fill",
     "fitting": "fill",
     "levels": "level",
+    "dizziness": "dizzy",
+    "lightheaded": "dizzy",
+    "eliminating": "eliminate",
+    "eliminates": "eliminate",
+    "improving": "improve",
+    "improved": "improve",
+    "increased": "increase",
+    "decreasing": "decrease",
+    "decreases": "decrease",
+    "reducing": "reduce",
+    "reduces": "reduce",
     "cafe-style": "cafe",
     "baked": "bakery",
     "bakeries": "bakery",

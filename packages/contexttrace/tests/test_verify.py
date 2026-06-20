@@ -220,6 +220,28 @@ def test_claim_extraction_skips_option_answer_meta_sentence():
     assert [claim.text for claim in claims] == ["Burn it in a peaceful manner."]
 
 
+def test_claim_extraction_skips_orphan_option_marker_sentence():
+    claims = extract_claims('Therefore, the answer is: "Option 1 or Option 2."')
+
+    assert claims == []
+
+
+def test_claim_extraction_strips_discourse_prefixes():
+    conclusion_claims = extract_claims(
+        "In conclusion, the recommended method involves using identical frames and attaching small hinges."
+    )
+    passage_claims = extract_claims(
+        "(Passage 3) Therefore, to grill pork chops, preheat the grill and season the pork chops."
+    )
+
+    assert [claim.text for claim in conclusion_claims] == [
+        "the recommended method involves using identical frames and attaching small hinges."
+    ]
+    assert [claim.text for claim in passage_claims] == [
+        "to grill pork chops, preheat the grill and season the pork chops."
+    ]
+
+
 def test_claim_extraction_preserves_us_abbreviation_in_boilerplate_prefix():
     claims = extract_claims(
         "Here's a brief answer to the question \"change of address u.s. postal service\" based on the given passages: "
@@ -798,6 +820,94 @@ def test_semantic_mode_supports_distributed_news_evidence():
                         "On Thursday, Noelle Velentzas and Asia Siddiqui were arrested in New York "
                         "and accused of planning to build an explosive device for attacks in the United States, "
                         "federal prosecutors said."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["missing_facts"] == []
+
+
+def test_semantic_mode_supports_numbered_list_items_without_include_marker():
+    result = verify_trace(
+        RAGTrace(
+            query="What are early signs of pregnancy?",
+            answer=(
+                "The earliest signs and symptoms of pregnancy include mood swings, "
+                "dizziness, bloating, spotting, cramping, and nausea with or without vomiting."
+            ),
+            contexts=[
+                TraceContext(
+                    id="pregnancy_signs",
+                    text=(
+                        "1 Mood swings. The flood of hormones in your body in early pregnancy can make "
+                        "you unusually emotional and weepy. Mood swings also are common. "
+                        "4 Dizziness. Pregnancy causes your blood vessels to dilate and your blood "
+                        "pressure to drop. As a result, you might feel lightheaded or dizzy. "
+                        "The earliest signs of pregnancy can include bloating, spotting, cramping, "
+                        "and nausea with or without vomiting."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["missing_facts"] == []
+
+
+def test_semantic_mode_supports_list_items_with_generic_gerund_heads():
+    result = verify_trace(
+        RAGTrace(
+            query="What are benefits of cupping massage?",
+            answer=(
+                "The benefits of cupping massage include eliminating toxins from the body, "
+                "improving circulation, providing pain relief, increasing range of motion "
+                "and flexibility, and decreasing anxiety."
+            ),
+            contexts=[
+                TraceContext(
+                    id="cupping",
+                    text=(
+                        "Some of the cupping massage benefits include the following: "
+                        "1 Eliminates toxins: A cupping massage can get rid of toxins from the body. "
+                        "2 Improved circulation: Increased blood circulation can also be brought about by cupping. "
+                        "3 Pain relief: A cupping massage helps reduce inflammation of tissues. "
+                        "4 Range of motion and flexibility can improve after treatment. "
+                        "5 Decreases anxiety."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["missing_facts"] == []
+
+
+def test_semantic_mode_allows_distributed_prevent_by_support():
+    result = verify_trace(
+        RAGTrace(
+            query="How can I prevent birds from nesting on a porch?",
+            answer=(
+                "You can prevent birds from building nests on your porch by attaching bird netting "
+                "to the eaves around the perimeter of your porch and the top of the porch if it has open rafters."
+            ),
+            contexts=[
+                TraceContext(
+                    id="bird_nesting",
+                    text=(
+                        "Attach bird netting to the eaves around the perimeter of your porch with a staple gun. "
+                        "If your porch has open rafters, use the staple gun to attach the netting to the top of the porch. "
+                        "The netting keeps the birds from reaching those spaces they often choose to build their nests."
                     ),
                 )
             ],

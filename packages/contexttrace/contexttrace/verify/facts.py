@@ -460,13 +460,19 @@ def _fact_supported(fact: str, evidence_text: str, *, mode: str) -> bool:
         return True
     if _requires_single_unit_support(fact):
         return False
-    if relation is not None:
+    if relation is not None and not _relation_allows_distributed_support(fact, relation):
         return False
     return _fact_supported_by_unit(fact, evidence_text, mode=mode)
 
 
 def _requires_single_unit_support(fact: str) -> bool:
     return bool(re.search(r"\brecord\s+for\b", str(fact or ""), flags=re.IGNORECASE))
+
+
+def _relation_allows_distributed_support(fact: str, relation: RelationFact) -> bool:
+    if relation.predicate != "prevent":
+        return False
+    return bool(re.search(r"\bby\b", str(fact or ""), flags=re.IGNORECASE))
 
 
 def _fact_supported_by_structured_data(fact: str, evidence_text: str) -> bool:
@@ -1006,16 +1012,35 @@ def _list_item_supported(
         return False
 
     verb = _canonical_token(match.group("verb"), mode=mode)
-    tail_tokens = _important_tokens(match.group("tail"), mode=mode)
+    tail_tokens = _important_tokens(_normalize_list_tail(match.group("tail")), mode=mode)
     if not tail_tokens or any(token not in evidence_tokens for token in tail_tokens):
         return False
 
     evidence_lower = str(evidence_text or "").lower()
     if verb in {"include", "support"}:
-        return any(marker in evidence_lower for marker in ("include", "support", " are ", ":", "subset"))
+        return any(marker in evidence_lower for marker in ("include", "support", " are ", ":", "subset")) or _looks_like_list_item(
+            evidence_text, evidence_tokens
+        )
     if verb == "keep":
         return any(marker in evidence_lower for marker in ("stays local", "stay local", "keeps", "local"))
     return True
+
+
+def _normalize_list_tail(value: str) -> str:
+    normalized = _clean(value)
+    return re.sub(
+        r"^(?:providing|provide|increasing|increase|controlling|control)\s+",
+        "",
+        normalized,
+        flags=re.IGNORECASE,
+    )
+
+
+def _looks_like_list_item(text: str, evidence_tokens: set[str]) -> bool:
+    value = str(text or "").strip()
+    if re.match(r"^(?:[-*•]|\d+\s+)", value):
+        return True
+    return len(evidence_tokens) <= 5
 
 
 def _important_tokens(text: str, *, mode: str) -> list[str]:
@@ -1583,6 +1608,17 @@ SEMANTIC_TOKEN_MAP = {
     "fits": "fill",
     "fitting": "fill",
     "levels": "level",
+    "dizziness": "dizzy",
+    "lightheaded": "dizzy",
+    "eliminating": "eliminate",
+    "eliminates": "eliminate",
+    "improving": "improve",
+    "improved": "improve",
+    "increased": "increase",
+    "decreasing": "decrease",
+    "decreases": "decrease",
+    "reducing": "reduce",
+    "reduces": "reduce",
     "cafe-style": "cafe",
     "baked": "bakery",
     "bakeries": "bakery",
