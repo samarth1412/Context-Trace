@@ -57,7 +57,7 @@ Latest RAGTruth assisted review pilot:
 
 | System | Cases | Reviewed Span Rows | Failure Macro-F1 | Root Cause Accuracy | Dangerous False Green | Citation Error F1 | Span Overlap |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| ContextTrace semantic verifier on RAGTruth stratified test sample | 200 | 76 | 0.270 | 0.360 | 0.005 | 1.000 | 0.555 |
+| ContextTrace semantic verifier on RAGTruth stratified test sample | 200 | 76 | 0.326 | 0.430 | 0.005 | 1.000 | 0.555 |
 | ContextTrace semantic verifier on RAGTruth test-split smoke | 50 | 15 | 0.181 | 0.400 | 0.000 | 1.000 | 0.883 |
 | OpenAI diagnostic judge `gpt-4.1-mini` on RAGTruth test-split smoke | 50 | 15 | 0.272 | 0.660 | 0.260 | 1.000 | 0.592 |
 
@@ -71,9 +71,13 @@ assisted review artifacts, not independent human sign-off. Treat the result as
 workflow and calibration evidence: it proves the adapter, review queue, apply
 step, manifest, and source-span scoring path work end to end, while the low
 failure macro-F1 and root-cause accuracy show the RAGTruth taxonomy
-mapping/calibration still needs work before any SOTA claim. RAGTruth rows use
-answer-level verdict scope by default; claim-count metrics apply only to rows
-with explicit reviewer taxonomy overrides. The OpenAI judge is
+mapping/calibration still needs work before any SOTA claim. The latest
+ContextTrace row includes verifier calibration for common news-summary
+paraphrases and structured JSON evidence attributes such as Wi-Fi,
+reservations, parking, ambience flags, categories, ratings, and explicit hours
+ranges. RAGTruth rows use answer-level verdict scope by default; claim-count
+metrics apply only to rows with explicit reviewer taxonomy overrides. The
+OpenAI judge is
 useful as a contrastive calibration target, but its 50-row smoke labeled 46/50
 rows as `no_failure_detected`, so its `0.260` dangerous false-green rate blocks
 any publishable claim from that smoke.

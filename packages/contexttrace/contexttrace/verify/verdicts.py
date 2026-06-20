@@ -161,7 +161,7 @@ def classify_claim(
     has_contexts: bool,
     mode: str = "lexical",
 ) -> ClaimVerification:
-    fact_evidence = match.supporting_text or match.snippet
+    fact_evidence = _fact_evidence_text(match)
     normalized_mode = str(mode or "lexical").strip().lower().replace("-", "_")
     fact_mode = "semantic" if normalized_mode in {"semantic", "local_ml", "nli"} else "lexical"
     fact_match = compare_facts(claim.text, fact_evidence, mode=fact_mode)
@@ -257,6 +257,13 @@ def classify_claim(
 
 def is_supported_match(claim_text: str, match: EvidenceMatch) -> bool:
     return match.score >= SUPPORTED_THRESHOLD and not is_contradicted(claim_text, match.snippet, match.score)
+
+
+def _fact_evidence_text(match: EvidenceMatch) -> str:
+    context_text = str(match.context_text or "").strip()
+    if context_text.startswith("{") and context_text.endswith("}"):
+        return context_text
+    return match.supporting_text or match.snippet
 
 
 def is_contradicted(claim_text: str, evidence_text: str, score: float) -> bool:

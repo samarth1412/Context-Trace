@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import dataclass
+from functools import lru_cache
 
 
 TOKEN_RE = re.compile(r"[A-Za-z0-9_./-]+")
@@ -39,11 +41,11 @@ NEGATION_RE = re.compile(r"\b(?:no|not|never|without|cannot|can't|prohibited|for
 STRONG_NEGATION_RE = re.compile(r"\b(?:no|not|never|cannot|can't|prohibited|forbidden|disallowed)\b", re.IGNORECASE)
 WHITESPACE_RE = re.compile(r"\s+")
 LIST_VERB_RE = re.compile(
-    r"\b(?P<verb>captures?|stores?|adds?|includes?|checks?|detects?|verifies?|reports?|records?|logs?|supports?|keeps?|calls?|maps?|creates?|runs?|writes?|saves?|evaluates?|gets?|fetches?|retrieves?|reranks?)\b\s+(?P<tail>.+)",
+    r"\b(?P<verb>captures?|stores?|adds?|includes?|offers?|provides?|serves?|allows?|checks?|detects?|verifies?|reports?|records?|logs?|supports?|keeps?|calls?|maps?|creates?|runs?|writes?|saves?|evaluates?|gets?|fetches?|retrieves?|reranks?)\b\s+(?P<tail>.+)",
     re.IGNORECASE,
 )
 LIST_ITEM_RE = re.compile(
-    r"^(?P<verb>captures?|stores?|adds?|includes?|checks?|detects?|verifies?|reports?|records?|logs?|supports?|keeps?|calls?|maps?|creates?|runs?|writes?|saves?|evaluates?|gets?|fetches?|retrieves?|reranks?)\s+(?P<tail>.+)$",
+    r"^(?P<verb>captures?|stores?|adds?|includes?|offers?|provides?|serves?|allows?|checks?|detects?|verifies?|reports?|records?|logs?|supports?|keeps?|calls?|maps?|creates?|runs?|writes?|saves?|evaluates?|gets?|fetches?|retrieves?|reranks?)\s+(?P<tail>.+)$",
     re.IGNORECASE,
 )
 
@@ -93,6 +95,7 @@ STOPWORDS = {
     "hers",
     "him",
     "his",
+    "however",
     "how",
     "i",
     "if",
@@ -122,6 +125,7 @@ STOPWORDS = {
     "over",
     "own",
     "same",
+    "s",
     "she",
     "should",
     "so",
@@ -193,6 +197,14 @@ LIST_VERB_TOKENS = {
     "adds",
     "include",
     "includes",
+    "offer",
+    "offers",
+    "provide",
+    "provides",
+    "serve",
+    "serves",
+    "allow",
+    "allows",
     "check",
     "checks",
     "detect",
@@ -299,13 +311,15 @@ def compare_facts(claim_text: str, evidence_text: str, *, mode: str = "lexical")
     matched_details: list[RequiredFact] = []
     missing_details: list[RequiredFact] = []
     conflicting_details: list[RequiredFact] = []
+    structured_data = _structured_json(evidence_text)
+    structured_dict = isinstance(structured_data, dict)
     for fact in required_details:
         if _fact_supported(fact.text, evidence_text, mode=mode):
             matched_details.append(fact)
         else:
             missing_details.append(fact)
 
-    if _has_negation_conflict(claim_text, evidence_text, mode=mode):
+    if not structured_dict and _has_negation_conflict(claim_text, evidence_text, mode=mode):
         conflicting_details.append(RequiredFact(text=claim_text.strip(), type="negation"))
     version_conflict = _version_conflict(claim_text, evidence_text, mode=mode)
     if version_conflict is not None:
@@ -313,6 +327,8 @@ def compare_facts(claim_text: str, evidence_text: str, *, mode: str = "lexical")
     numeric_conflict = _numeric_conflict(claim_text, evidence_text, mode=mode)
     if numeric_conflict is not None:
         conflicting_details.append(numeric_conflict)
+    for structured_conflict in _structured_value_conflicts(claim_text, evidence_text):
+        conflicting_details.append(structured_conflict)
     status_conflict = _status_conflict(claim_text, evidence_text)
     if status_conflict is not None:
         conflicting_details.append(status_conflict)
@@ -403,7 +419,37 @@ def _starts_with_list_verb(value: str) -> bool:
     return first in LIST_VERB_TOKENS
 
 
+STRUCTURED_FEATURES = (
+    ("wifi", ("wifi", "wi-fi", "wireless internet"), (("attributes", "WiFi"),)),
+    ("validated parking", ("validated parking", "parking validation"), (("attributes", "BusinessParking", "validated"),)),
+    ("garage parking", ("garage parking", "parking garage"), (("attributes", "BusinessParking", "garage"),)),
+    ("lot parking", ("lot parking", "parking lot"), (("attributes", "BusinessParking", "lot"),)),
+    ("street parking", ("street parking",), (("attributes", "BusinessParking", "street"),)),
+    ("valet parking", ("valet parking",), (("attributes", "BusinessParking", "valet"),)),
+    (
+        "reservations",
+        ("reservations", "reservation", "takes reservations", "take reservations", "accepts reservations"),
+        (("attributes", "RestaurantsReservations"),),
+    ),
+    ("outdoor seating", ("outdoor seating", "outside seating", "patio seating"), (("attributes", "OutdoorSeating"),)),
+    ("takeout", ("takeout", "take out", "take-out"), (("attributes", "RestaurantsTakeOut"),)),
+    ("music", ("music", "live music"), (("attributes", "Music"),)),
+    ("good for groups", ("good for groups", "larger groups", "large groups"), (("attributes", "RestaurantsGoodForGroups"),)),
+    ("casual ambience", ("casual", "casual atmosphere", "casual ambiance", "casual ambience"), (("attributes", "Ambience", "casual"),)),
+    ("classy ambience", ("classy", "classy atmosphere", "classy ambiance", "classy ambience"), (("attributes", "Ambience", "classy"),)),
+    ("divey ambience", ("divey", "dive bar", "divey atmosphere", "divey ambiance"), (("attributes", "Ambience", "divey"),)),
+    ("hipster ambience", ("hipster", "hipster atmosphere", "hipster ambiance"), (("attributes", "Ambience", "hipster"),)),
+    ("intimate ambience", ("intimate", "intimate atmosphere", "intimate ambiance"), (("attributes", "Ambience", "intimate"),)),
+    ("romantic ambience", ("romantic", "romantic atmosphere", "romantic ambiance", "dates"), (("attributes", "Ambience", "romantic"),)),
+    ("touristy ambience", ("touristy", "touristy atmosphere", "touristy ambiance"), (("attributes", "Ambience", "touristy"),)),
+    ("trendy ambience", ("trendy", "trendy atmosphere", "trendy ambiance"), (("attributes", "Ambience", "trendy"),)),
+    ("upscale ambience", ("upscale", "upscale atmosphere", "upscale ambiance"), (("attributes", "Ambience", "upscale"),)),
+)
+
+
 def _fact_supported(fact: str, evidence_text: str, *, mode: str) -> bool:
+    if _fact_supported_by_structured_data(fact, evidence_text):
+        return True
     relation = _extract_relation(fact)
     units = _evidence_units(evidence_text)
     if relation is not None and _any_relation_conflict(relation, units, mode=mode):
@@ -413,6 +459,255 @@ def _fact_supported(fact: str, evidence_text: str, *, mode: str) -> bool:
     if relation is not None:
         return False
     return _fact_supported_by_unit(fact, evidence_text, mode=mode)
+
+
+def _fact_supported_by_structured_data(fact: str, evidence_text: str) -> bool:
+    data = _structured_json(evidence_text)
+    if not isinstance(data, dict):
+        return False
+    fact_text = _semantic_text(fact)
+
+    mentioned_features = [
+        (phrases, paths)
+        for _, phrases, paths in STRUCTURED_FEATURES
+        if _mentions_any(fact_text, phrases)
+    ]
+    if mentioned_features:
+        return all(
+            _structured_feature_supported_for_data(fact_text, phrases, paths, data)
+            for phrases, paths in mentioned_features
+        )
+
+    if _category_supports_fact(fact_text, data):
+        return True
+    if _rating_supports_fact(fact_text, data):
+        return True
+    return False
+
+
+def _structured_feature_supported_for_data(
+    fact_text: str,
+    phrases: tuple[str, ...],
+    paths: tuple[tuple[str, ...], ...],
+    data: dict[str, object],
+) -> bool:
+    values = [_structured_lookup(data, path) for path in paths]
+    if _claim_denies_any(fact_text, phrases):
+        return any(_value_is_negative(value) for value in values)
+    return any(_value_is_positive(value) for value in values)
+
+
+def _structured_value_conflicts(claim_text: str, evidence_text: str) -> list[RequiredFact]:
+    data = _structured_json(evidence_text)
+    if not isinstance(data, dict):
+        return []
+    claim = _semantic_text(claim_text)
+    conflicts: list[RequiredFact] = []
+
+    for feature_name, phrases, paths in STRUCTURED_FEATURES:
+        if not _mentions_any(claim, phrases):
+            continue
+        values = [_structured_lookup(data, path) for path in paths]
+        if _claim_denies_any(claim, phrases) and any(_value_is_positive(value) for value in values):
+            conflicts.append(RequiredFact(text=feature_name, type="structured_value"))
+        if not _claim_denies_any(claim, phrases) and any(_value_is_negative(value) for value in values):
+            conflicts.append(RequiredFact(text=feature_name, type="structured_value"))
+
+    if _claim_denies_parking(claim) and _structured_parking_has_available_option(data):
+        conflicts.append(RequiredFact(text="parking", type="structured_value"))
+    hours_conflict = _structured_hours_conflict(claim, data)
+    if hours_conflict is not None:
+        conflicts.append(hours_conflict)
+    return _unique_fact_list(conflicts)
+
+
+@lru_cache(maxsize=256)
+def _structured_json(evidence_text: str) -> object | None:
+    value = str(evidence_text or "").strip()
+    if not value.startswith("{"):
+        return None
+    try:
+        return json.loads(value)
+    except json.JSONDecodeError:
+        return None
+
+
+def _structured_lookup(data: dict[str, object], path: tuple[str, ...]) -> object | None:
+    current: object = data
+    for part in path:
+        if not isinstance(current, dict):
+            return None
+        match = next((key for key in current if key.lower() == part.lower()), None)
+        if match is None:
+            return None
+        current = current[match]
+    return current
+
+
+def _value_is_positive(value: object) -> bool:
+    if value is True:
+        return True
+    if value is False or value is None:
+        return False
+    if isinstance(value, (int, float)):
+        return value > 0
+    normalized = str(value).strip().lower()
+    return normalized not in {"", "0", "false", "no", "none", "null", "n/a", "na"}
+
+
+def _value_is_negative(value: object) -> bool:
+    if value is False:
+        return True
+    if value is None:
+        return False
+    normalized = str(value).strip().lower()
+    return normalized in {"false", "no", "none", "0"}
+
+
+def _mentions_any(text: str, phrases: tuple[str, ...]) -> bool:
+    normalized = str(text or "").lower()
+    return any(phrase in normalized for phrase in phrases)
+
+
+def _claim_denies_any(text: str, phrases: tuple[str, ...]) -> bool:
+    normalized = str(text or "").lower()
+    for phrase in phrases:
+        escaped = re.escape(phrase)
+        if re.search(r"\b(?:no|not|without|lacks?|lack|does\s+not|do\s+not|doesnt|dont)\b.{0,45}\b%s\b" % escaped, normalized):
+            return True
+        if re.search(r"\b%s\b.{0,30}\b(?:unavailable|not\s+available|not\s+offered)\b" % escaped, normalized):
+            return True
+    return False
+
+
+def _claim_denies_parking(text: str) -> bool:
+    return bool(
+        re.search(
+            r"\b(?:no|not|without|lacks?|lack)\b.{0,45}\b(?:parking|parking\s+facilities)\b",
+            str(text or "").lower(),
+        )
+    )
+
+
+def _structured_parking_has_available_option(data: dict[str, object]) -> bool:
+    parking = _structured_lookup(data, ("attributes", "BusinessParking"))
+    if not isinstance(parking, dict):
+        return False
+    return any(_value_is_positive(value) for value in parking.values())
+
+
+def _structured_hours_conflict(claim_text: str, data: dict[str, object]) -> RequiredFact | None:
+    claim = str(claim_text or "").lower()
+    if "open" not in claim and "hours" not in claim:
+        return None
+    claim_range = _claim_time_range(claim)
+    if claim_range is None:
+        return None
+    hours = data.get("hours")
+    if not isinstance(hours, dict) or not hours:
+        return None
+    ranges = [
+        parsed
+        for value in hours.values()
+        for parsed in [_structured_time_range(str(value or ""))]
+        if parsed is not None
+    ]
+    if not ranges:
+        return None
+    if _claim_implies_uniform_hours(claim) and any(parsed != claim_range for parsed in ranges):
+        return RequiredFact(text="hours", type="structured_value")
+    if any(parsed == claim_range for parsed in ranges):
+        return None
+    claim_start, claim_end = claim_range
+    if any(start == claim_start or end != claim_end for start, end in ranges):
+        return RequiredFact(text="hours", type="structured_value")
+    return None
+
+
+def _claim_implies_uniform_hours(text: str) -> bool:
+    return bool(
+        re.search(
+            r"\b(?:every\s+day|seven\s+days|7\s+days|monday\s+through|monday\s+to|daily)\b",
+            str(text or ""),
+            flags=re.IGNORECASE,
+        )
+    )
+
+
+def _claim_time_range(text: str) -> tuple[int, int] | None:
+    match = re.search(
+        r"\bfrom\s+(?P<start>\d{1,2}(?::\d{1,2})?\s*(?:am|pm)?)\s*(?:to|-|until)\s+(?P<end>\d{1,2}(?::\d{1,2})?\s*(?:am|pm)?)",
+        text,
+        flags=re.IGNORECASE,
+    )
+    if not match:
+        return None
+    start = _parse_time_of_day(match.group("start"))
+    end = _parse_time_of_day(match.group("end"))
+    if start is None or end is None:
+        return None
+    return (start, end)
+
+
+def _structured_time_range(value: str) -> tuple[int, int] | None:
+    if "-" not in value:
+        return None
+    start_text, end_text = value.split("-", 1)
+    start = _parse_time_of_day(start_text)
+    end = _parse_time_of_day(end_text)
+    if start is None or end is None:
+        return None
+    return (start, end)
+
+
+def _parse_time_of_day(value: str) -> int | None:
+    match = re.search(r"\b(?P<hour>\d{1,2})(?::(?P<minute>\d{1,2}))?\s*(?P<period>am|pm)?\b", str(value or ""), flags=re.IGNORECASE)
+    if not match:
+        return None
+    hour = int(match.group("hour"))
+    minute = int(match.group("minute") or 0)
+    period = (match.group("period") or "").lower()
+    if minute >= 60:
+        return None
+    if period:
+        if hour < 1 or hour > 12:
+            return None
+        if period == "pm" and hour != 12:
+            hour += 12
+        if period == "am" and hour == 12:
+            hour = 0
+    if hour > 23:
+        return None
+    return (hour * 60) + minute
+
+
+def _category_supports_fact(fact_text: str, data: dict[str, object]) -> bool:
+    categories = str(data.get("categories") or "").lower()
+    if not categories:
+        return False
+    category_tokens = set(_important_tokens(categories, mode="semantic"))
+    fact_tokens = set(_important_tokens(fact_text, mode="semantic"))
+    if not category_tokens or not fact_tokens:
+        return False
+    category_overlap = category_tokens.intersection(fact_tokens)
+    coverage = len(category_overlap) / len(fact_tokens)
+    if {"restaurant", "bar", "food", "cuisine"}.intersection(fact_tokens) and category_overlap and coverage >= 0.45:
+        return True
+    return len(category_overlap) >= 2 and coverage >= 0.45
+
+
+def _rating_supports_fact(fact_text: str, data: dict[str, object]) -> bool:
+    if "star" not in fact_text and "rating" not in fact_text:
+        return False
+    rating = data.get("business_stars")
+    if rating is None:
+        return False
+    claim_numbers = set(NUMBER_RE.findall(fact_text))
+    if not claim_numbers:
+        return False
+    rating_text = ("%s" % rating).rstrip("0").rstrip(".")
+    rating_values = {str(rating), rating_text}
+    return bool(claim_numbers.intersection(rating_values))
 
 
 def _fact_supported_by_unit(fact: str, evidence_unit: str, *, mode: str) -> bool:
@@ -579,6 +874,10 @@ def _has_negation_conflict(claim_text: str, evidence_text: str, *, mode: str) ->
         return False
     if mode == "semantic" and _negated_truth_support(claim_text, evidence_text):
         return False
+    if _is_uncertainty_claim(claim_text) and any(
+        _token_overlap(claim_text, unit, mode=mode) >= 0.35 for unit in units
+    ):
+        return False
 
     if claim_polarity == "affirmative" and any(
         _token_overlap(claim_text, _non_negated_clause_text(unit), mode=mode) >= 0.65
@@ -602,6 +901,16 @@ def _has_negation_conflict(claim_text: str, evidence_text: str, *, mode: str) ->
         _negation_polarity(unit) != claim_polarity
         and _token_overlap(claim_text, unit, mode=mode) >= 0.45
         for unit in units
+    )
+
+
+def _is_uncertainty_claim(text: str) -> bool:
+    return bool(
+        re.search(
+            r"\b(?:unclear|not\s+clear|unknown|uncertain|not\s+known)\s+whether\b",
+            str(text or ""),
+            flags=re.IGNORECASE,
+        )
     )
 
 
@@ -1050,6 +1359,30 @@ SEMANTIC_TOKEN_MAP = {
     "evaluated": "evaluate",
     "evaluates": "evaluate",
     "evaluating": "evaluate",
+    "features": "show",
+    "featuring": "show",
+    "featured": "show",
+    "showed": "show",
+    "shows": "show",
+    "shown": "show",
+    "face": "face",
+    "faced": "face",
+    "faces": "face",
+    "facing": "face",
+    "overlap": "overlap",
+    "overlapped": "overlap",
+    "overlapping": "overlap",
+    "overlaps": "overlap",
+    "commentary": "comment",
+    "commentator": "comment",
+    "commentators": "comment",
+    "comments": "comment",
+    "opinions": "comment",
+    "various": "several",
+    "numerous": "several",
+    "pleased": "happy",
+    "remarks": "comment",
+    "remark": "comment",
     "recomputed": "recompute",
     "recomputes": "recompute",
     "recomputing": "recompute",
@@ -1119,6 +1452,11 @@ SEMANTIC_PHRASES = (
     ("k-nearest neighbors", "k-nn"),
     ("k-nearest neighbor", "k-nn"),
     ("united states", "us"),
+    ("face to face", "face"),
+    ("facing off", "face"),
+    ("voices overlap", "comment overlap"),
+    ("commentators' voices", "comments"),
+    ("commentators voices", "comments"),
     ("not exactly what the law considers true", "false by the law"),
     ('not exactly what the law considers "true', "false by the law"),
 )

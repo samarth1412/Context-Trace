@@ -733,6 +733,184 @@ def test_semantic_mode_supports_distributed_news_evidence():
     assert claim["missing_facts"] == []
 
 
+def test_semantic_mode_supports_news_summary_across_paraphrased_spans():
+    result = verify_trace(
+        RAGTrace(
+            query="What did the trailer show?",
+            answer=(
+                "The trailer features footage of Superman and Batman facing off, "
+                "along with overlapping commentary from various voices."
+            ),
+            contexts=[
+                TraceContext(
+                    id="batman_trailer",
+                    text=(
+                        "The trailer begins with a commentator's voice asking whether the most "
+                        "powerful man in the world should be a figure of controversy. "
+                        "As footage of Superman plays, numerous commentators' voices overlap "
+                        "one another with their opinions of the superheroes. "
+                        "A masked Batman appears, followed by the two superheroes coming face to face."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["missing_facts"] == []
+    assert len(claim["supporting_spans"]) >= 2
+    assert result["summary"]["failure_type"] == "no_failure_detected"
+
+
+def test_semantic_mode_treats_not_happy_as_not_pleased_support():
+    result = verify_trace(
+        RAGTrace(
+            query="How did Turkey react?",
+            answer="Turkey was not pleased with the Pope's remarks.",
+            contexts=[
+                TraceContext(
+                    id="pope_turkey",
+                    text=(
+                        "In a tweet Sunday, Turkey's Foreign Minister called the Pope's use "
+                        'of the word "unacceptable." New or not, Turkey was not happy.'
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["conflicting_facts"] == []
+    assert "contradicted_answer" not in result["summary"]["failure_types"]
+
+
+def test_semantic_mode_does_not_contradict_uncertain_mixed_legal_evidence():
+    result = verify_trace(
+        RAGTrace(
+            query="Would the fraternity members have individualized injury?",
+            answer=(
+                'While the "small group" exception may apply, it is unclear whether '
+                "individual members of the fraternity have suffered an individualized injury."
+            ),
+            contexts=[
+                TraceContext(
+                    id="defamation_analysis",
+                    text=(
+                        'Phi Kappa Psi would likely argue that the "small group" exception fits. '
+                        "Even if individual members were not identified by name, the story has "
+                        "been imputed directly to individual members, who have suffered by their "
+                        "association with the group. On the other hand, Rolling Stone's lawyers "
+                        "would likely argue that the group is so large and fluid that the members "
+                        "have suffered no individualized injury."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["conflicting_facts"] == []
+    assert "contradicted_answer" not in result["summary"]["failure_types"]
+
+
+def test_semantic_mode_uses_structured_json_attributes_for_support():
+    result = verify_trace(
+        RAGTrace(
+            query="What amenities does the restaurant offer?",
+            answer="The restaurant offers outdoor seating, takeout, and WiFi.",
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "attributes": {
+                                "OutdoorSeating": True,
+                                "RestaurantsTakeOut": True,
+                                "WiFi": "free",
+                            },
+                            "categories": "Mexican, Restaurants",
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["missing_facts"] == []
+    assert claim["conflicting_facts"] == []
+
+
+def test_semantic_mode_uses_structured_json_attributes_for_conflict():
+    result = verify_trace(
+        RAGTrace(
+            query="What amenities does the bar offer?",
+            answer="The bar offers Wi-Fi and validated parking options.",
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "attributes": {
+                                "BusinessParking": {"street": True, "validated": False},
+                                "WiFi": "no",
+                            },
+                            "categories": "Dive Bars, Bars",
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "contradicted"
+    assert set(claim["conflicting_facts"]) == {"wifi", "validated parking"}
+    assert "contradicted_answer" in result["summary"]["failure_types"]
+
+
+def test_semantic_mode_does_not_let_json_false_values_contradict_supported_field():
+    result = verify_trace(
+        RAGTrace(
+            query="What parking does the bar offer?",
+            answer="The bar offers street parking.",
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "attributes": {
+                                "BusinessParking": {
+                                    "garage": False,
+                                    "lot": False,
+                                    "street": True,
+                                    "validated": False,
+                                },
+                                "WiFi": "no",
+                            },
+                            "categories": "Dive Bars, Bars",
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["conflicting_facts"] == []
+
+
 def test_semantic_mode_treats_negated_truth_phrase_as_support():
     result = verify_trace(
         RAGTrace(
