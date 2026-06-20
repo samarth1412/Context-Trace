@@ -90,7 +90,24 @@ def extract_claims(answer: str) -> list[Claim]:
 
 def _clean_sentence(value: str) -> str:
     cleaned = _WHITESPACE_RE.sub(" ", value).strip()
-    return cleaned.strip("-* \t")
+    cleaned = cleaned.strip("-* \t")
+    return _strip_generated_claim_prefix(cleaned)
+
+
+def _strip_generated_claim_prefix(value: str) -> str:
+    match = re.match(
+        r"^(?:here(?:'s| is)\s+(?:(?:a|the)\s+)?summary(?:\s+of\s+the\s+article)?(?:\s+(?:in|within)\s+\d+\s+words)?|"
+        r"based\s+on\s+the\s+provided\s+structured\s+data[^:]{0,120}|"
+        r"based\s+on\s+the\s+provided\s+context[^:]{0,120})\s*:\s*(?P<claim>.+)$",
+        value,
+        flags=re.IGNORECASE,
+    )
+    if not match:
+        return value
+    claim = match.group("claim").strip()
+    if len(claim.split()) < 3:
+        return value
+    return claim
 
 
 def _split_sentences(text: str) -> list[str]:

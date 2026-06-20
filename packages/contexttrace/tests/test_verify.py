@@ -154,6 +154,33 @@ def test_claim_extraction_preserves_jsonpath_expressions():
     ]
 
 
+def test_claim_extraction_strips_generated_summary_prefixes():
+    claims = extract_claims(
+        "Here's a summary of the article within 109 words: On Big Brother 25, "
+        "the houseguests have regrets about evicting Cameron Hardin."
+    )
+
+    assert [claim.text for claim in claims] == [
+        "On Big Brother 25, the houseguests have regrets about evicting Cameron Hardin."
+    ]
+
+
+def test_claim_extraction_strips_generated_summary_prefix_variants():
+    claims = extract_claims("Here's the summary in 65 words: Nelly was arrested on drug charges.")
+
+    assert [claim.text for claim in claims] == ["Nelly was arrested on drug charges."]
+
+
+def test_claim_extraction_strips_structured_overview_prefixes():
+    claims = extract_claims(
+        "Based on the provided structured data in JSON format: Tiburon Tavern is a local dive bar located in Santa Barbara."
+    )
+
+    assert [claim.text for claim in claims] == [
+        "Tiburon Tavern is a local dive bar located in Santa Barbara."
+    ]
+
+
 def test_context_span_extraction_preserves_offsets_and_hashes():
     context = TraceContext(
         id="docs/local-mode.md",
@@ -762,6 +789,141 @@ def test_semantic_mode_supports_news_summary_across_paraphrased_spans():
     assert claim["missing_facts"] == []
     assert len(claim["supporting_spans"]) >= 2
     assert result["summary"]["failure_type"] == "no_failure_detected"
+
+
+def test_semantic_mode_supports_distributed_odor_detection_paraphrase():
+    result = verify_trace(
+        RAGTrace(
+            query="What happened during the traffic stop?",
+            answer=(
+                "During a routine traffic stop, state troopers detected the smell "
+                "of marijuana coming from Nelly's private bus."
+            ),
+            contexts=[
+                TraceContext(
+                    id="nelly_arrest",
+                    text=(
+                        "Hip-hop star Nelly has been arrested on drug charges in Tennessee "
+                        "after a state trooper pulled over the private bus in which he was traveling. "
+                        "The state trooper stopped the bus carrying Nelly and five other people. "
+                        'The trooper noticed an odor of marijuana emitting from the bus.'
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["missing_facts"] == []
+    assert result["summary"]["failure_type"] == "no_failure_detected"
+
+
+def test_semantic_mode_supports_measurement_paraphrase():
+    result = verify_trace(
+        RAGTrace(
+            query="What can children learn from water play?",
+            answer=(
+                "In math, they learn about measurement by determining the amount of water "
+                "that fits into a bucket, and concepts of more and less by comparing water "
+                "levels in different buckets."
+            ),
+            contexts=[
+                TraceContext(
+                    id="water_play",
+                    text=(
+                        "In math, children are able to learn about measuring a certain amount "
+                        "of water into a bucket, more and less by filling one bucket with more "
+                        "water and one bucket with less water."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["missing_facts"] == []
+    assert result["summary"]["failure_type"] == "no_failure_detected"
+
+
+def test_semantic_mode_does_not_mark_appositive_relation_support_as_conflict():
+    result = verify_trace(
+        RAGTrace(
+            query="What is Loeb suing over?",
+            answer=(
+                "Loeb is suing Vergara to prevent her from destroying the embryos, "
+                "which were conceived through in vitro fertilization in 2013."
+            ),
+            contexts=[
+                TraceContext(
+                    id="embryos",
+                    text=(
+                        "Loeb is suing the Colombian-born actress in Los Angeles to prevent "
+                        "Vergara from destroying their two embryos conceived through in vitro "
+                        "fertilization in November 2013."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["conflicting_facts"] == []
+
+
+def test_semantic_mode_does_not_mark_generic_subject_relation_support_as_conflict():
+    result = verify_trace(
+        RAGTrace(
+            query="What did the experience lead to?",
+            answer=(
+                'The experience led to Jiang writing a book called "Rejection Proof", '
+                "which is part self-help and part motivational/autobiography."
+            ),
+            contexts=[
+                TraceContext(
+                    id="rejection",
+                    text=(
+                        "This led to his writing his book called Rejection Proof, part "
+                        "self-help and part motivational/autobiography, which is being "
+                        "released this week."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["conflicting_facts"] == []
+
+
+def test_semantic_mode_requires_record_category_in_same_evidence_unit():
+    result = verify_trace(
+        RAGTrace(
+            query="What record did Cirie Fields set?",
+            answer="Cirie Fields set a record for most times nominated for eviction.",
+            contexts=[
+                TraceContext(
+                    id="big_brother",
+                    text=(
+                        "More from the world of Big Brother. Cirie Fields just set a Big Brother record. "
+                        "And then it was time for another Big Brother Eviction Ceremony."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] != "supported"
+    assert claim["missing_facts"]
 
 
 def test_semantic_mode_treats_not_happy_as_not_pleased_support():

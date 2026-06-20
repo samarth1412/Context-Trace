@@ -456,9 +456,15 @@ def _fact_supported(fact: str, evidence_text: str, *, mode: str) -> bool:
         return False
     if any(_fact_supported_by_unit(fact, unit, mode=mode) for unit in units):
         return True
+    if _requires_single_unit_support(fact):
+        return False
     if relation is not None:
         return False
     return _fact_supported_by_unit(fact, evidence_text, mode=mode)
+
+
+def _requires_single_unit_support(fact: str) -> bool:
+    return bool(re.search(r"\brecord\s+for\b", str(fact or ""), flags=re.IGNORECASE))
 
 
 def _fact_supported_by_structured_data(fact: str, evidence_text: str) -> bool:
@@ -1061,15 +1067,24 @@ def _relations_conflict(claim: RelationFact, evidence: RelationFact, *, mode: st
 
     if reversed_subject_overlap >= 0.72 and reversed_object_overlap >= 0.72:
         return True
+    if object_overlap >= 0.72 and _has_generic_relation_subject(claim.subject, evidence.subject):
+        return False
     if subject_overlap >= 0.72 and object_overlap < 0.50:
         return True
     if _same_relation_head_with_different_modifier(claim.subject, evidence.subject, mode=mode) and object_overlap < 0.50:
         return True
     if object_overlap >= 0.72 and (
-        subject_overlap < 0.35 or _proper_name_conflict(claim.subject, evidence.subject)
+        subject_overlap < 0.35 or (subject_overlap < 0.72 and _proper_name_conflict(claim.subject, evidence.subject))
     ):
         return True
     return False
+
+
+def _has_generic_relation_subject(left: str, right: str) -> bool:
+    generic = {"this", "that", "it", "experience", "event", "situation", "move"}
+    left_tokens = {token.lower() for token in TOKEN_RE.findall(str(left or ""))}
+    right_tokens = {token.lower() for token in TOKEN_RE.findall(str(right or ""))}
+    return bool(left_tokens.intersection(generic) or right_tokens.intersection(generic))
 
 
 def _extract_relation(text: str) -> RelationFact | None:
@@ -1359,6 +1374,33 @@ SEMANTIC_TOKEN_MAP = {
     "evaluated": "evaluate",
     "evaluates": "evaluate",
     "evaluating": "evaluate",
+    "detect": "notice",
+    "detected": "notice",
+    "detecting": "notice",
+    "detects": "notice",
+    "noticed": "notice",
+    "notices": "notice",
+    "odor": "smell",
+    "odour": "smell",
+    "emitting": "come",
+    "emits": "come",
+    "coming": "come",
+    "came": "come",
+    "stopped": "stop",
+    "pulled": "stop",
+    "backdoored": "evict",
+    "evicted": "evict",
+    "evicting": "evict",
+    "regretting": "regret",
+    "regrets": "regret",
+    "measuring": "measure",
+    "measurement": "measure",
+    "determining": "measure",
+    "determine": "measure",
+    "determines": "measure",
+    "fits": "fill",
+    "fitting": "fill",
+    "levels": "level",
     "features": "show",
     "featuring": "show",
     "featured": "show",
