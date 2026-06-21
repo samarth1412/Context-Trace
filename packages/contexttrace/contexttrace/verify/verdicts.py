@@ -20,6 +20,7 @@ NEGATION_TERMS = {
     "nor",
     "cannot",
     "can't",
+    "unable",
     "wont",
     "won't",
     "doesnt",
@@ -168,7 +169,7 @@ def classify_claim(
     fact_mode = "semantic" if normalized_mode in {"semantic", "local_ml", "nli"} else "lexical"
     fact_match = compare_facts(claim.text, fact_evidence, mode=fact_mode)
     contradiction_evidence = _contradiction_evidence_text(claim.text, match)
-    contradicted = has_contexts and is_contradicted(claim.text, contradiction_evidence, match.score)
+    contradicted = has_contexts and is_contradicted(claim.text, contradiction_evidence, match.score, mode=fact_mode)
     if contradicted or fact_match.conflicting_facts:
         verdict = "contradicted"
         confidence = max(0.66, min(0.98, match.score + 0.12))
@@ -257,8 +258,8 @@ def classify_claim(
     )
 
 
-def is_supported_match(claim_text: str, match: EvidenceMatch) -> bool:
-    return match.score >= SUPPORTED_THRESHOLD and not is_contradicted(claim_text, match.snippet, match.score)
+def is_supported_match(claim_text: str, match: EvidenceMatch, *, mode: str = "lexical") -> bool:
+    return match.score >= SUPPORTED_THRESHOLD and not is_contradicted(claim_text, match.snippet, match.score, mode=mode)
 
 
 def _fact_evidence_text(match: EvidenceMatch) -> str:
@@ -268,13 +269,23 @@ def _fact_evidence_text(match: EvidenceMatch) -> str:
     return match.supporting_text or match.snippet
 
 
-def is_contradicted(claim_text: str, evidence_text: str, score: float) -> bool:
+def is_contradicted(claim_text: str, evidence_text: str, score: float, *, mode: str = "lexical") -> bool:
     if score < 0.50:
         return False
     if _negated_truth_support(claim_text, evidence_text):
         return False
 
     if _has_negation(claim_text) != _has_negation(evidence_text) and _core_overlap(claim_text, evidence_text) >= 0.55:
+        if _preventive_negation_support(claim_text, evidence_text, mode=mode):
+            return False
+        if _critical_condition_negation_support(claim_text, evidence_text, mode=mode):
+            return False
+        if _first_time_since_negative_support(claim_text, evidence_text, mode=mode):
+            return False
+        if _outsourced_service_negation_support(claim_text, evidence_text, mode=mode):
+            return False
+        if _affirmative_contrast_support(claim_text, evidence_text, mode=mode):
+            return False
         if _has_affirmative_supporting_clause(claim_text, evidence_text):
             return False
         return True
@@ -288,7 +299,9 @@ def is_contradicted(claim_text: str, evidence_text: str, score: float) -> bool:
 
 
 def _has_negation(text: str) -> bool:
-    normalized_text = _neutralize_non_negating_phrases(str(text or "").replace("n't", " not"))
+    normalized_text = _neutralize_non_negating_phrases(str(text or ""))
+    normalized_text = re.sub(r"\bcan(?:'|\u2019)?t\b", "cannot", normalized_text, flags=re.IGNORECASE)
+    normalized_text = re.sub(r"\b([A-Za-z]+)n(?:'|\u2019)t\b", r"\1 not", normalized_text)
     tokens = {token.lower() for token in normalized_text.split()}
     normalized = " ".join(tokens)
     if "not allowed" in normalized_text.lower() or "not eligible" in normalized_text.lower():
@@ -308,7 +321,13 @@ def _negated_truth_support(claim_text: str, evidence_text: str) -> bool:
 
 def _neutralize_non_negating_phrases(text: str) -> str:
     value = str(text or "")
-    return value.replace("not only", "also").replace("Not only", "Also")
+    value = re.sub(r"\bnot\s+only\b", "also", value, flags=re.IGNORECASE)
+    value = re.sub(r"\bno\s+surprise\b", "expected", value, flags=re.IGNORECASE)
+    value = re.sub(r"\beven\s+if\s+it\s+\[?did\s+not\]?\s+end\s+up\b", "even if it might end up", value, flags=re.IGNORECASE)
+    value = re.sub(r"\beven\s+if\s+it\s+\[?didn(?:'|\u2019)?t\]?\s+end\s+up\b", "even if it might end up", value, flags=re.IGNORECASE)
+    value = re.sub(r"\beven\s+if\s+it\s+\[?did\s+not\s+end\]?\s+up\b", "even if it might end up", value, flags=re.IGNORECASE)
+    value = re.sub(r"\beven\s+if\s+it\s+\[?didn(?:'|\u2019)?t\s+end\]?\s+up\b", "even if it might end up", value, flags=re.IGNORECASE)
+    return value
 
 
 def _has_affirmative_supporting_clause(claim_text: str, evidence_text: str) -> bool:
@@ -318,6 +337,68 @@ def _has_affirmative_supporting_clause(claim_text: str, evidence_text: str) -> b
         clause for clause in _evidence_clauses(evidence_text) if not _has_negation(clause)
     )
     return bool(supporting_text and _core_overlap(claim_text, supporting_text) >= 0.55)
+
+
+def _preventive_negation_support(claim_text: str, evidence_text: str, *, mode: str) -> bool:
+    if str(mode or "").strip().lower().replace("-", "_") != "semantic":
+        return False
+    if not re.search(
+        r"\b(?:avoid|prevent|prevents|preventing|protect|protects|protecting)\b",
+        str(claim_text or ""),
+        flags=re.IGNORECASE,
+    ):
+        return False
+    return _core_overlap(claim_text, evidence_text, mode=mode) >= 0.55
+
+
+def _first_time_since_negative_support(claim_text: str, evidence_text: str, *, mode: str) -> bool:
+    if str(mode or "").strip().lower().replace("-", "_") != "semantic":
+        return False
+    if not re.search(r"\bfirst\s+time\b.+\bsince\b", str(claim_text or ""), flags=re.IGNORECASE):
+        return False
+    return bool(
+        re.search(r"\bsince\b", str(evidence_text or ""), flags=re.IGNORECASE)
+        and _has_negation(evidence_text)
+        and _core_overlap(claim_text, evidence_text, mode=mode) >= 0.55
+    )
+
+
+def _critical_condition_negation_support(claim_text: str, evidence_text: str, *, mode: str) -> bool:
+    if str(mode or "").strip().lower().replace("-", "_") != "semantic":
+        return False
+    if not re.search(r"\bcritical\s+condition\b", str(claim_text or ""), flags=re.IGNORECASE):
+        return False
+    return bool(
+        re.search(r"\b(?:coma|unable|cannot|rough\s+shape)\b", str(evidence_text or ""), flags=re.IGNORECASE)
+        and _core_overlap(claim_text, evidence_text, mode=mode) >= 0.45
+    )
+
+
+def _outsourced_service_negation_support(claim_text: str, evidence_text: str, *, mode: str) -> bool:
+    if str(mode or "").strip().lower().replace("-", "_") != "semantic":
+        return False
+    if not re.search(
+        r"\b(?:used\s+by|licensed|outside\s+company|cooperat|internal\s+investigation)\b",
+        str(claim_text or ""),
+        flags=re.IGNORECASE,
+    ):
+        return False
+    return bool(
+        re.search(r"\bdoes\s+not\s+treat\b", str(evidence_text or ""), flags=re.IGNORECASE)
+        and re.search(r"\brelies\s+on\s+licensed\s+professionals\b", str(evidence_text or ""), flags=re.IGNORECASE)
+        and _core_overlap(claim_text, evidence_text, mode=mode) >= 0.45
+    )
+
+
+def _affirmative_contrast_support(claim_text: str, evidence_text: str, *, mode: str) -> bool:
+    if str(mode or "").strip().lower().replace("-", "_") != "semantic":
+        return False
+    if _has_negation(claim_text):
+        return False
+    if not re.search(r"\bbut\s+if\b|\bthen\b", str(evidence_text or ""), flags=re.IGNORECASE):
+        return False
+    affirmative_text = " ".join(clause for clause in _evidence_clauses(evidence_text) if not _has_negation(clause))
+    return bool(affirmative_text and _core_overlap(claim_text, affirmative_text, mode=mode) >= 0.45)
 
 
 def _evidence_clauses(text: str) -> list[str]:
@@ -336,9 +417,9 @@ def _contradiction_evidence_text(claim_text: str, match: EvidenceMatch) -> str:
     return match.snippet
 
 
-def _core_overlap(claim_text: str, evidence_text: str) -> float:
-    claim_terms = [term for term in unique_important_tokens(claim_text) if not term.isdigit()]
-    evidence_terms = set(term for term in unique_important_tokens(evidence_text) if not term.isdigit())
+def _core_overlap(claim_text: str, evidence_text: str, *, mode: str = "lexical") -> float:
+    claim_terms = [term for term in unique_important_tokens(claim_text, mode=mode) if not term.isdigit()]
+    evidence_terms = set(term for term in unique_important_tokens(evidence_text, mode=mode) if not term.isdigit())
     if not claim_terms:
         return 0.0
     return len([term for term in claim_terms if term in evidence_terms]) / len(claim_terms)

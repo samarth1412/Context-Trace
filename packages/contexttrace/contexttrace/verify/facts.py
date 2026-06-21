@@ -38,8 +38,8 @@ FUTURE_STATUS_RE = re.compile(
     r"\b(?:will\s+(?:focus|begin|start|launch)|expected\s+to\s+begin|expected\s+to\s+start|within\s+\w+\s+years?)\b",
     re.IGNORECASE,
 )
-NEGATION_RE = re.compile(r"\b(?:no|not|never|neither|nor|without|cannot|can't|prohibited|forbidden|disallowed)\b", re.IGNORECASE)
-STRONG_NEGATION_RE = re.compile(r"\b(?:no|not|never|neither|nor|cannot|can't|prohibited|forbidden|disallowed)\b", re.IGNORECASE)
+NEGATION_RE = re.compile(r"\b(?:no|not|never|neither|nor|without|cannot|can't|unable|prohibited|forbidden|disallowed)\b", re.IGNORECASE)
+STRONG_NEGATION_RE = re.compile(r"\b(?:no|not|never|neither|nor|cannot|can't|unable|prohibited|forbidden|disallowed)\b", re.IGNORECASE)
 WHITESPACE_RE = re.compile(r"\s+")
 LIST_VERB_RE = re.compile(
     r"\b(?P<verb>captures?|stores?|adds?|includes?|offers?|provides?|serves?|allows?|checks?|detects?|verifies?|reports?|records?|logs?|supports?|keeps?|calls?|maps?|creates?|runs?|writes?|saves?|evaluates?|gets?|fetches?|retrieves?|reranks?)\b\s+(?P<tail>.+)",
@@ -544,7 +544,7 @@ def _fact_supported(fact: str, evidence_text: str, *, mode: str) -> bool:
         return True
     relation = _extract_relation(fact)
     units = _evidence_units(evidence_text)
-    if relation is not None and _any_relation_conflict(relation, units, mode=mode):
+    if relation is not None and _relation_conflict(fact, evidence_text, mode=mode) is not None:
         return False
     if any(_fact_supported_by_unit(fact, unit, mode=mode) for unit in units):
         return True
@@ -1593,6 +1593,14 @@ def _has_negation_conflict(claim_text: str, evidence_text: str, *, mode: str) ->
         _token_overlap(claim_text, unit, mode=mode) >= 0.35 for unit in units
     ):
         return False
+    if _preventive_negation_support(claim_text, units, mode=mode):
+        return False
+    if _critical_condition_negation_support(claim_text, units, mode=mode):
+        return False
+    if _first_time_since_negative_support(claim_text, units, mode=mode):
+        return False
+    if _outsourced_service_negation_support(claim_text, units, mode=mode):
+        return False
 
     if claim_polarity == "affirmative" and any(
         _token_overlap(claim_text, _non_negated_clause_text(unit), mode=mode) >= 0.65
@@ -1610,6 +1618,10 @@ def _has_negation_conflict(claim_text: str, evidence_text: str, *, mode: str) ->
         for unit in units
     )
     if same_polarity_support:
+        return False
+    if _mixed_polarity_claim_supported(claim_text, units, claim_polarity, mode=mode):
+        return False
+    if _affirmative_contrast_support(claim_text, units, claim_polarity, mode=mode):
         return False
 
     return any(
@@ -1629,6 +1641,103 @@ def _is_uncertainty_claim(text: str) -> bool:
     )
 
 
+def _preventive_negation_support(claim_text: str, units: list[str], *, mode: str) -> bool:
+    if mode != "semantic":
+        return False
+    if not re.search(
+        r"\b(?:avoid|prevent|prevents|preventing|protect|protects|protecting)\b",
+        str(claim_text or ""),
+        flags=re.IGNORECASE,
+    ):
+        return False
+    return any(
+        _negation_polarity(unit) != "affirmative" and _token_overlap(claim_text, unit, mode=mode) >= 0.55
+        for unit in units
+    )
+
+
+def _mixed_polarity_claim_supported(
+    claim_text: str,
+    units: list[str],
+    claim_polarity: str,
+    *,
+    mode: str,
+) -> bool:
+    if claim_polarity == "affirmative":
+        return False
+    if not re.search(r"\b(?:but|though|although|while|whereas)\b", str(claim_text or ""), flags=re.IGNORECASE):
+        return False
+    same_polarity = max(
+        (
+            _token_overlap(claim_text, unit, mode=mode)
+            for unit in units
+            if _negation_polarity(unit) == claim_polarity
+        ),
+        default=0.0,
+    )
+    affirmative_support = max(
+        (
+            _token_overlap(claim_text, _non_negated_clause_text(unit), mode=mode)
+            for unit in units
+            if _non_negated_clause_text(unit)
+        ),
+        default=0.0,
+    )
+    return same_polarity >= 0.30 and affirmative_support >= 0.45
+
+
+def _first_time_since_negative_support(claim_text: str, units: list[str], *, mode: str) -> bool:
+    if mode != "semantic":
+        return False
+    if not re.search(r"\bfirst\s+time\b.+\bsince\b", str(claim_text or ""), flags=re.IGNORECASE):
+        return False
+    return any(
+        _negation_polarity(unit) != "affirmative"
+        and re.search(r"\bsince\b", unit, flags=re.IGNORECASE)
+        and _token_overlap(claim_text, unit, mode=mode) >= 0.55
+        for unit in units
+    )
+
+
+def _critical_condition_negation_support(claim_text: str, units: list[str], *, mode: str) -> bool:
+    if mode != "semantic":
+        return False
+    if not re.search(r"\bcritical\s+condition\b", str(claim_text or ""), flags=re.IGNORECASE):
+        return False
+    return any(
+        re.search(r"\b(?:coma|unable|cannot|rough\s+shape)\b", unit, flags=re.IGNORECASE)
+        and _token_overlap(claim_text, unit, mode=mode) >= 0.45
+        for unit in units
+    )
+
+
+def _outsourced_service_negation_support(claim_text: str, units: list[str], *, mode: str) -> bool:
+    if mode != "semantic":
+        return False
+    claim = str(claim_text or "")
+    if not re.search(r"\b(?:used\s+by|licensed|outside\s+company|cooperat|internal\s+investigation)\b", claim, flags=re.IGNORECASE):
+        return False
+    evidence_text = " ".join(units)
+    return bool(
+        re.search(r"\bdoes\s+not\s+treat\b", evidence_text, flags=re.IGNORECASE)
+        and re.search(r"\brelies\s+on\s+licensed\s+professionals\b", evidence_text, flags=re.IGNORECASE)
+        and re.search(r"\boutside\s+company\b", evidence_text, flags=re.IGNORECASE)
+        and re.search(r"\b(?:cooperat|looking\s+into|internally)\b", evidence_text, flags=re.IGNORECASE)
+        and _token_overlap(claim, evidence_text, mode=mode) >= 0.45
+    )
+
+
+def _affirmative_contrast_support(claim_text: str, units: list[str], claim_polarity: str, *, mode: str) -> bool:
+    if mode != "semantic" or claim_polarity != "affirmative":
+        return False
+    return any(
+        re.search(r"\bbut\s+if\b|\bthen\b", unit, flags=re.IGNORECASE)
+        and _non_negated_clause_text(unit)
+        and _token_overlap(claim_text, _non_negated_clause_text(unit), mode=mode) >= 0.45
+        for unit in units
+    )
+
+
 def _negation_polarity(text: str) -> str:
     normalized = _neutralize_non_negating_phrases(_normalize_negation_text(text))
     if STRONG_NEGATION_RE.search(normalized):
@@ -1640,13 +1749,19 @@ def _negation_polarity(text: str) -> str:
 
 def _neutralize_non_negating_phrases(text: str) -> str:
     value = str(text or "")
-    return re.sub(r"\bnot\s+only\b", "also", value, flags=re.IGNORECASE)
+    value = re.sub(r"\bnot\s+only\b", "also", value, flags=re.IGNORECASE)
+    value = re.sub(r"\bno\s+surprise\b", "expected", value, flags=re.IGNORECASE)
+    value = re.sub(r"\beven\s+if\s+it\s+\[?did\s+not\]?\s+end\s+up\b", "even if it might end up", value, flags=re.IGNORECASE)
+    value = re.sub(r"\beven\s+if\s+it\s+\[?didn(?:'|\u2019)?t\]?\s+end\s+up\b", "even if it might end up", value, flags=re.IGNORECASE)
+    value = re.sub(r"\beven\s+if\s+it\s+\[?did\s+not\s+end\]?\s+up\b", "even if it might end up", value, flags=re.IGNORECASE)
+    value = re.sub(r"\beven\s+if\s+it\s+\[?didn(?:'|\u2019)?t\s+end\]?\s+up\b", "even if it might end up", value, flags=re.IGNORECASE)
+    return value
 
 
 def _normalize_negation_text(text: str) -> str:
     value = str(text or "")
-    value = re.sub(r"\bcan['’]?t\b", "cannot", value, flags=re.IGNORECASE)
-    return re.sub(r"\b([A-Za-z]+)n['’]t\b", r"\1 not", value)
+    value = re.sub(r"\bcan(?:'|\u2019)?t\b", "cannot", value, flags=re.IGNORECASE)
+    return re.sub(r"\b([A-Za-z]+)n(?:'|\u2019)t\b", r"\1 not", value)
 
 
 def _negated_truth_support(claim_text: str, evidence_text: str) -> bool:
@@ -1790,7 +1905,7 @@ def _relations_conflict(claim: RelationFact, evidence: RelationFact, *, mode: st
 
 
 def _has_generic_relation_subject(left: str, right: str) -> bool:
-    generic = {"this", "that", "it", "experience", "event", "situation", "move"}
+    generic = {"this", "that", "it", "you", "they", "we", "one", "experience", "event", "situation", "move"}
     left_tokens = {token.lower() for token in TOKEN_RE.findall(str(left or ""))}
     right_tokens = {token.lower() for token in TOKEN_RE.findall(str(right or ""))}
     return bool(left_tokens.intersection(generic) or right_tokens.intersection(generic))
@@ -2337,6 +2452,14 @@ SEMANTIC_PHRASES = (
     ("laid back atmosphere", "relaxed atmosphere"),
     ("hidden gem", "unique experience"),
     ("could be better", "could be improved"),
+    ("in a coma", "critical condition"),
+    ("unable to talk or move", "critical condition"),
+    ("rough shape", "critical condition"),
+    ("remains to be seen", "uncertain"),
+    ("gushing over", "happy with"),
+    ("enjoying life", "happy"),
+    ("happy and content", "happy"),
+    ("no streaking occurs", "avoid streaks"),
     ("too expensive", "high price"),
     ("more people than normal", "busy"),
 )

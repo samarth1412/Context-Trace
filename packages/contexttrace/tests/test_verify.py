@@ -1842,6 +1842,198 @@ def test_semantic_mode_supports_short_structured_review_subfacts():
     assert all(claim["conflicting_facts"] == [] for claim in result["claims"])
 
 
+def test_semantic_mode_does_not_conflict_preventive_negation_paraphrases():
+    result = verify_trace(
+        RAGTrace(
+            query="How can I prevent birds nesting on a porch and clean concrete?",
+            answer=(
+                "Remember to move the plastic hawk periodically to prevent the birds from becoming accustomed to it. "
+                "If you have a light fixture, you can also install bird netting over it, but make sure the netting "
+                "is nonflammable and safe to use around light bulbs and doesn't entangle birds. "
+                "Move at an even pace and keep the nozzle at a consistent distance from the surface to avoid streaks."
+            ),
+            contexts=[
+                TraceContext(
+                    id="how_to",
+                    text=(
+                        "Move the plastic hawk periodically, so the birds do not become accustom to the plastic hawk. "
+                        "Install bird netting over the top of the light fixture to block the birds' access to it. "
+                        "Choose a netting that is nonflammable and safe to use around light bulbs. "
+                        "Beware that the netting is installed so that it doesn't entangle birds. "
+                        "Move at an even pace and keep the nozzle at the same distance from the surface of the concrete "
+                        "at all times to ensure that no streaking occurs."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert all(claim["verdict"] == "supported" for claim in result["claims"])
+    assert all(claim["conflicting_facts"] == [] for claim in result["claims"])
+
+
+def test_semantic_mode_does_not_conflict_high_overlap_relation_paraphrases():
+    result = verify_trace(
+        RAGTrace(
+            query="What happened?",
+            answer=(
+                "They are at their best when they are in control, their own boss, or working on their own. "
+                "Two Delaware boys and their father are in critical condition after becoming sick, possibly from "
+                "pesticide exposure, during a trip to the U.S. Virgin Islands."
+            ),
+            contexts=[
+                TraceContext(
+                    id="relations",
+                    text=(
+                        "You are at your best when you are in control, your own boss, or working on your own. "
+                        "Two Delaware boys are in a coma and their father still is unable to talk or move two weeks "
+                        "after they became sick -- perhaps from pesticide exposure -- during a trip to the U.S. "
+                        "Virgin Islands."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert all(claim["verdict"] == "supported" for claim in result["claims"])
+    assert all(claim["conflicting_facts"] == [] for claim in result["claims"])
+
+
+def test_semantic_mode_neutralizes_quoted_conditional_negation():
+    result = verify_trace(
+        RAGTrace(
+            query="How did Savannah describe the relationship?",
+            answer=(
+                "Savannah has been open about her feelings for Robert, saying that she wants to "
+                "\"protect and love\" him and that their relationship is something she's grateful for."
+            ),
+            contexts=[
+                TraceContext(
+                    id="savannah",
+                    text=(
+                        "Savannah has been open about her feelings for Robert and said, "
+                        "\"This is a relationship that I'm like, 'I want to protect and love and even who knows where "
+                        "it's going to end up,' but even if it [didn't end] up as The One, I am so grateful to have "
+                        "met him.\""
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["conflicting_facts"] == []
+
+
+def test_semantic_mode_supports_critical_condition_negative_medical_paraphrases():
+    result = verify_trace(
+        RAGTrace(
+            query="What happened to the family?",
+            answer=(
+                "Two Delaware boys and their father are in critical condition after becoming sick, "
+                "possibly from pesticide exposure, during a trip to the U.S. Virgin Islands. "
+                "The father is conscious but unable to move."
+            ),
+            contexts=[
+                TraceContext(
+                    id="medical",
+                    text=(
+                        "Two Delaware boys are in a coma and their father still is unable to talk or move "
+                        "after they became sick, perhaps from pesticide exposure, during a trip to the U.S. "
+                        "Virgin Islands. The boys are in rough shape. Esmond is conscious but cannot move."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert all(claim["verdict"] == "supported" for claim in result["claims"])
+    assert all(claim["conflicting_facts"] == [] for claim in result["claims"])
+
+
+def test_semantic_mode_supports_first_time_since_negative_paraphrase():
+    result = verify_trace(
+        RAGTrace(
+            query="What is new about the dating situation?",
+            answer=(
+                "This is the first time she's been in a serious dating situation since her split "
+                "from her ex-fiance Nic Kerdiles."
+            ),
+            contexts=[
+                TraceContext(
+                    id="dating",
+                    text=(
+                        "Seeing Savannah spending time with someone and being in a serious dating situation "
+                        "hasn't happened since she was on and off with her ex-fiance, Nic Kerdiles."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["conflicting_facts"] == []
+
+
+def test_semantic_mode_supports_outsourced_service_negation_context():
+    result = verify_trace(
+        RAGTrace(
+            query="Who handled the pest control work?",
+            answer=(
+                "Terminix, the pest control company used by Sea Glass Vacations, is cooperating with "
+                "authorities and conducting an internal investigation."
+            ),
+            contexts=[
+                TraceContext(
+                    id="provider",
+                    text=(
+                        "The company said it licensed an outside company, Terminix, for the pest control services. "
+                        "Sea Glass Vacations does not treat the units it manages for pests but instead relies on "
+                        "licensed professionals for pest control services. A spokesman for Terminix wrote that "
+                        "the company is looking into this matter internally and cooperating with authorities."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["conflicting_facts"] == []
+
+
+def test_semantic_mode_supports_happy_content_uncertain_relationship_paraphrase():
+    result = verify_trace(
+        RAGTrace(
+            query="How does Savannah seem?",
+            answer="While the future of their relationship remains uncertain, Savannah seems happy and content with Robert by her side.",
+            contexts=[
+                TraceContext(
+                    id="relationship",
+                    text=(
+                        "Savannah Chrisley is enjoying life with a new man by her side. "
+                        "Robert may be a newer man, but she is already gushing over him. "
+                        "Whether this relationship lasts remains to be seen."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["conflicting_facts"] == []
+
+
 def test_semantic_mode_does_not_conflict_generic_casual_restaurant_with_ambience_false():
     result = verify_trace(
         RAGTrace(

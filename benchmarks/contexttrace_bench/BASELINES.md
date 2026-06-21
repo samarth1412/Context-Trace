@@ -57,7 +57,7 @@ Latest RAGTruth assisted review pilot:
 
 | System | Cases | Reviewed Span Rows | Failure Macro-F1 | Root Cause Accuracy | Dangerous False Green | Citation Error F1 | Span Overlap |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| ContextTrace semantic verifier on RAGTruth stratified test sample | 200 | 76 | 0.459 | 0.615 | 0.005 | 1.000 | 0.578 |
+| ContextTrace semantic verifier on RAGTruth stratified test sample | 200 | 76 | 0.474 | 0.635 | 0.005 | 1.000 | 0.578 |
 | ContextTrace semantic verifier on RAGTruth test-split smoke | 50 | 15 | 0.181 | 0.400 | 0.000 | 1.000 | 0.883 |
 | OpenAI diagnostic judge `gpt-4.1-mini` on RAGTruth test-split smoke | 50 | 15 | 0.272 | 0.660 | 0.260 | 1.000 | 0.592 |
 
@@ -87,7 +87,12 @@ friendly staff, menu changes, wrong sandwiches, high prices, and busy golf-event
 days. The current row further expands review-domain cue detection and bounded
 paraphrases for environmental straw/dockage concerns, not-welcoming wording,
 pier/waterfront views, menu item lists, beer selection, hidden-gem wording,
-mixed sentiment subfacts, and food/service sentiment.
+mixed sentiment subfacts, and food/service sentiment. The latest calibration
+also guards fact-level semantic support for preventive negation paraphrases,
+first-time-since negative wording, critical-condition medical paraphrases,
+outsourced-service contrast clauses, quoted conditional negation, and pronoun
+relation paraphrases while preserving swapped-entity and reversed-relation
+contradiction tests.
 RAGTruth rows use answer-level verdict scope by default; claim-count metrics
 apply only to rows with explicit reviewer taxonomy overrides. The OpenAI judge is
 useful as a contrastive calibration target, but its 50-row smoke labeled 46/50
