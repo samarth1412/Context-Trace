@@ -1485,6 +1485,168 @@ def test_semantic_mode_uses_structured_json_day_specific_hours_for_support():
     assert claim["conflicting_facts"] == []
 
 
+def test_semantic_mode_uses_structured_json_weekday_and_saturday_hours_for_support():
+    result = verify_trace(
+        RAGTrace(
+            query="When is the bakery open?",
+            answer=(
+                "The bakery is open from 6:00 am to 5:30 pm from Monday to Friday "
+                "and from 7:00 am to 4:00 pm on Saturdays."
+            ),
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "hours": {
+                                "Monday": "6:0-17:30",
+                                "Tuesday": "6:0-17:30",
+                                "Wednesday": "6:0-17:30",
+                                "Thursday": "6:0-17:30",
+                                "Friday": "6:0-17:30",
+                                "Saturday": "7:0-16:0",
+                            }
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["missing_facts"] == []
+    assert claim["conflicting_facts"] == []
+
+
+def test_semantic_mode_uses_structured_review_info_for_mixed_sentiment_support():
+    result = verify_trace(
+        RAGTrace(
+            query="What do reviews say?",
+            answer=(
+                "Customer reviews highlight mixed feelings. Some patrons praised the Korean chicken wings, "
+                "while others complained about slow service."
+            ),
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "review_info": [
+                                {
+                                    "review_stars": 5,
+                                    "review_text": "The Korean chicken wings were excellent and the new menu was great.",
+                                },
+                                {
+                                    "review_stars": 1,
+                                    "review_text": "The service was slow and disappointing.",
+                                },
+                            ]
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert [claim["verdict"] for claim in result["claims"]] == ["supported", "supported"]
+    assert all(claim["missing_facts"] == [] for claim in result["claims"])
+    assert all(claim["conflicting_facts"] == [] for claim in result["claims"])
+
+
+def test_semantic_mode_supports_structured_absent_information_claims():
+    result = verify_trace(
+        RAGTrace(
+            query="Which attributes are known?",
+            answer=(
+                "The provided structured data does not include information about restaurant reservations, "
+                "takeout service, WiFi availability, or whether the restaurant is good for groups."
+            ),
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps({"attributes": {}, "categories": "Bakeries, Food"}),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["missing_facts"] == []
+    assert claim["conflicting_facts"] == []
+
+
+def test_semantic_mode_supports_mixed_polarity_structured_parking_claims():
+    result = verify_trace(
+        RAGTrace(
+            query="What parking is available?",
+            answer=(
+                "The business does not provide garage or valet parking, "
+                "but street parking and a parking lot are available."
+            ),
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "attributes": {
+                                "BusinessParking": {
+                                    "garage": False,
+                                    "lot": True,
+                                    "street": True,
+                                    "valet": False,
+                                }
+                            }
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["missing_facts"] == []
+    assert claim["conflicting_facts"] == []
+
+
+def test_semantic_mode_does_not_conflict_generic_casual_restaurant_with_ambience_false():
+    result = verify_trace(
+        RAGTrace(
+            query="What is Sandpiper Grill like?",
+            answer="Sandpiper Grill seems to be a casual restaurant serving sandwiches and salads.",
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "name": "Sandpiper Grill",
+                            "categories": "American (Traditional), Sandwiches, Restaurants",
+                            "attributes": {"Ambience": {"casual": False}},
+                            "review_info": [
+                                {
+                                    "review_stars": 5,
+                                    "review_text": "The sandwich and salads are fresh and tasty.",
+                                }
+                            ],
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] != "contradicted"
+    assert claim["conflicting_facts"] == []
+
+
 def test_semantic_mode_uses_structured_json_attributes_for_conflict():
     result = verify_trace(
         RAGTrace(

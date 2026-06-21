@@ -57,7 +57,7 @@ Latest RAGTruth assisted review pilot:
 
 | System | Cases | Reviewed Span Rows | Failure Macro-F1 | Root Cause Accuracy | Dangerous False Green | Citation Error F1 | Span Overlap |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| ContextTrace semantic verifier on RAGTruth stratified test sample | 200 | 76 | 0.425 | 0.565 | 0.005 | 1.000 | 0.578 |
+| ContextTrace semantic verifier on RAGTruth stratified test sample | 200 | 76 | 0.438 | 0.580 | 0.005 | 1.000 | 0.578 |
 | ContextTrace semantic verifier on RAGTruth test-split smoke | 50 | 15 | 0.181 | 0.400 | 0.000 | 1.000 | 0.883 |
 | OpenAI diagnostic judge `gpt-4.1-mini` on RAGTruth test-split smoke | 50 | 15 | 0.272 | 0.660 | 0.260 | 1.000 | 0.592 |
 
@@ -78,7 +78,9 @@ QA list/procedural evidence, source-availability boilerplate,
 relation/appositive evidence variants, strict death-count identity checks,
 negated structured parking lists, and structured JSON evidence attributes such
 as Wi-Fi, reservations, parking, ambience flags, categories, ratings, hours
-ranges, and day-specific schedules.
+ranges, day-specific schedules, structured review aggregation, explicit
+structured-data absence claims, mixed-polarity parking claims, and plural
+structured list-item matching.
 RAGTruth rows use answer-level verdict scope by default; claim-count metrics
 apply only to rows with explicit reviewer taxonomy overrides. The OpenAI judge is
 useful as a contrastive calibration target, but its 50-row smoke labeled 46/50

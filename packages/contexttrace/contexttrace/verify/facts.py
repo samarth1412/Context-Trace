@@ -397,13 +397,20 @@ def _list_facts(claim: str) -> list[RequiredFact]:
     if "," not in tail and " and " not in tail.lower():
         return []
 
-    parts = _split_list_parts(tail, context=claim)
+    negated_list = bool(re.search(r"\b(?:does\s+not|do\s+not|doesnt|dont|not|no)\b[^.]{0,35}\b%s\b" % re.escape(verb), claim, flags=re.IGNORECASE))
+    parts = _split_list_parts(tail, context=claim, negated_list=negated_list)
     if len(parts) <= 1:
         return []
 
     facts: list[RequiredFact] = []
     for part in parts:
-        if _contains_predicate(part):
+        negated_part = re.match(r"^(?:not|no|without)\s+(?P<tail>.+)$", part, flags=re.IGNORECASE)
+        if negated_part:
+            negated_tail = negated_part.group("tail")
+            if verb == "include" and "information about" in claim.lower() and "information" not in negated_tail.lower():
+                negated_tail = "information about %s" % negated_tail
+            facts.append(RequiredFact(text="not %s %s" % (verb, negated_tail), type="negation"))
+        elif _contains_predicate(part):
             facts.append(RequiredFact(text=part, type=_fact_type(part)))
         elif _starts_with_list_verb(part):
             facts.append(RequiredFact(text=part, type="predicate"))
@@ -412,14 +419,19 @@ def _list_facts(claim: str) -> list[RequiredFact]:
     return facts
 
 
-def _split_list_parts(tail: str, *, context: str) -> list[str]:
+def _split_list_parts(tail: str, *, context: str, negated_list: bool = False) -> list[str]:
     parking_context = bool(re.search(r"\bparking\b", context, flags=re.IGNORECASE))
     parts: list[str] = []
-    negative_continuation = False
-    for raw_part in re.split(r",|\s+\band\b\s+", tail):
+    negative_continuation = negated_list
+    for raw_part in re.split(r",|\s+\band\b\s+|\s+\bor\b\s+", tail):
         part = _clean(re.sub(r"^(?:and|or)\s+", "", raw_part.strip(" ,;"), flags=re.IGNORECASE))
         if not part:
             continue
+        if re.match(r"^but\b", part, flags=re.IGNORECASE):
+            negative_continuation = False
+            part = _clean(re.sub(r"^but\s+", "", part, flags=re.IGNORECASE))
+            if not part:
+                continue
         split_negative = re.split(r"\bbut\s+(?:not|no)\b", part, maxsplit=1, flags=re.IGNORECASE)
         if len(split_negative) == 2:
             before = _clean(split_negative[0].strip(" ,;"))
@@ -432,8 +444,20 @@ def _split_list_parts(tail: str, *, context: str) -> list[str]:
             continue
         if negative_continuation and not re.match(r"^(?:not|no|without)\b", part, flags=re.IGNORECASE):
             part = "not %s" % part
+        if _is_list_summary_glue(part):
+            continue
         parts.append(_normalize_list_part(part, parking_context=parking_context))
     return [part for part in parts if part]
+
+
+def _is_list_summary_glue(part: str) -> bool:
+    return bool(
+        re.match(
+            r"^(?:making|which\s+(?:makes|has|is)|indicating|reflecting|adding)\b",
+            _clean(part),
+            flags=re.IGNORECASE,
+        )
+    )
 
 
 def _normalize_list_part(part: str, *, parking_context: bool) -> str:
@@ -563,6 +587,10 @@ def _fact_supported_by_structured_data(fact: str, evidence_text: str) -> bool:
         return True
     if _rating_supports_fact(fact_text, data):
         return True
+    if _business_identity_supports_fact(fact_text, data):
+        return True
+    if _review_info_supports_fact(fact_text, data):
+        return True
     return False
 
 
@@ -573,6 +601,8 @@ def _structured_feature_supported_for_data(
     data: dict[str, object],
 ) -> bool:
     values = [_structured_lookup(data, path) for path in paths]
+    if _claim_denies_information_about(fact_text, phrases):
+        return any(value is None for value in values)
     if _claim_denies_any(fact_text, phrases) or _claim_denies_structured_feature(fact_text, paths):
         return any(_value_is_negative(value) for value in values)
     return any(_value_is_positive(value) for value in values)
@@ -587,6 +617,8 @@ def _structured_value_conflicts(claim_text: str, evidence_text: str) -> list[Req
 
     for feature_name, phrases, paths in STRUCTURED_FEATURES:
         if not _mentions_any(claim, phrases):
+            continue
+        if feature_name.endswith(" ambience") and not _explicit_ambience_claim(claim):
             continue
         values = [_structured_lookup(data, path) for path in paths]
         claim_denies_feature = _claim_denies_any(claim, phrases) or _claim_denies_structured_feature(claim, paths)
@@ -659,10 +691,29 @@ def _claim_denies_any(text: str, phrases: tuple[str, ...]) -> bool:
             negated_window = match.group(0)
             if re.search(r"\bbut\s+(?:offers?|provides?|has|have|includes?|with)\b", negated_window):
                 continue
+            if _feature_after_but(negated_window, phrase):
+                continue
             return True
         if re.search(r"\b%s\b.{0,30}\b(?:unavailable|not\s+available|not\s+offered)\b" % escaped, normalized):
             return True
     return False
+
+
+def _claim_denies_information_about(text: str, phrases: tuple[str, ...]) -> bool:
+    normalized = str(text or "").lower()
+    if not re.search(r"\b(?:does\s+not|do\s+not|doesnt|dont|not)\s+(?:include|provide|contain|list)\s+information\b", normalized):
+        return False
+    return any(phrase in normalized for phrase in phrases)
+
+
+def _explicit_ambience_claim(text: str) -> bool:
+    return bool(
+        re.search(
+            r"\b(?:ambien(?:ce|t)|ambiance|atmosphere|vibe|setting|decor|environment)\b",
+            str(text or ""),
+            flags=re.IGNORECASE,
+        )
+    )
 
 
 def _claim_denies_structured_feature(text: str, paths: tuple[tuple[str, ...], ...]) -> bool:
@@ -678,9 +729,18 @@ def _claim_denies_structured_feature(text: str, paths: tuple[tuple[str, ...], ..
             window = match.group(0)
             if re.search(r"\bbut\s+(?:offers?|provides?|has|have|includes?|with)\b", window):
                 continue
+            if _feature_after_but(window, feature):
+                continue
             if re.search(r"\b(?:parking|options?|services?|available|garage|street|validated|lot|valet)\b", window):
                 return True
     return False
+
+
+def _feature_after_but(window: str, feature: str) -> bool:
+    normalized = str(window or "").lower()
+    but_index = normalized.rfind("but")
+    feature_index = normalized.rfind(str(feature or "").lower())
+    return but_index >= 0 and feature_index > but_index
 
 
 def _claim_denies_parking(text: str) -> bool:
@@ -750,21 +810,22 @@ def _structured_hours_supports_fact(fact_text: str, data: dict[str, object]) -> 
     if not hours_by_day:
         return False
 
+    claim_range = _claim_time_range(claim)
+    if claim_range is not None:
+        extended = _claim_extended_hours(claim, claim_range)
+        if extended is not None:
+            extended_days, extended_range = extended
+            return all(
+                actual_range == (extended_range if day in extended_days else claim_range)
+                for day, actual_range in hours_by_day.items()
+            )
+
     day_ranges = _claim_day_time_ranges(claim)
     if day_ranges:
         return all(hours_by_day.get(day) == claimed_range for day, claimed_range in day_ranges.items())
 
-    claim_range = _claim_time_range(claim)
     if claim_range is None:
         return False
-
-    extended = _claim_extended_hours(claim, claim_range)
-    if extended is not None:
-        extended_days, extended_range = extended
-        return all(
-            actual_range == (extended_range if day in extended_days else claim_range)
-            for day, actual_range in hours_by_day.items()
-        )
 
     ranges = set(hours_by_day.values())
     if _claim_implies_uniform_hours(claim):
@@ -811,6 +872,43 @@ def _normalize_day_name(value: str) -> str:
 
 def _claim_day_time_ranges(text: str) -> dict[str, tuple[int, int]]:
     output: dict[str, tuple[int, int]] = {}
+    range_pattern = re.compile(
+        r"\b(?P<start_day>monday|mondays|tuesday|tuesdays|wednesday|wednesdays|thursday|thursdays|friday|fridays|saturday|saturdays|sunday|sundays)\b"
+        r"\s*(?:to|through|-)\s*"
+        r"(?P<end_day>monday|mondays|tuesday|tuesdays|wednesday|wednesdays|thursday|thursdays|friday|fridays|saturday|saturdays|sunday|sundays)\b"
+        r"[^.]{0,80}?\b(?:from|between)?\s*(?P<start>\d{1,2}(?::\d{1,2})?\s*(?:am|pm)?)\s*(?:to|-|until)\s+"
+        r"(?P<end>\d{1,2}(?::\d{1,2})?\s*(?:am|pm)?)",
+        flags=re.IGNORECASE,
+    )
+    for match in range_pattern.finditer(str(text or "")):
+        start_day = _normalize_day_name(match.group("start_day"))
+        end_day = _normalize_day_name(match.group("end_day"))
+        start = _parse_time_of_day(match.group("start"))
+        end = _parse_time_of_day(match.group("end"))
+        if not start_day or not end_day or start is None or end is None:
+            continue
+        for day in _day_range(start_day, end_day):
+            output[day] = (start, end)
+
+    inverse_range_pattern = re.compile(
+        r"\bfrom\s+(?P<start>\d{1,2}(?::\d{1,2})?\s*(?:am|pm)?)\s*(?:to|-|until)\s+"
+        r"(?P<end>\d{1,2}(?::\d{1,2})?\s*(?:am|pm)?)\s+"
+        r"(?:from|on)\s+"
+        r"(?P<start_day>monday|mondays|tuesday|tuesdays|wednesday|wednesdays|thursday|thursdays|friday|fridays|saturday|saturdays|sunday|sundays)\b"
+        r"(?:\s*(?:to|through|-)\s*"
+        r"(?P<end_day>monday|mondays|tuesday|tuesdays|wednesday|wednesdays|thursday|thursdays|friday|fridays|saturday|saturdays|sunday|sundays)\b)?",
+        flags=re.IGNORECASE,
+    )
+    for match in inverse_range_pattern.finditer(str(text or "")):
+        start_day = _normalize_day_name(match.group("start_day"))
+        end_day = _normalize_day_name(match.group("end_day") or match.group("start_day"))
+        start = _parse_time_of_day(match.group("start"))
+        end = _parse_time_of_day(match.group("end"))
+        if not start_day or not end_day or start is None or end is None:
+            continue
+        for day in _day_range(start_day, end_day):
+            output[day] = (start, end)
+
     pattern = re.compile(
         r"\b(?P<day>monday|mondays|tuesday|tuesdays|wednesday|wednesdays|thursday|thursdays|friday|fridays|saturday|saturdays|sunday|sundays)\b"
         r"[^.]{0,45}?\bfrom\s+(?P<start>\d{1,2}(?::\d{1,2})?\s*(?:am|pm)?)\s*(?:to|-|until)\s+"
@@ -822,8 +920,22 @@ def _claim_day_time_ranges(text: str) -> dict[str, tuple[int, int]]:
         start = _parse_time_of_day(match.group("start"))
         end = _parse_time_of_day(match.group("end"))
         if day and start is not None and end is not None:
-            output[day] = (start, end)
+            output.setdefault(day, (start, end))
     return output
+
+
+DAY_ORDER = ("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday")
+
+
+def _day_range(start_day: str, end_day: str) -> list[str]:
+    try:
+        start = DAY_ORDER.index(start_day)
+        end = DAY_ORDER.index(end_day)
+    except ValueError:
+        return []
+    if start <= end:
+        return list(DAY_ORDER[start : end + 1])
+    return [*DAY_ORDER[start:], *DAY_ORDER[: end + 1]]
 
 
 def _claim_extended_hours(text: str, base_range: tuple[int, int]) -> tuple[set[str], tuple[int, int]] | None:
@@ -991,6 +1103,190 @@ def _rating_supports_fact(fact_text: str, data: dict[str, object]) -> bool:
     return bool(claim_numbers.intersection(rating_values))
 
 
+def _business_identity_supports_fact(fact_text: str, data: dict[str, object]) -> bool:
+    if _structured_number_mismatch(fact_text, data):
+        return False
+    business_text = _structured_business_text(data)
+    if not business_text:
+        return False
+    fact_tokens = [
+        token
+        for token in _important_tokens(_normalize_business_fact(fact_text), mode="semantic")
+        if token not in BUSINESS_IDENTITY_GENERIC_TOKENS
+    ]
+    if not fact_tokens:
+        return False
+    business_tokens = set(_important_tokens(business_text, mode="semantic"))
+    matched = [token for token in fact_tokens if token in business_tokens]
+    coverage = len(matched) / len(fact_tokens)
+    if _mentions_location_or_category_context(fact_text) and len(matched) >= 3 and coverage >= 0.46:
+        return True
+    return len(matched) >= 4 and coverage >= 0.55
+
+
+BUSINESS_IDENTITY_GENERIC_TOKENS = {
+    "available",
+    "business",
+    "california",
+    "ca",
+    "company",
+    "establishment",
+    "local",
+    "located",
+    "popular",
+    "rating",
+    "spot",
+    "star",
+}
+
+
+def _normalize_business_fact(text: str) -> str:
+    value = str(text or "")
+    value = re.sub(r"\b(?:popular|local|well-regarded|highly-rated|multi-faceted)\b", " ", value, flags=re.IGNORECASE)
+    value = re.sub(r"\b(?:unique|variety of|range of)\b", " ", value, flags=re.IGNORECASE)
+    return _clean(value)
+
+
+def _structured_business_text(data: dict[str, object]) -> str:
+    fields: list[str] = []
+    for key in ("name", "address", "city", "categories"):
+        value = data.get(key)
+        if value not in (None, ""):
+            fields.append(str(value))
+    return " ".join(fields)
+
+
+def _mentions_location_or_category_context(text: str) -> bool:
+    return bool(
+        re.search(
+            r"\b(?:located|situated|address|city|santa\s+barbara|goleta|carpinteria|categories?|cuisines?|restaurants?|bars?|brew(?:ery|eries|pubs?)|bakery|bakeries|food|nightlife|active\s+life|boating|music\s+venues?)\b",
+            str(text or ""),
+            flags=re.IGNORECASE,
+        )
+    )
+
+
+def _review_info_supports_fact(fact_text: str, data: dict[str, object]) -> bool:
+    reviews = _structured_reviews(data)
+    if not reviews:
+        return False
+    normalized = _normalize_review_fact(fact_text)
+    if not _mentions_review_context(normalized):
+        return False
+
+    if _claims_mixed_reviews(normalized):
+        return _has_positive_review(reviews) and _has_negative_review(reviews)
+
+    review_texts = [text for _, text in reviews if text]
+    corpus = " ".join(review_texts)
+    fact_tokens = _review_fact_tokens(normalized)
+    if not fact_tokens:
+        return False
+
+    aggregate_coverage = _token_coverage(fact_tokens, corpus, mode="semantic")
+    best_review_coverage = max((_token_coverage(fact_tokens, review, mode="semantic") for review in review_texts), default=0.0)
+    matched_count = len([token for token in fact_tokens if token in set(_important_tokens(corpus, mode="semantic"))])
+
+    if _claims_specific_reviewer(normalized):
+        return matched_count >= 2 and (best_review_coverage >= 0.42 or aggregate_coverage >= 0.58)
+    if _claims_positive_review(normalized):
+        return _has_positive_review(reviews) and matched_count >= 2 and (best_review_coverage >= 0.40 or aggregate_coverage >= 0.55)
+    if _claims_negative_review(normalized):
+        return _has_negative_review(reviews) and matched_count >= 2 and (best_review_coverage >= 0.40 or aggregate_coverage >= 0.42)
+    return matched_count >= 3 and aggregate_coverage >= 0.58
+
+
+def _structured_reviews(data: dict[str, object]) -> list[tuple[float | None, str]]:
+    raw_reviews = data.get("review_info")
+    if not isinstance(raw_reviews, list):
+        return []
+    reviews: list[tuple[float | None, str]] = []
+    for item in raw_reviews:
+        if not isinstance(item, dict):
+            continue
+        text = _clean(str(item.get("review_text") or ""))
+        if not text:
+            continue
+        stars = item.get("review_stars")
+        try:
+            rating = float(stars) if stars is not None else None
+        except (TypeError, ValueError):
+            rating = None
+        reviews.append((rating, text))
+    return reviews
+
+
+def _normalize_review_fact(text: str) -> str:
+    value = str(text or "")
+    value = re.sub(r"^(?:however|on the other hand|on the positive side|additionally|according to reviews?),?\s+", "", value, flags=re.IGNORECASE)
+    value = re.sub(r"\b(?:customers?|reviewers?|patrons?|visitors?|one customer|another customer|one reviewer|another reviewer|some reviewers?|other reviewers?)\b", " reviewer ", value, flags=re.IGNORECASE)
+    value = re.sub(r"\b(?:have|has|had|left|noted|mentioned|reported|stated|described|expressed|felt|highlighted|praised|criticized|complained|appreciated|commended|recommended)\b", " ", value, flags=re.IGNORECASE)
+    return _clean(value)
+
+
+def _mentions_review_context(text: str) -> bool:
+    return bool(
+        re.search(
+            r"\b(?:review|reviewer|customer|patron|visitor|praised|criticized|complained|noted|mentioned|reported|highlighted|appreciated|commended|rave|mixed|positive|negative|disappoint|dissatisfaction|service|food|staff|experience)\b",
+            str(text or ""),
+            flags=re.IGNORECASE,
+        )
+    )
+
+
+def _claims_mixed_reviews(text: str) -> bool:
+    return bool(re.search(r"\b(?:mixed|positive.*negative|negative.*positive|some\b.+\bothers?|while\b.+\bothers?)\b", str(text or ""), flags=re.IGNORECASE))
+
+
+def _claims_specific_reviewer(text: str) -> bool:
+    return bool(re.search(r"\b(?:one|another|a|an)\s+reviewer\b|\bone\s+customer\b|\banother\s+customer\b", str(text or ""), flags=re.IGNORECASE))
+
+
+def _claims_positive_review(text: str) -> bool:
+    return bool(re.search(r"\b(?:prais|commend|appreciat|rave|recommend|positive|great|good|friendly|delicious|excellent|helpful|enjoy|satisfied)\w*\b", str(text or ""), flags=re.IGNORECASE))
+
+
+def _claims_negative_review(text: str) -> bool:
+    return bool(re.search(r"\b(?:critic|complain|concern|disappoint|dissatisf|negative|poor|bad|slow|rude|issue|problem|overcooked|wrong|expensive|poison|closed|frustrat)\w*\b", str(text or ""), flags=re.IGNORECASE))
+
+
+def _has_positive_review(reviews: list[tuple[float | None, str]]) -> bool:
+    return any((rating is not None and rating >= 4.0) or _claims_positive_review(text) for rating, text in reviews)
+
+
+def _has_negative_review(reviews: list[tuple[float | None, str]]) -> bool:
+    return any((rating is not None and rating <= 2.0) or _claims_negative_review(text) for rating, text in reviews)
+
+
+def _review_fact_tokens(text: str) -> list[str]:
+    generic = {
+        "according",
+        "business",
+        "customer",
+        "customers",
+        "express",
+        "highlight",
+        "negative",
+        "positive",
+        "review",
+        "reviewer",
+        "reviewers",
+        "restaurant",
+        "some",
+        "other",
+        "others",
+        "while",
+    }
+    return [token for token in _important_tokens(text, mode="semantic") if token not in generic]
+
+
+def _token_coverage(tokens: list[str], text: str, *, mode: str) -> float:
+    if not tokens:
+        return 0.0
+    evidence_tokens = set(_important_tokens(text, mode=mode))
+    return len([token for token in tokens if token in evidence_tokens]) / len(tokens)
+
+
 def _fact_supported_by_unit(fact: str, evidence_unit: str, *, mode: str) -> bool:
     if _missing_exact_terms(fact, evidence_unit):
         for scoped_fact in _scope_variants(fact):
@@ -1120,7 +1416,7 @@ def _list_item_supported(
 def _normalize_list_tail(value: str) -> str:
     normalized = _clean(value)
     normalized = re.sub(
-        r"^(?:providing|provide|increasing|increase|controlling|control)\s+",
+        r"^(?:providing|provide|increasing|increase|controlling|control|including|include)\s+",
         "",
         normalized,
         flags=re.IGNORECASE,
@@ -1723,6 +2019,7 @@ SEMANTIC_TOKEN_MAP = {
     "baked": "bakery",
     "bakeries": "bakery",
     "dishes": "dish",
+    "sandwiches": "sandwich",
     "fought": "fight",
     "fights": "fight",
     "fighting": "fight",
@@ -1760,6 +2057,42 @@ SEMANTIC_TOKEN_MAP = {
     "specimens": "specimen",
     "collection": "collect",
     "collecting": "collect",
+    "praised": "praise",
+    "praises": "praise",
+    "praising": "praise",
+    "commended": "praise",
+    "commends": "praise",
+    "commending": "praise",
+    "appreciated": "praise",
+    "appreciates": "praise",
+    "appreciating": "praise",
+    "criticized": "criticize",
+    "criticizes": "criticize",
+    "criticizing": "criticize",
+    "complained": "complain",
+    "complains": "complain",
+    "complaining": "complain",
+    "disappointed": "disappoint",
+    "disappointment": "disappoint",
+    "dissatisfaction": "disappoint",
+    "satisfied": "satisfactory",
+    "satisfaction": "satisfactory",
+    "mentioned": "mention",
+    "mentions": "mention",
+    "noted": "mention",
+    "notes": "mention",
+    "reported": "report",
+    "reports": "report",
+    "highlighted": "highlight",
+    "highlights": "highlight",
+    "concerns": "concern",
+    "concerned": "concern",
+    "insane": "high",
+    "snobs": "elitist",
+    "snobby": "elitist",
+    "tasty": "delicious",
+    "kind": "friendly",
+    "helpful": "friendly",
     "features": "show",
     "featuring": "show",
     "featured": "show",
