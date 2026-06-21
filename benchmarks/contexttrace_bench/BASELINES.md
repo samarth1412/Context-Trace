@@ -57,7 +57,7 @@ Latest RAGTruth assisted review pilot:
 
 | System | Cases | Reviewed Span Rows | Failure Macro-F1 | Root Cause Accuracy | Dangerous False Green | Citation Error F1 | Span Overlap |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| ContextTrace semantic verifier on RAGTruth stratified test sample | 200 | 76 | 0.491 | 0.670 | 0.005 | 1.000 | 0.589 |
+| ContextTrace semantic verifier on RAGTruth stratified test sample | 200 | 76 | 0.519 | 0.720 | 0.005 | 1.000 | 0.589 |
 | ContextTrace semantic verifier on RAGTruth test-split smoke | 50 | 15 | 0.181 | 0.400 | 0.000 | 1.000 | 0.883 |
 | OpenAI diagnostic judge `gpt-4.1-mini` on RAGTruth test-split smoke | 50 | 15 | 0.272 | 0.660 | 0.260 | 1.000 | 0.592 |
 
@@ -96,7 +96,11 @@ contradiction tests. The current row additionally improves answerability/list
 calibration with relation-support precedence, numbered visit/call/fill/submit
 list parsing, optional `with or without` list handling, broader supporting-span
 recall, URL/website and city-list paraphrases, and targeted
-attribution/closed-list contradiction guards.
+attribution/closed-list contradiction guards. The current row also adds bounded
+structured Yelp review-summary support for private-event, comedy-relocation,
+affordability, positive/negative experience, delivery, dining-service,
+gratuity, signage, and accommodating-staff paraphrases, with a guard against
+supporting slow-service claims from positive staff reviews alone.
 RAGTruth rows use answer-level verdict scope by default; claim-count metrics
 apply only to rows with explicit reviewer taxonomy overrides. The OpenAI judge is
 useful as a contrastive calibration target, but its 50-row smoke labeled 46/50

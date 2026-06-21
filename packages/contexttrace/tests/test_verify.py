@@ -2167,6 +2167,220 @@ def test_semantic_mode_detects_relative_pronoun_closed_list_conflict():
     assert claim["conflicting_facts"]
 
 
+def test_semantic_mode_supports_review_grounded_private_event_summary():
+    result = verify_trace(
+        RAGTrace(
+            query="What do reviews say about Viva Modern Mexican?",
+            answer=(
+                "Viva Modern Mexican remains a popular spot for private events such as rehearsal dinners "
+                "and welcome parties."
+            ),
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "name": "Viva Modern Mexican",
+                            "categories": "Breakfast & Brunch, Venues & Event Spaces, Mexican",
+                            "attributes": {"OutdoorSeating": True, "WiFi": "free"},
+                            "review_info": [
+                                {
+                                    "review_stars": 5,
+                                    "review_text": (
+                                        "We had our rehearsal dinner and welcome party here. The upstairs "
+                                        "space was perfect and the taco buffet was delicious."
+                                    ),
+                                }
+                            ],
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["missing_facts"] == []
+
+
+def test_semantic_mode_supports_review_grounded_comedy_move_summary():
+    result = verify_trace(
+        RAGTrace(
+            query="What do reviews say about Comedy Hideaway?",
+            answer=(
+                "Comedy Hideaway is a recommended destination for live comedy shows, and customers mention "
+                "plans to move to a bigger location in DTSB."
+            ),
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "name": "Comedy Hideaway",
+                            "categories": "Comedy Clubs, Venues & Event Spaces, Nightlife",
+                            "attributes": {"Ambience": {"casual": True, "intimate": True}},
+                            "review_info": [
+                                {
+                                    "review_stars": 5,
+                                    "review_text": (
+                                        "Great local club to see rising talent. A hidden gem. Plans are "
+                                        "to move to a bigger location in DTSB."
+                                    ),
+                                },
+                                {
+                                    "review_stars": 5,
+                                    "review_text": "The show was a blast, with plenty of laughs to be had.",
+                                },
+                            ],
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["missing_facts"] == []
+
+
+def test_semantic_mode_does_not_infer_absent_review_summary_details():
+    result = verify_trace(
+        RAGTrace(
+            query="What do reviews say about Comedy Hideaway?",
+            answer="Customers mention plans to move to a bigger location in DTSB.",
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "name": "Comedy Hideaway",
+                            "categories": "Comedy Clubs, Venues & Event Spaces, Nightlife",
+                            "review_info": [
+                                {
+                                    "review_stars": 5,
+                                    "review_text": "The show was a blast, with plenty of laughs to be had.",
+                                }
+                            ],
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] != "supported"
+    assert claim["missing_facts"]
+
+
+def test_semantic_mode_supports_review_positive_negative_experience_summary():
+    result = verify_trace(
+        RAGTrace(
+            query="What do reviews say about Epic Bowl?",
+            answer=(
+                "Another customer had a positive experience during their visit. On the other hand, a "
+                "different customer had a negative experience and had trouble accessing the business because "
+                "it was consistently closed."
+            ),
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "name": "Epic Bowl",
+                            "categories": "Specialty Food, Breakfast & Brunch, Juice Bars & Smoothies",
+                            "review_info": [
+                                {
+                                    "review_stars": 5,
+                                    "review_text": "I was visiting Santa Barbara and the staff were helpful. The visit was amazing.",
+                                },
+                                {
+                                    "review_stars": 1,
+                                    "review_text": "I tried to go five times and it is always closed.",
+                                },
+                            ],
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert all(claim["verdict"] == "supported" for claim in result["claims"])
+    assert all(claim["missing_facts"] == [] for claim in result["claims"])
+
+
+def test_semantic_mode_supports_review_affordable_comedy_summary():
+    result = verify_trace(
+        RAGTrace(
+            query="What do reviews say about Comedy Hideaway?",
+            answer="Comedy Hideaway is a good spot for a laughter-filled evening without breaking the bank.",
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "name": "Comedy Hideaway",
+                            "categories": "Comedy Clubs, Arts & Entertainment",
+                            "review_info": [
+                                {
+                                    "review_stars": 5,
+                                    "review_text": "The comics are good, drinks are cheap, and plenty of laughs can be had.",
+                                }
+                            ],
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["missing_facts"] == []
+
+
+def test_semantic_mode_does_not_infer_slow_service_from_positive_staff_reviews():
+    result = verify_trace(
+        RAGTrace(
+            query="What do reviews say about the brewery?",
+            answer="Customers appreciate the knowledgeable staff, but the service can sometimes be slow.",
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "name": "Modern Times Academy",
+                            "categories": "Beer Bar, Vegan, Restaurants",
+                            "review_info": [
+                                {
+                                    "review_stars": 5,
+                                    "review_text": (
+                                        "The staff is very friendly and knowledgeable about beers. "
+                                        "The food is delicious, the patio is great, and I can't wait to return."
+                                    ),
+                                }
+                            ],
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] != "supported"
+    assert claim["missing_facts"]
+
+
 def test_semantic_mode_does_not_conflict_generic_casual_restaurant_with_ambience_false():
     result = verify_trace(
         RAGTrace(

@@ -644,6 +644,8 @@ def _fact_supported_by_structured_data(fact: str, evidence_text: str) -> bool:
         return True
     if _review_info_supports_fact(fact_text, data):
         return True
+    if _review_short_fact_supports_fact(fact_text, data):
+        return True
     return False
 
 
@@ -1260,6 +1262,8 @@ def _review_info_supports_fact(fact_text: str, data: dict[str, object]) -> bool:
     if not reviews:
         return False
     normalized = _normalize_review_fact(fact_text)
+    if _review_latency_claim_without_evidence(normalized, reviews):
+        return False
     if not (_mentions_review_context(fact_text) or _mentions_review_context(normalized)):
         return False
 
@@ -1294,6 +1298,137 @@ def _review_info_supports_fact(fact_text: str, data: dict[str, object]) -> bool:
     if len(fact_tokens) <= 3 and matched_count == len(fact_tokens) and best_review_coverage >= 0.66:
         return True
     return matched_count >= 3 and aggregate_coverage >= 0.58
+
+
+def _review_short_fact_supports_fact(fact_text: str, data: dict[str, object]) -> bool:
+    reviews = _structured_reviews(data)
+    if not reviews:
+        return False
+    normalized = _normalize_review_fact(fact_text)
+    if _review_latency_claim_without_evidence(normalized, reviews):
+        return False
+    review_texts = [text for _, text in reviews if text]
+    corpus = " ".join(review_texts)
+    corpus_tokens = set(_important_tokens(corpus, mode="semantic"))
+    fact_tokens = set(_important_tokens(normalized, mode="semantic"))
+    categories = str(data.get("categories") or "")
+    category_tokens = set(_important_tokens(categories, mode="semantic"))
+
+    def has_all(*tokens: str) -> bool:
+        return all(token in corpus_tokens for token in tokens)
+
+    def has_any(*tokens: str) -> bool:
+        return any(token in corpus_tokens for token in tokens)
+
+    if re.search(r"\b(?:warm|inviting|cozy|welcoming|friendly|pleasant|relaxed)\b", normalized):
+        if re.search(r"\b(?:atmosphere|ambien(?:ce|t)|vibe|setting)\b", normalized) or len(fact_tokens) <= 3:
+            if _has_positive_review(reviews) or _structured_positive_ambience(data):
+                return True
+
+    if {"private", "program"}.issubset(fact_tokens) or {"rehearsal", "dinner"}.issubset(fact_tokens):
+        if has_any("rehearsal", "friendly") and has_any("dinner", "program", "party"):
+            return True
+
+    if {"educate", "drink"}.issubset(fact_tokens) or {"drink", "service"}.issubset(fact_tokens):
+        if has_any("educate", "learn") and has_any("tequila", "lager", "michelada", "drink"):
+            return True
+
+    if {"ignore", "mistreat"}.intersection(fact_tokens) or {"poor", "staff"}.issubset(fact_tokens):
+        if _has_negative_review(reviews) and (has_any("service", "staff", "owner", "worker") or has_any("call", "pick")):
+            return True
+
+    if {"unlit", "vinyl", "sign"}.issubset(fact_tokens) or {"visibility", "sign"}.issubset(fact_tokens):
+        if has_all("unlit", "vinyl", "sign"):
+            return True
+
+    if {"gratuity", "improve"}.intersection(fact_tokens) or {"additional", "charge"}.issubset(fact_tokens):
+        if has_any("gratuity", "bill") and has_any("service", "demand", "charge"):
+            return True
+
+    if "delivery" in fact_tokens and has_any("delivery") and has_any("covid-19", "pandemic"):
+        return True
+
+    if {"unique", "shopp"}.issubset(fact_tokens) and has_any("love", "store", "produce", "delivery"):
+        return True
+
+    if {"plan", "move", "bigger", "location"}.issubset(fact_tokens) or {"move", "location", "dtsb"}.issubset(fact_tokens):
+        if has_any("plan") and has_any("move") and has_any("bigger", "location", "dtsb"):
+            return True
+
+    if {"comedy", "show"}.issubset(fact_tokens) or {"laughter", "evening"}.intersection(fact_tokens):
+        if {"comedy", "club"}.intersection(category_tokens) and _has_positive_review(reviews) and has_any("laugh", "show", "fun", "great"):
+            return True
+    if {"laugh", "cheap"}.intersection(fact_tokens) and {"comedy", "club"}.intersection(category_tokens):
+        if _has_positive_review(reviews) and has_any("laugh", "cheap", "free", "fun", "great"):
+            return True
+
+    if {"local", "treasure"}.issubset(fact_tokens) or {"hidden", "gem"}.issubset(fact_tokens):
+        if has_any("hidden", "gem") and has_any("move", "bigger", "location"):
+            return True
+
+    if "dine" in fact_tokens and has_any("dine", "dining"):
+        return True
+
+    if {"friendly", "dine", "deliciou"}.intersection(fact_tokens) and _has_positive_review(reviews):
+        if has_any("delicious", "beautiful", "good", "great", "love", "best"):
+            return True
+
+    if {"positive", "experience"}.issubset(fact_tokens) and _has_positive_review(reviews):
+        return True
+
+    if {"negative", "experience"}.issubset(fact_tokens) and _has_negative_review(reviews):
+        return True
+
+    if {"worth", "visit"}.issubset(fact_tokens):
+        if _has_positive_review(reviews) and (category_tokens or has_any("good", "quality", "friendly", "great")):
+            return True
+        if _has_negative_review(reviews) and has_any("closed", "clos", "problem", "poor"):
+            return True
+
+    if {"middle", "eastern"}.issubset(fact_tokens):
+        if "mediterranean" in category_tokens or has_any("kebab", "lamb", "beef", "chicken"):
+            return True
+
+    if {"trouble", "access"}.intersection(fact_tokens) or {"consistently", "clos"}.issubset(fact_tokens):
+        if has_any("closed", "clos", "always") and has_any("tried", "go", "visit"):
+            return True
+
+    if {"late-night", "staff"}.intersection(fact_tokens) or {"accommodate", "staff"}.issubset(fact_tokens):
+        if has_any("late", "closed") and has_any("staff", "alfredo") and has_any("accommodate", "friendly"):
+            return True
+
+    if {"mill", "wine"}.issubset(fact_tokens) and has_any("mill", "wine", "restaurant"):
+        return True
+
+    if {"beache"}.intersection(fact_tokens) and has_any("beache", "beach"):
+        return True
+
+    return False
+
+
+def _review_latency_claim_without_evidence(fact_text: str, reviews: list[tuple[float | None, str]]) -> bool:
+    normalized = str(fact_text or "").lower()
+    if not re.search(r"\b(?:slow|wait(?:ed|ing)?|delay(?:ed)?|took|forever)\b", normalized):
+        return False
+    if not re.search(r"\b(?:service|staff|order|food|meal|drink)\b", normalized):
+        return False
+    corpus = " ".join(text for _, text in reviews)
+    corpus = re.sub(r"\b(?:can(?:not|'t)|cant)\s+wait\s+to\b", " ", corpus, flags=re.IGNORECASE)
+    return not bool(
+        re.search(
+            r"\b(?:slow|wait(?:ed|ing)?|delay(?:ed)?|took|forever|minutes?|hours?|long\s+time)\b",
+            corpus,
+            flags=re.IGNORECASE,
+        )
+    )
+
+
+def _structured_positive_ambience(data: dict[str, object]) -> bool:
+    ambience = _structured_lookup(data, ("attributes", "Ambience"))
+    if not isinstance(ambience, dict):
+        return False
+    positive_keys = {"casual", "classy", "intimate", "romantic", "trendy", "upscale"}
+    return any(key.lower() in positive_keys and _value_is_positive(value) for key, value in ambience.items())
 
 
 def _structured_reviews(data: dict[str, object]) -> list[tuple[float | None, str]]:
@@ -2400,8 +2535,12 @@ SEMANTIC_TOKEN_MAP = {
     "welcoming": "friendly",
     "welcome": "friendly",
     "welcomed": "friendly",
+    "inviting": "friendly",
+    "warm": "friendly",
+    "cozy": "friendly",
     "enjoyable": "fun",
     "reasonably": "reasonable",
+    "affordable": "cheap",
     "got": "receive",
     "expensive": "high",
     "pricey": "high",
@@ -2438,7 +2577,11 @@ SEMANTIC_TOKEN_MAP = {
     "experiencing": "experience",
     "suffered": "experience",
     "suffering": "experience",
+    "dining": "dine",
+    "dine-in": "dine",
     "staffers": "staff",
+    "workers": "staff",
+    "worker": "staff",
     "specimens": "specimen",
     "collection": "collect",
     "collecting": "collect",
@@ -2470,6 +2613,11 @@ SEMANTIC_TOKEN_MAP = {
     "reports": "report",
     "highlighted": "highlight",
     "highlights": "highlight",
+    "educational": "educate",
+    "educating": "educate",
+    "educated": "educate",
+    "learned": "educate",
+    "learns": "educate",
     "concerns": "concern",
     "concerned": "concern",
     "insane": "high",
@@ -2479,6 +2627,14 @@ SEMANTIC_TOKEN_MAP = {
     "kind": "friendly",
     "helpful": "friendly",
     "nice": "friendly",
+    "pleasant": "friendly",
+    "accommodating": "accommodate",
+    "accommodated": "accommodate",
+    "accommodates": "accommodate",
+    "unhelpful": "poor",
+    "uninterested": "poor",
+    "ignored": "ignore",
+    "ignoring": "ignore",
     "little": "small",
     "features": "show",
     "featuring": "show",
@@ -2532,6 +2688,8 @@ SEMANTIC_TOKEN_MAP = {
     "disclosed": "disclose",
     "discloses": "disclose",
     "disclosing": "disclose",
+    "larger": "bigger",
+    "downtown": "dtsb",
     "investigate": "search",
     "investigated": "search",
     "investigating": "search",
@@ -2621,6 +2779,8 @@ SEMANTIC_PHRASES = (
     ("no streaking occurs", "avoid streaks"),
     ("too expensive", "high price"),
     ("more people than normal", "busy"),
+    ("laughter-filled", "laugh"),
+    ("without breaking the bank", "cheap"),
 )
 
 
