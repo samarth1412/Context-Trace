@@ -2034,6 +2034,139 @@ def test_semantic_mode_supports_happy_content_uncertain_relationship_paraphrase(
     assert claim["conflicting_facts"] == []
 
 
+def test_semantic_mode_supports_numbered_visit_call_submit_lists():
+    result = verify_trace(
+        RAGTrace(
+            query="How do I change my postal address?",
+            answer=(
+                "To change your address with the U.S. Postal Service, you can visit the USPS website "
+                "(moversguide.usps.com), call the USPS Call Center (1-800-ASK-USPS), or fill out and "
+                "submit PS Form 3575 at any U.S. Post Office."
+            ),
+            contexts=[
+                TraceContext(
+                    id="usps",
+                    text=(
+                        "Postal Service Official Change of Address form online. There are three ways you can "
+                        "change your address: 1.Visit https://moversguide.usps.com/. 2.Call the USPS Call Center "
+                        "at 1-800-ASK-USPS. 3.Fill out and submit PS Form 3575, which you can pick up at any "
+                        "U.S. Post Office."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["conflicting_facts"] == []
+
+
+def test_semantic_mode_supports_optional_symptom_lists_and_answerability_boilerplate():
+    result = verify_trace(
+        RAGTrace(
+            query="What are early pregnancy symptoms?",
+            answer=(
+                "The passages provide enough information to answer the question. "
+                "The earliest signs and symptoms of pregnancy include mood swings, dizziness, bloating, "
+                "spotting, cramping, and nausea with or without vomiting."
+            ),
+            contexts=[
+                TraceContext(
+                    id="pregnancy",
+                    text=(
+                        "passage 1: Mood swings are common. Dizziness can occur when blood pressure drops. "
+                        "passage 2: The earliest signs of pregnancy include bloating, spotting, and cramping. "
+                        "passage 3: Around half of pregnant women experience nausea and vomiting, and some "
+                        "experience nausea without vomiting."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert all(claim["verdict"] == "supported" for claim in result["claims"])
+    assert all(claim["conflicting_facts"] == [] for claim in result["claims"])
+
+
+def test_semantic_mode_supports_city_itinerary_lists_with_covers_such_as():
+    result = verify_trace(
+        RAGTrace(
+            query="What cities are on the itinerary?",
+            answer=(
+                "The itinerary includes visits to Hong Kong, Shenzhen, Guangzhou, Beijing, Shanghai, and "
+                "the province of Jiangsu, where the Governor will engage in discussions and meetings with "
+                "regional leaders, businesses, and government officials."
+            ),
+            contexts=[
+                TraceContext(
+                    id="itinerary",
+                    text=(
+                        "The comprehensive itinerary covers prominent cities such as Hong Kong, Shenzhen, "
+                        "Guangzhou, Beijing, Shanghai, and the province of Jiangsu. In Guangdong, the Governor "
+                        "will meet with regional leaders and businesses. In Beijing, discussions will involve "
+                        "government officials."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["conflicting_facts"] == []
+
+
+def test_semantic_mode_detects_apology_attribution_conflict():
+    result = verify_trace(
+        RAGTrace(
+            query="Who apologized?",
+            answer="The mayor of New York City, Bill de Blasio, issued an apology to the driver and passengers.",
+            contexts=[
+                TraceContext(
+                    id="apology",
+                    text=(
+                        "Mayor Bill de Blasio told reporters that he had not seen the video. "
+                        "Police Commissioner William Bratton issued an apology to the driver and passengers."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "contradicted"
+    assert claim["conflicting_facts"]
+
+
+def test_semantic_mode_detects_relative_pronoun_closed_list_conflict():
+    result = verify_trace(
+        RAGTrace(
+            query="Which relative pronouns introduce adjective clauses?",
+            answer="It is introduced by a relative pronoun (who, whose, him, her, it, that) or a subordinate conjunction.",
+            contexts=[
+                TraceContext(
+                    id="grammar",
+                    text=(
+                        "It will begin with a relative pronoun (who, whose, whom, which, and that) or a "
+                        "subordinate conjunction. Those are the only words that can be used to introduce "
+                        "an adjective clause."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "contradicted"
+    assert claim["conflicting_facts"]
+
+
 def test_semantic_mode_does_not_conflict_generic_casual_restaurant_with_ambience_false():
     result = verify_trace(
         RAGTrace(

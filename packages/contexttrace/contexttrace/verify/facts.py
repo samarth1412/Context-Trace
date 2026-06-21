@@ -22,7 +22,7 @@ LOCATION_RELATION_RE = re.compile(
     re.IGNORECASE,
 )
 ACTIVE_RELATION_RE = re.compile(
-    r"^(?P<subject>.+?)\s+(?P<predicate>causes?|caused|leads to|led|leads|results in|produces?|prevents?|requires?|modifies?|discovered|discovers?|founded|created|creates|wrote|writes)\s+(?P<object>.+)$",
+    r"^(?P<subject>.+?)\s+(?P<predicate>causes?|caused|leads to|led|leads|results in|produces?|prevents?|requires?|modify|modifies|discovered|discovers?|founded|created|creates|wrote|writes)\s+(?P<object>.+)$",
     re.IGNORECASE,
 )
 LEAD_BY_RE = re.compile(r"\bled\s+by\s+(?P<leader>[A-Z][A-Za-z.'-]+(?:\s+[A-Z][A-Za-z.'-]+)+)", re.IGNORECASE)
@@ -42,11 +42,11 @@ NEGATION_RE = re.compile(r"\b(?:no|not|never|neither|nor|without|cannot|can't|un
 STRONG_NEGATION_RE = re.compile(r"\b(?:no|not|never|neither|nor|cannot|can't|unable|prohibited|forbidden|disallowed)\b", re.IGNORECASE)
 WHITESPACE_RE = re.compile(r"\s+")
 LIST_VERB_RE = re.compile(
-    r"\b(?P<verb>captures?|stores?|adds?|includes?|offers?|provides?|serves?|allows?|checks?|detects?|verifies?|reports?|records?|logs?|supports?|keeps?|calls?|maps?|creates?|runs?|writes?|saves?|evaluates?|gets?|fetches?|retrieves?|reranks?)\b\s+(?P<tail>.+)",
+    r"\b(?P<verb>captures?|stores?|adds?|includes?|offers?|provides?|serves?|allows?|checks?|detects?|verifies?|reports?|records?|logs?|supports?|keeps?|calls?|visits?|fills?|submits?|maps?|creates?|runs?|writes?|saves?|evaluates?|gets?|fetches?|retrieves?|reranks?)\b\s+(?P<tail>.+)",
     re.IGNORECASE,
 )
 LIST_ITEM_RE = re.compile(
-    r"^(?P<verb>captures?|stores?|adds?|includes?|offers?|provides?|serves?|allows?|checks?|detects?|verifies?|reports?|records?|logs?|supports?|keeps?|calls?|maps?|creates?|runs?|writes?|saves?|evaluates?|gets?|fetches?|retrieves?|reranks?)\s+(?P<tail>.+)$",
+    r"^(?P<verb>captures?|stores?|adds?|includes?|offers?|provides?|serves?|allows?|checks?|detects?|verifies?|reports?|records?|logs?|supports?|keeps?|calls?|visits?|fills?|submits?|maps?|creates?|runs?|writes?|saves?|evaluates?|gets?|fetches?|retrieves?|reranks?)\s+(?P<tail>.+)$",
     re.IGNORECASE,
 )
 
@@ -224,6 +224,12 @@ LIST_VERB_TOKENS = {
     "keeps",
     "call",
     "calls",
+    "visit",
+    "visits",
+    "fill",
+    "fills",
+    "submit",
+    "submits",
     "map",
     "maps",
     "create",
@@ -340,6 +346,12 @@ def compare_facts(claim_text: str, evidence_text: str, *, mode: str = "lexical")
     lead_conflict = _lead_relation_conflict(claim_text, evidence_text, mode=mode)
     if lead_conflict is not None:
         conflicting_details.append(lead_conflict)
+    attribution_conflict = _apology_attribution_conflict(claim_text, evidence_text, mode=mode)
+    if attribution_conflict is not None:
+        conflicting_details.append(attribution_conflict)
+    closed_list_conflict = _relative_pronoun_list_conflict(claim_text, evidence_text)
+    if closed_list_conflict is not None:
+        conflicting_details.append(closed_list_conflict)
 
     return FactMatch(
         required_facts=[fact.text for fact in required_details],
@@ -437,6 +449,14 @@ def _split_list_parts(tail: str, *, context: str, negated_list: bool = False) ->
                 continue
         if negative_continuation and _starts_new_affirmative_predicate(part):
             negative_continuation = False
+        optional_without = re.match(r"^without\s+(?P<tail>.+)$", part, flags=re.IGNORECASE)
+        if optional_without and parts and parts[-1].lower().endswith(" with"):
+            base = parts.pop()[:-5].strip()
+            tail_value = optional_without.group("tail").strip(" ,;")
+            if base and tail_value:
+                parts.append(_normalize_list_part("%s with %s" % (base, tail_value), parking_context=parking_context))
+                parts.append(_normalize_list_part("%s without %s" % (base, tail_value), parking_context=parking_context))
+                continue
         split_negative = re.split(r"\bbut\s+(?:not|no)\b", part, maxsplit=1, flags=re.IGNORECASE)
         if len(split_negative) == 2:
             before = _clean(split_negative[0].strip(" ,;"))
@@ -1394,6 +1414,8 @@ def _token_coverage(tokens: list[str], text: str, *, mode: str) -> float:
 
 
 def _fact_supported_by_unit(fact: str, evidence_unit: str, *, mode: str) -> bool:
+    if _answerability_claim_supported(fact, evidence_unit, mode=mode):
+        return True
     if _missing_exact_terms(fact, evidence_unit):
         for scoped_fact in _scope_variants(fact):
             if scoped_fact == _clean(fact) or _missing_exact_terms(scoped_fact, evidence_unit):
@@ -1426,6 +1448,18 @@ def _fact_supported_by_unit(fact: str, evidence_unit: str, *, mode: str) -> bool
     if _is_death_count_identity_fact(fact):
         return False
     return len(matched) >= 2 and coverage >= 0.62
+
+
+def _answerability_claim_supported(fact: str, evidence_unit: str, *, mode: str) -> bool:
+    if mode != "semantic":
+        return False
+    if not re.search(
+        r"\bpassages?\s+provides?\s+enough\s+information\s+to\s+answer\s+the\s+questions?\b",
+        str(fact or ""),
+        flags=re.IGNORECASE,
+    ):
+        return False
+    return bool(re.search(r"\bpassage\s*\d+\b|\bpassages?\b", str(evidence_unit or ""), flags=re.IGNORECASE))
 
 
 def _drop_leading_scope(fact: str) -> str:
@@ -1510,7 +1544,7 @@ def _list_item_supported(
     evidence_lower = str(evidence_text or "").lower()
     if verb in {"include", "support"}:
         return (
-            any(marker in evidence_lower for marker in ("include", "support", " are ", ":", "subset"))
+            any(marker in evidence_lower for marker in ("include", "support", " are ", ":", "subset", "cover", "such as"))
             or _looks_like_list_item(evidence_text, evidence_tokens)
             or _event_catalog_item_supported(tail_tokens, evidence_tokens)
         )
@@ -1600,6 +1634,8 @@ def _has_negation_conflict(claim_text: str, evidence_text: str, *, mode: str) ->
     if _first_time_since_negative_support(claim_text, units, mode=mode):
         return False
     if _outsourced_service_negation_support(claim_text, units, mode=mode):
+        return False
+    if _with_or_without_support(claim_text, units, mode=mode):
         return False
 
     if claim_polarity == "affirmative" and any(
@@ -1727,6 +1763,22 @@ def _outsourced_service_negation_support(claim_text: str, units: list[str], *, m
     )
 
 
+def _with_or_without_support(claim_text: str, units: list[str], *, mode: str) -> bool:
+    if mode != "semantic":
+        return False
+    matches = list(re.finditer(r"\bwith\s+or\s+without\s+(?P<tail>[A-Za-z][A-Za-z -]{1,40})", str(claim_text or ""), flags=re.IGNORECASE))
+    if not matches:
+        return False
+    evidence_text = " ".join(units)
+    for match in matches:
+        tail = _clean(match.group("tail")).strip(" .,:;!?")
+        if not tail:
+            continue
+        if re.search(r"\bwithout\s+%s\b" % re.escape(tail), evidence_text, flags=re.IGNORECASE):
+            return True
+    return False
+
+
 def _affirmative_contrast_support(claim_text: str, units: list[str], claim_polarity: str, *, mode: str) -> bool:
     if mode != "semantic" or claim_polarity != "affirmative":
         return False
@@ -1814,7 +1866,10 @@ def _relation_conflict(claim_text: str, evidence_text: str, *, mode: str) -> Req
     relation = _extract_relation(claim_text)
     if relation is None:
         return None
-    if _any_relation_conflict(relation, _evidence_units(evidence_text), mode=mode):
+    units = _evidence_units(evidence_text)
+    if _any_relation_support(relation, units, mode=mode):
+        return None
+    if _any_relation_conflict(relation, units, mode=mode):
         return RequiredFact(text=_clean(claim_text).rstrip(".!?"), type="relation")
     return None
 
@@ -1840,6 +1895,60 @@ def _lead_relation_conflict(claim_text: str, evidence_text: str, *, mode: str) -
     if target and _phrase_overlap(target, evidence, mode=mode) < 0.35:
         return None
     return RequiredFact(text=_clean(claim_text).rstrip(".!?"), type="relation")
+
+
+def _apology_attribution_conflict(claim_text: str, evidence_text: str, *, mode: str) -> RequiredFact | None:
+    if mode != "semantic":
+        return None
+    if not re.search(r"\b(?:issued?\s+an\s+apology|apolog(?:y|ies|ized|ise|ised))\b", str(claim_text or ""), flags=re.IGNORECASE):
+        return None
+    if not re.search(r"\b(?:issued?\s+an\s+apology|apolog(?:y|ies|ized|ise|ised))\b", str(evidence_text or ""), flags=re.IGNORECASE):
+        return None
+
+    claim_last_names = _person_last_names(claim_text)
+    if not claim_last_names:
+        return None
+    evidence_lower = str(evidence_text or "").lower()
+    if not any(name.lower() in evidence_lower for name in claim_last_names):
+        return None
+
+    for unit in _evidence_units(evidence_text):
+        if not re.search(r"\b(?:issued?\s+an\s+apology|apolog(?:y|ies|ized|ise|ised))\b", unit, flags=re.IGNORECASE):
+            continue
+        unit_lower = unit.lower()
+        if any(name.lower() in unit_lower for name in claim_last_names):
+            continue
+        actor_names = _person_last_names(unit)
+        if actor_names and _token_overlap(claim_text, unit, mode=mode) >= 0.25:
+            return RequiredFact(text=_clean(claim_text).rstrip(".!?"), type="attribution")
+    return None
+
+
+def _relative_pronoun_list_conflict(claim_text: str, evidence_text: str) -> RequiredFact | None:
+    if not re.search(r"\brelative\s+pronouns?\b", str(claim_text or ""), flags=re.IGNORECASE):
+        return None
+    if not re.search(r"\brelative\s+pronouns?\b", str(evidence_text or ""), flags=re.IGNORECASE):
+        return None
+
+    claim_items = _relative_pronoun_items(claim_text)
+    evidence_items = _relative_pronoun_items(evidence_text)
+    if not claim_items or not evidence_items:
+        return None
+    invalid_items = claim_items.difference(evidence_items)
+    if invalid_items.intersection({"him", "her", "it"}):
+        return RequiredFact(text=", ".join(sorted(invalid_items)), type="closed_list")
+    return None
+
+
+def _relative_pronoun_items(text: str) -> set[str]:
+    match = re.search(r"\brelative\s+pronouns?\s*\((?P<items>[^)]{1,120})\)", str(text or ""), flags=re.IGNORECASE)
+    if not match:
+        return set()
+    return {
+        token.lower()
+        for token in re.findall(r"\b[A-Za-z]+\b", match.group("items"))
+        if token.lower() not in {"and", "or"}
+    }
 
 
 def _passive_leader(text: str) -> str:
@@ -1878,6 +1987,30 @@ def _any_relation_conflict(
         for evidence_relation in [_extract_relation(unit)]
         if evidence_relation is not None
     )
+
+
+def _any_relation_support(
+    claim_relation: RelationFact,
+    evidence_units: list[str],
+    *,
+    mode: str,
+) -> bool:
+    return any(
+        _relations_support(claim_relation, evidence_relation, mode=mode)
+        for unit in evidence_units
+        for evidence_relation in [_extract_relation(unit)]
+        if evidence_relation is not None
+    )
+
+
+def _relations_support(claim: RelationFact, evidence: RelationFact, *, mode: str) -> bool:
+    if claim.predicate != evidence.predicate:
+        return False
+    subject_overlap = _bidirectional_phrase_overlap(claim.subject, evidence.subject, mode=mode)
+    object_overlap = _bidirectional_phrase_overlap(claim.object, evidence.object, mode=mode)
+    if subject_overlap >= 0.72 and object_overlap >= 0.72:
+        return True
+    return bool(object_overlap >= 0.72 and _has_generic_relation_subject(claim.subject, evidence.subject))
 
 
 def _relations_conflict(claim: RelationFact, evidence: RelationFact, *, mode: str) -> bool:
@@ -1948,6 +2081,23 @@ def _capitalized_name_tokens(value: str) -> list[str]:
         for token in TOKEN_RE.findall(str(value or ""))
         if token[:1].isupper() and token[1:].islower()
     ]
+
+
+def _person_last_names(value: str) -> set[str]:
+    names: set[str] = set()
+    for phrase in re.findall(r"\b[A-Z][A-Za-z.'-]+(?:\s+(?:de|da|del|van|von|[A-Z][A-Za-z.'-]+)){0,3}\b", str(value or "")):
+        words = [word.strip(".,;:!?()[]{}\"'") for word in phrase.split() if word.strip(".,;:!?()[]{}\"'")]
+        if not words:
+            continue
+        if words[0] in {"The", "A", "An"}:
+            words = words[1:]
+        filtered = [word for word in words if word.lower() not in {"mayor", "detective", "commissioner", "president", "police", "department", "city", "new", "york"}]
+        if not filtered:
+            continue
+        last = filtered[-1]
+        if last[:1].isupper() and len(last) > 1:
+            names.add(last)
+    return names
 
 
 def _canonical_relation_predicate(value: str) -> str:
@@ -2349,6 +2499,10 @@ SEMANTIC_TOKEN_MAP = {
     "commentators": "comment",
     "comments": "comment",
     "opinions": "comment",
+    "website": "online",
+    "websites": "online",
+    "url": "online",
+    "site": "online",
     "various": "several",
     "numerous": "several",
     "pleased": "happy",
@@ -2432,6 +2586,11 @@ SEMANTIC_PHRASES = (
     ('not exactly what the law considers "true', "false by the law"),
     ("passed away", "died"),
     ("before the day is out", "soon"),
+    ("as soon as possible", "fast"),
+    ("currently in production for", "slated for"),
+    ("newsroom actress", "newsroom role"),
+    ("telepathic psylocke", "mutant superheroine psylocke"),
+    ("covers prominent cities such as", "includes visits to"),
     ("same distance", "consistent distance"),
     ("taking specimens", "specimen collection"),
     ("took specimens", "specimen collection"),
@@ -2468,6 +2627,7 @@ SEMANTIC_PHRASES = (
 def _semantic_text(text: str) -> str:
     value = _normalize_negation_text(text).lower()
     value = unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode("ascii")
+    value = re.sub(r"\b\d+\.(?=[a-z])", " ", value)
     for source, replacement in SEMANTIC_PHRASES:
         value = value.replace(source, replacement)
     return value

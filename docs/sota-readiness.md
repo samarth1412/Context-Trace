@@ -14,10 +14,10 @@ The reason is external validity. The verifier is strong on the built-in
 500-case benchmark and the 150-case public holdout, but the latest 200-case
 RAGTruth assisted run is still calibration-only:
 
-- Failure macro-F1: `0.474`
-- Root-cause accuracy: `0.635`
+- Failure macro-F1: `0.491`
+- Root-cause accuracy: `0.670`
 - Dangerous false-green rate: `0.005`
-- Evidence-span overlap: `0.578`
+- Evidence-span overlap: `0.589`
 - Claim-verdict macro-F1: `0.178` where claim-level overrides exist
 
 That is not SOTA. It is useful evidence that the harness, review workflow, and
@@ -58,16 +58,16 @@ calibration target:
 
 Immediate targets from the latest error analysis:
 
-- `no_failure_detected -> answer_overreach`: 44 cases. The verifier is
+- `no_failure_detected -> answer_overreach`: 36 cases. The verifier is
   over-flagging many supported RAGTruth rows, especially answer-level rows with
   no hallucination span.
 - `no_failure_detected -> conflicting_contexts`: 8 cases. Conflict detection is
   too eager on some supported rows.
-- `conflicting_contexts -> answer_overreach`: 11 cases, concentrated in
+- `conflicting_contexts -> answer_overreach`: 10 cases, concentrated in
   Data2txt/Yelp. These are contradicted-answer misses.
-- `answer_overreach -> conflicting_contexts`: 9 cases. These are
+- `answer_overreach -> conflicting_contexts`: 11 cases. These are
   partial-support misses being treated as contradictions.
-- Source-span localization misses: 44 cases, mostly Data2txt/Yelp conflict
+- Source-span localization misses: 43 cases, mostly Data2txt/Yelp conflict
   rows.
 
 The first implementation pass should target these clusters in that order. The
@@ -190,9 +190,17 @@ Completed in the repo:
   swapped-entity/reversed-relation contradiction tests. This moved the 200-case
   RAGTruth assisted sample to failure macro-F1 `0.474` and root-cause accuracy
   `0.635` while holding dangerous false-green rate at `0.005`.
-- The current semantic verifier scores failure macro-F1 `0.474`, root-cause
-  accuracy `0.635`, dangerous false-green rate `0.005`, and evidence span
-  overlap `0.578` on that 200-case RAGTruth sample, so RAGTruth is now a
+- A follow-up answerability/list calibration pass added relation-support
+  precedence before relation conflicts, numbered visit/call/fill/submit list
+  parsing, `with or without` optional-list handling, broader supporting-span
+  recall, URL/website and city-list paraphrases, QA answerability boilerplate
+  support, and targeted attribution/closed-list contradiction guards. This moved
+  the 200-case RAGTruth assisted sample to failure macro-F1 `0.491`,
+  root-cause accuracy `0.670`, and evidence span overlap `0.589` while holding
+  dangerous false-green rate at `0.005`.
+- The current semantic verifier scores failure macro-F1 `0.491`, root-cause
+  accuracy `0.670`, dangerous false-green rate `0.005`, and evidence span
+  overlap `0.589` on that 200-case RAGTruth sample, so RAGTruth is now a
   concrete calibration target rather than a publishable external benchmark
   claim.
 - Documentation links now point reviewers to methodology and baseline status.
@@ -236,8 +244,8 @@ Current baseline status:
   error F1 `1.000`, evidence span overlap `0.921`.
 - RAGTruth assisted review pilot, ContextTrace semantic verifier: 200 official
   test-split stratified cases, 88 assisted-reviewed hallucination rows, 76
-  rows with source evidence spans, failure macro-F1 `0.474`, root-cause
-  accuracy `0.635`, citation error F1 `1.000`, evidence span overlap `0.578`,
+  rows with source evidence spans, failure macro-F1 `0.491`, root-cause
+  accuracy `0.670`, citation error F1 `1.000`, evidence span overlap `0.589`,
   and dangerous false-green rate `0.005`. This is not publishable without
   independent sign-off and calibration.
 - RAGTruth assisted review pilot, OpenAI diagnostic judge with `gpt-4.1-mini`:

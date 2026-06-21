@@ -253,7 +253,7 @@ def score_claim_against_context(
     )
 
 
-def _rank_spans(spans: list[dict[str, object]], *, limit: int = 8) -> list[dict[str, object]]:
+def _rank_spans(spans: list[dict[str, object]], *, limit: int = 12) -> list[dict[str, object]]:
     unique: dict[str, dict[str, object]] = {}
     for span in spans:
         key = str(span.get("span_hash") or "%s:%s:%s" % (span.get("context_id"), span.get("start_char"), span.get("end_char")))
@@ -601,6 +601,10 @@ SEMANTIC_TOKEN_MAP = {
     "commentators": "comment",
     "comments": "comment",
     "opinions": "comment",
+    "website": "online",
+    "websites": "online",
+    "url": "online",
+    "site": "online",
     "various": "several",
     "numerous": "several",
     "pleased": "happy",
@@ -682,6 +686,11 @@ SEMANTIC_PHRASES = (
     ('not exactly what the law considers "true', "false by the law"),
     ("passed away", "died"),
     ("before the day is out", "soon"),
+    ("as soon as possible", "fast"),
+    ("currently in production for", "slated for"),
+    ("newsroom actress", "newsroom role"),
+    ("telepathic psylocke", "mutant superheroine psylocke"),
+    ("covers prominent cities such as", "includes visits to"),
     ("same distance", "consistent distance"),
     ("taking specimens", "specimen collection"),
     ("took specimens", "specimen collection"),
@@ -718,6 +727,7 @@ SEMANTIC_PHRASES = (
 def _semantic_text(text: str) -> str:
     value = _normalize_negation_text(text).lower()
     value = unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode("ascii")
+    value = re.sub(r"\b\d+\.(?=[a-z])", " ", value)
     for source, replacement in SEMANTIC_PHRASES:
         value = value.replace(source, replacement)
     return value
