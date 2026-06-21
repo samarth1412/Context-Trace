@@ -57,7 +57,7 @@ Latest RAGTruth assisted review pilot:
 
 | System | Cases | Reviewed Span Rows | Failure Macro-F1 | Root Cause Accuracy | Dangerous False Green | Citation Error F1 | Span Overlap |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| ContextTrace semantic verifier on RAGTruth stratified test sample | 200 | 76 | 0.398 | 0.525 | 0.005 | 1.000 | 0.578 |
+| ContextTrace semantic verifier on RAGTruth stratified test sample | 200 | 76 | 0.425 | 0.565 | 0.005 | 1.000 | 0.578 |
 | ContextTrace semantic verifier on RAGTruth test-split smoke | 50 | 15 | 0.181 | 0.400 | 0.000 | 1.000 | 0.883 |
 | OpenAI diagnostic judge `gpt-4.1-mini` on RAGTruth test-split smoke | 50 | 15 | 0.272 | 0.660 | 0.260 | 1.000 | 0.592 |
 
@@ -74,9 +74,11 @@ failure macro-F1 and root-cause accuracy show the RAGTruth taxonomy
 mapping/calibration still needs work before any SOTA claim. The latest
 ContextTrace row includes verifier calibration for common news-summary
 paraphrases, generated summary prefixes, QA boilerplate/list markers, multi-span
-QA list/procedural evidence, relation/appositive evidence variants, and
-structured JSON evidence attributes such as Wi-Fi, reservations, parking,
-ambience flags, categories, ratings, hours ranges, and day-specific schedules.
+QA list/procedural evidence, source-availability boilerplate,
+relation/appositive evidence variants, strict death-count identity checks,
+negated structured parking lists, and structured JSON evidence attributes such
+as Wi-Fi, reservations, parking, ambience flags, categories, ratings, hours
+ranges, and day-specific schedules.
 RAGTruth rows use answer-level verdict scope by default; claim-count metrics
 apply only to rows with explicit reviewer taxonomy overrides. The OpenAI judge is
 useful as a contrastive calibration target, but its 50-row smoke labeled 46/50

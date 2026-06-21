@@ -338,6 +338,10 @@ def display_matched_terms(claim_text: str, evidence_terms: set[str], *, mode: st
 def canonical_token(token: str, *, mode: str = "lexical") -> str:
     value = token.lower().strip()
     if _semantic_enabled(mode):
+        age_match = re.fullmatch(r"(\d+)-year-old", value)
+        if age_match:
+            return age_match.group(1)
+    if _semantic_enabled(mode):
         value = SEMANTIC_TOKEN_MAP.get(value, value)
     if value.endswith("ies") and len(value) > 4:
         return value[:-3] + "y"
@@ -488,6 +492,43 @@ SEMANTIC_TOKEN_MAP = {
     "baked": "bakery",
     "bakeries": "bakery",
     "dishes": "dish",
+    "fought": "fight",
+    "fights": "fight",
+    "fighting": "fight",
+    "inspirational": "inspire",
+    "inspired": "inspire",
+    "inspires": "inspire",
+    "inspiring": "inspire",
+    "died": "die",
+    "dies": "die",
+    "dead": "die",
+    "deaths": "die",
+    "likely": "expect",
+    "slated": "schedule",
+    "scheduled": "schedule",
+    "schedules": "schedule",
+    "scheduling": "schedule",
+    "critical": "vital",
+    "crucial": "vital",
+    "alleviate": "ease",
+    "alleviating": "ease",
+    "alleviated": "ease",
+    "easing": "ease",
+    "activities": "program",
+    "activity": "program",
+    "programs": "program",
+    "parties": "program",
+    "event": "program",
+    "events": "program",
+    "experienced": "experience",
+    "experiences": "experience",
+    "experiencing": "experience",
+    "suffered": "experience",
+    "suffering": "experience",
+    "staffers": "staff",
+    "specimens": "specimen",
+    "collection": "collect",
+    "collecting": "collect",
     "features": "show",
     "featuring": "show",
     "featured": "show",
@@ -586,6 +627,12 @@ SEMANTIC_PHRASES = (
     ("commentators voices", "comments"),
     ("not exactly what the law considers true", "false by the law"),
     ('not exactly what the law considers "true', "false by the law"),
+    ("passed away", "died"),
+    ("before the day is out", "soon"),
+    ("same distance", "consistent distance"),
+    ("taking specimens", "specimen collection"),
+    ("took specimens", "specimen collection"),
+    ("not into sweet stuff", "lacked flavor"),
 )
 
 

@@ -242,6 +242,23 @@ def test_claim_extraction_strips_discourse_prefixes():
     ]
 
 
+def test_claim_extraction_skips_source_availability_boilerplate():
+    claims = extract_claims(
+        "The passages do not provide information on the size or weight of the roast, so cooking times may vary. "
+        "Unable to answer based on given passages. If you have any further questions or concerns, please let me know!"
+    )
+
+    assert claims == []
+
+
+def test_claim_extraction_keeps_passage_specific_absence_claims():
+    claims = extract_claims("Passage 3 does not provide information about the difference between sirloin and porterhouse.")
+
+    assert [claim.text for claim in claims] == [
+        "Passage 3 does not provide information about the difference between sirloin and porterhouse."
+    ]
+
+
 def test_claim_extraction_preserves_us_abbreviation_in_boilerplate_prefix():
     claims = extract_claims(
         "Here's a brief answer to the question \"change of address u.s. postal service\" based on the given passages: "
@@ -918,6 +935,145 @@ def test_semantic_mode_allows_distributed_prevent_by_support():
     claim = result["claims"][0]
     assert claim["verdict"] == "supported"
     assert claim["missing_facts"] == []
+
+
+def test_semantic_mode_supports_news_event_catalog_items():
+    result = verify_trace(
+        RAGTrace(
+            query="What will National Park Week include?",
+            answer=(
+                "National Park Week will include various activities and events, "
+                "and people are encouraged to share their experiences using #FindYourPark."
+            ),
+            contexts=[
+                TraceContext(
+                    id="national_park_week",
+                    text=(
+                        "It is all part of National Park Week, happening April 18 through April 26. "
+                        "Check out night-time astronomy parties, daytime Revolutionary War programs, "
+                        "Earth Day parties and family-friendly Junior Ranger activities at national park sites. "
+                        "The park service wants people to share their stories using the hashtag #FindYourPark."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["missing_facts"] == []
+
+
+def test_semantic_mode_supports_distributed_appositive_relation_summary():
+    result = verify_trace(
+        RAGTrace(
+            query="What legal battle is Sofia Vergara in?",
+            answer=(
+                "Sofia Vergara, actress and star of Modern Family, is in a legal battle "
+                "with her ex-fiance Nick Loeb over two frozen embryos they created together."
+            ),
+            contexts=[
+                TraceContext(
+                    id="vergara_embryos",
+                    text=(
+                        "Sofia Vergara is playing defense in a legal battle initiated by her ex-fiance. "
+                        "The 42-year-old actress and star of the hit TV sitcom Modern Family split from "
+                        "businessman Nick Loeb in May 2014. Court papers allege the couple created the "
+                        "embryos while they were engaged."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["missing_facts"] == []
+
+
+def test_semantic_mode_supports_news_likely_and_passed_away_paraphrases():
+    result = verify_trace(
+        RAGTrace(
+            query="What happened?",
+            answer=(
+                "Lauren Hill, a 19-year-old who fought against brain cancer and whose story inspired many, "
+                "has passed away. Hostilities are expected to resume soon."
+            ),
+            contexts=[
+                TraceContext(
+                    id="paraphrases",
+                    text=(
+                        "Lauren Hill, who took her inspirational fight against brain cancer onto the "
+                        "basketball court and into the hearts of many, has died at age 19. "
+                        "Hostilities are likely to resume before the day is out."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert [claim["verdict"] for claim in result["claims"]] == ["supported", "supported"]
+    assert all(not claim["missing_facts"] for claim in result["claims"])
+
+
+def test_semantic_mode_supports_structured_negated_parking_lists():
+    result = verify_trace(
+        RAGTrace(
+            query="What parking is available?",
+            answer="The business parking options include a garage but not street parking, validated parking, a lot, or valet services.",
+            contexts=[
+                TraceContext(
+                    id="parking_json",
+                    text=json.dumps(
+                        {
+                            "attributes": {
+                                "BusinessParking": {
+                                    "garage": True,
+                                    "street": False,
+                                    "validated": False,
+                                    "lot": False,
+                                    "valet": False,
+                                }
+                            }
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["missing_facts"] == []
+    assert "contradicted_answer" not in result["summary"]["failure_types"]
+
+
+def test_semantic_mode_requires_death_count_identity_in_one_unit():
+    result = verify_trace(
+        RAGTrace(
+            query="What happened on Everest?",
+            answer="A deadly avalanche in 2014 killed 16 Sherpas and closed the climbing season.",
+            contexts=[
+                TraceContext(
+                    id="everest",
+                    text=(
+                        "In 2014, the Nepal climbing season ended after a piece of glacial ice fell, "
+                        "unleashing an avalanche that killed 16 Nepalis who had just finished their morning prayers. "
+                        "The deaths launched fierce debates about the risks faced by the Sherpas."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] != "supported"
+    assert claim["missing_facts"]
 
 
 def test_semantic_mode_supports_news_summary_across_paraphrased_spans():

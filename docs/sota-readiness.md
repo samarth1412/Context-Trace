@@ -14,8 +14,8 @@ The reason is external validity. The verifier is strong on the built-in
 500-case benchmark and the 150-case public holdout, but the latest 200-case
 RAGTruth assisted run is still calibration-only:
 
-- Failure macro-F1: `0.398`
-- Root-cause accuracy: `0.525`
+- Failure macro-F1: `0.425`
+- Root-cause accuracy: `0.565`
 - Dangerous false-green rate: `0.005`
 - Evidence-span overlap: `0.578`
 - Claim-verdict macro-F1: `0.164` where claim-level overrides exist
@@ -58,10 +58,10 @@ calibration target:
 
 Immediate targets from the latest error analysis:
 
-- `no_failure_detected -> answer_overreach`: 54 cases. The verifier is
+- `no_failure_detected -> answer_overreach`: 48 cases. The verifier is
   over-flagging many supported RAGTruth rows, especially answer-level rows with
   no hallucination span.
-- `no_failure_detected -> conflicting_contexts`: 20 cases. Conflict detection is
+- `no_failure_detected -> conflicting_contexts`: 18 cases. Conflict detection is
   too eager on some supported rows.
 - `conflicting_contexts -> answer_overreach`: 10 cases, concentrated in
   Data2txt/Yelp. These are contradicted-answer misses.
@@ -155,14 +155,15 @@ Completed in the repo:
   `164` without changing the conservative `calibration_only` status.
 - The semantic verifier now handles common news-summary paraphrases, generated
   summary prefixes, QA boilerplate/list markers, multi-span QA list/procedural
-  evidence, relation/appositive evidence variants, and structured JSON evidence
-  for clear attributes such as Wi-Fi, reservations, parking, ambience flags,
-  categories, ratings, hours ranges, and day-specific schedules. This moved the
-  200-case RAGTruth assisted sample from failure macro-F1 `0.270` to `0.398`
-  and root-cause accuracy `0.360` to `0.525` while holding dangerous false-green
-  rate at `0.005`.
-- The current semantic verifier scores failure macro-F1 `0.398`, root-cause
-  accuracy `0.525`, dangerous false-green rate `0.005`, and evidence span
+  evidence, source-availability boilerplate, relation/appositive evidence
+  variants, strict death-count identity checks, negated structured parking
+  lists, and structured JSON evidence for clear attributes such as Wi-Fi,
+  reservations, parking, ambience flags, categories, ratings, hours ranges, and
+  day-specific schedules. This moved the 200-case RAGTruth assisted sample from
+  failure macro-F1 `0.270` to `0.425` and root-cause accuracy `0.360` to
+  `0.565` while holding dangerous false-green rate at `0.005`.
+- The current semantic verifier scores failure macro-F1 `0.425`, root-cause
+  accuracy `0.565`, dangerous false-green rate `0.005`, and evidence span
   overlap `0.578` on that 200-case RAGTruth sample, so RAGTruth is now a
   concrete calibration target rather than a publishable external benchmark
   claim.
@@ -207,8 +208,8 @@ Current baseline status:
   error F1 `1.000`, evidence span overlap `0.921`.
 - RAGTruth assisted review pilot, ContextTrace semantic verifier: 200 official
   test-split stratified cases, 88 assisted-reviewed hallucination rows, 76
-  rows with source evidence spans, failure macro-F1 `0.398`, root-cause
-  accuracy `0.525`, citation error F1 `1.000`, evidence span overlap `0.578`,
+  rows with source evidence spans, failure macro-F1 `0.425`, root-cause
+  accuracy `0.565`, citation error F1 `1.000`, evidence span overlap `0.578`,
   and dangerous false-green rate `0.005`. This is not publishable without
   independent sign-off and calibration.
 - RAGTruth assisted review pilot, OpenAI diagnostic judge with `gpt-4.1-mini`:

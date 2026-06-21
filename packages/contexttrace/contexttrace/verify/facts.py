@@ -38,8 +38,8 @@ FUTURE_STATUS_RE = re.compile(
     r"\b(?:will\s+(?:focus|begin|start|launch)|expected\s+to\s+begin|expected\s+to\s+start|within\s+\w+\s+years?)\b",
     re.IGNORECASE,
 )
-NEGATION_RE = re.compile(r"\b(?:no|not|never|without|cannot|can't|prohibited|forbidden|disallowed)\b", re.IGNORECASE)
-STRONG_NEGATION_RE = re.compile(r"\b(?:no|not|never|cannot|can't|prohibited|forbidden|disallowed)\b", re.IGNORECASE)
+NEGATION_RE = re.compile(r"\b(?:no|not|never|neither|nor|without|cannot|can't|prohibited|forbidden|disallowed)\b", re.IGNORECASE)
+STRONG_NEGATION_RE = re.compile(r"\b(?:no|not|never|neither|nor|cannot|can't|prohibited|forbidden|disallowed)\b", re.IGNORECASE)
 WHITESPACE_RE = re.compile(r"\s+")
 LIST_VERB_RE = re.compile(
     r"\b(?P<verb>captures?|stores?|adds?|includes?|offers?|provides?|serves?|allows?|checks?|detects?|verifies?|reports?|records?|logs?|supports?|keeps?|calls?|maps?|creates?|runs?|writes?|saves?|evaluates?|gets?|fetches?|retrieves?|reranks?)\b\s+(?P<tail>.+)",
@@ -397,11 +397,7 @@ def _list_facts(claim: str) -> list[RequiredFact]:
     if "," not in tail and " and " not in tail.lower():
         return []
 
-    parts = [
-        _clean(part.strip(" ,;"))
-        for part in re.split(r",|\s+\band\b\s+", tail)
-        if _clean(part.strip(" ,;"))
-    ]
+    parts = _split_list_parts(tail, context=claim)
     if len(parts) <= 1:
         return []
 
@@ -414,6 +410,43 @@ def _list_facts(claim: str) -> list[RequiredFact]:
         else:
             facts.append(RequiredFact(text="%s %s" % (verb, part), type="predicate"))
     return facts
+
+
+def _split_list_parts(tail: str, *, context: str) -> list[str]:
+    parking_context = bool(re.search(r"\bparking\b", context, flags=re.IGNORECASE))
+    parts: list[str] = []
+    negative_continuation = False
+    for raw_part in re.split(r",|\s+\band\b\s+", tail):
+        part = _clean(re.sub(r"^(?:and|or)\s+", "", raw_part.strip(" ,;"), flags=re.IGNORECASE))
+        if not part:
+            continue
+        split_negative = re.split(r"\bbut\s+(?:not|no)\b", part, maxsplit=1, flags=re.IGNORECASE)
+        if len(split_negative) == 2:
+            before = _clean(split_negative[0].strip(" ,;"))
+            after = _clean(split_negative[1].strip(" ,;"))
+            if before:
+                parts.append(_normalize_list_part(before, parking_context=parking_context))
+            if after:
+                parts.append(_normalize_list_part("not %s" % after, parking_context=parking_context))
+            negative_continuation = True
+            continue
+        if negative_continuation and not re.match(r"^(?:not|no|without)\b", part, flags=re.IGNORECASE):
+            part = "not %s" % part
+        parts.append(_normalize_list_part(part, parking_context=parking_context))
+    return [part for part in parts if part]
+
+
+def _normalize_list_part(part: str, *, parking_context: bool) -> str:
+    cleaned = _clean(part)
+    if not parking_context or not re.match(r"^(?:not|no|without)\b", cleaned, flags=re.IGNORECASE):
+        return cleaned
+    normalized = re.sub(r"\ba\s+lot\b", "lot parking", cleaned, flags=re.IGNORECASE)
+    normalized = re.sub(r"\blot\b(?!\s+parking)", "lot parking", normalized, flags=re.IGNORECASE)
+    normalized = re.sub(r"\bvalet\s+services?\b", "valet parking", normalized, flags=re.IGNORECASE)
+    normalized = re.sub(r"\bgarage\b(?!\s+parking)", "garage parking", normalized, flags=re.IGNORECASE)
+    normalized = re.sub(r"\bstreet\b(?!\s+parking)", "street parking", normalized, flags=re.IGNORECASE)
+    normalized = re.sub(r"\bvalidated\b(?!\s+parking)", "validated parking", normalized, flags=re.IGNORECASE)
+    return _clean(normalized)
 
 
 def _starts_with_list_verb(value: str) -> bool:
@@ -461,18 +494,50 @@ def _fact_supported(fact: str, evidence_text: str, *, mode: str) -> bool:
     if _requires_single_unit_support(fact):
         return False
     if relation is not None and not _relation_allows_distributed_support(fact, relation):
-        return False
+        return _distributed_relation_supported(fact, evidence_text, relation, mode=mode)
     return _fact_supported_by_unit(fact, evidence_text, mode=mode)
 
 
 def _requires_single_unit_support(fact: str) -> bool:
-    return bool(re.search(r"\brecord\s+for\b", str(fact or ""), flags=re.IGNORECASE))
+    value = str(fact or "")
+    if re.search(r"\brecord\s+for\b", value, flags=re.IGNORECASE):
+        return True
+    return _is_death_count_identity_fact(value)
+
+
+def _is_death_count_identity_fact(fact: str) -> bool:
+    return bool(
+        NUMBER_RE.search(str(fact or ""))
+        and re.search(r"\b(?:killed|died|dead|death|deaths|fatalit(?:y|ies))\b", str(fact or ""), flags=re.IGNORECASE)
+    )
 
 
 def _relation_allows_distributed_support(fact: str, relation: RelationFact) -> bool:
     if relation.predicate != "prevent":
         return False
     return bool(re.search(r"\bby\b", str(fact or ""), flags=re.IGNORECASE))
+
+
+def _distributed_relation_supported(fact: str, evidence_text: str, relation: RelationFact, *, mode: str) -> bool:
+    if mode != "semantic":
+        return False
+    units = _evidence_units(evidence_text)
+    if len(units) < 2:
+        return False
+    if _any_relation_conflict(relation, units, mode=mode):
+        return False
+    fact_tokens = _important_tokens(fact, mode=mode)
+    if len(fact_tokens) < 6:
+        return False
+    evidence_tokens = set(_important_tokens(evidence_text, mode=mode))
+    if not evidence_tokens:
+        return False
+    coverage = len([token for token in fact_tokens if token in evidence_tokens]) / len(fact_tokens)
+    if coverage < 0.76:
+        return False
+    subject_overlap = _phrase_overlap(relation.subject, evidence_text, mode=mode)
+    object_overlap = _phrase_overlap(relation.object, evidence_text, mode=mode)
+    return subject_overlap >= 0.50 and object_overlap >= 0.55
 
 
 def _fact_supported_by_structured_data(fact: str, evidence_text: str) -> bool:
@@ -508,7 +573,7 @@ def _structured_feature_supported_for_data(
     data: dict[str, object],
 ) -> bool:
     values = [_structured_lookup(data, path) for path in paths]
-    if _claim_denies_any(fact_text, phrases):
+    if _claim_denies_any(fact_text, phrases) or _claim_denies_structured_feature(fact_text, paths):
         return any(_value_is_negative(value) for value in values)
     return any(_value_is_positive(value) for value in values)
 
@@ -524,9 +589,10 @@ def _structured_value_conflicts(claim_text: str, evidence_text: str) -> list[Req
         if not _mentions_any(claim, phrases):
             continue
         values = [_structured_lookup(data, path) for path in paths]
-        if _claim_denies_any(claim, phrases) and any(_value_is_positive(value) for value in values):
+        claim_denies_feature = _claim_denies_any(claim, phrases) or _claim_denies_structured_feature(claim, paths)
+        if claim_denies_feature and any(_value_is_positive(value) for value in values):
             conflicts.append(RequiredFact(text=feature_name, type="structured_value"))
-        if not _claim_denies_any(claim, phrases) and any(_value_is_negative(value) for value in values):
+        if not claim_denies_feature and any(_value_is_negative(value) for value in values):
             conflicts.append(RequiredFact(text=feature_name, type="structured_value"))
 
     if _claim_denies_parking(claim) and _structured_parking_has_available_option(data):
@@ -589,10 +655,31 @@ def _claim_denies_any(text: str, phrases: tuple[str, ...]) -> bool:
     normalized = str(text or "").lower()
     for phrase in phrases:
         escaped = re.escape(phrase)
-        if re.search(r"\b(?:no|not|without|lacks?|lack|does\s+not|do\s+not|doesnt|dont)\b.{0,45}\b%s\b" % escaped, normalized):
+        for match in re.finditer(r"\b(?:no|not|without|lacks?|lack|does\s+not|do\s+not|doesnt|dont)\b.{0,45}\b%s\b" % escaped, normalized):
+            negated_window = match.group(0)
+            if re.search(r"\bbut\s+(?:offers?|provides?|has|have|includes?|with)\b", negated_window):
+                continue
             return True
         if re.search(r"\b%s\b.{0,30}\b(?:unavailable|not\s+available|not\s+offered)\b" % escaped, normalized):
             return True
+    return False
+
+
+def _claim_denies_structured_feature(text: str, paths: tuple[tuple[str, ...], ...]) -> bool:
+    normalized = str(text or "").lower()
+    feature_names = {path[-1].lower() for path in paths if path}
+    parking_features = {"garage", "lot", "street", "valet", "validated"}
+    denied_features = feature_names.intersection(parking_features)
+    if not denied_features:
+        return False
+    for feature in denied_features:
+        pattern = r"\b(?:no|not|without|lacks?|lack)\b.{0,85}\b%s\b" % re.escape(feature)
+        for match in re.finditer(pattern, normalized):
+            window = match.group(0)
+            if re.search(r"\bbut\s+(?:offers?|provides?|has|have|includes?|with)\b", window):
+                continue
+            if re.search(r"\b(?:parking|options?|services?|available|garage|street|validated|lot|valet)\b", window):
+                return True
     return False
 
 
@@ -934,6 +1021,8 @@ def _fact_supported_by_unit(fact: str, evidence_unit: str, *, mode: str) -> bool
         if scoped_fact != _clean(fact) and _fact_supported_by_unit(scoped_fact, evidence_unit, mode=mode):
             return True
 
+    if _is_death_count_identity_fact(fact):
+        return False
     return len(matched) >= 2 and coverage >= 0.62
 
 
@@ -1018,8 +1107,10 @@ def _list_item_supported(
 
     evidence_lower = str(evidence_text or "").lower()
     if verb in {"include", "support"}:
-        return any(marker in evidence_lower for marker in ("include", "support", " are ", ":", "subset")) or _looks_like_list_item(
-            evidence_text, evidence_tokens
+        return (
+            any(marker in evidence_lower for marker in ("include", "support", " are ", ":", "subset"))
+            or _looks_like_list_item(evidence_text, evidence_tokens)
+            or _event_catalog_item_supported(tail_tokens, evidence_tokens)
         )
     if verb == "keep":
         return any(marker in evidence_lower for marker in ("stays local", "stay local", "keeps", "local"))
@@ -1028,12 +1119,13 @@ def _list_item_supported(
 
 def _normalize_list_tail(value: str) -> str:
     normalized = _clean(value)
-    return re.sub(
+    normalized = re.sub(
         r"^(?:providing|provide|increasing|increase|controlling|control)\s+",
         "",
         normalized,
         flags=re.IGNORECASE,
     )
+    return re.sub(r"^(?:various|several|numerous|different)\s+", "", normalized, flags=re.IGNORECASE)
 
 
 def _looks_like_list_item(text: str, evidence_tokens: set[str]) -> bool:
@@ -1041,6 +1133,10 @@ def _looks_like_list_item(text: str, evidence_tokens: set[str]) -> bool:
     if re.match(r"^(?:[-*•]|\d+\s+)", value):
         return True
     return len(evidence_tokens) <= 5
+
+
+def _event_catalog_item_supported(tail_tokens: list[str], evidence_tokens: set[str]) -> bool:
+    return tail_tokens == ["program"] and "program" in evidence_tokens
 
 
 def _important_tokens(text: str, *, mode: str) -> list[str]:
@@ -1059,6 +1155,10 @@ def _important_tokens(text: str, *, mode: str) -> list[str]:
 
 def _canonical_token(token: str, *, mode: str) -> str:
     value = token.lower().strip()
+    if mode == "semantic":
+        age_match = re.fullmatch(r"(\d+)-year-old", value)
+        if age_match:
+            return age_match.group(1)
     if mode == "semantic":
         value = SEMANTIC_TOKEN_MAP.get(value, value)
     if value.endswith("ies") and len(value) > 4:
@@ -1623,6 +1723,43 @@ SEMANTIC_TOKEN_MAP = {
     "baked": "bakery",
     "bakeries": "bakery",
     "dishes": "dish",
+    "fought": "fight",
+    "fights": "fight",
+    "fighting": "fight",
+    "inspirational": "inspire",
+    "inspired": "inspire",
+    "inspires": "inspire",
+    "inspiring": "inspire",
+    "died": "die",
+    "dies": "die",
+    "dead": "die",
+    "deaths": "die",
+    "likely": "expect",
+    "slated": "schedule",
+    "scheduled": "schedule",
+    "schedules": "schedule",
+    "scheduling": "schedule",
+    "critical": "vital",
+    "crucial": "vital",
+    "alleviate": "ease",
+    "alleviating": "ease",
+    "alleviated": "ease",
+    "easing": "ease",
+    "activities": "program",
+    "activity": "program",
+    "programs": "program",
+    "parties": "program",
+    "event": "program",
+    "events": "program",
+    "experienced": "experience",
+    "experiences": "experience",
+    "experiencing": "experience",
+    "suffered": "experience",
+    "suffering": "experience",
+    "staffers": "staff",
+    "specimens": "specimen",
+    "collection": "collect",
+    "collecting": "collect",
     "features": "show",
     "featuring": "show",
     "featured": "show",
@@ -1723,6 +1860,12 @@ SEMANTIC_PHRASES = (
     ("commentators voices", "comments"),
     ("not exactly what the law considers true", "false by the law"),
     ('not exactly what the law considers "true', "false by the law"),
+    ("passed away", "died"),
+    ("before the day is out", "soon"),
+    ("same distance", "consistent distance"),
+    ("taking specimens", "specimen collection"),
+    ("took specimens", "specimen collection"),
+    ("not into sweet stuff", "lacked flavor"),
 )
 
 

@@ -30,7 +30,12 @@ _FILLER_EXACT = {
     "i'm not sure",
     "i cannot answer that from the provided context",
     "i can't answer that from the provided context",
+    "i am unable to answer your question based on these passages",
+    "i am able to answer the question based on the given passages",
     "the context does not provide that information",
+    "unable to answer based on given passages",
+    "unable to answer based on the given passages",
+    "if you have any further questions or concerns, please let me know",
 }
 
 _FILLER_PREFIXES = (
@@ -194,7 +199,21 @@ def _is_filler(sentence: str) -> bool:
         return True
     if len(normalized.split()) <= 2 and normalized in _FILLER_EXACT:
         return True
+    if _is_source_availability_marker(normalized):
+        return True
     return any(normalized.startswith(prefix) and len(normalized.split()) <= 5 for prefix in _FILLER_PREFIXES)
+
+
+def _is_source_availability_marker(normalized: str) -> bool:
+    if re.match(r"^(?:therefore,\s*)?i\s+am\s+unable\s+to\s+answer\b", normalized):
+        return True
+    if re.match(r"^(?:the\s+)?(?:provided|given)?\s*passages?\s+do(?:es)?\s+not\s+provide\b", normalized):
+        return True
+    if re.match(r"^it\s+does\s+not\s+provide\s+information\s+on\b", normalized):
+        return True
+    if re.match(r"^however,\s*(?:the\s+)?passages?\s+do(?:es)?\s+not\s+provide\b", normalized):
+        return True
+    return False
 
 
 def _atomic_claims(sentence: str) -> list[str]:

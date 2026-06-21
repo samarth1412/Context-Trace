@@ -16,6 +16,8 @@ NEGATION_TERMS = {
     "not",
     "no",
     "never",
+    "neither",
+    "nor",
     "cannot",
     "can't",
     "wont",
