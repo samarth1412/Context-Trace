@@ -397,7 +397,7 @@ def _list_facts(claim: str) -> list[RequiredFact]:
     if "," not in tail and " and " not in tail.lower():
         return []
 
-    negated_list = bool(re.search(r"\b(?:does\s+not|do\s+not|doesnt|dont|not|no)\b[^.]{0,35}\b%s\b" % re.escape(verb), claim, flags=re.IGNORECASE))
+    negated_list = _list_verb_is_negated(claim, match.start("verb"), verb)
     parts = _split_list_parts(tail, context=claim, negated_list=negated_list)
     if len(parts) <= 1:
         return []
@@ -410,6 +410,9 @@ def _list_facts(claim: str) -> list[RequiredFact]:
             if verb == "include" and "information about" in claim.lower() and "information" not in negated_tail.lower():
                 negated_tail = "information about %s" % negated_tail
             facts.append(RequiredFact(text="not %s %s" % (verb, negated_tail), type="negation"))
+        elif _starts_new_affirmative_predicate(part):
+            predicate_part = _normalize_standalone_predicate_part(part)
+            facts.append(RequiredFact(text=predicate_part, type=_fact_type(predicate_part)))
         elif _contains_predicate(part):
             facts.append(RequiredFact(text=part, type=_fact_type(part)))
         elif _starts_with_list_verb(part):
@@ -427,11 +430,13 @@ def _split_list_parts(tail: str, *, context: str, negated_list: bool = False) ->
         part = _clean(re.sub(r"^(?:and|or)\s+", "", raw_part.strip(" ,;"), flags=re.IGNORECASE))
         if not part:
             continue
-        if re.match(r"^but\b", part, flags=re.IGNORECASE):
+        if re.match(r"^(?:but|though|although|while|whereas)\b", part, flags=re.IGNORECASE):
             negative_continuation = False
-            part = _clean(re.sub(r"^but\s+", "", part, flags=re.IGNORECASE))
+            part = _clean(re.sub(r"^(?:but|though|although|while|whereas)\s+", "", part, flags=re.IGNORECASE))
             if not part:
                 continue
+        if negative_continuation and _starts_new_affirmative_predicate(part):
+            negative_continuation = False
         split_negative = re.split(r"\bbut\s+(?:not|no)\b", part, maxsplit=1, flags=re.IGNORECASE)
         if len(split_negative) == 2:
             before = _clean(split_negative[0].strip(" ,;"))
@@ -448,6 +453,34 @@ def _split_list_parts(tail: str, *, context: str, negated_list: bool = False) ->
             continue
         parts.append(_normalize_list_part(part, parking_context=parking_context))
     return [part for part in parts if part]
+
+
+def _list_verb_is_negated(claim: str, verb_start: int, verb: str) -> bool:
+    prefix = str(claim or "")[:verb_start]
+    window = prefix[-50:]
+    if re.search(r"\b(?:but|though|although|while|whereas)\b", window, flags=re.IGNORECASE):
+        return False
+    return bool(
+        re.search(
+            r"\b(?:does\s+not|do\s+not|doesnt|dont|not|no)\b[^.]{0,35}$",
+            window,
+            flags=re.IGNORECASE,
+        )
+    )
+
+
+def _starts_new_affirmative_predicate(part: str) -> bool:
+    return bool(
+        re.match(
+            r"^(?:also\s+|only\s+|still\s+|then\s+)?(?:accepts?|offers?|provides?|has|have|includes?|is|are)\b",
+            _clean(part),
+            flags=re.IGNORECASE,
+        )
+    )
+
+
+def _normalize_standalone_predicate_part(part: str) -> str:
+    return _clean(re.sub(r"^(?:also|only|still|then)\s+", "", str(part or ""), flags=re.IGNORECASE))
 
 
 def _is_list_summary_glue(part: str) -> bool:
@@ -810,6 +843,18 @@ def _structured_hours_supports_fact(fact_text: str, data: dict[str, object]) -> 
     if not hours_by_day:
         return False
 
+    variable_closing = _claim_variable_closing_hours(claim)
+    if variable_closing is not None:
+        start, earliest_end, latest_end = variable_closing
+        actual_ranges = list(hours_by_day.values())
+        actual_ends = [end for _, end in actual_ranges]
+        return (
+            bool(actual_ranges)
+            and all(actual_start == start and earliest_end <= actual_end <= latest_end for actual_start, actual_end in actual_ranges)
+            and min(actual_ends) == earliest_end
+            and max(actual_ends) == latest_end
+        )
+
     claim_range = _claim_time_range(claim)
     if claim_range is not None:
         extended = _claim_extended_hours(claim, claim_range)
@@ -962,6 +1007,30 @@ def _claim_extended_hours(text: str, base_range: tuple[int, int]) -> tuple[set[s
     if not days:
         return None
     return days, (base_range[0], end)
+
+
+def _claim_variable_closing_hours(text: str) -> tuple[int, int, int] | None:
+    time_pattern = r"\d{1,2}(?::\d{1,2})?\s*(?:am|pm)?"
+    match = re.search(
+        r"\b(?:open|opens|operate|operates|operating)\s+from\s+"
+        r"(?P<start>%s)\s+(?:every\s+day|daily|each\s+day)\b"
+        r"[^.]{0,120}?\bclosing\s+(?:hours?|times?)\s+"
+        r"(?:vary|varies|varying)\s+(?:from|between)\s+"
+        r"(?P<earliest>%s)\s+(?:and|to|-)\s+(?P<latest>%s)"
+        % (time_pattern, time_pattern, time_pattern),
+        str(text or ""),
+        flags=re.IGNORECASE,
+    )
+    if not match:
+        return None
+    start = _parse_time_of_day(match.group("start"))
+    earliest_end = _parse_time_of_day(match.group("earliest"))
+    latest_end = _parse_time_of_day(match.group("latest"))
+    if start is None or earliest_end is None or latest_end is None:
+        return None
+    if earliest_end > latest_end:
+        earliest_end, latest_end = latest_end, earliest_end
+    return start, earliest_end, latest_end
 
 
 def _claim_implies_uniform_hours(text: str) -> bool:
@@ -1171,10 +1240,15 @@ def _review_info_supports_fact(fact_text: str, data: dict[str, object]) -> bool:
     if not reviews:
         return False
     normalized = _normalize_review_fact(fact_text)
-    if not _mentions_review_context(normalized):
+    if not (_mentions_review_context(fact_text) or _mentions_review_context(normalized)):
         return False
 
-    if _claims_mixed_reviews(normalized):
+    claims_mixed = _claims_mixed_reviews(fact_text) or _claims_mixed_reviews(normalized)
+    claims_specific = _claims_specific_reviewer(fact_text) or _claims_specific_reviewer(normalized)
+    claims_positive = _claims_positive_review(fact_text) or _claims_positive_review(normalized)
+    claims_negative = _claims_negative_review(fact_text) or _claims_negative_review(normalized)
+
+    if claims_mixed:
         return _has_positive_review(reviews) and _has_negative_review(reviews)
 
     review_texts = [text for _, text in reviews if text]
@@ -1187,12 +1261,16 @@ def _review_info_supports_fact(fact_text: str, data: dict[str, object]) -> bool:
     best_review_coverage = max((_token_coverage(fact_tokens, review, mode="semantic") for review in review_texts), default=0.0)
     matched_count = len([token for token in fact_tokens if token in set(_important_tokens(corpus, mode="semantic"))])
 
-    if _claims_specific_reviewer(normalized):
-        return matched_count >= 2 and (best_review_coverage >= 0.42 or aggregate_coverage >= 0.58)
-    if _claims_positive_review(normalized):
+    if claims_positive:
         return _has_positive_review(reviews) and matched_count >= 2 and (best_review_coverage >= 0.40 or aggregate_coverage >= 0.55)
-    if _claims_negative_review(normalized):
-        return _has_negative_review(reviews) and matched_count >= 2 and (best_review_coverage >= 0.40 or aggregate_coverage >= 0.42)
+    if claims_negative:
+        if not _has_negative_review(reviews):
+            return False
+        return (
+            matched_count >= 2 and (best_review_coverage >= 0.40 or aggregate_coverage >= 0.42)
+        ) or (matched_count >= 1 and len(fact_tokens) <= 2 and best_review_coverage >= 0.50)
+    if claims_specific:
+        return matched_count >= 2 and (best_review_coverage >= 0.42 or aggregate_coverage >= 0.58)
     return matched_count >= 3 and aggregate_coverage >= 0.58
 
 
@@ -1243,7 +1321,7 @@ def _claims_specific_reviewer(text: str) -> bool:
 
 
 def _claims_positive_review(text: str) -> bool:
-    return bool(re.search(r"\b(?:prais|commend|appreciat|rave|recommend|positive|great|good|friendly|delicious|excellent|helpful|enjoy|satisfied)\w*\b", str(text or ""), flags=re.IGNORECASE))
+    return bool(re.search(r"\b(?:prais|commend|appreciat|rave|recommend|positive|great|good|friendly|delicious|excellent|helpful|enjoy|satisfied|favorite)\w*\b", str(text or ""), flags=re.IGNORECASE))
 
 
 def _claims_negative_review(text: str) -> bool:
@@ -1267,7 +1345,9 @@ def _review_fact_tokens(text: str) -> list[str]:
         "express",
         "highlight",
         "negative",
+        "nearby",
         "positive",
+        "particularly",
         "review",
         "reviewer",
         "reviewers",
@@ -1276,6 +1356,7 @@ def _review_fact_tokens(text: str) -> list[str]:
         "other",
         "others",
         "while",
+        "experience",
     }
     return [token for token in _important_tokens(text, mode="semantic") if token not in generic]
 
@@ -2018,8 +2099,16 @@ SEMANTIC_TOKEN_MAP = {
     "cafe-style": "cafe",
     "baked": "bakery",
     "bakeries": "bakery",
+    "changed": "change",
+    "changes": "change",
+    "changing": "change",
     "dishes": "dish",
     "sandwiches": "sandwich",
+    "selection": "option",
+    "selections": "option",
+    "got": "receive",
+    "expensive": "high",
+    "pricey": "high",
     "fought": "fight",
     "fights": "fight",
     "fighting": "fight",
@@ -2093,6 +2182,8 @@ SEMANTIC_TOKEN_MAP = {
     "tasty": "delicious",
     "kind": "friendly",
     "helpful": "friendly",
+    "nice": "friendly",
+    "little": "small",
     "features": "show",
     "featuring": "show",
     "featured": "show",
@@ -2199,6 +2290,13 @@ SEMANTIC_PHRASES = (
     ("taking specimens", "specimen collection"),
     ("took specimens", "specimen collection"),
     ("not into sweet stuff", "lacked flavor"),
+    ("not a wide selection", "lack option"),
+    ("not wide selection", "lack option"),
+    ("only cash", "accept cash payment"),
+    ("atm there", "atm available onsite"),
+    ("people were nice", "staff friendly"),
+    ("too expensive", "high price"),
+    ("more people than normal", "busy"),
 )
 
 

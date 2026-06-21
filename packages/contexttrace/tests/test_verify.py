@@ -1615,6 +1615,138 @@ def test_semantic_mode_supports_mixed_polarity_structured_parking_claims():
     assert claim["conflicting_facts"] == []
 
 
+def test_semantic_mode_does_not_leak_negation_across_but_or_though_structured_claims():
+    result = verify_trace(
+        RAGTrace(
+            query="What does the restaurant offer?",
+            answer=(
+                "It is a casual dining spot that does not accept reservations but offers outdoor seating "
+                "and is suitable for groups. However, they do not provide WiFi and only accept cash payments, "
+                "though an ATM is available onsite."
+            ),
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "attributes": {
+                                "Ambience": {"casual": True},
+                                "OutdoorSeating": True,
+                                "RestaurantsGoodForGroups": True,
+                                "RestaurantsReservations": False,
+                                "WiFi": "no",
+                            },
+                            "review_info": [
+                                {
+                                    "review_stars": 4,
+                                    "review_text": "Only cash but don't worry, there's an ATM there!",
+                                }
+                            ],
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert [claim["verdict"] for claim in result["claims"]] == ["supported", "supported"]
+    assert all(claim["missing_facts"] == [] for claim in result["claims"])
+    assert all(claim["conflicting_facts"] == [] for claim in result["claims"])
+
+
+def test_semantic_mode_supports_structured_variable_closing_hours():
+    result = verify_trace(
+        RAGTrace(
+            query="When is the restaurant open?",
+            answer=(
+                "The restaurant operates from 10:00 am every day, with closing hours varying between "
+                "4:00 pm and 8:00 pm depending on the day."
+            ),
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "hours": {
+                                "Monday": "10:0-16:0",
+                                "Tuesday": "10:0-19:0",
+                                "Wednesday": "10:0-19:0",
+                                "Thursday": "10:0-19:0",
+                                "Friday": "10:0-20:0",
+                                "Saturday": "10:0-20:0",
+                                "Sunday": "10:0-17:0",
+                            }
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["missing_facts"] == []
+    assert claim["conflicting_facts"] == []
+
+
+def test_semantic_mode_supports_structured_review_paraphrases():
+    result = verify_trace(
+        RAGTrace(
+            query="What do customer reviews say?",
+            answer=(
+                "It specializes in Indian cuisine and is known for its good food and friendly staff. "
+                "The lunch buffet and dinner options have been particularly appreciated. "
+                "There is also a small salad bar, which seems to be a favorite among the customers. "
+                "On the other hand, another customer expressed disappointment with their experience. "
+                "They mentioned changes in the sandwich menu and a lack of pastry options. "
+                "They also complained about receiving the wrong sandwich and the high prices. "
+                "Reviewers have noted that the restaurant can be busy, particularly during golf events at the nearby course."
+            ),
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "categories": "Indian, Restaurants",
+                            "review_info": [
+                                {
+                                    "review_stars": 5,
+                                    "review_text": (
+                                        "I had a hunkering for good Indian food. The food here was really good, "
+                                        "fresh, the people were nice, lunch buffet and dinner was good and they "
+                                        "had a little salad bar my favorite part."
+                                    ),
+                                },
+                                {
+                                    "review_stars": 1,
+                                    "review_text": (
+                                        "What a disappointment! The sandwich menu changed and not a wide selection "
+                                        "of pastries anymore. I got the wrong sandwich and it was too expensive."
+                                    ),
+                                },
+                                {
+                                    "review_stars": 4,
+                                    "review_text": (
+                                        "That morning, there was a golf event scheduled at the course, "
+                                        "and there were more people than normal."
+                                    ),
+                                },
+                            ],
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert all(claim["verdict"] == "supported" for claim in result["claims"])
+    assert all(claim["missing_facts"] == [] for claim in result["claims"])
+    assert all(claim["conflicting_facts"] == [] for claim in result["claims"])
+
+
 def test_semantic_mode_does_not_conflict_generic_casual_restaurant_with_ambience_false():
     result = verify_trace(
         RAGTrace(
