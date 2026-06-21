@@ -1271,6 +1271,8 @@ def _review_info_supports_fact(fact_text: str, data: dict[str, object]) -> bool:
         ) or (matched_count >= 1 and len(fact_tokens) <= 2 and best_review_coverage >= 0.50)
     if claims_specific:
         return matched_count >= 2 and (best_review_coverage >= 0.42 or aggregate_coverage >= 0.58)
+    if len(fact_tokens) <= 3 and matched_count == len(fact_tokens) and best_review_coverage >= 0.66:
+        return True
     return matched_count >= 3 and aggregate_coverage >= 0.58
 
 
@@ -1305,7 +1307,7 @@ def _normalize_review_fact(text: str) -> str:
 def _mentions_review_context(text: str) -> bool:
     return bool(
         re.search(
-            r"\b(?:review|reviewer|customer|patron|visitor|praised|criticized|complained|noted|mentioned|reported|highlighted|appreciated|commended|rave|mixed|positive|negative|disappoint|dissatisfaction|service|food|staff|experience)\b",
+            r"\b(?:review|reviewer|customer|patron|visitor|praised|criticized|complained|noted|mentioned|reported|highlighted|appreciated|commended|rave|mixed|positive|negative|disappoint\w*|dissatisf\w*|service|food|staff|experience|menu|beer|beers|brewery|drink|drinks|price|prices|priced|atmosphere|vibe|ambien(?:ce|t)|seating|patio|views?|pier|waterfront|sign|owners?|comics?|comedy|talent|happy\s+hour|hidden\s+gem)\b",
             str(text or ""),
             flags=re.IGNORECASE,
         )
@@ -1339,22 +1341,45 @@ def _has_negative_review(reviews: list[tuple[float | None, str]]) -> bool:
 def _review_fact_tokens(text: str) -> list[str]:
     generic = {
         "according",
+        "area",
         "business",
+        "brewery",
         "customer",
         "customers",
+        "destination",
         "express",
+        "generally",
         "highlight",
+        "include",
+        "lover",
+        "lovers",
+        "mak",
+        "made",
+        "making",
+        "menu",
         "negative",
         "nearby",
+        "offer",
+        "online",
+        "option",
+        "place",
         "positive",
         "particularly",
+        "popular",
+        "provide",
+        "range",
         "review",
         "reviewer",
         "reviewers",
         "restaurant",
+        "seem",
+        "serve",
+        "serv",
         "some",
+        "spot",
         "other",
         "others",
+        "unless",
         "while",
         "experience",
     }
@@ -2106,6 +2131,12 @@ SEMANTIC_TOKEN_MAP = {
     "sandwiches": "sandwich",
     "selection": "option",
     "selections": "option",
+    "stunning": "great",
+    "welcoming": "friendly",
+    "welcome": "friendly",
+    "welcomed": "friendly",
+    "enjoyable": "fun",
+    "reasonably": "reasonable",
     "got": "receive",
     "expensive": "high",
     "pricey": "high",
@@ -2295,6 +2326,17 @@ SEMANTIC_PHRASES = (
     ("only cash", "accept cash payment"),
     ("atm there", "atm available onsite"),
     ("people were nice", "staff friendly"),
+    ("save the ocean life", "environmental impact"),
+    ("help save the ocean life", "environmental impact"),
+    ("sea animals", "environmental impact"),
+    ("so many straws", "plastic straws"),
+    ("wont give you the time of day", "not welcoming"),
+    ("wo not give you the time of day", "not welcoming"),
+    ("great selection of beers", "variety beers"),
+    ("mellow vibe", "relaxed atmosphere"),
+    ("laid back atmosphere", "relaxed atmosphere"),
+    ("hidden gem", "unique experience"),
+    ("could be better", "could be improved"),
     ("too expensive", "high price"),
     ("more people than normal", "busy"),
 )

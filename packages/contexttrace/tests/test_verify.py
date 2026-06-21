@@ -1747,6 +1747,101 @@ def test_semantic_mode_supports_structured_review_paraphrases():
     assert all(claim["conflicting_facts"] == [] for claim in result["claims"])
 
 
+def test_semantic_mode_supports_structured_review_domain_paraphrases():
+    result = verify_trace(
+        RAGTrace(
+            query="What themes do the reviews mention?",
+            answer=(
+                "Customer reviews highlight concerns about the environmental impact of the restaurants' use "
+                "of plastic straws and the high dockage fees. Some visitors also felt the place seemed elitist "
+                "and not welcoming unless you have a lot of money. The outdoor seating area offers stunning "
+                "views of the pier and waterfront. The menu features a range of options, including crab cakes, "
+                "ahi salad, and garden burgers. The brewery offers a variety of beers, making it a popular "
+                "destination for beer lovers."
+            ),
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "review_info": [
+                                {
+                                    "review_stars": 2,
+                                    "review_text": (
+                                        "Please make your restaurants and drink shops go straw less. So many straws "
+                                        "and you are on the ocean. Help the sea animals. The dockage fees are insane. "
+                                        "The place is crawling with snobs that wont give you the time of day unless "
+                                        "you have lots of money."
+                                    ),
+                                },
+                                {
+                                    "review_stars": 5,
+                                    "review_text": (
+                                        "Interior atmosphere is run-of-the-mill, but window tables have great views "
+                                        "of the pier and waterfront. Ordered crab cakes, ahi salad, and the Garden "
+                                        "Burger."
+                                    ),
+                                },
+                                {
+                                    "review_stars": 5,
+                                    "review_text": "Third Window has great selection of beers and a relaxed atmosphere.",
+                                },
+                            ]
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert all(claim["verdict"] == "supported" for claim in result["claims"])
+    assert all(claim["missing_facts"] == [] for claim in result["claims"])
+    assert all(claim["conflicting_facts"] == [] for claim in result["claims"])
+
+
+def test_semantic_mode_supports_short_structured_review_subfacts():
+    result = verify_trace(
+        RAGTrace(
+            query="How mixed are the reviews?",
+            answer=(
+                "Itsuki Restaurant seems to be a mixed bag, with some customers enjoying their experience "
+                "while others are disappointed. It is described as a hidden gem that provides a unique experience. "
+                "According to online reviews, the food served at the restaurant is generally good, but the customer "
+                "service is poor."
+            ),
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "review_info": [
+                                {
+                                    "review_stars": 2,
+                                    "review_text": "Absolutely disappointing. This experience was so disappointing.",
+                                },
+                                {
+                                    "review_stars": 5,
+                                    "review_text": "A hidden gem. You need to experience this before it is too late.",
+                                },
+                                {
+                                    "review_stars": 1,
+                                    "review_text": "Food is good but the worst service.",
+                                },
+                            ]
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert all(claim["verdict"] == "supported" for claim in result["claims"])
+    assert all(claim["missing_facts"] == [] for claim in result["claims"])
+    assert all(claim["conflicting_facts"] == [] for claim in result["claims"])
+
+
 def test_semantic_mode_does_not_conflict_generic_casual_restaurant_with_ambience_false():
     result = verify_trace(
         RAGTrace(
