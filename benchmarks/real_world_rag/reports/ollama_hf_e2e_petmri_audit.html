@@ -1,0 +1,1018 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ContextTrace Retrieval Audit Report</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f8fa;
+      --panel: #ffffff;
+      --subtle: #fbfcfe;
+      --text: #202832;
+      --muted: #657286;
+      --line: #d9e0ea;
+      --ok: #176f44;
+      --warn: #946200;
+      --bad: #b42318;
+      --accent: #2458d3;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    main { max-width: 1160px; margin: 0 auto; padding: 32px 20px 56px; }
+    header { border-bottom: 1px solid var(--line); margin-bottom: 22px; padding-bottom: 18px; }
+    h1, h2, h3 { margin: 0; }
+    h1 { font-size: 30px; }
+    h2 { font-size: 18px; margin-bottom: 12px; }
+    h3 { font-size: 15px; margin-bottom: 8px; }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin: 16px 0;
+      padding: 18px;
+    }
+    .summary {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+    }
+    .card, .item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--subtle);
+      padding: 12px;
+    }
+    .item + .item { margin-top: 10px; }
+    .label, .item-meta {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .value { margin-top: 4px; font-size: 18px; overflow-wrap: anywhere; }
+    .muted { color: var(--muted); }
+    .answer, .item p { white-space: pre-wrap; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { border-bottom: 1px solid var(--line); padding: 10px; text-align: left; vertical-align: top; }
+    th { color: var(--muted); font-size: 12px; text-transform: uppercase; }
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #eef2f7;
+      padding: 3px 8px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .audit-no-failure-detected { color: var(--ok); background: #e9f7ef; }
+    .audit-retrieval-miss, .audit-corpus-gap, .audit-stale-source { color: var(--bad); background: #fdeceb; }
+    .audit-chunking-issue, .audit-reranking-failure,
+    .audit-answer-overreach, .audit-insufficient-context { color: var(--warn); background: #fff7df; }
+    pre {
+      margin: 0;
+      overflow: auto;
+      background: #101828;
+      color: #f8fafc;
+      border-radius: 8px;
+      padding: 14px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>ContextTrace Retrieval Audit Report</h1>
+      <p class="muted">Local corpus-level diagnosis for claim evidence failures.</p>
+    </header>
+
+    <section>
+      <h2>Audit Summary</h2>
+      <div class="summary">
+        <div class="card">
+          <div class="label">Primary Audit Label</div>
+          <div class="value">retrieval_miss</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Total Claims</div>
+          <div class="value">5</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Audited Failures</div>
+          <div class="value">2</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Corpus Documents</div>
+          <div class="value">29</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Retrieval Misses</div>
+          <div class="value">1</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Chunking Issues</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Reranking Failures</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Corpus Gaps</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Answer Overreach</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Stale Sources</div>
+          <div class="value">1</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Insufficient Context</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Verification Failure</div>
+          <div class="value">contradicted_answer</div>
+        </div>
+        </div>
+    </section>
+
+    <section>
+      <h2>Query</h2>
+      <p>What are the main advantages of PET/MRI compared with PET/CT?</p>
+      <h2>Answer</h2>
+      <p class="answer">- PET/MRI has been introduced since 2010, with approximately 70 systems installed worldwide.
+- Widely accepted clinical indications for PET/MRI are yet to be determined.
+- PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis.
+- The adoption of PET/MRI has been slower compared to PET/CT.
+- However, the main advantages of PET/MRI over PET/CT are not explicitly</p>
+    </section>
+
+    <section>
+      <h2>Claim Failure Diagnosis</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Audit Label</th>
+            <th>Claim</th>
+            <th>Retrieved Verdict</th>
+            <th>Retrieved Context</th>
+            <th>Corpus Verdict</th>
+            <th>Corpus Document</th>
+            <th>Suggested Fix</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td><span class="badge audit-no-failure-detected">no_failure_detected</span></td>
+              <td>PET/MRI has been introduced since 2010, with approximately 70 systems installed worldwide.</td>
+              <td>supported</td>
+              <td>data/PETMRI.txt:4</td>
+              <td>supported</td>
+              <td>ollama_hf_corpus_4</td>
+              <td>No fix needed for this claim.</td>
+            </tr>
+            
+
+            <tr>
+              <td><span class="badge audit-no-failure-detected">no_failure_detected</span></td>
+              <td>Widely accepted clinical indications for PET/MRI are yet to be determined.</td>
+              <td>supported</td>
+              <td>data/PETMRI.txt:24</td>
+              <td>supported</td>
+              <td>ollama_hf_corpus_24</td>
+              <td>No fix needed for this claim.</td>
+            </tr>
+            
+
+            <tr>
+              <td><span class="badge audit-retrieval-miss">retrieval_miss</span></td>
+              <td>PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis.</td>
+              <td>partially_supported</td>
+              <td>data/PETMRI.txt:24</td>
+              <td>supported</td>
+              <td>ollama_hf_corpus_2</td>
+              <td>Improve retrieval recall, filters, query rewriting, or top_k so this source is retrieved.</td>
+            </tr>
+            
+
+            <tr>
+              <td><span class="badge audit-no-failure-detected">no_failure_detected</span></td>
+              <td>The adoption of PET/MRI has been slower compared to PET/CT.</td>
+              <td>supported</td>
+              <td>data/PETMRI.txt:4</td>
+              <td>supported</td>
+              <td>ollama_hf_corpus_4</td>
+              <td>No fix needed for this claim.</td>
+            </tr>
+            
+
+            <tr>
+              <td><span class="badge audit-stale-source">stale_source</span></td>
+              <td>However, the main advantages of PET/MRI over PET/CT are not explicitly.</td>
+              <td>contradicted</td>
+              <td>data/PETMRI.txt:24</td>
+              <td>contradicted</td>
+              <td>ollama_hf_corpus_24</td>
+              <td>Resolve stale or conflicting sources before allowing the answer to use this fact.</td>
+            </tr>
+            </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Retrieval Misses</h2>
+      
+    <article class="item">
+      <div class="item-meta">claim_3 | retrieval_miss | confidence 0.82</div>
+      <h3>PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis.</h3>
+      <p><strong>Diagnosis:</strong> The broader corpus contains evidence for this claim, but the retrieved contexts did not include it.</p>
+      <p><strong>Retrieved evidence:</strong> choice, particularly for assessment of some regions, such as
+brain, head and neck, liver and pelvis.</p>
+      <p class="muted">Retrieved context: data/PETMRI.txt:24 | verdict partially_supported | score 0.565</p>
+      <p><strong>Corpus evidence:</strong> Therefore, PET/MRI is a promising modality for oncologic imaging
+of some regions, such as brain, head and neck, liver and pelvis.</p>
+      <p class="muted">Corpus document: ollama_hf_corpus_2 | verdict supported | score 0.624</p>
+      <p><strong>Suggested fix:</strong> Improve retrieval recall, filters, query rewriting, or top_k so this source is retrieved.</p>
+    </article>
+    
+    </section>
+
+    <section>
+      <h2>Chunking And Reranking Issues</h2>
+      <p class="muted">No chunking or reranking failures detected.</p>
+    </section>
+
+    <section>
+      <h2>Corpus Gaps</h2>
+      <p class="muted">No corpus coverage gaps detected.</p>
+    </section>
+
+    <section>
+      <h2>Answer Overreach And Ambiguous Evidence</h2>
+      
+    <article class="item">
+      <div class="item-meta">claim_5 | stale_source | confidence 0.86</div>
+      <h3>However, the main advantages of PET/MRI over PET/CT are not explicitly.</h3>
+      <p><strong>Diagnosis:</strong> The claim appears to conflict with retrieved or corpus evidence.</p>
+      <p><strong>Retrieved evidence:</strong> However, widely
+accepted clinical indications remain to be determined
+
+before conclusive statements regarding the advantages
+of PET/MRI, over PET/CT can be made.</p>
+      <p class="muted">Retrieved context: data/PETMRI.txt:24 | verdict contradicted | score 0.622</p>
+      <p><strong>Corpus evidence:</strong> However, widely
+accepted clinical indications remain to be determined
+
+before conclusive statements regarding the advantages
+of PET/MRI, over PET/CT can be made.</p>
+      <p class="muted">Corpus document: ollama_hf_corpus_24 | verdict contradicted | score 0.622</p>
+      <p><strong>Suggested fix:</strong> Resolve stale or conflicting sources before allowing the answer to use this fact.</p>
+    </article>
+    
+    </section>
+
+    <section>
+      <h2>Retrieved Contexts</h2>
+      
+            <article class="item">
+              <div class="item-meta">rank 1 | data/PETMRI.txt:4 | {&quot;chunk_index&quot;: 4, &quot;repo&quot;: &quot;https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;, &quot;source&quot;: &quot;data/PETMRI.txt&quot;}</div>
+              <p>illustrated with examples extracted from the authors’ preliminary
+experience.                                                                                                                          introduced. The adoption of PET/MRI has been much
+                                                                                                                                     slower compared to PET/computed tomography (PET/
+Keywords: Positron-emission tomography/methods; Magnetic resonance                                                                   CT).         Since           its     introduction                    in     2010,          approximately
+imaging/methods; Tomography, x-ray computed/methods; Pelvic neoplasms;                                                               70 systems have been installed worldwide, mostly in</p>
+            </article>
+            
+
+            <article class="item">
+              <div class="item-meta">rank 2 | data/PETMRI.txt:17 | {&quot;chunk_index&quot;: 17, &quot;repo&quot;: &quot;https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;, &quot;source&quot;: &quot;data/PETMRI.txt&quot;}</div>
+              <p>compared to PET/CT(8) (Figure 4).</p>
+            </article>
+            
+
+            <article class="item">
+              <div class="item-meta">rank 3 | data/PETMRI.txt:24 | {&quot;chunk_index&quot;: 24, &quot;repo&quot;: &quot;https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;, &quot;source&quot;: &quot;data/PETMRI.txt&quot;}</div>
+              <p>choice, particularly for assessment of some regions, such as
+brain, head and neck, liver and pelvis. However, widely
+accepted clinical indications remain to be determined
+
+before conclusive statements regarding the advantages
+of PET/MRI, over PET/CT can be made.
+
+
+
+REFERENCES
+
+1.    Ter-Pogossian MM, Phelps ME, Hoffman EJ, Mullani NA. A positron-emission
+      transaxial tomograph for nuclear imaging (PETT). Radiology. 1975;114(1):89-98.</p>
+            </article>
+            
+    </section>
+
+    <section>
+      <h2>Corpus Summary</h2>
+      <pre>{
+  &quot;path&quot;: &quot;https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;,
+  &quot;documents&quot;: 29
+}</pre>
+    </section>
+
+    <section>
+      <h2>Why This Failed</h2>
+      <ul><li>retrieval_miss: The broader corpus contains evidence for this claim, but the retrieved contexts did not include it. Suggested fix: Improve retrieval recall, filters, query rewriting, or top_k so this source is retrieved.</li>
+<li>stale_source: The claim appears to conflict with retrieved or corpus evidence. Suggested fix: Resolve stale or conflicting sources before allowing the answer to use this fact.</li></ul>
+    </section>
+
+    <section>
+      <h2>Raw JSON Summary</h2>
+      <pre>{
+  &quot;summary&quot;: {
+    &quot;mode&quot;: &quot;semantic&quot;,
+    &quot;total_claims&quot;: 5,
+    &quot;audited_claims&quot;: 2,
+    &quot;corpus_documents&quot;: 29,
+    &quot;has_audit_failures&quot;: true,
+    &quot;primary_audit_label&quot;: &quot;retrieval_miss&quot;,
+    &quot;verification_failure_type&quot;: &quot;contradicted_answer&quot;,
+    &quot;verification_primary_root_cause&quot;: &quot;conflicting_contexts&quot;,
+    &quot;no_failure_detected&quot;: 3,
+    &quot;answer_overreach&quot;: 0,
+    &quot;chunking_issue&quot;: 0,
+    &quot;corpus_gap&quot;: 0,
+    &quot;insufficient_context&quot;: 0,
+    &quot;reranking_failure&quot;: 0,
+    &quot;retrieval_miss&quot;: 1,
+    &quot;stale_source&quot;: 1
+  },
+  &quot;claims&quot;: [
+    {
+      &quot;claim_id&quot;: &quot;claim_1&quot;,
+      &quot;claim&quot;: &quot;PET/MRI has been introduced since 2010, with approximately 70 systems installed worldwide.&quot;,
+      &quot;audit_label&quot;: &quot;no_failure_detected&quot;,
+      &quot;confidence&quot;: 0.99,
+      &quot;reason&quot;: &quot;The claim is already supported by the retrieved contexts.&quot;,
+      &quot;suggested_fix&quot;: &quot;No fix needed for this claim.&quot;,
+      &quot;retrieved&quot;: {
+        &quot;verdict&quot;: &quot;supported&quot;,
+        &quot;best_context_id&quot;: &quot;data/PETMRI.txt:4&quot;,
+        &quot;best_score&quot;: 0.707,
+        &quot;evidence&quot;: &quot;Since           its     introduction                    in     2010,          approximately\nimaging/methods; Tomography, x-ray computed/methods; Pelvic neoplasms;                                                               70 systems have been installed worldwide, mostly in&quot;,
+        &quot;matched_terms&quot;: [
+          &quot;since&quot;,
+          &quot;2010&quot;,
+          &quot;approximately&quot;,
+          &quot;70&quot;,
+          &quot;systems&quot;,
+          &quot;installed&quot;,
+          &quot;worldwide&quot;
+        ],
+        &quot;root_cause&quot;: &quot;no_failure_detected&quot;,
+        &quot;citation_status&quot;: &quot;claim_has_no_citation&quot;
+      },
+      &quot;corpus&quot;: {
+        &quot;verdict&quot;: &quot;supported&quot;,
+        &quot;best_document_id&quot;: &quot;ollama_hf_corpus_4&quot;,
+        &quot;best_score&quot;: 0.707,
+        &quot;evidence&quot;: &quot;Since           its     introduction                    in     2010,          approximately\nimaging/methods; Tomography, x-ray computed/methods; Pelvic neoplasms;                                                               70 systems have been installed worldwide, mostly in&quot;,
+        &quot;matched_terms&quot;: [
+          &quot;since&quot;,
+          &quot;2010&quot;,
+          &quot;approximately&quot;,
+          &quot;70&quot;,
+          &quot;systems&quot;,
+          &quot;installed&quot;,
+          &quot;worldwide&quot;
+        ],
+        &quot;evidence_span&quot;: {
+          &quot;context_id&quot;: &quot;ollama_hf_corpus_4&quot;,
+          &quot;text&quot;: &quot;Since           its     introduction                    in     2010,          approximately\nimaging/methods; Tomography, x-ray computed/methods; Pelvic neoplasms;                                                               70 systems have been installed worldwide, mostly in&quot;,
+          &quot;start_char&quot;: 577,
+          &quot;end_char&quot;: 853,
+          &quot;span_hash&quot;: &quot;sha256:3305d74ed400f638&quot;
+        },
+        &quot;supporting_spans&quot;: [
+          {
+            &quot;context_id&quot;: &quot;ollama_hf_corpus_4&quot;,
+            &quot;text&quot;: &quot;Since           its     introduction                    in     2010,          approximately\nimaging/methods; Tomography, x-ray computed/methods; Pelvic neoplasms;                                                               70 systems have been installed worldwide, mostly in&quot;,
+            &quot;start_char&quot;: 577,
+            &quot;end_char&quot;: 853,
+            &quot;span_hash&quot;: &quot;sha256:3305d74ed400f638&quot;,
+            &quot;score&quot;: 0.707,
+            &quot;matched_terms&quot;: [
+              &quot;since&quot;,
+              &quot;2010&quot;,
+              &quot;approximately&quot;,
+              &quot;70&quot;,
+              &quot;systems&quot;,
+              &quot;installed&quot;,
+              &quot;worldwide&quot;
+            ]
+          },
+          {
+            &quot;context_id&quot;: &quot;ollama_hf_corpus_26&quot;,
+            &quot;text&quot;: &quot;Comparison of PET/CT and PET/MRI hybrid systems using a 68Ga\n     labelled PSMA ligand for the diagnosis of recurrent prostate cancer: initial\n     experience.&quot;,
+            &quot;start_char&quot;: 407,
+            &quot;end_char&quot;: 566,
+            &quot;span_hash&quot;: &quot;sha256:fd69f7eb369ebd01&quot;,
+            &quot;score&quot;: 0.262,
+            &quot;matched_terms&quot;: [
+              &quot;pet&quot;,
+              &quot;mri&quot;,
+              &quot;systems&quot;
+            ]
+          },
+          {
+            &quot;context_id&quot;: &quot;ollama_hf_corpus_3&quot;,
+            &quot;text&quot;: &quot;The first whole-body integrated PET/magnetic\nClinical aspects of PET/MRI and its application to clinical cases are                                                                resonance imaging (PET/MRI) system has been recently\nillustrated with examples extracted from the authors\u2019 preliminary&quot;,
+            &quot;start_char&quot;: 703,
+            &quot;end_char&quot;: 999,
+            &quot;span_hash&quot;: &quot;sha256:4615335e7c9734ef&quot;,
+            &quot;score&quot;: 0.258,
+            &quot;matched_terms&quot;: [
+              &quot;pet&quot;,
+              &quot;mri&quot;,
+              &quot;systems&quot;
+            ]
+          },
+          {
+            &quot;context_id&quot;: &quot;ollama_hf_corpus_22&quot;,
+            &quot;text&quot;: &quot;PET/MRI in neurology                                                                                 information            for    easier       recognition           of  degeneration\n               Magnetic resonance imaging is the modality of choice for                                             patterns specific to Parkinson\u2019s disease, multiple system\n               neuro-oncologic imaging, neurodegenerative diseases and                                              atrophy, progressive supranuclear palsy and corticobasal\n               epilepsy.&quot;,
+            &quot;start_char&quot;: 0,
+            &quot;end_char&quot;: 554,
+            &quot;span_hash&quot;: &quot;sha256:2589de29addc021a&quot;,
+            &quot;score&quot;: 0.253,
+            &quot;matched_terms&quot;: [
+              &quot;pet&quot;,
+              &quot;mri&quot;,
+              &quot;systems&quot;
+            ]
+          }
+        ],
+        &quot;required_facts&quot;: [
+          &quot;PET/MRI has been introduced since 2010, with approximately 70 systems installed worldwide&quot;,
+          &quot;PET/MRI&quot;
+        ],
+        &quot;matched_facts&quot;: [],
+        &quot;missing_facts&quot;: [
+          &quot;PET/MRI has been introduced since 2010, with approximately 70 systems installed worldwide&quot;,
+          &quot;PET/MRI&quot;
+        ],
+        &quot;conflicting_facts&quot;: []
+      }
+    },
+    {
+      &quot;claim_id&quot;: &quot;claim_2&quot;,
+      &quot;claim&quot;: &quot;Widely accepted clinical indications for PET/MRI are yet to be determined.&quot;,
+      &quot;audit_label&quot;: &quot;no_failure_detected&quot;,
+      &quot;confidence&quot;: 0.99,
+      &quot;reason&quot;: &quot;The claim is already supported by the retrieved contexts.&quot;,
+      &quot;suggested_fix&quot;: &quot;No fix needed for this claim.&quot;,
+      &quot;retrieved&quot;: {
+        &quot;verdict&quot;: &quot;supported&quot;,
+        &quot;best_context_id&quot;: &quot;data/PETMRI.txt:24&quot;,
+        &quot;best_score&quot;: 0.779,
+        &quot;evidence&quot;: &quot;However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.&quot;,
+        &quot;matched_terms&quot;: [
+          &quot;widely&quot;,
+          &quot;accepted&quot;,
+          &quot;clinical&quot;,
+          &quot;indications&quot;,
+          &quot;pet&quot;,
+          &quot;mri&quot;,
+          &quot;determined&quot;
+        ],
+        &quot;root_cause&quot;: &quot;no_failure_detected&quot;,
+        &quot;citation_status&quot;: &quot;claim_has_no_citation&quot;
+      },
+      &quot;corpus&quot;: {
+        &quot;verdict&quot;: &quot;supported&quot;,
+        &quot;best_document_id&quot;: &quot;ollama_hf_corpus_24&quot;,
+        &quot;best_score&quot;: 0.779,
+        &quot;evidence&quot;: &quot;However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.&quot;,
+        &quot;matched_terms&quot;: [
+          &quot;widely&quot;,
+          &quot;accepted&quot;,
+          &quot;clinical&quot;,
+          &quot;indications&quot;,
+          &quot;pet&quot;,
+          &quot;mri&quot;,
+          &quot;determined&quot;
+        ],
+        &quot;evidence_span&quot;: {
+          &quot;context_id&quot;: &quot;ollama_hf_corpus_24&quot;,
+          &quot;text&quot;: &quot;However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.&quot;,
+          &quot;start_char&quot;: 101,
+          &quot;end_char&quot;: 262,
+          &quot;span_hash&quot;: &quot;sha256:5f6cefd06fee5999&quot;
+        },
+        &quot;supporting_spans&quot;: [
+          {
+            &quot;context_id&quot;: &quot;ollama_hf_corpus_24&quot;,
+            &quot;text&quot;: &quot;However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.&quot;,
+            &quot;start_char&quot;: 101,
+            &quot;end_char&quot;: 262,
+            &quot;span_hash&quot;: &quot;sha256:5f6cefd06fee5999&quot;,
+            &quot;score&quot;: 0.779,
+            &quot;matched_terms&quot;: [
+              &quot;widely&quot;,
+              &quot;accepted&quot;,
+              &quot;clinical&quot;,
+              &quot;indications&quot;,
+              &quot;pet&quot;,
+              &quot;mri&quot;,
+              &quot;determined&quot;
+            ]
+          },
+          {
+            &quot;context_id&quot;: &quot;ollama_hf_corpus_25&quot;,
+            &quot;text&quot;: &quot;PET/MRI: paving the way for the\n     next generation of clinical multimodality imaging applications.&quot;,
+            &quot;start_char&quot;: 248,
+            &quot;end_char&quot;: 348,
+            &quot;span_hash&quot;: &quot;sha256:5a3823960e1933d4&quot;,
+            &quot;score&quot;: 0.336,
+            &quot;matched_terms&quot;: [
+              &quot;clinical&quot;,
+              &quot;pet&quot;,
+              &quot;mri&quot;
+            ]
+          },
+          {
+            &quot;context_id&quot;: &quot;ollama_hf_corpus_3&quot;,
+            &quot;text&quot;: &quot;article set out to analyze clinical conditions that could benefit from                                                               Positron emission tomography (PET) was developed by\nPET/MRI imaging based on our caseload.&quot;,
+            &quot;start_char&quot;: 0,
+            &quot;end_char&quot;: 223,
+            &quot;span_hash&quot;: &quot;sha256:5ffb0fc195ecf815&quot;,
+            &quot;score&quot;: 0.326,
+            &quot;matched_terms&quot;: [
+              &quot;clinical&quot;,
+              &quot;pet&quot;,
+              &quot;mri&quot;
+            ]
+          },
+          {
+            &quot;context_id&quot;: &quot;ollama_hf_corpus_2&quot;,
+            &quot;text&quot;: &quot;In recent years, medical imaging with hybrid techniques has                                                                          por resson\u00e2ncia magn\u00e9tica/m\u00e9todos; Tomografia computadorizada\nwidely accepted and employed in clinical routine.&quot;,
+            &quot;start_char&quot;: 0,
+            &quot;end_char&quot;: 244,
+            &quot;span_hash&quot;: &quot;sha256:ac708c7f1d5164dc&quot;,
+            &quot;score&quot;: 0.32,
+            &quot;matched_terms&quot;: [
+              &quot;widely&quot;,
+              &quot;accepted&quot;,
+              &quot;clinical&quot;
+            ]
+          }
+        ],
+        &quot;required_facts&quot;: [
+          &quot;Widely accepted clinical indications for PET/MRI are yet to be determined&quot;,
+          &quot;PET/MRI&quot;
+        ],
+        &quot;matched_facts&quot;: [],
+        &quot;missing_facts&quot;: [
+          &quot;Widely accepted clinical indications for PET/MRI are yet to be determined&quot;,
+          &quot;PET/MRI&quot;
+        ],
+        &quot;conflicting_facts&quot;: []
+      }
+    },
+    {
+      &quot;claim_id&quot;: &quot;claim_3&quot;,
+      &quot;claim&quot;: &quot;PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis.&quot;,
+      &quot;audit_label&quot;: &quot;retrieval_miss&quot;,
+      &quot;confidence&quot;: 0.82,
+      &quot;reason&quot;: &quot;The broader corpus contains evidence for this claim, but the retrieved contexts did not include it.&quot;,
+      &quot;suggested_fix&quot;: &quot;Improve retrieval recall, filters, query rewriting, or top_k so this source is retrieved.&quot;,
+      &quot;retrieved&quot;: {
+        &quot;verdict&quot;: &quot;partially_supported&quot;,
+        &quot;best_context_id&quot;: &quot;data/PETMRI.txt:24&quot;,
+        &quot;best_score&quot;: 0.565,
+        &quot;evidence&quot;: &quot;choice, particularly for assessment of some regions, such as\nbrain, head and neck, liver and pelvis.&quot;,
+        &quot;matched_terms&quot;: [
+          &quot;particularly&quot;,
+          &quot;regions&quot;,
+          &quot;brain&quot;,
+          &quot;head&quot;,
+          &quot;neck&quot;,
+          &quot;liver&quot;,
+          &quot;pelvis&quot;
+        ],
+        &quot;root_cause&quot;: &quot;answer_overreach&quot;,
+        &quot;citation_status&quot;: &quot;claim_has_no_citation&quot;
+      },
+      &quot;corpus&quot;: {
+        &quot;verdict&quot;: &quot;supported&quot;,
+        &quot;best_document_id&quot;: &quot;ollama_hf_corpus_2&quot;,
+        &quot;best_score&quot;: 0.624,
+        &quot;evidence&quot;: &quot;Therefore, PET/MRI is a promising modality for oncologic imaging\nof some regions, such as brain, head and neck, liver and pelvis.&quot;,
+        &quot;matched_terms&quot;: [
+          &quot;pet&quot;,
+          &quot;mri&quot;,
+          &quot;regions&quot;,
+          &quot;brain&quot;,
+          &quot;head&quot;,
+          &quot;neck&quot;,
+          &quot;liver&quot;,
+          &quot;pelvis&quot;
+        ],
+        &quot;evidence_span&quot;: {
+          &quot;context_id&quot;: &quot;ollama_hf_corpus_2&quot;,
+          &quot;text&quot;: &quot;Therefore, PET/MRI is a promising modality for oncologic imaging\nof some regions, such as brain, head and neck, liver and pelvis.&quot;,
+          &quot;start_char&quot;: 612,
+          &quot;end_char&quot;: 741,
+          &quot;span_hash&quot;: &quot;sha256:d531df4d773731ac&quot;
+        },
+        &quot;supporting_spans&quot;: [
+          {
+            &quot;context_id&quot;: &quot;ollama_hf_corpus_2&quot;,
+            &quot;text&quot;: &quot;Therefore, PET/MRI is a promising modality for oncologic imaging\nof some regions, such as brain, head and neck, liver and pelvis.&quot;,
+            &quot;start_char&quot;: 612,
+            &quot;end_char&quot;: 741,
+            &quot;span_hash&quot;: &quot;sha256:d531df4d773731ac&quot;,
+            &quot;score&quot;: 0.624,
+            &quot;matched_terms&quot;: [
+              &quot;pet&quot;,
+              &quot;mri&quot;,
+              &quot;regions&quot;,
+              &quot;brain&quot;,
+              &quot;head&quot;,
+              &quot;neck&quot;,
+              &quot;liver&quot;,
+              &quot;pelvis&quot;
+            ]
+          },
+          {
+            &quot;context_id&quot;: &quot;ollama_hf_corpus_24&quot;,
+            &quot;text&quot;: &quot;choice, particularly for assessment of some regions, such as\nbrain, head and neck, liver and pelvis.&quot;,
+            &quot;start_char&quot;: 0,
+            &quot;end_char&quot;: 100,
+            &quot;span_hash&quot;: &quot;sha256:1b64f500e28f7f05&quot;,
+            &quot;score&quot;: 0.565,
+            &quot;matched_terms&quot;: [
+              &quot;particularly&quot;,
+              &quot;regions&quot;,
+              &quot;brain&quot;,
+              &quot;head&quot;,
+              &quot;neck&quot;,
+              &quot;liver&quot;,
+              &quot;pelvis&quot;
+            ]
+          },
+          {
+            &quot;context_id&quot;: &quot;ollama_hf_corpus_8&quot;,
+            &quot;text&quot;: &quot;, brain, head and neck, liver and pelvis).&quot;,
+            &quot;start_char&quot;: 146,
+            &quot;end_char&quot;: 188,
+            &quot;span_hash&quot;: &quot;sha256:89c34a4a463871b1&quot;,
+            &quot;score&quot;: 0.417,
+            &quot;matched_terms&quot;: [
+              &quot;brain&quot;,
+              &quot;head&quot;,
+              &quot;neck&quot;,
+              &quot;liver&quot;,
+              &quot;pelvis&quot;
+            ]
+          },
+          {
+            &quot;context_id&quot;: &quot;ollama_hf_corpus_14&quot;,
+            &quot;text&quot;: &quot;Head-and-neck PET/MRI\nThe role of PET/MRI in head and neck cancer diagnosis\nwas first investigated by Boss et al.&quot;,
+            &quot;start_char&quot;: 0,
+            &quot;end_char&quot;: 113,
+            &quot;span_hash&quot;: &quot;sha256:42289152a020c922&quot;,
+            &quot;score&quot;: 0.304,
+            &quot;matched_terms&quot;: [
+              &quot;pet&quot;,
+              &quot;mri&quot;,
+              &quot;head&quot;,
+              &quot;neck&quot;
+            ]
+          }
+        ],
+        &quot;required_facts&quot;: [
+          &quot;PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis&quot;,
+          &quot;PET/MRI&quot;
+        ],
+        &quot;matched_facts&quot;: [],
+        &quot;missing_facts&quot;: [
+          &quot;PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis&quot;,
+          &quot;PET/MRI&quot;
+        ],
+        &quot;conflicting_facts&quot;: []
+      }
+    },
+    {
+      &quot;claim_id&quot;: &quot;claim_4&quot;,
+      &quot;claim&quot;: &quot;The adoption of PET/MRI has been slower compared to PET/CT.&quot;,
+      &quot;audit_label&quot;: &quot;no_failure_detected&quot;,
+      &quot;confidence&quot;: 0.99,
+      &quot;reason&quot;: &quot;The claim is already supported by the retrieved contexts.&quot;,
+      &quot;suggested_fix&quot;: &quot;No fix needed for this claim.&quot;,
+      &quot;retrieved&quot;: {
+        &quot;verdict&quot;: &quot;supported&quot;,
+        &quot;best_context_id&quot;: &quot;data/PETMRI.txt:4&quot;,
+        &quot;best_score&quot;: 0.868,
+        &quot;evidence&quot;: &quot;The adoption of PET/MRI has been much\n                                                                                                                                     slower compared to PET/computed tomography (PET/\nKeywords: Positron-emission tomography/methods; Magnetic resonance                                                                   CT).&quot;,
+        &quot;matched_terms&quot;: [
+          &quot;adoption&quot;,
+          &quot;pet&quot;,
+          &quot;mri&quot;,
+          &quot;slower&quot;,
+          &quot;compared&quot;,
+          &quot;ct&quot;
+        ],
+        &quot;root_cause&quot;: &quot;no_failure_detected&quot;,
+        &quot;citation_status&quot;: &quot;claim_has_no_citation&quot;
+      },
+      &quot;corpus&quot;: {
+        &quot;verdict&quot;: &quot;supported&quot;,
+        &quot;best_document_id&quot;: &quot;ollama_hf_corpus_4&quot;,
+        &quot;best_score&quot;: 0.868,
+        &quot;evidence&quot;: &quot;The adoption of PET/MRI has been much\n                                                                                                                                     slower compared to PET/computed tomography (PET/\nKeywords: Positron-emission tomography/methods; Magnetic resonance                                                                   CT).&quot;,
+        &quot;matched_terms&quot;: [
+          &quot;adoption&quot;,
+          &quot;pet&quot;,
+          &quot;mri&quot;,
+          &quot;slower&quot;,
+          &quot;compared&quot;,
+          &quot;ct&quot;
+        ],
+        &quot;evidence_span&quot;: {
+          &quot;context_id&quot;: &quot;ollama_hf_corpus_4&quot;,
+          &quot;text&quot;: &quot;The adoption of PET/MRI has been much\n                                                                                                                                     slower compared to PET/computed tomography (PET/\nKeywords: Positron-emission tomography/methods; Magnetic resonance                                                                   CT).&quot;,
+          &quot;start_char&quot;: 211,
+          &quot;end_char&quot;: 568,
+          &quot;span_hash&quot;: &quot;sha256:b843f65a66d2ebcd&quot;
+        },
+        &quot;supporting_spans&quot;: [
+          {
+            &quot;context_id&quot;: &quot;ollama_hf_corpus_4&quot;,
+            &quot;text&quot;: &quot;The adoption of PET/MRI has been much\n                                                                                                                                     slower compared to PET/computed tomography (PET/\nKeywords: Positron-emission tomography/methods; Magnetic resonance                                                                   CT).&quot;,
+            &quot;start_char&quot;: 211,
+            &quot;end_char&quot;: 568,
+            &quot;span_hash&quot;: &quot;sha256:b843f65a66d2ebcd&quot;,
+            &quot;score&quot;: 0.868,
+            &quot;matched_terms&quot;: [
+              &quot;adoption&quot;,
+              &quot;pet&quot;,
+              &quot;mri&quot;,
+              &quot;slower&quot;,
+              &quot;compared&quot;,
+              &quot;ct&quot;
+            ]
+          },
+          {
+            &quot;context_id&quot;: &quot;ollama_hf_corpus_20&quot;,
+            &quot;text&quot;: &quot;(A) MRI image, axial T2; (B) PET, maximum intensity projection image; (C)\n                 compared to PET/CT (Figure 3).&quot;,
+            &quot;start_char&quot;: 8,
+            &quot;end_char&quot;: 129,
+            &quot;span_hash&quot;: &quot;sha256:af7217825c0f9dfd&quot;,
+            &quot;score&quot;: 0.583,
+            &quot;matched_terms&quot;: [
+              &quot;pet&quot;,
+              &quot;mri&quot;,
+              &quot;compared&quot;,
+              &quot;ct&quot;
+            ]
+          },
+          {
+            &quot;context_id&quot;: &quot;ollama_hf_corpus_2&quot;,
+            &quot;text&quot;: &quot;PET/MRI offers                                                                     por raios x/m\u00e9todos; Neoplasias p\u00e9lvicas; Neoplasias da pr\u00f3stata;\nsignificant advantages, including excellent contrast and resolution                                                                  Neuroimagem\nand reduced ionizing radiation, as compared to well-established PET/\nCT.&quot;,
+            &quot;start_char&quot;: 245,
+            &quot;end_char&quot;: 611,
+            &quot;span_hash&quot;: &quot;sha256:e9272caadb658319&quot;,
+            &quot;score&quot;: 0.553,
+            &quot;matched_terms&quot;: [
+              &quot;pet&quot;,
+              &quot;mri&quot;,
+              &quot;compared&quot;,
+              &quot;ct&quot;
+            ]
+          },
+          {
+            &quot;context_id&quot;: &quot;ollama_hf_corpus_17&quot;,
+            &quot;text&quot;: &quot;compared to PET/CT(8) (Figure 4).&quot;,
+            &quot;start_char&quot;: 0,
+            &quot;end_char&quot;: 33,
+            &quot;span_hash&quot;: &quot;sha256:167958f78c83dc80&quot;,
+            &quot;score&quot;: 0.463,
+            &quot;matched_terms&quot;: [
+              &quot;pet&quot;,
+              &quot;compared&quot;,
+              &quot;ct&quot;
+            ]
+          }
+        ],
+        &quot;required_facts&quot;: [
+          &quot;The adoption of PET/MRI has been slower compared to PET/CT&quot;,
+          &quot;PET/MRI&quot;,
+          &quot;PET/CT&quot;
+        ],
+        &quot;matched_facts&quot;: [
+          &quot;The adoption of PET/MRI has been slower compared to PET/CT&quot;,
+          &quot;PET/MRI&quot;,
+          &quot;PET/CT&quot;
+        ],
+        &quot;missing_facts&quot;: [],
+        &quot;conflicting_facts&quot;: []
+      }
+    },
+    {
+      &quot;claim_id&quot;: &quot;claim_5&quot;,
+      &quot;claim&quot;: &quot;However, the main advantages of PET/MRI over PET/CT are not explicitly.&quot;,
+      &quot;audit_label&quot;: &quot;stale_source&quot;,
+      &quot;confidence&quot;: 0.86,
+      &quot;reason&quot;: &quot;The claim appears to conflict with retrieved or corpus evidence.&quot;,
+      &quot;suggested_fix&quot;: &quot;Resolve stale or conflicting sources before allowing the answer to use this fact.&quot;,
+      &quot;retrieved&quot;: {
+        &quot;verdict&quot;: &quot;contradicted&quot;,
+        &quot;best_context_id&quot;: &quot;data/PETMRI.txt:24&quot;,
+        &quot;best_score&quot;: 0.622,
+        &quot;evidence&quot;: &quot;However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.&quot;,
+        &quot;matched_terms&quot;: [
+          &quot;however&quot;,
+          &quot;advantages&quot;,
+          &quot;pet&quot;,
+          &quot;mri&quot;,
+          &quot;ct&quot;
+        ],
+        &quot;root_cause&quot;: &quot;conflicting_contexts&quot;,
+        &quot;citation_status&quot;: &quot;claim_has_no_citation&quot;
+      },
+      &quot;corpus&quot;: {
+        &quot;verdict&quot;: &quot;contradicted&quot;,
+        &quot;best_document_id&quot;: &quot;ollama_hf_corpus_24&quot;,
+        &quot;best_score&quot;: 0.622,
+        &quot;evidence&quot;: &quot;However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.&quot;,
+        &quot;matched_terms&quot;: [
+          &quot;however&quot;,
+          &quot;advantages&quot;,
+          &quot;pet&quot;,
+          &quot;mri&quot;,
+          &quot;ct&quot;
+        ],
+        &quot;evidence_span&quot;: {
+          &quot;context_id&quot;: &quot;ollama_hf_corpus_24&quot;,
+          &quot;text&quot;: &quot;However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.&quot;,
+          &quot;start_char&quot;: 101,
+          &quot;end_char&quot;: 262,
+          &quot;span_hash&quot;: &quot;sha256:5f6cefd06fee5999&quot;
+        },
+        &quot;supporting_spans&quot;: [
+          {
+            &quot;context_id&quot;: &quot;ollama_hf_corpus_24&quot;,
+            &quot;text&quot;: &quot;However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.&quot;,
+            &quot;start_char&quot;: 101,
+            &quot;end_char&quot;: 262,
+            &quot;span_hash&quot;: &quot;sha256:5f6cefd06fee5999&quot;,
+            &quot;score&quot;: 0.622,
+            &quot;matched_terms&quot;: [
+              &quot;however&quot;,
+              &quot;advantages&quot;,
+              &quot;pet&quot;,
+              &quot;mri&quot;,
+              &quot;ct&quot;
+            ]
+          },
+          {
+            &quot;context_id&quot;: &quot;ollama_hf_corpus_2&quot;,
+            &quot;text&quot;: &quot;PET/MRI offers                                                                     por raios x/m\u00e9todos; Neoplasias p\u00e9lvicas; Neoplasias da pr\u00f3stata;\nsignificant advantages, including excellent contrast and resolution                                                                  Neuroimagem\nand reduced ionizing radiation, as compared to well-established PET/\nCT.&quot;,
+            &quot;start_char&quot;: 245,
+            &quot;end_char&quot;: 611,
+            &quot;span_hash&quot;: &quot;sha256:e9272caadb658319&quot;,
+            &quot;score&quot;: 0.477,
+            &quot;matched_terms&quot;: [
+              &quot;advantages&quot;,
+              &quot;pet&quot;,
+              &quot;mri&quot;,
+              &quot;ct&quot;
+            ]
+          },
+          {
+            &quot;context_id&quot;: &quot;ollama_hf_corpus_20&quot;,
+            &quot;text&quot;: &quot;(A) MRI image, axial T2; (B) PET, maximum intensity projection image; (C)\n                 compared to PET/CT (Figure 3).&quot;,
+            &quot;start_char&quot;: 8,
+            &quot;end_char&quot;: 129,
+            &quot;span_hash&quot;: &quot;sha256:af7217825c0f9dfd&quot;,
+            &quot;score&quot;: 0.376,
+            &quot;matched_terms&quot;: [
+              &quot;pet&quot;,
+              &quot;mri&quot;,
+              &quot;ct&quot;
+            ]
+          },
+          {
+            &quot;context_id&quot;: &quot;ollama_hf_corpus_10&quot;,
+            &quot;text&quot;: &quot;Patients were submitted can PET/MRI immediately after\nPET/CT,       without      any    further     intravenous        contrast\nagent injection for improved lesion characterization.&quot;,
+            &quot;start_char&quot;: 392,
+            &quot;end_char&quot;: 573,
+            &quot;span_hash&quot;: &quot;sha256:55c4ff388aa0cace&quot;,
+            &quot;score&quot;: 0.371,
+            &quot;matched_terms&quot;: [
+              &quot;pet&quot;,
+              &quot;mri&quot;,
+              &quot;ct&quot;
+            ]
+          }
+        ],
+        &quot;required_facts&quot;: [
+          &quot;However, the main advantages of PET/MRI over PET/CT are not explicitly&quot;,
+          &quot;PET/MRI&quot;,
+          &quot;PET/CT&quot;,
+          &quot;However, the main advantages of PET/MRI over PET/CT are not explicitly&quot;
+        ],
+        &quot;matched_facts&quot;: [
+          &quot;PET/MRI&quot;
+        ],
+        &quot;missing_facts&quot;: [
+          &quot;However, the main advantages of PET/MRI over PET/CT are not explicitly&quot;,
+          &quot;PET/CT&quot;,
+          &quot;However, the main advantages of PET/MRI over PET/CT are not explicitly&quot;
+        ],
+        &quot;conflicting_facts&quot;: [
+          &quot;However, the main advantages of PET/MRI over PET/CT are not explicitly.&quot;
+        ]
+      }
+    }
+  ],
+  &quot;verification&quot;: {
+    &quot;summary&quot;: {
+      &quot;total_claims&quot;: 5,
+      &quot;supported&quot;: 3,
+      &quot;partially_supported&quot;: 1,
+      &quot;unsupported&quot;: 0,
+      &quot;contradicted&quot;: 1,
+      &quot;unverifiable&quot;: 0,
+      &quot;support_rate&quot;: 0.6,
+      &quot;unsupported_claim_rate&quot;: 0.4,
+      &quot;citation_mismatches&quot;: 5,
+      &quot;should_abstain&quot;: false,
+      &quot;root_causes&quot;: {
+        &quot;answer_overreach&quot;: 1,
+        &quot;conflicting_contexts&quot;: 1,
+        &quot;no_failure_detected&quot;: 3
+      },
+      &quot;primary_root_cause&quot;: &quot;conflicting_contexts&quot;,
+      &quot;failure_type&quot;: &quot;contradicted_answer&quot;,
+      &quot;failure_types&quot;: [
+        &quot;contradicted_answer&quot;,
+        &quot;partial_support&quot;
+      ],
+      &quot;suggested_fix&quot;: &quot;Filter stale or conflicting sources and require the final answer to match the highest-priority evidence.&quot;,
+      &quot;mode&quot;: &quot;semantic&quot;
+    },
+    &quot;abstention&quot;: {
+      &quot;should_abstain&quot;: false,
+      &quot;reason&quot;: &quot;At least one claim is only partially supported; the answer should remove or qualify unsupported details rather than fully abstain.&quot;
+    },
+    &quot;diagnostics&quot;: {
+      &quot;failure_type&quot;: &quot;contradicted_answer&quot;,
+      &quot;failure_types&quot;: [
+        &quot;contradicted_answer&quot;,
+        &quot;partial_support&quot;
+      ],
+      &quot;suggested_fix&quot;: &quot;Filter stale or conflicting sources and require the final answer to match the highest-priority evidence.&quot;
+    }
+  },
+  &quot;corpus&quot;: {
+    &quot;path&quot;: &quot;https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;,
+    &quot;documents&quot;: 29
+  }
+}</pre>
+    </section>
+  </main>
+</body>
+</html>

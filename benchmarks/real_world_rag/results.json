@@ -1,0 +1,717 @@
+{
+  "generated_at": "2026-06-04",
+  "description": "Real-world ContextTrace smoke test over public GitHub RAG projects.",
+  "generation_model": "mistral",
+  "embedding_model": "all-MiniLM-L6-v2",
+  "answer_mode": "extractive_from_retrieved_context",
+  "projects": [
+    {
+      "project": "HeskethGD/local-rag-chat",
+      "repo_url": "https://github.com/HeskethGD/local-rag-chat",
+      "notes": "Offline FastAPI/Streamlit RAG app using Ollama and LanceDB.",
+      "status": "completed",
+      "setup": {
+        "state": "already_cloned",
+        "path": "C:\\Users\\mannv\\OneDrive\\Desktop\\Projects\\ContextTrace\\.contexttrace\\real_world_repos\\local-rag-chat"
+      },
+      "corpus_files": 11,
+      "corpus_chunks": 50,
+      "cases": [
+        {
+          "id": "local_rag_chat_1",
+          "case_type": "grounded_smoke",
+          "question": "What local models does this RAG chatbot use for chat and embeddings?",
+          "answer_preview": "# Offline Local AI Agent Chatbot with RAG This project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling users to ask questions of their docs. The application is designed to run offline and for the Large...",
+          "trace_path": "benchmarks/real_world_rag/traces/local_rag_chat_1.json",
+          "verify_report_path": "benchmarks/real_world_rag/reports/local_rag_chat_1_verify.html",
+          "audit_report_path": "benchmarks/real_world_rag/reports/local_rag_chat_1_audit.html",
+          "retrieved_context_ids": [
+            "local_rag_chat:README.md:1",
+            "local_rag_chat:README.md:2",
+            "local_rag_chat:backend/app/main.py:2"
+          ],
+          "verify_summary": {
+            "total_claims": 3,
+            "supported": 3,
+            "partially_supported": 0,
+            "unsupported": 0,
+            "contradicted": 0,
+            "unverifiable": 0,
+            "support_rate": 1.0,
+            "unsupported_claim_rate": 0.0,
+            "citation_mismatches": 3,
+            "should_abstain": false,
+            "root_causes": {
+              "no_failure_detected": 3
+            },
+            "primary_root_cause": "no_failure_detected",
+            "failure_type": "no_failure_detected",
+            "failure_types": [
+              "no_failure_detected"
+            ],
+            "suggested_fix": "No fix is needed for this trace based on the local verifier.",
+            "mode": "semantic"
+          },
+          "audit_summary": {
+            "mode": "semantic",
+            "total_claims": 3,
+            "audited_claims": 0,
+            "corpus_documents": 50,
+            "has_audit_failures": false,
+            "primary_audit_label": "no_failure_detected",
+            "verification_failure_type": "no_failure_detected",
+            "verification_primary_root_cause": "no_failure_detected",
+            "no_failure_detected": 3,
+            "answer_overreach": 0,
+            "chunking_issue": 0,
+            "corpus_gap": 0,
+            "insufficient_context": 0,
+            "reranking_failure": 0,
+            "retrieval_miss": 0,
+            "stale_source": 0
+          },
+          "top_claims": [
+            {
+              "claim": "# Offline Local AI Agent Chatbot with RAG This project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling users to ask questions of their docs.",
+              "verdict": "supported",
+              "root_cause": "no_failure_detected",
+              "evidence": "# Offline Local AI Agent Chatbot with RAG This project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling..."
+            },
+            {
+              "claim": "The application is designed to run offline and for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B`, and uses `nomic-embed-text` for local offline vector embeddings.",
+              "verdict": "supported",
+              "root_cause": "no_failure_detected",
+              "evidence": "The application is designed to run offline and for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B`, and use..."
+            },
+            {
+              "claim": "This application uses the Llama 3.2 3B param model (about 2GB, approx 10 minutes download) for chat and summaries, and the nomic-embed-text model (274Mb approx 2 minutes download) for vectorisation.",
+              "verdict": "supported",
+              "root_cause": "no_failure_detected",
+              "evidence": "This application uses the Llama 3.2 3B param model (about 2GB, approx 10 minutes download) for chat and summaries, and the nomic-embed-text model (274Mb appr..."
+            }
+          ]
+        },
+        {
+          "id": "local_rag_chat_2",
+          "case_type": "grounded_smoke",
+          "question": "How does the RAG agent use retrieved sources when drafting an answer?",
+          "answer_preview": "\"\" Utility for providing the files and page numbers for the information used in RAG answers. limit(N_results)) return [RagSearchResult(**r) for r in results.to_list()] def get_sources(self, results: List[RagSearchResult]) -> List[str]: \"\"\" Utility for provi...",
+          "trace_path": "benchmarks/real_world_rag/traces/local_rag_chat_2.json",
+          "verify_report_path": "benchmarks/real_world_rag/reports/local_rag_chat_2_verify.html",
+          "audit_report_path": "benchmarks/real_world_rag/reports/local_rag_chat_2_audit.html",
+          "retrieved_context_ids": [
+            "local_rag_chat:backend/app/semantic_db/semantic_db.py:12",
+            "local_rag_chat:backend/app/semantic_db/semantic_db.py:9",
+            "local_rag_chat:backend/app/agents/rag.py:2"
+          ],
+          "verify_summary": {
+            "total_claims": 3,
+            "supported": 3,
+            "partially_supported": 0,
+            "unsupported": 0,
+            "contradicted": 0,
+            "unverifiable": 0,
+            "support_rate": 1.0,
+            "unsupported_claim_rate": 0.0,
+            "citation_mismatches": 3,
+            "should_abstain": false,
+            "root_causes": {
+              "no_failure_detected": 3
+            },
+            "primary_root_cause": "no_failure_detected",
+            "failure_type": "no_failure_detected",
+            "failure_types": [
+              "no_failure_detected"
+            ],
+            "suggested_fix": "No fix is needed for this trace based on the local verifier.",
+            "mode": "semantic"
+          },
+          "audit_summary": {
+            "mode": "semantic",
+            "total_claims": 3,
+            "audited_claims": 0,
+            "corpus_documents": 50,
+            "has_audit_failures": false,
+            "primary_audit_label": "no_failure_detected",
+            "verification_failure_type": "no_failure_detected",
+            "verification_primary_root_cause": "no_failure_detected",
+            "no_failure_detected": 3,
+            "answer_overreach": 0,
+            "chunking_issue": 0,
+            "corpus_gap": 0,
+            "insufficient_context": 0,
+            "reranking_failure": 0,
+            "retrieval_miss": 0,
+            "stale_source": 0
+          },
+          "top_claims": [
+            {
+              "claim": "\"\" Utility for providing the files and page numbers for the information used in RAG answers.",
+              "verdict": "supported",
+              "root_cause": "no_failure_detected",
+              "evidence": "\"\" Utility for providing the files and page numbers for the information used in RAG answers."
+            },
+            {
+              "claim": "limit(N_results)) return [RagSearchResult(**r) for r in results.to_list()] def get_sources(self, results: List[RagSearchResult]) -> List[str]: \"\"\" Utility for providing the files and page numbers for the information used in RAG answers.",
+              "verdict": "supported",
+              "root_cause": "no_failure_detected",
+              "evidence": "\"\"\" results = (lancedb .connect(self.semantic_db_path) .open_table(table_name) .search(query_vector) .limit(N_results)) return [RagSearchResult(**r) for r in..."
+            },
+            {
+              "claim": "MANTIC_DB_PATH\") llm_model = os.getenv(\"LLM_MODEL\") llm_generate_url = os.getenv(\"LLM_GENERATE_URL\") semantic_db = SemanticDb( embedding_function=vecs.get_embeddings, vec_dimension=vecs.dimensions, semantic_db_path=semantic_db_path ) def run_agent( messages: List[Message], table_name=\"semantic-db-table\" ) -> ContentStream: \"\"\" Answers a user query with retrieval augmented generation (RAG) over documents in a LanceDB table in S3.",
+              "verdict": "supported",
+              "root_cause": "no_failure_detected",
+              "evidence": "MANTIC_DB_PATH\") llm_model = os.getenv(\"LLM_MODEL\") llm_generate_url = os.getenv(\"LLM_GENERATE_URL\") semantic_db = SemanticDb( embedding_function=vecs.get_em..."
+            }
+          ]
+        },
+        {
+          "id": "local_rag_chat_stress_1",
+          "case_type": "retrieval_stress_control",
+          "question": "What local models does this RAG chatbot use for chat and embeddings?",
+          "answer_preview": "# Offline Local AI Agent Chatbot with RAG This project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling users to ask questions of their docs. The application is designed to run offline and for the Large...",
+          "trace_path": "benchmarks/real_world_rag/traces/local_rag_chat_stress_1.json",
+          "verify_report_path": "benchmarks/real_world_rag/reports/local_rag_chat_stress_1_verify.html",
+          "audit_report_path": "benchmarks/real_world_rag/reports/local_rag_chat_stress_1_audit.html",
+          "retrieved_context_ids": [
+            "local_rag_chat:backend/app/agents/rag.py:3",
+            "local_rag_chat:backend/app/agents/rag.py:4",
+            "local_rag_chat:backend/app/agents/rag.py:5"
+          ],
+          "oracle_context_ids": [
+            "local_rag_chat:README.md:1",
+            "local_rag_chat:README.md:2",
+            "local_rag_chat:backend/app/main.py:2"
+          ],
+          "verify_summary": {
+            "total_claims": 3,
+            "supported": 0,
+            "partially_supported": 0,
+            "unsupported": 3,
+            "contradicted": 0,
+            "unverifiable": 0,
+            "support_rate": 0.0,
+            "unsupported_claim_rate": 1.0,
+            "citation_mismatches": 3,
+            "should_abstain": true,
+            "root_causes": {
+              "should_have_abstained": 3
+            },
+            "primary_root_cause": "should_have_abstained",
+            "failure_type": "should_have_abstained",
+            "failure_types": [
+              "should_have_abstained",
+              "unsupported_answer"
+            ],
+            "suggested_fix": "Add an abstention rule: when retrieved contexts do not support the requested fact, say the information is unavailable instead of generating a factual answer.",
+            "mode": "semantic"
+          },
+          "audit_summary": {
+            "mode": "semantic",
+            "total_claims": 3,
+            "audited_claims": 3,
+            "corpus_documents": 50,
+            "has_audit_failures": true,
+            "primary_audit_label": "retrieval_miss",
+            "verification_failure_type": "should_have_abstained",
+            "verification_primary_root_cause": "should_have_abstained",
+            "no_failure_detected": 0,
+            "answer_overreach": 0,
+            "chunking_issue": 0,
+            "corpus_gap": 0,
+            "insufficient_context": 0,
+            "reranking_failure": 0,
+            "retrieval_miss": 3,
+            "stale_source": 0
+          },
+          "top_claims": [
+            {
+              "claim": "# Offline Local AI Agent Chatbot with RAG This project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling users to ask questions of their docs.",
+              "verdict": "unsupported",
+              "root_cause": "should_have_abstained",
+              "evidence": "\"\"\" # Embedd the user query query_vector = [] query = \"\" try: query = messages[-1]."
+            },
+            {
+              "claim": "The application is designed to run offline and for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B`, and uses `nomic-embed-text` for local offline vector embeddings.",
+              "verdict": "unsupported",
+              "root_cause": "should_have_abstained",
+              "evidence": "or fetching sources: {e}\" logger.error(err_message) yield err_message return # Cal LLM to summarise answer based on retrieved content try: # Define prompt fo..."
+            },
+            {
+              "claim": "This application uses the Llama 3.2 3B param model (about 2GB, approx 10 minutes download) for chat and summaries, and the nomic-embed-text model (274Mb approx 2 minutes download) for vectorisation.",
+              "verdict": "unsupported",
+              "root_cause": "should_have_abstained",
+              "evidence": "or fetching sources: {e}\" logger.error(err_message) yield err_message return # Cal LLM to summarise answer based on retrieved content try: # Define prompt fo..."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "project": "taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+      "repo_url": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+      "notes": "LangChain/Ollama/FAISS RAG script with a real text corpus in data/.",
+      "status": "completed",
+      "setup": {
+        "state": "already_cloned",
+        "path": "C:\\Users\\mannv\\OneDrive\\Desktop\\Projects\\ContextTrace\\.contexttrace\\real_world_repos\\ollama-hf-rag-engine"
+      },
+      "corpus_files": 3,
+      "corpus_chunks": 53,
+      "cases": [
+        {
+          "id": "ollama_hf_rag_engine_1",
+          "case_type": "grounded_smoke",
+          "question": "What vector store does this RAG engine use?",
+          "answer_preview": "# Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA). = load_txts_from_directory(txt_directory) # Chunk the documents chunks = chunk_doc...",
+          "trace_path": "benchmarks/real_world_rag/traces/ollama_hf_rag_engine_1.json",
+          "verify_report_path": "benchmarks/real_world_rag/reports/ollama_hf_rag_engine_1_verify.html",
+          "audit_report_path": "benchmarks/real_world_rag/reports/ollama_hf_rag_engine_1_audit.html",
+          "retrieved_context_ids": [
+            "ollama_hf_rag_engine:README.md:1",
+            "ollama_hf_rag_engine:main.py:6",
+            "ollama_hf_rag_engine:README.md:2"
+          ],
+          "verify_summary": {
+            "total_claims": 2,
+            "supported": 2,
+            "partially_supported": 0,
+            "unsupported": 0,
+            "contradicted": 0,
+            "unverifiable": 0,
+            "support_rate": 1.0,
+            "unsupported_claim_rate": 0.0,
+            "citation_mismatches": 2,
+            "should_abstain": false,
+            "root_causes": {
+              "no_failure_detected": 2
+            },
+            "primary_root_cause": "no_failure_detected",
+            "failure_type": "no_failure_detected",
+            "failure_types": [
+              "no_failure_detected"
+            ],
+            "suggested_fix": "No fix is needed for this trace based on the local verifier.",
+            "mode": "semantic"
+          },
+          "audit_summary": {
+            "mode": "semantic",
+            "total_claims": 2,
+            "audited_claims": 0,
+            "corpus_documents": 53,
+            "has_audit_failures": false,
+            "primary_audit_label": "no_failure_detected",
+            "verification_failure_type": "no_failure_detected",
+            "verification_primary_root_cause": "no_failure_detected",
+            "no_failure_detected": 2,
+            "answer_overreach": 0,
+            "chunking_issue": 0,
+            "corpus_gap": 0,
+            "insufficient_context": 0,
+            "reranking_failure": 0,
+            "retrieval_miss": 0,
+            "stale_source": 0
+          },
+          "top_claims": [
+            {
+              "claim": "# Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA).",
+              "verdict": "supported",
+              "root_cause": "no_failure_detected",
+              "evidence": "# Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented questio..."
+            },
+            {
+              "claim": "= load_txts_from_directory(txt_directory) # Chunk the documents chunks = chunk_documents(texts) # Create embeddings and vector store embeddings = OllamaEmbeddings(model='nomic-embed-text', base_url=\"http://localhost:11434\") embedding_dimensions = len(embeddings.embed_query(\"test query\")) # Determine embedding dimensions vector_store = create_vector_store(embedding_function=embeddings, dimensions=embedding_dimensions) # Convert chunks into Document objects and add to vector store documents = [Document(page_content=chunk) for chunk in chunks] document_ids = vector_store.add_documents(documents=documents).",
+              "verdict": "supported",
+              "root_cause": "no_failure_detected",
+              "evidence": "= load_txts_from_directory(txt_directory) # Chunk the documents chunks = chunk_documents(texts) # Create embeddings and vector store embeddings = OllamaEmbed..."
+            }
+          ]
+        },
+        {
+          "id": "ollama_hf_rag_engine_2",
+          "case_type": "grounded_smoke",
+          "question": "What should the assistant do if it does not know the answer?",
+          "answer_preview": "If you don't know the answer, just say that you don't know. Answer in bullet points. Use the following pieces of retrieved context to answer the question.",
+          "trace_path": "benchmarks/real_world_rag/traces/ollama_hf_rag_engine_2.json",
+          "verify_report_path": "benchmarks/real_world_rag/reports/ollama_hf_rag_engine_2_verify.html",
+          "audit_report_path": "benchmarks/real_world_rag/reports/ollama_hf_rag_engine_2_audit.html",
+          "retrieved_context_ids": [
+            "ollama_hf_rag_engine:main.py:7",
+            "ollama_hf_rag_engine:main.py:8",
+            "ollama_hf_rag_engine:README.md:2"
+          ],
+          "verify_summary": {
+            "total_claims": 3,
+            "supported": 3,
+            "partially_supported": 0,
+            "unsupported": 0,
+            "contradicted": 0,
+            "unverifiable": 0,
+            "support_rate": 1.0,
+            "unsupported_claim_rate": 0.0,
+            "citation_mismatches": 3,
+            "should_abstain": false,
+            "root_causes": {
+              "no_failure_detected": 3
+            },
+            "primary_root_cause": "no_failure_detected",
+            "failure_type": "no_failure_detected",
+            "failure_types": [
+              "no_failure_detected"
+            ],
+            "suggested_fix": "No fix is needed for this trace based on the local verifier.",
+            "mode": "semantic"
+          },
+          "audit_summary": {
+            "mode": "semantic",
+            "total_claims": 3,
+            "audited_claims": 0,
+            "corpus_documents": 53,
+            "has_audit_failures": false,
+            "primary_audit_label": "no_failure_detected",
+            "verification_failure_type": "no_failure_detected",
+            "verification_primary_root_cause": "no_failure_detected",
+            "no_failure_detected": 3,
+            "answer_overreach": 0,
+            "chunking_issue": 0,
+            "corpus_gap": 0,
+            "insufficient_context": 0,
+            "reranking_failure": 0,
+            "retrieval_miss": 0,
+            "stale_source": 0
+          },
+          "top_claims": [
+            {
+              "claim": "If you don't know the answer, just say that you don't know.",
+              "verdict": "supported",
+              "root_cause": "no_failure_detected",
+              "evidence": "If you don't know the answer, just say that you don't know."
+            },
+            {
+              "claim": "Answer in bullet points.",
+              "verdict": "supported",
+              "root_cause": "no_failure_detected",
+              "evidence": "Answer in bullet points."
+            },
+            {
+              "claim": "Use the following pieces of retrieved context to answer the question.",
+              "verdict": "supported",
+              "root_cause": "no_failure_detected",
+              "evidence": "Use the following pieces of retrieved context to answer the question."
+            }
+          ]
+        },
+        {
+          "id": "ollama_hf_rag_engine_stress_1",
+          "case_type": "retrieval_stress_control",
+          "question": "What vector store does this RAG engine use?",
+          "answer_preview": "# Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA). = load_txts_from_directory(txt_directory) # Chunk the documents chunks = chunk_doc...",
+          "trace_path": "benchmarks/real_world_rag/traces/ollama_hf_rag_engine_stress_1.json",
+          "verify_report_path": "benchmarks/real_world_rag/reports/ollama_hf_rag_engine_stress_1_verify.html",
+          "audit_report_path": "benchmarks/real_world_rag/reports/ollama_hf_rag_engine_stress_1_audit.html",
+          "retrieved_context_ids": [
+            "ollama_hf_rag_engine:data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt:1",
+            "ollama_hf_rag_engine:data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt:2",
+            "ollama_hf_rag_engine:data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt:3"
+          ],
+          "oracle_context_ids": [
+            "ollama_hf_rag_engine:README.md:1",
+            "ollama_hf_rag_engine:main.py:6",
+            "ollama_hf_rag_engine:README.md:2"
+          ],
+          "verify_summary": {
+            "total_claims": 2,
+            "supported": 0,
+            "partially_supported": 0,
+            "unsupported": 2,
+            "contradicted": 0,
+            "unverifiable": 0,
+            "support_rate": 0.0,
+            "unsupported_claim_rate": 1.0,
+            "citation_mismatches": 2,
+            "should_abstain": true,
+            "root_causes": {
+              "should_have_abstained": 2
+            },
+            "primary_root_cause": "should_have_abstained",
+            "failure_type": "should_have_abstained",
+            "failure_types": [
+              "should_have_abstained",
+              "unsupported_answer"
+            ],
+            "suggested_fix": "Add an abstention rule: when retrieved contexts do not support the requested fact, say the information is unavailable instead of generating a factual answer.",
+            "mode": "semantic"
+          },
+          "audit_summary": {
+            "mode": "semantic",
+            "total_claims": 2,
+            "audited_claims": 2,
+            "corpus_documents": 53,
+            "has_audit_failures": true,
+            "primary_audit_label": "retrieval_miss",
+            "verification_failure_type": "should_have_abstained",
+            "verification_primary_root_cause": "should_have_abstained",
+            "no_failure_detected": 0,
+            "answer_overreach": 0,
+            "chunking_issue": 0,
+            "corpus_gap": 0,
+            "insufficient_context": 0,
+            "reranking_failure": 0,
+            "retrieval_miss": 2,
+            "stale_source": 0
+          },
+          "top_claims": [
+            {
+              "claim": "# Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA).",
+              "verdict": "unsupported",
+              "root_cause": "should_have_abstained",
+              "evidence": "PET/MRI: a novel hybrid imaging technique. Major clinical indications and preliminary experience in BrazilPET/RM: um novo m\u00e9todo de imagem h\u00edbrida. Principai..."
+            },
+            {
+              "claim": "= load_txts_from_directory(txt_directory) # Chunk the documents chunks = chunk_documents(texts) # Create embeddings and vector store embeddings = OllamaEmbeddings(model='nomic-embed-text', base_url=\"http://localhost:11434\") embedding_dimensions = len(embeddings.embed_query(\"test query\")) # Determine embedding dimensions vector_store = create_vector_store(embedding_function=embeddings, dimensions=embedding_dimensions) # Convert chunks into Document objects and add to vector store documents = [Document(page_content=chunk) for chunk in chunks] document_ids = vector_store.add_documents(documents=documents).",
+              "verdict": "unsupported",
+              "root_cause": "should_have_abstained",
+              "evidence": "PET/MRI: a novel hybrid imaging technique. Major clinical indications and preliminary experience in BrazilPET/RM: um novo m\u00e9todo de imagem h\u00edbrida. Principai..."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "project": "umbertogriffo/rag-chatbot",
+      "repo_url": "https://github.com/umbertogriffo/rag-chatbot",
+      "notes": "Local llama.cpp plus Chroma RAG chatbot with Markdown chunking and incremental indexing.",
+      "status": "completed",
+      "setup": {
+        "state": "already_cloned",
+        "path": "C:\\Users\\mannv\\OneDrive\\Desktop\\Projects\\ContextTrace\\.contexttrace\\real_world_repos\\rag-chatbot"
+      },
+      "corpus_files": 73,
+      "corpus_chunks": 548,
+      "cases": [
+        {
+          "id": "rag_chatbot_1",
+          "case_type": "grounded_smoke",
+          "question": "How does this chatbot update its vector database when documents change?",
+          "answer_preview": "index (VectorDatabaseDep): The vector database dependency for retrieval. When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database. Additionally, the chatbot is designed to remember previous interactions.",
+          "trace_path": "benchmarks/real_world_rag/traces/rag_chatbot_1.json",
+          "verify_report_path": "benchmarks/real_world_rag/reports/rag_chatbot_1_verify.html",
+          "audit_report_path": "benchmarks/real_world_rag/reports/rag_chatbot_1_audit.html",
+          "retrieved_context_ids": [
+            "rag_chatbot:backend/api/services/chat_stream.py:7",
+            "rag_chatbot:README.md:10",
+            "rag_chatbot:notes/prompts/plans/rag-ui-plan.md:6"
+          ],
+          "verify_summary": {
+            "total_claims": 3,
+            "supported": 3,
+            "partially_supported": 0,
+            "unsupported": 0,
+            "contradicted": 0,
+            "unverifiable": 0,
+            "support_rate": 1.0,
+            "unsupported_claim_rate": 0.0,
+            "citation_mismatches": 3,
+            "should_abstain": false,
+            "root_causes": {
+              "no_failure_detected": 3
+            },
+            "primary_root_cause": "no_failure_detected",
+            "failure_type": "no_failure_detected",
+            "failure_types": [
+              "no_failure_detected"
+            ],
+            "suggested_fix": "No fix is needed for this trace based on the local verifier.",
+            "mode": "semantic"
+          },
+          "audit_summary": {
+            "mode": "semantic",
+            "total_claims": 3,
+            "audited_claims": 0,
+            "corpus_documents": 548,
+            "has_audit_failures": false,
+            "primary_audit_label": "no_failure_detected",
+            "verification_failure_type": "no_failure_detected",
+            "verification_primary_root_cause": "no_failure_detected",
+            "no_failure_detected": 3,
+            "answer_overreach": 0,
+            "chunking_issue": 0,
+            "corpus_gap": 0,
+            "insufficient_context": 0,
+            "reranking_failure": 0,
+            "retrieval_miss": 0,
+            "stale_source": 0
+          },
+          "top_claims": [
+            {
+              "claim": "index (VectorDatabaseDep): The vector database dependency for retrieval.",
+              "verdict": "supported",
+              "root_cause": "no_failure_detected",
+              "evidence": "index (VectorDatabaseDep): The vector database dependency for retrieval."
+            },
+            {
+              "claim": "When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database.",
+              "verdict": "supported",
+              "root_cause": "no_failure_detected",
+              "evidence": "When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database."
+            },
+            {
+              "claim": "Additionally, the chatbot is designed to remember previous interactions.",
+              "verdict": "supported",
+              "root_cause": "no_failure_detected",
+              "evidence": "Additionally, the chatbot is designed to remember previous interactions."
+            }
+          ]
+        },
+        {
+          "id": "rag_chatbot_2",
+          "case_type": "grounded_smoke",
+          "question": "What response synthesis strategies does the chatbot support?",
+          "answer_preview": "* [Rerank](https://txt.cohere.com/rag-chatbot/#implement-reranking) * [Building Response Synthesis from Scratch](https://gpt-index.readthedocs.io/en/latest/examples/low_level/response_synthesis.html#) * [Conversational awareness](https://langstream.ai/2023/...",
+          "trace_path": "benchmarks/real_world_rag/traces/rag_chatbot_2.json",
+          "verify_report_path": "benchmarks/real_world_rag/reports/rag_chatbot_2_verify.html",
+          "audit_report_path": "benchmarks/real_world_rag/reports/rag_chatbot_2_audit.html",
+          "retrieved_context_ids": [
+            "rag_chatbot:README.md:42",
+            "rag_chatbot:notes/prompts/plans/rag-ui-plan.md:9",
+            "rag_chatbot:chatbot/bot/conversation/ctx_strategy.py:1"
+          ],
+          "verify_summary": {
+            "total_claims": 2,
+            "supported": 2,
+            "partially_supported": 0,
+            "unsupported": 0,
+            "contradicted": 0,
+            "unverifiable": 0,
+            "support_rate": 1.0,
+            "unsupported_claim_rate": 0.0,
+            "citation_mismatches": 2,
+            "should_abstain": false,
+            "root_causes": {
+              "no_failure_detected": 2
+            },
+            "primary_root_cause": "no_failure_detected",
+            "failure_type": "no_failure_detected",
+            "failure_types": [
+              "no_failure_detected"
+            ],
+            "suggested_fix": "No fix is needed for this trace based on the local verifier.",
+            "mode": "semantic"
+          },
+          "audit_summary": {
+            "mode": "semantic",
+            "total_claims": 2,
+            "audited_claims": 0,
+            "corpus_documents": 548,
+            "has_audit_failures": false,
+            "primary_audit_label": "no_failure_detected",
+            "verification_failure_type": "no_failure_detected",
+            "verification_primary_root_cause": "no_failure_detected",
+            "no_failure_detected": 2,
+            "answer_overreach": 0,
+            "chunking_issue": 0,
+            "corpus_gap": 0,
+            "insufficient_context": 0,
+            "reranking_failure": 0,
+            "retrieval_miss": 0,
+            "stale_source": 0
+          },
+          "top_claims": [
+            {
+              "claim": "[Rerank](https://txt.cohere.com/rag-chatbot/#implement-reranking) * [Building Response Synthesis from Scratch](https://gpt-index.readthedocs.io/en/latest/examples/low_level/response_synthesis.html#) * [Conversational awareness](https://langstream.ai/2023/10/13/rag-chatbot-with-conversation/) * [RAG is Dead, Again?",
+              "verdict": "supported",
+              "root_cause": "no_failure_detected",
+              "evidence": "* [Rerank](https://txt.cohere.com/rag-chatbot/#implement-reranking) * [Building Response Synthesis from Scratch](https://gpt-index.readthedocs.io/en/latest/e..."
+            },
+            {
+              "claim": "import asyncio from enum import Enum from typing import Any from entities.document import Document from helpers.log import get_logger from bot.client.lama_cpp_client import LamaCppClient logger = get_logger(__name__) class SynthesisStrategyType(Enum): CREATE_AND_REFINE = \"create-and-refine\" TREE_SUMMARIZATION = \"tree-summarization\" class BaseSynthesisStrategy: \"\"\" Base class for synthesis strategies.",
+              "verdict": "supported",
+              "root_cause": "no_failure_detected",
+              "evidence": "import asyncio from enum import Enum from typing import Any from entities.document import Document from helpers.log import get_logger from bot.client.lama_cp..."
+            }
+          ]
+        },
+        {
+          "id": "rag_chatbot_stress_1",
+          "case_type": "retrieval_stress_control",
+          "question": "How does this chatbot update its vector database when documents change?",
+          "answer_preview": "index (VectorDatabaseDep): The vector database dependency for retrieval. When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database. Additionally, the chatbot is designed to remember previous interactions.",
+          "trace_path": "benchmarks/real_world_rag/traces/rag_chatbot_stress_1.json",
+          "verify_report_path": "benchmarks/real_world_rag/reports/rag_chatbot_stress_1_verify.html",
+          "audit_report_path": "benchmarks/real_world_rag/reports/rag_chatbot_stress_1_audit.html",
+          "retrieved_context_ids": [
+            "rag_chatbot:backend/alembic/env.py:1",
+            "rag_chatbot:backend/alembic/env.py:2",
+            "rag_chatbot:backend/alembic/env.py:3"
+          ],
+          "oracle_context_ids": [
+            "rag_chatbot:backend/api/services/chat_stream.py:7",
+            "rag_chatbot:README.md:10",
+            "rag_chatbot:notes/prompts/plans/rag-ui-plan.md:6"
+          ],
+          "verify_summary": {
+            "total_claims": 3,
+            "supported": 0,
+            "partially_supported": 0,
+            "unsupported": 3,
+            "contradicted": 0,
+            "unverifiable": 0,
+            "support_rate": 0.0,
+            "unsupported_claim_rate": 1.0,
+            "citation_mismatches": 3,
+            "should_abstain": true,
+            "root_causes": {
+              "should_have_abstained": 3
+            },
+            "primary_root_cause": "should_have_abstained",
+            "failure_type": "should_have_abstained",
+            "failure_types": [
+              "should_have_abstained",
+              "unsupported_answer"
+            ],
+            "suggested_fix": "Add an abstention rule: when retrieved contexts do not support the requested fact, say the information is unavailable instead of generating a factual answer.",
+            "mode": "semantic"
+          },
+          "audit_summary": {
+            "mode": "semantic",
+            "total_claims": 3,
+            "audited_claims": 3,
+            "corpus_documents": 548,
+            "has_audit_failures": true,
+            "primary_audit_label": "retrieval_miss",
+            "verification_failure_type": "should_have_abstained",
+            "verification_primary_root_cause": "should_have_abstained",
+            "no_failure_detected": 0,
+            "answer_overreach": 0,
+            "chunking_issue": 0,
+            "corpus_gap": 0,
+            "insufficient_context": 0,
+            "reranking_failure": 0,
+            "retrieval_miss": 3,
+            "stale_source": 0
+          },
+          "top_claims": [
+            {
+              "claim": "index (VectorDatabaseDep): The vector database dependency for retrieval.",
+              "verdict": "unsupported",
+              "root_cause": "should_have_abstained",
+              "evidence": "\"\"\" url = config.get_main_option(\"sqlalchemy.url\") logger.info(f\"DATABASE_URL {url}\") context.configure( url=url, target_metadata=target_metadata, literal_bi..."
+            },
+            {
+              "claim": "When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database.",
+              "verdict": "unsupported",
+              "root_cause": "should_have_abstained",
+              "evidence": "\"\"\" url = config.get_main_option(\"sqlalchemy.url\") logger.info(f\"DATABASE_URL {url}\") context.configure( url=url, target_metadata=target_metadata, literal_bi..."
+            },
+            {
+              "claim": "Additionally, the chatbot is designed to remember previous interactions.",
+              "verdict": "unsupported",
+              "root_cause": "should_have_abstained",
+              "evidence": "from logging.config import fileConfig from alembic import context from bot.memory.document_registry import DocumentRecord # noqa: F401 \u2013 registers the model..."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

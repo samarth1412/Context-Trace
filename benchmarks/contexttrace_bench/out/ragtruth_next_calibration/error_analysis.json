@@ -1,0 +1,368 @@
+{
+  "benchmark": "ContextTrace-Bench",
+  "benchmark_miss_count": 14,
+  "case_count": 200,
+  "case_set": "external_case_pack",
+  "cases_to_review": [
+    {
+      "base_case_id": "ragtruth_121",
+      "conflicting_facts": [],
+      "evidence": "Letourneau gave birth to her young lover's child and went on to serve more than seven years in prison on charges related to their sexual relationship.",
+      "expected": [
+        "contradicted_answer"
+      ],
+      "expected_primary_root_cause": "conflicting_contexts",
+      "first_failed_claim": "After serving over seven years in prison, they have been married for 10 years.",
+      "first_failed_verdict": "unverifiable",
+      "id": "ragtruth_121",
+      "missing_facts": [
+        "After serving over seven years in prison, they have been married for 10 years",
+        "10 years"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_730",
+      "conflicting_facts": [
+        "A nuclear submarine at a Russian shipyard caught fire during repairs, but there's no danger of radiation or explosion as there's no ammunition or fissile materials on board."
+      ],
+      "evidence": "A nuclear submarine being repaired at a Russian shipyard has caught on fire, according to a law enforcement source speaking to Russia's state-run news agency ITAR-Tass.",
+      "expected": [
+        "partial_support"
+      ],
+      "expected_primary_root_cause": "answer_overreach",
+      "first_failed_claim": "A nuclear submarine at a Russian shipyard caught fire during repairs, but there's no danger of radiation or explosion as there's no ammunition or fissile materials on board.",
+      "first_failed_verdict": "contradicted",
+      "id": "ragtruth_730",
+      "missing_facts": [],
+      "predicted": [
+        "contradicted_answer"
+      ],
+      "predicted_primary_root_cause": "conflicting_contexts"
+    },
+    {
+      "base_case_id": "ragtruth_4211",
+      "conflicting_facts": [],
+      "evidence": "Jaddou asserts that USCIS is \"committed\" to completing work permit applications in a 30-day window on average.",
+      "expected": [
+        "contradicted_answer"
+      ],
+      "expected_primary_root_cause": "conflicting_contexts",
+      "first_failed_claim": "However, additional funding from Congress is needed to process more applications and reduce the current 30-day processing time.",
+      "first_failed_verdict": "unverifiable",
+      "id": "ragtruth_4211",
+      "missing_facts": [
+        "However, additional funding from Congress is needed to process more applications and reduce the current 30-day processing time"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_7052",
+      "conflicting_facts": [],
+      "evidence": "{\"address\": \"5918 Hollister Ave\", \"attributes\": {\"Ambience\": {\"casual\": true, \"classy\": false, \"divey\": false, \"hipster\": false, \"intimate\": false, \"romantic\": false, \"touristy\": false, \"trendy\": false, \"upscale\": false}, \"BusinessParking\": {\"garage\": false, \"lot\": true, \"street\": false, \"valet\": false, \"validated\": false}, \"Music\": null, \"OutdoorSeating\": null, \"RestaurantsGoodForGroups\": true, \"RestaurantsReservations\": true, \"RestaurantsTakeOut\": true, \"WiFi\": \"no\"}, \"business_stars\": 3.5, \"categories\": \"Restaurants, Thai\", \"city\": \"Goleta\", \"hours\": {\"Friday\": \"17:0-21:0\", \"Saturday\": \"17:0-21:0\", \"Sunday\": \"17:0-21:0\", \"Thursday\": \"17:0-21:0\", \"Tuesday\": \"17:0-21:0\", \"Wednesday\": \"17:0-21:0\"}, \"name\": \"Pattaya Thai Restaurant\", \"review_info\": [{\"review_date\": \"2022-01-18 10:53:32\", \"review_stars\": 3.0, \"review_text\": \"Went in for lunch and felt like I'd gone back in time.",
+      "expected": [
+        "contradicted_answer"
+      ],
+      "expected_primary_root_cause": "conflicting_contexts",
+      "first_failed_claim": "The restaurant has outdoor seating available.",
+      "first_failed_verdict": "partially_supported",
+      "id": "ragtruth_7052",
+      "missing_facts": [
+        "The restaurant has outdoor seating available"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_7236",
+      "conflicting_facts": [
+        "hours"
+      ],
+      "evidence": "{\"address\": \"5650 Calle Real\", \"attributes\": {\"Ambience\": {\"casual\": true, \"classy\": null, \"divey\": false, \"hipster\": true, \"intimate\": false, \"romantic\": null, \"touristy\": null, \"trendy\": null, \"upscale\": false}, \"BusinessParking\": {\"garage\": false, \"lot\": true, \"street\": null, \"valet\": false, \"validated\": false}, \"Music\": null, \"OutdoorSeating\": true, \"RestaurantsGoodForGroups\": true, \"RestaurantsReservations\": true, \"RestaurantsTakeOut\": false, \"WiFi\": \"free\"}, \"business_stars\": 4.0, \"categories\": \"Restaurants, American (New), Bars, Nightlife, Seafood, Breakfast & Brunch, American (Traditional), Desserts, Food\", \"city\": \"Goleta\", \"hours\": {\"Friday\": \"17:0-21:30\", \"Monday\": \"7:0-10:30\", \"Saturday\": \"17:0-21:30\", \"Sunday\": \"17:0-21:30\", \"Thursday\": \"17:0-21:30\", \"Tuesday\": \"7:0-10:30\", \"Wednesday\": \"17:0-21:30\"}, \"name\": \"Outpost\", \"review_info\": [{\"review_date\": \"2022-01-05 17:26:19\", \"review_stars\": 1.0, \"review_text\": \"My husband and I been coming here for about 4 years and the menu is amazing but the people that you guys hire they need some serious training.",
+      "expected": [
+        "partial_support"
+      ],
+      "expected_primary_root_cause": "answer_overreach",
+      "first_failed_claim": "The restaurant is open from 7:00 AM to 10:30 PM on Mondays and Tuesdays, and from 5:00 PM to 9:30 PM from Wednesday to Sunday.",
+      "first_failed_verdict": "contradicted",
+      "id": "ragtruth_7236",
+      "missing_facts": [
+        "The restaurant is open from 7:00 AM to 10:30 PM on Mondays and Tuesdays, and from 5:00 PM to 9:30 PM from Wednesday to Sunday"
+      ],
+      "predicted": [
+        "contradicted_answer"
+      ],
+      "predicted_primary_root_cause": "conflicting_contexts"
+    },
+    {
+      "base_case_id": "ragtruth_9604",
+      "conflicting_facts": [],
+      "evidence": "It perplexes me that this place is always so empty. Honestly it is the best food in IV without a doubt and it's because the owners double as the cooks and are invested in the overall quality of their ingredients and product. They are always entertaining and you could learn a thing or two from just conversing with them during your lunch. Consider helping out this humble mom and pop shop before heading to a big franchise restaurant because they do not compromise anything in their menu and are competitively priced compared to the rest of IV. \n\nI would recommend the Tuna sandwich for it's delicious combination of dressings and tastiness of the fish. Every bite is savory and leaves you wanting more. You can't go wrong with any of the sandwiches really though.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "According to customer reviews, the restaurant offers high-quality ingredients and unique flavor combinations, with a focus on sustainability and locally sourced ingredients.",
+      "first_failed_verdict": "unsupported",
+      "id": "ragtruth_9604",
+      "missing_facts": [
+        "offers high-quality ingredients",
+        "offers unique flavor combinations",
+        "offers with a focus on sustainability",
+        "locally sourced ingredients"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_10072",
+      "conflicting_facts": [],
+      "evidence": "The sashimi itself disappointed me as well due to the low quantity of cuts compared to kyoto's 25$ bowl.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "Its menu includes sushi, sashimi, and rolls, with prices ranging from $15 to $25 per item.",
+      "first_failed_verdict": "partially_supported",
+      "id": "ragtruth_10072",
+      "missing_facts": [
+        "includes with prices ranging from $15 to $25 per item"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_14007",
+      "conflicting_facts": [
+        "her, him, it"
+      ],
+      "evidence": "It will begin with a relative pronoun (who, whose, whom, which, and that) or a subordinate conjunction (when and where).",
+      "expected": [
+        "partial_support"
+      ],
+      "expected_primary_root_cause": "answer_overreach",
+      "first_failed_claim": "It is introduced by a relative pronoun (who, whose, him, her, it, that) or a subordinate conjunction (when and where).",
+      "first_failed_verdict": "contradicted",
+      "id": "ragtruth_14007",
+      "missing_facts": [],
+      "predicted": [
+        "contradicted_answer"
+      ],
+      "predicted_primary_root_cause": "conflicting_contexts"
+    },
+    {
+      "base_case_id": "ragtruth_15904",
+      "conflicting_facts": [],
+      "evidence": "passage 1:The design of a transistor allows it to function as an amplifier or a switch. This is accomplished by using a small amount of electricity to control a gate on a much larger supply of electricity, much like turning a valve to control a supply of water.he base pulls these electrons from the emitter because it has a more positive voltage than does the emitter. This movement of electrons creates a flow of electricity through the transistor. The current passes from the emitter to the collector through the base.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "When a positive voltage is applied to the base, it creates a region around the base where there are more electrons than holes.",
+      "first_failed_verdict": "partially_supported",
+      "id": "ragtruth_15904",
+      "missing_facts": [
+        "When a positive voltage is applied to the base, it creates a region around the base where there are more electrons than holes"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_15933",
+      "conflicting_facts": [],
+      "evidence": "passage 1:Global Egalitarianism. DOI:10.1093/acprof:oso/9780199235056.003.0003. This chapter examines global egalitarianism as a free-standing conception of global justice and provides some reasons for rejecting it. It argues that neither equality of resources nor equality of opportunity represents a workable principle of global justice. In neither case can we measure the resources or opportunities available to people in different societies in a way that is neutral as between cultures, and such neutrality seems indispensable in a global principle of justice.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "Global egalitarianism refers to a concept of global justice that emphasizes the importance of equality among individuals and groups worldwide.",
+      "first_failed_verdict": "unverifiable",
+      "id": "ragtruth_15933",
+      "missing_facts": [
+        "Global egalitarianism refers to a concept of global justice that emphasizes the importance of equality among individuals and groups worldwide"
+      ],
+      "predicted": [
+        "contradicted_answer"
+      ],
+      "predicted_primary_root_cause": "conflicting_contexts"
+    }
+  ],
+  "confusion": [
+    {
+      "count": 110,
+      "expected": "no_failure_detected",
+      "predicted": "no_failure_detected"
+    },
+    {
+      "count": 40,
+      "expected": "contradicted_answer",
+      "predicted": "contradicted_answer"
+    },
+    {
+      "count": 39,
+      "expected": "partial_support",
+      "predicted": "partial_support"
+    },
+    {
+      "count": 3,
+      "expected": "contradicted_answer",
+      "predicted": "partial_support"
+    },
+    {
+      "count": 3,
+      "expected": "no_failure_detected",
+      "predicted": "partial_support"
+    },
+    {
+      "count": 3,
+      "expected": "partial_support",
+      "predicted": "contradicted_answer"
+    },
+    {
+      "count": 1,
+      "expected": "no_failure_detected",
+      "predicted": "contradicted_answer"
+    },
+    {
+      "count": 1,
+      "expected": "unsupported",
+      "predicted": "unsupported"
+    }
+  ],
+  "dangerous_false_greens": [],
+  "false_positive_labels": [
+    {
+      "count": 3,
+      "label": "partial_support"
+    },
+    {
+      "count": 1,
+      "label": "contradicted_answer"
+    }
+  ],
+  "label_miss_count": 10,
+  "mode": "semantic",
+  "root_cause_confusion": [
+    {
+      "count": 110,
+      "expected_root_cause": "no_failure_detected",
+      "predicted_root_cause": "no_failure_detected"
+    },
+    {
+      "count": 40,
+      "expected_root_cause": "answer_overreach",
+      "predicted_root_cause": "answer_overreach"
+    },
+    {
+      "count": 40,
+      "expected_root_cause": "conflicting_contexts",
+      "predicted_root_cause": "conflicting_contexts"
+    },
+    {
+      "count": 3,
+      "expected_root_cause": "answer_overreach",
+      "predicted_root_cause": "conflicting_contexts"
+    },
+    {
+      "count": 3,
+      "expected_root_cause": "conflicting_contexts",
+      "predicted_root_cause": "answer_overreach"
+    },
+    {
+      "count": 3,
+      "expected_root_cause": "no_failure_detected",
+      "predicted_root_cause": "answer_overreach"
+    },
+    {
+      "count": 1,
+      "expected_root_cause": "no_failure_detected",
+      "predicted_root_cause": "conflicting_contexts"
+    }
+  ],
+  "top_conflicting_facts": [
+    {
+      "count": 1,
+      "fact": "A nuclear submarine at a Russian shipyard caught fire during repairs, but there's no danger of radiation or explosion as there's no ammunition or fissile materials on board."
+    },
+    {
+      "count": 1,
+      "fact": "The fire has been extinguished, with no injuries reported."
+    },
+    {
+      "count": 1,
+      "fact": "The first passage highlights the limitations of global egalitarianism by arguing that measuring the resources or opportunities available to people in different societies in a way that is neutral as between cultures is impossible."
+    },
+    {
+      "count": 1,
+      "fact": "her, him, it"
+    },
+    {
+      "count": 1,
+      "fact": "hours"
+    }
+  ],
+  "top_missing_facts": [
+    {
+      "count": 1,
+      "fact": "10 years"
+    },
+    {
+      "count": 1,
+      "fact": "According to customer reviews, the quality of the food at Itsuki Restaurant can be inconsistent, with some reviewers reporting that they were disappointed by the portion size and freshness of the sashimi and rolls"
+    },
+    {
+      "count": 1,
+      "fact": "According to this perspective, global justice requires that all individuals have equal access to resources and opportunities, regardless of their cultural background or location"
+    },
+    {
+      "count": 1,
+      "fact": "After serving over seven years in prison, they have been married for 10 years"
+    },
+    {
+      "count": 1,
+      "fact": "After serving over seven years in prison, they have two teenage daughters"
+    },
+    {
+      "count": 1,
+      "fact": "Despite their large age gap, they claim their marriage works due to their shared values and love for each other"
+    },
+    {
+      "count": 1,
+      "fact": "Easter is a complex holiday with religious and cultural significance, celebrated differently worldwide"
+    },
+    {
+      "count": 1,
+      "fact": "Global egalitarianism refers to a concept of global justice that emphasizes the importance of equality among individuals and groups worldwide"
+    },
+    {
+      "count": 1,
+      "fact": "He believes this would help regulate the number of crossings and provide a source of revenue"
+    },
+    {
+      "count": 1,
+      "fact": "However, additional funding from Congress is needed to process more applications and reduce the current 30-day processing time"
+    },
+    {
+      "count": 1,
+      "fact": "If coloring eggs, using Kool-Aid instead of vinegar can produce vibrant colors, but caution is advised as it can stain clothes and upholstery"
+    },
+    {
+      "count": 1,
+      "fact": "In summary, a transistor works by using a small input current to control a larger output current between the collector and the emitter, through the use of a depletion region created by the base and the type of material it is made of"
+    }
+  ]
+}

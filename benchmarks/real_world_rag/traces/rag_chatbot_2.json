@@ -1,0 +1,46 @@
+{
+  "query": "What response synthesis strategies does the chatbot support?",
+  "answer": "* [Rerank](https://txt.cohere.com/rag-chatbot/#implement-reranking)\n    * [Building Response Synthesis from Scratch](https://gpt-index.readthedocs.io/en/latest/examples/low_level/response_synthesis.html#)\n    * [Conversational awareness](https://langstream.ai/2023/10/13/rag-chatbot-with-conversation/)\n    * [RAG is Dead, Again? import asyncio\nfrom enum import Enum\nfrom typing import Any\n\nfrom entities.document import Document\nfrom helpers.log import get_logger\n\nfrom bot.client.lama_cpp_client import LamaCppClient\n\nlogger = get_logger(__name__)\n\nclass SynthesisStrategyType(Enum):\n    CREATE_AND_REFINE = \"create-and-refine\"\n    TREE_SUMMARIZATION = \"tree-summarization\"\n\nclass BaseSynthesisStrategy:\n    \"\"\"\n    Base class for synthesis strategies.",
+  "contexts": [
+    {
+      "id": "rag_chatbot:README.md:42",
+      "text": "k/rewrite.ipynb)\n        * > Because the original query can not be always optimal to retrieve for the LLM, especially in the real world,\n          we first prompt an LLM to rewrite the queries, then conduct retrieval-augmented reading.\n    * [Rerank](https://txt.cohere.com/rag-chatbot/#implement-reranking)\n    * [Building Response Synthesis from Scratch](https://gpt-index.readthedocs.io/en/latest/examples/low_level/response_synthesis.html#)\n    * [Conversational awareness](https://langstream.ai/2023/10/13/rag-chatbot-with-conversation/)\n    * [RAG is Dead, Again?](https://jina.ai/news/rag-is-dead-again/)\n* Chatbot UI:\n    * [Open WebUI](https://github.com/open-webui/open-webui)\n        * [Ru",
+      "metadata": {
+        "project": "umbertogriffo/rag-chatbot",
+        "repo_url": "https://github.com/umbertogriffo/rag-chatbot",
+        "source": "README.md",
+        "retrieval_score": 0.62,
+        "retriever": "sentence-transformers lexical-prefilter cosine"
+      }
+    },
+    {
+      "id": "rag_chatbot:notes/prompts/plans/rag-ui-plan.md:9",
+      "text": "mponent (or set of components) + Vite implementing the above features and styles using Tailwind CSS.\n\n### Prompt without sidebar\n\nImplementation of a high-fidelity, premium web UI for a modern AI chatbot as follows:",
+      "metadata": {
+        "project": "umbertogriffo/rag-chatbot",
+        "repo_url": "https://github.com/umbertogriffo/rag-chatbot",
+        "source": "notes/prompts/plans/rag-ui-plan.md",
+        "retrieval_score": 0.5769,
+        "retriever": "sentence-transformers lexical-prefilter cosine"
+      }
+    },
+    {
+      "id": "rag_chatbot:chatbot/bot/conversation/ctx_strategy.py:1",
+      "text": "import asyncio\nfrom enum import Enum\nfrom typing import Any\n\nfrom entities.document import Document\nfrom helpers.log import get_logger\n\nfrom bot.client.lama_cpp_client import LamaCppClient\n\nlogger = get_logger(__name__)\n\nclass SynthesisStrategyType(Enum):\n    CREATE_AND_REFINE = \"create-and-refine\"\n    TREE_SUMMARIZATION = \"tree-summarization\"\n\nclass BaseSynthesisStrategy:\n    \"\"\"\n    Base class for synthesis strategies.\n\nAttributes:\n        llm (LlmClient): The language model client used for generating responses.\n    \"\"\"\n\ndef __init__(self, llm: LamaCppClient) -> None:\n        \"\"\"\n        Initialize the synthesis strategy with the provided LlmClient.",
+      "metadata": {
+        "project": "umbertogriffo/rag-chatbot",
+        "repo_url": "https://github.com/umbertogriffo/rag-chatbot",
+        "source": "chatbot/bot/conversation/ctx_strategy.py",
+        "retrieval_score": 0.4515,
+        "retriever": "sentence-transformers lexical-prefilter cosine"
+      }
+    }
+  ],
+  "metadata": {
+    "project": "umbertogriffo/rag-chatbot",
+    "repo_url": "https://github.com/umbertogriffo/rag-chatbot",
+    "validation": "real_world_rag",
+    "generation_model": "mistral",
+    "embedding_model": "all-MiniLM-L6-v2"
+  }
+}

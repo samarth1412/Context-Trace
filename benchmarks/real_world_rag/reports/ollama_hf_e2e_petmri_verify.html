@@ -1,0 +1,1160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ContextTrace Verification Report</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f8fa;
+      --panel: #ffffff;
+      --subtle: #fbfcfe;
+      --text: #202832;
+      --muted: #657286;
+      --line: #d9e0ea;
+      --ok: #176f44;
+      --warn: #946200;
+      --bad: #b42318;
+      --accent: #2458d3;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    main { max-width: 1160px; margin: 0 auto; padding: 32px 20px 56px; }
+    header { border-bottom: 1px solid var(--line); margin-bottom: 22px; padding-bottom: 18px; }
+    h1, h2, h3 { margin: 0; }
+    h1 { font-size: 30px; }
+    h2 { font-size: 18px; margin-bottom: 12px; }
+    h3 { font-size: 15px; margin-bottom: 8px; }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin: 16px 0;
+      padding: 18px;
+    }
+    .summary {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    .card, .item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--subtle);
+      padding: 12px;
+    }
+    .item + .item { margin-top: 10px; }
+    .label, .item-meta {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .value { margin-top: 4px; font-size: 18px; overflow-wrap: anywhere; }
+    .muted { color: var(--muted); }
+    .answer, .item p { white-space: pre-wrap; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { border-bottom: 1px solid var(--line); padding: 10px; text-align: left; vertical-align: top; }
+    th { color: var(--muted); font-size: 12px; text-transform: uppercase; }
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #eef2f7;
+      padding: 3px 8px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .verdict-supported, .citation-citation_ok { color: var(--ok); background: #e9f7ef; }
+    .verdict-unverifiable, .verdict-partially_supported, .citation-claim_has_no_citation { color: var(--warn); background: #fff7df; }
+    .verdict-unsupported, .verdict-contradicted,
+    .citation-cited_source_missing,
+    .citation-claim_supported_by_different_source,
+    .citation-cited_source_does_not_support_claim { color: var(--bad); background: #fdeceb; }
+    pre {
+      margin: 0;
+      overflow: auto;
+      background: #101828;
+      color: #f8fafc;
+      border-radius: 8px;
+      padding: 14px;
+      font-size: 13px;
+    }
+    mark {
+      background: #fff0a6;
+      color: inherit;
+      border-radius: 3px;
+      padding: 0 2px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>ContextTrace Verification Report</h1>
+      <p class="muted">Local claim-level evidence verification for a portable RAG trace.</p>
+    </header>
+
+    <section>
+      <h2>Reliability Summary</h2>
+      <div class="summary">
+        <div class="card">
+          <div class="label">Failure Type</div>
+          <div class="value">contradicted_answer</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Total Claims</div>
+          <div class="value">5</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Supported</div>
+          <div class="value">3</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Partially Supported</div>
+          <div class="value">1</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Unsupported</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Unverifiable</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Contradicted</div>
+          <div class="value">1</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Support Rate</div>
+          <div class="value">0.6</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Unsupported Claim Rate</div>
+          <div class="value">0.4</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Citation Mismatches</div>
+          <div class="value">5</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Should Abstain</div>
+          <div class="value">False</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Primary Root Cause</div>
+          <div class="value">conflicting_contexts</div>
+        </div>
+        </div>
+    </section>
+
+    <section>
+      <h2>Suggested Fix</h2>
+      <p><strong>contradicted_answer</strong></p>
+      <p>Filter stale or conflicting sources and require the final answer to match the highest-priority evidence.</p>
+    </section>
+
+    <section>
+      <h2>Query</h2>
+      <p>What are the main advantages of PET/MRI compared with PET/CT?</p>
+      <h2>Answer</h2>
+      <p class="answer">- PET/MRI has been introduced since 2010, with approximately 70 systems installed worldwide.
+- Widely accepted clinical indications for PET/MRI are yet to be determined.
+- PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis.
+- The adoption of PET/MRI has been slower compared to PET/CT.
+- However, the main advantages of PET/MRI over PET/CT are not explicitly</p>
+    </section>
+
+    <section>
+      <h2>Claim Support Overview</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Claim</th>
+            <th>Verdict</th>
+            <th>Confidence</th>
+            <th>Best Context</th>
+            <th>Citation</th>
+            <th>Root Cause</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td>claim_1</td>
+              <td>PET/MRI has been introduced since 2010, with approximately 70 systems installed worldwide.</td>
+              <td><span class="badge verdict-supported">supported</span></td>
+              <td>0.707</td>
+              <td>data/PETMRI.txt:4</td>
+              <td><span class="badge citation-claim_has_no_citation">claim_has_no_citation</span></td>
+              <td>no_failure_detected</td>
+            </tr>
+            
+
+            <tr>
+              <td>claim_2</td>
+              <td>Widely accepted clinical indications for PET/MRI are yet to be determined.</td>
+              <td><span class="badge verdict-supported">supported</span></td>
+              <td>0.779</td>
+              <td>data/PETMRI.txt:24</td>
+              <td><span class="badge citation-claim_has_no_citation">claim_has_no_citation</span></td>
+              <td>no_failure_detected</td>
+            </tr>
+            
+
+            <tr>
+              <td>claim_3</td>
+              <td>PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis.</td>
+              <td><span class="badge verdict-partially_supported">partially_supported</span></td>
+              <td>0.565</td>
+              <td>data/PETMRI.txt:24</td>
+              <td><span class="badge citation-claim_has_no_citation">claim_has_no_citation</span></td>
+              <td>answer_overreach</td>
+            </tr>
+            
+
+            <tr>
+              <td>claim_4</td>
+              <td>The adoption of PET/MRI has been slower compared to PET/CT.</td>
+              <td><span class="badge verdict-supported">supported</span></td>
+              <td>0.868</td>
+              <td>data/PETMRI.txt:4</td>
+              <td><span class="badge citation-claim_has_no_citation">claim_has_no_citation</span></td>
+              <td>no_failure_detected</td>
+            </tr>
+            
+
+            <tr>
+              <td>claim_5</td>
+              <td>However, the main advantages of PET/MRI over PET/CT are not explicitly.</td>
+              <td><span class="badge verdict-contradicted">contradicted</span></td>
+              <td>0.742</td>
+              <td>data/PETMRI.txt:24</td>
+              <td><span class="badge citation-claim_has_no_citation">claim_has_no_citation</span></td>
+              <td>conflicting_contexts</td>
+            </tr>
+            </tbody>
+      </table>
+      <div>
+            <article class="item">
+              <div class="item-meta">claim_1 | supported | score 0.707</div>
+              <h3>PET/MRI has been introduced since 2010, with approximately 70 systems installed worldwide.</h3>
+              <p class="muted">Evidence span: data/PETMRI.txt:4 chars 577-853 sha256:9b174d24f2ef2e30</p>
+              <p><strong>Supporting spans:</strong> <span>data/PETMRI.txt:4 sha256:9b174d24f2ef2e30 score 0.707</span>, <span>data/PETMRI.txt:4 sha256:fb878681f624346b score 0.175</span>, <span>data/PETMRI.txt:24 sha256:09abda01878e92ff score 0.175</span>, <span>data/PETMRI.txt:4 sha256:b86d1613bbb0293b score 0.1</span></p>
+              <p><mark>Since</mark>           its     introduction                    in     <mark>2010</mark>,          <mark>approximately</mark>
+imaging/methods; Tomography, x-ray computed/methods; Pelvic neoplasms;                                                               <mark>70</mark> <mark>systems</mark> have been <mark>installed</mark> <mark>worldwide</mark>, mostly in</p>
+              <p class="muted">Matched terms: since, 2010, approximately, 70, systems, installed, worldwide</p>
+              <p><strong>Matched facts:</strong> <span class="muted">none</span></p>
+              <p><strong>Missing facts:</strong> <span>PET/MRI has been introduced since 2010, with approximately 70 systems installed worldwide (path)</span>, <span>PET/MRI (path)</span></p>
+              <p><strong>Root cause:</strong> no_failure_detected</p>
+              <p>The claim is supported by data/PETMRI.txt:4 because the context states: Since           its     introduction                    in     2010,          approximately
+imaging/methods; Tomography, x-ray computed/methods; Pelvic neoplasms;                                                               70 systems have been installed worldwide, mostly in</p>
+            </article>
+            
+
+            <article class="item">
+              <div class="item-meta">claim_2 | supported | score 0.779</div>
+              <h3>Widely accepted clinical indications for PET/MRI are yet to be determined.</h3>
+              <p class="muted">Evidence span: data/PETMRI.txt:24 chars 101-262 sha256:09abda01878e92ff</p>
+              <p><strong>Supporting spans:</strong> <span>data/PETMRI.txt:24 sha256:09abda01878e92ff score 0.779</span>, <span>data/PETMRI.txt:4 sha256:fb878681f624346b score 0.216</span>, <span>data/PETMRI.txt:17 sha256:9b1bf560d7470d2b score 0.114</span></p>
+              <p>However, <mark>widely</mark>
+<mark>accepted</mark> <mark>clinical</mark> <mark>indications</mark> remain to be <mark>determined</mark>
+
+before conclusive statements regarding the advantages
+of <mark>PET</mark>/<mark>MRI</mark>, over <mark>PET</mark>/CT can be made.</p>
+              <p class="muted">Matched terms: widely, accepted, clinical, indications, pet, mri, determined</p>
+              <p><strong>Matched facts:</strong> <span class="muted">none</span></p>
+              <p><strong>Missing facts:</strong> <span>Widely accepted clinical indications for PET/MRI are yet to be determined (path)</span>, <span>PET/MRI (path)</span></p>
+              <p><strong>Root cause:</strong> no_failure_detected</p>
+              <p>The claim is supported by data/PETMRI.txt:24 because the context states: However, widely
+accepted clinical indications remain to be determined
+
+before conclusive statements regarding the advantages
+of PET/MRI, over PET/CT can be made.</p>
+            </article>
+            
+
+            <article class="item">
+              <div class="item-meta">claim_3 | partially_supported | score 0.565</div>
+              <h3>PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis.</h3>
+              <p class="muted">Evidence span: data/PETMRI.txt:24 chars 0-100 sha256:7c723e5589be2598</p>
+              <p><strong>Supporting spans:</strong> <span>data/PETMRI.txt:24 sha256:7c723e5589be2598 score 0.565</span>, <span>data/PETMRI.txt:4 sha256:fb878681f624346b score 0.148</span>, <span>data/PETMRI.txt:24 sha256:09abda01878e92ff score 0.148</span>, <span>data/PETMRI.txt:17 sha256:9b1bf560d7470d2b score 0.078</span></p>
+              <p>choice, <mark>particularly</mark> for assessment of some <mark>regions</mark>, such as
+<mark>brain</mark>, <mark>head</mark> and <mark>neck</mark>, <mark>liver</mark> and <mark>pelvis</mark>.</p>
+              <p class="muted">Matched terms: particularly, regions, brain, head, neck, liver, pelvis</p>
+              <p><strong>Matched facts:</strong> <span class="muted">none</span></p>
+              <p><strong>Missing facts:</strong> <span>PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis (path)</span>, <span>PET/MRI (path)</span></p>
+              <p><strong>Root cause:</strong> answer_overreach</p>
+              <p>The strongest context supports part of the claim through particularly, regions, brain, head, neck, liver, pelvis, but it does not clearly support every detail.</p>
+            </article>
+            
+
+            <article class="item">
+              <div class="item-meta">claim_4 | supported | score 0.868</div>
+              <h3>The adoption of PET/MRI has been slower compared to PET/CT.</h3>
+              <p class="muted">Evidence span: data/PETMRI.txt:4 chars 211-568 sha256:fb878681f624346b</p>
+              <p><strong>Supporting spans:</strong> <span>data/PETMRI.txt:4 sha256:fb878681f624346b score 0.868</span>, <span>data/PETMRI.txt:17 sha256:9b1bf560d7470d2b score 0.463</span>, <span>data/PETMRI.txt:24 sha256:09abda01878e92ff score 0.427</span></p>
+              <p>The <mark>adoption</mark> of <mark>PET</mark>/<mark>MRI</mark> has been much
+                                                                                                                                     <mark>slower</mark> <mark>compared</mark> to <mark>PET</mark>/computed tomography (<mark>PET</mark>/
+Keywords: Positron-emission tomography/methods; Magnetic resonance                                                                   <mark>CT</mark>).</p>
+              <p class="muted">Matched terms: adoption, pet, mri, slower, compared, ct</p>
+              <p><strong>Matched facts:</strong> <span class="muted">none</span></p>
+              <p><strong>Missing facts:</strong> <span>The adoption of PET/MRI has been slower compared to PET/CT (path)</span>, <span>PET/MRI (path)</span>, <span>PET/CT (path)</span></p>
+              <p><strong>Root cause:</strong> no_failure_detected</p>
+              <p>The claim is supported by data/PETMRI.txt:4 because the context states: The adoption of PET/MRI has been much
+                                                                                                                                     slower compared to PET/computed tomography (PET/
+Keywords: Positron-emission tomography/methods; Magnetic resonance                                                                   CT).</p>
+            </article>
+            
+
+            <article class="item">
+              <div class="item-meta">claim_5 | contradicted | score 0.622</div>
+              <h3>However, the main advantages of PET/MRI over PET/CT are not explicitly.</h3>
+              <p class="muted">Evidence span: data/PETMRI.txt:24 chars 101-262 sha256:09abda01878e92ff</p>
+              <p><strong>Supporting spans:</strong> <span>data/PETMRI.txt:24 sha256:09abda01878e92ff score 0.622</span>, <span>data/PETMRI.txt:4 sha256:fb878681f624346b score 0.369</span>, <span>data/PETMRI.txt:17 sha256:9b1bf560d7470d2b score 0.263</span></p>
+              <p><mark>However</mark>, widely
+accepted clinical indications remain to be determined
+
+before conclusive statements regarding the <mark>advantages</mark>
+of <mark>PET</mark>/<mark>MRI</mark>, over <mark>PET</mark>/<mark>CT</mark> can be made.</p>
+              <p class="muted">Matched terms: however, advantages, pet, mri, ct</p>
+              <p><strong>Matched facts:</strong> <span class="muted">none</span></p>
+              <p><strong>Missing facts:</strong> <span>However, the main advantages of PET/MRI over PET/CT are not explicitly (path)</span>, <span>PET/MRI (path)</span>, <span>PET/CT (path)</span>, <span>However, the main advantages of PET/MRI over PET/CT are not explicitly (negation)</span></p>
+              <p><strong>Root cause:</strong> conflicting_contexts</p>
+              <p>The strongest evidence appears to conflict with the claim because it uses negation or a different numeric/date value for the same subject.</p>
+            </article>
+            </div>
+    </section>
+
+    <section>
+      <h2>Unsupported Claims</h2>
+      
+        <article class="item">
+          <div class="item-meta">claim_3 | partially_supported</div>
+          <p>PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis.</p>
+          <p><strong>Missing facts:</strong> <span>PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis (path)</span>, <span>PET/MRI (path)</span></p>
+          <p><strong>Root cause:</strong> answer_overreach</p>
+          <p>The strongest context supports part of the claim through particularly, regions, brain, head, neck, liver, pelvis, but it does not clearly support every detail.</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">claim_5 | contradicted</div>
+          <p>However, the main advantages of PET/MRI over PET/CT are not explicitly.</p>
+          <p><strong>Missing facts:</strong> <span>However, the main advantages of PET/MRI over PET/CT are not explicitly (path)</span>, <span>PET/MRI (path)</span>, <span>PET/CT (path)</span>, <span>However, the main advantages of PET/MRI over PET/CT are not explicitly (negation)</span></p>
+          <p><strong>Root cause:</strong> conflicting_contexts</p>
+          <p>The strongest evidence appears to conflict with the claim because it uses negation or a different numeric/date value for the same subject.</p>
+        </article>
+        
+    </section>
+
+    <section>
+      <h2>Root Cause Diagnosis</h2>
+      
+        <article class="item">
+          <div class="item-meta">claim_3 | answer_overreach</div>
+          <p>PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis.</p>
+          <p><strong>Missing fact:</strong> PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis</p>
+          <p><strong>Closest evidence:</strong> choice, particularly for assessment of some regions, such as
+brain, head and neck, liver and pelvis.</p>
+          <p>The retrieved evidence supports part of the claim, but not PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis.</p>
+          <p><strong>Suggested fix:</strong> Remove the unsupported detail or retrieve a source that explicitly supports it.</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">claim_5 | conflicting_contexts</div>
+          <p>However, the main advantages of PET/MRI over PET/CT are not explicitly.</p>
+          <p><strong>Missing fact:</strong> However, the main advantages of PET/MRI over PET/CT are not explicitly</p>
+          <p><strong>Closest evidence:</strong> However, widely
+accepted clinical indications remain to be determined
+
+before conclusive statements regarding the advantages
+of PET/MRI, over PET/CT can be made.</p>
+          <p>The retrieved evidence conflicts with the claim on However, the main advantages of PET/MRI over PET/CT are not explicitly..</p>
+          <p><strong>Suggested fix:</strong> Resolve stale or conflicting retrieved sources before allowing the generator to answer.</p>
+        </article>
+        
+    </section>
+
+    <section>
+      <h2>Citation Mismatches</h2>
+      
+        <article class="item">
+          <div class="item-meta">claim_1 | cited none</div>
+          <p>PET/MRI has been introduced since 2010, with approximately 70 systems installed worldwide.</p>
+          <p><strong>claim_has_no_citation</strong></p>
+          <p class="muted">Best supporting context: data/PETMRI.txt:4</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">claim_2 | cited none</div>
+          <p>Widely accepted clinical indications for PET/MRI are yet to be determined.</p>
+          <p><strong>claim_has_no_citation</strong></p>
+          <p class="muted">Best supporting context: data/PETMRI.txt:24</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">claim_3 | cited none</div>
+          <p>PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis.</p>
+          <p><strong>claim_has_no_citation</strong></p>
+          <p class="muted">Best supporting context: data/PETMRI.txt:24</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">claim_4 | cited none</div>
+          <p>The adoption of PET/MRI has been slower compared to PET/CT.</p>
+          <p><strong>claim_has_no_citation</strong></p>
+          <p class="muted">Best supporting context: data/PETMRI.txt:4</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">claim_5 | cited none</div>
+          <p>However, the main advantages of PET/MRI over PET/CT are not explicitly.</p>
+          <p><strong>claim_has_no_citation</strong></p>
+          <p class="muted">Best supporting context: data/PETMRI.txt:24</p>
+        </article>
+        
+    </section>
+
+    <section>
+      <h2>Retrieved Contexts</h2>
+      
+        <article class="item">
+          <div class="item-meta">data/PETMRI.txt:4 | {&quot;chunk_index&quot;: 4, &quot;repo&quot;: &quot;https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;, &quot;source&quot;: &quot;data/PETMRI.txt&quot;}</div>
+          <p>illustrated with examples extracted from the authors’ preliminary
+experience.                                                                                                                          introduced. The adoption of PET/MRI has been much
+                                                                                                                                     slower compared to PET/computed tomography (PET/
+Keywords: Positron-emission tomography/methods; Magnetic resonance                                                                   CT).         Since           its     introduction                    in     2010,          approximately
+imaging/methods; Tomography, x-ray computed/methods; Pelvic neoplasms;                                                               70 systems have been installed worldwide, mostly in</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">data/PETMRI.txt:17 | {&quot;chunk_index&quot;: 17, &quot;repo&quot;: &quot;https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;, &quot;source&quot;: &quot;data/PETMRI.txt&quot;}</div>
+          <p>compared to PET/CT(8) (Figure 4).</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">data/PETMRI.txt:24 | {&quot;chunk_index&quot;: 24, &quot;repo&quot;: &quot;https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;, &quot;source&quot;: &quot;data/PETMRI.txt&quot;}</div>
+          <p>choice, particularly for assessment of some regions, such as
+brain, head and neck, liver and pelvis. However, widely
+accepted clinical indications remain to be determined
+
+before conclusive statements regarding the advantages
+of PET/MRI, over PET/CT can be made.
+
+
+
+REFERENCES
+
+1.    Ter-Pogossian MM, Phelps ME, Hoffman EJ, Mullani NA. A positron-emission
+      transaxial tomograph for nuclear imaging (PETT). Radiology. 1975;114(1):89-98.</p>
+        </article>
+        
+    </section>
+
+    <section>
+      <h2>Why This Failed</h2>
+      <ul><li>answer_overreach: The retrieved evidence supports part of the claim, but not PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis. Suggested fix: Remove the unsupported detail or retrieve a source that explicitly supports it.</li>
+<li>conflicting_contexts: The retrieved evidence conflicts with the claim on However, the main advantages of PET/MRI over PET/CT are not explicitly.. Suggested fix: Resolve stale or conflicting retrieved sources before allowing the generator to answer.</li></ul>
+    </section>
+
+    <section>
+      <h2>Raw JSON Summary</h2>
+      <pre>{
+  &quot;summary&quot;: {
+    &quot;total_claims&quot;: 5,
+    &quot;supported&quot;: 3,
+    &quot;partially_supported&quot;: 1,
+    &quot;unsupported&quot;: 0,
+    &quot;contradicted&quot;: 1,
+    &quot;unverifiable&quot;: 0,
+    &quot;support_rate&quot;: 0.6,
+    &quot;unsupported_claim_rate&quot;: 0.4,
+    &quot;citation_mismatches&quot;: 5,
+    &quot;should_abstain&quot;: false,
+    &quot;root_causes&quot;: {
+      &quot;answer_overreach&quot;: 1,
+      &quot;conflicting_contexts&quot;: 1,
+      &quot;no_failure_detected&quot;: 3
+    },
+    &quot;primary_root_cause&quot;: &quot;conflicting_contexts&quot;,
+    &quot;failure_type&quot;: &quot;contradicted_answer&quot;,
+    &quot;failure_types&quot;: [
+      &quot;contradicted_answer&quot;,
+      &quot;partial_support&quot;
+    ],
+    &quot;suggested_fix&quot;: &quot;Filter stale or conflicting sources and require the final answer to match the highest-priority evidence.&quot;,
+    &quot;mode&quot;: &quot;semantic&quot;
+  },
+  &quot;abstention&quot;: {
+    &quot;should_abstain&quot;: false,
+    &quot;reason&quot;: &quot;At least one claim is only partially supported; the answer should remove or qualify unsupported details rather than fully abstain.&quot;
+  },
+  &quot;diagnostics&quot;: {
+    &quot;failure_type&quot;: &quot;contradicted_answer&quot;,
+    &quot;failure_types&quot;: [
+      &quot;contradicted_answer&quot;,
+      &quot;partial_support&quot;
+    ],
+    &quot;suggested_fix&quot;: &quot;Filter stale or conflicting sources and require the final answer to match the highest-priority evidence.&quot;
+  },
+  &quot;claims&quot;: [
+    {
+      &quot;claim_id&quot;: &quot;claim_1&quot;,
+      &quot;claim&quot;: &quot;PET/MRI has been introduced since 2010, with approximately 70 systems installed worldwide.&quot;,
+      &quot;verdict&quot;: &quot;supported&quot;,
+      &quot;confidence&quot;: 0.707,
+      &quot;best_context_id&quot;: &quot;data/PETMRI.txt:4&quot;,
+      &quot;best_context_text&quot;: &quot;illustrated with examples extracted from the authors\u2019 preliminary\nexperience.                                                                                                                          introduced. The adoption of PET/MRI has been much\n                                                                                                                                     slower compared to PET/computed tomography (PET/\nKeywords: Positron-emission tomography/methods; Magnetic resonance                                                                   CT).         Since           its     introduction                    in     2010,          approximately\nimaging/methods; Tomography, x-ray computed/methods; Pelvic neoplasms;                                                               70 systems have been installed worldwide, mostly in&quot;,
+      &quot;best_score&quot;: 0.707,
+      &quot;evidence&quot;: &quot;Since           its     introduction                    in     2010,          approximately\nimaging/methods; Tomography, x-ray computed/methods; Pelvic neoplasms;                                                               70 systems have been installed worldwide, mostly in&quot;,
+      &quot;evidence_span&quot;: {
+        &quot;context_id&quot;: &quot;data/PETMRI.txt:4&quot;,
+        &quot;text&quot;: &quot;Since           its     introduction                    in     2010,          approximately\nimaging/methods; Tomography, x-ray computed/methods; Pelvic neoplasms;                                                               70 systems have been installed worldwide, mostly in&quot;,
+        &quot;start_char&quot;: 577,
+        &quot;end_char&quot;: 853,
+        &quot;span_hash&quot;: &quot;sha256:9b174d24f2ef2e30&quot;
+      },
+      &quot;supporting_spans&quot;: [
+        {
+          &quot;context_id&quot;: &quot;data/PETMRI.txt:4&quot;,
+          &quot;text&quot;: &quot;Since           its     introduction                    in     2010,          approximately\nimaging/methods; Tomography, x-ray computed/methods; Pelvic neoplasms;                                                               70 systems have been installed worldwide, mostly in&quot;,
+          &quot;start_char&quot;: 577,
+          &quot;end_char&quot;: 853,
+          &quot;span_hash&quot;: &quot;sha256:9b174d24f2ef2e30&quot;,
+          &quot;score&quot;: 0.707,
+          &quot;matched_terms&quot;: [
+            &quot;since&quot;,
+            &quot;2010&quot;,
+            &quot;approximately&quot;,
+            &quot;70&quot;,
+            &quot;systems&quot;,
+            &quot;installed&quot;,
+            &quot;worldwide&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;data/PETMRI.txt:4&quot;,
+          &quot;text&quot;: &quot;The adoption of PET/MRI has been much\n                                                                                                                                     slower compared to PET/computed tomography (PET/\nKeywords: Positron-emission tomography/methods; Magnetic resonance                                                                   CT).&quot;,
+          &quot;start_char&quot;: 211,
+          &quot;end_char&quot;: 568,
+          &quot;span_hash&quot;: &quot;sha256:fb878681f624346b&quot;,
+          &quot;score&quot;: 0.175,
+          &quot;matched_terms&quot;: [
+            &quot;pet&quot;,
+            &quot;mri&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;data/PETMRI.txt:24&quot;,
+          &quot;text&quot;: &quot;However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.&quot;,
+          &quot;start_char&quot;: 101,
+          &quot;end_char&quot;: 262,
+          &quot;span_hash&quot;: &quot;sha256:09abda01878e92ff&quot;,
+          &quot;score&quot;: 0.175,
+          &quot;matched_terms&quot;: [
+            &quot;pet&quot;,
+            &quot;mri&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;data/PETMRI.txt:4&quot;,
+          &quot;text&quot;: &quot;introduced.&quot;,
+          &quot;start_char&quot;: 199,
+          &quot;end_char&quot;: 210,
+          &quot;span_hash&quot;: &quot;sha256:b86d1613bbb0293b&quot;,
+          &quot;score&quot;: 0.1,
+          &quot;matched_terms&quot;: [
+            &quot;introduced&quot;
+          ]
+        }
+      ],
+      &quot;matched_terms&quot;: [
+        &quot;since&quot;,
+        &quot;2010&quot;,
+        &quot;approximately&quot;,
+        &quot;70&quot;,
+        &quot;systems&quot;,
+        &quot;installed&quot;,
+        &quot;worldwide&quot;
+      ],
+      &quot;required_facts&quot;: [
+        &quot;PET/MRI has been introduced since 2010, with approximately 70 systems installed worldwide&quot;,
+        &quot;PET/MRI&quot;
+      ],
+      &quot;matched_facts&quot;: [],
+      &quot;missing_facts&quot;: [
+        &quot;PET/MRI has been introduced since 2010, with approximately 70 systems installed worldwide&quot;,
+        &quot;PET/MRI&quot;
+      ],
+      &quot;conflicting_facts&quot;: [],
+      &quot;required_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;PET/MRI has been introduced since 2010, with approximately 70 systems installed worldwide&quot;,
+          &quot;type&quot;: &quot;path&quot;
+        },
+        {
+          &quot;text&quot;: &quot;PET/MRI&quot;,
+          &quot;type&quot;: &quot;path&quot;
+        }
+      ],
+      &quot;matched_fact_details&quot;: [],
+      &quot;missing_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;PET/MRI has been introduced since 2010, with approximately 70 systems installed worldwide&quot;,
+          &quot;type&quot;: &quot;path&quot;
+        },
+        {
+          &quot;text&quot;: &quot;PET/MRI&quot;,
+          &quot;type&quot;: &quot;path&quot;
+        }
+      ],
+      &quot;conflicting_fact_details&quot;: [],
+      &quot;reason&quot;: &quot;The claim is supported by data/PETMRI.txt:4 because the context states: Since           its     introduction                    in     2010,          approximately\nimaging/methods; Tomography, x-ray computed/methods; Pelvic neoplasms;                                                               70 systems have been installed worldwide, mostly in&quot;,
+      &quot;citation_status&quot;: &quot;claim_has_no_citation&quot;,
+      &quot;citation_source_id&quot;: null,
+      &quot;root_cause&quot;: {
+        &quot;label&quot;: &quot;no_failure_detected&quot;,
+        &quot;reason&quot;: &quot;The claim is supported by retrieved evidence and no citation failure was detected.&quot;,
+        &quot;missing_fact&quot;: null,
+        &quot;closest_context_id&quot;: &quot;data/PETMRI.txt:4&quot;,
+        &quot;closest_evidence&quot;: &quot;Since           its     introduction                    in     2010,          approximately\nimaging/methods; Tomography, x-ray computed/methods; Pelvic neoplasms;                                                               70 systems have been installed worldwide, mostly in&quot;,
+        &quot;suggested_fix&quot;: &quot;No fix needed for this claim.&quot;
+      }
+    },
+    {
+      &quot;claim_id&quot;: &quot;claim_2&quot;,
+      &quot;claim&quot;: &quot;Widely accepted clinical indications for PET/MRI are yet to be determined.&quot;,
+      &quot;verdict&quot;: &quot;supported&quot;,
+      &quot;confidence&quot;: 0.779,
+      &quot;best_context_id&quot;: &quot;data/PETMRI.txt:24&quot;,
+      &quot;best_context_text&quot;: &quot;choice, particularly for assessment of some regions, such as\nbrain, head and neck, liver and pelvis. However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.\n\n\n\nREFERENCES\n\n1.    Ter-Pogossian MM, Phelps ME, Hoffman EJ, Mullani NA. A positron-emission\n      transaxial tomograph for nuclear imaging (PETT). Radiology. 1975;114(1):89-98.&quot;,
+      &quot;best_score&quot;: 0.779,
+      &quot;evidence&quot;: &quot;However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.&quot;,
+      &quot;evidence_span&quot;: {
+        &quot;context_id&quot;: &quot;data/PETMRI.txt:24&quot;,
+        &quot;text&quot;: &quot;However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.&quot;,
+        &quot;start_char&quot;: 101,
+        &quot;end_char&quot;: 262,
+        &quot;span_hash&quot;: &quot;sha256:09abda01878e92ff&quot;
+      },
+      &quot;supporting_spans&quot;: [
+        {
+          &quot;context_id&quot;: &quot;data/PETMRI.txt:24&quot;,
+          &quot;text&quot;: &quot;However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.&quot;,
+          &quot;start_char&quot;: 101,
+          &quot;end_char&quot;: 262,
+          &quot;span_hash&quot;: &quot;sha256:09abda01878e92ff&quot;,
+          &quot;score&quot;: 0.779,
+          &quot;matched_terms&quot;: [
+            &quot;widely&quot;,
+            &quot;accepted&quot;,
+            &quot;clinical&quot;,
+            &quot;indications&quot;,
+            &quot;pet&quot;,
+            &quot;mri&quot;,
+            &quot;determined&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;data/PETMRI.txt:4&quot;,
+          &quot;text&quot;: &quot;The adoption of PET/MRI has been much\n                                                                                                                                     slower compared to PET/computed tomography (PET/\nKeywords: Positron-emission tomography/methods; Magnetic resonance                                                                   CT).&quot;,
+          &quot;start_char&quot;: 211,
+          &quot;end_char&quot;: 568,
+          &quot;span_hash&quot;: &quot;sha256:fb878681f624346b&quot;,
+          &quot;score&quot;: 0.216,
+          &quot;matched_terms&quot;: [
+            &quot;pet&quot;,
+            &quot;mri&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;data/PETMRI.txt:17&quot;,
+          &quot;text&quot;: &quot;compared to PET/CT(8) (Figure 4).&quot;,
+          &quot;start_char&quot;: 0,
+          &quot;end_char&quot;: 33,
+          &quot;span_hash&quot;: &quot;sha256:9b1bf560d7470d2b&quot;,
+          &quot;score&quot;: 0.114,
+          &quot;matched_terms&quot;: [
+            &quot;pet&quot;
+          ]
+        }
+      ],
+      &quot;matched_terms&quot;: [
+        &quot;widely&quot;,
+        &quot;accepted&quot;,
+        &quot;clinical&quot;,
+        &quot;indications&quot;,
+        &quot;pet&quot;,
+        &quot;mri&quot;,
+        &quot;determined&quot;
+      ],
+      &quot;required_facts&quot;: [
+        &quot;Widely accepted clinical indications for PET/MRI are yet to be determined&quot;,
+        &quot;PET/MRI&quot;
+      ],
+      &quot;matched_facts&quot;: [],
+      &quot;missing_facts&quot;: [
+        &quot;Widely accepted clinical indications for PET/MRI are yet to be determined&quot;,
+        &quot;PET/MRI&quot;
+      ],
+      &quot;conflicting_facts&quot;: [],
+      &quot;required_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;Widely accepted clinical indications for PET/MRI are yet to be determined&quot;,
+          &quot;type&quot;: &quot;path&quot;
+        },
+        {
+          &quot;text&quot;: &quot;PET/MRI&quot;,
+          &quot;type&quot;: &quot;path&quot;
+        }
+      ],
+      &quot;matched_fact_details&quot;: [],
+      &quot;missing_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;Widely accepted clinical indications for PET/MRI are yet to be determined&quot;,
+          &quot;type&quot;: &quot;path&quot;
+        },
+        {
+          &quot;text&quot;: &quot;PET/MRI&quot;,
+          &quot;type&quot;: &quot;path&quot;
+        }
+      ],
+      &quot;conflicting_fact_details&quot;: [],
+      &quot;reason&quot;: &quot;The claim is supported by data/PETMRI.txt:24 because the context states: However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.&quot;,
+      &quot;citation_status&quot;: &quot;claim_has_no_citation&quot;,
+      &quot;citation_source_id&quot;: null,
+      &quot;root_cause&quot;: {
+        &quot;label&quot;: &quot;no_failure_detected&quot;,
+        &quot;reason&quot;: &quot;The claim is supported by retrieved evidence and no citation failure was detected.&quot;,
+        &quot;missing_fact&quot;: null,
+        &quot;closest_context_id&quot;: &quot;data/PETMRI.txt:24&quot;,
+        &quot;closest_evidence&quot;: &quot;However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.&quot;,
+        &quot;suggested_fix&quot;: &quot;No fix needed for this claim.&quot;
+      }
+    },
+    {
+      &quot;claim_id&quot;: &quot;claim_3&quot;,
+      &quot;claim&quot;: &quot;PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis.&quot;,
+      &quot;verdict&quot;: &quot;partially_supported&quot;,
+      &quot;confidence&quot;: 0.565,
+      &quot;best_context_id&quot;: &quot;data/PETMRI.txt:24&quot;,
+      &quot;best_context_text&quot;: &quot;choice, particularly for assessment of some regions, such as\nbrain, head and neck, liver and pelvis. However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.\n\n\n\nREFERENCES\n\n1.    Ter-Pogossian MM, Phelps ME, Hoffman EJ, Mullani NA. A positron-emission\n      transaxial tomograph for nuclear imaging (PETT). Radiology. 1975;114(1):89-98.&quot;,
+      &quot;best_score&quot;: 0.565,
+      &quot;evidence&quot;: &quot;choice, particularly for assessment of some regions, such as\nbrain, head and neck, liver and pelvis.&quot;,
+      &quot;evidence_span&quot;: {
+        &quot;context_id&quot;: &quot;data/PETMRI.txt:24&quot;,
+        &quot;text&quot;: &quot;choice, particularly for assessment of some regions, such as\nbrain, head and neck, liver and pelvis.&quot;,
+        &quot;start_char&quot;: 0,
+        &quot;end_char&quot;: 100,
+        &quot;span_hash&quot;: &quot;sha256:7c723e5589be2598&quot;
+      },
+      &quot;supporting_spans&quot;: [
+        {
+          &quot;context_id&quot;: &quot;data/PETMRI.txt:24&quot;,
+          &quot;text&quot;: &quot;choice, particularly for assessment of some regions, such as\nbrain, head and neck, liver and pelvis.&quot;,
+          &quot;start_char&quot;: 0,
+          &quot;end_char&quot;: 100,
+          &quot;span_hash&quot;: &quot;sha256:7c723e5589be2598&quot;,
+          &quot;score&quot;: 0.565,
+          &quot;matched_terms&quot;: [
+            &quot;particularly&quot;,
+            &quot;regions&quot;,
+            &quot;brain&quot;,
+            &quot;head&quot;,
+            &quot;neck&quot;,
+            &quot;liver&quot;,
+            &quot;pelvis&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;data/PETMRI.txt:4&quot;,
+          &quot;text&quot;: &quot;The adoption of PET/MRI has been much\n                                                                                                                                     slower compared to PET/computed tomography (PET/\nKeywords: Positron-emission tomography/methods; Magnetic resonance                                                                   CT).&quot;,
+          &quot;start_char&quot;: 211,
+          &quot;end_char&quot;: 568,
+          &quot;span_hash&quot;: &quot;sha256:fb878681f624346b&quot;,
+          &quot;score&quot;: 0.148,
+          &quot;matched_terms&quot;: [
+            &quot;pet&quot;,
+            &quot;mri&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;data/PETMRI.txt:24&quot;,
+          &quot;text&quot;: &quot;However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.&quot;,
+          &quot;start_char&quot;: 101,
+          &quot;end_char&quot;: 262,
+          &quot;span_hash&quot;: &quot;sha256:09abda01878e92ff&quot;,
+          &quot;score&quot;: 0.148,
+          &quot;matched_terms&quot;: [
+            &quot;pet&quot;,
+            &quot;mri&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;data/PETMRI.txt:17&quot;,
+          &quot;text&quot;: &quot;compared to PET/CT(8) (Figure 4).&quot;,
+          &quot;start_char&quot;: 0,
+          &quot;end_char&quot;: 33,
+          &quot;span_hash&quot;: &quot;sha256:9b1bf560d7470d2b&quot;,
+          &quot;score&quot;: 0.078,
+          &quot;matched_terms&quot;: [
+            &quot;pet&quot;
+          ]
+        }
+      ],
+      &quot;matched_terms&quot;: [
+        &quot;particularly&quot;,
+        &quot;regions&quot;,
+        &quot;brain&quot;,
+        &quot;head&quot;,
+        &quot;neck&quot;,
+        &quot;liver&quot;,
+        &quot;pelvis&quot;
+      ],
+      &quot;required_facts&quot;: [
+        &quot;PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis&quot;,
+        &quot;PET/MRI&quot;
+      ],
+      &quot;matched_facts&quot;: [],
+      &quot;missing_facts&quot;: [
+        &quot;PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis&quot;,
+        &quot;PET/MRI&quot;
+      ],
+      &quot;conflicting_facts&quot;: [],
+      &quot;required_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis&quot;,
+          &quot;type&quot;: &quot;path&quot;
+        },
+        {
+          &quot;text&quot;: &quot;PET/MRI&quot;,
+          &quot;type&quot;: &quot;path&quot;
+        }
+      ],
+      &quot;matched_fact_details&quot;: [],
+      &quot;missing_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis&quot;,
+          &quot;type&quot;: &quot;path&quot;
+        },
+        {
+          &quot;text&quot;: &quot;PET/MRI&quot;,
+          &quot;type&quot;: &quot;path&quot;
+        }
+      ],
+      &quot;conflicting_fact_details&quot;: [],
+      &quot;reason&quot;: &quot;The strongest context supports part of the claim through particularly, regions, brain, head, neck, liver, pelvis, but it does not clearly support every detail.&quot;,
+      &quot;citation_status&quot;: &quot;claim_has_no_citation&quot;,
+      &quot;citation_source_id&quot;: null,
+      &quot;root_cause&quot;: {
+        &quot;label&quot;: &quot;answer_overreach&quot;,
+        &quot;reason&quot;: &quot;The retrieved evidence supports part of the claim, but not PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis.&quot;,
+        &quot;missing_fact&quot;: &quot;PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis&quot;,
+        &quot;closest_context_id&quot;: &quot;data/PETMRI.txt:24&quot;,
+        &quot;closest_evidence&quot;: &quot;choice, particularly for assessment of some regions, such as\nbrain, head and neck, liver and pelvis.&quot;,
+        &quot;suggested_fix&quot;: &quot;Remove the unsupported detail or retrieve a source that explicitly supports it.&quot;
+      }
+    },
+    {
+      &quot;claim_id&quot;: &quot;claim_4&quot;,
+      &quot;claim&quot;: &quot;The adoption of PET/MRI has been slower compared to PET/CT.&quot;,
+      &quot;verdict&quot;: &quot;supported&quot;,
+      &quot;confidence&quot;: 0.868,
+      &quot;best_context_id&quot;: &quot;data/PETMRI.txt:4&quot;,
+      &quot;best_context_text&quot;: &quot;illustrated with examples extracted from the authors\u2019 preliminary\nexperience.                                                                                                                          introduced. The adoption of PET/MRI has been much\n                                                                                                                                     slower compared to PET/computed tomography (PET/\nKeywords: Positron-emission tomography/methods; Magnetic resonance                                                                   CT).         Since           its     introduction                    in     2010,          approximately\nimaging/methods; Tomography, x-ray computed/methods; Pelvic neoplasms;                                                               70 systems have been installed worldwide, mostly in&quot;,
+      &quot;best_score&quot;: 0.868,
+      &quot;evidence&quot;: &quot;The adoption of PET/MRI has been much\n                                                                                                                                     slower compared to PET/computed tomography (PET/\nKeywords: Positron-emission tomography/methods; Magnetic resonance                                                                   CT).&quot;,
+      &quot;evidence_span&quot;: {
+        &quot;context_id&quot;: &quot;data/PETMRI.txt:4&quot;,
+        &quot;text&quot;: &quot;The adoption of PET/MRI has been much\n                                                                                                                                     slower compared to PET/computed tomography (PET/\nKeywords: Positron-emission tomography/methods; Magnetic resonance                                                                   CT).&quot;,
+        &quot;start_char&quot;: 211,
+        &quot;end_char&quot;: 568,
+        &quot;span_hash&quot;: &quot;sha256:fb878681f624346b&quot;
+      },
+      &quot;supporting_spans&quot;: [
+        {
+          &quot;context_id&quot;: &quot;data/PETMRI.txt:4&quot;,
+          &quot;text&quot;: &quot;The adoption of PET/MRI has been much\n                                                                                                                                     slower compared to PET/computed tomography (PET/\nKeywords: Positron-emission tomography/methods; Magnetic resonance                                                                   CT).&quot;,
+          &quot;start_char&quot;: 211,
+          &quot;end_char&quot;: 568,
+          &quot;span_hash&quot;: &quot;sha256:fb878681f624346b&quot;,
+          &quot;score&quot;: 0.868,
+          &quot;matched_terms&quot;: [
+            &quot;adoption&quot;,
+            &quot;pet&quot;,
+            &quot;mri&quot;,
+            &quot;slower&quot;,
+            &quot;compared&quot;,
+            &quot;ct&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;data/PETMRI.txt:17&quot;,
+          &quot;text&quot;: &quot;compared to PET/CT(8) (Figure 4).&quot;,
+          &quot;start_char&quot;: 0,
+          &quot;end_char&quot;: 33,
+          &quot;span_hash&quot;: &quot;sha256:9b1bf560d7470d2b&quot;,
+          &quot;score&quot;: 0.463,
+          &quot;matched_terms&quot;: [
+            &quot;pet&quot;,
+            &quot;compared&quot;,
+            &quot;ct&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;data/PETMRI.txt:24&quot;,
+          &quot;text&quot;: &quot;However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.&quot;,
+          &quot;start_char&quot;: 101,
+          &quot;end_char&quot;: 262,
+          &quot;span_hash&quot;: &quot;sha256:09abda01878e92ff&quot;,
+          &quot;score&quot;: 0.427,
+          &quot;matched_terms&quot;: [
+            &quot;pet&quot;,
+            &quot;mri&quot;,
+            &quot;ct&quot;
+          ]
+        }
+      ],
+      &quot;matched_terms&quot;: [
+        &quot;adoption&quot;,
+        &quot;pet&quot;,
+        &quot;mri&quot;,
+        &quot;slower&quot;,
+        &quot;compared&quot;,
+        &quot;ct&quot;
+      ],
+      &quot;required_facts&quot;: [
+        &quot;The adoption of PET/MRI has been slower compared to PET/CT&quot;,
+        &quot;PET/MRI&quot;,
+        &quot;PET/CT&quot;
+      ],
+      &quot;matched_facts&quot;: [],
+      &quot;missing_facts&quot;: [
+        &quot;The adoption of PET/MRI has been slower compared to PET/CT&quot;,
+        &quot;PET/MRI&quot;,
+        &quot;PET/CT&quot;
+      ],
+      &quot;conflicting_facts&quot;: [],
+      &quot;required_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;The adoption of PET/MRI has been slower compared to PET/CT&quot;,
+          &quot;type&quot;: &quot;path&quot;
+        },
+        {
+          &quot;text&quot;: &quot;PET/MRI&quot;,
+          &quot;type&quot;: &quot;path&quot;
+        },
+        {
+          &quot;text&quot;: &quot;PET/CT&quot;,
+          &quot;type&quot;: &quot;path&quot;
+        }
+      ],
+      &quot;matched_fact_details&quot;: [],
+      &quot;missing_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;The adoption of PET/MRI has been slower compared to PET/CT&quot;,
+          &quot;type&quot;: &quot;path&quot;
+        },
+        {
+          &quot;text&quot;: &quot;PET/MRI&quot;,
+          &quot;type&quot;: &quot;path&quot;
+        },
+        {
+          &quot;text&quot;: &quot;PET/CT&quot;,
+          &quot;type&quot;: &quot;path&quot;
+        }
+      ],
+      &quot;conflicting_fact_details&quot;: [],
+      &quot;reason&quot;: &quot;The claim is supported by data/PETMRI.txt:4 because the context states: The adoption of PET/MRI has been much\n                                                                                                                                     slower compared to PET/computed tomography (PET/\nKeywords: Positron-emission tomography/methods; Magnetic resonance                                                                   CT).&quot;,
+      &quot;citation_status&quot;: &quot;claim_has_no_citation&quot;,
+      &quot;citation_source_id&quot;: null,
+      &quot;root_cause&quot;: {
+        &quot;label&quot;: &quot;no_failure_detected&quot;,
+        &quot;reason&quot;: &quot;The claim is supported by retrieved evidence and no citation failure was detected.&quot;,
+        &quot;missing_fact&quot;: null,
+        &quot;closest_context_id&quot;: &quot;data/PETMRI.txt:4&quot;,
+        &quot;closest_evidence&quot;: &quot;The adoption of PET/MRI has been much\n                                                                                                                                     slower compared to PET/computed tomography (PET/\nKeywords: Positron-emission tomography/methods; Magnetic resonance                                                                   CT).&quot;,
+        &quot;suggested_fix&quot;: &quot;No fix needed for this claim.&quot;
+      }
+    },
+    {
+      &quot;claim_id&quot;: &quot;claim_5&quot;,
+      &quot;claim&quot;: &quot;However, the main advantages of PET/MRI over PET/CT are not explicitly.&quot;,
+      &quot;verdict&quot;: &quot;contradicted&quot;,
+      &quot;confidence&quot;: 0.742,
+      &quot;best_context_id&quot;: &quot;data/PETMRI.txt:24&quot;,
+      &quot;best_context_text&quot;: &quot;choice, particularly for assessment of some regions, such as\nbrain, head and neck, liver and pelvis. However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.\n\n\n\nREFERENCES\n\n1.    Ter-Pogossian MM, Phelps ME, Hoffman EJ, Mullani NA. A positron-emission\n      transaxial tomograph for nuclear imaging (PETT). Radiology. 1975;114(1):89-98.&quot;,
+      &quot;best_score&quot;: 0.622,
+      &quot;evidence&quot;: &quot;However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.&quot;,
+      &quot;evidence_span&quot;: {
+        &quot;context_id&quot;: &quot;data/PETMRI.txt:24&quot;,
+        &quot;text&quot;: &quot;However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.&quot;,
+        &quot;start_char&quot;: 101,
+        &quot;end_char&quot;: 262,
+        &quot;span_hash&quot;: &quot;sha256:09abda01878e92ff&quot;
+      },
+      &quot;supporting_spans&quot;: [
+        {
+          &quot;context_id&quot;: &quot;data/PETMRI.txt:24&quot;,
+          &quot;text&quot;: &quot;However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.&quot;,
+          &quot;start_char&quot;: 101,
+          &quot;end_char&quot;: 262,
+          &quot;span_hash&quot;: &quot;sha256:09abda01878e92ff&quot;,
+          &quot;score&quot;: 0.622,
+          &quot;matched_terms&quot;: [
+            &quot;however&quot;,
+            &quot;advantages&quot;,
+            &quot;pet&quot;,
+            &quot;mri&quot;,
+            &quot;ct&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;data/PETMRI.txt:4&quot;,
+          &quot;text&quot;: &quot;The adoption of PET/MRI has been much\n                                                                                                                                     slower compared to PET/computed tomography (PET/\nKeywords: Positron-emission tomography/methods; Magnetic resonance                                                                   CT).&quot;,
+          &quot;start_char&quot;: 211,
+          &quot;end_char&quot;: 568,
+          &quot;span_hash&quot;: &quot;sha256:fb878681f624346b&quot;,
+          &quot;score&quot;: 0.369,
+          &quot;matched_terms&quot;: [
+            &quot;pet&quot;,
+            &quot;mri&quot;,
+            &quot;ct&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;data/PETMRI.txt:17&quot;,
+          &quot;text&quot;: &quot;compared to PET/CT(8) (Figure 4).&quot;,
+          &quot;start_char&quot;: 0,
+          &quot;end_char&quot;: 33,
+          &quot;span_hash&quot;: &quot;sha256:9b1bf560d7470d2b&quot;,
+          &quot;score&quot;: 0.263,
+          &quot;matched_terms&quot;: [
+            &quot;pet&quot;,
+            &quot;ct&quot;
+          ]
+        }
+      ],
+      &quot;matched_terms&quot;: [
+        &quot;however&quot;,
+        &quot;advantages&quot;,
+        &quot;pet&quot;,
+        &quot;mri&quot;,
+        &quot;ct&quot;
+      ],
+      &quot;required_facts&quot;: [
+        &quot;However, the main advantages of PET/MRI over PET/CT are not explicitly&quot;,
+        &quot;PET/MRI&quot;,
+        &quot;PET/CT&quot;,
+        &quot;However, the main advantages of PET/MRI over PET/CT are not explicitly&quot;
+      ],
+      &quot;matched_facts&quot;: [],
+      &quot;missing_facts&quot;: [
+        &quot;However, the main advantages of PET/MRI over PET/CT are not explicitly&quot;,
+        &quot;PET/MRI&quot;,
+        &quot;PET/CT&quot;,
+        &quot;However, the main advantages of PET/MRI over PET/CT are not explicitly&quot;
+      ],
+      &quot;conflicting_facts&quot;: [
+        &quot;However, the main advantages of PET/MRI over PET/CT are not explicitly.&quot;
+      ],
+      &quot;required_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;However, the main advantages of PET/MRI over PET/CT are not explicitly&quot;,
+          &quot;type&quot;: &quot;path&quot;
+        },
+        {
+          &quot;text&quot;: &quot;PET/MRI&quot;,
+          &quot;type&quot;: &quot;path&quot;
+        },
+        {
+          &quot;text&quot;: &quot;PET/CT&quot;,
+          &quot;type&quot;: &quot;path&quot;
+        },
+        {
+          &quot;text&quot;: &quot;However, the main advantages of PET/MRI over PET/CT are not explicitly&quot;,
+          &quot;type&quot;: &quot;negation&quot;
+        }
+      ],
+      &quot;matched_fact_details&quot;: [],
+      &quot;missing_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;However, the main advantages of PET/MRI over PET/CT are not explicitly&quot;,
+          &quot;type&quot;: &quot;path&quot;
+        },
+        {
+          &quot;text&quot;: &quot;PET/MRI&quot;,
+          &quot;type&quot;: &quot;path&quot;
+        },
+        {
+          &quot;text&quot;: &quot;PET/CT&quot;,
+          &quot;type&quot;: &quot;path&quot;
+        },
+        {
+          &quot;text&quot;: &quot;However, the main advantages of PET/MRI over PET/CT are not explicitly&quot;,
+          &quot;type&quot;: &quot;negation&quot;
+        }
+      ],
+      &quot;conflicting_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;However, the main advantages of PET/MRI over PET/CT are not explicitly.&quot;,
+          &quot;type&quot;: &quot;negation&quot;
+        }
+      ],
+      &quot;reason&quot;: &quot;The strongest evidence appears to conflict with the claim because it uses negation or a different numeric/date value for the same subject.&quot;,
+      &quot;citation_status&quot;: &quot;claim_has_no_citation&quot;,
+      &quot;citation_source_id&quot;: null,
+      &quot;root_cause&quot;: {
+        &quot;label&quot;: &quot;conflicting_contexts&quot;,
+        &quot;reason&quot;: &quot;The retrieved evidence conflicts with the claim on However, the main advantages of PET/MRI over PET/CT are not explicitly..&quot;,
+        &quot;missing_fact&quot;: &quot;However, the main advantages of PET/MRI over PET/CT are not explicitly&quot;,
+        &quot;closest_context_id&quot;: &quot;data/PETMRI.txt:24&quot;,
+        &quot;closest_evidence&quot;: &quot;However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.&quot;,
+        &quot;suggested_fix&quot;: &quot;Resolve stale or conflicting retrieved sources before allowing the generator to answer.&quot;
+      }
+    }
+  ]
+}</pre>
+    </section>
+  </main>
+</body>
+</html>

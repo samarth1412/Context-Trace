@@ -1,0 +1,99 @@
+{
+  "artifacts": {
+    "case_pack": "benchmarks\\contexttrace_bench\\out\\ragtruth_official\\ragtruth_test200_review_workflow\\ragtruth_case_pack.json",
+    "manifest": "benchmarks\\contexttrace_bench\\out\\ragtruth_official\\ragtruth_test200_review_workflow\\ragtruth_workflow_manifest.json",
+    "review_packet": "benchmarks\\contexttrace_bench\\out\\ragtruth_official\\ragtruth_test200_review_workflow\\ragtruth_review_packet.md",
+    "review_queue": "benchmarks\\contexttrace_bench\\out\\ragtruth_official\\ragtruth_test200_review_workflow\\ragtruth_review_queue.jsonl",
+    "review_validation": "benchmarks\\contexttrace_bench\\out\\ragtruth_official\\ragtruth_test200_review_workflow\\ragtruth_review_validation.json",
+    "reviewed_case_pack": "benchmarks\\contexttrace_bench\\out\\ragtruth_official\\ragtruth_test200_review_workflow\\ragtruth_reviewed_case_pack.json",
+    "score_output_dir": "benchmarks\\contexttrace_bench\\out\\ragtruth_official\\ragtruth_test200_review_workflow\\scored",
+    "score_paths": {
+      "candidate_inputs_jsonl": "benchmarks\\contexttrace_bench\\out\\ragtruth_official\\ragtruth_test200_review_workflow\\scored\\candidate_inputs.jsonl",
+      "error_analysis_json": "benchmarks\\contexttrace_bench\\out\\ragtruth_official\\ragtruth_test200_review_workflow\\scored\\error_analysis.json",
+      "error_analysis_md": "benchmarks\\contexttrace_bench\\out\\ragtruth_official\\ragtruth_test200_review_workflow\\scored\\error_analysis.md",
+      "json": "benchmarks\\contexttrace_bench\\out\\ragtruth_official\\ragtruth_test200_review_workflow\\scored\\contexttrace_bench_results.json",
+      "leaderboard_md": "benchmarks\\contexttrace_bench\\out\\ragtruth_official\\ragtruth_test200_review_workflow\\scored\\leaderboard.md",
+      "report_html": "benchmarks\\contexttrace_bench\\out\\ragtruth_official\\ragtruth_test200_review_workflow\\scored\\report.html",
+      "results_md": "benchmarks\\contexttrace_bench\\out\\ragtruth_official\\ragtruth_test200_review_workflow\\scored\\results.md"
+    }
+  },
+  "case_pack": {
+    "cases": 200,
+    "eligible_cases": 2675,
+    "sampling": {
+      "eligible_cases": 2675,
+      "method": "stratified",
+      "sample_seed": 13,
+      "sample_size": 200,
+      "strata": 67,
+      "stratify_by": [
+        "task_type",
+        "source",
+        "expected_label",
+        "model"
+      ]
+    }
+  },
+  "inputs": {
+    "response_path": "benchmarks/contexttrace_bench/out/ragtruth_official/response.jsonl",
+    "review_path": "benchmarks/contexttrace_bench/out/ragtruth_official/ragtruth_test200_review_workflow/ragtruth_reviewed_gpt51_assisted.jsonl",
+    "source_info_path": "benchmarks/contexttrace_bench/out/ragtruth_official/source_info.jsonl"
+  },
+  "options": {
+    "bootstrap_samples": 100,
+    "context_char_limit": 2500,
+    "include_supported": false,
+    "limit": null,
+    "max_suggestions": 3,
+    "mode": "semantic",
+    "quality": "good",
+    "require_reviewed": true,
+    "require_source_spans": false,
+    "sample_seed": 13,
+    "sample_size": 200,
+    "skip_score": false,
+    "split": "test",
+    "stratify_by": [
+      "task_type",
+      "source",
+      "expected_label",
+      "model"
+    ]
+  },
+  "review": {
+    "errors": 0,
+    "requires_human_review": true,
+    "review_rows": 88,
+    "reviewed_rows": 88,
+    "valid": true,
+    "warnings": 12
+  },
+  "score": {
+    "case_pack_dataset": "RAGTruth",
+    "case_set": "external_case_pack",
+    "summary": {
+      "cases": 200,
+      "citation_error_f1": 1.0,
+      "citation_error_precision": 1.0,
+      "citation_error_recall": 1.0,
+      "citation_status_reported_cases": 200,
+      "claim_verdict_macro_f1": 0.18,
+      "claim_verdict_match_rate": 0.005,
+      "cost_per_100_traces_usd": 0.0,
+      "dangerous_false_green_rate": 0.025,
+      "evidence_span_labeled_cases": 76,
+      "evidence_span_overlap": 0.555,
+      "evidence_span_reported_cases": 76,
+      "failure_label_exact_match_rate": 0.225,
+      "failure_label_macro_f1": 0.15,
+      "latency_p50_ms": 119.768,
+      "latency_p95_ms": 404.626,
+      "root_cause_accuracy": 0.255,
+      "root_cause_labeled_cases": 200,
+      "root_cause_reported_cases": 200
+    }
+  },
+  "started_at": "2026-06-13T06:03:12+00:00",
+  "status": "scored",
+  "workflow": "ragtruth_review_workflow"
+}

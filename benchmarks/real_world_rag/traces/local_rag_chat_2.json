@@ -1,0 +1,46 @@
+{
+  "query": "How does the RAG agent use retrieved sources when drafting an answer?",
+  "answer": "\"\"\n        Utility for providing the files and page numbers for the information used in RAG answers. limit(N_results))\n        return  [RagSearchResult(**r) for r in results.to_list()]\n\ndef get_sources(self, results: List[RagSearchResult]) -> List[str]:\n        \"\"\"\n        Utility for providing the files and page numbers for the information used in RAG answers. MANTIC_DB_PATH\")\nllm_model = os.getenv(\"LLM_MODEL\")\nllm_generate_url = os.getenv(\"LLM_GENERATE_URL\")\n\nsemantic_db = SemanticDb(\n    embedding_function=vecs.get_embeddings,\n    vec_dimension=vecs.dimensions,\n    semantic_db_path=semantic_db_path\n)\n\ndef run_agent(\n    messages: List[Message],\n    table_name=\"semantic-db-table\"\n    ) -> ContentStream:\n    \"\"\"\n    Answers a user query with retrieval augmented generation (RAG) over documents in a LanceDB table in S3.",
+  "contexts": [
+    {
+      "id": "local_rag_chat:backend/app/semantic_db/semantic_db.py:12",
+      "text": "\"\"\n        Utility for providing the files and page numbers for the information used in RAG answers.\n\nArgs\n        - results (List[RagSearchResult]): The search results from the vector database query.\n\nexcept Exception as e:\n            print(\"error fetching sources\", e)\n            return []",
+      "metadata": {
+        "project": "HeskethGD/local-rag-chat",
+        "repo_url": "https://github.com/HeskethGD/local-rag-chat",
+        "source": "backend/app/semantic_db/semantic_db.py",
+        "retrieval_score": 0.515,
+        "retriever": "sentence-transformers lexical-prefilter cosine"
+      }
+    },
+    {
+      "id": "local_rag_chat:backend/app/semantic_db/semantic_db.py:9",
+      "text": "in the vector db to query.\n        - N_results (int): The limit for the number of returned results.\n\nReturn\n        - search_results (List[RagSearchResult]): The semantic search results.\n        \"\"\"\n        results = (lancedb\n                .connect(self.semantic_db_path)\n                .open_table(table_name)\n                .search(query_vector)\n                .limit(N_results))\n        return  [RagSearchResult(**r) for r in results.to_list()]\n\ndef get_sources(self, results: List[RagSearchResult]) -> List[str]:\n        \"\"\"\n        Utility for providing the files and page numbers for the information used in RAG answers.",
+      "metadata": {
+        "project": "HeskethGD/local-rag-chat",
+        "repo_url": "https://github.com/HeskethGD/local-rag-chat",
+        "source": "backend/app/semantic_db/semantic_db.py",
+        "retrieval_score": 0.4364,
+        "retriever": "sentence-transformers lexical-prefilter cosine"
+      }
+    },
+    {
+      "id": "local_rag_chat:backend/app/agents/rag.py:2",
+      "text": "MANTIC_DB_PATH\")\nllm_model = os.getenv(\"LLM_MODEL\")\nllm_generate_url = os.getenv(\"LLM_GENERATE_URL\")\n\nsemantic_db = SemanticDb(\n    embedding_function=vecs.get_embeddings,\n    vec_dimension=vecs.dimensions,\n    semantic_db_path=semantic_db_path\n)\n\ndef run_agent(\n    messages: List[Message],\n    table_name=\"semantic-db-table\"\n    ) -> ContentStream:\n    \"\"\"\n    Answers a user query with retrieval augmented generation (RAG) over documents in a LanceDB table in S3.\n\nArgs\n    - messages (List[Message]): The chat history as messages.\n    - table_name (str): The name of the table in the semantic database.\n\nYields\n    - (ContentStream): The stream response from the LLM.\n    \"\"\"",
+      "metadata": {
+        "project": "HeskethGD/local-rag-chat",
+        "repo_url": "https://github.com/HeskethGD/local-rag-chat",
+        "source": "backend/app/agents/rag.py",
+        "retrieval_score": 0.3324,
+        "retriever": "sentence-transformers lexical-prefilter cosine"
+      }
+    }
+  ],
+  "metadata": {
+    "project": "HeskethGD/local-rag-chat",
+    "repo_url": "https://github.com/HeskethGD/local-rag-chat",
+    "validation": "real_world_rag",
+    "generation_model": "mistral",
+    "embedding_model": "all-MiniLM-L6-v2"
+  }
+}

@@ -1,0 +1,707 @@
+{
+  "benchmark": "ContextTrace-Bench",
+  "benchmark_miss_count": 112,
+  "case_count": 200,
+  "case_set": "external_case_pack",
+  "cases_to_review": [
+    {
+      "base_case_id": "ragtruth_58",
+      "conflicting_facts": [],
+      "evidence": "The university won't be able to sue, but if the members of the fraternity can get past some of the preliminary hurdles of a defamation claim, and they can make a tangible case for damages, then this could be one of those rare successful defamation cases.",
+      "expected": [
+        "partial_support"
+      ],
+      "expected_primary_root_cause": "answer_overreach",
+      "first_failed_claim": "The fraternity members mentioned in the article may be able to sue for defamation.",
+      "first_failed_verdict": "contradicted",
+      "id": "ragtruth_58",
+      "missing_facts": [],
+      "predicted": [
+        "contradicted_answer"
+      ],
+      "predicted_primary_root_cause": "conflicting_contexts"
+    },
+    {
+      "base_case_id": "ragtruth_59",
+      "conflicting_facts": [],
+      "evidence": "True statements cannot be defamatory.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "The article has been widely criticized for its inaccuracies and defamatory content.",
+      "first_failed_verdict": "unsupported",
+      "id": "ragtruth_59",
+      "missing_facts": [
+        "The article has been widely criticized for its inaccuracies and defamatory content"
+      ],
+      "predicted": [
+        "contradicted_answer"
+      ],
+      "predicted_primary_root_cause": "conflicting_contexts"
+    },
+    {
+      "base_case_id": "ragtruth_334",
+      "conflicting_facts": [],
+      "evidence": "Superman: Dawn of Justice\" leaked online on Thursday before quickly being taken down minutes later.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "Superman: Dawn of Justice\" features Spanish subtitles and highlights the controversial nature of Superman, with commentators discussing his power and intentions.",
+      "first_failed_verdict": "unsupported",
+      "id": "ragtruth_334",
+      "missing_facts": [
+        "Superman: Dawn of Justice\" features Spanish subtitles and highlights the controversial nature of Superman, with commentators discussing his power and intentions"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_351",
+      "conflicting_facts": [],
+      "evidence": "One hundred years ago, more than 1 million Armenians (some estimates run as high as 1.5 million) died at the hand of the Turks.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "The Pope faced a difficult decision during a recent mass in Rome, where he chose to acknowledge the deaths of over 1 million Armenians a century ago, while avoiding using the term \"genocide\".",
+      "first_failed_verdict": "unsupported",
+      "id": "ragtruth_351",
+      "missing_facts": [
+        "The Pope faced a difficult decision during a recent mass in Rome, where he chose to acknowledge the deaths of over 1 million Armenians a century ago",
+        "avoiding using the term \"genocide\""
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_355",
+      "conflicting_facts": [],
+      "evidence": "Then the park service wants people to share their stories using the hashtag #FindYourPark and at FindYourPark.com.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "National Park Week will include various activities and events, and people are encouraged to share their experiences using #FindYourPark.",
+      "first_failed_verdict": "partially_supported",
+      "id": "ragtruth_355",
+      "missing_facts": [
+        "include various activities",
+        "include events"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_543",
+      "conflicting_facts": [],
+      "evidence": "The prosecution showed close-up video of the 8-year-old, who was only 3\u00bd feet from one of the bombs, according to the FBI's re-creation of the crime scene.",
+      "expected": [
+        "contradicted_answer"
+      ],
+      "expected_primary_root_cause": "conflicting_contexts",
+      "first_failed_claim": "He also described the gruesome scenes he witnessed, including the death of 8-year-old Martin Richard, who was close to one of the bombs.",
+      "first_failed_verdict": "partially_supported",
+      "id": "ragtruth_543",
+      "missing_facts": [
+        "He also described the gruesome scenes he witnessed, including the death of 8-year-old Martin Richard, who was close to one of the bombs"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_586",
+      "conflicting_facts": [],
+      "evidence": "Los Angeles (CNN)She's one of the hottest and most successful Latinas in Hollywood, but now Sofia Vergara is playing defense in a legal battle initiated by her ex-fiance: He wants to keep the two frozen embryos from their relationship, both female.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "Sofia Vergara, actress and star of Modern Family, is in a legal battle with her ex-fianc\u00e9 Nick Loeb over two frozen embryos they created together.",
+      "first_failed_verdict": "unverifiable",
+      "id": "ragtruth_586",
+      "missing_facts": [
+        "Sofia Vergara, actress and star of Modern Family, is in a legal battle with her ex-fianc\u00e9 Nick Loeb over two frozen embryos they created together"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_730",
+      "conflicting_facts": [
+        "A nuclear submarine at a Russian shipyard caught fire during repairs, but there's no danger of radiation or explosion as there's no ammunition or fissile materials on board."
+      ],
+      "evidence": "A nuclear submarine being repaired at a Russian shipyard has caught on fire, according to a law enforcement source speaking to Russia's state-run news agency ITAR-Tass.",
+      "expected": [
+        "partial_support"
+      ],
+      "expected_primary_root_cause": "answer_overreach",
+      "first_failed_claim": "A nuclear submarine at a Russian shipyard caught fire during repairs, but there's no danger of radiation or explosion as there's no ammunition or fissile materials on board.",
+      "first_failed_verdict": "contradicted",
+      "id": "ragtruth_730",
+      "missing_facts": [],
+      "predicted": [
+        "contradicted_answer"
+      ],
+      "predicted_primary_root_cause": "conflicting_contexts"
+    },
+    {
+      "base_case_id": "ragtruth_878",
+      "conflicting_facts": [],
+      "evidence": "Two staffers from the agency are scheduled to meet the West Coast-based ship in San Diego on Monday.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "The Centers for Disease Control and Prevention (CDC) has yet to determine the cause of the illness, but two CDC staffers will meet the ship in San Diego on Monday to investigate further.",
+      "first_failed_verdict": "unverifiable",
+      "id": "ragtruth_878",
+      "missing_facts": [
+        "The Centers for Disease Control and Prevention (CDC) has yet to determine the cause of the illness, but two CDC staffers will meet the ship in San Diego on Monday to investigate further"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_906",
+      "conflicting_facts": [],
+      "evidence": "There was a larger message in the article about a purported gang rape that Rolling Stone retracted on Sunday night -- a part of the story that was never disputed: The University of Virginia is under continuing investigation over how it handles sexual assault on campus.",
+      "expected": [
+        "partial_support"
+      ],
+      "expected_primary_root_cause": "answer_overreach",
+      "first_failed_claim": "The University of Virginia (UVA) is currently under investigation for how it handles sexual assault cases on campus.",
+      "first_failed_verdict": "contradicted",
+      "id": "ragtruth_906",
+      "missing_facts": [],
+      "predicted": [
+        "contradicted_answer"
+      ],
+      "predicted_primary_root_cause": "conflicting_contexts"
+    },
+    {
+      "base_case_id": "ragtruth_924",
+      "conflicting_facts": [],
+      "evidence": "\"The fear of rejection really holds people back.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "Jiang aims to help others overcome their fear of rejection, which he believes holds people back from achieving their goals.",
+      "first_failed_verdict": "unverifiable",
+      "id": "ragtruth_924",
+      "missing_facts": [
+        "Jiang aims to help others overcome their fear of rejection, which he believes holds people back from achieving their goals"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_1153",
+      "conflicting_facts": [
+        "Two Delaware boys and their father are in critical condition after becoming sick, possibly from pesticide exposure, during a trip to the U.S"
+      ],
+      "evidence": "Two Delaware boys are in a coma and their father still is unable to talk or move two weeks after they became sick -- perhaps from pesticide exposure, federal officials say -- during a trip to the U.S.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "Two Delaware boys and their father are in critical condition after becoming sick, possibly from pesticide exposure, during a trip to the U.S.",
+      "first_failed_verdict": "contradicted",
+      "id": "ragtruth_1153",
+      "missing_facts": [
+        "Two Delaware boys and their father are in critical condition after becoming sick, possibly from pesticide exposure, during a trip to the U.S"
+      ],
+      "predicted": [
+        "contradicted_answer"
+      ],
+      "predicted_primary_root_cause": "conflicting_contexts"
+    },
+    {
+      "base_case_id": "ragtruth_1355",
+      "conflicting_facts": [],
+      "evidence": "Despite the fact that nuclear power is carbon-free, the Obama administration's energy policy plan is biased against it.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "Despite nuclear energy being the largest source of carbon-free energy in the US, the plan assumes the phaseout of nuclear power by 2050.",
+      "first_failed_verdict": "partially_supported",
+      "id": "ragtruth_1355",
+      "missing_facts": [
+        "Despite nuclear energy being the largest source of carbon-free energy in the US, the plan assumes the phaseout of nuclear power by 2050"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_1513",
+      "conflicting_facts": [],
+      "evidence": "But, like Christmas with its tree, ornaments and Santa Claus, Easter has picked up its peripheral trappings -- the bunny and colorful eggs.",
+      "expected": [
+        "partial_support"
+      ],
+      "expected_primary_root_cause": "answer_overreach",
+      "first_failed_claim": "While it is a time for Christians to rejoice, Easter has also acquired peripheral traditions such as the bunny and colorful eggs.",
+      "first_failed_verdict": "partially_supported",
+      "id": "ragtruth_1513",
+      "missing_facts": [
+        "While it is a time for Christians to rejoice, Easter has also acquired peripheral traditions such as the bunny and colorful eggs"
+      ],
+      "predicted": [
+        "contradicted_answer"
+      ],
+      "predicted_primary_root_cause": "conflicting_contexts"
+    },
+    {
+      "base_case_id": "ragtruth_1566",
+      "conflicting_facts": [],
+      "evidence": "Lauren Hill, who took her inspirational fight against brain cancer onto the basketball court and into the hearts of many, has died at age 19.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "Lauren Hill, a 19-year-old who fought against brain cancer and whose story inspired many, has passed away.",
+      "first_failed_verdict": "partially_supported",
+      "id": "ragtruth_1566",
+      "missing_facts": [
+        "Lauren Hill, a 19-year-old who fought against brain cancer and whose story inspired many, has passed away"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_1648",
+      "conflicting_facts": [],
+      "evidence": "The summit hit a depressing low for the Obama administration when Chavez walked up to Obama and, as the cameras clicked, handed the American President a copy of the book \"Open Veins of Latin America,\" which blames the region's woes on the U.S.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "President Barack Obama is in Panama for the Summit of the Americas, hoping to improve ties with Latin American leaders and reverse the US's declining influence in the region.",
+      "first_failed_verdict": "unverifiable",
+      "id": "ragtruth_1648",
+      "missing_facts": [
+        "President Barack Obama is in Panama for the Summit of the Americas, hoping to improve ties with Latin American leaders and reverse the US's declining influence in the region"
+      ],
+      "predicted": [
+        "contradicted_answer"
+      ],
+      "predicted_primary_root_cause": "conflicting_contexts"
+    },
+    {
+      "base_case_id": "ragtruth_1678",
+      "conflicting_facts": [],
+      "evidence": "Unicef hopes there will be just enough time to deliver vital food and supplies, helping to ease the country's worsening humanitarian crisis.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "Unicef delivered vital aid to Yemen's capital city of Sanaa despite the ongoing conflict, using a rare window of peace to bring food and supplies to those in need.",
+      "first_failed_verdict": "unsupported",
+      "id": "ragtruth_1678",
+      "missing_facts": [
+        "Unicef delivered vital aid to Yemen's capital city of Sanaa despite the ongoing conflict, using a rare window of peace to bring food and supplies to those in need"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_1683",
+      "conflicting_facts": [
+        "The author notes that while most people consider sexual violence as rape, they also include other forms of harassment such as groping, stalking, and ogling, which are equally intimidating."
+      ],
+      "evidence": "Most people, including women, only think of sexual violence as rape and tend to overlook touching, groping and stalking, not to mention the \"milder\" forms of ogling, leering, catcalling and whistling, even though all of this can be intimidating.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "The author notes that while most people consider sexual violence as rape, they also include other forms of harassment such as groping, stalking, and ogling, which are equally intimidating.",
+      "first_failed_verdict": "contradicted",
+      "id": "ragtruth_1683",
+      "missing_facts": [
+        "The author notes that",
+        "which are equally intimidating"
+      ],
+      "predicted": [
+        "contradicted_answer"
+      ],
+      "predicted_primary_root_cause": "conflicting_contexts"
+    },
+    {
+      "base_case_id": "ragtruth_1698",
+      "conflicting_facts": [],
+      "evidence": "The increasing popularity of the northern route has caused concern amongst Nepali companies that climbers will divert to the Chinese side.",
+      "expected": [
+        "contradicted_answer"
+      ],
+      "expected_primary_root_cause": "conflicting_contexts",
+      "first_failed_claim": "This has resulted in a rise in numbers registered to climb the northern route to Everest, which has led to concerns amongst Nepali companies that climbers will divert to the Chinese side.",
+      "first_failed_verdict": "partially_supported",
+      "id": "ragtruth_1698",
+      "missing_facts": [
+        "This has resulted in a rise in numbers registered to climb the northern route to Everest, which has led to concerns amongst Nepali companies that climbers will divert to the Chinese side"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_1990",
+      "conflicting_facts": [],
+      "evidence": "A mom furious at her son for apparently taking part in the Baltimore riots has become a sensation online.",
+      "expected": [
+        "contradicted_answer"
+      ],
+      "expected_primary_root_cause": "conflicting_contexts",
+      "first_failed_claim": "A mother was filmed publicly shaming and physically hitting her son, believed to be involved in the Baltimore riots, while praising him in front of the media.",
+      "first_failed_verdict": "unsupported",
+      "id": "ragtruth_1990",
+      "missing_facts": [
+        "A mother was filmed publicly shaming and physically hitting her son, believed to be involved in the Baltimore riots",
+        "praising him in front of the media"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_2136",
+      "conflicting_facts": [],
+      "evidence": "\" Singer revealed that the \"Newsroom\" actress would play Betsy Braddock in the movie (presumably before the confusing and complicated plot twist that saw Psylocke change from a Caucasian former supermodel to a Japanese ninja for no immediately obvious reason).",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "Munn, known for her role on \"The Newsroom\", is set to play mutant superheroine Psylocke.",
+      "first_failed_verdict": "unsupported",
+      "id": "ragtruth_2136",
+      "missing_facts": [
+        "Munn, known for her role on \"The Newsroom\", is set to play mutant superheroine Psylocke"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_2359",
+      "conflicting_facts": [],
+      "evidence": "Indiana declared a public health emergency in that county in March.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "Indiana has declared a public health emergency in the county and has deployed additional resources, including healthcare volunteers and a needle exchange program.",
+      "first_failed_verdict": "unverifiable",
+      "id": "ragtruth_2359",
+      "missing_facts": [
+        "Indiana has declared a public health emergency in the county and has deployed additional resources, including healthcare volunteers and a needle exchange program"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_2469",
+      "conflicting_facts": [],
+      "evidence": "Google's popular real-time traffic app, Waze, uses GPS navigation and crowdsourcing to alert users to traffic jams, automobile accidents, stalled cars, and through its \"traffic cop\" feature, the presence of law enforcement.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "Google's popular app Waze allows users to locate police officers in real-time, raising concerns about the safety of law enforcement officials.",
+      "first_failed_verdict": "partially_supported",
+      "id": "ragtruth_2469",
+      "missing_facts": [
+        "allows raising concerns about the safety of law enforcement officials"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_2653",
+      "conflicting_facts": [],
+      "evidence": "But sadly for beer fans, there's no talk of a beer-flavored ice cream.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "There is no mention of a beer-flavored ice cream at this time.",
+      "first_failed_verdict": "partially_supported",
+      "id": "ragtruth_2653",
+      "missing_facts": [
+        "There is no mention of a beer-flavored ice cream at this time"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_2675",
+      "conflicting_facts": [],
+      "evidence": "It was unclear whether it was a resumption of the operation or a short-term series of strikes.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "However, the renewed airstrikes have led to confusion about whether the operation has resumed or if it is a short-term series of strikes.",
+      "first_failed_verdict": "partially_supported",
+      "id": "ragtruth_2675",
+      "missing_facts": [
+        "However, the renewed airstrikes have led to confusion about whether the operation has resumed or if it is a short-term series of strikes"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    }
+  ],
+  "confusion": [
+    {
+      "count": 64,
+      "expected": "no_failure_detected",
+      "predicted": "partial_support"
+    },
+    {
+      "count": 32,
+      "expected": "contradicted_answer",
+      "predicted": "contradicted_answer"
+    },
+    {
+      "count": 31,
+      "expected": "partial_support",
+      "predicted": "partial_support"
+    },
+    {
+      "count": 26,
+      "expected": "no_failure_detected",
+      "predicted": "no_failure_detected"
+    },
+    {
+      "count": 22,
+      "expected": "no_failure_detected",
+      "predicted": "contradicted_answer"
+    },
+    {
+      "count": 12,
+      "expected": "partial_support",
+      "predicted": "contradicted_answer"
+    },
+    {
+      "count": 11,
+      "expected": "contradicted_answer",
+      "predicted": "partial_support"
+    },
+    {
+      "count": 1,
+      "expected": "partial_support",
+      "predicted": "no_failure_detected"
+    },
+    {
+      "count": 1,
+      "expected": "unsupported",
+      "predicted": "partial_support"
+    }
+  ],
+  "dangerous_false_greens": [
+    {
+      "base_case_id": "ragtruth_16056",
+      "conflicting_facts": [],
+      "evidence": "",
+      "expected": [
+        "partial_support"
+      ],
+      "expected_primary_root_cause": "answer_overreach",
+      "first_failed_claim": "",
+      "first_failed_verdict": "",
+      "id": "ragtruth_16056",
+      "missing_facts": [],
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_primary_root_cause": "no_failure_detected"
+    }
+  ],
+  "false_positive_labels": [
+    {
+      "count": 64,
+      "label": "partial_support"
+    },
+    {
+      "count": 22,
+      "label": "contradicted_answer"
+    }
+  ],
+  "label_miss_count": 111,
+  "mode": "semantic",
+  "root_cause_confusion": [
+    {
+      "count": 64,
+      "expected_root_cause": "no_failure_detected",
+      "predicted_root_cause": "answer_overreach"
+    },
+    {
+      "count": 32,
+      "expected_root_cause": "answer_overreach",
+      "predicted_root_cause": "answer_overreach"
+    },
+    {
+      "count": 32,
+      "expected_root_cause": "conflicting_contexts",
+      "predicted_root_cause": "conflicting_contexts"
+    },
+    {
+      "count": 26,
+      "expected_root_cause": "no_failure_detected",
+      "predicted_root_cause": "no_failure_detected"
+    },
+    {
+      "count": 22,
+      "expected_root_cause": "no_failure_detected",
+      "predicted_root_cause": "conflicting_contexts"
+    },
+    {
+      "count": 12,
+      "expected_root_cause": "answer_overreach",
+      "predicted_root_cause": "conflicting_contexts"
+    },
+    {
+      "count": 11,
+      "expected_root_cause": "conflicting_contexts",
+      "predicted_root_cause": "answer_overreach"
+    },
+    {
+      "count": 1,
+      "expected_root_cause": "answer_overreach",
+      "predicted_root_cause": "no_failure_detected"
+    }
+  ],
+  "top_conflicting_facts": [
+    {
+      "count": 7,
+      "fact": "parking"
+    },
+    {
+      "count": 4,
+      "fact": "hours"
+    },
+    {
+      "count": 2,
+      "fact": "00"
+    },
+    {
+      "count": 2,
+      "fact": "romantic ambience"
+    },
+    {
+      "count": 1,
+      "fact": "(Passage 1) * An adjective clause, on the other hand, is a dependent clause that modifies a noun or a pronoun"
+    },
+    {
+      "count": 1,
+      "fact": "A nuclear submarine at a Russian shipyard caught fire during repairs, but there's no danger of radiation or explosion as there's no ammunition or fissile materials on board."
+    },
+    {
+      "count": 1,
+      "fact": "According to passage 2, the jack pine produces serotonous cones that are dormant until a fire occurs, at which point they melt and release their seeds"
+    },
+    {
+      "count": 1,
+      "fact": "Based on the provided passages, automotive technicians can get paid in different ways, including hourly."
+    },
+    {
+      "count": 1,
+      "fact": "Efforts to unify the method of determining the date based on astronomical occurrences have not been successful."
+    },
+    {
+      "count": 1,
+      "fact": "If successful, Obama could leave a lasting legacy beyond the historic handshake with Cuban President Raul Castro."
+    },
+    {
+      "count": 1,
+      "fact": "If you have a light fixture, you can also install bird netting over it, but make sure the netting is nonflammable and safe to use around light bulbs and doesn't entangle birds."
+    },
+    {
+      "count": 1,
+      "fact": "Move at an even pace and keep the nozzle at a consistent distance from the surface to avoid streaks."
+    }
+  ],
+  "top_missing_facts": [
+    {
+      "count": 3,
+      "fact": "Unable to answer based on given passages"
+    },
+    {
+      "count": 1,
+      "fact": "\" is: They can work well for creating textured finishes on walls, especially when used with faux finishing techniques"
+    },
+    {
+      "count": 1,
+      "fact": "\"He Was a Friend of Mine\" is a song covered"
+    },
+    {
+      "count": 1,
+      "fact": "\"He was recorded by various artists"
+    },
+    {
+      "count": 1,
+      "fact": "'The Spot' is a local restaurant situated at 389 Linden Ave, Carpinteria, CA, offering a mix of Mexican and traditional American cuisine, with a special focus on burgers"
+    },
+    {
+      "count": 1,
+      "fact": "(Passage 1) * An adjective clause, on the other hand, is a dependent clause that modifies a noun or a pronoun"
+    },
+    {
+      "count": 1,
+      "fact": "(Passage 3) Therefore, to grill pork chops according to Allrecipes.com, you should preheat the grill, season the pork chops with a spice mixture, and grill them over indirect heat until they are cooked through"
+    },
+    {
+      "count": 1,
+      "fact": "18.60"
+    },
+    {
+      "count": 1,
+      "fact": "A draft resolution submitted by Russia to the UN Security Council calling for a halt to the airstrikes was met with skepticism, as it did not address key issues such as the Houthis stopping their fight or political talks between the warring parties"
+    },
+    {
+      "count": 1,
+      "fact": "A mother was filmed publicly shaming and physically hitting her son, believed to be involved in the Baltimore riots"
+    },
+    {
+      "count": 1,
+      "fact": "A third customer was disappointed with the higher prices and poor food quality at Cielo's, reporting a food poisoning incident"
+    },
+    {
+      "count": 1,
+      "fact": "According to customer reviews, Comedy Hideaway is highly recommended for its great local club atmosphere and rising talent performances"
+    }
+  ]
+}

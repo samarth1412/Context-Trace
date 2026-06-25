@@ -1,0 +1,92 @@
+{
+  "benchmark": "ContextTrace-Bench",
+  "benchmark_miss_count": 0,
+  "case_count": 500,
+  "case_set": "all",
+  "cases_to_review": [],
+  "confusion": [
+    {
+      "count": 314,
+      "expected": "should_have_abstained, unsupported_answer",
+      "predicted": "should_have_abstained, unsupported_answer"
+    },
+    {
+      "count": 61,
+      "expected": "citation_mismatch",
+      "predicted": "citation_mismatch"
+    },
+    {
+      "count": 56,
+      "expected": "no_failure_detected",
+      "predicted": "no_failure_detected"
+    },
+    {
+      "count": 28,
+      "expected": "low_authority_source",
+      "predicted": "low_authority_source"
+    },
+    {
+      "count": 28,
+      "expected": "stale_source",
+      "predicted": "stale_source"
+    },
+    {
+      "count": 10,
+      "expected": "contradicted_answer, should_have_abstained",
+      "predicted": "contradicted_answer, should_have_abstained"
+    },
+    {
+      "count": 3,
+      "expected": "partial_support",
+      "predicted": "partial_support"
+    }
+  ],
+  "dangerous_false_greens": [],
+  "false_positive_labels": [],
+  "label_miss_count": 0,
+  "mode": "semantic",
+  "root_cause_confusion": [
+    {
+      "count": 314,
+      "expected_root_cause": "should_have_abstained",
+      "predicted_root_cause": "should_have_abstained"
+    },
+    {
+      "count": 56,
+      "expected_root_cause": "no_failure_detected",
+      "predicted_root_cause": "no_failure_detected"
+    },
+    {
+      "count": 32,
+      "expected_root_cause": "wrong_source_cited",
+      "predicted_root_cause": "wrong_source_cited"
+    },
+    {
+      "count": 29,
+      "expected_root_cause": "missing_cited_source",
+      "predicted_root_cause": "missing_cited_source"
+    },
+    {
+      "count": 28,
+      "expected_root_cause": "low_authority_source",
+      "predicted_root_cause": "low_authority_source"
+    },
+    {
+      "count": 28,
+      "expected_root_cause": "stale_context",
+      "predicted_root_cause": "stale_context"
+    },
+    {
+      "count": 10,
+      "expected_root_cause": "conflicting_contexts",
+      "predicted_root_cause": "conflicting_contexts"
+    },
+    {
+      "count": 3,
+      "expected_root_cause": "answer_overreach",
+      "predicted_root_cause": "answer_overreach"
+    }
+  ],
+  "top_conflicting_facts": [],
+  "top_missing_facts": []
+}

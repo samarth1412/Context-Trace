@@ -1,0 +1,43 @@
+{
+  "query": "What are the main advantages of PET/MRI compared with PET/CT?",
+  "answer": "- PET/MRI has been introduced since 2010, with approximately 70 systems installed worldwide.\n- Widely accepted clinical indications for PET/MRI are yet to be determined.\n- PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis.\n- The adoption of PET/MRI has been slower compared to PET/CT.\n- However, the main advantages of PET/MRI over PET/CT are not explicitly",
+  "contexts": [
+    {
+      "id": "data/PETMRI.txt:4",
+      "text": "illustrated with examples extracted from the authors\u2019 preliminary\nexperience.                                                                                                                          introduced. The adoption of PET/MRI has been much\n                                                                                                                                     slower compared to PET/computed tomography (PET/\nKeywords: Positron-emission tomography/methods; Magnetic resonance                                                                   CT).         Since           its     introduction                    in     2010,          approximately\nimaging/methods; Tomography, x-ray computed/methods; Pelvic neoplasms;                                                               70 systems have been installed worldwide, mostly in",
+      "metadata": {
+        "source": "data/PETMRI.txt",
+        "chunk_index": 4,
+        "repo": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine"
+      }
+    },
+    {
+      "id": "data/PETMRI.txt:17",
+      "text": "compared to PET/CT(8) (Figure 4).",
+      "metadata": {
+        "source": "data/PETMRI.txt",
+        "chunk_index": 17,
+        "repo": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine"
+      }
+    },
+    {
+      "id": "data/PETMRI.txt:24",
+      "text": "choice, particularly for assessment of some regions, such as\nbrain, head and neck, liver and pelvis. However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.\n\n\n\nREFERENCES\n\n1.    Ter-Pogossian MM, Phelps ME, Hoffman EJ, Mullani NA. A positron-emission\n      transaxial tomograph for nuclear imaging (PETT). Radiology. 1975;114(1):89-98.",
+      "metadata": {
+        "source": "data/PETMRI.txt",
+        "chunk_index": 24,
+        "repo": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine"
+      }
+    }
+  ],
+  "metadata": {
+    "validation": "real_world_rag_e2e",
+    "repo": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+    "repo_state": "already_cloned",
+    "retriever": "FAISS.as_retriever(search_type='mmr', k=3, fetch_k=20, lambda_mult=0.5)",
+    "embedding_model": "nomic-embed-text",
+    "generation_model": "phi3",
+    "ollama_base_url": "http://localhost:11434",
+    "compatibility_note": "Used langchain_community Ollama wrappers because installed Ollama exposes /api/embeddings, while current langchain_ollama expects /api/embed."
+  }
+}

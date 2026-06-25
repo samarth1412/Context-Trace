@@ -1,0 +1,117 @@
+{
+  "base_url": "http://localhost:11434/v1",
+  "model": "phi3:latest",
+  "notes": [
+    "This runner uses an OpenAI-compatible chat-completions endpoint.",
+    "Default base URL targets Ollama's local OpenAI-compatible endpoint."
+  ],
+  "rows": [
+    {
+      "id": "local_mode_sqlite_supported",
+      "latency_ms": 56172.366,
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_citation_statuses": [],
+      "predicted_evidence_spans": [
+        "A new SDK client stores traces in SQLite under: .contexttrace/contexttrace.db."
+      ],
+      "predicted_primary_root_cause": "partial_context",
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 1,
+        "supported": 0,
+        "unsupported": 0,
+        "unverifiable": 0
+      },
+      "retrieved_context_count": 1
+    },
+    {
+      "id": "v020_claim_verification_supported",
+      "latency_ms": 23431.66,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_citation_statuses": [
+        "citation_ok"
+      ],
+      "predicted_evidence_spans": [
+        "ContextTrace v0rances: ContextTrace v0.2.0 adds local claim-level evidence verification for portable RAG traces."
+      ],
+      "predicted_primary_root_cause": "no_failure_detected",
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      },
+      "retrieved_context_count": 1
+    },
+    {
+      "id": "langchain_agent_events_supported",
+      "latency_ms": 23621.587,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_citation_statuses": [],
+      "predicted_evidence_spans": [
+        "The LangChain callback captures tool calls, tool results, and chain/tool errors as agent timeline events."
+      ],
+      "predicted_primary_root_cause": "conflicting_contexts",
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      },
+      "retrieved_context_count": 1
+    },
+    {
+      "id": "fastapi_logging_supported",
+      "latency_ms": 23014.359,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_citation_statuses": [
+        "citation_ok"
+      ],
+      "predicted_evidence_spans": [
+        "Logging failures are swallowed by default so tracing does not break the production endpoint."
+      ],
+      "predicted_primary_root_cause": "no_failure_detected",
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      },
+      "retrieved_context_count": 1
+    },
+    {
+      "id": "failure_taxonomy_citation_supported",
+      "latency_ms": 26717.084,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_citation_statuses": [
+        "cited_source_does_not_support_claim"
+      ],
+      "predicted_evidence_spans": [
+        "a claim cites a chunk that does not support it."
+      ],
+      "predicted_primary_root_cause": "conflicting_contexts",
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      },
+      "retrieved_context_count": 1
+    }
+  ],
+  "system": "Ollama phi3 local judge"
+}

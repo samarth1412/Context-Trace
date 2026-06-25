@@ -1,0 +1,46 @@
+{
+  "query": "What should the assistant do if it does not know the answer?",
+  "answer": "If you don't know the answer, just say that you don't know. Answer in bullet points. Use the following pieces of retrieved context to answer the question.",
+  "contexts": [
+    {
+      "id": "ollama_hf_rag_engine:main.py:7",
+      "text": "ntent=chunk) for chunk in chunks]\n    document_ids = vector_store.add_documents(documents=documents)\n\nmodel = ChatOllama(model=\"mistral\", base_url=\"http://localhost:11434\")\n\ntemplate = \"\"\"\n        You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question.\n        If you don't know the answer, just say that you don't know.\n        Answer in bullet points. Make sure your answer is relevant to the question and it is answered from the context only.\n        Question: {question}\n        Context: {context}\n        Answer:\n    \"\"\"\n\nprompt = ChatPromptTemplate.from_template(template)",
+      "metadata": {
+        "project": "taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+        "repo_url": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+        "source": "main.py",
+        "retrieval_score": 0.3089,
+        "retriever": "sentence-transformers lexical-prefilter cosine"
+      }
+    },
+    {
+      "id": "ollama_hf_rag_engine:main.py:8",
+      "text": "Context: {context}\n        Answer:\n    \"\"\"\n\nprompt = ChatPromptTemplate.from_template(template)\n\nwhile True:\n        question = input(\"You: \")\n        if question.lower() == \"exit\":\n            break;\n\n#results = vector_store.search(query=question, search_type='similarity')\n\nretriever = vector_store.as_retriever(search_type=\"mmr\", search_kwargs = {'k': 5, 'fetch_k': 50, 'lambda_mult': 0.5})\n\ndocs = retriever.invoke(question)\n\nrag_chain = (\n            {\"context\": retriever|format_docs, \"question\": RunnablePassthrough()}\n            | prompt\n            | model\n            | StrOutputParser()\n        )\n\noutput = rag_chain.invoke(question)\n        print(output)",
+      "metadata": {
+        "project": "taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+        "repo_url": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+        "source": "main.py",
+        "retrieval_score": 0.2462,
+        "retriever": "sentence-transformers lexical-prefilter cosine"
+      }
+    },
+    {
+      "id": "ollama_hf_rag_engine:README.md:2",
+      "text": "ion, and FAISS-based vector search to create a high-performance, context-aware chatbot.\n\n## Features\n\n- **Document Ingestion**: Load and process `.txt` files for retrieval.\n- **Chunking**: Split long documents into manageable pieces using `RecursiveCharacterTextSplitter`.\n- **Embeddings**: Generate text embeddings using Ollama's embedding model.\n- **Vector Search**: Perform similarity-based search using FAISS.\n- **LLM QA**: Retrieve relevant context and answer user queries using the `ChatOllama` LLM.\n- **Retrieval Augmented Generation (RAG)**: Combine retrieved context with a question-answering template to enhance LLM outputs.\n\n## Installation\n\n### Prerequisites\n- Python 3.8+\n- Pip",
+      "metadata": {
+        "project": "taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+        "repo_url": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+        "source": "README.md",
+        "retrieval_score": 0.2255,
+        "retriever": "sentence-transformers lexical-prefilter cosine"
+      }
+    }
+  ],
+  "metadata": {
+    "project": "taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+    "repo_url": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+    "validation": "real_world_rag",
+    "generation_model": "mistral",
+    "embedding_model": "all-MiniLM-L6-v2"
+  }
+}

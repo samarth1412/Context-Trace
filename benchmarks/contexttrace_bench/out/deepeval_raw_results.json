@@ -1,0 +1,3541 @@
+{
+  "model": "gpt-4.1-mini",
+  "notes": [
+    "DeepEval FaithfulnessMetric evaluates whether actual_output aligns with retrieval_context.",
+    "ContextualRecallMetric requires expected_output; this runner only uses it when explicitly enabled."
+  ],
+  "rows": [
+    {
+      "faithfulness_score": 1.0,
+      "id": "local_mode_sqlite_supported",
+      "latency_ms": 8760.484,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "v020_claim_verification_supported",
+      "latency_ms": 3879.196,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langchain_agent_events_supported",
+      "latency_ms": 5205.665,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "fastapi_logging_supported",
+      "latency_ms": 4309.419,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "failure_taxonomy_citation_supported",
+      "latency_ms": 5005.251,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "citation_points_to_wrong_real_doc",
+      "latency_ms": 8765.674,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "citation_source_missing_real_claim",
+      "latency_ms": 6017.982,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "unsupported_local_storage_from_fastapi_context",
+      "latency_ms": 7108.817,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 0.0,
+      "id": "contradicted_backend_required",
+      "latency_ms": 8229.66,
+      "reason": "The score is 0.00 because the actual output incorrectly states that a backend server is required for normal SDK, CLI, report, and viewer workflows, which directly contradicts the context stating no backend server is needed for these workflows.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 0.0,
+      "id": "adversarial_entity_swap_location",
+      "latency_ms": 6255.974,
+      "reason": "The score is 0.00 because the actual output incorrectly states that the Eiffel Tower is in Berlin, directly contradicting the retrieval context which clearly states it is in Paris.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 0.0,
+      "id": "adversarial_entity_swap_discovery",
+      "latency_ms": 6171.913,
+      "reason": "The score is 0.00 because the actual output incorrectly attributes the discovery of penicillin to Alexander Dumas, while the retrieval context clearly states it was Alexander Fleming.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 0.0,
+      "id": "adversarial_relation_direction_inversion",
+      "latency_ms": 6431.036,
+      "reason": "The score is 0.00 because the actual output incorrectly claims that A causes B, while the retrieval context clearly states that B causes A, representing a direct contradiction.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "partial_cross_doc_overclaim",
+      "latency_ms": 5564.234,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "no_context_release_claim",
+      "latency_ms": 0.003,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_report_contents_supported",
+      "latency_ms": 3800.238,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_viewer_supported",
+      "latency_ms": 4574.948,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_eval_workflow_supported",
+      "latency_ms": 6395.135,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_config_precedence_supported",
+      "latency_ms": 4584.613,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_agent_event_types_supported",
+      "latency_ms": 6148.952,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_local_items_supported",
+      "latency_ms": 5430.673,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_no_network_supported",
+      "latency_ms": 4649.473,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 0.0,
+      "id": "privacy_redaction_supported",
+      "latency_ms": 5866.081,
+      "reason": "The score is 0.00 because the actual output incorrectly states the options without the required colons, omitting a key syntax element present in the retrieval context, leading to a contradiction.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "release_runtime_dependencies_supported",
+      "latency_ms": 4020.957,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "byo_jsonpath_supported",
+      "latency_ms": 5958.745,
+      "reason": "The score is 1.00 because there are no contradictions between the actual output and the retrieval context, indicating complete faithfulness.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "regression_threshold_metrics_supported",
+      "latency_ms": 4934.752,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langgraph_errors_supported",
+      "latency_ms": 4603.855,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "llamaindex_mock_local_supported",
+      "latency_ms": 3663.571,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "citation_wrong_quickstart_section",
+      "latency_ms": 5478.78,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "unsupported_python_support_wrong_context",
+      "latency_ms": 5888.896,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 0.0,
+      "id": "contradicted_privacy_network",
+      "latency_ms": 4329.85,
+      "reason": "The score is 0.00 because the actual output incorrectly claims that a network call is made for local SDK tracing, which directly contradicts the retrieval context stating no network call occurs.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "partial_privacy_overclaim",
+      "latency_ms": 6425.183,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "multi_span_local_no_backend_supported",
+      "latency_ms": 4990.322,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "multi_context_eval_workflow_supported",
+      "latency_ms": 5335.968,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 0.0,
+      "id": "contradicted_release_version",
+      "latency_ms": 6620.741,
+      "reason": "The score is 0.00 because the actual output incorrectly claims that ContextTrace v0.1.0 adds local claim-level evidence verification, whereas the retrieval context specifies this feature was introduced in v0.2.0.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 0.0,
+      "id": "contradicted_llamaindex_external_services",
+      "latency_ms": 4617.893,
+      "reason": "The score is 0.00 because the actual output incorrectly claims the example uses external services, while the retrieval context explicitly states it runs without external services.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 0.0,
+      "id": "contradicted_default_retries",
+      "latency_ms": 4698.553,
+      "reason": "The score is 0.00 because the actual output incorrectly states that the default configuration value for retries is 5, while the retrieval context clearly states it is 2.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 0.0,
+      "id": "contradicted_viewer_port",
+      "latency_ms": 5589.959,
+      "reason": "The score is 0.00 because the actual output incorrectly states that the local viewer serves pages at http://localhost:3000, while the retrieval context clearly specifies it serves pages at http://localhost:8765.",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "no_context_privacy_claim",
+      "latency_ms": 0.003,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported",
+      "latency_ms": 5104.531,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported",
+      "latency_ms": 4144.867,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported",
+      "latency_ms": 4182.784,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_match_any_supported",
+      "latency_ms": 4122.057,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 0.0,
+      "id": "qdrant_text_any_contradicted",
+      "latency_ms": 6169.92,
+      "reason": "The score is 0.00 because the actual output incorrectly claims that the text_any condition matches only fields containing all query terms, whereas the retrieval context clarifies that text_any matches fields containing any single query term.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "chroma_where_filter_supported",
+      "latency_ms": 4670.685,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "chroma_issue_where_no_match_supported",
+      "latency_ms": 4581.503,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "chroma_issue_metadata_list_error_supported",
+      "latency_ms": 4627.874,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "haystack_document_store_supported",
+      "latency_ms": 4040.871,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 0.0,
+      "id": "haystack_protocol_partial_support",
+      "latency_ms": 5587.357,
+      "reason": "The score is 0.00 because the actual output incorrectly includes 'embed_documents' as part of the DocumentStore protocol, which contradicts the retrieval context that only lists count_documents, filter_documents, write_documents, and delete_documents.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langchain_vectorstore_retriever_supported",
+      "latency_ms": 4217.862,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "external_wrong_source_citation",
+      "latency_ms": 5088.406,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "external_no_context_should_abstain",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "local_mode_sqlite_supported__generated_uncited_supported",
+      "latency_ms": 5364.907,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "local_mode_sqlite_supported__generated_no_context",
+      "latency_ms": 0.005,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "local_mode_sqlite_supported__generated_missing_citation",
+      "latency_ms": 4657.296,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "local_mode_sqlite_supported__generated_wrong_source_citation",
+      "latency_ms": 4994.97,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "local_mode_sqlite_supported__generated_stale_source",
+      "latency_ms": 4085.298,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "local_mode_sqlite_supported__generated_low_authority_source",
+      "latency_ms": 6501.547,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "v020_claim_verification_supported__generated_uncited_supported",
+      "latency_ms": 3627.143,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "v020_claim_verification_supported__generated_no_context",
+      "latency_ms": 0.006,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "v020_claim_verification_supported__generated_missing_citation",
+      "latency_ms": 4923.12,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "v020_claim_verification_supported__generated_wrong_source_citation",
+      "latency_ms": 6067.112,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "v020_claim_verification_supported__generated_stale_source",
+      "latency_ms": 5023.058,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "v020_claim_verification_supported__generated_low_authority_source",
+      "latency_ms": 5737.798,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langchain_agent_events_supported__generated_uncited_supported",
+      "latency_ms": 5899.729,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "langchain_agent_events_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langchain_agent_events_supported__generated_missing_citation",
+      "latency_ms": 6336.654,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langchain_agent_events_supported__generated_wrong_source_citation",
+      "latency_ms": 5184.543,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langchain_agent_events_supported__generated_stale_source",
+      "latency_ms": 7066.562,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langchain_agent_events_supported__generated_low_authority_source",
+      "latency_ms": 6748.852,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "fastapi_logging_supported__generated_uncited_supported",
+      "latency_ms": 4928.434,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "fastapi_logging_supported__generated_no_context",
+      "latency_ms": 0.003,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "fastapi_logging_supported__generated_missing_citation",
+      "latency_ms": 4769.933,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "fastapi_logging_supported__generated_wrong_source_citation",
+      "latency_ms": 5096.41,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "fastapi_logging_supported__generated_stale_source",
+      "latency_ms": 4591.445,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "fastapi_logging_supported__generated_low_authority_source",
+      "latency_ms": 6266.215,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "failure_taxonomy_citation_supported__generated_uncited_supported",
+      "latency_ms": 4516.108,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "failure_taxonomy_citation_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "failure_taxonomy_citation_supported__generated_missing_citation",
+      "latency_ms": 3972.714,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "failure_taxonomy_citation_supported__generated_wrong_source_citation",
+      "latency_ms": 5762.921,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "failure_taxonomy_citation_supported__generated_stale_source",
+      "latency_ms": 3808.267,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "failure_taxonomy_citation_supported__generated_low_authority_source",
+      "latency_ms": 4032.18,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_report_contents_supported__generated_uncited_supported",
+      "latency_ms": 4380.504,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "quickstart_report_contents_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_report_contents_supported__generated_missing_citation",
+      "latency_ms": 5114.069,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_report_contents_supported__generated_wrong_source_citation",
+      "latency_ms": 4686.679,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_report_contents_supported__generated_stale_source",
+      "latency_ms": 4345.012,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_report_contents_supported__generated_low_authority_source",
+      "latency_ms": 4062.103,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_viewer_supported__generated_uncited_supported",
+      "latency_ms": 4675.742,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "quickstart_viewer_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_viewer_supported__generated_missing_citation",
+      "latency_ms": 4070.589,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_viewer_supported__generated_wrong_source_citation",
+      "latency_ms": 6330.972,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_viewer_supported__generated_stale_source",
+      "latency_ms": 3830.82,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_viewer_supported__generated_low_authority_source",
+      "latency_ms": 3817.01,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_eval_workflow_supported__generated_uncited_supported",
+      "latency_ms": 6777.426,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "quickstart_eval_workflow_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_eval_workflow_supported__generated_missing_citation",
+      "latency_ms": 5829.415,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_eval_workflow_supported__generated_wrong_source_citation",
+      "latency_ms": 5311.068,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_eval_workflow_supported__generated_stale_source",
+      "latency_ms": 5511.714,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_eval_workflow_supported__generated_low_authority_source",
+      "latency_ms": 5036.203,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 0.0,
+      "id": "sdk_config_precedence_supported__generated_uncited_supported",
+      "latency_ms": 4957.302,
+      "reason": "The score is 0.00 because the actual output omits specific environment variable keys and the detail that contexttrace.yaml is a file, and it fails to mention the 'then' before SDK defaults, indicating a discrepancy in the order and details compared to the retrieval context.",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "sdk_config_precedence_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 0.0,
+      "id": "sdk_config_precedence_supported__generated_missing_citation",
+      "latency_ms": 5908.13,
+      "reason": "The score is 0.00 because the actual output omits important details from the retrieval context, such as the specific environment variable keys and that contexttrace.yaml is a file, leading to an incomplete and less faithful representation of the configuration precedence.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 0.0,
+      "id": "sdk_config_precedence_supported__generated_wrong_source_citation",
+      "latency_ms": 5387.509,
+      "reason": "The score is 0.00 because the actual output omits the environment variables CONTEXTTRACE_API_KEY and CONTEXTTRACE_MODE, which are clearly part of the configuration precedence in the retrieval context, leading to a significant omission.",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 0.0,
+      "id": "sdk_config_precedence_supported__generated_stale_source",
+      "latency_ms": 6256.085,
+      "reason": "The score is 0.00 because the actual output omits the environment variables 'CONTEXTTRACE_PROJECT', 'CONTEXTTRACE_STORAGE_PATH', 'CONTEXTTRACE_API_KEY', and 'CONTEXTTRACE_MODE' from the precedence order, which are explicitly mentioned in the retrieval context.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 0.0,
+      "id": "sdk_config_precedence_supported__generated_low_authority_source",
+      "latency_ms": 5294.697,
+      "reason": "The score is 0.00 because the actual output fails to mention the specific environment variables (CONTEXTTRACE_PROJECT, CONTEXTTRACE_STORAGE_PATH, CONTEXTTRACE_API_KEY, CONTEXTTRACE_MODE) and does not explicitly state the configuration precedence order as detailed in the retrieval context, leading to a significant omission of critical details.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_agent_event_types_supported__generated_uncited_supported",
+      "latency_ms": 3315.928,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "sdk_agent_event_types_supported__generated_no_context",
+      "latency_ms": 0.003,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_agent_event_types_supported__generated_missing_citation",
+      "latency_ms": 4102.556,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_agent_event_types_supported__generated_wrong_source_citation",
+      "latency_ms": 3860.679,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_agent_event_types_supported__generated_stale_source",
+      "latency_ms": 3482.078,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_agent_event_types_supported__generated_low_authority_source",
+      "latency_ms": 4235.693,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_local_items_supported__generated_uncited_supported",
+      "latency_ms": 4886.596,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "privacy_local_items_supported__generated_no_context",
+      "latency_ms": 0.001,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_local_items_supported__generated_missing_citation",
+      "latency_ms": 4227.328,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_local_items_supported__generated_wrong_source_citation",
+      "latency_ms": 5310.495,
+      "reason": "The score is 1.00 because there are no contradictions between the actual output and the retrieval context, indicating perfect alignment.",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_local_items_supported__generated_stale_source",
+      "latency_ms": 3600.957,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_local_items_supported__generated_low_authority_source",
+      "latency_ms": 4201.292,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_no_network_supported__generated_uncited_supported",
+      "latency_ms": 3190.771,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "privacy_no_network_supported__generated_no_context",
+      "latency_ms": 0.003,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_no_network_supported__generated_missing_citation",
+      "latency_ms": 3224.24,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_no_network_supported__generated_wrong_source_citation",
+      "latency_ms": 4073.065,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_no_network_supported__generated_stale_source",
+      "latency_ms": 3816.435,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_no_network_supported__generated_low_authority_source",
+      "latency_ms": 3016.387,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 0.0,
+      "id": "privacy_redaction_supported__generated_uncited_supported",
+      "latency_ms": 5890.52,
+      "reason": "The score is 0.00 because the actual output incorrectly omits colons in option names like 'log_chunk_text' and 'log_answer_text', which is a factual inaccuracy compared to the retrieval context's syntax, leading to a contradiction.",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "privacy_redaction_supported__generated_no_context",
+      "latency_ms": 0.004,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_redaction_supported__generated_missing_citation",
+      "latency_ms": 5006.802,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_redaction_supported__generated_wrong_source_citation",
+      "latency_ms": 4947.005,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 0.0,
+      "id": "privacy_redaction_supported__generated_stale_source",
+      "latency_ms": 5315.836,
+      "reason": "The score is 0.00 because the actual output incorrectly omits colons in 'log_chunk_text false' and 'log_answer_text false', which differs from the retrieval context's correct syntax 'log_chunk_text: false' and 'log_answer_text: false', leading to a significant misunderstanding.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 0.0,
+      "id": "privacy_redaction_supported__generated_low_authority_source",
+      "latency_ms": 4896.102,
+      "reason": "The score is 0.00 because the actual output inaccurately omits colons in the options 'log_chunk_text' and 'log_answer_text', whereas the retrieval context correctly includes colons, indicating a syntax discrepancy.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "release_runtime_dependencies_supported__generated_uncited_supported",
+      "latency_ms": 3567.546,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "release_runtime_dependencies_supported__generated_no_context",
+      "latency_ms": 0.003,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "release_runtime_dependencies_supported__generated_missing_citation",
+      "latency_ms": 3794.287,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "release_runtime_dependencies_supported__generated_wrong_source_citation",
+      "latency_ms": 3936.574,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "release_runtime_dependencies_supported__generated_stale_source",
+      "latency_ms": 4225.919,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "release_runtime_dependencies_supported__generated_low_authority_source",
+      "latency_ms": 6369.339,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "byo_jsonpath_supported__generated_uncited_supported",
+      "latency_ms": 4699.187,
+      "reason": "The score is 1.00 because there are no contradictions indicating that the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "byo_jsonpath_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "byo_jsonpath_supported__generated_missing_citation",
+      "latency_ms": 4726.032,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "byo_jsonpath_supported__generated_wrong_source_citation",
+      "latency_ms": 4838.344,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "byo_jsonpath_supported__generated_stale_source",
+      "latency_ms": 5568.655,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "byo_jsonpath_supported__generated_low_authority_source",
+      "latency_ms": 4194.07,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "regression_threshold_metrics_supported__generated_uncited_supported",
+      "latency_ms": 3863.655,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "regression_threshold_metrics_supported__generated_no_context",
+      "latency_ms": 0.001,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "regression_threshold_metrics_supported__generated_missing_citation",
+      "latency_ms": 3342.168,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "regression_threshold_metrics_supported__generated_wrong_source_citation",
+      "latency_ms": 4978.059,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "regression_threshold_metrics_supported__generated_stale_source",
+      "latency_ms": 4746.257,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "regression_threshold_metrics_supported__generated_low_authority_source",
+      "latency_ms": 3760.781,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langgraph_errors_supported__generated_uncited_supported",
+      "latency_ms": 3916.74,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "langgraph_errors_supported__generated_no_context",
+      "latency_ms": 0.003,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langgraph_errors_supported__generated_missing_citation",
+      "latency_ms": 4096.256,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langgraph_errors_supported__generated_wrong_source_citation",
+      "latency_ms": 3814.225,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langgraph_errors_supported__generated_stale_source",
+      "latency_ms": 3674.427,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langgraph_errors_supported__generated_low_authority_source",
+      "latency_ms": 3764.291,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 0.0,
+      "id": "llamaindex_mock_local_supported__generated_uncited_supported",
+      "latency_ms": 5507.235,
+      "reason": "The score is 0.00 because the actual output incorrectly implies a causal connection between using mock nodes and local mode and running without external services, which is not explicitly supported by the retrieval context.",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "llamaindex_mock_local_supported__generated_no_context",
+      "latency_ms": 0.004,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 0.0,
+      "id": "llamaindex_mock_local_supported__generated_missing_citation",
+      "latency_ms": 5177.928,
+      "reason": "The score is 0.00 because the actual output incorrectly infers a causal connection between using mock nodes, running in local mode, and running without external services, which is not explicitly supported by the retrieval context, leading to a contradiction.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "llamaindex_mock_local_supported__generated_wrong_source_citation",
+      "latency_ms": 6406.933,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 0.0,
+      "id": "llamaindex_mock_local_supported__generated_stale_source",
+      "latency_ms": 4787.374,
+      "reason": "The score is 0.00 because the actual output implies a causal connection between using mock nodes and local mode and running without external services, which the retrieval context does not explicitly support, leading to a contradiction.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "llamaindex_mock_local_supported__generated_low_authority_source",
+      "latency_ms": 4901.719,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "multi_span_local_no_backend_supported__generated_uncited_supported",
+      "latency_ms": 5166.851,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "multi_span_local_no_backend_supported__generated_no_context",
+      "latency_ms": 0.003,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "multi_span_local_no_backend_supported__generated_missing_citation",
+      "latency_ms": 4484.607,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "multi_span_local_no_backend_supported__generated_wrong_source_citation",
+      "latency_ms": 4844.033,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "multi_span_local_no_backend_supported__generated_stale_source",
+      "latency_ms": 4574.756,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "multi_span_local_no_backend_supported__generated_low_authority_source",
+      "latency_ms": 4368.153,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_uncited_supported",
+      "latency_ms": 4637.695,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_missing_citation",
+      "latency_ms": 4223.246,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 0.5,
+      "id": "qdrant_payload_filter_supported__generated_wrong_source_citation",
+      "latency_ms": 9510.062,
+      "reason": "The score is 0.50 because the actual output incorrectly claims that additional filters are used to add custom logic, whereas the context presents additional filters and custom logic as separate capabilities, indicating a contradiction.",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_stale_source",
+      "latency_ms": 5329.38,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_low_authority_source",
+      "latency_ms": 4989.88,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_uncited_supported",
+      "latency_ms": 4537.597,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "qdrant_array_filter_supported__generated_no_context",
+      "latency_ms": 0.003,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_missing_citation",
+      "latency_ms": 4082.666,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_wrong_source_citation",
+      "latency_ms": 5081.177,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_stale_source",
+      "latency_ms": 4841.042,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_low_authority_source",
+      "latency_ms": 5070.789,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_uncited_supported",
+      "latency_ms": 3749.823,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "qdrant_payload_index_supported__generated_no_context",
+      "latency_ms": 0.004,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_missing_citation",
+      "latency_ms": 3954.854,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_wrong_source_citation",
+      "latency_ms": 4297.208,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_stale_source",
+      "latency_ms": 5924.468,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_low_authority_source",
+      "latency_ms": 3758.946,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_match_any_supported__generated_uncited_supported",
+      "latency_ms": 4109.511,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "qdrant_match_any_supported__generated_no_context",
+      "latency_ms": 0.003,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_match_any_supported__generated_missing_citation",
+      "latency_ms": 4417.206,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_match_any_supported__generated_wrong_source_citation",
+      "latency_ms": 4399.727,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_match_any_supported__generated_stale_source",
+      "latency_ms": 4596.383,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_match_any_supported__generated_low_authority_source",
+      "latency_ms": 4289.283,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "chroma_where_filter_supported__generated_uncited_supported",
+      "latency_ms": 4321.699,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "chroma_where_filter_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "chroma_where_filter_supported__generated_missing_citation",
+      "latency_ms": 4669.596,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "chroma_where_filter_supported__generated_wrong_source_citation",
+      "latency_ms": 4353.619,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "chroma_where_filter_supported__generated_stale_source",
+      "latency_ms": 4236.128,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "chroma_where_filter_supported__generated_low_authority_source",
+      "latency_ms": 4522.994,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "chroma_issue_where_no_match_supported__generated_uncited_supported",
+      "latency_ms": 6729.35,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "chroma_issue_where_no_match_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "chroma_issue_where_no_match_supported__generated_missing_citation",
+      "latency_ms": 4476.609,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "chroma_issue_where_no_match_supported__generated_wrong_source_citation",
+      "latency_ms": 4435.757,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "chroma_issue_where_no_match_supported__generated_stale_source",
+      "latency_ms": 4007.759,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "chroma_issue_where_no_match_supported__generated_low_authority_source",
+      "latency_ms": 4135.388,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "chroma_issue_metadata_list_error_supported__generated_uncited_supported",
+      "latency_ms": 3970.325,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "chroma_issue_metadata_list_error_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "chroma_issue_metadata_list_error_supported__generated_missing_citation",
+      "latency_ms": 3668.836,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "chroma_issue_metadata_list_error_supported__generated_wrong_source_citation",
+      "latency_ms": 3973.645,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "chroma_issue_metadata_list_error_supported__generated_stale_source",
+      "latency_ms": 4447.432,
+      "reason": "The score is 1.00 because there are no contradictions indicating that the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "chroma_issue_metadata_list_error_supported__generated_low_authority_source",
+      "latency_ms": 5597.548,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "haystack_document_store_supported__generated_uncited_supported",
+      "latency_ms": 3970.956,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "haystack_document_store_supported__generated_no_context",
+      "latency_ms": 0.003,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 0.5,
+      "id": "haystack_document_store_supported__generated_missing_citation",
+      "latency_ms": 5060.308,
+      "reason": "The score is 0.50 because the actual output reverses the relationship between the Document Store and the Retriever, incorrectly stating that the Document Store fetches documents with a Retriever, whereas the context clarifies that the Retriever fetches documents from the Document Store.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "haystack_document_store_supported__generated_wrong_source_citation",
+      "latency_ms": 4709.453,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "haystack_document_store_supported__generated_stale_source",
+      "latency_ms": 3978.949,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "haystack_document_store_supported__generated_low_authority_source",
+      "latency_ms": 3874.392,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langchain_vectorstore_retriever_supported__generated_uncited_supported",
+      "latency_ms": 3387.859,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "contextual_recall": 0.0,
+      "faithfulness_score": 0.0,
+      "id": "langchain_vectorstore_retriever_supported__generated_no_context",
+      "latency_ms": 0.003,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langchain_vectorstore_retriever_supported__generated_missing_citation",
+      "latency_ms": 4699.223,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langchain_vectorstore_retriever_supported__generated_wrong_source_citation",
+      "latency_ms": 4380.93,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langchain_vectorstore_retriever_supported__generated_stale_source",
+      "latency_ms": 3707.835,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langchain_vectorstore_retriever_supported__generated_low_authority_source",
+      "latency_ms": 3874.625,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "local_mode_sqlite_supported__generated_distractor_only_context_000",
+      "latency_ms": 5824.845,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "local_mode_sqlite_supported__generated_distractor_only_context_001",
+      "latency_ms": 4673.419,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "local_mode_sqlite_supported__generated_distractor_only_context_002",
+      "latency_ms": 5363.282,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "local_mode_sqlite_supported__generated_distractor_only_context_003",
+      "latency_ms": 5032.651,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "local_mode_sqlite_supported__generated_distractor_only_context_004",
+      "latency_ms": 4859.26,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "local_mode_sqlite_supported__generated_distractor_only_context_005",
+      "latency_ms": 4648.669,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "v020_claim_verification_supported__generated_distractor_only_context_000",
+      "latency_ms": 4093.398,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "v020_claim_verification_supported__generated_distractor_only_context_001",
+      "latency_ms": 4012.784,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "v020_claim_verification_supported__generated_distractor_only_context_002",
+      "latency_ms": 6320.971,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "v020_claim_verification_supported__generated_distractor_only_context_003",
+      "latency_ms": 5314.526,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "v020_claim_verification_supported__generated_distractor_only_context_004",
+      "latency_ms": 6636.004,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "v020_claim_verification_supported__generated_distractor_only_context_005",
+      "latency_ms": 6093.095,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "v020_claim_verification_supported__generated_distractor_only_context_006",
+      "latency_ms": 4452.305,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "v020_claim_verification_supported__generated_distractor_only_context_007",
+      "latency_ms": 5323.037,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "v020_claim_verification_supported__generated_distractor_only_context_008",
+      "latency_ms": 4438.376,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "v020_claim_verification_supported__generated_distractor_only_context_009",
+      "latency_ms": 4413.261,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "v020_claim_verification_supported__generated_distractor_only_context_010",
+      "latency_ms": 3537.513,
+      "reason": "The score is 1.00 because there are no contradictions indicating that the actual output fully aligns with the retrieval context.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "v020_claim_verification_supported__generated_distractor_only_context_011",
+      "latency_ms": 3790.915,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langchain_agent_events_supported__generated_distractor_only_context_000",
+      "latency_ms": 4143.784,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langchain_agent_events_supported__generated_distractor_only_context_001",
+      "latency_ms": 5979.249,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langchain_agent_events_supported__generated_distractor_only_context_002",
+      "latency_ms": 5462.147,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langchain_agent_events_supported__generated_distractor_only_context_003",
+      "latency_ms": 3972.628,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langchain_agent_events_supported__generated_distractor_only_context_004",
+      "latency_ms": 5676.17,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langchain_agent_events_supported__generated_distractor_only_context_005",
+      "latency_ms": 5161.05,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "fastapi_logging_supported__generated_distractor_only_context_000",
+      "latency_ms": 4172.96,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "fastapi_logging_supported__generated_distractor_only_context_001",
+      "latency_ms": 4217.912,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "fastapi_logging_supported__generated_distractor_only_context_002",
+      "latency_ms": 5128.347,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "fastapi_logging_supported__generated_distractor_only_context_003",
+      "latency_ms": 5811.079,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "fastapi_logging_supported__generated_distractor_only_context_004",
+      "latency_ms": 6023.668,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "fastapi_logging_supported__generated_distractor_only_context_005",
+      "latency_ms": 5981.683,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "fastapi_logging_supported__generated_distractor_only_context_006",
+      "latency_ms": 4919.265,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "fastapi_logging_supported__generated_distractor_only_context_007",
+      "latency_ms": 5169.78,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "fastapi_logging_supported__generated_distractor_only_context_008",
+      "latency_ms": 5630.721,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "failure_taxonomy_citation_supported__generated_distractor_only_context_000",
+      "latency_ms": 3993.858,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "failure_taxonomy_citation_supported__generated_distractor_only_context_001",
+      "latency_ms": 4161.938,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "failure_taxonomy_citation_supported__generated_distractor_only_context_002",
+      "latency_ms": 3974.705,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "failure_taxonomy_citation_supported__generated_distractor_only_context_003",
+      "latency_ms": 4049.641,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "failure_taxonomy_citation_supported__generated_distractor_only_context_004",
+      "latency_ms": 4207.936,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "failure_taxonomy_citation_supported__generated_distractor_only_context_005",
+      "latency_ms": 4180.904,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "failure_taxonomy_citation_supported__generated_distractor_only_context_006",
+      "latency_ms": 4047.371,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "failure_taxonomy_citation_supported__generated_distractor_only_context_007",
+      "latency_ms": 5068.4,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "failure_taxonomy_citation_supported__generated_distractor_only_context_008",
+      "latency_ms": 3986.948,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_000",
+      "latency_ms": 3757.16,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_001",
+      "latency_ms": 4329.885,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_002",
+      "latency_ms": 5152.485,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_003",
+      "latency_ms": 5610.926,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_004",
+      "latency_ms": 4335.843,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_005",
+      "latency_ms": 4196.371,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_006",
+      "latency_ms": 4904.343,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_007",
+      "latency_ms": 5656.48,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_008",
+      "latency_ms": 4552.986,
+      "reason": "The score is 1.00 because there are no contradictions between the actual output and the retrieval context, indicating complete faithfulness.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_009",
+      "latency_ms": 5306.021,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_010",
+      "latency_ms": 4118.212,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_011",
+      "latency_ms": 4614.89,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_012",
+      "latency_ms": 4256.493,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_viewer_supported__generated_distractor_only_context_000",
+      "latency_ms": 4324.175,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_viewer_supported__generated_distractor_only_context_001",
+      "latency_ms": 3891.754,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_viewer_supported__generated_distractor_only_context_002",
+      "latency_ms": 21060.637,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_viewer_supported__generated_distractor_only_context_003",
+      "latency_ms": 3778.188,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_viewer_supported__generated_distractor_only_context_004",
+      "latency_ms": 3700.566,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_viewer_supported__generated_distractor_only_context_005",
+      "latency_ms": 3983.012,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_viewer_supported__generated_distractor_only_context_006",
+      "latency_ms": 5329.048,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_viewer_supported__generated_distractor_only_context_007",
+      "latency_ms": 4046.822,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_viewer_supported__generated_distractor_only_context_008",
+      "latency_ms": 4796.413,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_eval_workflow_supported__generated_distractor_only_context_000",
+      "latency_ms": 5187.429,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_eval_workflow_supported__generated_distractor_only_context_001",
+      "latency_ms": 5235.123,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_eval_workflow_supported__generated_distractor_only_context_002",
+      "latency_ms": 5051.81,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_eval_workflow_supported__generated_distractor_only_context_003",
+      "latency_ms": 5785.413,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_eval_workflow_supported__generated_distractor_only_context_004",
+      "latency_ms": 5428.994,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "quickstart_eval_workflow_supported__generated_distractor_only_context_005",
+      "latency_ms": 4887.56,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_config_precedence_supported__generated_distractor_only_context_000",
+      "latency_ms": 3483.09,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_config_precedence_supported__generated_distractor_only_context_001",
+      "latency_ms": 3358.619,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_config_precedence_supported__generated_distractor_only_context_002",
+      "latency_ms": 3713.37,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_config_precedence_supported__generated_distractor_only_context_003",
+      "latency_ms": 3633.164,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_config_precedence_supported__generated_distractor_only_context_004",
+      "latency_ms": 3464.349,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_config_precedence_supported__generated_distractor_only_context_005",
+      "latency_ms": 5227.859,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_config_precedence_supported__generated_distractor_only_context_006",
+      "latency_ms": 4020.493,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_config_precedence_supported__generated_distractor_only_context_007",
+      "latency_ms": 4345.981,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_config_precedence_supported__generated_distractor_only_context_008",
+      "latency_ms": 4299.681,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_config_precedence_supported__generated_distractor_only_context_009",
+      "latency_ms": 4850.198,
+      "reason": "The score is 1.00 because there are no contradictions indicating that the actual output fully aligns with the retrieval context.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_config_precedence_supported__generated_distractor_only_context_010",
+      "latency_ms": 4140.243,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_000",
+      "latency_ms": 4534.744,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_001",
+      "latency_ms": 17566.837,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_002",
+      "latency_ms": 4379.643,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_003",
+      "latency_ms": 4941.244,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_004",
+      "latency_ms": 5578.729,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_005",
+      "latency_ms": 27762.38,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_006",
+      "latency_ms": 3671.991,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_007",
+      "latency_ms": 4406.844,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_008",
+      "latency_ms": 4365.126,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_009",
+      "latency_ms": 4093.708,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_010",
+      "latency_ms": 3889.007,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_011",
+      "latency_ms": 3784.194,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_012",
+      "latency_ms": 3706.455,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_013",
+      "latency_ms": 25122.555,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_000",
+      "latency_ms": 4124.542,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_001",
+      "latency_ms": 4132.396,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_002",
+      "latency_ms": 3505.906,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_003",
+      "latency_ms": 4291.711,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_004",
+      "latency_ms": 4240.974,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_005",
+      "latency_ms": 4986.802,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_006",
+      "latency_ms": 5112.971,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_007",
+      "latency_ms": 4729.157,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_008",
+      "latency_ms": 4878.662,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_009",
+      "latency_ms": 5907.197,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_010",
+      "latency_ms": 5464.904,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_011",
+      "latency_ms": 4746.398,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_012",
+      "latency_ms": 4546.923,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_013",
+      "latency_ms": 4779.568,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_no_network_supported__generated_distractor_only_context_000",
+      "latency_ms": 4140.344,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_no_network_supported__generated_distractor_only_context_001",
+      "latency_ms": 4186.007,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_no_network_supported__generated_distractor_only_context_002",
+      "latency_ms": 26035.904,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_no_network_supported__generated_distractor_only_context_003",
+      "latency_ms": 5505.997,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_no_network_supported__generated_distractor_only_context_004",
+      "latency_ms": 4650.359,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_no_network_supported__generated_distractor_only_context_005",
+      "latency_ms": 4194.578,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_no_network_supported__generated_distractor_only_context_006",
+      "latency_ms": 4135.962,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_no_network_supported__generated_distractor_only_context_007",
+      "latency_ms": 4433.198,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_no_network_supported__generated_distractor_only_context_008",
+      "latency_ms": 3757.079,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_no_network_supported__generated_distractor_only_context_009",
+      "latency_ms": 3948.182,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_redaction_supported__generated_distractor_only_context_000",
+      "latency_ms": 3511.134,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_redaction_supported__generated_distractor_only_context_001",
+      "latency_ms": 3856.987,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_redaction_supported__generated_distractor_only_context_002",
+      "latency_ms": 3488.95,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_redaction_supported__generated_distractor_only_context_003",
+      "latency_ms": 4107.155,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_redaction_supported__generated_distractor_only_context_004",
+      "latency_ms": 4684.091,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_redaction_supported__generated_distractor_only_context_005",
+      "latency_ms": 4279.495,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_redaction_supported__generated_distractor_only_context_006",
+      "latency_ms": 4993.519,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_redaction_supported__generated_distractor_only_context_007",
+      "latency_ms": 4599.541,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_redaction_supported__generated_distractor_only_context_008",
+      "latency_ms": 6953.874,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_redaction_supported__generated_distractor_only_context_009",
+      "latency_ms": 4062.07,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "privacy_redaction_supported__generated_distractor_only_context_010",
+      "latency_ms": 4241.951,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_000",
+      "latency_ms": 3178.888,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_001",
+      "latency_ms": 17191.669,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_002",
+      "latency_ms": 2972.978,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_003",
+      "latency_ms": 4362.608,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_004",
+      "latency_ms": 3345.51,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_005",
+      "latency_ms": 4096.304,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_006",
+      "latency_ms": 4351.456,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_007",
+      "latency_ms": 4481.654,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_008",
+      "latency_ms": 3689.325,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_009",
+      "latency_ms": 4353.695,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_010",
+      "latency_ms": 5237.208,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_011",
+      "latency_ms": 3640.843,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_012",
+      "latency_ms": 3069.642,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "byo_jsonpath_supported__generated_distractor_only_context_000",
+      "latency_ms": 5832.022,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "byo_jsonpath_supported__generated_distractor_only_context_001",
+      "latency_ms": 5590.543,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "byo_jsonpath_supported__generated_distractor_only_context_002",
+      "latency_ms": 6362.112,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "byo_jsonpath_supported__generated_distractor_only_context_003",
+      "latency_ms": 5057.353,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "byo_jsonpath_supported__generated_distractor_only_context_004",
+      "latency_ms": 6129.293,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "byo_jsonpath_supported__generated_distractor_only_context_005",
+      "latency_ms": 4792.815,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "byo_jsonpath_supported__generated_distractor_only_context_006",
+      "latency_ms": 5679.524,
+      "reason": "The score is 1.00 because there are no contradictions indicating that the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "byo_jsonpath_supported__generated_distractor_only_context_007",
+      "latency_ms": 6266.357,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "byo_jsonpath_supported__generated_distractor_only_context_008",
+      "latency_ms": 5863.279,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "byo_jsonpath_supported__generated_distractor_only_context_009",
+      "latency_ms": 9637.202,
+      "reason": "The score is 1.00 because there are no contradictions between the actual output and the retrieval context, indicating complete faithfulness.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "byo_jsonpath_supported__generated_distractor_only_context_010",
+      "latency_ms": 5609.055,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_000",
+      "latency_ms": 3798.67,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_001",
+      "latency_ms": 3918.306,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_002",
+      "latency_ms": 4021.083,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_003",
+      "latency_ms": 5915.855,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_004",
+      "latency_ms": 4479.077,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_005",
+      "latency_ms": 4101.208,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_006",
+      "latency_ms": 6082.316,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_007",
+      "latency_ms": 6414.871,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_008",
+      "latency_ms": 5503.173,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_009",
+      "latency_ms": 5185.148,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_010",
+      "latency_ms": 4689.574,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_011",
+      "latency_ms": 5449.084,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_012",
+      "latency_ms": 4918.372,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_013",
+      "latency_ms": 7451.336,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langgraph_errors_supported__generated_distractor_only_context_000",
+      "latency_ms": 5101.76,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langgraph_errors_supported__generated_distractor_only_context_001",
+      "latency_ms": 4840.149,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langgraph_errors_supported__generated_distractor_only_context_002",
+      "latency_ms": 6200.603,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langgraph_errors_supported__generated_distractor_only_context_003",
+      "latency_ms": 5088.126,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langgraph_errors_supported__generated_distractor_only_context_004",
+      "latency_ms": 5770.463,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langgraph_errors_supported__generated_distractor_only_context_005",
+      "latency_ms": 4131.558,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langgraph_errors_supported__generated_distractor_only_context_006",
+      "latency_ms": 6324.925,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langgraph_errors_supported__generated_distractor_only_context_007",
+      "latency_ms": 4471.333,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langgraph_errors_supported__generated_distractor_only_context_008",
+      "latency_ms": 4369.354,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "langgraph_errors_supported__generated_distractor_only_context_009",
+      "latency_ms": 4934.024,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "llamaindex_mock_local_supported__generated_distractor_only_context_000",
+      "latency_ms": 4922.195,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "llamaindex_mock_local_supported__generated_distractor_only_context_001",
+      "latency_ms": 3821.928,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "llamaindex_mock_local_supported__generated_distractor_only_context_002",
+      "latency_ms": 5059.324,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "llamaindex_mock_local_supported__generated_distractor_only_context_003",
+      "latency_ms": 3823.881,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "llamaindex_mock_local_supported__generated_distractor_only_context_004",
+      "latency_ms": 3863.595,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "multi_span_local_no_backend_supported__generated_distractor_only_context_000",
+      "latency_ms": 5268.914,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "multi_span_local_no_backend_supported__generated_distractor_only_context_001",
+      "latency_ms": 4527.414,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "multi_span_local_no_backend_supported__generated_distractor_only_context_002",
+      "latency_ms": 4694.257,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "multi_span_local_no_backend_supported__generated_distractor_only_context_003",
+      "latency_ms": 4198.473,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "multi_span_local_no_backend_supported__generated_distractor_only_context_004",
+      "latency_ms": 4706.967,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "multi_span_local_no_backend_supported__generated_distractor_only_context_005",
+      "latency_ms": 5303.189,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "multi_span_local_no_backend_supported__generated_distractor_only_context_006",
+      "latency_ms": 5021.841,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "multi_span_local_no_backend_supported__generated_distractor_only_context_007",
+      "latency_ms": 4969.328,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "multi_span_local_no_backend_supported__generated_distractor_only_context_008",
+      "latency_ms": 4655.686,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "multi_span_local_no_backend_supported__generated_distractor_only_context_009",
+      "latency_ms": 4988.319,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_000",
+      "latency_ms": 4886.984,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_001",
+      "latency_ms": 4322.242,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_002",
+      "latency_ms": 5532.778,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_003",
+      "latency_ms": 4177.242,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_004",
+      "latency_ms": 4302.099,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_005",
+      "latency_ms": 5445.035,
+      "reason": "The score is 1.00 because there are no contradictions indicating that the actual output fully aligns with the retrieval context.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_006",
+      "latency_ms": 4721.945,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_007",
+      "latency_ms": 4945.523,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_008",
+      "latency_ms": 4837.764,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_009",
+      "latency_ms": 4655.063,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_010",
+      "latency_ms": 4887.003,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_011",
+      "latency_ms": 4553.613,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_012",
+      "latency_ms": 4091.674,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_013",
+      "latency_ms": 5042.59,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_014",
+      "latency_ms": 4513.008,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_015",
+      "latency_ms": 4561.197,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_016",
+      "latency_ms": 6347.775,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_017",
+      "latency_ms": 4345.91,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_018",
+      "latency_ms": 4352.302,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_019",
+      "latency_ms": 4090.751,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_020",
+      "latency_ms": 4225.746,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_021",
+      "latency_ms": 4448.174,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_022",
+      "latency_ms": 3837.54,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_023",
+      "latency_ms": 4972.283,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_024",
+      "latency_ms": 3849.728,
+      "reason": "The score is 1.00 because there are no contradictions between the actual output and the retrieval context, indicating perfect alignment.",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_025",
+      "latency_ms": 3961.755,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_026",
+      "latency_ms": 4592.658,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_027",
+      "latency_ms": 3880.747,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_028",
+      "latency_ms": 3909.898,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_029",
+      "latency_ms": 3986.438,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_030",
+      "latency_ms": 3448.182,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_031",
+      "latency_ms": 3773.437,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_032",
+      "latency_ms": 5255.286,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_033",
+      "latency_ms": 3475.618,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_034",
+      "latency_ms": 4675.748,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_000",
+      "latency_ms": 4207.936,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_001",
+      "latency_ms": 5281.392,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_002",
+      "latency_ms": 4233.213,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_003",
+      "latency_ms": 5182.039,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_004",
+      "latency_ms": 4433.262,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_005",
+      "latency_ms": 4450.847,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_006",
+      "latency_ms": 4562.869,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_007",
+      "latency_ms": 3873.826,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_008",
+      "latency_ms": 3321.294,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_009",
+      "latency_ms": 4552.802,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_010",
+      "latency_ms": 5327.003,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_011",
+      "latency_ms": 4292.139,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_012",
+      "latency_ms": 4070.992,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_013",
+      "latency_ms": 4594.93,
+      "reason": "The score is 1.00 because there are no contradictions indicating that the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_014",
+      "latency_ms": 5686.843,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_015",
+      "latency_ms": 4322.262,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_016",
+      "latency_ms": 3889.428,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_017",
+      "latency_ms": 4221.937,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_018",
+      "latency_ms": 4428.842,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_019",
+      "latency_ms": 3944.435,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_020",
+      "latency_ms": 4418.162,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_021",
+      "latency_ms": 4023.607,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_022",
+      "latency_ms": 3442.555,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_023",
+      "latency_ms": 3249.681,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_024",
+      "latency_ms": 3609.024,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_000",
+      "latency_ms": 4587.452,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_001",
+      "latency_ms": 4119.981,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_002",
+      "latency_ms": 3472.296,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_003",
+      "latency_ms": 3601.857,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_004",
+      "latency_ms": 4102.438,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_005",
+      "latency_ms": 3926.419,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_006",
+      "latency_ms": 5068.493,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_007",
+      "latency_ms": 3714.065,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_008",
+      "latency_ms": 3188.982,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_009",
+      "latency_ms": 3749.131,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_010",
+      "latency_ms": 5184.017,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_011",
+      "latency_ms": 4732.966,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_012",
+      "latency_ms": 3870.148,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_013",
+      "latency_ms": 3997.686,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_014",
+      "latency_ms": 3558.745,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_015",
+      "latency_ms": 3702.675,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_016",
+      "latency_ms": 4273.947,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_017",
+      "latency_ms": 4030.63,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_018",
+      "latency_ms": 3833.861,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_019",
+      "latency_ms": 3823.403,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_020",
+      "latency_ms": 3937.524,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_021",
+      "latency_ms": 3611.794,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_022",
+      "latency_ms": 4132.296,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_023",
+      "latency_ms": 3967.449,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_024",
+      "latency_ms": 3917.019,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_025",
+      "latency_ms": 4365.203,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_026",
+      "latency_ms": 3733.276,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness_score": 1.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_027",
+      "latency_ms": 3341.671,
+      "reason": "The score is 1.00 because there are no contradictions; the actual output fully aligns with the retrieval context. Great job maintaining accuracy!",
+      "retrieved_context_count": 1
+    }
+  ],
+  "system": "DeepEval"
+}

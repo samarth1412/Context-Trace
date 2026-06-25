@@ -1,0 +1,2958 @@
+[
+  {
+    "benchmark": "ContextTrace-Bench",
+    "confidence_intervals": {
+      "citation_error_f1": {
+        "estimate": 1.0,
+        "high": 1.0,
+        "level": 0.95,
+        "low": 1.0,
+        "method": "case_bootstrap",
+        "samples": 400,
+        "seed": 20260612
+      },
+      "claim_verdict_macro_f1": {
+        "estimate": 0.33,
+        "high": 0.557,
+        "level": 0.95,
+        "low": 0.303,
+        "method": "case_bootstrap",
+        "samples": 400,
+        "seed": 20260612
+      },
+      "dangerous_false_green_rate": {
+        "estimate": 0.26,
+        "high": 0.38,
+        "level": 0.95,
+        "low": 0.14,
+        "method": "case_bootstrap",
+        "samples": 400,
+        "seed": 20260612
+      },
+      "evidence_span_overlap": {
+        "estimate": 0.592,
+        "high": 0.758,
+        "level": 0.95,
+        "low": 0.45,
+        "method": "case_bootstrap",
+        "samples": 400,
+        "seed": 20260612
+      },
+      "failure_label_macro_f1": {
+        "estimate": 0.272,
+        "high": 0.299,
+        "level": 0.95,
+        "low": 0.24,
+        "method": "case_bootstrap",
+        "samples": 400,
+        "seed": 20260612
+      },
+      "root_cause_accuracy": {
+        "estimate": 0.66,
+        "high": 0.78,
+        "level": 0.95,
+        "low": 0.54,
+        "method": "case_bootstrap",
+        "samples": 400,
+        "seed": 20260612
+      }
+    },
+    "coverage": {
+      "matched_predictions": 50,
+      "reference_cases": 50,
+      "submitted_predictions": 50
+    },
+    "per_label": {
+      "contradicted_answer": {
+        "f1": 0.0,
+        "fn": 9,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 0.0,
+        "tp": 0
+      },
+      "no_failure_detected": {
+        "f1": 0.815,
+        "fn": 2,
+        "fp": 13,
+        "precision": 0.717,
+        "recall": 0.943,
+        "tp": 33
+      },
+      "partial_support": {
+        "f1": 0.0,
+        "fn": 6,
+        "fp": 4,
+        "precision": 0.0,
+        "recall": 0.0,
+        "tp": 0
+      }
+    },
+    "rows": [
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_24",
+        "latency_ms": 6668.294,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "The FBI charged a Philadelphia woman on Thursday with trying to travel overseas to fight for ISIS.",
+          "Two New York women were also taken into custody.",
+          "The FBI said Thomas purchased an electronic visa to Turkey on March 23.",
+          "An ISIS manual advises recruits to buy round-trip tickets to vacation spots such as Spain and then purchase tickets for their real destination once they arrive overseas, the FBI said.",
+          "On March 26, Thomas purchased a ticket to Barcelona, with a March 29 departure and an April 15 return to the United States, the complaint said.",
+          "She was charged with knowingly attempting to provide material support and resources to a designated foreign terrorist organization.",
+          "She could be sentenced to 15 years in prison.",
+          "Noelle Velentzas, 28, and her former roommate, Asia Siddiqui, 31, were arrested in New York and accused of planning to build an explosive device for attacks in the United States, federal prosecutors said."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_25",
+        "latency_ms": 7228.306,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "The FBI charged a Philadelphia woman on Thursday with trying to travel overseas to fight for ISIS.",
+          "She's one of three women arrested this week on terror charges.",
+          "Two New York women were also taken into custody.",
+          "An FBI complaint cites numerous social media messages dating back to August 2013 that were sent by Keonna Thomas, 30, also known as \"Young Lioness\" and \"Fatayat Al Khilafah.\"",
+          "The FBI said Thomas purchased an electronic visa to Turkey on March 23.",
+          "On March 26, Thomas purchased a ticket to Barcelona, with a March 29 departure and an April 15 return to the United States, the complaint said.",
+          "She was charged with knowingly attempting to provide material support and resources to a designated foreign terrorist organization.",
+          "On Thursday, Noelle Velentzas, 28, and her former roommate, Asia Siddiqui, 31, were arrested in New York and accused of planning to build an explosive device for attacks in the United States, federal prosecutors said.",
+          "In the past 18 months, the Justice Department's National Security Division has prosecuted or is prosecuting more than 30 cases of people attempting to travel abroad to join or provide support to terrorist groups."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_26",
+        "latency_ms": 6314.333,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "The FBI charged a Philadelphia woman on Thursday with trying to travel overseas to fight for ISIS.",
+          "An FBI complaint cites numerous social media messages dating back to August 2013 that were sent by Keonna Thomas, 30, also known as \"Young Lioness\" and \"Fatayat Al Khilafah.\"",
+          "The FBI said Thomas purchased an electronic visa to Turkey on March 23. Turkey is known as the easiest place from which to enter Syria and join ISIS.",
+          "She could be sentenced to 15 years in prison.",
+          "Two New York women were also taken into custody.",
+          "\"The terrorist threat is more decentralized, more diffuse, more complicated,\" Homeland Security Secretary Jeh Johnson told reporters Thursday. \"It involves the potential lone wolf actor, it involves the effective use of social media, the Internet.\""
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_27",
+        "latency_ms": 6766.237,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "The FBI charged a Philadelphia woman on Thursday with trying to travel overseas to fight for ISIS.",
+          "She's one of three women arrested this week on terror charges.",
+          "Two New York women were also taken into custody.",
+          "An FBI complaint cites numerous social media messages dating back to August 2013 that were sent by Keonna Thomas, 30, also known as \"Young Lioness\" and \"Fatayat Al Khilafah.\"",
+          "The FBI said Thomas purchased an electronic visa to Turkey on March 23.",
+          "On March 26, Thomas purchased a ticket to Barcelona, with a March 29 departure and an April 15 return to the United States, the complaint said.",
+          "She was charged with knowingly attempting to provide material support and resources to a designated foreign terrorist organization.",
+          "She could be sentenced to 15 years in prison.",
+          "On Thursday, Noelle Velentzas, 28, and her former roommate, Asia Siddiqui, 31, were arrested in New York and accused of planning to build an explosive device for attacks in the United States, federal prosecutors said."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": false,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": 0.639,
+        "evidence_spans_reported": true,
+        "exact_match": false,
+        "expected": [
+          "contradicted_answer"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [
+          "The FBI charged a Philadelphia woman on Thursday with trying to travel overseas to fight for ISIS. She's one of three women arrested this week on terror charges.",
+          "On Thursday, Noelle Velentzas, 28, and her former roommate, Asia Siddiqui, 31, were arrested in New York and accused of planning to build an explosive device for attacks in the United States, federal prosecutors said.",
+          "It's not clear when or where she was arrested."
+        ],
+        "expected_primary_root_cause": "conflicting_contexts",
+        "expected_verdict_counts": {
+          "contradicted": 1,
+          "partially_supported": 0,
+          "supported": 0,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_28",
+        "latency_ms": 4856.853,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "The FBI charged a Philadelphia woman on Thursday with trying to travel overseas to fight for ISIS.",
+          "She's one of three women arrested this week on terror charges.",
+          "Two New York women were also taken into custody.",
+          "An FBI complaint cites numerous social media messages dating back to August 2013 that were sent by Keonna Thomas, 30, also known as \"Young Lioness\" and \"Fatayat Al Khilafah.\"",
+          "The FBI said Thomas purchased an electronic visa to Turkey on March 23.",
+          "On March 26, Thomas purchased a ticket to Barcelona, with a March 29 departure and an April 15 return to the United States, the complaint said.",
+          "She was charged with knowingly attempting to provide material support and resources to a designated foreign terrorist organization.",
+          "On Thursday, Noelle Velentzas, 28, and her former roommate, Asia Siddiqui, 31, were arrested in New York and accused of planning to build an explosive device for attacks in the United States, federal prosecutors said.",
+          "In the past 18 months, the Justice Department's National Security Division has prosecuted or is prosecuting more than 30 cases of people attempting to travel abroad to join or provide support to terrorist groups. Of those cases, 18 allegedly involve support to ISIS."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": false,
+        "root_cause_reported": true,
+        "verdict_match": false
+      },
+      {
+        "benchmark_pass": false,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": 0.154,
+        "evidence_spans_reported": true,
+        "exact_match": false,
+        "expected": [
+          "contradicted_answer"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [
+          "It's not clear when or where she was arrested."
+        ],
+        "expected_primary_root_cause": "conflicting_contexts",
+        "expected_verdict_counts": {
+          "contradicted": 1,
+          "partially_supported": 0,
+          "supported": 0,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_29",
+        "latency_ms": 4535.35,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "The FBI charged a Philadelphia woman on Thursday with trying to travel overseas to fight for ISIS.",
+          "Two New York women were also taken into custody.",
+          "Keonna Thomas, 30, also known as \"Young Lioness\" and \"Fatayat Al Khilafah.\"",
+          "On March 26, Thomas purchased a ticket to Barcelona, with a March 29 departure and an April 15 return to the United States.",
+          "She was charged with knowingly attempting to provide material support and resources to a designated foreign terrorist organization.",
+          "She could be sentenced to 15 years in prison.",
+          "Noelle Velentzas, 28, and her former roommate, Asia Siddiqui, 31, were arrested in New York and accused of planning to build an explosive device for attacks in the United States.",
+          "In the past 18 months, the Justice Department's National Security Division has prosecuted or is prosecuting more than 30 cases of people attempting to travel abroad to join or provide support to terrorist groups. Of those cases, 18 allegedly involve support to ISIS.",
+          "\"The terrorist threat is more decentralized, more diffuse, more complicated,\" Homeland Security Secretary Jeh Johnson told reporters Thursday."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": false,
+        "root_cause_reported": true,
+        "verdict_match": false
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_42",
+        "latency_ms": 4021.845,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Blue Bell ice cream has temporarily shut down one of its manufacturing plants over the discovery of listeria contamination in a serving of ice cream originating from that plant.",
+          "It is the third time Blue Bell has taken action in light of a listeria outbreak at a Kansas hospital that served the company's ice cream.",
+          "Five people were infected and three died in the past year in Kansas from listeria that might be linked to Blue Bell Creameries products, according to the CDC.",
+          "All five of them were hospitalized at the same hospital before developing listeriosis, the CDC said.",
+          "At least four of them had consumed milkshakes made with Blue Bell ice cream before developing the infection.",
+          "The CDC advises that individuals and institutions should check their freezers for the recalled products and throw them away.",
+          "In a statement on its website, Blue Bell said \"this recall in no way includes Blue Bell ice cream half gallons, pints, quarts, 3 gallons or other 3 oz. cups.\"",
+          "This has been the first product recall in the 108-year history of Blue Bell Creameries, the company said."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_43",
+        "latency_ms": 6156.378,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Blue Bell ice cream has temporarily shut down one of its manufacturing plants over the discovery of listeria contamination in a serving of ice cream originating from that plant.",
+          "Public health officials warned consumers Friday not to eat any Blue Bell-branded products made at the company's Broken Arrow, Oklahoma, plant.",
+          "That includes 3-ounce servings of Blue Bell ice cream from this plant that went to institutions in containers marked with the letters O, P, Q, R, S or T behind the coding date.",
+          "The warning by the Centers for Disease Control and Prevention does not affect other Blue Bell ice cream, including other 3-ounce servings, not made at the plant.",
+          "But Blue Bell has recalled other products.",
+          "The company is shutting down the Broken Arrow facility \"out of an abundance of caution\" to search for a possible cause of contamination.",
+          "It is the third time Blue Bell has taken action in light of a listeria outbreak at a Kansas hospital that served the company's ice cream.",
+          "Listeria monocytogenes was recently found in a cup of ice cream recovered from the hospital.",
+          "The cup contaminated with the bacteria was produced at the Broken Arrow plant in April 2014, Blue Bell said.",
+          "And, according to the CDC, listeria bacteria was found in additional samples of the same product that were recovered from the plant.",
+          "The bacteria in the hospital sample and the factory sample appeared to match each other genetically, the CDC said.",
+          "None of this means the ice cream is the source of either spate of the infections.",
+          "\"Investigation to determine whether these illnesses are related to exposure to Blue Bell products is ongoing,\" the CDC said.",
+          "\"We are devastated and know that Blue Bell has to be and can be better than this,\" Paul Kruse, Blue Bell CEO and president, said in a statement.",
+          "The CDC advises that individuals and institutions should check their freezers for the recalled products and throw them away.",
+          "Listeriosis is a serious infection caused by eating food contaminated with listeria, and primarily affects the elderly, pregnant women, newborns and people with weakened immune systems, according to the CDC."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": false,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": 0.64,
+        "evidence_spans_reported": true,
+        "exact_match": false,
+        "expected": [
+          "contradicted_answer"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [
+          "Blue Bell ice cream has temporarily shut down one of its manufacturing plants over the discovery of listeria contamination in a serving of ice cream originating from that plant.",
+          "Five people were infected and three died in the past year in Kansas from listeria that might be linked to Blue Bell Creameries products, according to the CDC."
+        ],
+        "expected_primary_root_cause": "conflicting_contexts",
+        "expected_verdict_counts": {
+          "contradicted": 1,
+          "partially_supported": 0,
+          "supported": 0,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_44",
+        "latency_ms": 4782.331,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Blue Bell ice cream has temporarily shut down one of its manufacturing plants over the discovery of listeria contamination in a serving of ice cream originating from that plant.",
+          "Public health officials warned consumers Friday not to eat any Blue Bell-branded products made at the company's Broken Arrow, Oklahoma, plant.",
+          "That includes 3-ounce servings of Blue Bell ice cream from this plant that went to institutions in containers marked with the letters O, P, Q, R, S or T behind the coding date.",
+          "The warning by the Centers for Disease Control and Prevention does not affect other Blue Bell ice cream, including other 3-ounce servings, not made at the plant.",
+          "Blue Bell has recalled other products.",
+          "The company is shutting down the Broken Arrow facility \"out of an abundance of caution\" to search for a possible cause of contamination.",
+          "Listeriosis is a serious infection caused by eating food contaminated with listeria, and primarily affects the elderly, pregnant women, newborns and people with weakened immune systems, according to the CDC.",
+          "Symptoms of a listeria infection are fever and muscle aches, sometimes associated with diarrhea or other gastrointestinal symptoms.",
+          "In the United States, an estimated 1,600 people become seriously ill each year, and approximately 16% of these illnesses result in death.",
+          "The CDC advises that individuals and institutions should check their freezers for the recalled products and throw them away.",
+          "This has been the first product recall in the 108-year history of Blue Bell Creameries, the company said."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": false,
+        "root_cause_reported": true,
+        "verdict_match": false
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": null,
+        "citation_match": null,
+        "citation_statuses_reported": false,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_45",
+        "latency_ms": 3305.993,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [],
+        "predicted_evidence_spans": [
+          "Blue Bell ice cream has temporarily shut down one of its manufacturing plants over the discovery of listeria contamination in a serving of ice cream originating from that plant.",
+          "Public health officials warned consumers Friday not to eat any Blue Bell-branded products made at the company's Broken Arrow, Oklahoma, plant.",
+          "It is the third time Blue Bell has taken action in light of a listeria outbreak at a Kansas hospital that served the company's ice cream.",
+          "Investigation to determine whether these illnesses are related to exposure to Blue Bell products is ongoing,\" the CDC said.",
+          "Blue Bell has recalled other products.",
+          "The CDC advises that individuals and institutions should check their freezers for the recalled products and throw them away.",
+          "This has been the first product recall in the 108-year history of Blue Bell Creameries, the company said."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": false,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": 1.0,
+        "evidence_spans_reported": true,
+        "exact_match": false,
+        "expected": [
+          "contradicted_answer"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [
+          "Five people were infected and three died in the past year in Kansas from listeria that might be linked to Blue Bell Creameries products, according to the CDC."
+        ],
+        "expected_primary_root_cause": "conflicting_contexts",
+        "expected_verdict_counts": {
+          "contradicted": 1,
+          "partially_supported": 0,
+          "supported": 0,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_46",
+        "latency_ms": 4045.118,
+        "predicted": [
+          "partial_support"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Blue Bell ice cream has temporarily shut down one of its manufacturing plants over the discovery of listeria contamination in a serving of ice cream originating from that plant.",
+          "Public health officials warned consumers Friday not to eat any Blue Bell-branded products made at the company's Broken Arrow, Oklahoma, plant.",
+          "That includes 3-ounce servings of Blue Bell ice cream from this plant that went to institutions in containers marked with the letters O, P, Q, R, S or T behind the coding date.",
+          "It is the third time Blue Bell has taken action in light of a listeria outbreak at a Kansas hospital that served the company's ice cream.",
+          "Five people were infected and three died in the past year in Kansas from listeria that might be linked to Blue Bell Creameries products, according to the CDC.",
+          "At least four of them had consumed milkshakes made with Blue Bell ice cream before developing the infection.",
+          "No illnesses have been reported directly linked to the contaminated ice cream, but five people in Kansas have died from listeriosis in the past year after consuming Blue Bell products."
+        ],
+        "predicted_primary_root_cause": "answer_overreach",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 1,
+          "supported": 6,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": false,
+        "root_cause_reported": true,
+        "verdict_match": false
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_47",
+        "latency_ms": 3208.445,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Blue Bell ice cream has temporarily shut down one of its manufacturing plants over the discovery of listeria contamination in a serving of ice cream originating from that plant.",
+          "Public health officials warned consumers Friday not to eat any Blue Bell-branded products made at the company's Broken Arrow, Oklahoma, plant.",
+          "The company is shutting down the Broken Arrow facility \"out of an abundance of caution\" to search for a possible cause of contamination.",
+          "The Centers for Disease Control and Prevention (CDC) has found a link between the contaminated ice cream and a listeria outbreak at a Kansas hospital, but it is not clear if the ice cream is the source of the infections.",
+          "Consumers are advised to check their freezers for recalled products and throw them away.",
+          "This is the first product recall in Blue Bell's 108-year history."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_54",
+        "latency_ms": 3218.382,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "an institutional failure at Rolling Stone resulted in a deeply flawed article about a purported gang rape at the University of Virginia.",
+          "The failure encompassed reporting, editing, editorial supervision and fact-checking.",
+          "The magazine's managing editor, Will Dana, wrote, \"We would like to apologize to our readers and to all of those who were damaged by our story and the ensuing fallout, including members of the Phi Kappa Psi fraternity and UVA administrators and students.\"",
+          "The UVA situation is not your run-of-the-mill defamation case. The university won't be able to sue, but if the members of the fraternity can get past some of the preliminary hurdles of a defamation claim, and they can make a tangible case for damages, then this could be one of those rare successful defamation cases."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_55",
+        "latency_ms": 7760.554,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "\"(a)n institutional failure at Rolling Stone resulted in a deeply flawed article about a purported gang rape at the University of Virginia.\"",
+          "\"The failure encompassed reporting, editing, editorial supervision and fact-checking.\"",
+          "\"We would like to apologize to our readers and to all of those who were damaged by our story and the ensuing fallout, including members of the Phi Kappa Psi fraternity and UVA administrators and students.\"",
+          "\"the elements of libel are (1) publication of (2) an actionable statement with (3) the requisite intent.\"",
+          "\"Actionable means the statement must be both false and defamatory.\"",
+          "\"True statements cannot be defamatory. Neither can pure statements of opinion.\"",
+          "\"The individual members of the fraternity will likely be considered private individuals, and not public figures; the latter have a harder time proving defamation.\"",
+          "\"A private person suing for defamation must establish that the defendant has published a false factual statement that is about the person and that it also harms the person's reputation.\"",
+          "\"The Columbia report may go a long way toward establishing at least a modicum of the required intent.\"",
+          "\"The university is a public university, and therefore it is a governmental entity. The Supreme Court has been clear on the issue of libelous statements about the government: The government cannot sue for defamation.\"",
+          "\"A fraternity is not an individual, but a group. A plaintiff in a defamation case must show that the statements were 'of or concerning' the plaintiff.\"",
+          "\"If the defamatory language is about 'a comparatively small group of persons and the defamatory part is easily imputed against all members of the small group, an individual member may sue.'\"",
+          "\"Phi Kappa Psi would likely argue that the 'small group' exception fits it perfectly.\"",
+          "\"Rolling Stone's lawyers would likely argue that the group is so large and fluid... that even though the fraternity's reputation is tarnished, the members have suffered no individualized injury.\"",
+          "\"A libel suit is one of those things that citizens often threaten each other with on Facebook, but that such cases are rarely actually filed.\"",
+          "\"A plaintiff usually has to show some kind of financial harm.\"",
+          "\"The UVA situation is not your run-of-the-mill defamation case. The university won't be able to sue, but if the members of the fraternity can get past some of the preliminary hurdles of a defamation claim, and they can make a tangible case for damages, then this could be one of those rare successful defamation cases.\""
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_56",
+        "latency_ms": 5856.848,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "\"(a)n institutional failure at Rolling Stone resulted in a deeply flawed article about a purported gang rape at the University of Virginia.\"",
+          "\"The failure encompassed reporting, editing, editorial supervision and fact-checking.\"",
+          "\"The magazine's managing editor, Will Dana, wrote, 'We would like to apologize to our readers and to all of those who were damaged by our story and the ensuing fallout, including members of the Phi Kappa Psi fraternity and UVA administrators and students.'\"",
+          "\"The Virginia Supreme Court said in Jordan v. Kollman that 'the elements of libel are (1) publication of (2) an actionable statement with (3) the requisite intent.'\"",
+          "\"The individual members of the fraternity will likely be considered private individuals, and not public figures; the latter have a harder time proving defamation.\"",
+          "\"A private person suing for defamation must establish that the defendant has published a false factual statement that is about the person and that it also harms the person's reputation.\"",
+          "\"The Columbia report may go a long way toward establishing at least a modicum of the required intent.\"",
+          "\"The university is a public university, and therefore it is a governmental entity. The Supreme Court has been clear on the issue of libelous statements about the government: The government cannot sue for defamation.\"",
+          "\"A fraternity is not an individual, but a group. A plaintiff in a defamation case must show that the statements were 'of or concerning' the plaintiff.\"",
+          "\"If the defamatory language is about 'a comparatively small group of persons and the defamatory part is easily imputed against all members of the small group, an individual member may sue.'\"",
+          "\"Phi Kappa Psi would likely argue that the 'small group' exception fits it perfectly: Even if the individual members were not identified by name, the defamatory story has been imputed directly to individual members, who have suffered by their association with the group.\"",
+          "\"If the members of the fraternity can get past some of the preliminary hurdles of a defamation claim, and they can make a tangible case for damages, then this could be one of those rare successful defamation cases.\""
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": false,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": false,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_57",
+        "latency_ms": 3940.099,
+        "predicted": [
+          "partial_support"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "\"(a)n institutional failure at Rolling Stone resulted in a deeply flawed article about a purported gang rape at the University of Virginia.\"",
+          "\"The failure encompassed reporting, editing, editorial supervision and fact-checking.\"",
+          "\"We would like to apologize to our readers and to all of those who were damaged by our story and the ensuing fallout, including members of the Phi Kappa Psi fraternity and UVA administrators and students.\"",
+          "\"Fraternity to 'pursue all available legal action'\"",
+          "\"The individual members of the fraternity will likely be considered private individuals, and not public figures; the latter have a harder time proving defamation.\"",
+          "\"The university won't be able to sue, but if the members of the fraternity can get past some of the preliminary hurdles of a defamation claim, and they can make a tangible case for damages, then this could be one of those rare successful defamation cases.\"",
+          "\"A private person suing for defamation must establish that the defendant has published a false factual statement that is about the person and that it also harms the person's reputation.\"",
+          "The fraternity's ability to sue may be limited due to the fact that it is not a public figure and cannot demonstrate actual financial harm as a result of the article."
+        ],
+        "predicted_primary_root_cause": "partial_context",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 1,
+          "supported": 7,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": false,
+        "root_cause_reported": true,
+        "verdict_match": false
+      },
+      {
+        "benchmark_pass": false,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": 0.305,
+        "evidence_spans_reported": true,
+        "exact_match": false,
+        "expected": [
+          "partial_support"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [
+          "A fraternity is not an individual, but a group. A plaintiff in a defamation case must show that the statements were \"of or concerning\" the plaintiff.",
+          "Defamatory statements about a group are therefore not actionable by the group's individual members, for the most part."
+        ],
+        "expected_primary_root_cause": "answer_overreach",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 1,
+          "supported": 0,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_58",
+        "latency_ms": 3272.067,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "\"(a)n institutional failure at Rolling Stone resulted in a deeply flawed article about a purported gang rape at the University of Virginia.\"",
+          "\"The Columbia team concluded that \\\"The failure encompassed reporting, editing, editorial supervision and fact-checking.\\\"",
+          "\"The fraternity members mentioned in the article may be able to sue for defamation... To prove defamation, they must show that the statement was false, caused harm to their reputation, and was made with the requisite intent.\"",
+          "\"The fact that the statement was about a group rather than an individual makes it harder to prove.\"",
+          "\"The UVA situation is not your run-of-the-mill defamation case... if the members of the fraternity can get past some of the preliminary hurdles of a defamation claim, and they can make a tangible case for damages, then this could be one of those rare successful defamation cases.\""
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": false,
+        "root_cause_reported": true,
+        "verdict_match": false
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_59",
+        "latency_ms": 6349.89,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "\"(a)n institutional failure at Rolling Stone resulted in a deeply flawed article about a purported gang rape at the University of Virginia.\"",
+          "\"The failure encompassed reporting, editing, editorial supervision and fact-checking.\"",
+          "\"We would like to apologize to our readers and to all of those who were damaged by our story and the ensuing fallout, including members of the Phi Kappa Psi fraternity and UVA administrators and students.\"",
+          "\"The Virginia Supreme Court said in Jordan v. Kollman that 'the elements of libel are (1) publication of (2) an actionable statement with (3) the requisite intent.'\"",
+          "\"A private person suing for defamation must establish that the defendant has published a false factual statement that is about the person and that it also harms the person's reputation.\"",
+          "\"The government cannot sue for defamation. There is no such cause of action in American jurisprudence.\"",
+          "\"A plaintiff in a defamation case must show that the statements were 'of or concerning' the plaintiff.\"",
+          "\"If the defamatory language is about 'a comparatively small group of persons and the defamatory part is easily imputed against all members of the small group, an individual member may sue.'\"",
+          "\"Phi Kappa Psi would likely argue that the 'small group' exception fits it perfectly: Even if the individual members were not identified by name, the defamatory story has been imputed directly to individual members, who have suffered by their association with the group.\"",
+          "\"Rolling Stone's lawyers would likely argue that the group is so large and fluid... that even though the fraternity's reputation is tarnished, the members have suffered no individualized injury.\"",
+          "\"The UVA situation is not your run-of-the-mill defamation case. The university won't be able to sue, but if the members of the fraternity can get past some of the preliminary hurdles of a defamation claim, and they can make a tangible case for damages, then this could be one of those rare successful defamation cases.\""
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_66",
+        "latency_ms": 4228.335,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "When I was elected to the Kentucky State Senate in 1967, I became the first woman and the first person of color to serve in the body.",
+          "Since coming to the U.S. Senate, Paul has tried to sell himself as a different type of Republican. He's tried to brand himself as the GOP's minority outreach candidate.",
+          "Paul has also questioned the Civil Rights Act, and even claimed that private business owners have a right to discriminate.",
+          "When asked about the need for a more robust Voting Rights Act following the Supreme Court's dismantling of the law, Paul dismissively remarked, \"We have an African-American President.\"",
+          "Paul's record makes it very clear that his views are outdated, outside of the mainstream, and disqualifying for a man who wants to lead our country.",
+          "The American people deserve a leader who won't disrespect their intelligence, who won't pander to them when it's convenient, and who won't work to dismantle the progress we have made over the last five decades."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": null,
+        "citation_match": null,
+        "citation_statuses_reported": false,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_67",
+        "latency_ms": 4445.112,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [],
+        "predicted_evidence_spans": [
+          "His campaign team told reporters last week that his campaign announcement message would be about \"expanding the Republican Party\" -- a message of inclusion.",
+          "Paul has tried to sell himself as a different type of Republican.  He's tried to brand himself as the GOP's minority outreach candidate.",
+          "Paul has also questioned the Civil Rights Act, and even claimed that private business owners have a right to discriminate.",
+          "He has come across as condescending and lacking basic cultural competency.",
+          "Paul dismissively remarked, \"We have an African-American President.\"",
+          "Paul's record makes it very clear that his views are outdated, outside of the mainstream, and disqualifying for a man who wants to lead our country.",
+          "The American people deserve a leader who won't disrespect their intelligence, who won't pander to them when it's convenient, and who won't work to dismantle the progress we have made over the last five decades."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": false,
+        "candidate_reported": true,
+        "citation_error_counts": null,
+        "citation_match": null,
+        "citation_statuses_reported": false,
+        "cost_usd": null,
+        "evidence_span_overlap": 0.574,
+        "evidence_spans_reported": true,
+        "exact_match": false,
+        "expected": [
+          "partial_support"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [
+          "When I was elected to the Kentucky State Senate in 1967, I became the first woman and the first person of color to serve in the body.",
+          "Five decades later, I find it almost unfathomable that a politician from my own state is attempting to launch his presidential campaign on a record that includes questioning landmark voting rights and civil rights legislation."
+        ],
+        "expected_primary_root_cause": "answer_overreach",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 1,
+          "supported": 0,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_68",
+        "latency_ms": 3786.361,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [],
+        "predicted_evidence_spans": [
+          "I find it almost unfathomable that a politician from my own state is attempting to launch his presidential campaign on a record that includes questioning landmark voting rights and civil rights legislation.",
+          "His campaign team told reporters last week that his campaign announcement message would be about \"expanding the Republican Party\" -- a message of inclusion. But those of us listening today who he is hoping to include, heard nothing more than hype.",
+          "A quick survey of Sen. Paul's positions makes clear that he does not.",
+          "Paul kicked off his announcement speech in Louisville by declaring \"I have a message that is loud and clear:  We have come to take our country back.\"",
+          "Paul has done since landing on the national stage; when there was no Department of Education -- a department he thinks \"should be done away with;\" when women didn't have choices -- choices Paul seeks to limit in Washington; when DREAMers weren't protected from deportation -- protections Paul currently opposes.",
+          "Paul has also questioned the Civil Rights Act, and even claimed that private business owners have a right to discriminate."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": false,
+        "root_cause_reported": true,
+        "verdict_match": false
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_69",
+        "latency_ms": 3365.222,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Rand Paul, who today declared he's running for president of the United States",
+          "his record that includes questioning landmark voting rights and civil rights legislation",
+          "Paul has tried to sell himself as a different type of Republican",
+          "he does not [have a real commitment to the issues facing minority communities]",
+          "Paul has also questioned the Civil Rights Act, and even claimed that private business owners have a right to discriminate",
+          "Paul dismissively remarked, \"We have an African-American President.\"",
+          "his views are outdated, outside of the mainstream, and disqualifying for a man who wants to lead our country",
+          "The American people deserve a leader who won't disrespect their intelligence, who won't pander to them when it's convenient, and who won't work to dismantle the progress we have made over the last five decades"
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": null,
+        "citation_match": null,
+        "citation_statuses_reported": false,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_70",
+        "latency_ms": 7486.44,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [],
+        "predicted_evidence_spans": [
+          "When I was elected to the Kentucky State Senate in 1967, I became the first woman and the first person of color to serve in the body.",
+          "Five decades later, I find it almost unfathomable that a politician from my own state is attempting to launch his presidential campaign on a record that includes questioning landmark voting rights and civil rights legislation.",
+          "His campaign team told reporters last week that his campaign announcement message would be about \"expanding the Republican Party\" -- a message of inclusion.",
+          "Since coming to the U.S. Senate, Paul has tried to sell himself as a different type of Republican.  He's tried to brand himself as the GOP's minority outreach candidate.",
+          "A quick survey of Sen. Paul's positions makes clear that he does not.",
+          "Paul kicked off his announcement speech in Louisville by declaring \"I have a message that is loud and clear:  We have come to take our country back.\"",
+          "I have no doubt that under Paul's leadership, he would indeed take our country back -- in the wrong direction -- way back to a time when we were debating the Civil Rights Act --  which Paul has done since landing on the national stage;",
+          "when there was no Department of Education -- a department he thinks \"should be done away with;\"",
+          "when women didn't have choices -- choices Paul seeks to limit in Washington;",
+          "when DREAMers weren't protected from deportation -- protections Paul currently opposes.",
+          "In his inept speaking engagements at historically black colleges and universities, he has come across as condescending and lacking basic cultural competency.",
+          "But Paul has also questioned the Civil Rights Act, and even claimed that private business owners have a right to discriminate.",
+          "When asked about the need for a more robust Voting Rights Act following the Supreme Court's dismantling of the law, Paul dismissively remarked, \"We have an African-American President.\"",
+          "Paul tried once again from that stage in Louisville to fashion himself as the one member of his party courageous enough to try to broaden Republican appeal to constituencies they ignore year after year.",
+          "But his record makes it very clear that his views are outdated, outside of the mainstream, and disqualifying for a man who wants to lead our country.",
+          "The American people deserve a leader who won't disrespect their intelligence, who won't pander to them when it's convenient, and who won't work to dismantle the progress we have made over the last five decades."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_71",
+        "latency_ms": 4533.099,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Rand Paul, who today declared he's running for president of the United States, is doing. His campaign team told reporters last week that his campaign announcement message would be about \"expanding the Republican Party\" -- a message of inclusion.",
+          "Paul has tried to sell himself as a different type of Republican.  He's tried to brand himself as the GOP's minority outreach candidate.",
+          "Paul has done since landing on the national stage; when there was no Department of Education -- a department he thinks \"should be done away with;\" when women didn't have choices -- choices Paul seeks to limit in Washington; when DREAMers weren't protected from deportation -- protections Paul currently opposes.",
+          "Paul has also questioned the Civil Rights Act, and even claimed that private business owners have a right to discriminate.",
+          "When asked about the need for a more robust Voting Rights Act following the Supreme Court's dismantling of the law, Paul dismissively remarked, \"We have an African-American President.\"",
+          "Paul tried once again from that stage in Louisville to fashion himself as the one member of his party courageous enough to try to broaden Republican appeal to constituencies they ignore year after year.",
+          "His record makes it very clear that his views are outdated, outside of the mainstream, and disqualifying for a man who wants to lead our country."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_120",
+        "latency_ms": 2938.442,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Mary Kay tells Walters what makes their marriage work in spite of their huge difference in their age.",
+          "She also discusses her surprising plans to teach again, as well as her intentions to have her status as a registered sex offender lifted."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": false,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": 1.0,
+        "evidence_spans_reported": true,
+        "exact_match": false,
+        "expected": [
+          "contradicted_answer"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [
+          "She also discusses her surprising plans to teach again, as well as her intentions to have her status as a registered sex offender lifted"
+        ],
+        "expected_primary_root_cause": "conflicting_contexts",
+        "expected_verdict_counts": {
+          "contradicted": 1,
+          "partially_supported": 0,
+          "supported": 0,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_121",
+        "latency_ms": 3815.499,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Mary Kay Letourneau Fualaau wants the world to know that she and her husband, Vili Fualaau, are still happily together.",
+          "She was a married 34-year-old teacher and mother of four in Seattle in 1996 when she began an affair with Fualaau, her 13-year-old student.",
+          "Letourneau gave birth to her young lover's child and went on to serve more than seven years in prison on charges related to their sexual relationship.",
+          "The pair wed soon after she was released from prison in 2005 and are now the parents of two teen girls.",
+          "During the interview with Barbara Walters, Mary Kay tells Walters what makes their marriage work in spite of their huge difference in their age.",
+          "She also discusses her surprising plans to teach again, as well as her intentions to have her status as a registered sex offender lifted.",
+          "Vili Fualaau discusses his bouts with alcoholism, depression and why he believes the system failed him while he was still a minor."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": false,
+        "root_cause_reported": true,
+        "verdict_match": false
+      },
+      {
+        "benchmark_pass": false,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": 0.844,
+        "evidence_spans_reported": true,
+        "exact_match": false,
+        "expected": [
+          "partial_support"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [
+          "Their relationship led to jail time for her, but Mary Kay Letourneau Fualaau wants the world to know that she and her husband, Vili Fualaau, are still happily together."
+        ],
+        "expected_primary_root_cause": "answer_overreach",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 1,
+          "supported": 0,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_122",
+        "latency_ms": 4092.077,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Mary Kay Letourneau Fualaau wants the world to know that she and her husband, Vili Fualaau, are still happily together.",
+          "She was a married 34-year-old teacher and mother of four in Seattle in 1996 when she began an affair with Fualaau, her 13-year-old student.",
+          "Letourneau gave birth to her young lover's child and went on to serve more than seven years in prison on charges related to their sexual relationship.",
+          "On Friday, ABC's \"20/20\" will air an exclusive interview with the couple, who will celebrate their 10th wedding anniversary on May 20.",
+          "The pair wed soon after she was released from prison in 2005 and are now the parents of two teen girls.",
+          "Mary Kay tells Walters what makes their marriage work in spite of their huge difference in their age.",
+          "She also discusses her surprising plans to teach again, as well as her intentions to have her status as a registered sex offender lifted."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": false,
+        "root_cause_reported": true,
+        "verdict_match": false
+      },
+      {
+        "benchmark_pass": false,
+        "candidate_reported": true,
+        "citation_error_counts": null,
+        "citation_match": null,
+        "citation_statuses_reported": false,
+        "cost_usd": null,
+        "evidence_span_overlap": 0.118,
+        "evidence_spans_reported": true,
+        "exact_match": false,
+        "expected": [
+          "partial_support"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [
+          "Mary Kay tells Walters what makes their marriage work in spite of their huge difference in their age."
+        ],
+        "expected_primary_root_cause": "answer_overreach",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 1,
+          "supported": 0,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_123",
+        "latency_ms": 3447.091,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [],
+        "predicted_evidence_spans": [
+          "Mary Kay Letourneau Fualaau wants the world to know that she and her husband, Vili Fualaau, are still happily together.",
+          "She was a married 34-year-old teacher and mother of four in Seattle in 1996 when she began an affair with Fualaau, her 13-year-old student.",
+          "Letourneau gave birth to her young lover's child and went on to serve more than seven years in prison on charges related to their sexual relationship.",
+          "The pair wed soon after she was released from prison in 2005 and are now the parents of two teen girls.",
+          "She also discusses her surprising plans to teach again, as well as her intentions to have her status as a registered sex offender lifted."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 5,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": false,
+        "root_cause_reported": true,
+        "verdict_match": false
+      },
+      {
+        "benchmark_pass": false,
+        "candidate_reported": true,
+        "citation_error_counts": null,
+        "citation_match": null,
+        "citation_statuses_reported": false,
+        "cost_usd": null,
+        "evidence_span_overlap": 1.0,
+        "evidence_spans_reported": true,
+        "exact_match": false,
+        "expected": [
+          "contradicted_answer"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [
+          "She also discusses her surprising plans to teach again, as well as her intentions to have her status as a registered sex offender lifted"
+        ],
+        "expected_primary_root_cause": "conflicting_contexts",
+        "expected_verdict_counts": {
+          "contradicted": 1,
+          "partially_supported": 0,
+          "supported": 0,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_124",
+        "latency_ms": 3161.508,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [],
+        "predicted_evidence_spans": [
+          "Mary Kay Letourneau Fualaau wants the world to know that she and her husband, Vili Fualaau, are still happily together.",
+          "Letourneau gave birth to her young lover's child and went on to serve more than seven years in prison on charges related to their sexual relationship.",
+          "The pair wed soon after she was released from prison in 2005 and are now the parents of two teen girls.",
+          "She also discusses her surprising plans to teach again, as well as her intentions to have her status as a registered sex offender lifted."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": false,
+        "root_cause_reported": true,
+        "verdict_match": false
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_125",
+        "latency_ms": 4043.559,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Mary Kay Letourneau Fualaau wants the world to know that she and her husband, Vili Fualaau, are still happily together.",
+          "She was a married 34-year-old teacher and mother of four in Seattle in 1996 when she began an affair with Fualaau, her 13-year-old student.",
+          "Letourneau gave birth to her young lover's child and went on to serve more than seven years in prison on charges related to their sexual relationship.",
+          "The pair wed soon after she was released from prison in 2005 and are now the parents of two teen girls.",
+          "On Friday, ABC's \"20/20\" will air an exclusive interview with the couple, who will celebrate their 10th wedding anniversary on May 20.",
+          "Mary Kay tells Walters what makes their marriage work in spite of their huge difference in their age.",
+          "She also discusses her surprising plans to teach again, as well as her intentions to have her status as a registered sex offender lifted.",
+          "Vili Fualaau, meanwhile, discusses his bouts with alcoholism, depression and why he believes the system failed him while he was still a minor."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_138",
+        "latency_ms": 3704.355,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Kanye West has settled a lawsuit with a paparazzi photographer he assaulted -- and the two have shaken on it.",
+          "The photographer, Daniel Ramos, had filed the civil suit against West after the hip-hop star attacked him and tried to wrestle his camera from him in July 2013 at Los Angeles International Airport.",
+          "Ramos and his lawyer, Gloria Allred, sought general and punitive damages in the civil suit, saying that West had interfered with the photographer's rights to pursue a lawful occupation.",
+          "Allred issued a statement Tuesday night saying Ramos' side had filed a dismissal \"because the case was settled to the satisfaction of the parties.\"",
+          "\"One important aspect of it was an apology by Kanye West to our client, Daniel Ramos.\"",
+          "Her statement included a picture of West and Ramos shaking hands, which she said happened after the apology."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": null,
+        "citation_match": null,
+        "citation_statuses_reported": false,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_139",
+        "latency_ms": 4872.287,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [],
+        "predicted_evidence_spans": [
+          "Kanye West has settled a lawsuit with a paparazzi photographer he assaulted -- and the two have shaken on it.",
+          "The photographer, Daniel Ramos, had filed the civil suit against West after the hip-hop star attacked him and tried to wrestle his camera from him in July 2013 at Los Angeles International Airport.",
+          "West pleaded no contest last year to a misdemeanor count of battery over the scuffle.",
+          "A judge sentenced him to two years' probation, as well as anger management sessions and community service.",
+          "Ramos and his lawyer, Gloria Allred, sought general and punitive damages in the civil suit, saying that West had interfered with the photographer's rights to pursue a lawful occupation.",
+          "The case had been set for trial next week, but Allred issued a statement Tuesday night saying Ramos' side had filed a dismissal \"because the case was settled to the satisfaction of the parties.\"",
+          "She didn't disclose the details of the settlement other than saying that \"one important aspect of it was an apology by Kanye West to our client, Daniel Ramos.\"",
+          "Her statement included a picture of West and Ramos shaking hands, which she said happened after the apology.",
+          "Beverly Hills Police investigated an incident in January 2014 in which West was accused of assaulting a man at a Beverly Hills chiropractor's office. West avoided criminal charges by reaching a civil settlement with the man."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": null,
+        "citation_match": null,
+        "citation_statuses_reported": false,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_140",
+        "latency_ms": 4740.102,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [],
+        "predicted_evidence_spans": [
+          "Kanye West has settled a lawsuit with a paparazzi photographer he assaulted -- and the two have shaken on it.",
+          "The photographer, Daniel Ramos, had filed the civil suit against West after the hip-hop star attacked him and tried to wrestle his camera from him in July 2013 at Los Angeles International Airport.",
+          "West pleaded no contest last year to a misdemeanor count of battery over the scuffle.",
+          "A judge sentenced him to two years' probation, as well as anger management sessions and community service.",
+          "Ramos and his lawyer, Gloria Allred, sought general and punitive damages in the civil suit, saying that West had interfered with the photographer's rights to pursue a lawful occupation.",
+          "The case had been set for trial next week, but Allred issued a statement Tuesday night saying Ramos' side had filed a dismissal \"because the case was settled to the satisfaction of the parties.\"",
+          "She didn't disclose the details of the settlement other than saying that \"one important aspect of it was an apology by Kanye West to our client, Daniel Ramos.\"",
+          "Her statement included a picture of West and Ramos shaking hands, which she said happened after the apology.",
+          "\"We believe that this case sent an important message,\" Allred said. \"Celebrities are not above the law, and they have no right to physically attack someone simply because they were asked a question.\""
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": false,
+        "candidate_reported": true,
+        "citation_error_counts": null,
+        "citation_match": null,
+        "citation_statuses_reported": false,
+        "cost_usd": null,
+        "evidence_span_overlap": 0.711,
+        "evidence_spans_reported": true,
+        "exact_match": false,
+        "expected": [
+          "contradicted_answer"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [
+          "West pleaded no contest last year to a misdemeanor count of battery over the scuffle. A judge sentenced him to two years' probation, as well as anger management sessions and community service."
+        ],
+        "expected_primary_root_cause": "conflicting_contexts",
+        "expected_verdict_counts": {
+          "contradicted": 1,
+          "partially_supported": 0,
+          "supported": 0,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_141",
+        "latency_ms": 4537.546,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [],
+        "predicted_evidence_spans": [
+          "Kanye West has settled a lawsuit with a paparazzi photographer he assaulted -- and the two have shaken on it.",
+          "West pleaded no contest last year to a misdemeanor count of battery over the scuffle.",
+          "A judge sentenced him to two years' probation, as well as anger management sessions and community service.",
+          "Ramos and his lawyer, Gloria Allred, sought general and punitive damages in the civil suit, saying that West had interfered with the photographer's rights to pursue a lawful occupation.",
+          "Allred issued a statement Tuesday night saying Ramos' side had filed a dismissal \"because the case was settled to the satisfaction of the parties.\"",
+          "\"One important aspect of it was an apology by Kanye West to our client, Daniel Ramos.\"",
+          "Her statement included a picture of West and Ramos shaking hands, which she said happened after the apology.",
+          "Beverly Hills Police investigated an incident in January 2014 in which West was accused of assaulting a man at a Beverly Hills chiropractor's office.",
+          "West avoided criminal charges by reaching a civil settlement with the man."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": false,
+        "root_cause_reported": true,
+        "verdict_match": false
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_142",
+        "latency_ms": 3529.509,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Kanye West has settled a lawsuit with a paparazzi photographer he assaulted -- and the two have shaken on it.",
+          "The photographer, Daniel Ramos, had filed the civil suit against West after the hip-hop star attacked him and tried to wrestle his camera from him in July 2013 at Los Angeles International Airport.",
+          "West pleaded no contest last year to a misdemeanor count of battery over the scuffle.",
+          "The case had been set for trial next week, but Allred issued a statement Tuesday night saying Ramos' side had filed a dismissal \"because the case was settled to the satisfaction of the parties.\"",
+          "\"One important aspect of it was an apology by Kanye West to our client, Daniel Ramos.\"",
+          "Beverly Hills Police investigated an incident in January 2014 in which West was accused of assaulting a man at a Beverly Hills chiropractor's office. West avoided criminal charges by reaching a civil settlement with the man."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": null,
+        "citation_match": null,
+        "citation_statuses_reported": false,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_143",
+        "latency_ms": 4700.664,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [],
+        "predicted_evidence_spans": [
+          "Kanye West has settled a lawsuit with a paparazzi photographer he assaulted -- and the two have shaken on it.",
+          "The photographer, Daniel Ramos, had filed the civil suit against West after the hip-hop star attacked him and tried to wrestle his camera from him in July 2013 at Los Angeles International Airport.",
+          "West pleaded no contest last year to a misdemeanor count of battery over the scuffle.",
+          "A judge sentenced him to two years' probation, as well as anger management sessions and community service.",
+          "The case had been set for trial next week, but Allred issued a statement Tuesday night saying Ramos' side had filed a dismissal \"because the case was settled to the satisfaction of the parties.\"",
+          "She didn't disclose the details of the settlement other than saying that \"one important aspect of it was an apology by Kanye West to our client, Daniel Ramos.\"",
+          "Her statement included a picture of West and Ramos shaking hands, which she said happened after the apology.",
+          "The incident was caught on video and sparked debate about celebrities' treatment of paparazzi."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_144",
+        "latency_ms": 3061.659,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Blues legend B.B. King was hospitalized for dehydration, though the ailment didn't keep him out for long.",
+          "King's dehydration was caused by his Type II diabetes, but he \"is much better,\" his daughter, Claudette King, told the Los Angeles Times.",
+          "\"I'm feeling much better and am leaving the hospital today,\" King said in a message Tuesday.",
+          "Angela Moore, a publicist for Claudette King, said later in the day that he was back home resting and enjoying time with his grandchildren.",
+          "Last year, the bluesman suffered from dehydration and exhaustion after a show in Chicago, forcing him to cancel the remainder of his tour."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_145",
+        "latency_ms": 4368.25,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Blues legend B.B. King was hospitalized for dehydration, though the ailment didn't keep him out for long.",
+          "King's dehydration was caused by his Type II diabetes, but he \"is much better,\" his daughter, Claudette King, told the Los Angeles Times.",
+          "\"I'm feeling much better and am leaving the hospital today,\" King said in a message Tuesday.",
+          "Angela Moore, a publicist for Claudette King, said later in the day that he was back home resting and enjoying time with his grandchildren.",
+          "No more information on King's condition or where he was hospitalized was immediately available.",
+          "King, 89, has used various models of Gibson guitars over the years, and named each one of them Lucille.",
+          "He was inducted into the Rock and Roll Hall of Fame in 1987, and has 30 Grammy nominations.",
+          "Some of his hits include \"The Thrill Is Gone,\" which won him his first Grammy in 1970.",
+          "Last year, the bluesman suffered from dehydration and exhaustion after a show in Chicago, forcing him to cancel the remainder of his tour."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": false,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": 0.581,
+        "evidence_spans_reported": true,
+        "exact_match": false,
+        "expected": [
+          "contradicted_answer"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [
+          "King's dehydration was caused by his Type II diabetes, but he \"is much better,\" his daughter, Claudette King, told the Los Angeles Times."
+        ],
+        "expected_primary_root_cause": "conflicting_contexts",
+        "expected_verdict_counts": {
+          "contradicted": 1,
+          "partially_supported": 0,
+          "supported": 0,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_146",
+        "latency_ms": 2519.179,
+        "predicted": [
+          "partial_support"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Blues legend B.B. King was hospitalized for dehydration",
+          "King's dehydration was caused by his Type II diabetes",
+          "\"I'm feeling much better and am leaving the hospital today,\" King said in a message Tuesday",
+          "he was back home resting and enjoying time with his grandchildren",
+          "Some of his hits include \"The Thrill Is Gone,\" which won him his first Grammy in 1970, \"There Must be a Better World Somewhere\""
+        ],
+        "predicted_primary_root_cause": "answer_overreach",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 1,
+          "supported": 5,
+          "unsupported": 1,
+          "unverifiable": 0
+        },
+        "root_cause_match": false,
+        "root_cause_reported": true,
+        "verdict_match": false
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_147",
+        "latency_ms": 3166.335,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Blues legend B.B. King was hospitalized for dehydration, though the ailment didn't keep him out for long.",
+          "King's dehydration was caused by his Type II diabetes, but he \"is much better,\" his daughter, Claudette King, told the Los Angeles Times.",
+          "He was inducted into the Rock and Roll Hall of Fame in 1987, and has 30 Grammy nominations.",
+          "King, 89, has used various models of Gibson guitars over the years, and named each one of them Lucille.",
+          "Last year, the bluesman suffered from dehydration and exhaustion after a show in Chicago, forcing him to cancel the remainder of his tour."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": false,
+        "candidate_reported": true,
+        "citation_error_counts": null,
+        "citation_match": null,
+        "citation_statuses_reported": false,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": false,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_148",
+        "latency_ms": 3299.198,
+        "predicted": [
+          "partial_support"
+        ],
+        "predicted_citation_statuses": [],
+        "predicted_evidence_spans": [
+          "Blues legend B.B. King was hospitalized for dehydration, though the ailment didn't keep him out for long.",
+          "King's dehydration was caused by his Type II diabetes",
+          "he \"is much better,\" his daughter, Claudette King, told the Los Angeles Times.",
+          "The legendary guitarist and vocalist released a statement thanking those who have expressed their concerns.",
+          "\"I'm feeling much better and am leaving the hospital today,\" King said in a message Tuesday.",
+          "He was inducted into the Rock and Roll Hall of Fame in 1987, and has 30 Grammy nominations."
+        ],
+        "predicted_primary_root_cause": "answer_overreach",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 1,
+          "supported": 5,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": false,
+        "root_cause_reported": true,
+        "verdict_match": false
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_149",
+        "latency_ms": 3142.025,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Blues legend B.B. King was hospitalized for dehydration, though the ailment didn't keep him out for long.",
+          "King's dehydration was caused by his Type II diabetes, but he \"is much better,\" his daughter, Claudette King, told the Los Angeles Times.",
+          "\"I'm feeling much better and am leaving the hospital today,\" King said in a message Tuesday.",
+          "Angela Moore, a publicist for Claudette King, said later in the day that he was back home resting and enjoying time with his grandchildren.",
+          "Last year, the bluesman suffered from dehydration and exhaustion after a show in Chicago, forcing him to cancel the remainder of his tour."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": false,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": 0.208,
+        "evidence_spans_reported": true,
+        "exact_match": false,
+        "expected": [
+          "contradicted_answer"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [
+          "Copeland and a female companion, Katrine Saltara, were in the club for about 10 minutes before leaving and walking down the street toward Fulton Houses, where their car was parked, said a 1OAK spokesperson."
+        ],
+        "expected_primary_root_cause": "conflicting_contexts",
+        "expected_verdict_counts": {
+          "contradicted": 1,
+          "partially_supported": 0,
+          "supported": 0,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_180",
+        "latency_ms": 2636.047,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Chris Copeland of the Indiana Pacers was stabbed after leaving a trendy New York nightclub early Wednesday",
+          "The Hawks were not involved in the stabbing incident, police said, but were arrested on obstruction and other charges later",
+          "Copeland suffered a knife wound to his left elbow and abdomen, and he's in stable condition at a New York hospital",
+          "A suspect was arrested on charges pending",
+          "Antic and Sefolosha interfered with officers trying to establish a crime scene"
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": false,
+        "root_cause_reported": true,
+        "verdict_match": false
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_181",
+        "latency_ms": 6106.502,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Chris Copeland of the Indiana Pacers was stabbed after leaving a trendy New York nightclub early Wednesday",
+          "two Atlanta Hawks -- who had just finished a home game hours before the incident -- were among those arrested",
+          "The Hawks were not involved in the stabbing incident, police said, but were arrested on obstruction and other charges later",
+          "the stabbing occurred in front of the Fulton Houses project down the street",
+          "Copeland and a female companion, Katrine Saltara, were in the club for about 10 minutes before leaving and walking down the street toward Fulton Houses",
+          "The suspect, who the spokesperson said never entered 1OAK, stabbed Copeland and Saltara in front of Fulton Houses",
+          "Mr. Copeland's driver sprang to accost and detain the apparent perpetrator and that individual is now in police custody",
+          "Copeland suffered a knife wound to his left elbow and abdomen, and he's in stable condition at a New York hospital",
+          "Antic and Sefolosha were arrested on charges of obstructing governmental administration and disorderly conduct, she said. Sefolosha faces an additional charge of resisting arrest",
+          "Word of the stabbing quickly spread through the club, reaching Antic and Sefolosha, who went outside to check on their friend, Copeland",
+          "The club shut down immediately after the incident",
+          "The NBA and the Hawks front office said they were looking into the incident",
+          "The Hawks are preparing for a historic playoff run after clinching the No. 1 seed in the NBA's Eastern Conference",
+          "The Pacers sit in the conference's 10th spot but are only one game out of playoff contention"
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_182",
+        "latency_ms": 3562.531,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Chris Copeland of the Indiana Pacers was stabbed after leaving a trendy New York nightclub early Wednesday",
+          "two Atlanta Hawks -- who had just finished a home game hours before the incident -- were among those arrested",
+          "The Hawks were not involved in the stabbing incident, police said, but were arrested on obstruction and other charges later",
+          "Copeland and a female companion, Katrine Saltara, were in the club for about 10 minutes before leaving and walking down the street toward Fulton Houses",
+          "The suspect ... stabbed Copeland and Saltara in front of Fulton Houses",
+          "Copeland and Saltara tried to make their way back to the club to seek help from the 20 or so security personnel on hand, leaving a \"bloody trail of handprints\"",
+          "Copeland is in stable condition at a New York hospital",
+          "Saltara suffered cuts to her arm, breast and buttock"
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_183",
+        "latency_ms": 3519.448,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Chris Copeland of the Indiana Pacers was stabbed after leaving a trendy New York nightclub early Wednesday",
+          "two Atlanta Hawks -- who had just finished a home game hours before the incident -- were among those arrested",
+          "The Hawks were not involved in the stabbing incident, police said, but were arrested on obstruction and other charges later",
+          "Copeland suffered a knife wound to his left elbow and abdomen, and he's in stable condition at a New York hospital",
+          "Antic and Sefolosha interfered with officers trying to establish a crime scene, and one of the Hawks pushed a police officer",
+          "The Hawks are in New York for a Wednesday night game against the Brooklyn Nets. Neither player will be in uniform, the team said"
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": false,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": 0.551,
+        "evidence_spans_reported": true,
+        "exact_match": false,
+        "expected": [
+          "partial_support"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [
+          "Mr. Copeland's driver sprang to accost and detain the apparent perpetrator and that individual is now in police custody.",
+          "A knife was recovered, a suspect was arrested and two individuals not involved in the dispute -- the Hawks' Pero Antic, 32, and Thabo Sefolosha, 30 -- were arrested on charges of obstructing governmental administration and disorderly conduct, she said."
+        ],
+        "expected_primary_root_cause": "answer_overreach",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 1,
+          "supported": 0,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_184",
+        "latency_ms": 3802.218,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Chris Copeland of the Indiana Pacers was stabbed after leaving a trendy New York nightclub early Wednesday",
+          "two Atlanta Hawks -- who had just finished a home game hours before the incident -- were among those arrested",
+          "The Hawks were not involved in the stabbing incident, police said, but were arrested on obstruction and other charges later",
+          "Copeland, a former Knick, was near the nightclub with Saltara when a 22-year-old Brooklyn man approached them",
+          "The suspect stabbed Copeland and Saltara in front of Fulton Houses",
+          "A knife was recovered, a suspect was arrested",
+          "two individuals not involved in the dispute -- the Hawks' Pero Antic, 32, and Thabo Sefolosha, 30 -- were arrested on charges of obstructing governmental administration and disorderly conduct",
+          "Antic and Sefolosha interfered with officers trying to establish a crime scene"
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": false,
+        "root_cause_reported": true,
+        "verdict_match": false
+      },
+      {
+        "benchmark_pass": false,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": 0.551,
+        "evidence_spans_reported": true,
+        "exact_match": false,
+        "expected": [
+          "partial_support"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [
+          "Mr. Copeland's driver sprang to accost and detain the apparent perpetrator and that individual is now in police custody.",
+          "A knife was recovered, a suspect was arrested and two individuals not involved in the dispute -- the Hawks' Pero Antic, 32, and Thabo Sefolosha, 30 -- were arrested on charges of obstructing governmental administration and disorderly conduct, she said."
+        ],
+        "expected_primary_root_cause": "answer_overreach",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 1,
+          "supported": 0,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_185",
+        "latency_ms": 4711.767,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Chris Copeland of the Indiana Pacers was stabbed after leaving a trendy New York nightclub early Wednesday",
+          "two Atlanta Hawks -- who had just finished a home game hours before the incident -- were among those arrested",
+          "The Hawks were not involved in the stabbing incident, police said, but were arrested on obstruction and other charges later",
+          "the stabbing occurred in front of the Fulton Houses project down the street",
+          "Copeland and a female companion, Katrine Saltara, were in the club for about 10 minutes before leaving and walking down the street toward Fulton Houses",
+          "The suspect, who the spokesperson said never entered 1OAK, stabbed Copeland and Saltara in front of Fulton Houses",
+          "Copeland and Saltara tried to make their way back to the club to seek help from the 20 or so security personnel on hand, leaving a \"bloody trail of handprints\"",
+          "two individuals not involved in the dispute -- the Hawks' Pero Antic, 32, and Thabo Sefolosha, 30 -- were arrested on charges of obstructing governmental administration and disorderly conduct",
+          "Copeland suffered a knife wound to his left elbow and abdomen, and he's in stable condition at a New York hospital"
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": false,
+        "root_cause_reported": true,
+        "verdict_match": false
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": null,
+        "citation_match": null,
+        "citation_statuses_reported": false,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_204",
+        "latency_ms": 3121.699,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [],
+        "predicted_evidence_spans": [
+          "The family of Tejano star Selena, who was killed by her fan club president twenty years ago, is working with Nevada-based tech company, Acrovirt LLC, to create a digital version of her singing and dancing.",
+          "The hologram-like figure is called \"Selena the One\", and will be the first figure to use Acrovirt's technology.",
+          "The project hopes to give new fans an experience of the late star's persona, and will be used to release new songs and videos, collaborate with current artists, and even go on tour in 2018.",
+          "Selena's sister, Suzette Quintanilla, insisted that it is not about replacing Selena, but about helping her legacy continue to grow."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      },
+      {
+        "benchmark_pass": true,
+        "candidate_reported": true,
+        "citation_error_counts": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 1,
+          "tp": 0
+        },
+        "citation_match": null,
+        "citation_statuses_reported": true,
+        "cost_usd": null,
+        "evidence_span_overlap": null,
+        "evidence_spans_reported": true,
+        "exact_match": true,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_citation_statuses": [],
+        "expected_evidence_spans": [],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "id": "ragtruth_205",
+        "latency_ms": 3293.943,
+        "predicted": [
+          "no_failure_detected"
+        ],
+        "predicted_citation_statuses": [
+          "citation_ok"
+        ],
+        "predicted_evidence_spans": [
+          "Tejano star Selena, who died 20 years ago, is coming back in a big way: with a hologram-like figure.",
+          "The technology is being handled by Acrovirt LLC, a Nevada-based tech company.",
+          "The project is being called \"Selena the One.\"",
+          "The family intends to expand her legacy in another way: with some new music.",
+          "Selena the One \"will release new songs and videos, will collaborate with current hit artists, and aims to go on tour in 2018,\" said a statement on Selena's Facebook page.",
+          "Fans can join an Indiegogo campaign, www.selenatheone.com, to support the launch."
+        ],
+        "predicted_primary_root_cause": "no_failure_detected",
+        "predicted_verdict_counts": {
+          "contradicted": 0,
+          "partially_supported": 0,
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0
+        },
+        "root_cause_match": true,
+        "root_cause_reported": true,
+        "verdict_match": true
+      }
+    ],
+    "status": "scored",
+    "summary": {
+      "cases": 50,
+      "citation_error_f1": 1.0,
+      "citation_error_precision": 1.0,
+      "citation_error_recall": 1.0,
+      "citation_status_reported_cases": 38,
+      "claim_verdict_macro_f1": 0.33,
+      "claim_verdict_match_rate": 0.66,
+      "cost_per_100_traces_usd": 0.0,
+      "dangerous_false_green_rate": 0.26,
+      "evidence_span_labeled_cases": 15,
+      "evidence_span_overlap": 0.592,
+      "evidence_span_reported_cases": 15,
+      "failure_label_exact_match_rate": 0.66,
+      "failure_label_macro_f1": 0.272,
+      "latency_p50_ms": 4021.845,
+      "latency_p95_ms": 7228.306,
+      "root_cause_accuracy": 0.66,
+      "root_cause_labeled_cases": 50,
+      "root_cause_reported_cases": 50
+    },
+    "system": "OpenAI diagnostic judge on RAGTruth assisted pilot",
+    "version": "gpt-4.1-mini"
+  }
+]

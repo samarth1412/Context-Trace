@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ContextTrace Verification Report</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f8fa;
+      --panel: #ffffff;
+      --subtle: #fbfcfe;
+      --text: #202832;
+      --muted: #657286;
+      --line: #d9e0ea;
+      --ok: #176f44;
+      --warn: #946200;
+      --bad: #b42318;
+      --accent: #2458d3;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    main { max-width: 1160px; margin: 0 auto; padding: 32px 20px 56px; }
+    header { border-bottom: 1px solid var(--line); margin-bottom: 22px; padding-bottom: 18px; }
+    h1, h2, h3 { margin: 0; }
+    h1 { font-size: 30px; }
+    h2 { font-size: 18px; margin-bottom: 12px; }
+    h3 { font-size: 15px; margin-bottom: 8px; }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin: 16px 0;
+      padding: 18px;
+    }
+    .summary {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    .card, .item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--subtle);
+      padding: 12px;
+    }
+    .item + .item { margin-top: 10px; }
+    .label, .item-meta {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .value { margin-top: 4px; font-size: 18px; overflow-wrap: anywhere; }
+    .muted { color: var(--muted); }
+    .answer, .item p { white-space: pre-wrap; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { border-bottom: 1px solid var(--line); padding: 10px; text-align: left; vertical-align: top; }
+    th { color: var(--muted); font-size: 12px; text-transform: uppercase; }
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #eef2f7;
+      padding: 3px 8px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .verdict-supported, .citation-citation_ok { color: var(--ok); background: #e9f7ef; }
+    .verdict-unverifiable, .verdict-partially_supported, .citation-claim_has_no_citation { color: var(--warn); background: #fff7df; }
+    .verdict-unsupported, .verdict-contradicted,
+    .citation-cited_source_missing,
+    .citation-claim_supported_by_different_source,
+    .citation-cited_source_does_not_support_claim { color: var(--bad); background: #fdeceb; }
+    pre {
+      margin: 0;
+      overflow: auto;
+      background: #101828;
+      color: #f8fafc;
+      border-radius: 8px;
+      padding: 14px;
+      font-size: 13px;
+    }
+    mark {
+      background: #fff0a6;
+      color: inherit;
+      border-radius: 3px;
+      padding: 0 2px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>ContextTrace Verification Report</h1>
+      <p class="muted">Local claim-level evidence verification for a portable RAG trace.</p>
+    </header>
+
+    <section>
+      <h2>Reliability Summary</h2>
+      <div class="summary">
+        <div class="card">
+          <div class="label">Failure Type</div>
+          <div class="value">no_failure_detected</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Total Claims</div>
+          <div class="value">2</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Supported</div>
+          <div class="value">2</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Partially Supported</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Unsupported</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Unverifiable</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Contradicted</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Support Rate</div>
+          <div class="value">1.0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Unsupported Claim Rate</div>
+          <div class="value">0.0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Citation Mismatches</div>
+          <div class="value">2</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Should Abstain</div>
+          <div class="value">False</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Primary Root Cause</div>
+          <div class="value">no_failure_detected</div>
+        </div>
+        </div>
+    </section>
+
+    <section>
+      <h2>Suggested Fix</h2>
+      <p><strong>no_failure_detected</strong></p>
+      <p>No fix is needed for this trace based on the local verifier.</p>
+    </section>
+
+    <section>
+      <h2>Query</h2>
+      <p>What vector store does this RAG engine use?</p>
+      <h2>Answer</h2>
+      <p class="answer"># Ollama and HuggingFace RAG Engine
+
+This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA). = load_txts_from_directory(txt_directory)
+
+# Chunk the documents
+    chunks = chunk_documents(texts)
+
+# Create embeddings and vector store
+    embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;, base_url=&quot;http://localhost:11434&quot;)
+    embedding_dimensions = len(embeddings.embed_query(&quot;test query&quot;))  # Determine embedding dimensions
+    vector_store = create_vector_store(embedding_function=embeddings, dimensions=embedding_dimensions)
+
+# Convert chunks into Document objects and add to vector store
+    documents = [Document(page_content=chunk) for chunk in chunks]
+    document_ids = vector_store.add_documents(documents=documents)</p>
+    </section>
+
+    <section>
+      <h2>Claim Support Overview</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Claim</th>
+            <th>Verdict</th>
+            <th>Confidence</th>
+            <th>Best Context</th>
+            <th>Citation</th>
+            <th>Root Cause</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td>claim_1</td>
+              <td># Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA).</td>
+              <td><span class="badge verdict-supported">supported</span></td>
+              <td>1.0</td>
+              <td>ollama_hf_rag_engine:README.md:1</td>
+              <td><span class="badge citation-claim_has_no_citation">claim_has_no_citation</span></td>
+              <td>no_failure_detected</td>
+            </tr>
+            
+
+            <tr>
+              <td>claim_2</td>
+              <td>= load_txts_from_directory(txt_directory) # Chunk the documents chunks = chunk_documents(texts) # Create embeddings and vector store embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;, base_url=&quot;http://localhost:11434&quot;) embedding_dimensions = len(embeddings.embed_query(&quot;test query&quot;)) # Determine embedding dimensions vector_store = create_vector_store(embedding_function=embeddings, dimensions=embedding_dimensions) # Convert chunks into Document objects and add to vector store documents = [Document(page_content=chunk) for chunk in chunks] document_ids = vector_store.add_documents(documents=documents).</td>
+              <td><span class="badge verdict-supported">supported</span></td>
+              <td>1.0</td>
+              <td>ollama_hf_rag_engine:main.py:6</td>
+              <td><span class="badge citation-claim_has_no_citation">claim_has_no_citation</span></td>
+              <td>no_failure_detected</td>
+            </tr>
+            </tbody>
+      </table>
+      <div>
+            <article class="item">
+              <div class="item-meta">claim_1 | supported | score 1.0</div>
+              <h3># Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA).</h3>
+              <p class="muted">Evidence span: ollama_hf_rag_engine:README.md:1 chars 0-175 sha256:01a888bbf819f68d</p>
+              <p><strong>Supporting spans:</strong> <span>ollama_hf_rag_engine:README.md:1 sha256:01a888bbf819f68d score 1.0</span>, <span>ollama_hf_rag_engine:README.md:2 sha256:8331292689e8769e score 0.313</span>, <span>ollama_hf_rag_engine:README.md:2 sha256:d6dc2cf8a8292ef2 score 0.156</span>, <span>ollama_hf_rag_engine:README.md:2 sha256:fd9af60dacdea655 score 0.106</span></p>
+              <p># <mark>Ollama</mark> and <mark>HuggingFace</mark> <mark>RAG</mark> <mark>Engine</mark>
+
+This <mark>repository</mark> <mark>contains</mark> a <mark>chatbot</mark> <mark>implementation</mark> <mark>leveraging</mark> <mark>large</mark> <mark>language</mark> <mark>models</mark> (<mark>LLMs</mark>) for <mark>retrieval</mark>-<mark>augmented</mark> <mark>question</mark> <mark>answering</mark> (<mark>QA</mark>).</p>
+              <p class="muted">Matched terms: ollama, huggingface, rag, engine, repository, contains, chatbot, implementation, leveraging, large, language, models, llms, retrieval, augmented, question, answering, qa</p>
+              <p><strong>Matched facts:</strong> <span># Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA) (predicate)</span></p>
+              <p><strong>Missing facts:</strong> <span class="muted">none</span></p>
+              <p><strong>Root cause:</strong> no_failure_detected</p>
+              <p>The claim is supported by the retrieved evidence because all required facts were matched.</p>
+            </article>
+            
+
+            <article class="item">
+              <div class="item-meta">claim_2 | supported | score 1.0</div>
+              <h3>= load_txts_from_directory(txt_directory) # Chunk the documents chunks = chunk_documents(texts) # Create embeddings and vector store embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;, base_url=&quot;http://localhost:11434&quot;) embedding_dimensions = len(embeddings.embed_query(&quot;test query&quot;)) # Determine embedding dimensions vector_store = create_vector_store(embedding_function=embeddings, dimensions=embedding_dimensions) # Convert chunks into Document objects and add to vector store documents = [Document(page_content=chunk) for chunk in chunks] document_ids = vector_store.add_documents(documents=documents).</h3>
+              <p class="muted">Evidence span: ollama_hf_rag_engine:main.py:6 chars 0-637 sha256:dfa80934fae16bf6</p>
+              <p><strong>Supporting spans:</strong> <span>ollama_hf_rag_engine:main.py:6 sha256:dfa80934fae16bf6 score 1.0</span>, <span>ollama_hf_rag_engine:README.md:1 sha256:04c1097cfa82b9eb score 0.143</span>, <span>ollama_hf_rag_engine:README.md:2 sha256:fd9af60dacdea655 score 0.119</span>, <span>ollama_hf_rag_engine:README.md:2 sha256:4221576a3e04a1bb score 0.059</span></p>
+              <p>= load_txts_from_directory(txt_directory)
+
+# <mark>Chunk</mark> the <mark>documents</mark>
+    <mark>chunks</mark> = chunk_documents(<mark>texts</mark>)
+
+# <mark>Create</mark> <mark>embeddings</mark> and <mark>vector</mark> <mark>store</mark>
+    <mark>embeddings</mark> = <mark>OllamaEmbeddings</mark>(<mark>model</mark>=&#x27;<mark>nomic</mark>-<mark>embed</mark>-<mark>text</mark>&#x27;, base_url=&quot;<mark>http</mark>://<mark>localhost</mark>:<mark>11434</mark>&quot;)
+    embedding_dimensions = <mark>len</mark>(<mark>embeddings</mark>.embed_query(&quot;<mark>test</mark> <mark>query</mark>&quot;))  # <mark>Determine</mark> <mark>embedding</mark> <mark>dimensions</mark>
+    vector_store = create_vector_store(embedding_function=<mark>embeddings</mark>, <mark>dimensions</mark>=embedding_dimensions)
+
+# <mark>Convert</mark> <mark>chunks</mark> into <mark>Document</mark> <mark>objects</mark> and <mark>add</mark> to <mark>vector</mark> <mark>store</mark>
+    <mark>documents</mark> = [<mark>Document</mark>(page_content=<mark>chunk</mark>) for <mark>chunk</mark> in <mark>chunks</mark>]
+    document_ids = vector_store.add_documents(<mark>documents</mark>=<mark>documents</mark>)</p>
+              <p class="muted">Matched terms: load, txts, directory, txt, chunk, documents, chunks, texts, create, embeddings, vector, store, ollamaembeddings, model, nomic, embed, text, base, url, http, localhost, 11434, embedding, dimensions, len, query, test, determine, function, convert, document, objects, add, page, content, ids</p>
+              <p><strong>Matched facts:</strong> <span>create embeddings (predicate)</span>, <span>create vector store embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27; (predicate)</span>, <span>create base_url=&quot;http://localhost:11434&quot;) embedding_dimensions = len(embeddings.embed_query(&quot;test query&quot;)) # Determine embedding dimensions vector_store = create_vector_store(embedding_function=embeddings (predicate)</span>, <span>create dimensions=embedding_dimensions) # Convert chunks into Document objects (predicate)</span>, <span>create add to vector store documents = [Document(page_content=chunk) for chunk in chunks] document_ids = vector_store.add_documents(documents=documents) (predicate)</span></p>
+              <p><strong>Missing facts:</strong> <span class="muted">none</span></p>
+              <p><strong>Root cause:</strong> no_failure_detected</p>
+              <p>The claim is supported by the retrieved evidence because all required facts were matched.</p>
+            </article>
+            </div>
+    </section>
+
+    <section>
+      <h2>Unsupported Claims</h2>
+      <p class="muted">No partial, unsupported, contradicted, or unverifiable claims detected.</p>
+    </section>
+
+    <section>
+      <h2>Root Cause Diagnosis</h2>
+      <p class="muted">No root-cause failure was detected.</p>
+    </section>
+
+    <section>
+      <h2>Citation Mismatches</h2>
+      
+        <article class="item">
+          <div class="item-meta">claim_1 | cited none</div>
+          <p># Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA).</p>
+          <p><strong>claim_has_no_citation</strong></p>
+          <p class="muted">Best supporting context: ollama_hf_rag_engine:README.md:1</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">claim_2 | cited none</div>
+          <p>= load_txts_from_directory(txt_directory) # Chunk the documents chunks = chunk_documents(texts) # Create embeddings and vector store embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;, base_url=&quot;http://localhost:11434&quot;) embedding_dimensions = len(embeddings.embed_query(&quot;test query&quot;)) # Determine embedding dimensions vector_store = create_vector_store(embedding_function=embeddings, dimensions=embedding_dimensions) # Convert chunks into Document objects and add to vector store documents = [Document(page_content=chunk) for chunk in chunks] document_ids = vector_store.add_documents(documents=documents).</p>
+          <p><strong>claim_has_no_citation</strong></p>
+          <p class="muted">Best supporting context: ollama_hf_rag_engine:main.py:6</p>
+        </article>
+        
+    </section>
+
+    <section>
+      <h2>Retrieved Contexts</h2>
+      
+        <article class="item">
+          <div class="item-meta">ollama_hf_rag_engine:README.md:1 | {&quot;project&quot;: &quot;taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;, &quot;repo_url&quot;: &quot;https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;, &quot;retrieval_score&quot;: 0.2633, &quot;retriever&quot;: &quot;sentence-transformers lexical-prefilter cosine&quot;, &quot;source&quot;: &quot;README.md&quot;}</div>
+          <p># Ollama and HuggingFace RAG Engine
+
+This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA). The system integrates document chunking, embedding generation, and FAISS-based vector search to create a high-performance, context-aware chatbot.
+
+## Features</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">ollama_hf_rag_engine:main.py:6 | {&quot;project&quot;: &quot;taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;, &quot;repo_url&quot;: &quot;https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;, &quot;retrieval_score&quot;: 0.1906, &quot;retriever&quot;: &quot;sentence-transformers lexical-prefilter cosine&quot;, &quot;source&quot;: &quot;main.py&quot;}</div>
+          <p>= load_txts_from_directory(txt_directory)
+
+# Chunk the documents
+    chunks = chunk_documents(texts)
+
+# Create embeddings and vector store
+    embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;, base_url=&quot;http://localhost:11434&quot;)
+    embedding_dimensions = len(embeddings.embed_query(&quot;test query&quot;))  # Determine embedding dimensions
+    vector_store = create_vector_store(embedding_function=embeddings, dimensions=embedding_dimensions)
+
+# Convert chunks into Document objects and add to vector store
+    documents = [Document(page_content=chunk) for chunk in chunks]
+    document_ids = vector_store.add_documents(documents=documents)</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">ollama_hf_rag_engine:README.md:2 | {&quot;project&quot;: &quot;taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;, &quot;repo_url&quot;: &quot;https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;, &quot;retrieval_score&quot;: 0.1753, &quot;retriever&quot;: &quot;sentence-transformers lexical-prefilter cosine&quot;, &quot;source&quot;: &quot;README.md&quot;}</div>
+          <p>ion, and FAISS-based vector search to create a high-performance, context-aware chatbot.
+
+## Features
+
+- **Document Ingestion**: Load and process `.txt` files for retrieval.
+- **Chunking**: Split long documents into manageable pieces using `RecursiveCharacterTextSplitter`.
+- **Embeddings**: Generate text embeddings using Ollama&#x27;s embedding model.
+- **Vector Search**: Perform similarity-based search using FAISS.
+- **LLM QA**: Retrieve relevant context and answer user queries using the `ChatOllama` LLM.
+- **Retrieval Augmented Generation (RAG)**: Combine retrieved context with a question-answering template to enhance LLM outputs.
+
+## Installation
+
+### Prerequisites
+- Python 3.8+
+- Pip</p>
+        </article>
+        
+    </section>
+
+    <section>
+      <h2>Why This Failed</h2>
+      <ul><li>No claim-level evidence failure was detected by the local verifier.</li></ul>
+    </section>
+
+    <section>
+      <h2>Raw JSON Summary</h2>
+      <pre>{
+  &quot;summary&quot;: {
+    &quot;total_claims&quot;: 2,
+    &quot;supported&quot;: 2,
+    &quot;partially_supported&quot;: 0,
+    &quot;unsupported&quot;: 0,
+    &quot;contradicted&quot;: 0,
+    &quot;unverifiable&quot;: 0,
+    &quot;support_rate&quot;: 1.0,
+    &quot;unsupported_claim_rate&quot;: 0.0,
+    &quot;citation_mismatches&quot;: 2,
+    &quot;should_abstain&quot;: false,
+    &quot;root_causes&quot;: {
+      &quot;no_failure_detected&quot;: 2
+    },
+    &quot;primary_root_cause&quot;: &quot;no_failure_detected&quot;,
+    &quot;failure_type&quot;: &quot;no_failure_detected&quot;,
+    &quot;failure_types&quot;: [
+      &quot;no_failure_detected&quot;
+    ],
+    &quot;suggested_fix&quot;: &quot;No fix is needed for this trace based on the local verifier.&quot;,
+    &quot;mode&quot;: &quot;semantic&quot;
+  },
+  &quot;abstention&quot;: {
+    &quot;should_abstain&quot;: false,
+    &quot;reason&quot;: &quot;Most generated claims are supported by retrieved evidence.&quot;
+  },
+  &quot;diagnostics&quot;: {
+    &quot;failure_type&quot;: &quot;no_failure_detected&quot;,
+    &quot;failure_types&quot;: [
+      &quot;no_failure_detected&quot;
+    ],
+    &quot;suggested_fix&quot;: &quot;No fix is needed for this trace based on the local verifier.&quot;
+  },
+  &quot;claims&quot;: [
+    {
+      &quot;claim_id&quot;: &quot;claim_1&quot;,
+      &quot;claim&quot;: &quot;# Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA).&quot;,
+      &quot;verdict&quot;: &quot;supported&quot;,
+      &quot;confidence&quot;: 1.0,
+      &quot;best_context_id&quot;: &quot;ollama_hf_rag_engine:README.md:1&quot;,
+      &quot;best_context_text&quot;: &quot;# Ollama and HuggingFace RAG Engine\n\nThis repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA). The system integrates document chunking, embedding generation, and FAISS-based vector search to create a high-performance, context-aware chatbot.\n\n## Features&quot;,
+      &quot;best_score&quot;: 1.0,
+      &quot;evidence&quot;: &quot;# Ollama and HuggingFace RAG Engine\n\nThis repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA).&quot;,
+      &quot;evidence_span&quot;: {
+        &quot;context_id&quot;: &quot;ollama_hf_rag_engine:README.md:1&quot;,
+        &quot;text&quot;: &quot;# Ollama and HuggingFace RAG Engine\n\nThis repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA).&quot;,
+        &quot;start_char&quot;: 0,
+        &quot;end_char&quot;: 175,
+        &quot;span_hash&quot;: &quot;sha256:01a888bbf819f68d&quot;
+      },
+      &quot;supporting_spans&quot;: [
+        {
+          &quot;context_id&quot;: &quot;ollama_hf_rag_engine:README.md:1&quot;,
+          &quot;text&quot;: &quot;# Ollama and HuggingFace RAG Engine\n\nThis repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA).&quot;,
+          &quot;start_char&quot;: 0,
+          &quot;end_char&quot;: 175,
+          &quot;span_hash&quot;: &quot;sha256:01a888bbf819f68d&quot;,
+          &quot;score&quot;: 1.0,
+          &quot;matched_terms&quot;: [
+            &quot;ollama&quot;,
+            &quot;huggingface&quot;,
+            &quot;rag&quot;,
+            &quot;engine&quot;,
+            &quot;repository&quot;,
+            &quot;contains&quot;,
+            &quot;chatbot&quot;,
+            &quot;implementation&quot;,
+            &quot;leveraging&quot;,
+            &quot;large&quot;,
+            &quot;language&quot;,
+            &quot;models&quot;,
+            &quot;llms&quot;,
+            &quot;retrieval&quot;,
+            &quot;augmented&quot;,
+            &quot;question&quot;,
+            &quot;answering&quot;,
+            &quot;qa&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;ollama_hf_rag_engine:README.md:2&quot;,
+          &quot;text&quot;: &quot;- **Retrieval Augmented Generation (RAG)**: Combine retrieved context with a question-answering template to enhance LLM outputs.&quot;,
+          &quot;start_char&quot;: 506,
+          &quot;end_char&quot;: 634,
+          &quot;span_hash&quot;: &quot;sha256:8331292689e8769e&quot;,
+          &quot;score&quot;: 0.313,
+          &quot;matched_terms&quot;: [
+            &quot;rag&quot;,
+            &quot;llms&quot;,
+            &quot;retrieval&quot;,
+            &quot;augmented&quot;,
+            &quot;question&quot;,
+            &quot;answering&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;ollama_hf_rag_engine:README.md:2&quot;,
+          &quot;text&quot;: &quot;- **LLM QA**: Retrieve relevant context and answer user queries using the `ChatOllama` LLM.&quot;,
+          &quot;start_char&quot;: 414,
+          &quot;end_char&quot;: 505,
+          &quot;span_hash&quot;: &quot;sha256:d6dc2cf8a8292ef2&quot;,
+          &quot;score&quot;: 0.156,
+          &quot;matched_terms&quot;: [
+            &quot;llms&quot;,
+            &quot;answering&quot;,
+            &quot;qa&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;ollama_hf_rag_engine:README.md:2&quot;,
+          &quot;text&quot;: &quot;- **Embeddings**: Generate text embeddings using Ollama&#x27;s embedding model.&quot;,
+          &quot;start_char&quot;: 273,
+          &quot;end_char&quot;: 347,
+          &quot;span_hash&quot;: &quot;sha256:fd9af60dacdea655&quot;,
+          &quot;score&quot;: 0.106,
+          &quot;matched_terms&quot;: [
+            &quot;ollama&quot;,
+            &quot;models&quot;
+          ]
+        }
+      ],
+      &quot;matched_terms&quot;: [
+        &quot;ollama&quot;,
+        &quot;huggingface&quot;,
+        &quot;rag&quot;,
+        &quot;engine&quot;,
+        &quot;repository&quot;,
+        &quot;contains&quot;,
+        &quot;chatbot&quot;,
+        &quot;implementation&quot;,
+        &quot;leveraging&quot;,
+        &quot;large&quot;,
+        &quot;language&quot;,
+        &quot;models&quot;,
+        &quot;llms&quot;,
+        &quot;retrieval&quot;,
+        &quot;augmented&quot;,
+        &quot;question&quot;,
+        &quot;answering&quot;,
+        &quot;qa&quot;
+      ],
+      &quot;required_facts&quot;: [
+        &quot;# Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA)&quot;
+      ],
+      &quot;matched_facts&quot;: [
+        &quot;# Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA)&quot;
+      ],
+      &quot;missing_facts&quot;: [],
+      &quot;conflicting_facts&quot;: [],
+      &quot;required_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;# Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA)&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        }
+      ],
+      &quot;matched_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;# Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA)&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        }
+      ],
+      &quot;missing_fact_details&quot;: [],
+      &quot;conflicting_fact_details&quot;: [],
+      &quot;reason&quot;: &quot;The claim is supported by the retrieved evidence because all required facts were matched.&quot;,
+      &quot;citation_status&quot;: &quot;claim_has_no_citation&quot;,
+      &quot;citation_source_id&quot;: null,
+      &quot;root_cause&quot;: {
+        &quot;label&quot;: &quot;no_failure_detected&quot;,
+        &quot;reason&quot;: &quot;The claim is supported by retrieved evidence and no citation failure was detected.&quot;,
+        &quot;missing_fact&quot;: null,
+        &quot;closest_context_id&quot;: &quot;ollama_hf_rag_engine:README.md:1&quot;,
+        &quot;closest_evidence&quot;: &quot;# Ollama and HuggingFace RAG Engine\n\nThis repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA).&quot;,
+        &quot;suggested_fix&quot;: &quot;No fix needed for this claim.&quot;
+      }
+    },
+    {
+      &quot;claim_id&quot;: &quot;claim_2&quot;,
+      &quot;claim&quot;: &quot;= load_txts_from_directory(txt_directory) # Chunk the documents chunks = chunk_documents(texts) # Create embeddings and vector store embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;, base_url=\&quot;http://localhost:11434\&quot;) embedding_dimensions = len(embeddings.embed_query(\&quot;test query\&quot;)) # Determine embedding dimensions vector_store = create_vector_store(embedding_function=embeddings, dimensions=embedding_dimensions) # Convert chunks into Document objects and add to vector store documents = [Document(page_content=chunk) for chunk in chunks] document_ids = vector_store.add_documents(documents=documents).&quot;,
+      &quot;verdict&quot;: &quot;supported&quot;,
+      &quot;confidence&quot;: 1.0,
+      &quot;best_context_id&quot;: &quot;ollama_hf_rag_engine:main.py:6&quot;,
+      &quot;best_context_text&quot;: &quot;= load_txts_from_directory(txt_directory)\n\n# Chunk the documents\n    chunks = chunk_documents(texts)\n\n# Create embeddings and vector store\n    embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;, base_url=\&quot;http://localhost:11434\&quot;)\n    embedding_dimensions = len(embeddings.embed_query(\&quot;test query\&quot;))  # Determine embedding dimensions\n    vector_store = create_vector_store(embedding_function=embeddings, dimensions=embedding_dimensions)\n\n# Convert chunks into Document objects and add to vector store\n    documents = [Document(page_content=chunk) for chunk in chunks]\n    document_ids = vector_store.add_documents(documents=documents)&quot;,
+      &quot;best_score&quot;: 1.0,
+      &quot;evidence&quot;: &quot;= load_txts_from_directory(txt_directory)\n\n# Chunk the documents\n    chunks = chunk_documents(texts)\n\n# Create embeddings and vector store\n    embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;, base_url=\&quot;http://localhost:11434\&quot;)\n    embedding_dimensions = len(embeddings.embed_query(\&quot;test query\&quot;))  # Determine embedding dimensions\n    vector_store = create_vector_store(embedding_function=embeddings, dimensions=embedding_dimensions)\n\n# Convert chunks into Document objects and add to vector store\n    documents = [Document(page_content=chunk) for chunk in chunks]\n    document_ids = vector_store.add_documents(documents=documents)&quot;,
+      &quot;evidence_span&quot;: {
+        &quot;context_id&quot;: &quot;ollama_hf_rag_engine:main.py:6&quot;,
+        &quot;text&quot;: &quot;= load_txts_from_directory(txt_directory)\n\n# Chunk the documents\n    chunks = chunk_documents(texts)\n\n# Create embeddings and vector store\n    embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;, base_url=\&quot;http://localhost:11434\&quot;)\n    embedding_dimensions = len(embeddings.embed_query(\&quot;test query\&quot;))  # Determine embedding dimensions\n    vector_store = create_vector_store(embedding_function=embeddings, dimensions=embedding_dimensions)\n\n# Convert chunks into Document objects and add to vector store\n    documents = [Document(page_content=chunk) for chunk in chunks]\n    document_ids = vector_store.add_documents(documents=documents)&quot;,
+        &quot;start_char&quot;: 0,
+        &quot;end_char&quot;: 637,
+        &quot;span_hash&quot;: &quot;sha256:dfa80934fae16bf6&quot;
+      },
+      &quot;supporting_spans&quot;: [
+        {
+          &quot;context_id&quot;: &quot;ollama_hf_rag_engine:main.py:6&quot;,
+          &quot;text&quot;: &quot;= load_txts_from_directory(txt_directory)\n\n# Chunk the documents\n    chunks = chunk_documents(texts)\n\n# Create embeddings and vector store\n    embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;, base_url=\&quot;http://localhost:11434\&quot;)\n    embedding_dimensions = len(embeddings.embed_query(\&quot;test query\&quot;))  # Determine embedding dimensions\n    vector_store = create_vector_store(embedding_function=embeddings, dimensions=embedding_dimensions)\n\n# Convert chunks into Document objects and add to vector store\n    documents = [Document(page_content=chunk) for chunk in chunks]\n    document_ids = vector_store.add_documents(documents=documents)&quot;,
+          &quot;start_char&quot;: 0,
+          &quot;end_char&quot;: 637,
+          &quot;span_hash&quot;: &quot;sha256:dfa80934fae16bf6&quot;,
+          &quot;score&quot;: 1.0,
+          &quot;matched_terms&quot;: [
+            &quot;load&quot;,
+            &quot;txts&quot;,
+            &quot;directory&quot;,
+            &quot;txt&quot;,
+            &quot;chunk&quot;,
+            &quot;documents&quot;,
+            &quot;chunks&quot;,
+            &quot;texts&quot;,
+            &quot;create&quot;,
+            &quot;embeddings&quot;,
+            &quot;vector&quot;,
+            &quot;store&quot;,
+            &quot;ollamaembeddings&quot;,
+            &quot;model&quot;,
+            &quot;nomic&quot;,
+            &quot;embed&quot;,
+            &quot;text&quot;,
+            &quot;base&quot;,
+            &quot;url&quot;,
+            &quot;http&quot;,
+            &quot;localhost&quot;,
+            &quot;11434&quot;,
+            &quot;embedding&quot;,
+            &quot;dimensions&quot;,
+            &quot;len&quot;,
+            &quot;query&quot;,
+            &quot;test&quot;,
+            &quot;determine&quot;,
+            &quot;function&quot;,
+            &quot;convert&quot;,
+            &quot;document&quot;,
+            &quot;objects&quot;,
+            &quot;add&quot;,
+            &quot;page&quot;,
+            &quot;content&quot;,
+            &quot;ids&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;ollama_hf_rag_engine:README.md:1&quot;,
+          &quot;text&quot;: &quot;The system integrates document chunking, embedding generation, and FAISS-based vector search to create a high-performance, context-aware chatbot.&quot;,
+          &quot;start_char&quot;: 176,
+          &quot;end_char&quot;: 321,
+          &quot;span_hash&quot;: &quot;sha256:04c1097cfa82b9eb&quot;,
+          &quot;score&quot;: 0.143,
+          &quot;matched_terms&quot;: [
+            &quot;chunk&quot;,
+            &quot;chunks&quot;,
+            &quot;create&quot;,
+            &quot;vector&quot;,
+            &quot;embedding&quot;,
+            &quot;document&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;ollama_hf_rag_engine:README.md:2&quot;,
+          &quot;text&quot;: &quot;- **Embeddings**: Generate text embeddings using Ollama&#x27;s embedding model.&quot;,
+          &quot;start_char&quot;: 273,
+          &quot;end_char&quot;: 347,
+          &quot;span_hash&quot;: &quot;sha256:fd9af60dacdea655&quot;,
+          &quot;score&quot;: 0.119,
+          &quot;matched_terms&quot;: [
+            &quot;texts&quot;,
+            &quot;embeddings&quot;,
+            &quot;model&quot;,
+            &quot;text&quot;,
+            &quot;embedding&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;ollama_hf_rag_engine:README.md:2&quot;,
+          &quot;text&quot;: &quot;- **Chunking**: Split long documents into manageable pieces using `RecursiveCharacterTextSplitter`.&quot;,
+          &quot;start_char&quot;: 173,
+          &quot;end_char&quot;: 272,
+          &quot;span_hash&quot;: &quot;sha256:4221576a3e04a1bb&quot;,
+          &quot;score&quot;: 0.059,
+          &quot;matched_terms&quot;: [
+            &quot;chunk&quot;,
+            &quot;documents&quot;,
+            &quot;chunks&quot;
+          ]
+        }
+      ],
+      &quot;matched_terms&quot;: [
+        &quot;load&quot;,
+        &quot;txts&quot;,
+        &quot;directory&quot;,
+        &quot;txt&quot;,
+        &quot;chunk&quot;,
+        &quot;documents&quot;,
+        &quot;chunks&quot;,
+        &quot;texts&quot;,
+        &quot;create&quot;,
+        &quot;embeddings&quot;,
+        &quot;vector&quot;,
+        &quot;store&quot;,
+        &quot;ollamaembeddings&quot;,
+        &quot;model&quot;,
+        &quot;nomic&quot;,
+        &quot;embed&quot;,
+        &quot;text&quot;,
+        &quot;base&quot;,
+        &quot;url&quot;,
+        &quot;http&quot;,
+        &quot;localhost&quot;,
+        &quot;11434&quot;,
+        &quot;embedding&quot;,
+        &quot;dimensions&quot;,
+        &quot;len&quot;,
+        &quot;query&quot;,
+        &quot;test&quot;,
+        &quot;determine&quot;,
+        &quot;function&quot;,
+        &quot;convert&quot;,
+        &quot;document&quot;,
+        &quot;objects&quot;,
+        &quot;add&quot;,
+        &quot;page&quot;,
+        &quot;content&quot;,
+        &quot;ids&quot;
+      ],
+      &quot;required_facts&quot;: [
+        &quot;create embeddings&quot;,
+        &quot;create vector store embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;&quot;,
+        &quot;create base_url=\&quot;http://localhost:11434\&quot;) embedding_dimensions = len(embeddings.embed_query(\&quot;test query\&quot;)) # Determine embedding dimensions vector_store = create_vector_store(embedding_function=embeddings&quot;,
+        &quot;create dimensions=embedding_dimensions) # Convert chunks into Document objects&quot;,
+        &quot;create add to vector store documents = [Document(page_content=chunk) for chunk in chunks] document_ids = vector_store.add_documents(documents=documents)&quot;
+      ],
+      &quot;matched_facts&quot;: [
+        &quot;create embeddings&quot;,
+        &quot;create vector store embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;&quot;,
+        &quot;create base_url=\&quot;http://localhost:11434\&quot;) embedding_dimensions = len(embeddings.embed_query(\&quot;test query\&quot;)) # Determine embedding dimensions vector_store = create_vector_store(embedding_function=embeddings&quot;,
+        &quot;create dimensions=embedding_dimensions) # Convert chunks into Document objects&quot;,
+        &quot;create add to vector store documents = [Document(page_content=chunk) for chunk in chunks] document_ids = vector_store.add_documents(documents=documents)&quot;
+      ],
+      &quot;missing_facts&quot;: [],
+      &quot;conflicting_facts&quot;: [],
+      &quot;required_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;create embeddings&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        },
+        {
+          &quot;text&quot;: &quot;create vector store embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        },
+        {
+          &quot;text&quot;: &quot;create base_url=\&quot;http://localhost:11434\&quot;) embedding_dimensions = len(embeddings.embed_query(\&quot;test query\&quot;)) # Determine embedding dimensions vector_store = create_vector_store(embedding_function=embeddings&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        },
+        {
+          &quot;text&quot;: &quot;create dimensions=embedding_dimensions) # Convert chunks into Document objects&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        },
+        {
+          &quot;text&quot;: &quot;create add to vector store documents = [Document(page_content=chunk) for chunk in chunks] document_ids = vector_store.add_documents(documents=documents)&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        }
+      ],
+      &quot;matched_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;create embeddings&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        },
+        {
+          &quot;text&quot;: &quot;create vector store embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        },
+        {
+          &quot;text&quot;: &quot;create base_url=\&quot;http://localhost:11434\&quot;) embedding_dimensions = len(embeddings.embed_query(\&quot;test query\&quot;)) # Determine embedding dimensions vector_store = create_vector_store(embedding_function=embeddings&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        },
+        {
+          &quot;text&quot;: &quot;create dimensions=embedding_dimensions) # Convert chunks into Document objects&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        },
+        {
+          &quot;text&quot;: &quot;create add to vector store documents = [Document(page_content=chunk) for chunk in chunks] document_ids = vector_store.add_documents(documents=documents)&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        }
+      ],
+      &quot;missing_fact_details&quot;: [],
+      &quot;conflicting_fact_details&quot;: [],
+      &quot;reason&quot;: &quot;The claim is supported by the retrieved evidence because all required facts were matched.&quot;,
+      &quot;citation_status&quot;: &quot;claim_has_no_citation&quot;,
+      &quot;citation_source_id&quot;: null,
+      &quot;root_cause&quot;: {
+        &quot;label&quot;: &quot;no_failure_detected&quot;,
+        &quot;reason&quot;: &quot;The claim is supported by retrieved evidence and no citation failure was detected.&quot;,
+        &quot;missing_fact&quot;: null,
+        &quot;closest_context_id&quot;: &quot;ollama_hf_rag_engine:main.py:6&quot;,
+        &quot;closest_evidence&quot;: &quot;= load_txts_from_directory(txt_directory)\n\n# Chunk the documents\n    chunks = chunk_documents(texts)\n\n# Create embeddings and vector store\n    embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;, base_url=\&quot;http://localhost:11434\&quot;)\n    embedding_dimensions = len(embeddings.embed_query(\&quot;test query\&quot;))  # Determine embedding dimensions\n    vector_store = create_vector_store(embedding_function=embeddings, dimensions=embedding_dimensions)\n\n# Convert chunks into Document objects and add to vector store\n    documents = [Document(page_content=chunk) for chunk in chunks]\n    document_ids = vector_store.add_documents(documents=documents)&quot;,
+        &quot;suggested_fix&quot;: &quot;No fix needed for this claim.&quot;
+      }
+    }
+  ]
+}</pre>
+    </section>
+  </main>
+</body>
+</html>

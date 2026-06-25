@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ContextTrace Verification Report</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f8fa;
+      --panel: #ffffff;
+      --subtle: #fbfcfe;
+      --text: #202832;
+      --muted: #657286;
+      --line: #d9e0ea;
+      --ok: #176f44;
+      --warn: #946200;
+      --bad: #b42318;
+      --accent: #2458d3;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    main { max-width: 1160px; margin: 0 auto; padding: 32px 20px 56px; }
+    header { border-bottom: 1px solid var(--line); margin-bottom: 22px; padding-bottom: 18px; }
+    h1, h2, h3 { margin: 0; }
+    h1 { font-size: 30px; }
+    h2 { font-size: 18px; margin-bottom: 12px; }
+    h3 { font-size: 15px; margin-bottom: 8px; }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin: 16px 0;
+      padding: 18px;
+    }
+    .summary {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    .card, .item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--subtle);
+      padding: 12px;
+    }
+    .item + .item { margin-top: 10px; }
+    .label, .item-meta {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .value { margin-top: 4px; font-size: 18px; overflow-wrap: anywhere; }
+    .muted { color: var(--muted); }
+    .answer, .item p { white-space: pre-wrap; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { border-bottom: 1px solid var(--line); padding: 10px; text-align: left; vertical-align: top; }
+    th { color: var(--muted); font-size: 12px; text-transform: uppercase; }
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #eef2f7;
+      padding: 3px 8px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .verdict-supported, .citation-citation_ok { color: var(--ok); background: #e9f7ef; }
+    .verdict-unverifiable, .verdict-partially_supported, .citation-claim_has_no_citation { color: var(--warn); background: #fff7df; }
+    .verdict-unsupported, .verdict-contradicted,
+    .citation-cited_source_missing,
+    .citation-claim_supported_by_different_source,
+    .citation-cited_source_does_not_support_claim { color: var(--bad); background: #fdeceb; }
+    pre {
+      margin: 0;
+      overflow: auto;
+      background: #101828;
+      color: #f8fafc;
+      border-radius: 8px;
+      padding: 14px;
+      font-size: 13px;
+    }
+    mark {
+      background: #fff0a6;
+      color: inherit;
+      border-radius: 3px;
+      padding: 0 2px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>ContextTrace Verification Report</h1>
+      <p class="muted">Local claim-level evidence verification for a portable RAG trace.</p>
+    </header>
+
+    <section>
+      <h2>Reliability Summary</h2>
+      <div class="summary">
+        <div class="card">
+          <div class="label">Failure Type</div>
+          <div class="value">no_failure_detected</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Total Claims</div>
+          <div class="value">1</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Supported</div>
+          <div class="value">1</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Partially Supported</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Unsupported</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Unverifiable</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Contradicted</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Support Rate</div>
+          <div class="value">1.0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Unsupported Claim Rate</div>
+          <div class="value">0.0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Citation Mismatches</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Should Abstain</div>
+          <div class="value">False</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Primary Root Cause</div>
+          <div class="value">no_failure_detected</div>
+        </div>
+        </div>
+    </section>
+
+    <section>
+      <h2>Suggested Fix</h2>
+      <p><strong>no_failure_detected</strong></p>
+      <p>No fix is needed for this trace based on the local verifier.</p>
+    </section>
+
+    <section>
+      <h2>Query</h2>
+      <p>What is the refund policy?</p>
+      <h2>Answer</h2>
+      <p class="answer">Refunds are available within 30 days.</p>
+    </section>
+
+    <section>
+      <h2>Claim Support Overview</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Claim</th>
+            <th>Verdict</th>
+            <th>Confidence</th>
+            <th>Best Context</th>
+            <th>Citation</th>
+            <th>Root Cause</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td>claim_1</td>
+              <td>Refunds are available within 30 days.</td>
+              <td><span class="badge verdict-supported">supported</span></td>
+              <td>1.0</td>
+              <td>refund_policy</td>
+              <td><span class="badge citation-citation_ok">citation_ok</span></td>
+              <td>no_failure_detected</td>
+            </tr>
+            </tbody>
+      </table>
+      <div>
+            <article class="item">
+              <div class="item-meta">claim_1 | supported | score 1.0</div>
+              <h3>Refunds are available within 30 days.</h3>
+              <p class="muted">Evidence span: refund_policy chars 0-37 sha256:b544b00ff314a989</p>
+              <p><strong>Supporting spans:</strong> <span>refund_policy sha256:b544b00ff314a989 score 1.0</span></p>
+              <p><mark>Refunds</mark> are <mark>available</mark> within <mark>30</mark> <mark>days</mark>.</p>
+              <p class="muted">Matched terms: refunds, available, 30, days</p>
+              <p><strong>Matched facts:</strong> <span>Refunds are available within 30 days (numeric)</span>, <span>30 days (numeric)</span></p>
+              <p><strong>Missing facts:</strong> <span class="muted">none</span></p>
+              <p><strong>Root cause:</strong> no_failure_detected</p>
+              <p>The claim is supported by the retrieved evidence because all required facts were matched.</p>
+            </article>
+            </div>
+    </section>
+
+    <section>
+      <h2>Unsupported Claims</h2>
+      <p class="muted">No partial, unsupported, contradicted, or unverifiable claims detected.</p>
+    </section>
+
+    <section>
+      <h2>Root Cause Diagnosis</h2>
+      <p class="muted">No root-cause failure was detected.</p>
+    </section>
+
+    <section>
+      <h2>Citation Mismatches</h2>
+      <p class="muted">All supplied citations support their matched claims.</p>
+    </section>
+
+    <section>
+      <h2>Retrieved Contexts</h2>
+      
+        <article class="item">
+          <div class="item-meta">refund_policy | {&quot;source&quot;: &quot;refund_policy.md&quot;}</div>
+          <p>Refunds are available within 30 days.</p>
+        </article>
+        
+    </section>
+
+    <section>
+      <h2>Why This Failed</h2>
+      <ul><li>No claim-level evidence failure was detected by the local verifier.</li></ul>
+    </section>
+
+    <section>
+      <h2>Raw JSON Summary</h2>
+      <pre>{
+  &quot;summary&quot;: {
+    &quot;total_claims&quot;: 1,
+    &quot;supported&quot;: 1,
+    &quot;partially_supported&quot;: 0,
+    &quot;unsupported&quot;: 0,
+    &quot;contradicted&quot;: 0,
+    &quot;unverifiable&quot;: 0,
+    &quot;support_rate&quot;: 1.0,
+    &quot;unsupported_claim_rate&quot;: 0.0,
+    &quot;citation_mismatches&quot;: 0,
+    &quot;should_abstain&quot;: false,
+    &quot;root_causes&quot;: {
+      &quot;no_failure_detected&quot;: 1
+    },
+    &quot;primary_root_cause&quot;: &quot;no_failure_detected&quot;,
+    &quot;failure_type&quot;: &quot;no_failure_detected&quot;,
+    &quot;failure_types&quot;: [
+      &quot;no_failure_detected&quot;
+    ],
+    &quot;suggested_fix&quot;: &quot;No fix is needed for this trace based on the local verifier.&quot;,
+    &quot;mode&quot;: &quot;lexical&quot;
+  },
+  &quot;abstention&quot;: {
+    &quot;should_abstain&quot;: false,
+    &quot;reason&quot;: &quot;Most generated claims are supported by retrieved evidence.&quot;
+  },
+  &quot;diagnostics&quot;: {
+    &quot;failure_type&quot;: &quot;no_failure_detected&quot;,
+    &quot;failure_types&quot;: [
+      &quot;no_failure_detected&quot;
+    ],
+    &quot;suggested_fix&quot;: &quot;No fix is needed for this trace based on the local verifier.&quot;
+  },
+  &quot;claims&quot;: [
+    {
+      &quot;claim_id&quot;: &quot;claim_1&quot;,
+      &quot;claim&quot;: &quot;Refunds are available within 30 days.&quot;,
+      &quot;verdict&quot;: &quot;supported&quot;,
+      &quot;confidence&quot;: 1.0,
+      &quot;best_context_id&quot;: &quot;refund_policy&quot;,
+      &quot;best_context_text&quot;: &quot;Refunds are available within 30 days.&quot;,
+      &quot;best_score&quot;: 1.0,
+      &quot;evidence&quot;: &quot;Refunds are available within 30 days.&quot;,
+      &quot;evidence_span&quot;: {
+        &quot;context_id&quot;: &quot;refund_policy&quot;,
+        &quot;text&quot;: &quot;Refunds are available within 30 days.&quot;,
+        &quot;start_char&quot;: 0,
+        &quot;end_char&quot;: 37,
+        &quot;span_hash&quot;: &quot;sha256:b544b00ff314a989&quot;
+      },
+      &quot;supporting_spans&quot;: [
+        {
+          &quot;context_id&quot;: &quot;refund_policy&quot;,
+          &quot;text&quot;: &quot;Refunds are available within 30 days.&quot;,
+          &quot;start_char&quot;: 0,
+          &quot;end_char&quot;: 37,
+          &quot;span_hash&quot;: &quot;sha256:b544b00ff314a989&quot;,
+          &quot;score&quot;: 1.0,
+          &quot;matched_terms&quot;: [
+            &quot;refunds&quot;,
+            &quot;available&quot;,
+            &quot;30&quot;,
+            &quot;days&quot;
+          ]
+        }
+      ],
+      &quot;matched_terms&quot;: [
+        &quot;refunds&quot;,
+        &quot;available&quot;,
+        &quot;30&quot;,
+        &quot;days&quot;
+      ],
+      &quot;required_facts&quot;: [
+        &quot;Refunds are available within 30 days&quot;,
+        &quot;30 days&quot;
+      ],
+      &quot;matched_facts&quot;: [
+        &quot;Refunds are available within 30 days&quot;,
+        &quot;30 days&quot;
+      ],
+      &quot;missing_facts&quot;: [],
+      &quot;conflicting_facts&quot;: [],
+      &quot;required_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;Refunds are available within 30 days&quot;,
+          &quot;type&quot;: &quot;numeric&quot;
+        },
+        {
+          &quot;text&quot;: &quot;30 days&quot;,
+          &quot;type&quot;: &quot;numeric&quot;
+        }
+      ],
+      &quot;matched_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;Refunds are available within 30 days&quot;,
+          &quot;type&quot;: &quot;numeric&quot;
+        },
+        {
+          &quot;text&quot;: &quot;30 days&quot;,
+          &quot;type&quot;: &quot;numeric&quot;
+        }
+      ],
+      &quot;missing_fact_details&quot;: [],
+      &quot;conflicting_fact_details&quot;: [],
+      &quot;reason&quot;: &quot;The claim is supported by the retrieved evidence because all required facts were matched.&quot;,
+      &quot;citation_status&quot;: &quot;citation_ok&quot;,
+      &quot;citation_source_id&quot;: &quot;refund_policy&quot;,
+      &quot;root_cause&quot;: {
+        &quot;label&quot;: &quot;no_failure_detected&quot;,
+        &quot;reason&quot;: &quot;The claim is supported by retrieved evidence and no citation failure was detected.&quot;,
+        &quot;missing_fact&quot;: null,
+        &quot;closest_context_id&quot;: &quot;refund_policy&quot;,
+        &quot;closest_evidence&quot;: &quot;Refunds are available within 30 days.&quot;,
+        &quot;suggested_fix&quot;: &quot;No fix needed for this claim.&quot;
+      }
+    }
+  ]
+}</pre>
+    </section>
+  </main>
+</body>
+</html>

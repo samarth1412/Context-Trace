@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ContextTrace Verification Report</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f8fa;
+      --panel: #ffffff;
+      --subtle: #fbfcfe;
+      --text: #202832;
+      --muted: #657286;
+      --line: #d9e0ea;
+      --ok: #176f44;
+      --warn: #946200;
+      --bad: #b42318;
+      --accent: #2458d3;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    main { max-width: 1160px; margin: 0 auto; padding: 32px 20px 56px; }
+    header { border-bottom: 1px solid var(--line); margin-bottom: 22px; padding-bottom: 18px; }
+    h1, h2, h3 { margin: 0; }
+    h1 { font-size: 30px; }
+    h2 { font-size: 18px; margin-bottom: 12px; }
+    h3 { font-size: 15px; margin-bottom: 8px; }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin: 16px 0;
+      padding: 18px;
+    }
+    .summary {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    .card, .item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--subtle);
+      padding: 12px;
+    }
+    .item + .item { margin-top: 10px; }
+    .label, .item-meta {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .value { margin-top: 4px; font-size: 18px; overflow-wrap: anywhere; }
+    .muted { color: var(--muted); }
+    .answer, .item p { white-space: pre-wrap; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { border-bottom: 1px solid var(--line); padding: 10px; text-align: left; vertical-align: top; }
+    th { color: var(--muted); font-size: 12px; text-transform: uppercase; }
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #eef2f7;
+      padding: 3px 8px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .verdict-supported, .citation-citation_ok { color: var(--ok); background: #e9f7ef; }
+    .verdict-unverifiable, .verdict-partially_supported, .citation-claim_has_no_citation { color: var(--warn); background: #fff7df; }
+    .verdict-unsupported, .verdict-contradicted,
+    .citation-cited_source_missing,
+    .citation-claim_supported_by_different_source,
+    .citation-cited_source_does_not_support_claim { color: var(--bad); background: #fdeceb; }
+    pre {
+      margin: 0;
+      overflow: auto;
+      background: #101828;
+      color: #f8fafc;
+      border-radius: 8px;
+      padding: 14px;
+      font-size: 13px;
+    }
+    mark {
+      background: #fff0a6;
+      color: inherit;
+      border-radius: 3px;
+      padding: 0 2px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>ContextTrace Verification Report</h1>
+      <p class="muted">Local claim-level evidence verification for a portable RAG trace.</p>
+    </header>
+
+    <section>
+      <h2>Reliability Summary</h2>
+      <div class="summary">
+        <div class="card">
+          <div class="label">Failure Type</div>
+          <div class="value">no_failure_detected</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Total Claims</div>
+          <div class="value">3</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Supported</div>
+          <div class="value">3</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Partially Supported</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Unsupported</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Unverifiable</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Contradicted</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Support Rate</div>
+          <div class="value">1.0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Unsupported Claim Rate</div>
+          <div class="value">0.0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Citation Mismatches</div>
+          <div class="value">3</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Should Abstain</div>
+          <div class="value">False</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Primary Root Cause</div>
+          <div class="value">no_failure_detected</div>
+        </div>
+        </div>
+    </section>
+
+    <section>
+      <h2>Suggested Fix</h2>
+      <p><strong>no_failure_detected</strong></p>
+      <p>No fix is needed for this trace based on the local verifier.</p>
+    </section>
+
+    <section>
+      <h2>Query</h2>
+      <p>What should the assistant do if it does not know the answer?</p>
+      <h2>Answer</h2>
+      <p class="answer">If you don&#x27;t know the answer, just say that you don&#x27;t know. Answer in bullet points. Use the following pieces of retrieved context to answer the question.</p>
+    </section>
+
+    <section>
+      <h2>Claim Support Overview</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Claim</th>
+            <th>Verdict</th>
+            <th>Confidence</th>
+            <th>Best Context</th>
+            <th>Citation</th>
+            <th>Root Cause</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td>claim_1</td>
+              <td>If you don&#x27;t know the answer, just say that you don&#x27;t know.</td>
+              <td><span class="badge verdict-supported">supported</span></td>
+              <td>1.0</td>
+              <td>ollama_hf_rag_engine:main.py:7</td>
+              <td><span class="badge citation-claim_has_no_citation">claim_has_no_citation</span></td>
+              <td>no_failure_detected</td>
+            </tr>
+            
+
+            <tr>
+              <td>claim_2</td>
+              <td>Answer in bullet points.</td>
+              <td><span class="badge verdict-supported">supported</span></td>
+              <td>1.0</td>
+              <td>ollama_hf_rag_engine:main.py:7</td>
+              <td><span class="badge citation-claim_has_no_citation">claim_has_no_citation</span></td>
+              <td>no_failure_detected</td>
+            </tr>
+            
+
+            <tr>
+              <td>claim_3</td>
+              <td>Use the following pieces of retrieved context to answer the question.</td>
+              <td><span class="badge verdict-supported">supported</span></td>
+              <td>1.0</td>
+              <td>ollama_hf_rag_engine:main.py:7</td>
+              <td><span class="badge citation-claim_has_no_citation">claim_has_no_citation</span></td>
+              <td>no_failure_detected</td>
+            </tr>
+            </tbody>
+      </table>
+      <div>
+            <article class="item">
+              <div class="item-meta">claim_1 | supported | score 1.0</div>
+              <h3>If you don&#x27;t know the answer, just say that you don&#x27;t know.</h3>
+              <p class="muted">Evidence span: ollama_hf_rag_engine:main.py:7 chars 326-385 sha256:1835667460537264</p>
+              <p><strong>Supporting spans:</strong> <span>ollama_hf_rag_engine:main.py:7 sha256:1835667460537264 score 1.0</span>, <span>ollama_hf_rag_engine:main.py:7 sha256:e8eb684f09b60063 score 0.187</span>, <span>ollama_hf_rag_engine:main.py:7 sha256:0b52cbfb484764cd score 0.178</span>, <span>ollama_hf_rag_engine:main.py:7 sha256:981c8cbbd42237de score 0.178</span></p>
+              <p>If you <mark>don</mark>&#x27;t <mark>know</mark> the <mark>answer</mark>, <mark>just</mark> <mark>say</mark> that you <mark>don</mark>&#x27;t <mark>know</mark>.</p>
+              <p class="muted">Matched terms: don, know, answer, just, say</p>
+              <p><strong>Matched facts:</strong> <span>If you don&#x27;t know the answer, just say that you don&#x27;t know (keyword)</span></p>
+              <p><strong>Missing facts:</strong> <span class="muted">none</span></p>
+              <p><strong>Root cause:</strong> no_failure_detected</p>
+              <p>The claim is supported by the retrieved evidence because all required facts were matched.</p>
+            </article>
+            
+
+            <article class="item">
+              <div class="item-meta">claim_2 | supported | score 1.0</div>
+              <h3>Answer in bullet points.</h3>
+              <p class="muted">Evidence span: ollama_hf_rag_engine:main.py:7 chars 394-418 sha256:e8eb684f09b60063</p>
+              <p><strong>Supporting spans:</strong> <span>ollama_hf_rag_engine:main.py:7 sha256:e8eb684f09b60063 score 1.0</span>, <span>ollama_hf_rag_engine:main.py:7 sha256:1835667460537264 score 0.291</span>, <span>ollama_hf_rag_engine:main.py:7 sha256:0b52cbfb484764cd score 0.288</span>, <span>ollama_hf_rag_engine:main.py:7 sha256:981c8cbbd42237de score 0.288</span></p>
+              <p><mark>Answer</mark> in <mark>bullet</mark> <mark>points</mark>.</p>
+              <p class="muted">Matched terms: answer, bullet, points</p>
+              <p><strong>Matched facts:</strong> <span>Answer in bullet points (keyword)</span></p>
+              <p><strong>Missing facts:</strong> <span class="muted">none</span></p>
+              <p><strong>Root cause:</strong> no_failure_detected</p>
+              <p>The claim is supported by the retrieved evidence because all required facts were matched.</p>
+            </article>
+            
+
+            <article class="item">
+              <div class="item-meta">claim_3 | supported | score 1.0</div>
+              <h3>Use the following pieces of retrieved context to answer the question.</h3>
+              <p class="muted">Evidence span: ollama_hf_rag_engine:main.py:7 chars 248-317 sha256:dc1efd43974f191a</p>
+              <p><strong>Supporting spans:</strong> <span>ollama_hf_rag_engine:main.py:7 sha256:dc1efd43974f191a score 1.0</span>, <span>ollama_hf_rag_engine:README.md:2 sha256:8331292689e8769e score 0.501</span>, <span>ollama_hf_rag_engine:main.py:7 sha256:0b52cbfb484764cd score 0.4</span>, <span>ollama_hf_rag_engine:main.py:7 sha256:981c8cbbd42237de score 0.4</span></p>
+              <p><mark>Use</mark> the <mark>following</mark> <mark>pieces</mark> of <mark>retrieved</mark> <mark>context</mark> to <mark>answer</mark> the <mark>question</mark>.</p>
+              <p class="muted">Matched terms: use, following, pieces, retrieved, context, answer, question</p>
+              <p><strong>Matched facts:</strong> <span>Use the following pieces of retrieved context to answer the question (predicate)</span></p>
+              <p><strong>Missing facts:</strong> <span class="muted">none</span></p>
+              <p><strong>Root cause:</strong> no_failure_detected</p>
+              <p>The claim is supported by the retrieved evidence because all required facts were matched.</p>
+            </article>
+            </div>
+    </section>
+
+    <section>
+      <h2>Unsupported Claims</h2>
+      <p class="muted">No partial, unsupported, contradicted, or unverifiable claims detected.</p>
+    </section>
+
+    <section>
+      <h2>Root Cause Diagnosis</h2>
+      <p class="muted">No root-cause failure was detected.</p>
+    </section>
+
+    <section>
+      <h2>Citation Mismatches</h2>
+      
+        <article class="item">
+          <div class="item-meta">claim_1 | cited none</div>
+          <p>If you don&#x27;t know the answer, just say that you don&#x27;t know.</p>
+          <p><strong>claim_has_no_citation</strong></p>
+          <p class="muted">Best supporting context: ollama_hf_rag_engine:main.py:7</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">claim_2 | cited none</div>
+          <p>Answer in bullet points.</p>
+          <p><strong>claim_has_no_citation</strong></p>
+          <p class="muted">Best supporting context: ollama_hf_rag_engine:main.py:7</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">claim_3 | cited none</div>
+          <p>Use the following pieces of retrieved context to answer the question.</p>
+          <p><strong>claim_has_no_citation</strong></p>
+          <p class="muted">Best supporting context: ollama_hf_rag_engine:main.py:7</p>
+        </article>
+        
+    </section>
+
+    <section>
+      <h2>Retrieved Contexts</h2>
+      
+        <article class="item">
+          <div class="item-meta">ollama_hf_rag_engine:main.py:7 | {&quot;project&quot;: &quot;taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;, &quot;repo_url&quot;: &quot;https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;, &quot;retrieval_score&quot;: 0.3089, &quot;retriever&quot;: &quot;sentence-transformers lexical-prefilter cosine&quot;, &quot;source&quot;: &quot;main.py&quot;}</div>
+          <p>ntent=chunk) for chunk in chunks]
+    document_ids = vector_store.add_documents(documents=documents)
+
+model = ChatOllama(model=&quot;mistral&quot;, base_url=&quot;http://localhost:11434&quot;)
+
+template = &quot;&quot;&quot;
+        You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question.
+        If you don&#x27;t know the answer, just say that you don&#x27;t know.
+        Answer in bullet points. Make sure your answer is relevant to the question and it is answered from the context only.
+        Question: {question}
+        Context: {context}
+        Answer:
+    &quot;&quot;&quot;
+
+prompt = ChatPromptTemplate.from_template(template)</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">ollama_hf_rag_engine:main.py:8 | {&quot;project&quot;: &quot;taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;, &quot;repo_url&quot;: &quot;https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;, &quot;retrieval_score&quot;: 0.2462, &quot;retriever&quot;: &quot;sentence-transformers lexical-prefilter cosine&quot;, &quot;source&quot;: &quot;main.py&quot;}</div>
+          <p>Context: {context}
+        Answer:
+    &quot;&quot;&quot;
+
+prompt = ChatPromptTemplate.from_template(template)
+
+while True:
+        question = input(&quot;You: &quot;)
+        if question.lower() == &quot;exit&quot;:
+            break;
+
+#results = vector_store.search(query=question, search_type=&#x27;similarity&#x27;)
+
+retriever = vector_store.as_retriever(search_type=&quot;mmr&quot;, search_kwargs = {&#x27;k&#x27;: 5, &#x27;fetch_k&#x27;: 50, &#x27;lambda_mult&#x27;: 0.5})
+
+docs = retriever.invoke(question)
+
+rag_chain = (
+            {&quot;context&quot;: retriever|format_docs, &quot;question&quot;: RunnablePassthrough()}
+            | prompt
+            | model
+            | StrOutputParser()
+        )
+
+output = rag_chain.invoke(question)
+        print(output)</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">ollama_hf_rag_engine:README.md:2 | {&quot;project&quot;: &quot;taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;, &quot;repo_url&quot;: &quot;https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;, &quot;retrieval_score&quot;: 0.2255, &quot;retriever&quot;: &quot;sentence-transformers lexical-prefilter cosine&quot;, &quot;source&quot;: &quot;README.md&quot;}</div>
+          <p>ion, and FAISS-based vector search to create a high-performance, context-aware chatbot.
+
+## Features
+
+- **Document Ingestion**: Load and process `.txt` files for retrieval.
+- **Chunking**: Split long documents into manageable pieces using `RecursiveCharacterTextSplitter`.
+- **Embeddings**: Generate text embeddings using Ollama&#x27;s embedding model.
+- **Vector Search**: Perform similarity-based search using FAISS.
+- **LLM QA**: Retrieve relevant context and answer user queries using the `ChatOllama` LLM.
+- **Retrieval Augmented Generation (RAG)**: Combine retrieved context with a question-answering template to enhance LLM outputs.
+
+## Installation
+
+### Prerequisites
+- Python 3.8+
+- Pip</p>
+        </article>
+        
+    </section>
+
+    <section>
+      <h2>Why This Failed</h2>
+      <ul><li>No claim-level evidence failure was detected by the local verifier.</li></ul>
+    </section>
+
+    <section>
+      <h2>Raw JSON Summary</h2>
+      <pre>{
+  &quot;summary&quot;: {
+    &quot;total_claims&quot;: 3,
+    &quot;supported&quot;: 3,
+    &quot;partially_supported&quot;: 0,
+    &quot;unsupported&quot;: 0,
+    &quot;contradicted&quot;: 0,
+    &quot;unverifiable&quot;: 0,
+    &quot;support_rate&quot;: 1.0,
+    &quot;unsupported_claim_rate&quot;: 0.0,
+    &quot;citation_mismatches&quot;: 3,
+    &quot;should_abstain&quot;: false,
+    &quot;root_causes&quot;: {
+      &quot;no_failure_detected&quot;: 3
+    },
+    &quot;primary_root_cause&quot;: &quot;no_failure_detected&quot;,
+    &quot;failure_type&quot;: &quot;no_failure_detected&quot;,
+    &quot;failure_types&quot;: [
+      &quot;no_failure_detected&quot;
+    ],
+    &quot;suggested_fix&quot;: &quot;No fix is needed for this trace based on the local verifier.&quot;,
+    &quot;mode&quot;: &quot;semantic&quot;
+  },
+  &quot;abstention&quot;: {
+    &quot;should_abstain&quot;: false,
+    &quot;reason&quot;: &quot;Most generated claims are supported by retrieved evidence.&quot;
+  },
+  &quot;diagnostics&quot;: {
+    &quot;failure_type&quot;: &quot;no_failure_detected&quot;,
+    &quot;failure_types&quot;: [
+      &quot;no_failure_detected&quot;
+    ],
+    &quot;suggested_fix&quot;: &quot;No fix is needed for this trace based on the local verifier.&quot;
+  },
+  &quot;claims&quot;: [
+    {
+      &quot;claim_id&quot;: &quot;claim_1&quot;,
+      &quot;claim&quot;: &quot;If you don&#x27;t know the answer, just say that you don&#x27;t know.&quot;,
+      &quot;verdict&quot;: &quot;supported&quot;,
+      &quot;confidence&quot;: 1.0,
+      &quot;best_context_id&quot;: &quot;ollama_hf_rag_engine:main.py:7&quot;,
+      &quot;best_context_text&quot;: &quot;ntent=chunk) for chunk in chunks]\n    document_ids = vector_store.add_documents(documents=documents)\n\nmodel = ChatOllama(model=\&quot;mistral\&quot;, base_url=\&quot;http://localhost:11434\&quot;)\n\ntemplate = \&quot;\&quot;\&quot;\n        You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question.\n        If you don&#x27;t know the answer, just say that you don&#x27;t know.\n        Answer in bullet points. Make sure your answer is relevant to the question and it is answered from the context only.\n        Question: {question}\n        Context: {context}\n        Answer:\n    \&quot;\&quot;\&quot;\n\nprompt = ChatPromptTemplate.from_template(template)&quot;,
+      &quot;best_score&quot;: 1.0,
+      &quot;evidence&quot;: &quot;If you don&#x27;t know the answer, just say that you don&#x27;t know.&quot;,
+      &quot;evidence_span&quot;: {
+        &quot;context_id&quot;: &quot;ollama_hf_rag_engine:main.py:7&quot;,
+        &quot;text&quot;: &quot;If you don&#x27;t know the answer, just say that you don&#x27;t know.&quot;,
+        &quot;start_char&quot;: 326,
+        &quot;end_char&quot;: 385,
+        &quot;span_hash&quot;: &quot;sha256:1835667460537264&quot;
+      },
+      &quot;supporting_spans&quot;: [
+        {
+          &quot;context_id&quot;: &quot;ollama_hf_rag_engine:main.py:7&quot;,
+          &quot;text&quot;: &quot;If you don&#x27;t know the answer, just say that you don&#x27;t know.&quot;,
+          &quot;start_char&quot;: 326,
+          &quot;end_char&quot;: 385,
+          &quot;span_hash&quot;: &quot;sha256:1835667460537264&quot;,
+          &quot;score&quot;: 1.0,
+          &quot;matched_terms&quot;: [
+            &quot;don&quot;,
+            &quot;know&quot;,
+            &quot;answer&quot;,
+            &quot;just&quot;,
+            &quot;say&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;ollama_hf_rag_engine:main.py:7&quot;,
+          &quot;text&quot;: &quot;Answer in bullet points.&quot;,
+          &quot;start_char&quot;: 394,
+          &quot;end_char&quot;: 418,
+          &quot;span_hash&quot;: &quot;sha256:e8eb684f09b60063&quot;,
+          &quot;score&quot;: 0.187,
+          &quot;matched_terms&quot;: [
+            &quot;answer&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;ollama_hf_rag_engine:main.py:7&quot;,
+          &quot;text&quot;: &quot;Make sure your answer is relevant to the question and it is answered from the context only.&quot;,
+          &quot;start_char&quot;: 419,
+          &quot;end_char&quot;: 510,
+          &quot;span_hash&quot;: &quot;sha256:0b52cbfb484764cd&quot;,
+          &quot;score&quot;: 0.178,
+          &quot;matched_terms&quot;: [
+            &quot;answer&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;ollama_hf_rag_engine:main.py:7&quot;,
+          &quot;text&quot;: &quot;Question: {question}\n        Context: {context}\n        Answer:\n    \&quot;\&quot;\&quot;\n\nprompt = ChatPromptTemplate.from_template(template)&quot;,
+          &quot;start_char&quot;: 519,
+          &quot;end_char&quot;: 643,
+          &quot;span_hash&quot;: &quot;sha256:981c8cbbd42237de&quot;,
+          &quot;score&quot;: 0.178,
+          &quot;matched_terms&quot;: [
+            &quot;answer&quot;
+          ]
+        }
+      ],
+      &quot;matched_terms&quot;: [
+        &quot;don&quot;,
+        &quot;know&quot;,
+        &quot;answer&quot;,
+        &quot;just&quot;,
+        &quot;say&quot;
+      ],
+      &quot;required_facts&quot;: [
+        &quot;If you don&#x27;t know the answer, just say that you don&#x27;t know&quot;
+      ],
+      &quot;matched_facts&quot;: [
+        &quot;If you don&#x27;t know the answer, just say that you don&#x27;t know&quot;
+      ],
+      &quot;missing_facts&quot;: [],
+      &quot;conflicting_facts&quot;: [],
+      &quot;required_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;If you don&#x27;t know the answer, just say that you don&#x27;t know&quot;,
+          &quot;type&quot;: &quot;keyword&quot;
+        }
+      ],
+      &quot;matched_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;If you don&#x27;t know the answer, just say that you don&#x27;t know&quot;,
+          &quot;type&quot;: &quot;keyword&quot;
+        }
+      ],
+      &quot;missing_fact_details&quot;: [],
+      &quot;conflicting_fact_details&quot;: [],
+      &quot;reason&quot;: &quot;The claim is supported by the retrieved evidence because all required facts were matched.&quot;,
+      &quot;citation_status&quot;: &quot;claim_has_no_citation&quot;,
+      &quot;citation_source_id&quot;: null,
+      &quot;root_cause&quot;: {
+        &quot;label&quot;: &quot;no_failure_detected&quot;,
+        &quot;reason&quot;: &quot;The claim is supported by retrieved evidence and no citation failure was detected.&quot;,
+        &quot;missing_fact&quot;: null,
+        &quot;closest_context_id&quot;: &quot;ollama_hf_rag_engine:main.py:7&quot;,
+        &quot;closest_evidence&quot;: &quot;If you don&#x27;t know the answer, just say that you don&#x27;t know.&quot;,
+        &quot;suggested_fix&quot;: &quot;No fix needed for this claim.&quot;
+      }
+    },
+    {
+      &quot;claim_id&quot;: &quot;claim_2&quot;,
+      &quot;claim&quot;: &quot;Answer in bullet points.&quot;,
+      &quot;verdict&quot;: &quot;supported&quot;,
+      &quot;confidence&quot;: 1.0,
+      &quot;best_context_id&quot;: &quot;ollama_hf_rag_engine:main.py:7&quot;,
+      &quot;best_context_text&quot;: &quot;ntent=chunk) for chunk in chunks]\n    document_ids = vector_store.add_documents(documents=documents)\n\nmodel = ChatOllama(model=\&quot;mistral\&quot;, base_url=\&quot;http://localhost:11434\&quot;)\n\ntemplate = \&quot;\&quot;\&quot;\n        You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question.\n        If you don&#x27;t know the answer, just say that you don&#x27;t know.\n        Answer in bullet points. Make sure your answer is relevant to the question and it is answered from the context only.\n        Question: {question}\n        Context: {context}\n        Answer:\n    \&quot;\&quot;\&quot;\n\nprompt = ChatPromptTemplate.from_template(template)&quot;,
+      &quot;best_score&quot;: 1.0,
+      &quot;evidence&quot;: &quot;Answer in bullet points.&quot;,
+      &quot;evidence_span&quot;: {
+        &quot;context_id&quot;: &quot;ollama_hf_rag_engine:main.py:7&quot;,
+        &quot;text&quot;: &quot;Answer in bullet points.&quot;,
+        &quot;start_char&quot;: 394,
+        &quot;end_char&quot;: 418,
+        &quot;span_hash&quot;: &quot;sha256:e8eb684f09b60063&quot;
+      },
+      &quot;supporting_spans&quot;: [
+        {
+          &quot;context_id&quot;: &quot;ollama_hf_rag_engine:main.py:7&quot;,
+          &quot;text&quot;: &quot;Answer in bullet points.&quot;,
+          &quot;start_char&quot;: 394,
+          &quot;end_char&quot;: 418,
+          &quot;span_hash&quot;: &quot;sha256:e8eb684f09b60063&quot;,
+          &quot;score&quot;: 1.0,
+          &quot;matched_terms&quot;: [
+            &quot;answer&quot;,
+            &quot;bullet&quot;,
+            &quot;points&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;ollama_hf_rag_engine:main.py:7&quot;,
+          &quot;text&quot;: &quot;If you don&#x27;t know the answer, just say that you don&#x27;t know.&quot;,
+          &quot;start_char&quot;: 326,
+          &quot;end_char&quot;: 385,
+          &quot;span_hash&quot;: &quot;sha256:1835667460537264&quot;,
+          &quot;score&quot;: 0.291,
+          &quot;matched_terms&quot;: [
+            &quot;answer&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;ollama_hf_rag_engine:main.py:7&quot;,
+          &quot;text&quot;: &quot;Make sure your answer is relevant to the question and it is answered from the context only.&quot;,
+          &quot;start_char&quot;: 419,
+          &quot;end_char&quot;: 510,
+          &quot;span_hash&quot;: &quot;sha256:0b52cbfb484764cd&quot;,
+          &quot;score&quot;: 0.288,
+          &quot;matched_terms&quot;: [
+            &quot;answer&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;ollama_hf_rag_engine:main.py:7&quot;,
+          &quot;text&quot;: &quot;Question: {question}\n        Context: {context}\n        Answer:\n    \&quot;\&quot;\&quot;\n\nprompt = ChatPromptTemplate.from_template(template)&quot;,
+          &quot;start_char&quot;: 519,
+          &quot;end_char&quot;: 643,
+          &quot;span_hash&quot;: &quot;sha256:981c8cbbd42237de&quot;,
+          &quot;score&quot;: 0.288,
+          &quot;matched_terms&quot;: [
+            &quot;answer&quot;
+          ]
+        }
+      ],
+      &quot;matched_terms&quot;: [
+        &quot;answer&quot;,
+        &quot;bullet&quot;,
+        &quot;points&quot;
+      ],
+      &quot;required_facts&quot;: [
+        &quot;Answer in bullet points&quot;
+      ],
+      &quot;matched_facts&quot;: [
+        &quot;Answer in bullet points&quot;
+      ],
+      &quot;missing_facts&quot;: [],
+      &quot;conflicting_facts&quot;: [],
+      &quot;required_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;Answer in bullet points&quot;,
+          &quot;type&quot;: &quot;keyword&quot;
+        }
+      ],
+      &quot;matched_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;Answer in bullet points&quot;,
+          &quot;type&quot;: &quot;keyword&quot;
+        }
+      ],
+      &quot;missing_fact_details&quot;: [],
+      &quot;conflicting_fact_details&quot;: [],
+      &quot;reason&quot;: &quot;The claim is supported by the retrieved evidence because all required facts were matched.&quot;,
+      &quot;citation_status&quot;: &quot;claim_has_no_citation&quot;,
+      &quot;citation_source_id&quot;: null,
+      &quot;root_cause&quot;: {
+        &quot;label&quot;: &quot;no_failure_detected&quot;,
+        &quot;reason&quot;: &quot;The claim is supported by retrieved evidence and no citation failure was detected.&quot;,
+        &quot;missing_fact&quot;: null,
+        &quot;closest_context_id&quot;: &quot;ollama_hf_rag_engine:main.py:7&quot;,
+        &quot;closest_evidence&quot;: &quot;Answer in bullet points.&quot;,
+        &quot;suggested_fix&quot;: &quot;No fix needed for this claim.&quot;
+      }
+    },
+    {
+      &quot;claim_id&quot;: &quot;claim_3&quot;,
+      &quot;claim&quot;: &quot;Use the following pieces of retrieved context to answer the question.&quot;,
+      &quot;verdict&quot;: &quot;supported&quot;,
+      &quot;confidence&quot;: 1.0,
+      &quot;best_context_id&quot;: &quot;ollama_hf_rag_engine:main.py:7&quot;,
+      &quot;best_context_text&quot;: &quot;ntent=chunk) for chunk in chunks]\n    document_ids = vector_store.add_documents(documents=documents)\n\nmodel = ChatOllama(model=\&quot;mistral\&quot;, base_url=\&quot;http://localhost:11434\&quot;)\n\ntemplate = \&quot;\&quot;\&quot;\n        You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question.\n        If you don&#x27;t know the answer, just say that you don&#x27;t know.\n        Answer in bullet points. Make sure your answer is relevant to the question and it is answered from the context only.\n        Question: {question}\n        Context: {context}\n        Answer:\n    \&quot;\&quot;\&quot;\n\nprompt = ChatPromptTemplate.from_template(template)&quot;,
+      &quot;best_score&quot;: 1.0,
+      &quot;evidence&quot;: &quot;Use the following pieces of retrieved context to answer the question.&quot;,
+      &quot;evidence_span&quot;: {
+        &quot;context_id&quot;: &quot;ollama_hf_rag_engine:main.py:7&quot;,
+        &quot;text&quot;: &quot;Use the following pieces of retrieved context to answer the question.&quot;,
+        &quot;start_char&quot;: 248,
+        &quot;end_char&quot;: 317,
+        &quot;span_hash&quot;: &quot;sha256:dc1efd43974f191a&quot;
+      },
+      &quot;supporting_spans&quot;: [
+        {
+          &quot;context_id&quot;: &quot;ollama_hf_rag_engine:main.py:7&quot;,
+          &quot;text&quot;: &quot;Use the following pieces of retrieved context to answer the question.&quot;,
+          &quot;start_char&quot;: 248,
+          &quot;end_char&quot;: 317,
+          &quot;span_hash&quot;: &quot;sha256:dc1efd43974f191a&quot;,
+          &quot;score&quot;: 1.0,
+          &quot;matched_terms&quot;: [
+            &quot;use&quot;,
+            &quot;following&quot;,
+            &quot;pieces&quot;,
+            &quot;retrieved&quot;,
+            &quot;context&quot;,
+            &quot;answer&quot;,
+            &quot;question&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;ollama_hf_rag_engine:README.md:2&quot;,
+          &quot;text&quot;: &quot;- **Retrieval Augmented Generation (RAG)**: Combine retrieved context with a question-answering template to enhance LLM outputs.&quot;,
+          &quot;start_char&quot;: 506,
+          &quot;end_char&quot;: 634,
+          &quot;span_hash&quot;: &quot;sha256:8331292689e8769e&quot;,
+          &quot;score&quot;: 0.501,
+          &quot;matched_terms&quot;: [
+            &quot;retrieved&quot;,
+            &quot;context&quot;,
+            &quot;answer&quot;,
+            &quot;question&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;ollama_hf_rag_engine:main.py:7&quot;,
+          &quot;text&quot;: &quot;Make sure your answer is relevant to the question and it is answered from the context only.&quot;,
+          &quot;start_char&quot;: 419,
+          &quot;end_char&quot;: 510,
+          &quot;span_hash&quot;: &quot;sha256:0b52cbfb484764cd&quot;,
+          &quot;score&quot;: 0.4,
+          &quot;matched_terms&quot;: [
+            &quot;context&quot;,
+            &quot;answer&quot;,
+            &quot;question&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;ollama_hf_rag_engine:main.py:7&quot;,
+          &quot;text&quot;: &quot;Question: {question}\n        Context: {context}\n        Answer:\n    \&quot;\&quot;\&quot;\n\nprompt = ChatPromptTemplate.from_template(template)&quot;,
+          &quot;start_char&quot;: 519,
+          &quot;end_char&quot;: 643,
+          &quot;span_hash&quot;: &quot;sha256:981c8cbbd42237de&quot;,
+          &quot;score&quot;: 0.4,
+          &quot;matched_terms&quot;: [
+            &quot;context&quot;,
+            &quot;answer&quot;,
+            &quot;question&quot;
+          ]
+        }
+      ],
+      &quot;matched_terms&quot;: [
+        &quot;use&quot;,
+        &quot;following&quot;,
+        &quot;pieces&quot;,
+        &quot;retrieved&quot;,
+        &quot;context&quot;,
+        &quot;answer&quot;,
+        &quot;question&quot;
+      ],
+      &quot;required_facts&quot;: [
+        &quot;Use the following pieces of retrieved context to answer the question&quot;
+      ],
+      &quot;matched_facts&quot;: [
+        &quot;Use the following pieces of retrieved context to answer the question&quot;
+      ],
+      &quot;missing_facts&quot;: [],
+      &quot;conflicting_facts&quot;: [],
+      &quot;required_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;Use the following pieces of retrieved context to answer the question&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        }
+      ],
+      &quot;matched_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;Use the following pieces of retrieved context to answer the question&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        }
+      ],
+      &quot;missing_fact_details&quot;: [],
+      &quot;conflicting_fact_details&quot;: [],
+      &quot;reason&quot;: &quot;The claim is supported by the retrieved evidence because all required facts were matched.&quot;,
+      &quot;citation_status&quot;: &quot;claim_has_no_citation&quot;,
+      &quot;citation_source_id&quot;: null,
+      &quot;root_cause&quot;: {
+        &quot;label&quot;: &quot;no_failure_detected&quot;,
+        &quot;reason&quot;: &quot;The claim is supported by retrieved evidence and no citation failure was detected.&quot;,
+        &quot;missing_fact&quot;: null,
+        &quot;closest_context_id&quot;: &quot;ollama_hf_rag_engine:main.py:7&quot;,
+        &quot;closest_evidence&quot;: &quot;Use the following pieces of retrieved context to answer the question.&quot;,
+        &quot;suggested_fix&quot;: &quot;No fix needed for this claim.&quot;
+      }
+    }
+  ]
+}</pre>
+    </section>
+  </main>
+</body>
+</html>

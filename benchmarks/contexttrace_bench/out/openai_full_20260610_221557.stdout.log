@@ -1,0 +1,15 @@
+ContextTrace-Bench
+Mode: semantic
+Case set: all
+Cases: 500
+Base cases: 51
+Generated cases: 449
+Failure macro-F1: 1.000
+Root-cause accuracy: 1.000
+Citation error F1: 1.000
+Evidence span overlap: 0.863
+Latency p95 ms: 4.485
+Results: benchmarks\contexttrace_bench\out\results.md
+Leaderboard: benchmarks\contexttrace_bench\out\leaderboard.md
+Report: benchmarks\contexttrace_bench\out\report.html
+Candidate inputs: benchmarks\contexttrace_bench\out\candidate_inputs.jsonl

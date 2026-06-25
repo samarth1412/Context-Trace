@@ -1,0 +1,78 @@
+ContextTrace-Bench
+Mode: semantic
+Case set: all
+Cases: 500
+Base cases: 51
+Generated cases: 449
+Failure macro-F1: 1.000
+Root-cause accuracy: 1.000
+Citation error F1: 1.000
+Evidence span overlap: 0.863
+Latency p95 ms: 4.448
+Results: benchmarks\contexttrace_bench\out\results.md
+Leaderboard: benchmarks\contexttrace_bench\out\leaderboard.md
+Report: benchmarks\contexttrace_bench\out\report.html
+Candidate inputs: benchmarks\contexttrace_bench\out\candidate_inputs.jsonl
+RAGAS progress: 25/500
+RAGAS progress: 50/500
+RAGAS progress: 75/500
+RAGAS progress: 100/500
+RAGAS progress: 125/500
+RAGAS progress: 150/500
+RAGAS progress: 175/500
+RAGAS progress: 200/500
+RAGAS progress: 225/500
+RAGAS progress: 250/500
+RAGAS progress: 275/500
+RAGAS progress: 300/500
+RAGAS progress: 325/500
+RAGAS progress: 350/500
+RAGAS progress: 375/500
+RAGAS progress: 400/500
+RAGAS progress: 425/500
+RAGAS progress: 450/500
+RAGAS progress: 475/500
+RAGAS progress: 500/500
+Raw RAGAS results: C:\Users\mannv\OneDrive\Desktop\Projects\ContextTrace\benchmarks\contexttrace_bench\out\ragas_raw_results.json
+Candidate predictions: C:\Users\mannv\OneDrive\Desktop\Projects\ContextTrace\benchmarks\contexttrace_bench\out\ragas_predictions.json
+Rows: 500
+DeepEval progress: 25/500
+DeepEval progress: 50/500
+DeepEval progress: 75/500
+DeepEval progress: 100/500
+DeepEval progress: 125/500
+DeepEval progress: 150/500
+DeepEval progress: 175/500
+DeepEval progress: 200/500
+DeepEval progress: 225/500
+DeepEval progress: 250/500
+DeepEval progress: 275/500
+DeepEval progress: 300/500
+DeepEval progress: 325/500
+DeepEval progress: 350/500
+DeepEval progress: 375/500
+DeepEval progress: 400/500
+DeepEval progress: 425/500
+DeepEval progress: 450/500
+DeepEval progress: 475/500
+DeepEval progress: 500/500
+Raw DeepEval results: C:\Users\mannv\OneDrive\Desktop\Projects\ContextTrace\benchmarks\contexttrace_bench\out\deepeval_raw_results.json
+Candidate predictions: C:\Users\mannv\OneDrive\Desktop\Projects\ContextTrace\benchmarks\contexttrace_bench\out\deepeval_predictions.json
+Rows: 500
+ContextTrace-Bench
+Mode: semantic
+Case set: all
+Cases: 500
+Base cases: 51
+Generated cases: 449
+Failure macro-F1: 1.000
+Root-cause accuracy: 1.000
+Citation error F1: 1.000
+Evidence span overlap: 0.863
+Latency p95 ms: 4.073
+Results: benchmarks\contexttrace_bench\out\results.md
+Leaderboard: benchmarks\contexttrace_bench\out\leaderboard.md
+Report: benchmarks\contexttrace_bench\out\report.html
+Candidate inputs: benchmarks\contexttrace_bench\out\candidate_inputs.jsonl
+Baseline RAGAS: failure macro-F1 0.2, root-cause accuracy N/A
+Baseline DeepEval: failure macro-F1 0.069, root-cause accuracy N/A

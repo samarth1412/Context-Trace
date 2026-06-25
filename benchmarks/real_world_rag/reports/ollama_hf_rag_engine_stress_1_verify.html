@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ContextTrace Verification Report</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f8fa;
+      --panel: #ffffff;
+      --subtle: #fbfcfe;
+      --text: #202832;
+      --muted: #657286;
+      --line: #d9e0ea;
+      --ok: #176f44;
+      --warn: #946200;
+      --bad: #b42318;
+      --accent: #2458d3;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    main { max-width: 1160px; margin: 0 auto; padding: 32px 20px 56px; }
+    header { border-bottom: 1px solid var(--line); margin-bottom: 22px; padding-bottom: 18px; }
+    h1, h2, h3 { margin: 0; }
+    h1 { font-size: 30px; }
+    h2 { font-size: 18px; margin-bottom: 12px; }
+    h3 { font-size: 15px; margin-bottom: 8px; }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin: 16px 0;
+      padding: 18px;
+    }
+    .summary {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    .card, .item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--subtle);
+      padding: 12px;
+    }
+    .item + .item { margin-top: 10px; }
+    .label, .item-meta {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .value { margin-top: 4px; font-size: 18px; overflow-wrap: anywhere; }
+    .muted { color: var(--muted); }
+    .answer, .item p { white-space: pre-wrap; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { border-bottom: 1px solid var(--line); padding: 10px; text-align: left; vertical-align: top; }
+    th { color: var(--muted); font-size: 12px; text-transform: uppercase; }
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #eef2f7;
+      padding: 3px 8px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .verdict-supported, .citation-citation_ok { color: var(--ok); background: #e9f7ef; }
+    .verdict-unverifiable, .verdict-partially_supported, .citation-claim_has_no_citation { color: var(--warn); background: #fff7df; }
+    .verdict-unsupported, .verdict-contradicted,
+    .citation-cited_source_missing,
+    .citation-claim_supported_by_different_source,
+    .citation-cited_source_does_not_support_claim { color: var(--bad); background: #fdeceb; }
+    pre {
+      margin: 0;
+      overflow: auto;
+      background: #101828;
+      color: #f8fafc;
+      border-radius: 8px;
+      padding: 14px;
+      font-size: 13px;
+    }
+    mark {
+      background: #fff0a6;
+      color: inherit;
+      border-radius: 3px;
+      padding: 0 2px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>ContextTrace Verification Report</h1>
+      <p class="muted">Local claim-level evidence verification for a portable RAG trace.</p>
+    </header>
+
+    <section>
+      <h2>Reliability Summary</h2>
+      <div class="summary">
+        <div class="card">
+          <div class="label">Failure Type</div>
+          <div class="value">should_have_abstained</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Total Claims</div>
+          <div class="value">2</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Supported</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Partially Supported</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Unsupported</div>
+          <div class="value">2</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Unverifiable</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Contradicted</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Support Rate</div>
+          <div class="value">0.0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Unsupported Claim Rate</div>
+          <div class="value">1.0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Citation Mismatches</div>
+          <div class="value">2</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Should Abstain</div>
+          <div class="value">True</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Primary Root Cause</div>
+          <div class="value">should_have_abstained</div>
+        </div>
+        </div>
+    </section>
+
+    <section>
+      <h2>Suggested Fix</h2>
+      <p><strong>should_have_abstained</strong></p>
+      <p>Add an abstention rule: when retrieved contexts do not support the requested fact, say the information is unavailable instead of generating a factual answer.</p>
+    </section>
+
+    <section>
+      <h2>Query</h2>
+      <p>What vector store does this RAG engine use?</p>
+      <h2>Answer</h2>
+      <p class="answer"># Ollama and HuggingFace RAG Engine
+
+This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA). = load_txts_from_directory(txt_directory)
+
+# Chunk the documents
+    chunks = chunk_documents(texts)
+
+# Create embeddings and vector store
+    embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;, base_url=&quot;http://localhost:11434&quot;)
+    embedding_dimensions = len(embeddings.embed_query(&quot;test query&quot;))  # Determine embedding dimensions
+    vector_store = create_vector_store(embedding_function=embeddings, dimensions=embedding_dimensions)
+
+# Convert chunks into Document objects and add to vector store
+    documents = [Document(page_content=chunk) for chunk in chunks]
+    document_ids = vector_store.add_documents(documents=documents)</p>
+    </section>
+
+    <section>
+      <h2>Claim Support Overview</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Claim</th>
+            <th>Verdict</th>
+            <th>Confidence</th>
+            <th>Best Context</th>
+            <th>Citation</th>
+            <th>Root Cause</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td>claim_1</td>
+              <td># Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA).</td>
+              <td><span class="badge verdict-unsupported">unsupported</span></td>
+              <td>1.0</td>
+              <td>ollama_hf_rag_engine:data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt:1</td>
+              <td><span class="badge citation-claim_has_no_citation">claim_has_no_citation</span></td>
+              <td>should_have_abstained</td>
+            </tr>
+            
+
+            <tr>
+              <td>claim_2</td>
+              <td>= load_txts_from_directory(txt_directory) # Chunk the documents chunks = chunk_documents(texts) # Create embeddings and vector store embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;, base_url=&quot;http://localhost:11434&quot;) embedding_dimensions = len(embeddings.embed_query(&quot;test query&quot;)) # Determine embedding dimensions vector_store = create_vector_store(embedding_function=embeddings, dimensions=embedding_dimensions) # Convert chunks into Document objects and add to vector store documents = [Document(page_content=chunk) for chunk in chunks] document_ids = vector_store.add_documents(documents=documents).</td>
+              <td><span class="badge verdict-unsupported">unsupported</span></td>
+              <td>1.0</td>
+              <td>ollama_hf_rag_engine:data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt:1</td>
+              <td><span class="badge citation-claim_has_no_citation">claim_has_no_citation</span></td>
+              <td>should_have_abstained</td>
+            </tr>
+            </tbody>
+      </table>
+      <div>
+            <article class="item">
+              <div class="item-meta">claim_1 | unsupported | score 0.0</div>
+              <h3># Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA).</h3>
+              <p class="muted">Evidence span: none</p>
+              <p><strong>Supporting spans:</strong> <span class="muted">none</span></p>
+              <p>PET/MRI: a novel hybrid imaging technique.
+ Major clinical indications and preliminary experience in BrazilPET/RM: um novo método de imagem híbrida.
+                                           Principais indicações clínicas e experiência preliminar no Brasil
+        Taise Vitor1, Karine Minaif Martins, Tudor Mihai Ionescu, Marcelo Livorsi da Cunha1, Ronaldo Hueb Baroni,1                   1                                                                                                                1
+                                  Marcio Ricardo Taveira Garcia1  , Jairo Wagner1, Guilherme de Carvalho Campos Neto,1
+                                             Solange Amorim Nogueira1 , Ela</p>
+              <p class="muted">Matched terms: none</p>
+              <p><strong>Matched facts:</strong> <span class="muted">none</span></p>
+              <p><strong>Missing facts:</strong> <span># Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA) (predicate)</span></p>
+              <p><strong>Root cause:</strong> should_have_abstained</p>
+              <p>No retrieved context has enough evidence overlap to support the claim.</p>
+            </article>
+            
+
+            <article class="item">
+              <div class="item-meta">claim_2 | unsupported | score 0.0</div>
+              <h3>= load_txts_from_directory(txt_directory) # Chunk the documents chunks = chunk_documents(texts) # Create embeddings and vector store embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;, base_url=&quot;http://localhost:11434&quot;) embedding_dimensions = len(embeddings.embed_query(&quot;test query&quot;)) # Determine embedding dimensions vector_store = create_vector_store(embedding_function=embeddings, dimensions=embedding_dimensions) # Convert chunks into Document objects and add to vector store documents = [Document(page_content=chunk) for chunk in chunks] document_ids = vector_store.add_documents(documents=documents).</h3>
+              <p class="muted">Evidence span: none</p>
+              <p><strong>Supporting spans:</strong> <span class="muted">none</span></p>
+              <p>PET/MRI: a novel hybrid imaging technique.
+ Major clinical indications and preliminary experience in BrazilPET/RM: um novo método de imagem híbrida.
+                                           Principais indicações clínicas e experiência preliminar no Brasil
+        Taise Vitor1, Karine Minaif Martins, Tudor Mihai Ionescu, Marcelo Livorsi da Cunha1, Ronaldo Hueb Baroni,1                   1                                                                                                                1
+                                  Marcio Ricardo Taveira Garcia1  , Jairo Wagner1, Guilherme de Carvalho Campos Neto,1
+                                             Solange Amorim Nogueira1 , Ela</p>
+              <p class="muted">Matched terms: none</p>
+              <p><strong>Matched facts:</strong> <span class="muted">none</span></p>
+              <p><strong>Missing facts:</strong> <span>create embeddings (predicate)</span>, <span>create vector store embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27; (predicate)</span>, <span>create base_url=&quot;http://localhost:11434&quot;) embedding_dimensions = len(embeddings.embed_query(&quot;test query&quot;)) # Determine embedding dimensions vector_store = create_vector_store(embedding_function=embeddings (predicate)</span>, <span>create dimensions=embedding_dimensions) # Convert chunks into Document objects (predicate)</span>, <span>create add to vector store documents = [Document(page_content=chunk) for chunk in chunks] document_ids = vector_store.add_documents(documents=documents) (predicate)</span></p>
+              <p><strong>Root cause:</strong> should_have_abstained</p>
+              <p>No retrieved context has enough evidence overlap to support the claim.</p>
+            </article>
+            </div>
+    </section>
+
+    <section>
+      <h2>Unsupported Claims</h2>
+      
+        <article class="item">
+          <div class="item-meta">claim_1 | unsupported</div>
+          <p># Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA).</p>
+          <p><strong>Missing facts:</strong> <span># Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA) (predicate)</span></p>
+          <p><strong>Root cause:</strong> should_have_abstained</p>
+          <p>No retrieved context has enough evidence overlap to support the claim.</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">claim_2 | unsupported</div>
+          <p>= load_txts_from_directory(txt_directory) # Chunk the documents chunks = chunk_documents(texts) # Create embeddings and vector store embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;, base_url=&quot;http://localhost:11434&quot;) embedding_dimensions = len(embeddings.embed_query(&quot;test query&quot;)) # Determine embedding dimensions vector_store = create_vector_store(embedding_function=embeddings, dimensions=embedding_dimensions) # Convert chunks into Document objects and add to vector store documents = [Document(page_content=chunk) for chunk in chunks] document_ids = vector_store.add_documents(documents=documents).</p>
+          <p><strong>Missing facts:</strong> <span>create embeddings (predicate)</span>, <span>create vector store embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27; (predicate)</span>, <span>create base_url=&quot;http://localhost:11434&quot;) embedding_dimensions = len(embeddings.embed_query(&quot;test query&quot;)) # Determine embedding dimensions vector_store = create_vector_store(embedding_function=embeddings (predicate)</span>, <span>create dimensions=embedding_dimensions) # Convert chunks into Document objects (predicate)</span>, <span>create add to vector store documents = [Document(page_content=chunk) for chunk in chunks] document_ids = vector_store.add_documents(documents=documents) (predicate)</span></p>
+          <p><strong>Root cause:</strong> should_have_abstained</p>
+          <p>No retrieved context has enough evidence overlap to support the claim.</p>
+        </article>
+        
+    </section>
+
+    <section>
+      <h2>Root Cause Diagnosis</h2>
+      
+        <article class="item">
+          <div class="item-meta">claim_1 | should_have_abstained</div>
+          <p># Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA).</p>
+          <p><strong>Missing fact:</strong> # Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA)</p>
+          <p><strong>Closest evidence:</strong> PET/MRI: a novel hybrid imaging technique.
+ Major clinical indications and preliminary experience in BrazilPET/RM: um novo método de imagem híbrida.
+                                           Principais indicações clínicas e experiência preliminar no Brasil
+        Taise Vitor1, Karine Minaif Martins, Tudor Mihai Ionescu, Marcelo Livorsi da Cunha1, Ronaldo Hueb Baroni,1                   1                                                                                                                1
+                                  Marcio Ricardo Taveira Garcia1  , Jairo Wagner1, Guilherme de Carvalho Campos Neto,1
+                                             Solange Amorim Nogueira1 , Ela</p>
+          <p>The answer made a factual claim without retrieved evidence that supports it.</p>
+          <p><strong>Suggested fix:</strong> Return an unavailable/insufficient-context answer unless retrieval returns evidence for the missing fact.</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">claim_2 | should_have_abstained</div>
+          <p>= load_txts_from_directory(txt_directory) # Chunk the documents chunks = chunk_documents(texts) # Create embeddings and vector store embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;, base_url=&quot;http://localhost:11434&quot;) embedding_dimensions = len(embeddings.embed_query(&quot;test query&quot;)) # Determine embedding dimensions vector_store = create_vector_store(embedding_function=embeddings, dimensions=embedding_dimensions) # Convert chunks into Document objects and add to vector store documents = [Document(page_content=chunk) for chunk in chunks] document_ids = vector_store.add_documents(documents=documents).</p>
+          <p><strong>Missing fact:</strong> create embeddings</p>
+          <p><strong>Closest evidence:</strong> PET/MRI: a novel hybrid imaging technique.
+ Major clinical indications and preliminary experience in BrazilPET/RM: um novo método de imagem híbrida.
+                                           Principais indicações clínicas e experiência preliminar no Brasil
+        Taise Vitor1, Karine Minaif Martins, Tudor Mihai Ionescu, Marcelo Livorsi da Cunha1, Ronaldo Hueb Baroni,1                   1                                                                                                                1
+                                  Marcio Ricardo Taveira Garcia1  , Jairo Wagner1, Guilherme de Carvalho Campos Neto,1
+                                             Solange Amorim Nogueira1 , Ela</p>
+          <p>The answer made a factual claim without retrieved evidence that supports it.</p>
+          <p><strong>Suggested fix:</strong> Return an unavailable/insufficient-context answer unless retrieval returns evidence for the missing fact.</p>
+        </article>
+        
+    </section>
+
+    <section>
+      <h2>Citation Mismatches</h2>
+      
+        <article class="item">
+          <div class="item-meta">claim_1 | cited none</div>
+          <p># Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA).</p>
+          <p><strong>claim_has_no_citation</strong></p>
+          <p class="muted">Best supporting context: ollama_hf_rag_engine:data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt:1</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">claim_2 | cited none</div>
+          <p>= load_txts_from_directory(txt_directory) # Chunk the documents chunks = chunk_documents(texts) # Create embeddings and vector store embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;, base_url=&quot;http://localhost:11434&quot;) embedding_dimensions = len(embeddings.embed_query(&quot;test query&quot;)) # Determine embedding dimensions vector_store = create_vector_store(embedding_function=embeddings, dimensions=embedding_dimensions) # Convert chunks into Document objects and add to vector store documents = [Document(page_content=chunk) for chunk in chunks] document_ids = vector_store.add_documents(documents=documents).</p>
+          <p><strong>claim_has_no_citation</strong></p>
+          <p class="muted">Best supporting context: ollama_hf_rag_engine:data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt:1</p>
+        </article>
+        
+    </section>
+
+    <section>
+      <h2>Retrieved Contexts</h2>
+      
+        <article class="item">
+          <div class="item-meta">ollama_hf_rag_engine:data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt:1 | {&quot;project&quot;: &quot;taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;, &quot;repo_url&quot;: &quot;https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;, &quot;retrieval_score&quot;: 0.0, &quot;retriever&quot;: &quot;intentional low-overlap stress control&quot;, &quot;source&quot;: &quot;data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt&quot;}</div>
+          <p>PET/MRI: a novel hybrid imaging technique.
+ Major clinical indications and preliminary experience in BrazilPET/RM: um novo método de imagem híbrida.
+                                           Principais indicações clínicas e experiência preliminar no Brasil
+        Taise Vitor1, Karine Minaif Martins, Tudor Mihai Ionescu, Marcelo Livorsi da Cunha1, Ronaldo Hueb Baroni,1                   1                                                                                                                1
+                                  Marcio Ricardo Taveira Garcia1  , Jairo Wagner1, Guilherme de Carvalho Campos Neto,1
+                                             Solange Amorim Nogueira1 , Ela</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">ollama_hf_rag_engine:data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt:2 | {&quot;project&quot;: &quot;taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;, &quot;repo_url&quot;: &quot;https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;, &quot;retrieval_score&quot;: 0.0, &quot;retriever&quot;: &quot;intentional low-overlap stress control&quot;, &quot;source&quot;: &quot;data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt&quot;}</div>
+          <p>e Carvalho Campos Neto,1
+                                             Solange Amorim Nogueira1 , Elaine Gonçalves Guerra, Edson Amaro Junior11
+ABSTRACT                                                                                                                             Descritores: Tomografia por emissão de pósitrons/métodos; Imagem
+In recent years, medical imaging with hybrid techniques has                                                                          por ressonância magnética/métodos; Tomografia computadorizada
+widely accepted and employed in clinical routine. PET/MRI offers                                                                     por raios x/métodos; Neoplasias</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">ollama_hf_rag_engine:data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt:3 | {&quot;project&quot;: &quot;taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;, &quot;repo_url&quot;: &quot;https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine&quot;, &quot;retrieval_score&quot;: 0.0, &quot;retriever&quot;: &quot;intentional low-overlap stress control&quot;, &quot;source&quot;: &quot;data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt&quot;}</div>
+          <p>por raios x/métodos; Neoplasias pélvicas; Neoplasias da próstata;
+significant advantages, including excellent contrast and resolution                                                                  Neuroimagem
+and reduced ionizing radiation, as compared to well-established PET/
+CT. Therefore, PET/MRI is a promising modality for oncologic imaging
+of some regions, such as brain, head and neck, liver and pelvis. This                                                                INTRODUCTION
+article set out to analyze clinical conditions that could benefit from                                                               Pos</p>
+        </article>
+        
+    </section>
+
+    <section>
+      <h2>Why This Failed</h2>
+      <ul><li>should_have_abstained: The answer made a factual claim without retrieved evidence that supports it. Suggested fix: Return an unavailable/insufficient-context answer unless retrieval returns evidence for the missing fact.</li>
+<li>should_have_abstained: The answer made a factual claim without retrieved evidence that supports it. Suggested fix: Return an unavailable/insufficient-context answer unless retrieval returns evidence for the missing fact.</li>
+<li>The query asks for information that does not appear in the retrieved contexts, but the answer still gives a factual response.</li></ul>
+    </section>
+
+    <section>
+      <h2>Raw JSON Summary</h2>
+      <pre>{
+  &quot;summary&quot;: {
+    &quot;total_claims&quot;: 2,
+    &quot;supported&quot;: 0,
+    &quot;partially_supported&quot;: 0,
+    &quot;unsupported&quot;: 2,
+    &quot;contradicted&quot;: 0,
+    &quot;unverifiable&quot;: 0,
+    &quot;support_rate&quot;: 0.0,
+    &quot;unsupported_claim_rate&quot;: 1.0,
+    &quot;citation_mismatches&quot;: 2,
+    &quot;should_abstain&quot;: true,
+    &quot;root_causes&quot;: {
+      &quot;should_have_abstained&quot;: 2
+    },
+    &quot;primary_root_cause&quot;: &quot;should_have_abstained&quot;,
+    &quot;failure_type&quot;: &quot;should_have_abstained&quot;,
+    &quot;failure_types&quot;: [
+      &quot;should_have_abstained&quot;,
+      &quot;unsupported_answer&quot;
+    ],
+    &quot;suggested_fix&quot;: &quot;Add an abstention rule: when retrieved contexts do not support the requested fact, say the information is unavailable instead of generating a factual answer.&quot;,
+    &quot;mode&quot;: &quot;semantic&quot;
+  },
+  &quot;abstention&quot;: {
+    &quot;should_abstain&quot;: true,
+    &quot;reason&quot;: &quot;The query asks for information that does not appear in the retrieved contexts, but the answer still gives a factual response.&quot;
+  },
+  &quot;diagnostics&quot;: {
+    &quot;failure_type&quot;: &quot;should_have_abstained&quot;,
+    &quot;failure_types&quot;: [
+      &quot;should_have_abstained&quot;,
+      &quot;unsupported_answer&quot;
+    ],
+    &quot;suggested_fix&quot;: &quot;Add an abstention rule: when retrieved contexts do not support the requested fact, say the information is unavailable instead of generating a factual answer.&quot;
+  },
+  &quot;claims&quot;: [
+    {
+      &quot;claim_id&quot;: &quot;claim_1&quot;,
+      &quot;claim&quot;: &quot;# Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA).&quot;,
+      &quot;verdict&quot;: &quot;unsupported&quot;,
+      &quot;confidence&quot;: 1.0,
+      &quot;best_context_id&quot;: &quot;ollama_hf_rag_engine:data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt:1&quot;,
+      &quot;best_context_text&quot;: &quot;PET/MRI: a novel hybrid imaging technique.\n Major clinical indications and preliminary experience in BrazilPET/RM: um novo m\u00e9todo de imagem h\u00edbrida.\n                                           Principais indica\u00e7\u00f5es cl\u00ednicas e experi\u00eancia preliminar no Brasil\n        Taise Vitor1, Karine Minaif Martins, Tudor Mihai Ionescu, Marcelo Livorsi da Cunha1, Ronaldo Hueb Baroni,1                   1                                                                                                                1\n                                  Marcio Ricardo Taveira Garcia1  , Jairo Wagner1, Guilherme de Carvalho Campos Neto,1\n                                             Solange Amorim Nogueira1 , Ela&quot;,
+      &quot;best_score&quot;: 0.0,
+      &quot;evidence&quot;: &quot;PET/MRI: a novel hybrid imaging technique.\n Major clinical indications and preliminary experience in BrazilPET/RM: um novo m\u00e9todo de imagem h\u00edbrida.\n                                           Principais indica\u00e7\u00f5es cl\u00ednicas e experi\u00eancia preliminar no Brasil\n        Taise Vitor1, Karine Minaif Martins, Tudor Mihai Ionescu, Marcelo Livorsi da Cunha1, Ronaldo Hueb Baroni,1                   1                                                                                                                1\n                                  Marcio Ricardo Taveira Garcia1  , Jairo Wagner1, Guilherme de Carvalho Campos Neto,1\n                                             Solange Amorim Nogueira1 , Ela&quot;,
+      &quot;evidence_span&quot;: null,
+      &quot;supporting_spans&quot;: [],
+      &quot;matched_terms&quot;: [],
+      &quot;required_facts&quot;: [
+        &quot;# Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA)&quot;
+      ],
+      &quot;matched_facts&quot;: [],
+      &quot;missing_facts&quot;: [
+        &quot;# Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA)&quot;
+      ],
+      &quot;conflicting_facts&quot;: [],
+      &quot;required_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;# Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA)&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        }
+      ],
+      &quot;matched_fact_details&quot;: [],
+      &quot;missing_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;# Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA)&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        }
+      ],
+      &quot;conflicting_fact_details&quot;: [],
+      &quot;reason&quot;: &quot;No retrieved context has enough evidence overlap to support the claim.&quot;,
+      &quot;citation_status&quot;: &quot;claim_has_no_citation&quot;,
+      &quot;citation_source_id&quot;: null,
+      &quot;root_cause&quot;: {
+        &quot;label&quot;: &quot;should_have_abstained&quot;,
+        &quot;reason&quot;: &quot;The answer made a factual claim without retrieved evidence that supports it.&quot;,
+        &quot;missing_fact&quot;: &quot;# Ollama and HuggingFace RAG Engine This repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA)&quot;,
+        &quot;closest_context_id&quot;: &quot;ollama_hf_rag_engine:data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt:1&quot;,
+        &quot;closest_evidence&quot;: &quot;PET/MRI: a novel hybrid imaging technique.\n Major clinical indications and preliminary experience in BrazilPET/RM: um novo m\u00e9todo de imagem h\u00edbrida.\n                                           Principais indica\u00e7\u00f5es cl\u00ednicas e experi\u00eancia preliminar no Brasil\n        Taise Vitor1, Karine Minaif Martins, Tudor Mihai Ionescu, Marcelo Livorsi da Cunha1, Ronaldo Hueb Baroni,1                   1                                                                                                                1\n                                  Marcio Ricardo Taveira Garcia1  , Jairo Wagner1, Guilherme de Carvalho Campos Neto,1\n                                             Solange Amorim Nogueira1 , Ela&quot;,
+        &quot;suggested_fix&quot;: &quot;Return an unavailable/insufficient-context answer unless retrieval returns evidence for the missing fact.&quot;
+      }
+    },
+    {
+      &quot;claim_id&quot;: &quot;claim_2&quot;,
+      &quot;claim&quot;: &quot;= load_txts_from_directory(txt_directory) # Chunk the documents chunks = chunk_documents(texts) # Create embeddings and vector store embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;, base_url=\&quot;http://localhost:11434\&quot;) embedding_dimensions = len(embeddings.embed_query(\&quot;test query\&quot;)) # Determine embedding dimensions vector_store = create_vector_store(embedding_function=embeddings, dimensions=embedding_dimensions) # Convert chunks into Document objects and add to vector store documents = [Document(page_content=chunk) for chunk in chunks] document_ids = vector_store.add_documents(documents=documents).&quot;,
+      &quot;verdict&quot;: &quot;unsupported&quot;,
+      &quot;confidence&quot;: 1.0,
+      &quot;best_context_id&quot;: &quot;ollama_hf_rag_engine:data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt:1&quot;,
+      &quot;best_context_text&quot;: &quot;PET/MRI: a novel hybrid imaging technique.\n Major clinical indications and preliminary experience in BrazilPET/RM: um novo m\u00e9todo de imagem h\u00edbrida.\n                                           Principais indica\u00e7\u00f5es cl\u00ednicas e experi\u00eancia preliminar no Brasil\n        Taise Vitor1, Karine Minaif Martins, Tudor Mihai Ionescu, Marcelo Livorsi da Cunha1, Ronaldo Hueb Baroni,1                   1                                                                                                                1\n                                  Marcio Ricardo Taveira Garcia1  , Jairo Wagner1, Guilherme de Carvalho Campos Neto,1\n                                             Solange Amorim Nogueira1 , Ela&quot;,
+      &quot;best_score&quot;: 0.0,
+      &quot;evidence&quot;: &quot;PET/MRI: a novel hybrid imaging technique.\n Major clinical indications and preliminary experience in BrazilPET/RM: um novo m\u00e9todo de imagem h\u00edbrida.\n                                           Principais indica\u00e7\u00f5es cl\u00ednicas e experi\u00eancia preliminar no Brasil\n        Taise Vitor1, Karine Minaif Martins, Tudor Mihai Ionescu, Marcelo Livorsi da Cunha1, Ronaldo Hueb Baroni,1                   1                                                                                                                1\n                                  Marcio Ricardo Taveira Garcia1  , Jairo Wagner1, Guilherme de Carvalho Campos Neto,1\n                                             Solange Amorim Nogueira1 , Ela&quot;,
+      &quot;evidence_span&quot;: null,
+      &quot;supporting_spans&quot;: [],
+      &quot;matched_terms&quot;: [],
+      &quot;required_facts&quot;: [
+        &quot;create embeddings&quot;,
+        &quot;create vector store embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;&quot;,
+        &quot;create base_url=\&quot;http://localhost:11434\&quot;) embedding_dimensions = len(embeddings.embed_query(\&quot;test query\&quot;)) # Determine embedding dimensions vector_store = create_vector_store(embedding_function=embeddings&quot;,
+        &quot;create dimensions=embedding_dimensions) # Convert chunks into Document objects&quot;,
+        &quot;create add to vector store documents = [Document(page_content=chunk) for chunk in chunks] document_ids = vector_store.add_documents(documents=documents)&quot;
+      ],
+      &quot;matched_facts&quot;: [],
+      &quot;missing_facts&quot;: [
+        &quot;create embeddings&quot;,
+        &quot;create vector store embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;&quot;,
+        &quot;create base_url=\&quot;http://localhost:11434\&quot;) embedding_dimensions = len(embeddings.embed_query(\&quot;test query\&quot;)) # Determine embedding dimensions vector_store = create_vector_store(embedding_function=embeddings&quot;,
+        &quot;create dimensions=embedding_dimensions) # Convert chunks into Document objects&quot;,
+        &quot;create add to vector store documents = [Document(page_content=chunk) for chunk in chunks] document_ids = vector_store.add_documents(documents=documents)&quot;
+      ],
+      &quot;conflicting_facts&quot;: [],
+      &quot;required_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;create embeddings&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        },
+        {
+          &quot;text&quot;: &quot;create vector store embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        },
+        {
+          &quot;text&quot;: &quot;create base_url=\&quot;http://localhost:11434\&quot;) embedding_dimensions = len(embeddings.embed_query(\&quot;test query\&quot;)) # Determine embedding dimensions vector_store = create_vector_store(embedding_function=embeddings&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        },
+        {
+          &quot;text&quot;: &quot;create dimensions=embedding_dimensions) # Convert chunks into Document objects&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        },
+        {
+          &quot;text&quot;: &quot;create add to vector store documents = [Document(page_content=chunk) for chunk in chunks] document_ids = vector_store.add_documents(documents=documents)&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        }
+      ],
+      &quot;matched_fact_details&quot;: [],
+      &quot;missing_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;create embeddings&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        },
+        {
+          &quot;text&quot;: &quot;create vector store embeddings = OllamaEmbeddings(model=&#x27;nomic-embed-text&#x27;&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        },
+        {
+          &quot;text&quot;: &quot;create base_url=\&quot;http://localhost:11434\&quot;) embedding_dimensions = len(embeddings.embed_query(\&quot;test query\&quot;)) # Determine embedding dimensions vector_store = create_vector_store(embedding_function=embeddings&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        },
+        {
+          &quot;text&quot;: &quot;create dimensions=embedding_dimensions) # Convert chunks into Document objects&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        },
+        {
+          &quot;text&quot;: &quot;create add to vector store documents = [Document(page_content=chunk) for chunk in chunks] document_ids = vector_store.add_documents(documents=documents)&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        }
+      ],
+      &quot;conflicting_fact_details&quot;: [],
+      &quot;reason&quot;: &quot;No retrieved context has enough evidence overlap to support the claim.&quot;,
+      &quot;citation_status&quot;: &quot;claim_has_no_citation&quot;,
+      &quot;citation_source_id&quot;: null,
+      &quot;root_cause&quot;: {
+        &quot;label&quot;: &quot;should_have_abstained&quot;,
+        &quot;reason&quot;: &quot;The answer made a factual claim without retrieved evidence that supports it.&quot;,
+        &quot;missing_fact&quot;: &quot;create embeddings&quot;,
+        &quot;closest_context_id&quot;: &quot;ollama_hf_rag_engine:data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt:1&quot;,
+        &quot;closest_evidence&quot;: &quot;PET/MRI: a novel hybrid imaging technique.\n Major clinical indications and preliminary experience in BrazilPET/RM: um novo m\u00e9todo de imagem h\u00edbrida.\n                                           Principais indica\u00e7\u00f5es cl\u00ednicas e experi\u00eancia preliminar no Brasil\n        Taise Vitor1, Karine Minaif Martins, Tudor Mihai Ionescu, Marcelo Livorsi da Cunha1, Ronaldo Hueb Baroni,1                   1                                                                                                                1\n                                  Marcio Ricardo Taveira Garcia1  , Jairo Wagner1, Guilherme de Carvalho Campos Neto,1\n                                             Solange Amorim Nogueira1 , Ela&quot;,
+        &quot;suggested_fix&quot;: &quot;Return an unavailable/insufficient-context answer unless retrieval returns evidence for the missing fact.&quot;
+      }
+    }
+  ]
+}</pre>
+    </section>
+  </main>
+</body>
+</html>

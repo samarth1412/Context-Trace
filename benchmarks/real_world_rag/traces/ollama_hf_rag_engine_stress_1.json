@@ -1,0 +1,47 @@
+{
+  "query": "What vector store does this RAG engine use?",
+  "answer": "# Ollama and HuggingFace RAG Engine\n\nThis repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA). = load_txts_from_directory(txt_directory)\n\n# Chunk the documents\n    chunks = chunk_documents(texts)\n\n# Create embeddings and vector store\n    embeddings = OllamaEmbeddings(model='nomic-embed-text', base_url=\"http://localhost:11434\")\n    embedding_dimensions = len(embeddings.embed_query(\"test query\"))  # Determine embedding dimensions\n    vector_store = create_vector_store(embedding_function=embeddings, dimensions=embedding_dimensions)\n\n# Convert chunks into Document objects and add to vector store\n    documents = [Document(page_content=chunk) for chunk in chunks]\n    document_ids = vector_store.add_documents(documents=documents)",
+  "contexts": [
+    {
+      "id": "ollama_hf_rag_engine:data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt:1",
+      "text": "PET/MRI: a novel hybrid imaging technique.\n Major clinical indications and preliminary experience in BrazilPET/RM: um novo m\u00e9todo de imagem h\u00edbrida.\n                                           Principais indica\u00e7\u00f5es cl\u00ednicas e experi\u00eancia preliminar no Brasil\n        Taise Vitor1, Karine Minaif Martins, Tudor Mihai Ionescu, Marcelo Livorsi da Cunha1, Ronaldo Hueb Baroni,1                   1                                                                                                                1\n                                  Marcio Ricardo Taveira Garcia1  , Jairo Wagner1, Guilherme de Carvalho Campos Neto,1\n                                             Solange Amorim Nogueira1 , Ela",
+      "metadata": {
+        "project": "taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+        "repo_url": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+        "source": "data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt",
+        "retrieval_score": 0.0,
+        "retriever": "intentional low-overlap stress control"
+      }
+    },
+    {
+      "id": "ollama_hf_rag_engine:data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt:2",
+      "text": "e Carvalho Campos Neto,1\n                                             Solange Amorim Nogueira1 , Elaine Gon\u00e7alves Guerra, Edson Amaro Junior11\nABSTRACT                                                                                                                             Descritores: Tomografia por emiss\u00e3o de p\u00f3sitrons/m\u00e9todos; Imagem\nIn recent years, medical imaging with hybrid techniques has                                                                          por resson\u00e2ncia magn\u00e9tica/m\u00e9todos; Tomografia computadorizada\nwidely accepted and employed in clinical routine. PET/MRI offers                                                                     por raios x/m\u00e9todos; Neoplasias",
+      "metadata": {
+        "project": "taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+        "repo_url": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+        "source": "data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt",
+        "retrieval_score": 0.0,
+        "retriever": "intentional low-overlap stress control"
+      }
+    },
+    {
+      "id": "ollama_hf_rag_engine:data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt:3",
+      "text": "por raios x/m\u00e9todos; Neoplasias p\u00e9lvicas; Neoplasias da pr\u00f3stata;\nsignificant advantages, including excellent contrast and resolution                                                                  Neuroimagem\nand reduced ionizing radiation, as compared to well-established PET/\nCT. Therefore, PET/MRI is a promising modality for oncologic imaging\nof some regions, such as brain, head and neck, liver and pelvis. This                                                                INTRODUCTION\narticle set out to analyze clinical conditions that could benefit from                                                               Pos",
+      "metadata": {
+        "project": "taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+        "repo_url": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+        "source": "data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt",
+        "retrieval_score": 0.0,
+        "retriever": "intentional low-overlap stress control"
+      }
+    }
+  ],
+  "metadata": {
+    "project": "taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+    "repo_url": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+    "validation": "real_world_rag",
+    "case_type": "retrieval_stress_control",
+    "generation_model": "extractive oracle from real corpus",
+    "embedding_model": "all-MiniLM-L6-v2"
+  }
+}

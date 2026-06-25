@@ -1,0 +1,47 @@
+{
+  "query": "How does this chatbot update its vector database when documents change?",
+  "answer": "index (VectorDatabaseDep): The vector database dependency for retrieval. When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database. Additionally, the chatbot is designed to remember previous interactions.",
+  "contexts": [
+    {
+      "id": "rag_chatbot:backend/alembic/env.py:1",
+      "text": "from logging.config import fileConfig\n\nfrom alembic import context\nfrom bot.memory.document_registry import DocumentRecord  # noqa: F401 \u2013 registers the model\nfrom core.config import settings\nfrom helpers.log import get_logger\nfrom sqlalchemy import engine_from_config, pool\nfrom sqlmodel import SQLModel\n\nlogger = get_logger(__name__)\n\n# this is the Alembic Config object, which provides\n# access to the values within the .ini file in use.\nconfig = context.config\n\n# Interpret the config file for Python logging.\n# This line sets up loggers basically.\nif config.config_file_name is not None:\n    fileConfig(config.config_file_name)",
+      "metadata": {
+        "project": "umbertogriffo/rag-chatbot",
+        "repo_url": "https://github.com/umbertogriffo/rag-chatbot",
+        "source": "backend/alembic/env.py",
+        "retrieval_score": 0.0,
+        "retriever": "intentional low-overlap stress control"
+      }
+    },
+    {
+      "id": "rag_chatbot:backend/alembic/env.py:2",
+      "text": "p loggers basically.\nif config.config_file_name is not None:\n    fileConfig(config.config_file_name)\n\n# Use SQLModel's combined metadata so Alembic auto-generates\n# migrations for every table model in the registry.\ntarget_metadata = SQLModel.metadata\n\ndef run_migrations_offline() -> None:\n    \"\"\"Run migrations in 'offline' mode.\n\nThis configures the context with just a URL\n    and not an Engine, though an Engine is acceptable\n    here as well.  By skipping the Engine creation\n    we don't even need a DBAPI to be available.\n\nCalls to context.execute() here emit the given string to the\n    script output.",
+      "metadata": {
+        "project": "umbertogriffo/rag-chatbot",
+        "repo_url": "https://github.com/umbertogriffo/rag-chatbot",
+        "source": "backend/alembic/env.py",
+        "retrieval_score": 0.0,
+        "retriever": "intentional low-overlap stress control"
+      }
+    },
+    {
+      "id": "rag_chatbot:backend/alembic/env.py:3",
+      "text": "PI to be available.\n\nCalls to context.execute() here emit the given string to the\n    script output.\n\n\"\"\"\n    url = config.get_main_option(\"sqlalchemy.url\")\n    logger.info(f\"DATABASE_URL {url}\")\n    context.configure(\n        url=url,\n        target_metadata=target_metadata,\n        literal_binds=True,\n        dialect_opts={\"paramstyle\": \"named\"},\n    )\n\nwith context.begin_transaction():\n        context.run_migrations()\n\ndef run_migrations_online() -> None:\n    \"\"\"Run migrations in 'online' mode.\n\nIn this scenario we need to create an Engine\n    and associate a connection with the context.",
+      "metadata": {
+        "project": "umbertogriffo/rag-chatbot",
+        "repo_url": "https://github.com/umbertogriffo/rag-chatbot",
+        "source": "backend/alembic/env.py",
+        "retrieval_score": 0.0,
+        "retriever": "intentional low-overlap stress control"
+      }
+    }
+  ],
+  "metadata": {
+    "project": "umbertogriffo/rag-chatbot",
+    "repo_url": "https://github.com/umbertogriffo/rag-chatbot",
+    "validation": "real_world_rag",
+    "case_type": "retrieval_stress_control",
+    "generation_model": "extractive oracle from real corpus",
+    "embedding_model": "all-MiniLM-L6-v2"
+  }
+}

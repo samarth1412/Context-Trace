@@ -1,0 +1,82 @@
+{
+  "status": "completed",
+  "repo": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+  "question": "What are the main advantages of PET/MRI compared with PET/CT?",
+  "answer": " - PET/MRI has been introduced since 2010, with approximately 70 systems installed worldwide.\n- Widely accepted clinical indications for PET/MRI are yet to be determined.\n- PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis.\n- The adoption of PET/MRI has been slower compared to PET/CT.\n- However, the main advantages of PET/MRI over PET/CT are not explicitly",
+  "elapsed_seconds": 171.066,
+  "retrieved_contexts": [
+    {
+      "id": "data/PETMRI.txt:4",
+      "metadata": {
+        "source": "data/PETMRI.txt",
+        "chunk_index": 4,
+        "repo": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine"
+      },
+      "preview": "illustrated with examples extracted from the authors\u2019 preliminary\nexperience.                                                                                                                          introduced. The adoption of PET/MRI has b"
+    },
+    {
+      "id": "data/PETMRI.txt:17",
+      "metadata": {
+        "source": "data/PETMRI.txt",
+        "chunk_index": 17,
+        "repo": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine"
+      },
+      "preview": "compared to PET/CT(8) (Figure 4)."
+    },
+    {
+      "id": "data/PETMRI.txt:24",
+      "metadata": {
+        "source": "data/PETMRI.txt",
+        "chunk_index": 24,
+        "repo": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine"
+      },
+      "preview": "choice, particularly for assessment of some regions, such as\nbrain, head and neck, liver and pelvis. However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, ov"
+    }
+  ],
+  "verify_summary": {
+    "total_claims": 5,
+    "supported": 3,
+    "partially_supported": 1,
+    "unsupported": 0,
+    "contradicted": 1,
+    "unverifiable": 0,
+    "support_rate": 0.6,
+    "unsupported_claim_rate": 0.4,
+    "citation_mismatches": 5,
+    "should_abstain": false,
+    "root_causes": {
+      "answer_overreach": 1,
+      "conflicting_contexts": 1,
+      "no_failure_detected": 3
+    },
+    "primary_root_cause": "conflicting_contexts",
+    "failure_type": "contradicted_answer",
+    "failure_types": [
+      "contradicted_answer",
+      "partial_support"
+    ],
+    "suggested_fix": "Filter stale or conflicting sources and require the final answer to match the highest-priority evidence.",
+    "mode": "semantic"
+  },
+  "audit_summary": {
+    "mode": "semantic",
+    "total_claims": 5,
+    "audited_claims": 2,
+    "corpus_documents": 29,
+    "has_audit_failures": true,
+    "primary_audit_label": "retrieval_miss",
+    "verification_failure_type": "contradicted_answer",
+    "verification_primary_root_cause": "conflicting_contexts",
+    "no_failure_detected": 3,
+    "answer_overreach": 0,
+    "chunking_issue": 0,
+    "corpus_gap": 0,
+    "insufficient_context": 0,
+    "reranking_failure": 0,
+    "retrieval_miss": 1,
+    "stale_source": 1
+  },
+  "trace_path": "benchmarks/real_world_rag/traces/ollama_hf_e2e_petmri.json",
+  "verify_report_path": "benchmarks/real_world_rag/reports/ollama_hf_e2e_petmri_verify.html",
+  "audit_report_path": "benchmarks/real_world_rag/reports/ollama_hf_e2e_petmri_audit.html"
+}

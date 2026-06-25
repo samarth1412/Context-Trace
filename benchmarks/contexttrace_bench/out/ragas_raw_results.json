@@ -1,0 +1,3541 @@
+{
+  "model": "gpt-4.1-mini",
+  "notes": [
+    "RAGAS faithfulness evaluates whether each response is supported by retrieved contexts.",
+    "Context recall is emitted only when explicitly requested; ContextTrace-Bench does not ship hidden references to baseline runners."
+  ],
+  "rows": [
+    {
+      "faithfulness": 1.0,
+      "id": "local_mode_sqlite_supported",
+      "latency_ms": 23333.773,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "v020_claim_verification_supported",
+      "latency_ms": 13662.992,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "langchain_agent_events_supported",
+      "latency_ms": 16156.653,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "fastapi_logging_supported",
+      "latency_ms": 13191.604,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "failure_taxonomy_citation_supported",
+      "latency_ms": 11763.335,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "citation_points_to_wrong_real_doc",
+      "latency_ms": 15340.148,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "citation_source_missing_real_claim",
+      "latency_ms": 16221.691,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "unsupported_local_storage_from_fastapi_context",
+      "latency_ms": 15939.955,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "contradicted_backend_required",
+      "latency_ms": 18070.157,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "adversarial_entity_swap_location",
+      "latency_ms": 16082.172,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "adversarial_entity_swap_discovery",
+      "latency_ms": 16329.954,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "adversarial_relation_direction_inversion",
+      "latency_ms": 16182.832,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.75,
+      "id": "partial_cross_doc_overclaim",
+      "latency_ms": 13326.73,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "no_context_release_claim",
+      "latency_ms": 0.003,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "quickstart_report_contents_supported",
+      "latency_ms": 13226.181,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "quickstart_viewer_supported",
+      "latency_ms": 13079.065,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "quickstart_eval_workflow_supported",
+      "latency_ms": 14481.162,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "sdk_config_precedence_supported",
+      "latency_ms": 14297.687,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "sdk_agent_event_types_supported",
+      "latency_ms": 14296.435,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "privacy_local_items_supported",
+      "latency_ms": 3732.077,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "privacy_no_network_supported",
+      "latency_ms": 12225.443,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "privacy_redaction_supported",
+      "latency_ms": 12410.847,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "release_runtime_dependencies_supported",
+      "latency_ms": 3821.137,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "byo_jsonpath_supported",
+      "latency_ms": 3242.817,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "regression_threshold_metrics_supported",
+      "latency_ms": 14301.291,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "langgraph_errors_supported",
+      "latency_ms": 13525.757,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "llamaindex_mock_local_supported",
+      "latency_ms": 13347.576,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "citation_wrong_quickstart_section",
+      "latency_ms": 12928.267,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "unsupported_python_support_wrong_context",
+      "latency_ms": 14905.852,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "contradicted_privacy_network",
+      "latency_ms": 1966.545,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.75,
+      "id": "partial_privacy_overclaim",
+      "latency_ms": 13685.631,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "multi_span_local_no_backend_supported",
+      "latency_ms": 3132.435,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "multi_context_eval_workflow_supported",
+      "latency_ms": 12938.266,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "contradicted_release_version",
+      "latency_ms": 12275.716,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "contradicted_llamaindex_external_services",
+      "latency_ms": 2262.313,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "contradicted_default_retries",
+      "latency_ms": 2234.615,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "contradicted_viewer_port",
+      "latency_ms": 2058.63,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "no_context_privacy_claim",
+      "latency_ms": 0.001,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "qdrant_payload_filter_supported",
+      "latency_ms": 12854.138,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.5,
+      "id": "qdrant_array_filter_supported",
+      "latency_ms": 12676.542,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "qdrant_payload_index_supported",
+      "latency_ms": 12499.578,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "qdrant_match_any_supported",
+      "latency_ms": 12472.933,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_text_any_contradicted",
+      "latency_ms": 3250.252,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "chroma_where_filter_supported",
+      "latency_ms": 2542.002,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "chroma_issue_where_no_match_supported",
+      "latency_ms": 14946.288,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.6666666666666666,
+      "id": "chroma_issue_metadata_list_error_supported",
+      "latency_ms": 3456.03,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "haystack_document_store_supported",
+      "latency_ms": 12404.402,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.8,
+      "id": "haystack_protocol_partial_support",
+      "latency_ms": 26403.942,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "langchain_vectorstore_retriever_supported",
+      "latency_ms": 15556.169,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "external_wrong_source_citation",
+      "latency_ms": 3988.165,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "external_no_context_should_abstain",
+      "latency_ms": 0.001,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "local_mode_sqlite_supported__generated_uncited_supported",
+      "latency_ms": 3694.476,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "local_mode_sqlite_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "local_mode_sqlite_supported__generated_missing_citation",
+      "latency_ms": 13023.719,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "local_mode_sqlite_supported__generated_wrong_source_citation",
+      "latency_ms": 11907.905,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "local_mode_sqlite_supported__generated_stale_source",
+      "latency_ms": 11857.092,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "local_mode_sqlite_supported__generated_low_authority_source",
+      "latency_ms": 3845.103,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "v020_claim_verification_supported__generated_uncited_supported",
+      "latency_ms": 13517.3,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "v020_claim_verification_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "v020_claim_verification_supported__generated_missing_citation",
+      "latency_ms": 13488.421,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "v020_claim_verification_supported__generated_wrong_source_citation",
+      "latency_ms": 12698.524,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "v020_claim_verification_supported__generated_stale_source",
+      "latency_ms": 12700.117,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "v020_claim_verification_supported__generated_low_authority_source",
+      "latency_ms": 2908.893,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "langchain_agent_events_supported__generated_uncited_supported",
+      "latency_ms": 3555.867,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "langchain_agent_events_supported__generated_no_context",
+      "latency_ms": 0.001,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "langchain_agent_events_supported__generated_missing_citation",
+      "latency_ms": 4146.64,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "langchain_agent_events_supported__generated_wrong_source_citation",
+      "latency_ms": 12884.862,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "langchain_agent_events_supported__generated_stale_source",
+      "latency_ms": 13748.882,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "langchain_agent_events_supported__generated_low_authority_source",
+      "latency_ms": 13075.938,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "fastapi_logging_supported__generated_uncited_supported",
+      "latency_ms": 12021.029,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "fastapi_logging_supported__generated_no_context",
+      "latency_ms": 0.001,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "fastapi_logging_supported__generated_missing_citation",
+      "latency_ms": 3010.688,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "fastapi_logging_supported__generated_wrong_source_citation",
+      "latency_ms": 2773.49,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "fastapi_logging_supported__generated_stale_source",
+      "latency_ms": 2462.471,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "fastapi_logging_supported__generated_low_authority_source",
+      "latency_ms": 2295.767,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "failure_taxonomy_citation_supported__generated_uncited_supported",
+      "latency_ms": 11484.44,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "failure_taxonomy_citation_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "failure_taxonomy_citation_supported__generated_missing_citation",
+      "latency_ms": 11478.316,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "failure_taxonomy_citation_supported__generated_wrong_source_citation",
+      "latency_ms": 11302.029,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "failure_taxonomy_citation_supported__generated_stale_source",
+      "latency_ms": 11215.185,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "failure_taxonomy_citation_supported__generated_low_authority_source",
+      "latency_ms": 2238.499,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "quickstart_report_contents_supported__generated_uncited_supported",
+      "latency_ms": 15321.402,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "quickstart_report_contents_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "quickstart_report_contents_supported__generated_missing_citation",
+      "latency_ms": 15267.573,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "quickstart_report_contents_supported__generated_wrong_source_citation",
+      "latency_ms": 15152.951,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "quickstart_report_contents_supported__generated_stale_source",
+      "latency_ms": 14118.589,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "quickstart_report_contents_supported__generated_low_authority_source",
+      "latency_ms": 15095.269,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "quickstart_viewer_supported__generated_uncited_supported",
+      "latency_ms": 3676.284,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "quickstart_viewer_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "quickstart_viewer_supported__generated_missing_citation",
+      "latency_ms": 3329.84,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "quickstart_viewer_supported__generated_wrong_source_citation",
+      "latency_ms": 3203.071,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "quickstart_viewer_supported__generated_stale_source",
+      "latency_ms": 11890.79,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "quickstart_viewer_supported__generated_low_authority_source",
+      "latency_ms": 11765.059,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "quickstart_eval_workflow_supported__generated_uncited_supported",
+      "latency_ms": 14236.657,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "quickstart_eval_workflow_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "quickstart_eval_workflow_supported__generated_missing_citation",
+      "latency_ms": 4521.081,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "quickstart_eval_workflow_supported__generated_wrong_source_citation",
+      "latency_ms": 14870.103,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "quickstart_eval_workflow_supported__generated_stale_source",
+      "latency_ms": 4831.542,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "quickstart_eval_workflow_supported__generated_low_authority_source",
+      "latency_ms": 12051.871,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "sdk_config_precedence_supported__generated_uncited_supported",
+      "latency_ms": 12350.023,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "sdk_config_precedence_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "sdk_config_precedence_supported__generated_missing_citation",
+      "latency_ms": 12052.27,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "sdk_config_precedence_supported__generated_wrong_source_citation",
+      "latency_ms": 14105.453,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "sdk_config_precedence_supported__generated_stale_source",
+      "latency_ms": 3693.589,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "sdk_config_precedence_supported__generated_low_authority_source",
+      "latency_ms": 12104.086,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "sdk_agent_event_types_supported__generated_uncited_supported",
+      "latency_ms": 15621.971,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "sdk_agent_event_types_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "sdk_agent_event_types_supported__generated_missing_citation",
+      "latency_ms": 14621.678,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "sdk_agent_event_types_supported__generated_wrong_source_citation",
+      "latency_ms": 14647.655,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "sdk_agent_event_types_supported__generated_stale_source",
+      "latency_ms": 14647.134,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "sdk_agent_event_types_supported__generated_low_authority_source",
+      "latency_ms": 14561.998,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "privacy_local_items_supported__generated_uncited_supported",
+      "latency_ms": 13149.927,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "privacy_local_items_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "privacy_local_items_supported__generated_missing_citation",
+      "latency_ms": 13798.121,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "privacy_local_items_supported__generated_wrong_source_citation",
+      "latency_ms": 13797.24,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "privacy_local_items_supported__generated_stale_source",
+      "latency_ms": 13964.923,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "privacy_local_items_supported__generated_low_authority_source",
+      "latency_ms": 13257.758,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "privacy_no_network_supported__generated_uncited_supported",
+      "latency_ms": 1775.939,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "privacy_no_network_supported__generated_no_context",
+      "latency_ms": 0.001,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "privacy_no_network_supported__generated_missing_citation",
+      "latency_ms": 1736.331,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "privacy_no_network_supported__generated_wrong_source_citation",
+      "latency_ms": 1952.612,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "privacy_no_network_supported__generated_stale_source",
+      "latency_ms": 1941.754,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "privacy_no_network_supported__generated_low_authority_source",
+      "latency_ms": 13207.116,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "privacy_redaction_supported__generated_uncited_supported",
+      "latency_ms": 11598.819,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "privacy_redaction_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "privacy_redaction_supported__generated_missing_citation",
+      "latency_ms": 12864.825,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "privacy_redaction_supported__generated_wrong_source_citation",
+      "latency_ms": 13526.002,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "privacy_redaction_supported__generated_stale_source",
+      "latency_ms": 3739.979,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "privacy_redaction_supported__generated_low_authority_source",
+      "latency_ms": 3257.545,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "release_runtime_dependencies_supported__generated_uncited_supported",
+      "latency_ms": 13205.816,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "release_runtime_dependencies_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "release_runtime_dependencies_supported__generated_missing_citation",
+      "latency_ms": 12517.46,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "release_runtime_dependencies_supported__generated_wrong_source_citation",
+      "latency_ms": 13306.516,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "release_runtime_dependencies_supported__generated_stale_source",
+      "latency_ms": 12382.133,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "release_runtime_dependencies_supported__generated_low_authority_source",
+      "latency_ms": 3088.39,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "byo_jsonpath_supported__generated_uncited_supported",
+      "latency_ms": 16090.069,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "byo_jsonpath_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "byo_jsonpath_supported__generated_missing_citation",
+      "latency_ms": 14293.989,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "byo_jsonpath_supported__generated_wrong_source_citation",
+      "latency_ms": 14115.988,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "byo_jsonpath_supported__generated_stale_source",
+      "latency_ms": 12995.589,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "byo_jsonpath_supported__generated_low_authority_source",
+      "latency_ms": 16158.94,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "regression_threshold_metrics_supported__generated_uncited_supported",
+      "latency_ms": 16158.832,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "regression_threshold_metrics_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "regression_threshold_metrics_supported__generated_missing_citation",
+      "latency_ms": 16155.532,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "regression_threshold_metrics_supported__generated_wrong_source_citation",
+      "latency_ms": 16152.21,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "regression_threshold_metrics_supported__generated_stale_source",
+      "latency_ms": 14721.569,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "regression_threshold_metrics_supported__generated_low_authority_source",
+      "latency_ms": 14720.633,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "langgraph_errors_supported__generated_uncited_supported",
+      "latency_ms": 2446.444,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "langgraph_errors_supported__generated_no_context",
+      "latency_ms": 0.003,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "langgraph_errors_supported__generated_missing_citation",
+      "latency_ms": 2420.893,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "langgraph_errors_supported__generated_wrong_source_citation",
+      "latency_ms": 12302.155,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "langgraph_errors_supported__generated_stale_source",
+      "latency_ms": 12287.288,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "langgraph_errors_supported__generated_low_authority_source",
+      "latency_ms": 2840.946,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "llamaindex_mock_local_supported__generated_uncited_supported",
+      "latency_ms": 3501.944,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "llamaindex_mock_local_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "llamaindex_mock_local_supported__generated_missing_citation",
+      "latency_ms": 3103.596,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "llamaindex_mock_local_supported__generated_wrong_source_citation",
+      "latency_ms": 3501.275,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "llamaindex_mock_local_supported__generated_stale_source",
+      "latency_ms": 13271.841,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "llamaindex_mock_local_supported__generated_low_authority_source",
+      "latency_ms": 13005.332,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "multi_span_local_no_backend_supported__generated_uncited_supported",
+      "latency_ms": 12611.564,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "multi_span_local_no_backend_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "multi_span_local_no_backend_supported__generated_missing_citation",
+      "latency_ms": 12597.784,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "multi_span_local_no_backend_supported__generated_wrong_source_citation",
+      "latency_ms": 2511.048,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "multi_span_local_no_backend_supported__generated_stale_source",
+      "latency_ms": 2688.244,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "multi_span_local_no_backend_supported__generated_low_authority_source",
+      "latency_ms": 3955.104,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_uncited_supported",
+      "latency_ms": 3674.398,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_missing_citation",
+      "latency_ms": 13367.133,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_wrong_source_citation",
+      "latency_ms": 13189.184,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_stale_source",
+      "latency_ms": 14557.19,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "qdrant_payload_filter_supported__generated_low_authority_source",
+      "latency_ms": 14203.398,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.5,
+      "id": "qdrant_array_filter_supported__generated_uncited_supported",
+      "latency_ms": 3339.101,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 0.5,
+      "id": "qdrant_array_filter_supported__generated_missing_citation",
+      "latency_ms": 3432.202,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.5,
+      "id": "qdrant_array_filter_supported__generated_wrong_source_citation",
+      "latency_ms": 12500.689,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 0.5,
+      "id": "qdrant_array_filter_supported__generated_stale_source",
+      "latency_ms": 12423.607,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "qdrant_array_filter_supported__generated_low_authority_source",
+      "latency_ms": 14116.038,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "qdrant_payload_index_supported__generated_uncited_supported",
+      "latency_ms": 13402.766,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "qdrant_payload_index_supported__generated_missing_citation",
+      "latency_ms": 3907.026,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "qdrant_payload_index_supported__generated_wrong_source_citation",
+      "latency_ms": 4228.874,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "qdrant_payload_index_supported__generated_stale_source",
+      "latency_ms": 13044.187,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "qdrant_payload_index_supported__generated_low_authority_source",
+      "latency_ms": 12422.579,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "qdrant_match_any_supported__generated_uncited_supported",
+      "latency_ms": 13205.456,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "qdrant_match_any_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "qdrant_match_any_supported__generated_missing_citation",
+      "latency_ms": 12767.004,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_match_any_supported__generated_wrong_source_citation",
+      "latency_ms": 3301.486,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "qdrant_match_any_supported__generated_stale_source",
+      "latency_ms": 3181.492,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "qdrant_match_any_supported__generated_low_authority_source",
+      "latency_ms": 13095.581,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "chroma_where_filter_supported__generated_uncited_supported",
+      "latency_ms": 2763.518,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "chroma_where_filter_supported__generated_no_context",
+      "latency_ms": 0.002,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "chroma_where_filter_supported__generated_missing_citation",
+      "latency_ms": 11813.898,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "chroma_where_filter_supported__generated_wrong_source_citation",
+      "latency_ms": 11695.047,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "chroma_where_filter_supported__generated_stale_source",
+      "latency_ms": 11683.49,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "chroma_where_filter_supported__generated_low_authority_source",
+      "latency_ms": 2939.853,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.6666666666666666,
+      "id": "chroma_issue_where_no_match_supported__generated_uncited_supported",
+      "latency_ms": 4184.347,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "chroma_issue_where_no_match_supported__generated_no_context",
+      "latency_ms": 0.004,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 0.6666666666666666,
+      "id": "chroma_issue_where_no_match_supported__generated_missing_citation",
+      "latency_ms": 14887.684,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.6666666666666666,
+      "id": "chroma_issue_where_no_match_supported__generated_wrong_source_citation",
+      "latency_ms": 13425.261,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 0.6666666666666666,
+      "id": "chroma_issue_where_no_match_supported__generated_stale_source",
+      "latency_ms": 11948.462,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.6666666666666666,
+      "id": "chroma_issue_where_no_match_supported__generated_low_authority_source",
+      "latency_ms": 13379.271,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.6666666666666666,
+      "id": "chroma_issue_metadata_list_error_supported__generated_uncited_supported",
+      "latency_ms": 4777.51,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "chroma_issue_metadata_list_error_supported__generated_no_context",
+      "latency_ms": 0.004,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 0.6666666666666666,
+      "id": "chroma_issue_metadata_list_error_supported__generated_missing_citation",
+      "latency_ms": 3628.212,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.6666666666666666,
+      "id": "chroma_issue_metadata_list_error_supported__generated_wrong_source_citation",
+      "latency_ms": 3836.275,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 0.6666666666666666,
+      "id": "chroma_issue_metadata_list_error_supported__generated_stale_source",
+      "latency_ms": 12746.764,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.6666666666666666,
+      "id": "chroma_issue_metadata_list_error_supported__generated_low_authority_source",
+      "latency_ms": 13929.745,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "haystack_document_store_supported__generated_uncited_supported",
+      "latency_ms": 13212.723,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "haystack_document_store_supported__generated_no_context",
+      "latency_ms": 0.004,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "haystack_document_store_supported__generated_missing_citation",
+      "latency_ms": 12111.31,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "haystack_document_store_supported__generated_wrong_source_citation",
+      "latency_ms": 2761.073,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "haystack_document_store_supported__generated_stale_source",
+      "latency_ms": 13074.719,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "haystack_document_store_supported__generated_low_authority_source",
+      "latency_ms": 12912.784,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "langchain_vectorstore_retriever_supported__generated_uncited_supported",
+      "latency_ms": 12405.638,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "context_recall": 0.0,
+      "faithfulness": 0.0,
+      "id": "langchain_vectorstore_retriever_supported__generated_no_context",
+      "latency_ms": 0.003,
+      "reason": "No retrieved contexts were supplied.",
+      "retrieved_context_count": 0
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "langchain_vectorstore_retriever_supported__generated_missing_citation",
+      "latency_ms": 11781.292,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "langchain_vectorstore_retriever_supported__generated_wrong_source_citation",
+      "latency_ms": 3189.803,
+      "reason": "",
+      "retrieved_context_count": 2
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "langchain_vectorstore_retriever_supported__generated_stale_source",
+      "latency_ms": 3346.975,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 1.0,
+      "id": "langchain_vectorstore_retriever_supported__generated_low_authority_source",
+      "latency_ms": 3763.848,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "local_mode_sqlite_supported__generated_distractor_only_context_000",
+      "latency_ms": 2827.749,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "local_mode_sqlite_supported__generated_distractor_only_context_001",
+      "latency_ms": 12585.933,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "local_mode_sqlite_supported__generated_distractor_only_context_002",
+      "latency_ms": 12448.167,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "local_mode_sqlite_supported__generated_distractor_only_context_003",
+      "latency_ms": 12043.842,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "local_mode_sqlite_supported__generated_distractor_only_context_004",
+      "latency_ms": 11836.014,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "local_mode_sqlite_supported__generated_distractor_only_context_005",
+      "latency_ms": 13028.965,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "v020_claim_verification_supported__generated_distractor_only_context_000",
+      "latency_ms": 13004.02,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "v020_claim_verification_supported__generated_distractor_only_context_001",
+      "latency_ms": 12809.66,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "v020_claim_verification_supported__generated_distractor_only_context_002",
+      "latency_ms": 12782.798,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "v020_claim_verification_supported__generated_distractor_only_context_003",
+      "latency_ms": 3200.103,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "v020_claim_verification_supported__generated_distractor_only_context_004",
+      "latency_ms": 3100.331,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "v020_claim_verification_supported__generated_distractor_only_context_005",
+      "latency_ms": 3839.264,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "v020_claim_verification_supported__generated_distractor_only_context_006",
+      "latency_ms": 4258.842,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "v020_claim_verification_supported__generated_distractor_only_context_007",
+      "latency_ms": 13218.481,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "v020_claim_verification_supported__generated_distractor_only_context_008",
+      "latency_ms": 13508.911,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "v020_claim_verification_supported__generated_distractor_only_context_009",
+      "latency_ms": 12612.058,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "v020_claim_verification_supported__generated_distractor_only_context_010",
+      "latency_ms": 12075.745,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "v020_claim_verification_supported__generated_distractor_only_context_011",
+      "latency_ms": 14014.629,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "langchain_agent_events_supported__generated_distractor_only_context_000",
+      "latency_ms": 13996.581,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "langchain_agent_events_supported__generated_distractor_only_context_001",
+      "latency_ms": 13881.021,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "langchain_agent_events_supported__generated_distractor_only_context_002",
+      "latency_ms": 13633.633,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "langchain_agent_events_supported__generated_distractor_only_context_003",
+      "latency_ms": 13836.15,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "langchain_agent_events_supported__generated_distractor_only_context_004",
+      "latency_ms": 13836.008,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "langchain_agent_events_supported__generated_distractor_only_context_005",
+      "latency_ms": 13833.4,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "fastapi_logging_supported__generated_distractor_only_context_000",
+      "latency_ms": 2991.207,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "fastapi_logging_supported__generated_distractor_only_context_001",
+      "latency_ms": 12425.018,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "fastapi_logging_supported__generated_distractor_only_context_002",
+      "latency_ms": 2790.337,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "fastapi_logging_supported__generated_distractor_only_context_003",
+      "latency_ms": 2807.576,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "fastapi_logging_supported__generated_distractor_only_context_004",
+      "latency_ms": 2840.717,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "fastapi_logging_supported__generated_distractor_only_context_005",
+      "latency_ms": 12776.934,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "fastapi_logging_supported__generated_distractor_only_context_006",
+      "latency_ms": 12208.862,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "fastapi_logging_supported__generated_distractor_only_context_007",
+      "latency_ms": 11550.549,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "fastapi_logging_supported__generated_distractor_only_context_008",
+      "latency_ms": 12156.133,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "failure_taxonomy_citation_supported__generated_distractor_only_context_000",
+      "latency_ms": 4326.455,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "failure_taxonomy_citation_supported__generated_distractor_only_context_001",
+      "latency_ms": 2392.707,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "failure_taxonomy_citation_supported__generated_distractor_only_context_002",
+      "latency_ms": 2793.816,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "failure_taxonomy_citation_supported__generated_distractor_only_context_003",
+      "latency_ms": 2018.992,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "failure_taxonomy_citation_supported__generated_distractor_only_context_004",
+      "latency_ms": 2295.061,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "failure_taxonomy_citation_supported__generated_distractor_only_context_005",
+      "latency_ms": 2235.73,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "failure_taxonomy_citation_supported__generated_distractor_only_context_006",
+      "latency_ms": 12107.617,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "failure_taxonomy_citation_supported__generated_distractor_only_context_007",
+      "latency_ms": 12697.131,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "failure_taxonomy_citation_supported__generated_distractor_only_context_008",
+      "latency_ms": 12277.135,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_000",
+      "latency_ms": 27704.05,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_001",
+      "latency_ms": 17057.038,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_002",
+      "latency_ms": 15631.292,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_003",
+      "latency_ms": 15573.472,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_004",
+      "latency_ms": 16490.966,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_005",
+      "latency_ms": 16489.375,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_006",
+      "latency_ms": 16487.278,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_007",
+      "latency_ms": 16487.79,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_008",
+      "latency_ms": 15804.573,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_009",
+      "latency_ms": 15803.355,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_010",
+      "latency_ms": 15803.582,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_011",
+      "latency_ms": 15801.094,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_report_contents_supported__generated_distractor_only_context_012",
+      "latency_ms": 15202.575,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_viewer_supported__generated_distractor_only_context_000",
+      "latency_ms": 3378.523,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_viewer_supported__generated_distractor_only_context_001",
+      "latency_ms": 3726.42,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_viewer_supported__generated_distractor_only_context_002",
+      "latency_ms": 15200.192,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_viewer_supported__generated_distractor_only_context_003",
+      "latency_ms": 15539.916,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_viewer_supported__generated_distractor_only_context_004",
+      "latency_ms": 14696.668,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_viewer_supported__generated_distractor_only_context_005",
+      "latency_ms": 3858.797,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_viewer_supported__generated_distractor_only_context_006",
+      "latency_ms": 4208.647,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_viewer_supported__generated_distractor_only_context_007",
+      "latency_ms": 14088.66,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_viewer_supported__generated_distractor_only_context_008",
+      "latency_ms": 13593.928,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_eval_workflow_supported__generated_distractor_only_context_000",
+      "latency_ms": 13451.915,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_eval_workflow_supported__generated_distractor_only_context_001",
+      "latency_ms": 13100.204,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_eval_workflow_supported__generated_distractor_only_context_002",
+      "latency_ms": 15484.159,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_eval_workflow_supported__generated_distractor_only_context_003",
+      "latency_ms": 15482.657,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_eval_workflow_supported__generated_distractor_only_context_004",
+      "latency_ms": 15482.706,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "quickstart_eval_workflow_supported__generated_distractor_only_context_005",
+      "latency_ms": 15482.736,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_config_precedence_supported__generated_distractor_only_context_000",
+      "latency_ms": 14621.933,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_config_precedence_supported__generated_distractor_only_context_001",
+      "latency_ms": 14622.007,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_config_precedence_supported__generated_distractor_only_context_002",
+      "latency_ms": 14626.842,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_config_precedence_supported__generated_distractor_only_context_003",
+      "latency_ms": 14620.718,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_config_precedence_supported__generated_distractor_only_context_004",
+      "latency_ms": 15109.026,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_config_precedence_supported__generated_distractor_only_context_005",
+      "latency_ms": 15108.206,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_config_precedence_supported__generated_distractor_only_context_006",
+      "latency_ms": 15108.648,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_config_precedence_supported__generated_distractor_only_context_007",
+      "latency_ms": 31869.777,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_config_precedence_supported__generated_distractor_only_context_008",
+      "latency_ms": 16768.091,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_config_precedence_supported__generated_distractor_only_context_009",
+      "latency_ms": 16767.951,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_config_precedence_supported__generated_distractor_only_context_010",
+      "latency_ms": 16767.904,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_000",
+      "latency_ms": 18368.717,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_001",
+      "latency_ms": 18367.446,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_002",
+      "latency_ms": 18367.828,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_003",
+      "latency_ms": 18366.241,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_004",
+      "latency_ms": 17112.431,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_005",
+      "latency_ms": 17105.716,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_006",
+      "latency_ms": 17105.941,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_007",
+      "latency_ms": 17104.553,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_008",
+      "latency_ms": 20548.856,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_009",
+      "latency_ms": 20547.289,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_010",
+      "latency_ms": 20548.549,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_011",
+      "latency_ms": 20541.965,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_012",
+      "latency_ms": 15840.139,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "sdk_agent_event_types_supported__generated_distractor_only_context_013",
+      "latency_ms": 15840.96,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_000",
+      "latency_ms": 15839.527,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_001",
+      "latency_ms": 15839.409,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_002",
+      "latency_ms": 17771.424,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_003",
+      "latency_ms": 17770.239,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_004",
+      "latency_ms": 17769.893,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_005",
+      "latency_ms": 17768.885,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_006",
+      "latency_ms": 16366.709,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_007",
+      "latency_ms": 16365.995,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_008",
+      "latency_ms": 16366.009,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_009",
+      "latency_ms": 16365.073,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_010",
+      "latency_ms": 20424.471,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_011",
+      "latency_ms": 20420.761,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_012",
+      "latency_ms": 20424.529,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_local_items_supported__generated_distractor_only_context_013",
+      "latency_ms": 20414.282,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_no_network_supported__generated_distractor_only_context_000",
+      "latency_ms": 14263.089,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_no_network_supported__generated_distractor_only_context_001",
+      "latency_ms": 14257.796,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_no_network_supported__generated_distractor_only_context_002",
+      "latency_ms": 3906.289,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_no_network_supported__generated_distractor_only_context_003",
+      "latency_ms": 14253.553,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_no_network_supported__generated_distractor_only_context_004",
+      "latency_ms": 12027.312,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_no_network_supported__generated_distractor_only_context_005",
+      "latency_ms": 2305.936,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_no_network_supported__generated_distractor_only_context_006",
+      "latency_ms": 14891.924,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_no_network_supported__generated_distractor_only_context_007",
+      "latency_ms": 2545.404,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_no_network_supported__generated_distractor_only_context_008",
+      "latency_ms": 13201.682,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_no_network_supported__generated_distractor_only_context_009",
+      "latency_ms": 12561.661,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_redaction_supported__generated_distractor_only_context_000",
+      "latency_ms": 15501.036,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_redaction_supported__generated_distractor_only_context_001",
+      "latency_ms": 3191.069,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_redaction_supported__generated_distractor_only_context_002",
+      "latency_ms": 14738.907,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_redaction_supported__generated_distractor_only_context_003",
+      "latency_ms": 14727.802,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_redaction_supported__generated_distractor_only_context_004",
+      "latency_ms": 14125.006,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_redaction_supported__generated_distractor_only_context_005",
+      "latency_ms": 14322.864,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_redaction_supported__generated_distractor_only_context_006",
+      "latency_ms": 3850.502,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_redaction_supported__generated_distractor_only_context_007",
+      "latency_ms": 3703.913,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_redaction_supported__generated_distractor_only_context_008",
+      "latency_ms": 11877.671,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_redaction_supported__generated_distractor_only_context_009",
+      "latency_ms": 13727.395,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "privacy_redaction_supported__generated_distractor_only_context_010",
+      "latency_ms": 12892.6,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_000",
+      "latency_ms": 13212.314,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_001",
+      "latency_ms": 15020.242,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_002",
+      "latency_ms": 12961.592,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_003",
+      "latency_ms": 12852.742,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_004",
+      "latency_ms": 12388.237,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_005",
+      "latency_ms": 4282.109,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_006",
+      "latency_ms": 3820.75,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_007",
+      "latency_ms": 3998.307,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_008",
+      "latency_ms": 3964.632,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_009",
+      "latency_ms": 14580.592,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_010",
+      "latency_ms": 14366.139,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_011",
+      "latency_ms": 14902.098,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "release_runtime_dependencies_supported__generated_distractor_only_context_012",
+      "latency_ms": 13748.977,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "byo_jsonpath_supported__generated_distractor_only_context_000",
+      "latency_ms": 12311.799,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "byo_jsonpath_supported__generated_distractor_only_context_001",
+      "latency_ms": 12008.664,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "byo_jsonpath_supported__generated_distractor_only_context_002",
+      "latency_ms": 11940.054,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "byo_jsonpath_supported__generated_distractor_only_context_003",
+      "latency_ms": 14787.431,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "byo_jsonpath_supported__generated_distractor_only_context_004",
+      "latency_ms": 14124.268,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "byo_jsonpath_supported__generated_distractor_only_context_005",
+      "latency_ms": 14124.568,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "byo_jsonpath_supported__generated_distractor_only_context_006",
+      "latency_ms": 14121.757,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "byo_jsonpath_supported__generated_distractor_only_context_007",
+      "latency_ms": 14404.89,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "byo_jsonpath_supported__generated_distractor_only_context_008",
+      "latency_ms": 4151.858,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "byo_jsonpath_supported__generated_distractor_only_context_009",
+      "latency_ms": 14562.269,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "byo_jsonpath_supported__generated_distractor_only_context_010",
+      "latency_ms": 14560.423,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_000",
+      "latency_ms": 25735.985,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_001",
+      "latency_ms": 25197.595,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_002",
+      "latency_ms": 14796.141,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_003",
+      "latency_ms": 14786.211,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_004",
+      "latency_ms": 19534.376,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_005",
+      "latency_ms": 19534.579,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_006",
+      "latency_ms": 19526.873,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_007",
+      "latency_ms": 19518.18,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_008",
+      "latency_ms": 17230.689,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_009",
+      "latency_ms": 17230.838,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_010",
+      "latency_ms": 17229.21,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_011",
+      "latency_ms": 17229.495,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_012",
+      "latency_ms": 15368.61,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "regression_threshold_metrics_supported__generated_distractor_only_context_013",
+      "latency_ms": 15368.714,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "langgraph_errors_supported__generated_distractor_only_context_000",
+      "latency_ms": 4135.996,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "langgraph_errors_supported__generated_distractor_only_context_001",
+      "latency_ms": 4078.087,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "langgraph_errors_supported__generated_distractor_only_context_002",
+      "latency_ms": 12987.832,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "langgraph_errors_supported__generated_distractor_only_context_003",
+      "latency_ms": 13036.771,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "langgraph_errors_supported__generated_distractor_only_context_004",
+      "latency_ms": 3809.581,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "langgraph_errors_supported__generated_distractor_only_context_005",
+      "latency_ms": 14268.198,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "langgraph_errors_supported__generated_distractor_only_context_006",
+      "latency_ms": 12570.267,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "langgraph_errors_supported__generated_distractor_only_context_007",
+      "latency_ms": 12464.139,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "langgraph_errors_supported__generated_distractor_only_context_008",
+      "latency_ms": 12185.87,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "langgraph_errors_supported__generated_distractor_only_context_009",
+      "latency_ms": 3595.252,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "llamaindex_mock_local_supported__generated_distractor_only_context_000",
+      "latency_ms": 14947.912,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "llamaindex_mock_local_supported__generated_distractor_only_context_001",
+      "latency_ms": 14945.869,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "llamaindex_mock_local_supported__generated_distractor_only_context_002",
+      "latency_ms": 13220.277,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "llamaindex_mock_local_supported__generated_distractor_only_context_003",
+      "latency_ms": 13892.723,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "llamaindex_mock_local_supported__generated_distractor_only_context_004",
+      "latency_ms": 4247.337,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "multi_span_local_no_backend_supported__generated_distractor_only_context_000",
+      "latency_ms": 3659.56,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "multi_span_local_no_backend_supported__generated_distractor_only_context_001",
+      "latency_ms": 3100.286,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "multi_span_local_no_backend_supported__generated_distractor_only_context_002",
+      "latency_ms": 12446.51,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "multi_span_local_no_backend_supported__generated_distractor_only_context_003",
+      "latency_ms": 11886.587,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "multi_span_local_no_backend_supported__generated_distractor_only_context_004",
+      "latency_ms": 13450.681,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "multi_span_local_no_backend_supported__generated_distractor_only_context_005",
+      "latency_ms": 13114.363,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "multi_span_local_no_backend_supported__generated_distractor_only_context_006",
+      "latency_ms": 3102.224,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "multi_span_local_no_backend_supported__generated_distractor_only_context_007",
+      "latency_ms": 2524.857,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "multi_span_local_no_backend_supported__generated_distractor_only_context_008",
+      "latency_ms": 12807.769,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "multi_span_local_no_backend_supported__generated_distractor_only_context_009",
+      "latency_ms": 12557.361,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_000",
+      "latency_ms": 12405.764,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_001",
+      "latency_ms": 11827.916,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_002",
+      "latency_ms": 15667.891,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_003",
+      "latency_ms": 15667.01,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_004",
+      "latency_ms": 15666.184,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_005",
+      "latency_ms": 15667.129,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_006",
+      "latency_ms": 14776.954,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_007",
+      "latency_ms": 14775.813,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_008",
+      "latency_ms": 14775.177,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_009",
+      "latency_ms": 14774.637,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_010",
+      "latency_ms": 14510.306,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_011",
+      "latency_ms": 14491.6,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_012",
+      "latency_ms": 14490.089,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_013",
+      "latency_ms": 14487.827,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_014",
+      "latency_ms": 4444.981,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_015",
+      "latency_ms": 4502.791,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_016",
+      "latency_ms": 4732.76,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_017",
+      "latency_ms": 4692.757,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_018",
+      "latency_ms": 15759.215,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_019",
+      "latency_ms": 14818.448,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_020",
+      "latency_ms": 14367.033,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_021",
+      "latency_ms": 15739.158,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_022",
+      "latency_ms": 12582.573,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_023",
+      "latency_ms": 12341.056,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_024",
+      "latency_ms": 14872.131,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_025",
+      "latency_ms": 14600.976,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_026",
+      "latency_ms": 14817.98,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_027",
+      "latency_ms": 14816.631,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_028",
+      "latency_ms": 14144.679,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_029",
+      "latency_ms": 15281.891,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_030",
+      "latency_ms": 4357.87,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_031",
+      "latency_ms": 4379.763,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_032",
+      "latency_ms": 15571.651,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_033",
+      "latency_ms": 14018.599,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_filter_supported__generated_distractor_only_context_034",
+      "latency_ms": 13369.465,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_000",
+      "latency_ms": 12742.264,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_001",
+      "latency_ms": 13917.342,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_002",
+      "latency_ms": 13051.984,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_003",
+      "latency_ms": 12716.263,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_004",
+      "latency_ms": 12413.433,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_005",
+      "latency_ms": 14386.188,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_006",
+      "latency_ms": 14273.939,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_007",
+      "latency_ms": 14218.664,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_008",
+      "latency_ms": 13958.934,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_009",
+      "latency_ms": 3976.576,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_010",
+      "latency_ms": 14517.724,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_011",
+      "latency_ms": 4047.847,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_012",
+      "latency_ms": 4046.747,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_013",
+      "latency_ms": 13031.454,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_014",
+      "latency_ms": 13047.436,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_015",
+      "latency_ms": 12885.714,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_016",
+      "latency_ms": 3651.681,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_017",
+      "latency_ms": 15569.215,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_018",
+      "latency_ms": 12972.701,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_019",
+      "latency_ms": 12883.337,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_020",
+      "latency_ms": 14279.108,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_021",
+      "latency_ms": 14629.142,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_022",
+      "latency_ms": 14626.752,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_023",
+      "latency_ms": 14361.158,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_array_filter_supported__generated_distractor_only_context_024",
+      "latency_ms": 14257.058,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_000",
+      "latency_ms": 14843.05,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_001",
+      "latency_ms": 14841.337,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_002",
+      "latency_ms": 12689.766,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_003",
+      "latency_ms": 12639.749,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_004",
+      "latency_ms": 4115.979,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_005",
+      "latency_ms": 4351.528,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_006",
+      "latency_ms": 3182.853,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_007",
+      "latency_ms": 4274.826,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_008",
+      "latency_ms": 12320.265,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_009",
+      "latency_ms": 13724.182,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_010",
+      "latency_ms": 13355.686,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_011",
+      "latency_ms": 13566.19,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_012",
+      "latency_ms": 3960.353,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_013",
+      "latency_ms": 12503.675,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_014",
+      "latency_ms": 12294.529,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_015",
+      "latency_ms": 12216.551,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_016",
+      "latency_ms": 13205.091,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_017",
+      "latency_ms": 3780.788,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_018",
+      "latency_ms": 3763.342,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_019",
+      "latency_ms": 4009.186,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_020",
+      "latency_ms": 12605.495,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_021",
+      "latency_ms": 14702.821,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_022",
+      "latency_ms": 14064.731,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_023",
+      "latency_ms": 26044.403,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_024",
+      "latency_ms": 14914.528,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_025",
+      "latency_ms": 12207.402,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_026",
+      "latency_ms": 14474.792,
+      "reason": "",
+      "retrieved_context_count": 1
+    },
+    {
+      "faithfulness": 0.0,
+      "id": "qdrant_payload_index_supported__generated_distractor_only_context_027",
+      "latency_ms": 3834.843,
+      "reason": "",
+      "retrieved_context_count": 1
+    }
+  ],
+  "system": "RAGAS"
+}

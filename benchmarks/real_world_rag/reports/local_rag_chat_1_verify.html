@@ -1,0 +1,940 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ContextTrace Verification Report</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f8fa;
+      --panel: #ffffff;
+      --subtle: #fbfcfe;
+      --text: #202832;
+      --muted: #657286;
+      --line: #d9e0ea;
+      --ok: #176f44;
+      --warn: #946200;
+      --bad: #b42318;
+      --accent: #2458d3;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    main { max-width: 1160px; margin: 0 auto; padding: 32px 20px 56px; }
+    header { border-bottom: 1px solid var(--line); margin-bottom: 22px; padding-bottom: 18px; }
+    h1, h2, h3 { margin: 0; }
+    h1 { font-size: 30px; }
+    h2 { font-size: 18px; margin-bottom: 12px; }
+    h3 { font-size: 15px; margin-bottom: 8px; }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin: 16px 0;
+      padding: 18px;
+    }
+    .summary {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    .card, .item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--subtle);
+      padding: 12px;
+    }
+    .item + .item { margin-top: 10px; }
+    .label, .item-meta {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .value { margin-top: 4px; font-size: 18px; overflow-wrap: anywhere; }
+    .muted { color: var(--muted); }
+    .answer, .item p { white-space: pre-wrap; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { border-bottom: 1px solid var(--line); padding: 10px; text-align: left; vertical-align: top; }
+    th { color: var(--muted); font-size: 12px; text-transform: uppercase; }
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #eef2f7;
+      padding: 3px 8px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .verdict-supported, .citation-citation_ok { color: var(--ok); background: #e9f7ef; }
+    .verdict-unverifiable, .verdict-partially_supported, .citation-claim_has_no_citation { color: var(--warn); background: #fff7df; }
+    .verdict-unsupported, .verdict-contradicted,
+    .citation-cited_source_missing,
+    .citation-claim_supported_by_different_source,
+    .citation-cited_source_does_not_support_claim { color: var(--bad); background: #fdeceb; }
+    pre {
+      margin: 0;
+      overflow: auto;
+      background: #101828;
+      color: #f8fafc;
+      border-radius: 8px;
+      padding: 14px;
+      font-size: 13px;
+    }
+    mark {
+      background: #fff0a6;
+      color: inherit;
+      border-radius: 3px;
+      padding: 0 2px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>ContextTrace Verification Report</h1>
+      <p class="muted">Local claim-level evidence verification for a portable RAG trace.</p>
+    </header>
+
+    <section>
+      <h2>Reliability Summary</h2>
+      <div class="summary">
+        <div class="card">
+          <div class="label">Failure Type</div>
+          <div class="value">no_failure_detected</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Total Claims</div>
+          <div class="value">3</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Supported</div>
+          <div class="value">3</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Partially Supported</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Unsupported</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Unverifiable</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Contradicted</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Support Rate</div>
+          <div class="value">1.0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Unsupported Claim Rate</div>
+          <div class="value">0.0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Citation Mismatches</div>
+          <div class="value">3</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Should Abstain</div>
+          <div class="value">False</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Primary Root Cause</div>
+          <div class="value">no_failure_detected</div>
+        </div>
+        </div>
+    </section>
+
+    <section>
+      <h2>Suggested Fix</h2>
+      <p><strong>no_failure_detected</strong></p>
+      <p>No fix is needed for this trace based on the local verifier.</p>
+    </section>
+
+    <section>
+      <h2>Query</h2>
+      <p>What local models does this RAG chatbot use for chat and embeddings?</p>
+      <h2>Answer</h2>
+      <p class="answer"># Offline Local AI Agent Chatbot with RAG
+
+This project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling users to ask questions of their docs. The application is designed to run offline and for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B`, and uses `nomic-embed-text` for local offline vector embeddings. This application uses the Llama 3.2 3B param model (about 2GB, approx 10 minutes download) for chat and summaries, and the nomic-embed-text model (274Mb approx 2 minutes download) for vectorisation.</p>
+    </section>
+
+    <section>
+      <h2>Claim Support Overview</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Claim</th>
+            <th>Verdict</th>
+            <th>Confidence</th>
+            <th>Best Context</th>
+            <th>Citation</th>
+            <th>Root Cause</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td>claim_1</td>
+              <td># Offline Local AI Agent Chatbot with RAG This project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling users to ask questions of their docs.</td>
+              <td><span class="badge verdict-supported">supported</span></td>
+              <td>1.0</td>
+              <td>local_rag_chat:README.md:1</td>
+              <td><span class="badge citation-claim_has_no_citation">claim_has_no_citation</span></td>
+              <td>no_failure_detected</td>
+            </tr>
+            
+
+            <tr>
+              <td>claim_2</td>
+              <td>The application is designed to run offline and for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B`, and uses `nomic-embed-text` for local offline vector embeddings.</td>
+              <td><span class="badge verdict-supported">supported</span></td>
+              <td>1.0</td>
+              <td>local_rag_chat:README.md:1</td>
+              <td><span class="badge citation-claim_has_no_citation">claim_has_no_citation</span></td>
+              <td>no_failure_detected</td>
+            </tr>
+            
+
+            <tr>
+              <td>claim_3</td>
+              <td>This application uses the Llama 3.2 3B param model (about 2GB, approx 10 minutes download) for chat and summaries, and the nomic-embed-text model (274Mb approx 2 minutes download) for vectorisation.</td>
+              <td><span class="badge verdict-supported">supported</span></td>
+              <td>1.0</td>
+              <td>local_rag_chat:README.md:2</td>
+              <td><span class="badge citation-claim_has_no_citation">claim_has_no_citation</span></td>
+              <td>no_failure_detected</td>
+            </tr>
+            </tbody>
+      </table>
+      <div>
+            <article class="item">
+              <div class="item-meta">claim_1 | supported | score 1.0</div>
+              <h3># Offline Local AI Agent Chatbot with RAG This project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling users to ask questions of their docs.</h3>
+              <p class="muted">Evidence span: local_rag_chat:README.md:1 chars 0-196 sha256:09d48d44c62bd7cc</p>
+              <p><strong>Supporting spans:</strong> <span>local_rag_chat:README.md:1 sha256:09d48d44c62bd7cc score 1.0</span>, <span>local_rag_chat:backend/app/main.py:2 sha256:80ce04919535a5d0 score 0.191</span>, <span>local_rag_chat:README.md:1 sha256:2e21cbfc95455e40 score 0.098</span></p>
+              <p># <mark>Offline</mark> <mark>Local</mark> <mark>AI</mark> <mark>Agent</mark> <mark>Chatbot</mark> with <mark>RAG</mark>
+
+This <mark>project</mark> <mark>builds</mark> a <mark>chatbot</mark> <mark>connected</mark> to an <mark>AI</mark> <mark>Agent</mark> that <mark>provides</mark> <mark>retrieval</mark>-<mark>augmented</mark> <mark>generation</mark> (<mark>RAG</mark>), <mark>enabling</mark> <mark>users</mark> to <mark>ask</mark> <mark>questions</mark> of their <mark>docs</mark>.</p>
+              <p class="muted">Matched terms: offline, local, ai, agent, chatbot, rag, project, builds, connected, provides, retrieval, augmented, generation, enabling, users, ask, questions, docs</p>
+              <p><strong>Matched facts:</strong> <span># Offline Local AI Agent Chatbot with RAG This project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling users to ask questions of their docs (predicate)</span></p>
+              <p><strong>Missing facts:</strong> <span class="muted">none</span></p>
+              <p><strong>Root cause:</strong> no_failure_detected</p>
+              <p>The claim is supported by the retrieved evidence because all required facts were matched.</p>
+            </article>
+            
+
+            <article class="item">
+              <div class="item-meta">claim_2 | supported | score 1.0</div>
+              <h3>The application is designed to run offline and for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B`, and uses `nomic-embed-text` for local offline vector embeddings.</h3>
+              <p class="muted">Evidence span: local_rag_chat:README.md:1 chars 266-480 sha256:2e21cbfc95455e40</p>
+              <p><strong>Supporting spans:</strong> <span>local_rag_chat:README.md:1 sha256:2e21cbfc95455e40 score 1.0</span>, <span>local_rag_chat:README.md:2 sha256:237c3094b33f1d75 score 0.548</span>, <span>local_rag_chat:README.md:2 sha256:5005b9a0c50f70cb score 0.323</span>, <span>local_rag_chat:README.md:2 sha256:7490190345fefaf7 score 0.13</span></p>
+              <p>The <mark>application</mark> is <mark>designed</mark> to <mark>run</mark> <mark>offline</mark> and for the <mark>Large</mark> <mark>Language</mark> <mark>Model</mark> (<mark>LLM</mark>) it <mark>uses</mark> <mark>Ollama</mark> to <mark>run</mark> <mark>small</mark> <mark>3B</mark> <mark>param</mark> <mark>models</mark> such as `<mark>Llama</mark> <mark>3</mark>.<mark>2</mark> <mark>3B</mark>`, and <mark>uses</mark> `<mark>nomic</mark>-<mark>embed</mark>-<mark>text</mark>` for <mark>local</mark> <mark>offline</mark> <mark>vector</mark> <mark>embeddings</mark>.</p>
+              <p class="muted">Matched terms: application, designed, run, offline, large, language, model, llm, uses, ollama, small, 3b, param, models, llama, 3, 2, nomic, embed, text, local, vector, embeddings</p>
+              <p><strong>Matched facts:</strong> <span>run offline (predicate)</span>, <span>run for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B` (predicate)</span>, <span>run uses `nomic-embed-text` for local offline vector embeddings (predicate)</span>, <span>3.2 (version)</span></p>
+              <p><strong>Missing facts:</strong> <span class="muted">none</span></p>
+              <p><strong>Root cause:</strong> no_failure_detected</p>
+              <p>The claim is supported by the retrieved evidence because all required facts were matched.</p>
+            </article>
+            
+
+            <article class="item">
+              <div class="item-meta">claim_3 | supported | score 1.0</div>
+              <h3>This application uses the Llama 3.2 3B param model (about 2GB, approx 10 minutes download) for chat and summaries, and the nomic-embed-text model (274Mb approx 2 minutes download) for vectorisation.</h3>
+              <p class="muted">Evidence span: local_rag_chat:README.md:2 chars 313-511 sha256:237c3094b33f1d75</p>
+              <p><strong>Supporting spans:</strong> <span>local_rag_chat:README.md:2 sha256:237c3094b33f1d75 score 1.0</span>, <span>local_rag_chat:README.md:1 sha256:2e21cbfc95455e40 score 0.327</span>, <span>local_rag_chat:README.md:2 sha256:5005b9a0c50f70cb score 0.086</span>, <span>local_rag_chat:README.md:2 sha256:7490190345fefaf7 score 0.059</span></p>
+              <p>This <mark>application</mark> <mark>uses</mark> the <mark>Llama</mark> <mark>3</mark>.<mark>2</mark> <mark>3B</mark> <mark>param</mark> <mark>model</mark> (about <mark>2GB</mark>, <mark>approx</mark> <mark>10</mark> <mark>minutes</mark> <mark>download</mark>) for <mark>chat</mark> and <mark>summaries</mark>, and the <mark>nomic</mark>-<mark>embed</mark>-<mark>text</mark> <mark>model</mark> (<mark>274Mb</mark> <mark>approx</mark> <mark>2</mark> <mark>minutes</mark> <mark>download</mark>) for <mark>vectorisation</mark>.</p>
+              <p class="muted">Matched terms: application, uses, llama, 3, 2, 3b, param, model, 2gb, approx, 10, minutes, download, chat, summaries, nomic, embed, text, 274mb, vectorisation</p>
+              <p><strong>Matched facts:</strong> <span>This application uses the Llama 3.2 3B param model (about 2GB, approx 10 minutes download) for chat and summaries, and the nomic-embed-text model (274Mb approx 2 minutes download) for vectorisation (version)</span>, <span>3.2 (version)</span></p>
+              <p><strong>Missing facts:</strong> <span class="muted">none</span></p>
+              <p><strong>Root cause:</strong> no_failure_detected</p>
+              <p>The claim is supported by the retrieved evidence because all required facts were matched.</p>
+            </article>
+            </div>
+    </section>
+
+    <section>
+      <h2>Unsupported Claims</h2>
+      <p class="muted">No partial, unsupported, contradicted, or unverifiable claims detected.</p>
+    </section>
+
+    <section>
+      <h2>Root Cause Diagnosis</h2>
+      <p class="muted">No root-cause failure was detected.</p>
+    </section>
+
+    <section>
+      <h2>Citation Mismatches</h2>
+      
+        <article class="item">
+          <div class="item-meta">claim_1 | cited none</div>
+          <p># Offline Local AI Agent Chatbot with RAG This project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling users to ask questions of their docs.</p>
+          <p><strong>claim_has_no_citation</strong></p>
+          <p class="muted">Best supporting context: local_rag_chat:README.md:1</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">claim_2 | cited none</div>
+          <p>The application is designed to run offline and for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B`, and uses `nomic-embed-text` for local offline vector embeddings.</p>
+          <p><strong>claim_has_no_citation</strong></p>
+          <p class="muted">Best supporting context: local_rag_chat:README.md:1</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">claim_3 | cited none</div>
+          <p>This application uses the Llama 3.2 3B param model (about 2GB, approx 10 minutes download) for chat and summaries, and the nomic-embed-text model (274Mb approx 2 minutes download) for vectorisation.</p>
+          <p><strong>claim_has_no_citation</strong></p>
+          <p class="muted">Best supporting context: local_rag_chat:README.md:2</p>
+        </article>
+        
+    </section>
+
+    <section>
+      <h2>Retrieved Contexts</h2>
+      
+        <article class="item">
+          <div class="item-meta">local_rag_chat:README.md:1 | {&quot;project&quot;: &quot;HeskethGD/local-rag-chat&quot;, &quot;repo_url&quot;: &quot;https://github.com/HeskethGD/local-rag-chat&quot;, &quot;retrieval_score&quot;: 0.6672, &quot;retriever&quot;: &quot;sentence-transformers lexical-prefilter cosine&quot;, &quot;source&quot;: &quot;README.md&quot;}</div>
+          <p># Offline Local AI Agent Chatbot with RAG
+
+This project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling users to ask questions of their docs. The backend is built with Python and uses FastAPI for the API layer. The application is designed to run offline and for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B`, and uses `nomic-embed-text` for local offline vector embeddings.
+
+The frontend chat UI may eventually be built with Nextjs but for now there is a Python based Streamlit UI in the backend folder.
+
+## Prerequisites
+
+- Python 3.11 or higher
+- Poetry (package manager)
+- Git
+- Ollama</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">local_rag_chat:README.md:2 | {&quot;project&quot;: &quot;HeskethGD/local-rag-chat&quot;, &quot;repo_url&quot;: &quot;https://github.com/HeskethGD/local-rag-chat&quot;, &quot;retrieval_score&quot;: 0.4458, &quot;retriever&quot;: &quot;sentence-transformers lexical-prefilter cosine&quot;, &quot;source&quot;: &quot;README.md&quot;}</div>
+          <p>backend folder.
+
+## Prerequisites
+
+- Python 3.11 or higher
+- Poetry (package manager)
+- Git
+- Ollama
+
+To install Ollama, follow the instructions for your operating sytem here: https://ollama.com/download
+
+## Using Llama 3.2 3B with Ollama
+
+To view models available on Ollama see here: https://ollama.com/library.
+This application uses the Llama 3.2 3B param model (about 2GB, approx 10 minutes download) for chat and summaries, and the nomic-embed-text model (274Mb approx 2 minutes download) for vectorisation. To pull them from Ollama run these commands:
+
+```
+ollama pull llama3.2:3b
+ollama pull nomic-embed-text
+```</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">local_rag_chat:backend/app/main.py:2 | {&quot;project&quot;: &quot;HeskethGD/local-rag-chat&quot;, &quot;repo_url&quot;: &quot;https://github.com/HeskethGD/local-rag-chat&quot;, &quot;retrieval_score&quot;: 0.4455, &quot;retriever&quot;: &quot;sentence-transformers lexical-prefilter cosine&quot;, &quot;source&quot;: &quot;backend/app/main.py&quot;}</div>
+          <p>chat history.
+
+Returns:
+    - (StreamingResponse): Streaming response of assistant message.
+    &quot;&quot;&quot;
+
+messages = body.messages
+    if messages == None or messages == []:
+        return None
+    try:
+        return StreamingResponse(chat_agent(messages), media_type=&quot;text/html&quot;)
+    except HTTPException as e:
+        raise HTTPException(status_code=500, detail=&quot;Internal server error&quot;)
+
+@app.post(&quot;/rag&quot;)
+def rag(body: Body):
+    &quot;&quot;&quot;
+    Generates an LLM stream response to a user question using RAG over a vector db.
+
+Parameters:
+    - body (Body): Messages from the chat history.
+
+Returns:
+    - (StreamingResponse): Streaming response of assistant message.
+    &quot;&quot;&quot;</p>
+        </article>
+        
+    </section>
+
+    <section>
+      <h2>Why This Failed</h2>
+      <ul><li>No claim-level evidence failure was detected by the local verifier.</li></ul>
+    </section>
+
+    <section>
+      <h2>Raw JSON Summary</h2>
+      <pre>{
+  &quot;summary&quot;: {
+    &quot;total_claims&quot;: 3,
+    &quot;supported&quot;: 3,
+    &quot;partially_supported&quot;: 0,
+    &quot;unsupported&quot;: 0,
+    &quot;contradicted&quot;: 0,
+    &quot;unverifiable&quot;: 0,
+    &quot;support_rate&quot;: 1.0,
+    &quot;unsupported_claim_rate&quot;: 0.0,
+    &quot;citation_mismatches&quot;: 3,
+    &quot;should_abstain&quot;: false,
+    &quot;root_causes&quot;: {
+      &quot;no_failure_detected&quot;: 3
+    },
+    &quot;primary_root_cause&quot;: &quot;no_failure_detected&quot;,
+    &quot;failure_type&quot;: &quot;no_failure_detected&quot;,
+    &quot;failure_types&quot;: [
+      &quot;no_failure_detected&quot;
+    ],
+    &quot;suggested_fix&quot;: &quot;No fix is needed for this trace based on the local verifier.&quot;,
+    &quot;mode&quot;: &quot;semantic&quot;
+  },
+  &quot;abstention&quot;: {
+    &quot;should_abstain&quot;: false,
+    &quot;reason&quot;: &quot;Most generated claims are supported by retrieved evidence.&quot;
+  },
+  &quot;diagnostics&quot;: {
+    &quot;failure_type&quot;: &quot;no_failure_detected&quot;,
+    &quot;failure_types&quot;: [
+      &quot;no_failure_detected&quot;
+    ],
+    &quot;suggested_fix&quot;: &quot;No fix is needed for this trace based on the local verifier.&quot;
+  },
+  &quot;claims&quot;: [
+    {
+      &quot;claim_id&quot;: &quot;claim_1&quot;,
+      &quot;claim&quot;: &quot;# Offline Local AI Agent Chatbot with RAG This project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling users to ask questions of their docs.&quot;,
+      &quot;verdict&quot;: &quot;supported&quot;,
+      &quot;confidence&quot;: 1.0,
+      &quot;best_context_id&quot;: &quot;local_rag_chat:README.md:1&quot;,
+      &quot;best_context_text&quot;: &quot;# Offline Local AI Agent Chatbot with RAG\n\nThis project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling users to ask questions of their docs. The backend is built with Python and uses FastAPI for the API layer. The application is designed to run offline and for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B`, and uses `nomic-embed-text` for local offline vector embeddings.\n\nThe frontend chat UI may eventually be built with Nextjs but for now there is a Python based Streamlit UI in the backend folder.\n\n## Prerequisites\n\n- Python 3.11 or higher\n- Poetry (package manager)\n- Git\n- Ollama&quot;,
+      &quot;best_score&quot;: 1.0,
+      &quot;evidence&quot;: &quot;# Offline Local AI Agent Chatbot with RAG\n\nThis project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling users to ask questions of their docs.&quot;,
+      &quot;evidence_span&quot;: {
+        &quot;context_id&quot;: &quot;local_rag_chat:README.md:1&quot;,
+        &quot;text&quot;: &quot;# Offline Local AI Agent Chatbot with RAG\n\nThis project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling users to ask questions of their docs.&quot;,
+        &quot;start_char&quot;: 0,
+        &quot;end_char&quot;: 196,
+        &quot;span_hash&quot;: &quot;sha256:09d48d44c62bd7cc&quot;
+      },
+      &quot;supporting_spans&quot;: [
+        {
+          &quot;context_id&quot;: &quot;local_rag_chat:README.md:1&quot;,
+          &quot;text&quot;: &quot;# Offline Local AI Agent Chatbot with RAG\n\nThis project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling users to ask questions of their docs.&quot;,
+          &quot;start_char&quot;: 0,
+          &quot;end_char&quot;: 196,
+          &quot;span_hash&quot;: &quot;sha256:09d48d44c62bd7cc&quot;,
+          &quot;score&quot;: 1.0,
+          &quot;matched_terms&quot;: [
+            &quot;offline&quot;,
+            &quot;local&quot;,
+            &quot;ai&quot;,
+            &quot;agent&quot;,
+            &quot;chatbot&quot;,
+            &quot;rag&quot;,
+            &quot;project&quot;,
+            &quot;builds&quot;,
+            &quot;connected&quot;,
+            &quot;provides&quot;,
+            &quot;retrieval&quot;,
+            &quot;augmented&quot;,
+            &quot;generation&quot;,
+            &quot;enabling&quot;,
+            &quot;users&quot;,
+            &quot;ask&quot;,
+            &quot;questions&quot;,
+            &quot;docs&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;local_rag_chat:backend/app/main.py:2&quot;,
+          &quot;text&quot;: &quot;\&quot;\&quot;\&quot;\n\nmessages = body.messages\n    if messages == None or messages == []:\n        return None\n    try:\n        return StreamingResponse(chat_agent(messages), media_type=\&quot;text/html\&quot;)\n    except HTTPException as e:\n        raise HTTPException(status_code=500, detail=\&quot;Internal server error\&quot;)\n\n@app.post(\&quot;/rag\&quot;)\ndef rag(body: Body):\n    \&quot;\&quot;\&quot;\n    Generates an LLM stream response to a user question using RAG over a vector db.&quot;,
+          &quot;start_char&quot;: 96,
+          &quot;end_char&quot;: 516,
+          &quot;span_hash&quot;: &quot;sha256:80ce04919535a5d0&quot;,
+          &quot;score&quot;: 0.191,
+          &quot;matched_terms&quot;: [
+            &quot;agent&quot;,
+            &quot;rag&quot;,
+            &quot;users&quot;,
+            &quot;questions&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;local_rag_chat:README.md:1&quot;,
+          &quot;text&quot;: &quot;The application is designed to run offline and for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B`, and uses `nomic-embed-text` for local offline vector embeddings.&quot;,
+          &quot;start_char&quot;: 266,
+          &quot;end_char&quot;: 480,
+          &quot;span_hash&quot;: &quot;sha256:2e21cbfc95455e40&quot;,
+          &quot;score&quot;: 0.098,
+          &quot;matched_terms&quot;: [
+            &quot;offline&quot;,
+            &quot;local&quot;
+          ]
+        }
+      ],
+      &quot;matched_terms&quot;: [
+        &quot;offline&quot;,
+        &quot;local&quot;,
+        &quot;ai&quot;,
+        &quot;agent&quot;,
+        &quot;chatbot&quot;,
+        &quot;rag&quot;,
+        &quot;project&quot;,
+        &quot;builds&quot;,
+        &quot;connected&quot;,
+        &quot;provides&quot;,
+        &quot;retrieval&quot;,
+        &quot;augmented&quot;,
+        &quot;generation&quot;,
+        &quot;enabling&quot;,
+        &quot;users&quot;,
+        &quot;ask&quot;,
+        &quot;questions&quot;,
+        &quot;docs&quot;
+      ],
+      &quot;required_facts&quot;: [
+        &quot;# Offline Local AI Agent Chatbot with RAG This project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling users to ask questions of their docs&quot;
+      ],
+      &quot;matched_facts&quot;: [
+        &quot;# Offline Local AI Agent Chatbot with RAG This project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling users to ask questions of their docs&quot;
+      ],
+      &quot;missing_facts&quot;: [],
+      &quot;conflicting_facts&quot;: [],
+      &quot;required_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;# Offline Local AI Agent Chatbot with RAG This project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling users to ask questions of their docs&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        }
+      ],
+      &quot;matched_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;# Offline Local AI Agent Chatbot with RAG This project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling users to ask questions of their docs&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        }
+      ],
+      &quot;missing_fact_details&quot;: [],
+      &quot;conflicting_fact_details&quot;: [],
+      &quot;reason&quot;: &quot;The claim is supported by the retrieved evidence because all required facts were matched.&quot;,
+      &quot;citation_status&quot;: &quot;claim_has_no_citation&quot;,
+      &quot;citation_source_id&quot;: null,
+      &quot;root_cause&quot;: {
+        &quot;label&quot;: &quot;no_failure_detected&quot;,
+        &quot;reason&quot;: &quot;The claim is supported by retrieved evidence and no citation failure was detected.&quot;,
+        &quot;missing_fact&quot;: null,
+        &quot;closest_context_id&quot;: &quot;local_rag_chat:README.md:1&quot;,
+        &quot;closest_evidence&quot;: &quot;# Offline Local AI Agent Chatbot with RAG\n\nThis project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling users to ask questions of their docs.&quot;,
+        &quot;suggested_fix&quot;: &quot;No fix needed for this claim.&quot;
+      }
+    },
+    {
+      &quot;claim_id&quot;: &quot;claim_2&quot;,
+      &quot;claim&quot;: &quot;The application is designed to run offline and for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B`, and uses `nomic-embed-text` for local offline vector embeddings.&quot;,
+      &quot;verdict&quot;: &quot;supported&quot;,
+      &quot;confidence&quot;: 1.0,
+      &quot;best_context_id&quot;: &quot;local_rag_chat:README.md:1&quot;,
+      &quot;best_context_text&quot;: &quot;# Offline Local AI Agent Chatbot with RAG\n\nThis project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling users to ask questions of their docs. The backend is built with Python and uses FastAPI for the API layer. The application is designed to run offline and for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B`, and uses `nomic-embed-text` for local offline vector embeddings.\n\nThe frontend chat UI may eventually be built with Nextjs but for now there is a Python based Streamlit UI in the backend folder.\n\n## Prerequisites\n\n- Python 3.11 or higher\n- Poetry (package manager)\n- Git\n- Ollama&quot;,
+      &quot;best_score&quot;: 1.0,
+      &quot;evidence&quot;: &quot;The application is designed to run offline and for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B`, and uses `nomic-embed-text` for local offline vector embeddings.&quot;,
+      &quot;evidence_span&quot;: {
+        &quot;context_id&quot;: &quot;local_rag_chat:README.md:1&quot;,
+        &quot;text&quot;: &quot;The application is designed to run offline and for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B`, and uses `nomic-embed-text` for local offline vector embeddings.&quot;,
+        &quot;start_char&quot;: 266,
+        &quot;end_char&quot;: 480,
+        &quot;span_hash&quot;: &quot;sha256:2e21cbfc95455e40&quot;
+      },
+      &quot;supporting_spans&quot;: [
+        {
+          &quot;context_id&quot;: &quot;local_rag_chat:README.md:1&quot;,
+          &quot;text&quot;: &quot;The application is designed to run offline and for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B`, and uses `nomic-embed-text` for local offline vector embeddings.&quot;,
+          &quot;start_char&quot;: 266,
+          &quot;end_char&quot;: 480,
+          &quot;span_hash&quot;: &quot;sha256:2e21cbfc95455e40&quot;,
+          &quot;score&quot;: 1.0,
+          &quot;matched_terms&quot;: [
+            &quot;application&quot;,
+            &quot;designed&quot;,
+            &quot;run&quot;,
+            &quot;offline&quot;,
+            &quot;large&quot;,
+            &quot;language&quot;,
+            &quot;model&quot;,
+            &quot;llm&quot;,
+            &quot;uses&quot;,
+            &quot;ollama&quot;,
+            &quot;small&quot;,
+            &quot;3b&quot;,
+            &quot;param&quot;,
+            &quot;models&quot;,
+            &quot;llama&quot;,
+            &quot;3&quot;,
+            &quot;2&quot;,
+            &quot;nomic&quot;,
+            &quot;embed&quot;,
+            &quot;text&quot;,
+            &quot;local&quot;,
+            &quot;vector&quot;,
+            &quot;embeddings&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;local_rag_chat:README.md:2&quot;,
+          &quot;text&quot;: &quot;This application uses the Llama 3.2 3B param model (about 2GB, approx 10 minutes download) for chat and summaries, and the nomic-embed-text model (274Mb approx 2 minutes download) for vectorisation.&quot;,
+          &quot;start_char&quot;: 313,
+          &quot;end_char&quot;: 511,
+          &quot;span_hash&quot;: &quot;sha256:237c3094b33f1d75&quot;,
+          &quot;score&quot;: 0.548,
+          &quot;matched_terms&quot;: [
+            &quot;application&quot;,
+            &quot;model&quot;,
+            &quot;uses&quot;,
+            &quot;3b&quot;,
+            &quot;param&quot;,
+            &quot;models&quot;,
+            &quot;llama&quot;,
+            &quot;3&quot;,
+            &quot;2&quot;,
+            &quot;nomic&quot;,
+            &quot;embed&quot;,
+            &quot;text&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;local_rag_chat:README.md:2&quot;,
+          &quot;text&quot;: &quot;## Prerequisites\n\n- Python 3.11 or higher\n- Poetry (package manager)\n- Git\n- Ollama\n\nTo install Ollama, follow the instructions for your operating sytem here: https://ollama.com/download\n\n## Using Llama 3.2 3B with Ollama\n\nTo view models available on Ollama see here: https://ollama.com/library.&quot;,
+          &quot;start_char&quot;: 17,
+          &quot;end_char&quot;: 312,
+          &quot;span_hash&quot;: &quot;sha256:5005b9a0c50f70cb&quot;,
+          &quot;score&quot;: 0.323,
+          &quot;matched_terms&quot;: [
+            &quot;model&quot;,
+            &quot;ollama&quot;,
+            &quot;3b&quot;,
+            &quot;models&quot;,
+            &quot;llama&quot;,
+            &quot;3&quot;,
+            &quot;2&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;local_rag_chat:README.md:2&quot;,
+          &quot;text&quot;: &quot;To pull them from Ollama run these commands:\n\n```\nollama pull llama3.2:3b\nollama pull nomic-embed-text\n```&quot;,
+          &quot;start_char&quot;: 512,
+          &quot;end_char&quot;: 618,
+          &quot;span_hash&quot;: &quot;sha256:7490190345fefaf7&quot;,
+          &quot;score&quot;: 0.13,
+          &quot;matched_terms&quot;: [
+            &quot;run&quot;,
+            &quot;ollama&quot;,
+            &quot;3b&quot;,
+            &quot;2&quot;,
+            &quot;nomic&quot;,
+            &quot;embed&quot;,
+            &quot;text&quot;
+          ]
+        }
+      ],
+      &quot;matched_terms&quot;: [
+        &quot;application&quot;,
+        &quot;designed&quot;,
+        &quot;run&quot;,
+        &quot;offline&quot;,
+        &quot;large&quot;,
+        &quot;language&quot;,
+        &quot;model&quot;,
+        &quot;llm&quot;,
+        &quot;uses&quot;,
+        &quot;ollama&quot;,
+        &quot;small&quot;,
+        &quot;3b&quot;,
+        &quot;param&quot;,
+        &quot;models&quot;,
+        &quot;llama&quot;,
+        &quot;3&quot;,
+        &quot;2&quot;,
+        &quot;nomic&quot;,
+        &quot;embed&quot;,
+        &quot;text&quot;,
+        &quot;local&quot;,
+        &quot;vector&quot;,
+        &quot;embeddings&quot;
+      ],
+      &quot;required_facts&quot;: [
+        &quot;run offline&quot;,
+        &quot;run for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B`&quot;,
+        &quot;run uses `nomic-embed-text` for local offline vector embeddings&quot;,
+        &quot;3.2&quot;
+      ],
+      &quot;matched_facts&quot;: [
+        &quot;run offline&quot;,
+        &quot;run for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B`&quot;,
+        &quot;run uses `nomic-embed-text` for local offline vector embeddings&quot;,
+        &quot;3.2&quot;
+      ],
+      &quot;missing_facts&quot;: [],
+      &quot;conflicting_facts&quot;: [],
+      &quot;required_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;run offline&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        },
+        {
+          &quot;text&quot;: &quot;run for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B`&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        },
+        {
+          &quot;text&quot;: &quot;run uses `nomic-embed-text` for local offline vector embeddings&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        },
+        {
+          &quot;text&quot;: &quot;3.2&quot;,
+          &quot;type&quot;: &quot;version&quot;
+        }
+      ],
+      &quot;matched_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;run offline&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        },
+        {
+          &quot;text&quot;: &quot;run for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B`&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        },
+        {
+          &quot;text&quot;: &quot;run uses `nomic-embed-text` for local offline vector embeddings&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        },
+        {
+          &quot;text&quot;: &quot;3.2&quot;,
+          &quot;type&quot;: &quot;version&quot;
+        }
+      ],
+      &quot;missing_fact_details&quot;: [],
+      &quot;conflicting_fact_details&quot;: [],
+      &quot;reason&quot;: &quot;The claim is supported by the retrieved evidence because all required facts were matched.&quot;,
+      &quot;citation_status&quot;: &quot;claim_has_no_citation&quot;,
+      &quot;citation_source_id&quot;: null,
+      &quot;root_cause&quot;: {
+        &quot;label&quot;: &quot;no_failure_detected&quot;,
+        &quot;reason&quot;: &quot;The claim is supported by retrieved evidence and no citation failure was detected.&quot;,
+        &quot;missing_fact&quot;: null,
+        &quot;closest_context_id&quot;: &quot;local_rag_chat:README.md:1&quot;,
+        &quot;closest_evidence&quot;: &quot;The application is designed to run offline and for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B`, and uses `nomic-embed-text` for local offline vector embeddings.&quot;,
+        &quot;suggested_fix&quot;: &quot;No fix needed for this claim.&quot;
+      }
+    },
+    {
+      &quot;claim_id&quot;: &quot;claim_3&quot;,
+      &quot;claim&quot;: &quot;This application uses the Llama 3.2 3B param model (about 2GB, approx 10 minutes download) for chat and summaries, and the nomic-embed-text model (274Mb approx 2 minutes download) for vectorisation.&quot;,
+      &quot;verdict&quot;: &quot;supported&quot;,
+      &quot;confidence&quot;: 1.0,
+      &quot;best_context_id&quot;: &quot;local_rag_chat:README.md:2&quot;,
+      &quot;best_context_text&quot;: &quot;backend folder.\n\n## Prerequisites\n\n- Python 3.11 or higher\n- Poetry (package manager)\n- Git\n- Ollama\n\nTo install Ollama, follow the instructions for your operating sytem here: https://ollama.com/download\n\n## Using Llama 3.2 3B with Ollama\n\nTo view models available on Ollama see here: https://ollama.com/library.\nThis application uses the Llama 3.2 3B param model (about 2GB, approx 10 minutes download) for chat and summaries, and the nomic-embed-text model (274Mb approx 2 minutes download) for vectorisation. To pull them from Ollama run these commands:\n\n```\nollama pull llama3.2:3b\nollama pull nomic-embed-text\n```&quot;,
+      &quot;best_score&quot;: 1.0,
+      &quot;evidence&quot;: &quot;This application uses the Llama 3.2 3B param model (about 2GB, approx 10 minutes download) for chat and summaries, and the nomic-embed-text model (274Mb approx 2 minutes download) for vectorisation.&quot;,
+      &quot;evidence_span&quot;: {
+        &quot;context_id&quot;: &quot;local_rag_chat:README.md:2&quot;,
+        &quot;text&quot;: &quot;This application uses the Llama 3.2 3B param model (about 2GB, approx 10 minutes download) for chat and summaries, and the nomic-embed-text model (274Mb approx 2 minutes download) for vectorisation.&quot;,
+        &quot;start_char&quot;: 313,
+        &quot;end_char&quot;: 511,
+        &quot;span_hash&quot;: &quot;sha256:237c3094b33f1d75&quot;
+      },
+      &quot;supporting_spans&quot;: [
+        {
+          &quot;context_id&quot;: &quot;local_rag_chat:README.md:2&quot;,
+          &quot;text&quot;: &quot;This application uses the Llama 3.2 3B param model (about 2GB, approx 10 minutes download) for chat and summaries, and the nomic-embed-text model (274Mb approx 2 minutes download) for vectorisation.&quot;,
+          &quot;start_char&quot;: 313,
+          &quot;end_char&quot;: 511,
+          &quot;span_hash&quot;: &quot;sha256:237c3094b33f1d75&quot;,
+          &quot;score&quot;: 1.0,
+          &quot;matched_terms&quot;: [
+            &quot;application&quot;,
+            &quot;uses&quot;,
+            &quot;llama&quot;,
+            &quot;3&quot;,
+            &quot;2&quot;,
+            &quot;3b&quot;,
+            &quot;param&quot;,
+            &quot;model&quot;,
+            &quot;2gb&quot;,
+            &quot;approx&quot;,
+            &quot;10&quot;,
+            &quot;minutes&quot;,
+            &quot;download&quot;,
+            &quot;chat&quot;,
+            &quot;summaries&quot;,
+            &quot;nomic&quot;,
+            &quot;embed&quot;,
+            &quot;text&quot;,
+            &quot;274mb&quot;,
+            &quot;vectorisation&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;local_rag_chat:README.md:1&quot;,
+          &quot;text&quot;: &quot;The application is designed to run offline and for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B`, and uses `nomic-embed-text` for local offline vector embeddings.&quot;,
+          &quot;start_char&quot;: 266,
+          &quot;end_char&quot;: 480,
+          &quot;span_hash&quot;: &quot;sha256:2e21cbfc95455e40&quot;,
+          &quot;score&quot;: 0.327,
+          &quot;matched_terms&quot;: [
+            &quot;application&quot;,
+            &quot;uses&quot;,
+            &quot;llama&quot;,
+            &quot;3&quot;,
+            &quot;2&quot;,
+            &quot;3b&quot;,
+            &quot;param&quot;,
+            &quot;model&quot;,
+            &quot;nomic&quot;,
+            &quot;embed&quot;,
+            &quot;text&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;local_rag_chat:README.md:2&quot;,
+          &quot;text&quot;: &quot;## Prerequisites\n\n- Python 3.11 or higher\n- Poetry (package manager)\n- Git\n- Ollama\n\nTo install Ollama, follow the instructions for your operating sytem here: https://ollama.com/download\n\n## Using Llama 3.2 3B with Ollama\n\nTo view models available on Ollama see here: https://ollama.com/library.&quot;,
+          &quot;start_char&quot;: 17,
+          &quot;end_char&quot;: 312,
+          &quot;span_hash&quot;: &quot;sha256:5005b9a0c50f70cb&quot;,
+          &quot;score&quot;: 0.086,
+          &quot;matched_terms&quot;: [
+            &quot;llama&quot;,
+            &quot;3&quot;,
+            &quot;2&quot;,
+            &quot;3b&quot;,
+            &quot;model&quot;,
+            &quot;download&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;local_rag_chat:README.md:2&quot;,
+          &quot;text&quot;: &quot;To pull them from Ollama run these commands:\n\n```\nollama pull llama3.2:3b\nollama pull nomic-embed-text\n```&quot;,
+          &quot;start_char&quot;: 512,
+          &quot;end_char&quot;: 618,
+          &quot;span_hash&quot;: &quot;sha256:7490190345fefaf7&quot;,
+          &quot;score&quot;: 0.059,
+          &quot;matched_terms&quot;: [
+            &quot;2&quot;,
+            &quot;3b&quot;,
+            &quot;nomic&quot;,
+            &quot;embed&quot;,
+            &quot;text&quot;
+          ]
+        }
+      ],
+      &quot;matched_terms&quot;: [
+        &quot;application&quot;,
+        &quot;uses&quot;,
+        &quot;llama&quot;,
+        &quot;3&quot;,
+        &quot;2&quot;,
+        &quot;3b&quot;,
+        &quot;param&quot;,
+        &quot;model&quot;,
+        &quot;2gb&quot;,
+        &quot;approx&quot;,
+        &quot;10&quot;,
+        &quot;minutes&quot;,
+        &quot;download&quot;,
+        &quot;chat&quot;,
+        &quot;summaries&quot;,
+        &quot;nomic&quot;,
+        &quot;embed&quot;,
+        &quot;text&quot;,
+        &quot;274mb&quot;,
+        &quot;vectorisation&quot;
+      ],
+      &quot;required_facts&quot;: [
+        &quot;This application uses the Llama 3.2 3B param model (about 2GB, approx 10 minutes download) for chat and summaries, and the nomic-embed-text model (274Mb approx 2 minutes download) for vectorisation&quot;,
+        &quot;3.2&quot;
+      ],
+      &quot;matched_facts&quot;: [
+        &quot;This application uses the Llama 3.2 3B param model (about 2GB, approx 10 minutes download) for chat and summaries, and the nomic-embed-text model (274Mb approx 2 minutes download) for vectorisation&quot;,
+        &quot;3.2&quot;
+      ],
+      &quot;missing_facts&quot;: [],
+      &quot;conflicting_facts&quot;: [],
+      &quot;required_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;This application uses the Llama 3.2 3B param model (about 2GB, approx 10 minutes download) for chat and summaries, and the nomic-embed-text model (274Mb approx 2 minutes download) for vectorisation&quot;,
+          &quot;type&quot;: &quot;version&quot;
+        },
+        {
+          &quot;text&quot;: &quot;3.2&quot;,
+          &quot;type&quot;: &quot;version&quot;
+        }
+      ],
+      &quot;matched_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;This application uses the Llama 3.2 3B param model (about 2GB, approx 10 minutes download) for chat and summaries, and the nomic-embed-text model (274Mb approx 2 minutes download) for vectorisation&quot;,
+          &quot;type&quot;: &quot;version&quot;
+        },
+        {
+          &quot;text&quot;: &quot;3.2&quot;,
+          &quot;type&quot;: &quot;version&quot;
+        }
+      ],
+      &quot;missing_fact_details&quot;: [],
+      &quot;conflicting_fact_details&quot;: [],
+      &quot;reason&quot;: &quot;The claim is supported by the retrieved evidence because all required facts were matched.&quot;,
+      &quot;citation_status&quot;: &quot;claim_has_no_citation&quot;,
+      &quot;citation_source_id&quot;: null,
+      &quot;root_cause&quot;: {
+        &quot;label&quot;: &quot;no_failure_detected&quot;,
+        &quot;reason&quot;: &quot;The claim is supported by retrieved evidence and no citation failure was detected.&quot;,
+        &quot;missing_fact&quot;: null,
+        &quot;closest_context_id&quot;: &quot;local_rag_chat:README.md:2&quot;,
+        &quot;closest_evidence&quot;: &quot;This application uses the Llama 3.2 3B param model (about 2GB, approx 10 minutes download) for chat and summaries, and the nomic-embed-text model (274Mb approx 2 minutes download) for vectorisation.&quot;,
+        &quot;suggested_fix&quot;: &quot;No fix needed for this claim.&quot;
+      }
+    }
+  ]
+}</pre>
+    </section>
+  </main>
+</body>
+</html>

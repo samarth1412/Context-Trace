@@ -1,0 +1,751 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ContextTrace Verification Report</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f8fa;
+      --panel: #ffffff;
+      --subtle: #fbfcfe;
+      --text: #202832;
+      --muted: #657286;
+      --line: #d9e0ea;
+      --ok: #176f44;
+      --warn: #946200;
+      --bad: #b42318;
+      --accent: #2458d3;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    main { max-width: 1160px; margin: 0 auto; padding: 32px 20px 56px; }
+    header { border-bottom: 1px solid var(--line); margin-bottom: 22px; padding-bottom: 18px; }
+    h1, h2, h3 { margin: 0; }
+    h1 { font-size: 30px; }
+    h2 { font-size: 18px; margin-bottom: 12px; }
+    h3 { font-size: 15px; margin-bottom: 8px; }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin: 16px 0;
+      padding: 18px;
+    }
+    .summary {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    .card, .item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--subtle);
+      padding: 12px;
+    }
+    .item + .item { margin-top: 10px; }
+    .label, .item-meta {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .value { margin-top: 4px; font-size: 18px; overflow-wrap: anywhere; }
+    .muted { color: var(--muted); }
+    .answer, .item p { white-space: pre-wrap; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { border-bottom: 1px solid var(--line); padding: 10px; text-align: left; vertical-align: top; }
+    th { color: var(--muted); font-size: 12px; text-transform: uppercase; }
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #eef2f7;
+      padding: 3px 8px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .verdict-supported, .citation-citation_ok { color: var(--ok); background: #e9f7ef; }
+    .verdict-unverifiable, .verdict-partially_supported, .citation-claim_has_no_citation { color: var(--warn); background: #fff7df; }
+    .verdict-unsupported, .verdict-contradicted,
+    .citation-cited_source_missing,
+    .citation-claim_supported_by_different_source,
+    .citation-cited_source_does_not_support_claim { color: var(--bad); background: #fdeceb; }
+    pre {
+      margin: 0;
+      overflow: auto;
+      background: #101828;
+      color: #f8fafc;
+      border-radius: 8px;
+      padding: 14px;
+      font-size: 13px;
+    }
+    mark {
+      background: #fff0a6;
+      color: inherit;
+      border-radius: 3px;
+      padding: 0 2px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>ContextTrace Verification Report</h1>
+      <p class="muted">Local claim-level evidence verification for a portable RAG trace.</p>
+    </header>
+
+    <section>
+      <h2>Reliability Summary</h2>
+      <div class="summary">
+        <div class="card">
+          <div class="label">Failure Type</div>
+          <div class="value">no_failure_detected</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Total Claims</div>
+          <div class="value">3</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Supported</div>
+          <div class="value">3</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Partially Supported</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Unsupported</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Unverifiable</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Contradicted</div>
+          <div class="value">0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Support Rate</div>
+          <div class="value">1.0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Unsupported Claim Rate</div>
+          <div class="value">0.0</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Citation Mismatches</div>
+          <div class="value">3</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Should Abstain</div>
+          <div class="value">False</div>
+        </div>
+        
+
+        <div class="card">
+          <div class="label">Primary Root Cause</div>
+          <div class="value">no_failure_detected</div>
+        </div>
+        </div>
+    </section>
+
+    <section>
+      <h2>Suggested Fix</h2>
+      <p><strong>no_failure_detected</strong></p>
+      <p>No fix is needed for this trace based on the local verifier.</p>
+    </section>
+
+    <section>
+      <h2>Query</h2>
+      <p>How does this chatbot update its vector database when documents change?</p>
+      <h2>Answer</h2>
+      <p class="answer">index (VectorDatabaseDep): The vector database dependency for retrieval. When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database. Additionally, the chatbot is designed to remember previous interactions.</p>
+    </section>
+
+    <section>
+      <h2>Claim Support Overview</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Claim</th>
+            <th>Verdict</th>
+            <th>Confidence</th>
+            <th>Best Context</th>
+            <th>Citation</th>
+            <th>Root Cause</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td>claim_1</td>
+              <td>index (VectorDatabaseDep): The vector database dependency for retrieval.</td>
+              <td><span class="badge verdict-supported">supported</span></td>
+              <td>1.0</td>
+              <td>rag_chatbot:backend/api/services/chat_stream.py:7</td>
+              <td><span class="badge citation-claim_has_no_citation">claim_has_no_citation</span></td>
+              <td>no_failure_detected</td>
+            </tr>
+            
+
+            <tr>
+              <td>claim_2</td>
+              <td>When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database.</td>
+              <td><span class="badge verdict-supported">supported</span></td>
+              <td>1.0</td>
+              <td>rag_chatbot:README.md:10</td>
+              <td><span class="badge citation-claim_has_no_citation">claim_has_no_citation</span></td>
+              <td>no_failure_detected</td>
+            </tr>
+            
+
+            <tr>
+              <td>claim_3</td>
+              <td>Additionally, the chatbot is designed to remember previous interactions.</td>
+              <td><span class="badge verdict-supported">supported</span></td>
+              <td>1.0</td>
+              <td>rag_chatbot:README.md:10</td>
+              <td><span class="badge citation-claim_has_no_citation">claim_has_no_citation</span></td>
+              <td>no_failure_detected</td>
+            </tr>
+            </tbody>
+      </table>
+      <div>
+            <article class="item">
+              <div class="item-meta">claim_1 | supported | score 1.0</div>
+              <h3>index (VectorDatabaseDep): The vector database dependency for retrieval.</h3>
+              <p class="muted">Evidence span: rag_chatbot:backend/api/services/chat_stream.py:7 chars 101-173 sha256:37cde002b3fe1a2a</p>
+              <p><strong>Supporting spans:</strong> <span>rag_chatbot:backend/api/services/chat_stream.py:7 sha256:37cde002b3fe1a2a score 1.0</span>, <span>rag_chatbot:backend/api/services/chat_stream.py:7 sha256:53585990221bfa59 score 0.148</span>, <span>rag_chatbot:README.md:10 sha256:c4d78f529074fb4b score 0.145</span>, <span>rag_chatbot:README.md:10 sha256:f18a6328f0d1ab62 score 0.145</span></p>
+              <p><mark>index</mark> (<mark>VectorDatabaseDep</mark>): The <mark>vector</mark> <mark>database</mark> <mark>dependency</mark> for <mark>retrieval</mark>.</p>
+              <p class="muted">Matched terms: index, vectordatabasedep, vector, database, dependency, retrieval</p>
+              <p><strong>Matched facts:</strong> <span>index (VectorDatabaseDep): The vector database dependency for retrieval (keyword)</span></p>
+              <p><strong>Missing facts:</strong> <span class="muted">none</span></p>
+              <p><strong>Root cause:</strong> no_failure_detected</p>
+              <p>The claim is supported by the retrieved evidence because all required facts were matched.</p>
+            </article>
+            
+
+            <article class="item">
+              <div class="item-meta">claim_2 | supported | score 1.0</div>
+              <h3>When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database.</h3>
+              <p class="muted">Evidence span: rag_chatbot:README.md:10 chars 101-211 sha256:f18a6328f0d1ab62</p>
+              <p><strong>Supporting spans:</strong> <span>rag_chatbot:README.md:10 sha256:f18a6328f0d1ab62 score 1.0</span>, <span>rag_chatbot:README.md:10 sha256:c4d78f529074fb4b score 0.18</span>, <span>rag_chatbot:README.md:10 sha256:eff8e6d927274437 score 0.178</span>, <span>rag_chatbot:README.md:10 sha256:0e2b02eddb98e52b score 0.176</span></p>
+              <p>When a <mark>user</mark> <mark>asks</mark> a <mark>question</mark>, the <mark>RAG</mark> <mark>ChatBot</mark> <mark>retrieves</mark> the most <mark>relevant</mark> <mark>sections</mark> from the <mark>Embedding</mark> <mark>database</mark>.</p>
+              <p class="muted">Matched terms: user, asks, question, rag, chatbot, retrieves, relevant, sections, embedding, database</p>
+              <p><strong>Matched facts:</strong> <span>When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database (keyword)</span></p>
+              <p><strong>Missing facts:</strong> <span class="muted">none</span></p>
+              <p><strong>Root cause:</strong> no_failure_detected</p>
+              <p>The claim is supported by the retrieved evidence because all required facts were matched.</p>
+            </article>
+            
+
+            <article class="item">
+              <div class="item-meta">claim_3 | supported | score 1.0</div>
+              <h3>Additionally, the chatbot is designed to remember previous interactions.</h3>
+              <p class="muted">Evidence span: rag_chatbot:README.md:10 chars 496-568 sha256:1aceae379aba4d7c</p>
+              <p><strong>Supporting spans:</strong> <span>rag_chatbot:README.md:10 sha256:1aceae379aba4d7c score 1.0</span>, <span>rag_chatbot:README.md:10 sha256:f18a6328f0d1ab62 score 0.145</span>, <span>rag_chatbot:README.md:10 sha256:be8631b06ff1d0f1 score 0.144</span>, <span>rag_chatbot:notes/prompts/plans/rag-ui-plan.md:6 sha256:35cd86322ef6f9ac score 0.138</span></p>
+              <p><mark>Additionally</mark>, the <mark>chatbot</mark> is <mark>designed</mark> to <mark>remember</mark> <mark>previous</mark> <mark>interactions</mark>.</p>
+              <p class="muted">Matched terms: additionally, chatbot, designed, remember, previous, interactions</p>
+              <p><strong>Matched facts:</strong> <span>Additionally, the chatbot is designed to remember previous interactions (predicate)</span></p>
+              <p><strong>Missing facts:</strong> <span class="muted">none</span></p>
+              <p><strong>Root cause:</strong> no_failure_detected</p>
+              <p>The claim is supported by the retrieved evidence because all required facts were matched.</p>
+            </article>
+            </div>
+    </section>
+
+    <section>
+      <h2>Unsupported Claims</h2>
+      <p class="muted">No partial, unsupported, contradicted, or unverifiable claims detected.</p>
+    </section>
+
+    <section>
+      <h2>Root Cause Diagnosis</h2>
+      <p class="muted">No root-cause failure was detected.</p>
+    </section>
+
+    <section>
+      <h2>Citation Mismatches</h2>
+      
+        <article class="item">
+          <div class="item-meta">claim_1 | cited none</div>
+          <p>index (VectorDatabaseDep): The vector database dependency for retrieval.</p>
+          <p><strong>claim_has_no_citation</strong></p>
+          <p class="muted">Best supporting context: rag_chatbot:backend/api/services/chat_stream.py:7</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">claim_2 | cited none</div>
+          <p>When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database.</p>
+          <p><strong>claim_has_no_citation</strong></p>
+          <p class="muted">Best supporting context: rag_chatbot:README.md:10</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">claim_3 | cited none</div>
+          <p>Additionally, the chatbot is designed to remember previous interactions.</p>
+          <p><strong>claim_has_no_citation</strong></p>
+          <p class="muted">Best supporting context: rag_chatbot:README.md:10</p>
+        </article>
+        
+    </section>
+
+    <section>
+      <h2>Retrieved Contexts</h2>
+      
+        <article class="item">
+          <div class="item-meta">rag_chatbot:backend/api/services/chat_stream.py:7 | {&quot;project&quot;: &quot;umbertogriffo/rag-chatbot&quot;, &quot;repo_url&quot;: &quot;https://github.com/umbertogriffo/rag-chatbot&quot;, &quot;retrieval_score&quot;: 0.5318, &quot;retriever&quot;: &quot;sentence-transformers lexical-prefilter cosine&quot;, &quot;source&quot;: &quot;backend/api/services/chat_stream.py&quot;}</div>
+          <p>chat_history (ChatHistoryDep): The chat history dependency to maintain conversation context.
+        index (VectorDatabaseDep): The vector database dependency for retrieval.
+    &quot;&quot;&quot;
+    try:
+        start_time = time.time()
+        ctx_synthesis_strategy = get_ctx_synthesis_strategy(settings.SYNTHESIS_STRATEGY, llm=llm_client)</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">rag_chatbot:README.md:10 | {&quot;project&quot;: &quot;umbertogriffo/rag-chatbot&quot;, &quot;repo_url&quot;: &quot;https://github.com/umbertogriffo/rag-chatbot&quot;, &quot;retrieval_score&quot;: 0.5024, &quot;retriever&quot;: &quot;sentence-transformers lexical-prefilter cosine&quot;, &quot;source&quot;: &quot;README.md&quot;}</div>
+          <p>them in an embedding database called [Chroma](https://github.com/chroma-core/chroma) for later use.
+
+When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database.
+Since the original question can&#x27;t be always optimal to retrieve for the LLM, we first prompt an LLM to rewrite the
+question, then conduct retrieval-augmented reading.
+The most relevant sections are then used as context to generate the final answer using a local language model (LLM).
+Additionally, the chatbot is designed to remember previous interactions. It saves the chat history and considers the
+relevant context from previous conversations to provide more accurate answers.</p>
+        </article>
+        
+
+        <article class="item">
+          <div class="item-meta">rag_chatbot:notes/prompts/plans/rag-ui-plan.md:6 | {&quot;project&quot;: &quot;umbertogriffo/rag-chatbot&quot;, &quot;repo_url&quot;: &quot;https://github.com/umbertogriffo/rag-chatbot&quot;, &quot;retrieval_score&quot;: 0.4599, &quot;retriever&quot;: &quot;sentence-transformers lexical-prefilter cosine&quot;, &quot;source&quot;: &quot;notes/prompts/plans/rag-ui-plan.md&quot;}</div>
+          <p># Prompt full
+
+Implementation of a high-fidelity, premium web UI for a modern AI chatbot as follows:
+
+- **Layout**:
+  - Collapsible minimalist sidebar on the left for chat history and a prominent, clean conversation area in the center.
+  - Floating, bottom-centered text input bar with a glowing &#x27;send&#x27; icon.
+  - Integrate a document upload component (drag-and-drop, progress bars, document list with delete buttons) directly into the main chat interface (not in the sidebar).</p>
+        </article>
+        
+    </section>
+
+    <section>
+      <h2>Why This Failed</h2>
+      <ul><li>No claim-level evidence failure was detected by the local verifier.</li></ul>
+    </section>
+
+    <section>
+      <h2>Raw JSON Summary</h2>
+      <pre>{
+  &quot;summary&quot;: {
+    &quot;total_claims&quot;: 3,
+    &quot;supported&quot;: 3,
+    &quot;partially_supported&quot;: 0,
+    &quot;unsupported&quot;: 0,
+    &quot;contradicted&quot;: 0,
+    &quot;unverifiable&quot;: 0,
+    &quot;support_rate&quot;: 1.0,
+    &quot;unsupported_claim_rate&quot;: 0.0,
+    &quot;citation_mismatches&quot;: 3,
+    &quot;should_abstain&quot;: false,
+    &quot;root_causes&quot;: {
+      &quot;no_failure_detected&quot;: 3
+    },
+    &quot;primary_root_cause&quot;: &quot;no_failure_detected&quot;,
+    &quot;failure_type&quot;: &quot;no_failure_detected&quot;,
+    &quot;failure_types&quot;: [
+      &quot;no_failure_detected&quot;
+    ],
+    &quot;suggested_fix&quot;: &quot;No fix is needed for this trace based on the local verifier.&quot;,
+    &quot;mode&quot;: &quot;semantic&quot;
+  },
+  &quot;abstention&quot;: {
+    &quot;should_abstain&quot;: false,
+    &quot;reason&quot;: &quot;Most generated claims are supported by retrieved evidence.&quot;
+  },
+  &quot;diagnostics&quot;: {
+    &quot;failure_type&quot;: &quot;no_failure_detected&quot;,
+    &quot;failure_types&quot;: [
+      &quot;no_failure_detected&quot;
+    ],
+    &quot;suggested_fix&quot;: &quot;No fix is needed for this trace based on the local verifier.&quot;
+  },
+  &quot;claims&quot;: [
+    {
+      &quot;claim_id&quot;: &quot;claim_1&quot;,
+      &quot;claim&quot;: &quot;index (VectorDatabaseDep): The vector database dependency for retrieval.&quot;,
+      &quot;verdict&quot;: &quot;supported&quot;,
+      &quot;confidence&quot;: 1.0,
+      &quot;best_context_id&quot;: &quot;rag_chatbot:backend/api/services/chat_stream.py:7&quot;,
+      &quot;best_context_text&quot;: &quot;chat_history (ChatHistoryDep): The chat history dependency to maintain conversation context.\n        index (VectorDatabaseDep): The vector database dependency for retrieval.\n    \&quot;\&quot;\&quot;\n    try:\n        start_time = time.time()\n        ctx_synthesis_strategy = get_ctx_synthesis_strategy(settings.SYNTHESIS_STRATEGY, llm=llm_client)&quot;,
+      &quot;best_score&quot;: 1.0,
+      &quot;evidence&quot;: &quot;index (VectorDatabaseDep): The vector database dependency for retrieval.&quot;,
+      &quot;evidence_span&quot;: {
+        &quot;context_id&quot;: &quot;rag_chatbot:backend/api/services/chat_stream.py:7&quot;,
+        &quot;text&quot;: &quot;index (VectorDatabaseDep): The vector database dependency for retrieval.&quot;,
+        &quot;start_char&quot;: 101,
+        &quot;end_char&quot;: 173,
+        &quot;span_hash&quot;: &quot;sha256:37cde002b3fe1a2a&quot;
+      },
+      &quot;supporting_spans&quot;: [
+        {
+          &quot;context_id&quot;: &quot;rag_chatbot:backend/api/services/chat_stream.py:7&quot;,
+          &quot;text&quot;: &quot;index (VectorDatabaseDep): The vector database dependency for retrieval.&quot;,
+          &quot;start_char&quot;: 101,
+          &quot;end_char&quot;: 173,
+          &quot;span_hash&quot;: &quot;sha256:37cde002b3fe1a2a&quot;,
+          &quot;score&quot;: 1.0,
+          &quot;matched_terms&quot;: [
+            &quot;index&quot;,
+            &quot;vectordatabasedep&quot;,
+            &quot;vector&quot;,
+            &quot;database&quot;,
+            &quot;dependency&quot;,
+            &quot;retrieval&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;rag_chatbot:backend/api/services/chat_stream.py:7&quot;,
+          &quot;text&quot;: &quot;chat_history (ChatHistoryDep): The chat history dependency to maintain conversation context.&quot;,
+          &quot;start_char&quot;: 0,
+          &quot;end_char&quot;: 92,
+          &quot;span_hash&quot;: &quot;sha256:53585990221bfa59&quot;,
+          &quot;score&quot;: 0.148,
+          &quot;matched_terms&quot;: [
+            &quot;dependency&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;rag_chatbot:README.md:10&quot;,
+          &quot;text&quot;: &quot;them in an embedding database called [Chroma](https://github.com/chroma-core/chroma) for later use.&quot;,
+          &quot;start_char&quot;: 0,
+          &quot;end_char&quot;: 99,
+          &quot;span_hash&quot;: &quot;sha256:c4d78f529074fb4b&quot;,
+          &quot;score&quot;: 0.145,
+          &quot;matched_terms&quot;: [
+            &quot;database&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;rag_chatbot:README.md:10&quot;,
+          &quot;text&quot;: &quot;When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database.&quot;,
+          &quot;start_char&quot;: 101,
+          &quot;end_char&quot;: 211,
+          &quot;span_hash&quot;: &quot;sha256:f18a6328f0d1ab62&quot;,
+          &quot;score&quot;: 0.145,
+          &quot;matched_terms&quot;: [
+            &quot;database&quot;
+          ]
+        }
+      ],
+      &quot;matched_terms&quot;: [
+        &quot;index&quot;,
+        &quot;vectordatabasedep&quot;,
+        &quot;vector&quot;,
+        &quot;database&quot;,
+        &quot;dependency&quot;,
+        &quot;retrieval&quot;
+      ],
+      &quot;required_facts&quot;: [
+        &quot;index (VectorDatabaseDep): The vector database dependency for retrieval&quot;
+      ],
+      &quot;matched_facts&quot;: [
+        &quot;index (VectorDatabaseDep): The vector database dependency for retrieval&quot;
+      ],
+      &quot;missing_facts&quot;: [],
+      &quot;conflicting_facts&quot;: [],
+      &quot;required_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;index (VectorDatabaseDep): The vector database dependency for retrieval&quot;,
+          &quot;type&quot;: &quot;keyword&quot;
+        }
+      ],
+      &quot;matched_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;index (VectorDatabaseDep): The vector database dependency for retrieval&quot;,
+          &quot;type&quot;: &quot;keyword&quot;
+        }
+      ],
+      &quot;missing_fact_details&quot;: [],
+      &quot;conflicting_fact_details&quot;: [],
+      &quot;reason&quot;: &quot;The claim is supported by the retrieved evidence because all required facts were matched.&quot;,
+      &quot;citation_status&quot;: &quot;claim_has_no_citation&quot;,
+      &quot;citation_source_id&quot;: null,
+      &quot;root_cause&quot;: {
+        &quot;label&quot;: &quot;no_failure_detected&quot;,
+        &quot;reason&quot;: &quot;The claim is supported by retrieved evidence and no citation failure was detected.&quot;,
+        &quot;missing_fact&quot;: null,
+        &quot;closest_context_id&quot;: &quot;rag_chatbot:backend/api/services/chat_stream.py:7&quot;,
+        &quot;closest_evidence&quot;: &quot;index (VectorDatabaseDep): The vector database dependency for retrieval.&quot;,
+        &quot;suggested_fix&quot;: &quot;No fix needed for this claim.&quot;
+      }
+    },
+    {
+      &quot;claim_id&quot;: &quot;claim_2&quot;,
+      &quot;claim&quot;: &quot;When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database.&quot;,
+      &quot;verdict&quot;: &quot;supported&quot;,
+      &quot;confidence&quot;: 1.0,
+      &quot;best_context_id&quot;: &quot;rag_chatbot:README.md:10&quot;,
+      &quot;best_context_text&quot;: &quot;them in an embedding database called [Chroma](https://github.com/chroma-core/chroma) for later use.\n\nWhen a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database.\nSince the original question can&#x27;t be always optimal to retrieve for the LLM, we first prompt an LLM to rewrite the\nquestion, then conduct retrieval-augmented reading.\nThe most relevant sections are then used as context to generate the final answer using a local language model (LLM).\nAdditionally, the chatbot is designed to remember previous interactions. It saves the chat history and considers the\nrelevant context from previous conversations to provide more accurate answers.&quot;,
+      &quot;best_score&quot;: 1.0,
+      &quot;evidence&quot;: &quot;When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database.&quot;,
+      &quot;evidence_span&quot;: {
+        &quot;context_id&quot;: &quot;rag_chatbot:README.md:10&quot;,
+        &quot;text&quot;: &quot;When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database.&quot;,
+        &quot;start_char&quot;: 101,
+        &quot;end_char&quot;: 211,
+        &quot;span_hash&quot;: &quot;sha256:f18a6328f0d1ab62&quot;
+      },
+      &quot;supporting_spans&quot;: [
+        {
+          &quot;context_id&quot;: &quot;rag_chatbot:README.md:10&quot;,
+          &quot;text&quot;: &quot;When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database.&quot;,
+          &quot;start_char&quot;: 101,
+          &quot;end_char&quot;: 211,
+          &quot;span_hash&quot;: &quot;sha256:f18a6328f0d1ab62&quot;,
+          &quot;score&quot;: 1.0,
+          &quot;matched_terms&quot;: [
+            &quot;user&quot;,
+            &quot;asks&quot;,
+            &quot;question&quot;,
+            &quot;rag&quot;,
+            &quot;chatbot&quot;,
+            &quot;retrieves&quot;,
+            &quot;relevant&quot;,
+            &quot;sections&quot;,
+            &quot;embedding&quot;,
+            &quot;database&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;rag_chatbot:README.md:10&quot;,
+          &quot;text&quot;: &quot;them in an embedding database called [Chroma](https://github.com/chroma-core/chroma) for later use.&quot;,
+          &quot;start_char&quot;: 0,
+          &quot;end_char&quot;: 99,
+          &quot;span_hash&quot;: &quot;sha256:c4d78f529074fb4b&quot;,
+          &quot;score&quot;: 0.18,
+          &quot;matched_terms&quot;: [
+            &quot;embedding&quot;,
+            &quot;database&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;rag_chatbot:README.md:10&quot;,
+          &quot;text&quot;: &quot;The most relevant sections are then used as context to generate the final answer using a local language model (LLM).&quot;,
+          &quot;start_char&quot;: 379,
+          &quot;end_char&quot;: 495,
+          &quot;span_hash&quot;: &quot;sha256:eff8e6d927274437&quot;,
+          &quot;score&quot;: 0.178,
+          &quot;matched_terms&quot;: [
+            &quot;relevant&quot;,
+            &quot;sections&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;rag_chatbot:README.md:10&quot;,
+          &quot;text&quot;: &quot;Since the original question can&#x27;t be always optimal to retrieve for the LLM, we first prompt an LLM to rewrite the\nquestion, then conduct retrieval-augmented reading.&quot;,
+          &quot;start_char&quot;: 212,
+          &quot;end_char&quot;: 378,
+          &quot;span_hash&quot;: &quot;sha256:0e2b02eddb98e52b&quot;,
+          &quot;score&quot;: 0.176,
+          &quot;matched_terms&quot;: [
+            &quot;question&quot;,
+            &quot;retrieves&quot;
+          ]
+        }
+      ],
+      &quot;matched_terms&quot;: [
+        &quot;user&quot;,
+        &quot;asks&quot;,
+        &quot;question&quot;,
+        &quot;rag&quot;,
+        &quot;chatbot&quot;,
+        &quot;retrieves&quot;,
+        &quot;relevant&quot;,
+        &quot;sections&quot;,
+        &quot;embedding&quot;,
+        &quot;database&quot;
+      ],
+      &quot;required_facts&quot;: [
+        &quot;When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database&quot;
+      ],
+      &quot;matched_facts&quot;: [
+        &quot;When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database&quot;
+      ],
+      &quot;missing_facts&quot;: [],
+      &quot;conflicting_facts&quot;: [],
+      &quot;required_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database&quot;,
+          &quot;type&quot;: &quot;keyword&quot;
+        }
+      ],
+      &quot;matched_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database&quot;,
+          &quot;type&quot;: &quot;keyword&quot;
+        }
+      ],
+      &quot;missing_fact_details&quot;: [],
+      &quot;conflicting_fact_details&quot;: [],
+      &quot;reason&quot;: &quot;The claim is supported by the retrieved evidence because all required facts were matched.&quot;,
+      &quot;citation_status&quot;: &quot;claim_has_no_citation&quot;,
+      &quot;citation_source_id&quot;: null,
+      &quot;root_cause&quot;: {
+        &quot;label&quot;: &quot;no_failure_detected&quot;,
+        &quot;reason&quot;: &quot;The claim is supported by retrieved evidence and no citation failure was detected.&quot;,
+        &quot;missing_fact&quot;: null,
+        &quot;closest_context_id&quot;: &quot;rag_chatbot:README.md:10&quot;,
+        &quot;closest_evidence&quot;: &quot;When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database.&quot;,
+        &quot;suggested_fix&quot;: &quot;No fix needed for this claim.&quot;
+      }
+    },
+    {
+      &quot;claim_id&quot;: &quot;claim_3&quot;,
+      &quot;claim&quot;: &quot;Additionally, the chatbot is designed to remember previous interactions.&quot;,
+      &quot;verdict&quot;: &quot;supported&quot;,
+      &quot;confidence&quot;: 1.0,
+      &quot;best_context_id&quot;: &quot;rag_chatbot:README.md:10&quot;,
+      &quot;best_context_text&quot;: &quot;them in an embedding database called [Chroma](https://github.com/chroma-core/chroma) for later use.\n\nWhen a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database.\nSince the original question can&#x27;t be always optimal to retrieve for the LLM, we first prompt an LLM to rewrite the\nquestion, then conduct retrieval-augmented reading.\nThe most relevant sections are then used as context to generate the final answer using a local language model (LLM).\nAdditionally, the chatbot is designed to remember previous interactions. It saves the chat history and considers the\nrelevant context from previous conversations to provide more accurate answers.&quot;,
+      &quot;best_score&quot;: 1.0,
+      &quot;evidence&quot;: &quot;Additionally, the chatbot is designed to remember previous interactions.&quot;,
+      &quot;evidence_span&quot;: {
+        &quot;context_id&quot;: &quot;rag_chatbot:README.md:10&quot;,
+        &quot;text&quot;: &quot;Additionally, the chatbot is designed to remember previous interactions.&quot;,
+        &quot;start_char&quot;: 496,
+        &quot;end_char&quot;: 568,
+        &quot;span_hash&quot;: &quot;sha256:1aceae379aba4d7c&quot;
+      },
+      &quot;supporting_spans&quot;: [
+        {
+          &quot;context_id&quot;: &quot;rag_chatbot:README.md:10&quot;,
+          &quot;text&quot;: &quot;Additionally, the chatbot is designed to remember previous interactions.&quot;,
+          &quot;start_char&quot;: 496,
+          &quot;end_char&quot;: 568,
+          &quot;span_hash&quot;: &quot;sha256:1aceae379aba4d7c&quot;,
+          &quot;score&quot;: 1.0,
+          &quot;matched_terms&quot;: [
+            &quot;additionally&quot;,
+            &quot;chatbot&quot;,
+            &quot;designed&quot;,
+            &quot;remember&quot;,
+            &quot;previous&quot;,
+            &quot;interactions&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;rag_chatbot:README.md:10&quot;,
+          &quot;text&quot;: &quot;When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database.&quot;,
+          &quot;start_char&quot;: 101,
+          &quot;end_char&quot;: 211,
+          &quot;span_hash&quot;: &quot;sha256:f18a6328f0d1ab62&quot;,
+          &quot;score&quot;: 0.145,
+          &quot;matched_terms&quot;: [
+            &quot;chatbot&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;rag_chatbot:README.md:10&quot;,
+          &quot;text&quot;: &quot;It saves the chat history and considers the\nrelevant context from previous conversations to provide more accurate answers.&quot;,
+          &quot;start_char&quot;: 569,
+          &quot;end_char&quot;: 691,
+          &quot;span_hash&quot;: &quot;sha256:be8631b06ff1d0f1&quot;,
+          &quot;score&quot;: 0.144,
+          &quot;matched_terms&quot;: [
+            &quot;previous&quot;
+          ]
+        },
+        {
+          &quot;context_id&quot;: &quot;rag_chatbot:notes/prompts/plans/rag-ui-plan.md:6&quot;,
+          &quot;text&quot;: &quot;# Prompt full\n\nImplementation of a high-fidelity, premium web UI for a modern AI chatbot as follows:\n\n- **Layout**:\n  - Collapsible minimalist sidebar on the left for chat history and a prominent, clean conversation area in the center.&quot;,
+          &quot;start_char&quot;: 0,
+          &quot;end_char&quot;: 235,
+          &quot;span_hash&quot;: &quot;sha256:35cd86322ef6f9ac&quot;,
+          &quot;score&quot;: 0.138,
+          &quot;matched_terms&quot;: [
+            &quot;chatbot&quot;
+          ]
+        }
+      ],
+      &quot;matched_terms&quot;: [
+        &quot;additionally&quot;,
+        &quot;chatbot&quot;,
+        &quot;designed&quot;,
+        &quot;remember&quot;,
+        &quot;previous&quot;,
+        &quot;interactions&quot;
+      ],
+      &quot;required_facts&quot;: [
+        &quot;Additionally, the chatbot is designed to remember previous interactions&quot;
+      ],
+      &quot;matched_facts&quot;: [
+        &quot;Additionally, the chatbot is designed to remember previous interactions&quot;
+      ],
+      &quot;missing_facts&quot;: [],
+      &quot;conflicting_facts&quot;: [],
+      &quot;required_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;Additionally, the chatbot is designed to remember previous interactions&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        }
+      ],
+      &quot;matched_fact_details&quot;: [
+        {
+          &quot;text&quot;: &quot;Additionally, the chatbot is designed to remember previous interactions&quot;,
+          &quot;type&quot;: &quot;predicate&quot;
+        }
+      ],
+      &quot;missing_fact_details&quot;: [],
+      &quot;conflicting_fact_details&quot;: [],
+      &quot;reason&quot;: &quot;The claim is supported by the retrieved evidence because all required facts were matched.&quot;,
+      &quot;citation_status&quot;: &quot;claim_has_no_citation&quot;,
+      &quot;citation_source_id&quot;: null,
+      &quot;root_cause&quot;: {
+        &quot;label&quot;: &quot;no_failure_detected&quot;,
+        &quot;reason&quot;: &quot;The claim is supported by retrieved evidence and no citation failure was detected.&quot;,
+        &quot;missing_fact&quot;: null,
+        &quot;closest_context_id&quot;: &quot;rag_chatbot:README.md:10&quot;,
+        &quot;closest_evidence&quot;: &quot;Additionally, the chatbot is designed to remember previous interactions.&quot;,
+        &quot;suggested_fix&quot;: &quot;No fix needed for this claim.&quot;
+      }
+    }
+  ]
+}</pre>
+    </section>
+  </main>
+</body>
+</html>

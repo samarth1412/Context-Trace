@@ -1,0 +1,220 @@
+{
+  "artifacts": [
+    {
+      "bytes": 1633673,
+      "name": "contexttrace_bench_results.json",
+      "path": "contexttrace_bench_results.json",
+      "required": true,
+      "sha256": "41e46e57ca85f94f3e0e24b1c1ff511aff7747d5915256f39ea256ce92a3d92e",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\public_holdout\\contexttrace_bench_results.json"
+    },
+    {
+      "bytes": 2285,
+      "name": "results.md",
+      "path": "results.md",
+      "required": true,
+      "sha256": "5f68ecd2d367378ff6b634b6eae6fad0b79fddbcb4e9713d1d9eae7f1658f008",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\public_holdout\\results.md"
+    },
+    {
+      "bytes": 1021,
+      "name": "leaderboard.md",
+      "path": "leaderboard.md",
+      "required": true,
+      "sha256": "21805c5b2305f79b39ad2d7a43fd733a8d295d7ce38ff7253fe588dbd5bbe377",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\public_holdout\\leaderboard.md"
+    },
+    {
+      "bytes": 72868,
+      "name": "report.html",
+      "path": "report.html",
+      "required": true,
+      "sha256": "17d3b95888f40750ab9704de0ef72a51993654974ecd1d580cd5672961ac29d0",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\public_holdout\\report.html"
+    },
+    {
+      "bytes": 1757,
+      "name": "error_analysis.json",
+      "path": "error_analysis.json",
+      "required": true,
+      "sha256": "e49d986f8587cdf1b9eb6a241a6ab82d054c4b070344aa8ada087bd5e79261e5",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\public_holdout\\error_analysis.json"
+    },
+    {
+      "bytes": 1156,
+      "name": "error_analysis.md",
+      "path": "error_analysis.md",
+      "required": true,
+      "sha256": "d3c2d1216a0ac2aba75d71eb8cecf2fb90b0429e32fda73c96664ed8977a83a8",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\public_holdout\\error_analysis.md"
+    },
+    {
+      "bytes": 161612,
+      "name": "candidate_inputs.jsonl",
+      "path": "candidate_inputs.jsonl",
+      "required": true,
+      "sha256": "473e0b3bbd31ca434ce81a737bd2b6f5371437b5e1576196d54c7b34a32af46f",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\public_holdout\\candidate_inputs.jsonl"
+    },
+    {
+      "bytes": 354779,
+      "name": "diag150_audit_packet.json",
+      "path": "diag150_audit_packet.json",
+      "required": true,
+      "sha256": "cb8e9be08fe45c3d3362888f95055e70e342d10a0cffce489270c3a6cad183a8",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\public_holdout\\diag150_audit_packet.json"
+    },
+    {
+      "bytes": 125240,
+      "name": "diag150_audit_packet.md",
+      "path": "diag150_audit_packet.md",
+      "required": true,
+      "sha256": "c647bc35686dd94b9111699dbc6ad49fa074aac6ba84c1e8b948b0d57e481b12",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\public_holdout\\diag150_audit_packet.md"
+    },
+    {
+      "bytes": 45120,
+      "name": "diag150_human_review_template.json",
+      "path": "diag150_human_review_template.json",
+      "required": true,
+      "sha256": "9bbf16dd8e9cb0170972f5b1179646666da6450e51b0d13fa271cec4268057ca",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\public_holdout\\diag150_human_review_template.json"
+    },
+    {
+      "bytes": 2923,
+      "name": "diag150_audit_validation.json",
+      "path": "diag150_audit_validation.json",
+      "required": true,
+      "sha256": "2bd043fa751f2db4e9754ee0cf228bce5d18a006fd466231e628048d014cd23a",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\public_holdout\\diag150_audit_validation.json"
+    },
+    {
+      "bytes": 3804,
+      "name": "AUDIT_REPORT.md",
+      "path": "AUDIT_REPORT.md",
+      "required": true,
+      "sha256": "ac94aead89f1dcacbfdf09d1af89c327d4a8a01ed6c114339d0f9d4e2ca76958",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\public_holdout\\AUDIT_REPORT.md"
+    },
+    {
+      "bytes": 258215,
+      "name": "baseline_results.json",
+      "path": "baseline_results.json",
+      "required": false,
+      "sha256": "c71d4fe895bdc5b19bebda6f61bf32be058009161b898fa8dd089cd110aed4ad",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\public_holdout\\baseline_results.json"
+    },
+    {
+      "bytes": 95141,
+      "name": "openai_diagnostic_judge_predictions.json",
+      "path": "openai_diagnostic_judge_predictions.json",
+      "required": false,
+      "sha256": "abe10f539da1e412ad2baf2fddde51c798104392bb32649239b079d88d7c9300",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\public_holdout\\openai_diagnostic_judge_predictions.json"
+    },
+    {
+      "bytes": 102839,
+      "name": "openai_diagnostic_judge_raw_results.json",
+      "path": "openai_diagnostic_judge_raw_results.json",
+      "required": false,
+      "sha256": "577019f8e04ed901486e0f79aeeac191d27de94c83c08457acb113d7ad6e1577",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\public_holdout\\openai_diagnostic_judge_raw_results.json"
+    }
+  ],
+  "benchmark": "ContextTrace-Diag-150",
+  "bundle_status": "review_pending",
+  "bundle_version": 1,
+  "case_count": 150,
+  "case_set": "public_holdout",
+  "claim_policy": "This bundle passed automated validation, but independent human signoff is pending. Use it for reviewer handoff and reproducibility, not frozen-split or broad SOTA claims.",
+  "commit": "a2f44be",
+  "confidence_intervals": {
+    "citation_error_f1": {
+      "estimate": 1.0,
+      "high": 1.0,
+      "level": 0.95,
+      "low": 1.0,
+      "method": "case_bootstrap",
+      "samples": 400,
+      "seed": 20260612
+    },
+    "claim_verdict_macro_f1": {
+      "estimate": 1.0,
+      "high": 1.0,
+      "level": 0.95,
+      "low": 1.0,
+      "method": "case_bootstrap",
+      "samples": 400,
+      "seed": 20260612
+    },
+    "dangerous_false_green_rate": {
+      "estimate": 0.0,
+      "high": 0.0,
+      "level": 0.95,
+      "low": 0.0,
+      "method": "case_bootstrap",
+      "samples": 400,
+      "seed": 20260612
+    },
+    "evidence_span_overlap": {
+      "estimate": 0.95,
+      "high": 0.966,
+      "level": 0.95,
+      "low": 0.936,
+      "method": "case_bootstrap",
+      "samples": 400,
+      "seed": 20260612
+    },
+    "failure_label_macro_f1": {
+      "estimate": 1.0,
+      "high": 1.0,
+      "level": 0.95,
+      "low": 1.0,
+      "method": "case_bootstrap",
+      "samples": 400,
+      "seed": 20260612
+    },
+    "root_cause_accuracy": {
+      "estimate": 1.0,
+      "high": 1.0,
+      "level": 0.95,
+      "low": 1.0,
+      "method": "case_bootstrap",
+      "samples": 400,
+      "seed": 20260612
+    }
+  },
+  "generated_at": "2026-06-23T21:17:47+00:00",
+  "human_signoff_complete": false,
+  "missing_required_artifacts": [],
+  "require_human_signoff": false,
+  "source_output_dir": "benchmarks\\contexttrace_bench\\out\\public_holdout",
+  "summary": {
+    "cases": 150,
+    "citation_error_f1": 1.0,
+    "citation_error_precision": 1.0,
+    "citation_error_recall": 1.0,
+    "citation_status_reported_cases": 150,
+    "claim_verdict_macro_f1": 1.0,
+    "claim_verdict_match_rate": 1.0,
+    "cost_per_100_traces_usd": 0.0,
+    "dangerous_false_green_rate": 0.0,
+    "evidence_span_labeled_cases": 149,
+    "evidence_span_overlap": 0.95,
+    "evidence_span_reported_cases": 149,
+    "failure_label_exact_match_rate": 1.0,
+    "failure_label_macro_f1": 1.0,
+    "latency_p50_ms": 6.185,
+    "latency_p95_ms": 11.463,
+    "root_cause_accuracy": 1.0,
+    "root_cause_labeled_cases": 150,
+    "root_cause_reported_cases": 150
+  },
+  "validation_status": "passed",
+  "validation_summary": {
+    "case_count": 150,
+    "checks": 16,
+    "errors": 0,
+    "warnings": 1
+  }
+}

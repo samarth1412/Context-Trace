@@ -1,0 +1,1636 @@
+{
+  "checker_name": "openai/gpt-4.1-mini",
+  "elapsed_ms": 27838.059,
+  "extractor_name": "openai/gpt-4.1-mini",
+  "metrics": "all_metrics",
+  "notes": [
+    "RAGChecker reports per-case metrics under each result.metrics object.",
+    "ContextTrace-Bench maps metrics.faithfulness to unsupported_answer and metrics.claim_recall to should_have_abstained."
+  ],
+  "ragchecker_output": {
+    "metrics": {
+      "generator_metrics": {
+        "context_utilization": 66.7,
+        "faithfulness": 70.0,
+        "hallucination": 5.0,
+        "noise_sensitivity_in_irrelevant": 0.0,
+        "noise_sensitivity_in_relevant": 3.3,
+        "self_knowledge": 25.0
+      },
+      "overall_metrics": {
+        "f1": 91.7,
+        "precision": 91.7,
+        "recall": 91.7
+      },
+      "retriever_metrics": {
+        "claim_recall": 70.0,
+        "context_precision": 65.0
+      }
+    },
+    "results": [
+      {
+        "answer2response": [
+          "Entailment",
+          "Entailment"
+        ],
+        "gt_answer": "A new SDK client stores traces in SQLite under .contexttrace/contexttrace.db.",
+        "gt_answer_claims": [
+          [
+            "SDK client",
+            "stores traces in",
+            "SQLite"
+          ],
+          [
+            "Traces",
+            "stored under",
+            ".contexttrace/contexttrace.db"
+          ]
+        ],
+        "latency_ms": null,
+        "metrics": {
+          "claim_recall": 1.0,
+          "context_precision": 1.0,
+          "context_utilization": 1.0,
+          "f1": 1.0,
+          "faithfulness": 1.0,
+          "hallucination": 0.0,
+          "noise_sensitivity_in_irrelevant": 0.0,
+          "noise_sensitivity_in_relevant": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "self_knowledge": 0.0
+        },
+        "query": "Where does a local SDK client store traces?",
+        "query_id": "local_mode_sqlite_supported",
+        "response": "A new SDK client stores traces in SQLite under .contexttrace/contexttrace.db.",
+        "response2answer": [
+          "Entailment",
+          "Entailment"
+        ],
+        "response_claims": [
+          [
+            "SDK client",
+            "stores traces in",
+            "SQLite"
+          ],
+          [
+            "Traces in SQLite",
+            "located at",
+            ".contexttrace/contexttrace.db"
+          ]
+        ],
+        "retrieved2answer": [
+          [
+            "Entailment"
+          ],
+          [
+            "Entailment"
+          ]
+        ],
+        "retrieved2response": [
+          [
+            "Entailment"
+          ],
+          [
+            "Entailment"
+          ]
+        ],
+        "retrieved_context": [
+          {
+            "doc_id": "docs/local-mode.md",
+            "text": "ContextTrace is local-first by default. A new SDK client stores traces in SQLite under: .contexttrace/contexttrace.db. No backend server is required for normal SDK, CLI, report, or viewer workflows."
+          }
+        ]
+      },
+      {
+        "answer2response": [
+          "Entailment",
+          "Entailment"
+        ],
+        "gt_answer": "ContextTrace v0.2.0 adds local claim-level evidence verification for portable RAG traces.",
+        "gt_answer_claims": [
+          [
+            "ContextTrace v0.2.0",
+            "adds",
+            "local claim-level evidence verification"
+          ],
+          [
+            "local claim-level evidence verification",
+            "applied to",
+            "portable RAG traces"
+          ]
+        ],
+        "latency_ms": null,
+        "metrics": {
+          "claim_recall": 1.0,
+          "context_precision": 1.0,
+          "context_utilization": 1.0,
+          "f1": 1.0,
+          "faithfulness": 1.0,
+          "hallucination": 0.0,
+          "noise_sensitivity_in_irrelevant": 0.0,
+          "noise_sensitivity_in_relevant": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "self_knowledge": 0.0
+        },
+        "query": "What did ContextTrace v0.2.0 add?",
+        "query_id": "v020_claim_verification_supported",
+        "response": "ContextTrace v0.2.0 adds local claim-level evidence verification for portable RAG traces.",
+        "response2answer": [
+          "Entailment",
+          "Entailment"
+        ],
+        "response_claims": [
+          [
+            "ContextTrace v0.2.0",
+            "adds",
+            "local claim-level evidence verification"
+          ],
+          [
+            "local claim-level evidence verification",
+            "applied to",
+            "portable RAG traces"
+          ]
+        ],
+        "retrieved2answer": [
+          [
+            "Entailment"
+          ],
+          [
+            "Entailment"
+          ]
+        ],
+        "retrieved2response": [
+          [
+            "Entailment"
+          ],
+          [
+            "Entailment"
+          ]
+        ],
+        "retrieved_context": [
+          {
+            "doc_id": "release/v0.2.0.md",
+            "text": "ContextTrace v0.2.0 adds local claim-level evidence verification for portable RAG traces. The release focuses on one core question: is each generated claim actually supported by retrieved evidence?"
+          }
+        ]
+      },
+      {
+        "answer2response": [
+          "Entailment",
+          "Entailment",
+          "Entailment",
+          "Neutral",
+          "Neutral",
+          "Entailment"
+        ],
+        "gt_answer": "The LangChain callback captures tool calls, tool results, and chain/tool errors as agent timeline events.",
+        "gt_answer_claims": [
+          [
+            "LangChain callback",
+            "captures",
+            "tool calls"
+          ],
+          [
+            "LangChain callback",
+            "captures",
+            "tool results"
+          ],
+          [
+            "LangChain callback",
+            "captures",
+            "chain/tool errors"
+          ],
+          [
+            "tool calls",
+            "are",
+            "agent timeline events"
+          ],
+          [
+            "tool results",
+            "are",
+            "agent timeline events"
+          ],
+          [
+            "chain/tool errors",
+            "are",
+            "agent timeline events"
+          ]
+        ],
+        "latency_ms": null,
+        "metrics": {
+          "claim_recall": 1.0,
+          "context_precision": 1.0,
+          "context_utilization": 0.6666666666666666,
+          "f1": 0.6666666666666666,
+          "faithfulness": 1.0,
+          "hallucination": 0.0,
+          "noise_sensitivity_in_irrelevant": 0.0,
+          "noise_sensitivity_in_relevant": 0.3333333333333333,
+          "precision": 0.6666666666666666,
+          "recall": 0.6666666666666666,
+          "self_knowledge": 0.0
+        },
+        "query": "What agent events does the LangChain callback capture?",
+        "query_id": "langchain_agent_events_supported",
+        "response": "The LangChain callback captures tool calls, tool results, and chain/tool errors as agent timeline events.",
+        "response2answer": [
+          "Entailment",
+          "Entailment",
+          "Entailment",
+          "Neutral",
+          "Neutral",
+          "Entailment"
+        ],
+        "response_claims": [
+          [
+            "LangChain callback",
+            "captures",
+            "tool calls"
+          ],
+          [
+            "LangChain callback",
+            "captures",
+            "tool results"
+          ],
+          [
+            "LangChain callback",
+            "captures",
+            "chain/tool errors"
+          ],
+          [
+            "tool calls",
+            "are",
+            "agent timeline events"
+          ],
+          [
+            "tool results",
+            "are",
+            "agent timeline events"
+          ],
+          [
+            "chain/tool errors",
+            "are",
+            "agent timeline events"
+          ]
+        ],
+        "retrieved2answer": [
+          [
+            "Entailment"
+          ],
+          [
+            "Entailment"
+          ],
+          [
+            "Entailment"
+          ],
+          [
+            "Entailment"
+          ],
+          [
+            "Entailment"
+          ],
+          [
+            "Entailment"
+          ]
+        ],
+        "retrieved2response": [
+          [
+            "Entailment"
+          ],
+          [
+            "Entailment"
+          ],
+          [
+            "Entailment"
+          ],
+          [
+            "Entailment"
+          ],
+          [
+            "Entailment"
+          ],
+          [
+            "Entailment"
+          ]
+        ],
+        "retrieved_context": [
+          {
+            "doc_id": "docs/integrations/langchain.md",
+            "text": "ContextTrace ships a ContextTraceCallbackHandler for LangChain callback pipelines. It captures query/input, retrieved documents, selected context, final answer/output, citations when the chain returns them, metadata, tags, run IDs, model, token usage, and latency, tool calls, tool results, and chain/tool errors as agent timeline events."
+          }
+        ]
+      },
+      {
+        "answer2response": [
+          "Entailment",
+          "Entailment"
+        ],
+        "gt_answer": "Logging failures are swallowed by default so tracing does not break the production endpoint.",
+        "gt_answer_claims": [
+          [
+            "Logging failures",
+            "are swallowed by",
+            "default"
+          ],
+          [
+            "Swallowing logging failures",
+            "prevents",
+            "tracing from breaking the production endpoint"
+          ]
+        ],
+        "latency_ms": null,
+        "metrics": {
+          "claim_recall": 1.0,
+          "context_precision": 1.0,
+          "context_utilization": 1.0,
+          "f1": 1.0,
+          "faithfulness": 1.0,
+          "hallucination": 0.0,
+          "noise_sensitivity_in_irrelevant": 0.0,
+          "noise_sensitivity_in_relevant": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "self_knowledge": 0.0
+        },
+        "query": "What happens when FastAPI tracing logging fails?",
+        "query_id": "fastapi_logging_supported",
+        "response": "Logging failures are swallowed by default so tracing does not break the production endpoint.",
+        "response2answer": [
+          "Entailment",
+          "Entailment"
+        ],
+        "response_claims": [
+          [
+            "Logging failures",
+            "are swallowed by",
+            "default"
+          ],
+          [
+            "Swallowing logging failures",
+            "prevents",
+            "tracing from breaking the production endpoint"
+          ]
+        ],
+        "retrieved2answer": [
+          [
+            "Entailment"
+          ],
+          [
+            "Entailment"
+          ]
+        ],
+        "retrieved2response": [
+          [
+            "Entailment"
+          ],
+          [
+            "Entailment"
+          ]
+        ],
+        "retrieved_context": [
+          {
+            "doc_id": "docs/integrations/fastapi.md",
+            "text": "Logging failures are swallowed by default so tracing does not break the production endpoint. Set raise_logging_errors=True during development."
+          }
+        ]
+      },
+      {
+        "answer2response": [
+          "Entailment"
+        ],
+        "gt_answer": "citation_mismatch means a claim cites a chunk that does not support it.",
+        "gt_answer_claims": [
+          [
+            "citation_mismatch",
+            "means",
+            "a claim cites a chunk that does not support it"
+          ]
+        ],
+        "latency_ms": null,
+        "metrics": {
+          "claim_recall": 1.0,
+          "context_precision": 1.0,
+          "context_utilization": 1.0,
+          "f1": 1.0,
+          "faithfulness": 1.0,
+          "hallucination": 0.0,
+          "noise_sensitivity_in_irrelevant": 0.0,
+          "noise_sensitivity_in_relevant": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "self_knowledge": 0.0
+        },
+        "query": "What does citation_mismatch mean?",
+        "query_id": "failure_taxonomy_citation_supported",
+        "response": "citation_mismatch means a claim cites a chunk that does not support it.",
+        "response2answer": [
+          "Entailment"
+        ],
+        "response_claims": [
+          [
+            "citation_mismatch",
+            "means",
+            "a claim cites a chunk that does not support it"
+          ]
+        ],
+        "retrieved2answer": [
+          [
+            "Entailment"
+          ]
+        ],
+        "retrieved2response": [
+          [
+            "Entailment"
+          ]
+        ],
+        "retrieved_context": [
+          {
+            "doc_id": "docs/failure-taxonomy.md",
+            "text": "ContextTrace reports practical failure labels for RAG debugging. citation_mismatch: a claim cites a chunk that does not support it. unsupported_answer: the answer contains claims not supported by retrieved context."
+          }
+        ]
+      },
+      {
+        "answer2response": [
+          "Entailment"
+        ],
+        "gt_answer": "citation_mismatch means a claim cites a chunk that does not support it.",
+        "gt_answer_claims": [
+          [
+            "citation_mismatch",
+            "means",
+            "a claim cites a chunk that does not support it"
+          ]
+        ],
+        "latency_ms": null,
+        "metrics": {
+          "claim_recall": 1.0,
+          "context_precision": 0.5,
+          "context_utilization": 1.0,
+          "f1": 1.0,
+          "faithfulness": 1.0,
+          "hallucination": 0.0,
+          "noise_sensitivity_in_irrelevant": 0.0,
+          "noise_sensitivity_in_relevant": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "self_knowledge": 0.0
+        },
+        "query": "What does citation_mismatch mean?",
+        "query_id": "citation_points_to_wrong_real_doc",
+        "response": "citation_mismatch means a claim cites a chunk that does not support it.",
+        "response2answer": [
+          "Entailment"
+        ],
+        "response_claims": [
+          [
+            "citation_mismatch",
+            "means",
+            "a claim cites a chunk that does not support it"
+          ]
+        ],
+        "retrieved2answer": [
+          [
+            "Entailment",
+            "Neutral"
+          ]
+        ],
+        "retrieved2response": [
+          [
+            "Entailment",
+            "Neutral"
+          ]
+        ],
+        "retrieved_context": [
+          {
+            "doc_id": "docs/failure-taxonomy.md",
+            "text": "ContextTrace reports practical failure labels for RAG debugging. citation_mismatch: a claim cites a chunk that does not support it. unsupported_answer: the answer contains claims not supported by retrieved context."
+          },
+          {
+            "doc_id": "docs/local-mode.md",
+            "text": "ContextTrace is local-first by default. A new SDK client stores traces in SQLite under: .contexttrace/contexttrace.db. No backend server is required for normal SDK, CLI, report, or viewer workflows."
+          }
+        ]
+      },
+      {
+        "answer2response": [
+          "Entailment",
+          "Entailment"
+        ],
+        "gt_answer": "ContextTrace v0.2.0 adds local claim-level evidence verification for portable RAG traces.",
+        "gt_answer_claims": [
+          [
+            "ContextTrace v0.2.0",
+            "adds",
+            "local claim-level evidence verification"
+          ],
+          [
+            "local claim-level evidence verification",
+            "applied to",
+            "portable RAG traces"
+          ]
+        ],
+        "latency_ms": null,
+        "metrics": {
+          "claim_recall": 1.0,
+          "context_precision": 1.0,
+          "context_utilization": 1.0,
+          "f1": 1.0,
+          "faithfulness": 1.0,
+          "hallucination": 0.0,
+          "noise_sensitivity_in_irrelevant": 0.0,
+          "noise_sensitivity_in_relevant": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "self_knowledge": 0.0
+        },
+        "query": "What did ContextTrace v0.2.0 add?",
+        "query_id": "citation_source_missing_real_claim",
+        "response": "ContextTrace v0.2.0 adds local claim-level evidence verification for portable RAG traces.",
+        "response2answer": [
+          "Entailment",
+          "Entailment"
+        ],
+        "response_claims": [
+          [
+            "ContextTrace v0.2.0",
+            "adds",
+            "local claim-level evidence verification"
+          ],
+          [
+            "local claim-level evidence verification",
+            "applied to",
+            "portable RAG traces"
+          ]
+        ],
+        "retrieved2answer": [
+          [
+            "Entailment"
+          ],
+          [
+            "Entailment"
+          ]
+        ],
+        "retrieved2response": [
+          [
+            "Entailment"
+          ],
+          [
+            "Entailment"
+          ]
+        ],
+        "retrieved_context": [
+          {
+            "doc_id": "release/v0.2.0.md",
+            "text": "ContextTrace v0.2.0 adds local claim-level evidence verification for portable RAG traces. The release focuses on one core question: is each generated claim actually supported by retrieved evidence?"
+          }
+        ]
+      },
+      {
+        "answer2response": [
+          "Entailment",
+          "Neutral"
+        ],
+        "gt_answer": "A new SDK client stores traces in SQLite under .contexttrace/contexttrace.db.",
+        "gt_answer_claims": [
+          [
+            "A new SDK client",
+            "stores traces in",
+            "SQLite"
+          ],
+          [
+            "SQLite",
+            "location",
+            ".contexttrace/contexttrace.db"
+          ]
+        ],
+        "latency_ms": null,
+        "metrics": {
+          "claim_recall": 0.0,
+          "context_precision": 0.0,
+          "context_utilization": 0.0,
+          "f1": 0.5,
+          "faithfulness": 0.0,
+          "hallucination": 0.5,
+          "noise_sensitivity_in_irrelevant": 0.0,
+          "noise_sensitivity_in_relevant": 0.0,
+          "precision": 0.5,
+          "recall": 0.5,
+          "self_knowledge": 0.5
+        },
+        "query": "Where does local mode store traces?",
+        "query_id": "unsupported_local_storage_from_fastapi_context",
+        "response": "A new SDK client stores traces in SQLite under .contexttrace/contexttrace.db.",
+        "response2answer": [
+          "Entailment",
+          "Neutral"
+        ],
+        "response_claims": [
+          [
+            "A new SDK client",
+            "stores traces in",
+            "SQLite"
+          ],
+          [
+            "SQLite",
+            "location of traces file",
+            ".contexttrace/contexttrace.db"
+          ]
+        ],
+        "retrieved2answer": [
+          [
+            "Neutral"
+          ],
+          [
+            "Neutral"
+          ]
+        ],
+        "retrieved2response": [
+          [
+            "Neutral"
+          ],
+          [
+            "Neutral"
+          ]
+        ],
+        "retrieved_context": [
+          {
+            "doc_id": "docs/integrations/fastapi.md",
+            "text": "ContextTraceFastAPIMiddleware traces incoming RAG API requests without installing SDK calls inside each endpoint. It is ASGI middleware, so it works with sync or async FastAPI endpoints."
+          }
+        ]
+      },
+      {
+        "answer2response": [
+          "Entailment",
+          "Entailment",
+          "Entailment",
+          "Entailment"
+        ],
+        "gt_answer": "A backend server is required for normal SDK, CLI, report, or viewer workflows.",
+        "gt_answer_claims": [
+          [
+            "Backend server",
+            "is required for",
+            "normal SDK workflows"
+          ],
+          [
+            "Backend server",
+            "is required for",
+            "CLI workflows"
+          ],
+          [
+            "Backend server",
+            "is required for",
+            "report workflows"
+          ],
+          [
+            "Backend server",
+            "is required for",
+            "viewer workflows"
+          ]
+        ],
+        "latency_ms": null,
+        "metrics": {
+          "claim_recall": 0.0,
+          "context_precision": 0.0,
+          "context_utilization": 0.0,
+          "f1": 1.0,
+          "faithfulness": 0.0,
+          "hallucination": 0.0,
+          "noise_sensitivity_in_irrelevant": 0.0,
+          "noise_sensitivity_in_relevant": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "self_knowledge": 1.0
+        },
+        "query": "Is a backend server required for local mode?",
+        "query_id": "contradicted_backend_required",
+        "response": "A backend server is required for normal SDK, CLI, report, or viewer workflows.",
+        "response2answer": [
+          "Entailment",
+          "Entailment",
+          "Entailment",
+          "Entailment"
+        ],
+        "response_claims": [
+          [
+            "Backend server",
+            "is required for",
+            "normal SDK workflows"
+          ],
+          [
+            "Backend server",
+            "is required for",
+            "CLI workflows"
+          ],
+          [
+            "Backend server",
+            "is required for",
+            "report workflows"
+          ],
+          [
+            "Backend server",
+            "is required for",
+            "viewer workflows"
+          ]
+        ],
+        "retrieved2answer": [
+          [
+            "Contradiction"
+          ],
+          [
+            "Contradiction"
+          ],
+          [
+            "Contradiction"
+          ],
+          [
+            "Contradiction"
+          ]
+        ],
+        "retrieved2response": [
+          [
+            "Contradiction"
+          ],
+          [
+            "Contradiction"
+          ],
+          [
+            "Contradiction"
+          ],
+          [
+            "Contradiction"
+          ]
+        ],
+        "retrieved_context": [
+          {
+            "doc_id": "docs/local-mode.md",
+            "text": "ContextTrace is local-first by default. A new SDK client stores traces in SQLite under: .contexttrace/contexttrace.db. No backend server is required for normal SDK, CLI, report, or viewer workflows."
+          }
+        ]
+      },
+      {
+        "answer2response": [
+          "Entailment"
+        ],
+        "gt_answer": "The Eiffel Tower is in Berlin.",
+        "gt_answer_claims": [
+          [
+            "Eiffel Tower",
+            "is in",
+            "Berlin"
+          ]
+        ],
+        "latency_ms": null,
+        "metrics": {
+          "claim_recall": 0.0,
+          "context_precision": 0.0,
+          "context_utilization": 0.0,
+          "f1": 1.0,
+          "faithfulness": 0.0,
+          "hallucination": 0.0,
+          "noise_sensitivity_in_irrelevant": 0.0,
+          "noise_sensitivity_in_relevant": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "self_knowledge": 1.0
+        },
+        "query": "Where is the Eiffel Tower?",
+        "query_id": "adversarial_entity_swap_location",
+        "response": "The Eiffel Tower is in Berlin.",
+        "response2answer": [
+          "Entailment"
+        ],
+        "response_claims": [
+          [
+            "Eiffel Tower",
+            "is in",
+            "Berlin"
+          ]
+        ],
+        "retrieved2answer": [
+          [
+            "Contradiction"
+          ]
+        ],
+        "retrieved2response": [
+          [
+            "Contradiction"
+          ]
+        ],
+        "retrieved_context": [
+          {
+            "doc_id": "adversarial_relation_location",
+            "text": "The Eiffel Tower is in Paris. Berlin is in Germany."
+          }
+        ]
+      }
+    ]
+  },
+  "rows": [
+    {
+      "answer2response": [
+        "Entailment",
+        "Entailment"
+      ],
+      "gt_answer": "A new SDK client stores traces in SQLite under .contexttrace/contexttrace.db.",
+      "gt_answer_claims": [
+        [
+          "SDK client",
+          "stores traces in",
+          "SQLite"
+        ],
+        [
+          "Traces",
+          "stored under",
+          ".contexttrace/contexttrace.db"
+        ]
+      ],
+      "latency_ms": null,
+      "metrics": {
+        "claim_recall": 1.0,
+        "context_precision": 1.0,
+        "context_utilization": 1.0,
+        "f1": 1.0,
+        "faithfulness": 1.0,
+        "hallucination": 0.0,
+        "noise_sensitivity_in_irrelevant": 0.0,
+        "noise_sensitivity_in_relevant": 0.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "self_knowledge": 0.0
+      },
+      "query": "Where does a local SDK client store traces?",
+      "query_id": "local_mode_sqlite_supported",
+      "response": "A new SDK client stores traces in SQLite under .contexttrace/contexttrace.db.",
+      "response2answer": [
+        "Entailment",
+        "Entailment"
+      ],
+      "response_claims": [
+        [
+          "SDK client",
+          "stores traces in",
+          "SQLite"
+        ],
+        [
+          "Traces in SQLite",
+          "located at",
+          ".contexttrace/contexttrace.db"
+        ]
+      ],
+      "retrieved2answer": [
+        [
+          "Entailment"
+        ],
+        [
+          "Entailment"
+        ]
+      ],
+      "retrieved2response": [
+        [
+          "Entailment"
+        ],
+        [
+          "Entailment"
+        ]
+      ],
+      "retrieved_context": [
+        {
+          "doc_id": "docs/local-mode.md",
+          "text": "ContextTrace is local-first by default. A new SDK client stores traces in SQLite under: .contexttrace/contexttrace.db. No backend server is required for normal SDK, CLI, report, or viewer workflows."
+        }
+      ]
+    },
+    {
+      "answer2response": [
+        "Entailment",
+        "Entailment"
+      ],
+      "gt_answer": "ContextTrace v0.2.0 adds local claim-level evidence verification for portable RAG traces.",
+      "gt_answer_claims": [
+        [
+          "ContextTrace v0.2.0",
+          "adds",
+          "local claim-level evidence verification"
+        ],
+        [
+          "local claim-level evidence verification",
+          "applied to",
+          "portable RAG traces"
+        ]
+      ],
+      "latency_ms": null,
+      "metrics": {
+        "claim_recall": 1.0,
+        "context_precision": 1.0,
+        "context_utilization": 1.0,
+        "f1": 1.0,
+        "faithfulness": 1.0,
+        "hallucination": 0.0,
+        "noise_sensitivity_in_irrelevant": 0.0,
+        "noise_sensitivity_in_relevant": 0.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "self_knowledge": 0.0
+      },
+      "query": "What did ContextTrace v0.2.0 add?",
+      "query_id": "v020_claim_verification_supported",
+      "response": "ContextTrace v0.2.0 adds local claim-level evidence verification for portable RAG traces.",
+      "response2answer": [
+        "Entailment",
+        "Entailment"
+      ],
+      "response_claims": [
+        [
+          "ContextTrace v0.2.0",
+          "adds",
+          "local claim-level evidence verification"
+        ],
+        [
+          "local claim-level evidence verification",
+          "applied to",
+          "portable RAG traces"
+        ]
+      ],
+      "retrieved2answer": [
+        [
+          "Entailment"
+        ],
+        [
+          "Entailment"
+        ]
+      ],
+      "retrieved2response": [
+        [
+          "Entailment"
+        ],
+        [
+          "Entailment"
+        ]
+      ],
+      "retrieved_context": [
+        {
+          "doc_id": "release/v0.2.0.md",
+          "text": "ContextTrace v0.2.0 adds local claim-level evidence verification for portable RAG traces. The release focuses on one core question: is each generated claim actually supported by retrieved evidence?"
+        }
+      ]
+    },
+    {
+      "answer2response": [
+        "Entailment",
+        "Entailment",
+        "Entailment",
+        "Neutral",
+        "Neutral",
+        "Entailment"
+      ],
+      "gt_answer": "The LangChain callback captures tool calls, tool results, and chain/tool errors as agent timeline events.",
+      "gt_answer_claims": [
+        [
+          "LangChain callback",
+          "captures",
+          "tool calls"
+        ],
+        [
+          "LangChain callback",
+          "captures",
+          "tool results"
+        ],
+        [
+          "LangChain callback",
+          "captures",
+          "chain/tool errors"
+        ],
+        [
+          "tool calls",
+          "are",
+          "agent timeline events"
+        ],
+        [
+          "tool results",
+          "are",
+          "agent timeline events"
+        ],
+        [
+          "chain/tool errors",
+          "are",
+          "agent timeline events"
+        ]
+      ],
+      "latency_ms": null,
+      "metrics": {
+        "claim_recall": 1.0,
+        "context_precision": 1.0,
+        "context_utilization": 0.6666666666666666,
+        "f1": 0.6666666666666666,
+        "faithfulness": 1.0,
+        "hallucination": 0.0,
+        "noise_sensitivity_in_irrelevant": 0.0,
+        "noise_sensitivity_in_relevant": 0.3333333333333333,
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666,
+        "self_knowledge": 0.0
+      },
+      "query": "What agent events does the LangChain callback capture?",
+      "query_id": "langchain_agent_events_supported",
+      "response": "The LangChain callback captures tool calls, tool results, and chain/tool errors as agent timeline events.",
+      "response2answer": [
+        "Entailment",
+        "Entailment",
+        "Entailment",
+        "Neutral",
+        "Neutral",
+        "Entailment"
+      ],
+      "response_claims": [
+        [
+          "LangChain callback",
+          "captures",
+          "tool calls"
+        ],
+        [
+          "LangChain callback",
+          "captures",
+          "tool results"
+        ],
+        [
+          "LangChain callback",
+          "captures",
+          "chain/tool errors"
+        ],
+        [
+          "tool calls",
+          "are",
+          "agent timeline events"
+        ],
+        [
+          "tool results",
+          "are",
+          "agent timeline events"
+        ],
+        [
+          "chain/tool errors",
+          "are",
+          "agent timeline events"
+        ]
+      ],
+      "retrieved2answer": [
+        [
+          "Entailment"
+        ],
+        [
+          "Entailment"
+        ],
+        [
+          "Entailment"
+        ],
+        [
+          "Entailment"
+        ],
+        [
+          "Entailment"
+        ],
+        [
+          "Entailment"
+        ]
+      ],
+      "retrieved2response": [
+        [
+          "Entailment"
+        ],
+        [
+          "Entailment"
+        ],
+        [
+          "Entailment"
+        ],
+        [
+          "Entailment"
+        ],
+        [
+          "Entailment"
+        ],
+        [
+          "Entailment"
+        ]
+      ],
+      "retrieved_context": [
+        {
+          "doc_id": "docs/integrations/langchain.md",
+          "text": "ContextTrace ships a ContextTraceCallbackHandler for LangChain callback pipelines. It captures query/input, retrieved documents, selected context, final answer/output, citations when the chain returns them, metadata, tags, run IDs, model, token usage, and latency, tool calls, tool results, and chain/tool errors as agent timeline events."
+        }
+      ]
+    },
+    {
+      "answer2response": [
+        "Entailment",
+        "Entailment"
+      ],
+      "gt_answer": "Logging failures are swallowed by default so tracing does not break the production endpoint.",
+      "gt_answer_claims": [
+        [
+          "Logging failures",
+          "are swallowed by",
+          "default"
+        ],
+        [
+          "Swallowing logging failures",
+          "prevents",
+          "tracing from breaking the production endpoint"
+        ]
+      ],
+      "latency_ms": null,
+      "metrics": {
+        "claim_recall": 1.0,
+        "context_precision": 1.0,
+        "context_utilization": 1.0,
+        "f1": 1.0,
+        "faithfulness": 1.0,
+        "hallucination": 0.0,
+        "noise_sensitivity_in_irrelevant": 0.0,
+        "noise_sensitivity_in_relevant": 0.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "self_knowledge": 0.0
+      },
+      "query": "What happens when FastAPI tracing logging fails?",
+      "query_id": "fastapi_logging_supported",
+      "response": "Logging failures are swallowed by default so tracing does not break the production endpoint.",
+      "response2answer": [
+        "Entailment",
+        "Entailment"
+      ],
+      "response_claims": [
+        [
+          "Logging failures",
+          "are swallowed by",
+          "default"
+        ],
+        [
+          "Swallowing logging failures",
+          "prevents",
+          "tracing from breaking the production endpoint"
+        ]
+      ],
+      "retrieved2answer": [
+        [
+          "Entailment"
+        ],
+        [
+          "Entailment"
+        ]
+      ],
+      "retrieved2response": [
+        [
+          "Entailment"
+        ],
+        [
+          "Entailment"
+        ]
+      ],
+      "retrieved_context": [
+        {
+          "doc_id": "docs/integrations/fastapi.md",
+          "text": "Logging failures are swallowed by default so tracing does not break the production endpoint. Set raise_logging_errors=True during development."
+        }
+      ]
+    },
+    {
+      "answer2response": [
+        "Entailment"
+      ],
+      "gt_answer": "citation_mismatch means a claim cites a chunk that does not support it.",
+      "gt_answer_claims": [
+        [
+          "citation_mismatch",
+          "means",
+          "a claim cites a chunk that does not support it"
+        ]
+      ],
+      "latency_ms": null,
+      "metrics": {
+        "claim_recall": 1.0,
+        "context_precision": 1.0,
+        "context_utilization": 1.0,
+        "f1": 1.0,
+        "faithfulness": 1.0,
+        "hallucination": 0.0,
+        "noise_sensitivity_in_irrelevant": 0.0,
+        "noise_sensitivity_in_relevant": 0.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "self_knowledge": 0.0
+      },
+      "query": "What does citation_mismatch mean?",
+      "query_id": "failure_taxonomy_citation_supported",
+      "response": "citation_mismatch means a claim cites a chunk that does not support it.",
+      "response2answer": [
+        "Entailment"
+      ],
+      "response_claims": [
+        [
+          "citation_mismatch",
+          "means",
+          "a claim cites a chunk that does not support it"
+        ]
+      ],
+      "retrieved2answer": [
+        [
+          "Entailment"
+        ]
+      ],
+      "retrieved2response": [
+        [
+          "Entailment"
+        ]
+      ],
+      "retrieved_context": [
+        {
+          "doc_id": "docs/failure-taxonomy.md",
+          "text": "ContextTrace reports practical failure labels for RAG debugging. citation_mismatch: a claim cites a chunk that does not support it. unsupported_answer: the answer contains claims not supported by retrieved context."
+        }
+      ]
+    },
+    {
+      "answer2response": [
+        "Entailment"
+      ],
+      "gt_answer": "citation_mismatch means a claim cites a chunk that does not support it.",
+      "gt_answer_claims": [
+        [
+          "citation_mismatch",
+          "means",
+          "a claim cites a chunk that does not support it"
+        ]
+      ],
+      "latency_ms": null,
+      "metrics": {
+        "claim_recall": 1.0,
+        "context_precision": 0.5,
+        "context_utilization": 1.0,
+        "f1": 1.0,
+        "faithfulness": 1.0,
+        "hallucination": 0.0,
+        "noise_sensitivity_in_irrelevant": 0.0,
+        "noise_sensitivity_in_relevant": 0.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "self_knowledge": 0.0
+      },
+      "query": "What does citation_mismatch mean?",
+      "query_id": "citation_points_to_wrong_real_doc",
+      "response": "citation_mismatch means a claim cites a chunk that does not support it.",
+      "response2answer": [
+        "Entailment"
+      ],
+      "response_claims": [
+        [
+          "citation_mismatch",
+          "means",
+          "a claim cites a chunk that does not support it"
+        ]
+      ],
+      "retrieved2answer": [
+        [
+          "Entailment",
+          "Neutral"
+        ]
+      ],
+      "retrieved2response": [
+        [
+          "Entailment",
+          "Neutral"
+        ]
+      ],
+      "retrieved_context": [
+        {
+          "doc_id": "docs/failure-taxonomy.md",
+          "text": "ContextTrace reports practical failure labels for RAG debugging. citation_mismatch: a claim cites a chunk that does not support it. unsupported_answer: the answer contains claims not supported by retrieved context."
+        },
+        {
+          "doc_id": "docs/local-mode.md",
+          "text": "ContextTrace is local-first by default. A new SDK client stores traces in SQLite under: .contexttrace/contexttrace.db. No backend server is required for normal SDK, CLI, report, or viewer workflows."
+        }
+      ]
+    },
+    {
+      "answer2response": [
+        "Entailment",
+        "Entailment"
+      ],
+      "gt_answer": "ContextTrace v0.2.0 adds local claim-level evidence verification for portable RAG traces.",
+      "gt_answer_claims": [
+        [
+          "ContextTrace v0.2.0",
+          "adds",
+          "local claim-level evidence verification"
+        ],
+        [
+          "local claim-level evidence verification",
+          "applied to",
+          "portable RAG traces"
+        ]
+      ],
+      "latency_ms": null,
+      "metrics": {
+        "claim_recall": 1.0,
+        "context_precision": 1.0,
+        "context_utilization": 1.0,
+        "f1": 1.0,
+        "faithfulness": 1.0,
+        "hallucination": 0.0,
+        "noise_sensitivity_in_irrelevant": 0.0,
+        "noise_sensitivity_in_relevant": 0.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "self_knowledge": 0.0
+      },
+      "query": "What did ContextTrace v0.2.0 add?",
+      "query_id": "citation_source_missing_real_claim",
+      "response": "ContextTrace v0.2.0 adds local claim-level evidence verification for portable RAG traces.",
+      "response2answer": [
+        "Entailment",
+        "Entailment"
+      ],
+      "response_claims": [
+        [
+          "ContextTrace v0.2.0",
+          "adds",
+          "local claim-level evidence verification"
+        ],
+        [
+          "local claim-level evidence verification",
+          "applied to",
+          "portable RAG traces"
+        ]
+      ],
+      "retrieved2answer": [
+        [
+          "Entailment"
+        ],
+        [
+          "Entailment"
+        ]
+      ],
+      "retrieved2response": [
+        [
+          "Entailment"
+        ],
+        [
+          "Entailment"
+        ]
+      ],
+      "retrieved_context": [
+        {
+          "doc_id": "release/v0.2.0.md",
+          "text": "ContextTrace v0.2.0 adds local claim-level evidence verification for portable RAG traces. The release focuses on one core question: is each generated claim actually supported by retrieved evidence?"
+        }
+      ]
+    },
+    {
+      "answer2response": [
+        "Entailment",
+        "Neutral"
+      ],
+      "gt_answer": "A new SDK client stores traces in SQLite under .contexttrace/contexttrace.db.",
+      "gt_answer_claims": [
+        [
+          "A new SDK client",
+          "stores traces in",
+          "SQLite"
+        ],
+        [
+          "SQLite",
+          "location",
+          ".contexttrace/contexttrace.db"
+        ]
+      ],
+      "latency_ms": null,
+      "metrics": {
+        "claim_recall": 0.0,
+        "context_precision": 0.0,
+        "context_utilization": 0.0,
+        "f1": 0.5,
+        "faithfulness": 0.0,
+        "hallucination": 0.5,
+        "noise_sensitivity_in_irrelevant": 0.0,
+        "noise_sensitivity_in_relevant": 0.0,
+        "precision": 0.5,
+        "recall": 0.5,
+        "self_knowledge": 0.5
+      },
+      "query": "Where does local mode store traces?",
+      "query_id": "unsupported_local_storage_from_fastapi_context",
+      "response": "A new SDK client stores traces in SQLite under .contexttrace/contexttrace.db.",
+      "response2answer": [
+        "Entailment",
+        "Neutral"
+      ],
+      "response_claims": [
+        [
+          "A new SDK client",
+          "stores traces in",
+          "SQLite"
+        ],
+        [
+          "SQLite",
+          "location of traces file",
+          ".contexttrace/contexttrace.db"
+        ]
+      ],
+      "retrieved2answer": [
+        [
+          "Neutral"
+        ],
+        [
+          "Neutral"
+        ]
+      ],
+      "retrieved2response": [
+        [
+          "Neutral"
+        ],
+        [
+          "Neutral"
+        ]
+      ],
+      "retrieved_context": [
+        {
+          "doc_id": "docs/integrations/fastapi.md",
+          "text": "ContextTraceFastAPIMiddleware traces incoming RAG API requests without installing SDK calls inside each endpoint. It is ASGI middleware, so it works with sync or async FastAPI endpoints."
+        }
+      ]
+    },
+    {
+      "answer2response": [
+        "Entailment",
+        "Entailment",
+        "Entailment",
+        "Entailment"
+      ],
+      "gt_answer": "A backend server is required for normal SDK, CLI, report, or viewer workflows.",
+      "gt_answer_claims": [
+        [
+          "Backend server",
+          "is required for",
+          "normal SDK workflows"
+        ],
+        [
+          "Backend server",
+          "is required for",
+          "CLI workflows"
+        ],
+        [
+          "Backend server",
+          "is required for",
+          "report workflows"
+        ],
+        [
+          "Backend server",
+          "is required for",
+          "viewer workflows"
+        ]
+      ],
+      "latency_ms": null,
+      "metrics": {
+        "claim_recall": 0.0,
+        "context_precision": 0.0,
+        "context_utilization": 0.0,
+        "f1": 1.0,
+        "faithfulness": 0.0,
+        "hallucination": 0.0,
+        "noise_sensitivity_in_irrelevant": 0.0,
+        "noise_sensitivity_in_relevant": 0.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "self_knowledge": 1.0
+      },
+      "query": "Is a backend server required for local mode?",
+      "query_id": "contradicted_backend_required",
+      "response": "A backend server is required for normal SDK, CLI, report, or viewer workflows.",
+      "response2answer": [
+        "Entailment",
+        "Entailment",
+        "Entailment",
+        "Entailment"
+      ],
+      "response_claims": [
+        [
+          "Backend server",
+          "is required for",
+          "normal SDK workflows"
+        ],
+        [
+          "Backend server",
+          "is required for",
+          "CLI workflows"
+        ],
+        [
+          "Backend server",
+          "is required for",
+          "report workflows"
+        ],
+        [
+          "Backend server",
+          "is required for",
+          "viewer workflows"
+        ]
+      ],
+      "retrieved2answer": [
+        [
+          "Contradiction"
+        ],
+        [
+          "Contradiction"
+        ],
+        [
+          "Contradiction"
+        ],
+        [
+          "Contradiction"
+        ]
+      ],
+      "retrieved2response": [
+        [
+          "Contradiction"
+        ],
+        [
+          "Contradiction"
+        ],
+        [
+          "Contradiction"
+        ],
+        [
+          "Contradiction"
+        ]
+      ],
+      "retrieved_context": [
+        {
+          "doc_id": "docs/local-mode.md",
+          "text": "ContextTrace is local-first by default. A new SDK client stores traces in SQLite under: .contexttrace/contexttrace.db. No backend server is required for normal SDK, CLI, report, or viewer workflows."
+        }
+      ]
+    },
+    {
+      "answer2response": [
+        "Entailment"
+      ],
+      "gt_answer": "The Eiffel Tower is in Berlin.",
+      "gt_answer_claims": [
+        [
+          "Eiffel Tower",
+          "is in",
+          "Berlin"
+        ]
+      ],
+      "latency_ms": null,
+      "metrics": {
+        "claim_recall": 0.0,
+        "context_precision": 0.0,
+        "context_utilization": 0.0,
+        "f1": 1.0,
+        "faithfulness": 0.0,
+        "hallucination": 0.0,
+        "noise_sensitivity_in_irrelevant": 0.0,
+        "noise_sensitivity_in_relevant": 0.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "self_knowledge": 1.0
+      },
+      "query": "Where is the Eiffel Tower?",
+      "query_id": "adversarial_entity_swap_location",
+      "response": "The Eiffel Tower is in Berlin.",
+      "response2answer": [
+        "Entailment"
+      ],
+      "response_claims": [
+        [
+          "Eiffel Tower",
+          "is in",
+          "Berlin"
+        ]
+      ],
+      "retrieved2answer": [
+        [
+          "Contradiction"
+        ]
+      ],
+      "retrieved2response": [
+        [
+          "Contradiction"
+        ]
+      ],
+      "retrieved_context": [
+        {
+          "doc_id": "adversarial_relation_location",
+          "text": "The Eiffel Tower is in Paris. Berlin is in Germany."
+        }
+      ]
+    }
+  ],
+  "system": "RAGChecker"
+}

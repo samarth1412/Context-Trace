@@ -1,0 +1,46 @@
+{
+  "query": "How does this chatbot update its vector database when documents change?",
+  "answer": "index (VectorDatabaseDep): The vector database dependency for retrieval. When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database. Additionally, the chatbot is designed to remember previous interactions.",
+  "contexts": [
+    {
+      "id": "rag_chatbot:backend/api/services/chat_stream.py:7",
+      "text": "chat_history (ChatHistoryDep): The chat history dependency to maintain conversation context.\n        index (VectorDatabaseDep): The vector database dependency for retrieval.\n    \"\"\"\n    try:\n        start_time = time.time()\n        ctx_synthesis_strategy = get_ctx_synthesis_strategy(settings.SYNTHESIS_STRATEGY, llm=llm_client)",
+      "metadata": {
+        "project": "umbertogriffo/rag-chatbot",
+        "repo_url": "https://github.com/umbertogriffo/rag-chatbot",
+        "source": "backend/api/services/chat_stream.py",
+        "retrieval_score": 0.5318,
+        "retriever": "sentence-transformers lexical-prefilter cosine"
+      }
+    },
+    {
+      "id": "rag_chatbot:README.md:10",
+      "text": "them in an embedding database called [Chroma](https://github.com/chroma-core/chroma) for later use.\n\nWhen a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database.\nSince the original question can't be always optimal to retrieve for the LLM, we first prompt an LLM to rewrite the\nquestion, then conduct retrieval-augmented reading.\nThe most relevant sections are then used as context to generate the final answer using a local language model (LLM).\nAdditionally, the chatbot is designed to remember previous interactions. It saves the chat history and considers the\nrelevant context from previous conversations to provide more accurate answers.",
+      "metadata": {
+        "project": "umbertogriffo/rag-chatbot",
+        "repo_url": "https://github.com/umbertogriffo/rag-chatbot",
+        "source": "README.md",
+        "retrieval_score": 0.5024,
+        "retriever": "sentence-transformers lexical-prefilter cosine"
+      }
+    },
+    {
+      "id": "rag_chatbot:notes/prompts/plans/rag-ui-plan.md:6",
+      "text": "# Prompt full\n\nImplementation of a high-fidelity, premium web UI for a modern AI chatbot as follows:\n\n- **Layout**:\n  - Collapsible minimalist sidebar on the left for chat history and a prominent, clean conversation area in the center.\n  - Floating, bottom-centered text input bar with a glowing 'send' icon.\n  - Integrate a document upload component (drag-and-drop, progress bars, document list with delete buttons) directly into the main chat interface (not in the sidebar).",
+      "metadata": {
+        "project": "umbertogriffo/rag-chatbot",
+        "repo_url": "https://github.com/umbertogriffo/rag-chatbot",
+        "source": "notes/prompts/plans/rag-ui-plan.md",
+        "retrieval_score": 0.4599,
+        "retriever": "sentence-transformers lexical-prefilter cosine"
+      }
+    }
+  ],
+  "metadata": {
+    "project": "umbertogriffo/rag-chatbot",
+    "repo_url": "https://github.com/umbertogriffo/rag-chatbot",
+    "validation": "real_world_rag",
+    "generation_model": "mistral",
+    "embedding_model": "all-MiniLM-L6-v2"
+  }
+}

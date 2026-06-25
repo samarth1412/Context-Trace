@@ -1,0 +1,134 @@
+{
+  "benchmark": "ContextTrace-Diag-150",
+  "case_set": "public_holdout",
+  "checks": [
+    {
+      "details": "public_holdout",
+      "name": "case_set_public_holdout",
+      "severity": "error",
+      "status": "passed"
+    },
+    {
+      "details": {
+        "actual": 150,
+        "expected": 150
+      },
+      "name": "case_count",
+      "severity": "error",
+      "status": "passed"
+    },
+    {
+      "details": [],
+      "name": "unique_case_ids",
+      "severity": "error",
+      "status": "passed"
+    },
+    {
+      "details": 0,
+      "name": "no_generated_cases",
+      "severity": "error",
+      "status": "passed"
+    },
+    {
+      "details": [],
+      "name": "required_label_coverage",
+      "severity": "error",
+      "status": "passed"
+    },
+    {
+      "details": [],
+      "name": "root_cause_taxonomy",
+      "severity": "error",
+      "status": "passed"
+    },
+    {
+      "details": [],
+      "name": "source_urls_present",
+      "severity": "error",
+      "status": "passed"
+    },
+    {
+      "details": [],
+      "name": "evidence_spans_grounded_in_context",
+      "severity": "error",
+      "status": "passed"
+    },
+    {
+      "details": [],
+      "name": "contexttrace_benchmark_passes",
+      "severity": "error",
+      "status": "passed"
+    },
+    {
+      "details": [],
+      "name": "result_case_ids_match_packet",
+      "severity": "error",
+      "status": "passed"
+    },
+    {
+      "details": {
+        "packet_cases": 150,
+        "summary_cases": 150
+      },
+      "name": "result_summary_case_count",
+      "severity": "error",
+      "status": "passed"
+    },
+    {
+      "details": {
+        "candidate_inputs": 150,
+        "packet_cases": 150
+      },
+      "name": "candidate_input_count",
+      "severity": "error",
+      "status": "passed"
+    },
+    {
+      "details": [],
+      "name": "candidate_input_ids_match_packet",
+      "severity": "error",
+      "status": "passed"
+    },
+    {
+      "details": [],
+      "name": "candidate_inputs_hide_labels",
+      "severity": "error",
+      "status": "passed"
+    },
+    {
+      "details": [],
+      "name": "human_review_blockers",
+      "severity": "error",
+      "status": "passed"
+    },
+    {
+      "details": {
+        "required": 150,
+        "signed_off": 0
+      },
+      "name": "independent_human_signoff_complete",
+      "severity": "warning",
+      "status": "failed"
+    }
+  ],
+  "errors": [],
+  "generated_at": "2026-06-23T21:17:47+00:00",
+  "status": "passed",
+  "summary": {
+    "case_count": 150,
+    "checks": 16,
+    "errors": 0,
+    "warnings": 1
+  },
+  "warnings": [
+    {
+      "details": {
+        "required": 150,
+        "signed_off": 0
+      },
+      "name": "independent_human_signoff_complete",
+      "severity": "warning",
+      "status": "failed"
+    }
+  ]
+}

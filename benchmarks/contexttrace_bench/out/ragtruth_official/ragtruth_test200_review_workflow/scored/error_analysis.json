@@ -1,0 +1,1000 @@
+{
+  "benchmark": "ContextTrace-Bench",
+  "benchmark_miss_count": 199,
+  "case_count": 200,
+  "case_set": "external_case_pack",
+  "cases_to_review": [
+    {
+      "base_case_id": "ragtruth_58",
+      "conflicting_facts": [],
+      "evidence": "The university won't be able to sue, but if the members of the fraternity can get past some of the preliminary hurdles of a defamation claim, and they can make a tangible case for damages, then this could be one of those rare successful defamation cases.",
+      "expected": [
+        "partial_support"
+      ],
+      "expected_primary_root_cause": "answer_overreach",
+      "first_failed_claim": "The fraternity members mentioned in the article may be able to sue for defamation.",
+      "first_failed_verdict": "contradicted",
+      "id": "ragtruth_58",
+      "missing_facts": [],
+      "predicted": [
+        "contradicted_answer",
+        "insufficient_context",
+        "should_have_abstained",
+        "unsupported_answer"
+      ],
+      "predicted_primary_root_cause": "should_have_abstained"
+    },
+    {
+      "base_case_id": "ragtruth_59",
+      "conflicting_facts": [],
+      "evidence": "True statements cannot be defamatory.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "The article has been widely criticized for its inaccuracies and defamatory content.",
+      "first_failed_verdict": "unsupported",
+      "id": "ragtruth_59",
+      "missing_facts": [
+        "The article has been widely criticized for its inaccuracies and defamatory content"
+      ],
+      "predicted": [
+        "contradicted_answer",
+        "should_have_abstained",
+        "unsupported_answer"
+      ],
+      "predicted_primary_root_cause": "should_have_abstained"
+    },
+    {
+      "base_case_id": "ragtruth_121",
+      "conflicting_facts": [
+        "10"
+      ],
+      "evidence": "Letourneau gave birth to her young lover's child and went on to serve more than seven years in prison on charges related to their sexual relationship.",
+      "expected": [
+        "contradicted_answer"
+      ],
+      "expected_primary_root_cause": "conflicting_contexts",
+      "first_failed_claim": "After serving over seven years in prison, they have been married for 10 years.",
+      "first_failed_verdict": "contradicted",
+      "id": "ragtruth_121",
+      "missing_facts": [
+        "10 years"
+      ],
+      "predicted": [
+        "contradicted_answer",
+        "insufficient_context"
+      ],
+      "predicted_primary_root_cause": "conflicting_contexts"
+    },
+    {
+      "base_case_id": "ragtruth_331",
+      "conflicting_facts": [],
+      "evidence": "\" As footage of Superman plays, numerous commentators' voices overlap one another with their opinions of the superheroes, including \"We as a population on this planet have been looking for a savior\" and \"Maybe he's just a guy trying to do the right thing.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "The trailer features footage of Superman and Batman facing off, along with overlapping commentary from various voices.",
+      "first_failed_verdict": "unsupported",
+      "id": "ragtruth_331",
+      "missing_facts": [
+        "The trailer features footage of Superman and Batman facing off, along with overlapping commentary from various voices"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_332",
+      "conflicting_facts": [],
+      "evidence": "\" As footage of Superman plays, numerous commentators' voices overlap one another with their opinions of the superheroes, including \"We as a population on this planet have been looking for a savior\" and \"Maybe he's just a guy trying to do the right thing.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "The trailer showed footage of Superman and included comments from various people about the superheroes.",
+      "first_failed_verdict": "unverifiable",
+      "id": "ragtruth_332",
+      "missing_facts": [
+        "The trailer showed footage of Superman and included comments from various people about the superheroes"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_334",
+      "conflicting_facts": [],
+      "evidence": "Superman: Dawn of Justice\" leaked online on Thursday before quickly being taken down minutes later.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "Superman: Dawn of Justice\" features Spanish subtitles and highlights the controversial nature of Superman, with commentators discussing his power and intentions.",
+      "first_failed_verdict": "unsupported",
+      "id": "ragtruth_334",
+      "missing_facts": [
+        "Superman: Dawn of Justice\" features Spanish subtitles and highlights the controversial nature of Superman, with commentators discussing his power and intentions"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_351",
+      "conflicting_facts": [],
+      "evidence": "One hundred years ago, more than 1 million Armenians (some estimates run as high as 1.5 million) died at the hand of the Turks.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "The Pope faced a difficult decision during a recent mass in Rome, where he chose to acknowledge the deaths of over 1 million Armenians a century ago, while avoiding using the term \"genocide\".",
+      "first_failed_verdict": "unsupported",
+      "id": "ragtruth_351",
+      "missing_facts": [
+        "The Pope faced a difficult decision during a recent mass in Rome, where he chose to acknowledge the deaths of over 1 million Armenians a century ago, while avoiding using the term \"genocide\""
+      ],
+      "predicted": [
+        "contradicted_answer",
+        "insufficient_context",
+        "should_have_abstained",
+        "unsupported_answer"
+      ],
+      "predicted_primary_root_cause": "should_have_abstained"
+    },
+    {
+      "base_case_id": "ragtruth_355",
+      "conflicting_facts": [],
+      "evidence": "Then the park service wants people to share their stories using the hashtag #FindYourPark and at FindYourPark.com.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "National Park Week will include various activities and events, and people are encouraged to share their experiences using #FindYourPark.",
+      "first_failed_verdict": "partially_supported",
+      "id": "ragtruth_355",
+      "missing_facts": [
+        "include various activities",
+        "include events"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_543",
+      "conflicting_facts": [],
+      "evidence": "The prosecution showed close-up video of the 8-year-old, who was only 3\u00bd feet from one of the bombs, according to the FBI's re-creation of the crime scene.",
+      "expected": [
+        "contradicted_answer"
+      ],
+      "expected_primary_root_cause": "conflicting_contexts",
+      "first_failed_claim": "He also described the gruesome scenes he witnessed, including the death of 8-year-old Martin Richard, who was close to one of the bombs.",
+      "first_failed_verdict": "partially_supported",
+      "id": "ragtruth_543",
+      "missing_facts": [
+        "He also described the gruesome scenes he witnessed, including the death of 8-year-old Martin Richard, who was close to one of the bombs"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_586",
+      "conflicting_facts": [],
+      "evidence": "Los Angeles (CNN)She's one of the hottest and most successful Latinas in Hollywood, but now Sofia Vergara is playing defense in a legal battle initiated by her ex-fiance: He wants to keep the two frozen embryos from their relationship, both female.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "Sofia Vergara, actress and star of Modern Family, is in a legal battle with her ex-fianc\u00e9 Nick Loeb over two frozen embryos they created together.",
+      "first_failed_verdict": "unverifiable",
+      "id": "ragtruth_586",
+      "missing_facts": [
+        "Sofia Vergara, actress and star of Modern Family, is in a legal battle with her ex-fianc\u00e9 Nick Loeb over two frozen embryos they created together"
+      ],
+      "predicted": [
+        "contradicted_answer",
+        "insufficient_context"
+      ],
+      "predicted_primary_root_cause": "conflicting_contexts"
+    },
+    {
+      "base_case_id": "ragtruth_656",
+      "conflicting_facts": [],
+      "evidence": "Incredibly, as they got closer, they saw there was a man on it, signaling for help.",
+      "expected": [
+        "contradicted_answer"
+      ],
+      "expected_primary_root_cause": "conflicting_contexts",
+      "first_failed_claim": "he was aboard a boat when he noticed a signal for help.",
+      "first_failed_verdict": "unverifiable",
+      "id": "ragtruth_656",
+      "missing_facts": [
+        "he was aboard a boat when he noticed a signal for help"
+      ],
+      "predicted": [
+        "contradicted_answer",
+        "insufficient_context",
+        "should_have_abstained",
+        "unsupported_answer"
+      ],
+      "predicted_primary_root_cause": "should_have_abstained"
+    },
+    {
+      "base_case_id": "ragtruth_730",
+      "conflicting_facts": [],
+      "evidence": "A nuclear submarine being repaired at a Russian shipyard has caught on fire, according to a law enforcement source speaking to Russia's state-run news agency ITAR-Tass.",
+      "expected": [
+        "partial_support"
+      ],
+      "expected_primary_root_cause": "answer_overreach",
+      "first_failed_claim": "Here's the summary within 42 words: A nuclear submarine at a Russian shipyard caught fire during repairs, but there's no danger of radiation or explosion as there's no ammunition or fissile materials on board.",
+      "first_failed_verdict": "unverifiable",
+      "id": "ragtruth_730",
+      "missing_facts": [
+        "Here's the summary within 42 words: A nuclear submarine at a Russian shipyard caught fire during repairs, but there's no danger of radiation or explosion as there's no ammunition or fissile materials on board"
+      ],
+      "predicted": [
+        "contradicted_answer",
+        "insufficient_context",
+        "should_have_abstained"
+      ],
+      "predicted_primary_root_cause": "conflicting_contexts"
+    },
+    {
+      "base_case_id": "ragtruth_835",
+      "conflicting_facts": [],
+      "evidence": "Hip-hop star Nelly has been arrested on drug charges in Tennessee after a state trooper pulled over the private bus in which he was traveling, authorities said.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "During a routine traffic stop, state troopers detected the smell of marijuana coming from Nelly's private bus.",
+      "first_failed_verdict": "unverifiable",
+      "id": "ragtruth_835",
+      "missing_facts": [
+        "During a routine traffic stop, state troopers detected the smell of marijuana coming from Nelly's private bus"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_838",
+      "conflicting_facts": [],
+      "evidence": "Hip-hop star Nelly has been arrested on drug charges in Tennessee after a state trooper pulled over the private bus in which he was traveling, authorities said.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "Here's the summary in 65 words: Nelly was arrested on drug charges in Tennessee after a state trooper smelled marijuana coming from his bus.",
+      "first_failed_verdict": "partially_supported",
+      "id": "ragtruth_838",
+      "missing_facts": [
+        "Here's the summary in 65 words: Nelly was arrested on drug charges in Tennessee after a state trooper smelled marijuana coming from his bus"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_878",
+      "conflicting_facts": [],
+      "evidence": "Two staffers from the agency are scheduled to meet the West Coast-based ship in San Diego on Monday.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "The Centers for Disease Control and Prevention (CDC) has yet to determine the cause of the illness, but two CDC staffers will meet the ship in San Diego on Monday to investigate further.",
+      "first_failed_verdict": "unverifiable",
+      "id": "ragtruth_878",
+      "missing_facts": [
+        "The Centers for Disease Control and Prevention (CDC) has yet to determine the cause of the illness, but two CDC staffers will meet the ship in San Diego on Monday to investigate further"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_885",
+      "conflicting_facts": [],
+      "evidence": "During World War I, soldiers would take refuge in the carved-out rooms and pathways.",
+      "expected": [
+        "partial_support"
+      ],
+      "expected_primary_root_cause": "answer_overreach",
+      "first_failed_claim": "Here is a summary of the article in 121 words: Graffiti left behind by World War I soldiers has been discovered in a French chalk quarry, including the names and ranks of nearly 2,000 soldiers.",
+      "first_failed_verdict": "unsupported",
+      "id": "ragtruth_885",
+      "missing_facts": [
+        "Here is a summary of the article in 121 words: Graffiti left behind by World War I soldiers has been discovered in a French chalk quarry, including the names and ranks of nearly 2,000 soldiers"
+      ],
+      "predicted": [
+        "insufficient_context",
+        "should_have_abstained",
+        "unsupported_answer"
+      ],
+      "predicted_primary_root_cause": "should_have_abstained"
+    },
+    {
+      "base_case_id": "ragtruth_906",
+      "conflicting_facts": [],
+      "evidence": "There was a larger message in the article about a purported gang rape that Rolling Stone retracted on Sunday night -- a part of the story that was never disputed: The University of Virginia is under continuing investigation over how it handles sexual assault on campus.",
+      "expected": [
+        "partial_support"
+      ],
+      "expected_primary_root_cause": "answer_overreach",
+      "first_failed_claim": "The University of Virginia (UVA) is currently under investigation for how it handles sexual assault cases on campus.",
+      "first_failed_verdict": "contradicted",
+      "id": "ragtruth_906",
+      "missing_facts": [],
+      "predicted": [
+        "contradicted_answer"
+      ],
+      "predicted_primary_root_cause": "conflicting_contexts"
+    },
+    {
+      "base_case_id": "ragtruth_924",
+      "conflicting_facts": [],
+      "evidence": "\"The fear of rejection really holds people back.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "Jiang aims to help others overcome their fear of rejection, which he believes holds people back from achieving their goals.",
+      "first_failed_verdict": "unverifiable",
+      "id": "ragtruth_924",
+      "missing_facts": [
+        "Jiang aims to help others overcome their fear of rejection, which he believes holds people back from achieving their goals"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_1153",
+      "conflicting_facts": [
+        "Two Delaware boys and their father are in critical condition after becoming sick, possibly from pesticide exposure, during a trip to the U.S"
+      ],
+      "evidence": "Two Delaware boys are in a coma and their father still is unable to talk or move two weeks after they became sick -- perhaps from pesticide exposure, federal officials say -- during a trip to the U.S.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "Two Delaware boys and their father are in critical condition after becoming sick, possibly from pesticide exposure, during a trip to the U.S.",
+      "first_failed_verdict": "contradicted",
+      "id": "ragtruth_1153",
+      "missing_facts": [
+        "Two Delaware boys and their father are in critical condition after becoming sick, possibly from pesticide exposure, during a trip to the U.S"
+      ],
+      "predicted": [
+        "contradicted_answer"
+      ],
+      "predicted_primary_root_cause": "conflicting_contexts"
+    },
+    {
+      "base_case_id": "ragtruth_1157",
+      "conflicting_facts": [
+        "Two boys from Delaware and their father are in critical condition, and their mother is undergoing occupational therapy, after falling ill during a trip to the US Virgin Islands"
+      ],
+      "evidence": "Two Delaware boys are in a coma and their father still is unable to talk or move two weeks after they became sick -- perhaps from pesticide exposure, federal officials say -- during a trip to the U.S.",
+      "expected": [
+        "contradicted_answer"
+      ],
+      "expected_primary_root_cause": "conflicting_contexts",
+      "first_failed_claim": "Two boys from Delaware and their father are in critical condition, and their mother is undergoing occupational therapy, after falling ill during a trip to the US Virgin Islands.",
+      "first_failed_verdict": "contradicted",
+      "id": "ragtruth_1157",
+      "missing_facts": [
+        "Two boys from Delaware and their father are in critical condition, and their mother is undergoing occupational therapy, after falling ill during a trip to the US Virgin Islands"
+      ],
+      "predicted": [
+        "contradicted_answer",
+        "insufficient_context",
+        "should_have_abstained"
+      ],
+      "predicted_primary_root_cause": "insufficient_context"
+    },
+    {
+      "base_case_id": "ragtruth_1355",
+      "conflicting_facts": [],
+      "evidence": "Despite the fact that nuclear power is carbon-free, the Obama administration's energy policy plan is biased against it.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "Despite nuclear energy being the largest source of carbon-free energy in the US, the plan assumes the phaseout of nuclear power by 2050.",
+      "first_failed_verdict": "partially_supported",
+      "id": "ragtruth_1355",
+      "missing_facts": [
+        "Despite nuclear energy being the largest source of carbon-free energy in the US, the plan assumes the phaseout of nuclear power by 2050"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_1513",
+      "conflicting_facts": [],
+      "evidence": "But, like Christmas with its tree, ornaments and Santa Claus, Easter has picked up its peripheral trappings -- the bunny and colorful eggs.",
+      "expected": [
+        "partial_support"
+      ],
+      "expected_primary_root_cause": "answer_overreach",
+      "first_failed_claim": "While it is a time for Christians to rejoice, Easter has also acquired peripheral traditions such as the bunny and colorful eggs.",
+      "first_failed_verdict": "partially_supported",
+      "id": "ragtruth_1513",
+      "missing_facts": [
+        "While it is a time for Christians to rejoice, Easter has also acquired peripheral traditions such as the bunny and colorful eggs"
+      ],
+      "predicted": [
+        "contradicted_answer",
+        "partial_support",
+        "unsupported_answer"
+      ],
+      "predicted_primary_root_cause": "conflicting_contexts"
+    },
+    {
+      "base_case_id": "ragtruth_1566",
+      "conflicting_facts": [],
+      "evidence": "Lauren Hill, who took her inspirational fight against brain cancer onto the basketball court and into the hearts of many, has died at age 19.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "Lauren Hill, a 19-year-old who fought against brain cancer and whose story inspired many, has passed away.",
+      "first_failed_verdict": "partially_supported",
+      "id": "ragtruth_1566",
+      "missing_facts": [
+        "Lauren Hill, a 19-year-old who fought against brain cancer and whose story inspired many, has passed away"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    },
+    {
+      "base_case_id": "ragtruth_1648",
+      "conflicting_facts": [],
+      "evidence": "The summit hit a depressing low for the Obama administration when Chavez walked up to Obama and, as the cameras clicked, handed the American President a copy of the book \"Open Veins of Latin America,\" which blames the region's woes on the U.S.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "Here's the summary within 200 words: President Barack Obama is in Panama for the Summit of the Americas, hoping to improve ties with Latin American leaders and reverse the US's declining influence in the region.",
+      "first_failed_verdict": "unverifiable",
+      "id": "ragtruth_1648",
+      "missing_facts": [
+        "Here's the summary within 200 words: President Barack Obama is in Panama for the Summit of the Americas, hoping to improve ties with Latin American leaders and reverse the US's declining influence in the region"
+      ],
+      "predicted": [
+        "contradicted_answer",
+        "insufficient_context",
+        "should_have_abstained",
+        "unsupported_answer"
+      ],
+      "predicted_primary_root_cause": "insufficient_context"
+    },
+    {
+      "base_case_id": "ragtruth_1678",
+      "conflicting_facts": [],
+      "evidence": "Unicef hopes there will be just enough time to deliver vital food and supplies, helping to ease the country's worsening humanitarian crisis.",
+      "expected": [
+        "no_failure_detected"
+      ],
+      "expected_primary_root_cause": "no_failure_detected",
+      "first_failed_claim": "Here's the summary in 106 words: Unicef delivered vital aid to Yemen's capital city of Sanaa despite the ongoing conflict, using a rare window of peace to bring food and supplies to those in need.",
+      "first_failed_verdict": "unsupported",
+      "id": "ragtruth_1678",
+      "missing_facts": [
+        "Here's the summary in 106 words: Unicef delivered vital aid to Yemen's capital city of Sanaa despite the ongoing conflict, using a rare window of peace to bring food and supplies to those in need"
+      ],
+      "predicted": [
+        "partial_support"
+      ],
+      "predicted_primary_root_cause": "answer_overreach"
+    }
+  ],
+  "confusion": [
+    {
+      "count": 65,
+      "expected": "no_failure_detected",
+      "predicted": "partial_support"
+    },
+    {
+      "count": 23,
+      "expected": "partial_support",
+      "predicted": "partial_support"
+    },
+    {
+      "count": 20,
+      "expected": "no_failure_detected",
+      "predicted": "no_failure_detected"
+    },
+    {
+      "count": 18,
+      "expected": "contradicted_answer",
+      "predicted": "partial_support"
+    },
+    {
+      "count": 9,
+      "expected": "contradicted_answer",
+      "predicted": "contradicted_answer, insufficient_context, partial_support, should_have_abstained, unsupported_answer"
+    },
+    {
+      "count": 7,
+      "expected": "no_failure_detected",
+      "predicted": "contradicted_answer, insufficient_context, partial_support, should_have_abstained, unsupported_answer"
+    },
+    {
+      "count": 5,
+      "expected": "no_failure_detected",
+      "predicted": "contradicted_answer, insufficient_context, should_have_abstained, unsupported_answer"
+    },
+    {
+      "count": 5,
+      "expected": "partial_support",
+      "predicted": "insufficient_context, partial_support, should_have_abstained, unsupported_answer"
+    },
+    {
+      "count": 4,
+      "expected": "partial_support",
+      "predicted": "contradicted_answer, insufficient_context, partial_support, should_have_abstained, unsupported_answer"
+    },
+    {
+      "count": 3,
+      "expected": "contradicted_answer",
+      "predicted": "no_failure_detected"
+    },
+    {
+      "count": 3,
+      "expected": "no_failure_detected",
+      "predicted": "contradicted_answer"
+    },
+    {
+      "count": 2,
+      "expected": "contradicted_answer",
+      "predicted": "contradicted_answer"
+    },
+    {
+      "count": 2,
+      "expected": "contradicted_answer",
+      "predicted": "contradicted_answer, insufficient_context"
+    },
+    {
+      "count": 2,
+      "expected": "contradicted_answer",
+      "predicted": "contradicted_answer, insufficient_context, should_have_abstained"
+    },
+    {
+      "count": 2,
+      "expected": "contradicted_answer",
+      "predicted": "contradicted_answer, insufficient_context, should_have_abstained, unsupported_answer"
+    },
+    {
+      "count": 2,
+      "expected": "contradicted_answer",
+      "predicted": "insufficient_context, partial_support, should_have_abstained, unsupported_answer"
+    },
+    {
+      "count": 2,
+      "expected": "no_failure_detected",
+      "predicted": "contradicted_answer, partial_support"
+    },
+    {
+      "count": 2,
+      "expected": "no_failure_detected",
+      "predicted": "contradicted_answer, partial_support, should_have_abstained, unsupported_answer"
+    },
+    {
+      "count": 2,
+      "expected": "no_failure_detected",
+      "predicted": "contradicted_answer, should_have_abstained, unsupported_answer"
+    },
+    {
+      "count": 2,
+      "expected": "partial_support",
+      "predicted": "contradicted_answer, insufficient_context, should_have_abstained"
+    },
+    {
+      "count": 2,
+      "expected": "partial_support",
+      "predicted": "contradicted_answer, insufficient_context, should_have_abstained, unsupported_answer"
+    },
+    {
+      "count": 2,
+      "expected": "partial_support",
+      "predicted": "no_failure_detected"
+    },
+    {
+      "count": 1,
+      "expected": "contradicted_answer",
+      "predicted": "contradicted_answer, insufficient_context, partial_support, unsupported_answer"
+    },
+    {
+      "count": 1,
+      "expected": "contradicted_answer",
+      "predicted": "contradicted_answer, unsupported_answer"
+    },
+    {
+      "count": 1,
+      "expected": "contradicted_answer",
+      "predicted": "should_have_abstained, unsupported_answer"
+    },
+    {
+      "count": 1,
+      "expected": "no_failure_detected",
+      "predicted": "contradicted_answer, insufficient_context"
+    },
+    {
+      "count": 1,
+      "expected": "no_failure_detected",
+      "predicted": "contradicted_answer, insufficient_context, should_have_abstained"
+    },
+    {
+      "count": 1,
+      "expected": "no_failure_detected",
+      "predicted": "contradicted_answer, unsupported_answer"
+    },
+    {
+      "count": 1,
+      "expected": "no_failure_detected",
+      "predicted": "insufficient_context, partial_support, should_have_abstained"
+    },
+    {
+      "count": 1,
+      "expected": "no_failure_detected",
+      "predicted": "insufficient_context, partial_support, should_have_abstained, unsupported_answer"
+    },
+    {
+      "count": 1,
+      "expected": "no_failure_detected",
+      "predicted": "should_have_abstained, unsupported_answer"
+    },
+    {
+      "count": 1,
+      "expected": "partial_support",
+      "predicted": "contradicted_answer"
+    },
+    {
+      "count": 1,
+      "expected": "partial_support",
+      "predicted": "contradicted_answer, insufficient_context, partial_support, unsupported_answer"
+    },
+    {
+      "count": 1,
+      "expected": "partial_support",
+      "predicted": "contradicted_answer, partial_support, unsupported_answer"
+    },
+    {
+      "count": 1,
+      "expected": "partial_support",
+      "predicted": "contradicted_answer, should_have_abstained, unsupported_answer"
+    },
+    {
+      "count": 1,
+      "expected": "partial_support",
+      "predicted": "insufficient_context, should_have_abstained, unsupported_answer"
+    },
+    {
+      "count": 1,
+      "expected": "partial_support",
+      "predicted": "partial_support, should_have_abstained, unsupported_answer"
+    },
+    {
+      "count": 1,
+      "expected": "unsupported",
+      "predicted": "partial_support"
+    }
+  ],
+  "dangerous_false_greens": [
+    {
+      "base_case_id": "ragtruth_1698",
+      "conflicting_facts": [],
+      "evidence": "",
+      "expected": [
+        "contradicted_answer"
+      ],
+      "expected_primary_root_cause": "conflicting_contexts",
+      "first_failed_claim": "",
+      "first_failed_verdict": "",
+      "id": "ragtruth_1698",
+      "missing_facts": [],
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_primary_root_cause": "no_failure_detected"
+    },
+    {
+      "base_case_id": "ragtruth_2668",
+      "conflicting_facts": [],
+      "evidence": "",
+      "expected": [
+        "contradicted_answer"
+      ],
+      "expected_primary_root_cause": "conflicting_contexts",
+      "first_failed_claim": "",
+      "first_failed_verdict": "",
+      "id": "ragtruth_2668",
+      "missing_facts": [],
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_primary_root_cause": "no_failure_detected"
+    },
+    {
+      "base_case_id": "ragtruth_4052",
+      "conflicting_facts": [],
+      "evidence": "",
+      "expected": [
+        "contradicted_answer"
+      ],
+      "expected_primary_root_cause": "conflicting_contexts",
+      "first_failed_claim": "",
+      "first_failed_verdict": "",
+      "id": "ragtruth_4052",
+      "missing_facts": [],
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_primary_root_cause": "no_failure_detected"
+    },
+    {
+      "base_case_id": "ragtruth_14007",
+      "conflicting_facts": [],
+      "evidence": "",
+      "expected": [
+        "partial_support"
+      ],
+      "expected_primary_root_cause": "answer_overreach",
+      "first_failed_claim": "",
+      "first_failed_verdict": "",
+      "id": "ragtruth_14007",
+      "missing_facts": [],
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_primary_root_cause": "no_failure_detected"
+    },
+    {
+      "base_case_id": "ragtruth_16056",
+      "conflicting_facts": [],
+      "evidence": "",
+      "expected": [
+        "partial_support"
+      ],
+      "expected_primary_root_cause": "answer_overreach",
+      "first_failed_claim": "",
+      "first_failed_verdict": "",
+      "id": "ragtruth_16056",
+      "missing_facts": [],
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_primary_root_cause": "no_failure_detected"
+    }
+  ],
+  "false_positive_labels": [
+    {
+      "count": 78,
+      "label": "partial_support"
+    },
+    {
+      "count": 24,
+      "label": "contradicted_answer"
+    },
+    {
+      "count": 20,
+      "label": "should_have_abstained"
+    },
+    {
+      "count": 19,
+      "label": "unsupported_answer"
+    },
+    {
+      "count": 16,
+      "label": "insufficient_context"
+    }
+  ],
+  "label_miss_count": 155,
+  "mode": "semantic",
+  "root_cause_confusion": [
+    {
+      "count": 65,
+      "expected_root_cause": "no_failure_detected",
+      "predicted_root_cause": "answer_overreach"
+    },
+    {
+      "count": 25,
+      "expected_root_cause": "answer_overreach",
+      "predicted_root_cause": "answer_overreach"
+    },
+    {
+      "count": 20,
+      "expected_root_cause": "no_failure_detected",
+      "predicted_root_cause": "no_failure_detected"
+    },
+    {
+      "count": 19,
+      "expected_root_cause": "conflicting_contexts",
+      "predicted_root_cause": "answer_overreach"
+    },
+    {
+      "count": 12,
+      "expected_root_cause": "answer_overreach",
+      "predicted_root_cause": "should_have_abstained"
+    },
+    {
+      "count": 12,
+      "expected_root_cause": "conflicting_contexts",
+      "predicted_root_cause": "should_have_abstained"
+    },
+    {
+      "count": 12,
+      "expected_root_cause": "no_failure_detected",
+      "predicted_root_cause": "should_have_abstained"
+    },
+    {
+      "count": 11,
+      "expected_root_cause": "no_failure_detected",
+      "predicted_root_cause": "conflicting_contexts"
+    },
+    {
+      "count": 6,
+      "expected_root_cause": "conflicting_contexts",
+      "predicted_root_cause": "conflicting_contexts"
+    },
+    {
+      "count": 4,
+      "expected_root_cause": "no_failure_detected",
+      "predicted_root_cause": "insufficient_context"
+    },
+    {
+      "count": 3,
+      "expected_root_cause": "answer_overreach",
+      "predicted_root_cause": "conflicting_contexts"
+    },
+    {
+      "count": 3,
+      "expected_root_cause": "conflicting_contexts",
+      "predicted_root_cause": "no_failure_detected"
+    },
+    {
+      "count": 2,
+      "expected_root_cause": "answer_overreach",
+      "predicted_root_cause": "insufficient_context"
+    },
+    {
+      "count": 2,
+      "expected_root_cause": "answer_overreach",
+      "predicted_root_cause": "no_failure_detected"
+    },
+    {
+      "count": 2,
+      "expected_root_cause": "conflicting_contexts",
+      "predicted_root_cause": "insufficient_context"
+    },
+    {
+      "count": 1,
+      "expected_root_cause": "answer_overreach",
+      "predicted_root_cause": "retrieval_miss"
+    },
+    {
+      "count": 1,
+      "expected_root_cause": "conflicting_contexts",
+      "predicted_root_cause": "retrieval_miss"
+    }
+  ],
+  "top_conflicting_facts": [
+    {
+      "count": 2,
+      "fact": "00"
+    },
+    {
+      "count": 1,
+      "fact": "\" However, the cat was likely a pet belonging to an elderly couple, who have since identified the cat as their missing pet, Tiger."
+    },
+    {
+      "count": 1,
+      "fact": "'The Spot' is a local restaurant situated at 389 Linden Ave, Carpinteria, CA, offering a mix of Mexican and traditional American cuisine, with a special focus on burgers."
+    },
+    {
+      "count": 1,
+      "fact": "10"
+    },
+    {
+      "count": 1,
+      "fact": "10, 11, 4"
+    },
+    {
+      "count": 1,
+      "fact": "According to customer reviews, Comedy Hideaway is highly recommended for its great local club atmosphere and rising talent performances."
+    },
+    {
+      "count": 1,
+      "fact": "According to passage 2, the jack pine produces serotonous cones that are dormant until a fire occurs, at which point they melt and release their seeds"
+    },
+    {
+      "count": 1,
+      "fact": "According to reviews, the comics are good, and the food is delicious."
+    },
+    {
+      "count": 1,
+      "fact": "American Ale has a rating of 4.0 stars on Google."
+    },
+    {
+      "count": 1,
+      "fact": "Another customer expressed their excitement for the reopening of the store, mentioning the clean and handsome interior."
+    },
+    {
+      "count": 1,
+      "fact": "Based on the provided passages, automotive technicians can get paid in different ways, including hourly."
+    },
+    {
+      "count": 1,
+      "fact": "Ca' Dario is a Tuscan-style restaurant located in Santa Barbara, California, offering seafood, wine bars, and Italian cuisine."
+    }
+  ],
+  "top_missing_facts": [
+    {
+      "count": 3,
+      "fact": "The business has a rating of 3.5 stars"
+    },
+    {
+      "count": 3,
+      "fact": "Unable to answer based on given passages"
+    },
+    {
+      "count": 2,
+      "fact": "include outdoor seating"
+    },
+    {
+      "count": 1,
+      "fact": "\" However, the cat was likely a pet belonging to an elderly couple, who have since identified the cat as their missing pet, Tiger"
+    },
+    {
+      "count": 1,
+      "fact": "\" is: They can work well for creating textured finishes on walls, especially when used with faux finishing techniques"
+    },
+    {
+      "count": 1,
+      "fact": "\"He Was a Friend of Mine\" is a song covered"
+    },
+    {
+      "count": 1,
+      "fact": "\"He was recorded by various artists"
+    },
+    {
+      "count": 1,
+      "fact": "'The Spot' has mixed reviews with an average rating of 3.5 stars, with customers praising the quick service, delicious food, especially the burgers, onion rings, and clam chowder"
+    },
+    {
+      "count": 1,
+      "fact": "'The Spot' is a local restaurant situated at 389 Linden Ave, Carpinteria, CA, offering a mix of Mexican and traditional American cuisine, with a special focus on burgers"
+    },
+    {
+      "count": 1,
+      "fact": "(Passage 3) Therefore, to grill pork chops according to Allrecipes.com, you should preheat the grill, season the pork chops with a spice mixture, and grill them over indirect heat until they are cooked through"
+    },
+    {
+      "count": 1,
+      "fact": "10"
+    },
+    {
+      "count": 1,
+      "fact": "10 years"
+    }
+  ]
+}

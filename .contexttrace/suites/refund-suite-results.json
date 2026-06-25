@@ -1,0 +1,654 @@
+{
+  "schema_version": "0.1",
+  "suite_name": "refund-suite",
+  "mode": "lexical",
+  "endpoint": "http://127.0.0.1:50293/query",
+  "summary": {
+    "status": "passed",
+    "total_cases": 1,
+    "passed": 1,
+    "failed": 0,
+    "errors": 0,
+    "regressions": 0,
+    "resolved_failures": 1,
+    "new_failures": 0,
+    "unsupported_cases": 0,
+    "should_abstain_cases": 0,
+    "average_support_rate": 1.0,
+    "pass_risk_cases": 0,
+    "low_risk_cases": 1,
+    "medium_risk_cases": 0,
+    "high_risk_cases": 0,
+    "primary_issues": {
+      "citation_mismatch": 1
+    }
+  },
+  "cases": [
+    {
+      "id": "refund_processing_failure",
+      "query": "How long does refund processing take?",
+      "status": "passed",
+      "duration_ms": 21.17,
+      "failures": [],
+      "baseline": {
+        "query": "How long does refund processing take?",
+        "answer": "Refunds are processed within 5 business days.",
+        "summary": {
+          "mode": "lexical",
+          "risk_score": 63,
+          "risk_level": "high",
+          "severity": "high",
+          "primary_issue": "should_abstain",
+          "corpus_audited": false,
+          "corpus_path": null,
+          "total_claims": 1,
+          "support_rate": 0.0,
+          "unsupported_claim_rate": 1.0,
+          "supported": 0,
+          "partially_supported": 0,
+          "unsupported": 1,
+          "unverifiable": 0,
+          "contradicted": 0,
+          "citation_mismatches": 1,
+          "should_abstain": true,
+          "verification_failure_type": "should_have_abstained",
+          "verification_primary_root_cause": "should_have_abstained",
+          "inspect_warnings": 1,
+          "audit_primary_label": null,
+          "has_audit_failures": false,
+          "failure_stages": {},
+          "top_recommended_actions": [],
+          "risk_signals": [
+            {
+              "label": "inspect_warning",
+              "title": "Trace inspection warning",
+              "points": 5,
+              "risk_band": "low"
+            },
+            {
+              "label": "should_abstain",
+              "title": "Answer should have abstained",
+              "points": 30,
+              "risk_band": "high"
+            },
+            {
+              "label": "unsupported",
+              "title": "Unsupported claim",
+              "points": 20,
+              "risk_band": "medium"
+            },
+            {
+              "label": "citation_mismatch",
+              "title": "Citation mismatch",
+              "points": 8,
+              "risk_band": "low"
+            }
+          ]
+        },
+        "verification": {
+          "query": "How long does refund processing take?",
+          "answer": "Refunds are processed within 5 business days.",
+          "summary": {
+            "total_claims": 1,
+            "supported": 0,
+            "partially_supported": 0,
+            "unsupported": 1,
+            "contradicted": 0,
+            "unverifiable": 0,
+            "support_rate": 0.0,
+            "unsupported_claim_rate": 1.0,
+            "citation_mismatches": 1,
+            "should_abstain": true,
+            "root_causes": {
+              "should_have_abstained": 1
+            },
+            "primary_root_cause": "should_have_abstained",
+            "failure_type": "should_have_abstained",
+            "failure_types": [
+              "should_have_abstained",
+              "unsupported_answer"
+            ],
+            "suggested_fix": "Add an abstention rule: when retrieved contexts do not support the requested fact, say the information is unavailable instead of generating a factual answer.",
+            "mode": "lexical"
+          },
+          "claims": [
+            {
+              "claim_id": "claim_1",
+              "claim": "Refunds are processed within 5 business days.",
+              "verdict": "unsupported",
+              "confidence": 0.819,
+              "best_context_id": "refund_policy",
+              "best_context_text": "Customers may request refunds within 30 days of purchase.",
+              "best_score": 0.181,
+              "evidence": "Customers may request refunds within 30 days of purchase.",
+              "evidence_span": {
+                "context_id": "refund_policy",
+                "text": "Customers may request refunds within 30 days of purchase.",
+                "start_char": 0,
+                "end_char": 57,
+                "span_hash": "sha256:4d7720738f0e1eb8"
+              },
+              "supporting_spans": [
+                {
+                  "context_id": "refund_policy",
+                  "text": "Customers may request refunds within 30 days of purchase.",
+                  "start_char": 0,
+                  "end_char": 57,
+                  "span_hash": "sha256:4d7720738f0e1eb8",
+                  "score": 0.181,
+                  "matched_terms": [
+                    "refunds",
+                    "days"
+                  ]
+                }
+              ],
+              "matched_terms": [
+                "refunds",
+                "days"
+              ],
+              "required_facts": [
+                "Refunds are processed within 5 business days",
+                "5 business days"
+              ],
+              "matched_facts": [],
+              "missing_facts": [
+                "Refunds are processed within 5 business days",
+                "5 business days"
+              ],
+              "conflicting_facts": [],
+              "required_fact_details": [
+                {
+                  "text": "Refunds are processed within 5 business days",
+                  "type": "numeric"
+                },
+                {
+                  "text": "5 business days",
+                  "type": "numeric"
+                }
+              ],
+              "matched_fact_details": [],
+              "missing_fact_details": [
+                {
+                  "text": "Refunds are processed within 5 business days",
+                  "type": "numeric"
+                },
+                {
+                  "text": "5 business days",
+                  "type": "numeric"
+                }
+              ],
+              "conflicting_fact_details": [],
+              "reason": "No retrieved context has enough evidence overlap to support the claim.",
+              "citation_status": "claim_has_no_citation",
+              "citation_source_id": null,
+              "root_cause": {
+                "label": "should_have_abstained",
+                "reason": "The answer made a factual claim without retrieved evidence that supports it.",
+                "missing_fact": "Refunds are processed within 5 business days",
+                "closest_context_id": "refund_policy",
+                "closest_evidence": "Customers may request refunds within 30 days of purchase.",
+                "suggested_fix": "Return an unavailable/insufficient-context answer unless retrieval returns evidence for the missing fact."
+              }
+            }
+          ],
+          "abstention": {
+            "should_abstain": true,
+            "reason": "The answer contains factual claims, but most important claims are unsupported or contradicted by the retrieved contexts."
+          },
+          "diagnostics": {
+            "failure_type": "should_have_abstained",
+            "failure_types": [
+              "should_have_abstained",
+              "unsupported_answer"
+            ],
+            "suggested_fix": "Add an abstention rule: when retrieved contexts do not support the requested fact, say the information is unavailable instead of generating a factual answer."
+          },
+          "metadata": {
+            "run_id": "refund_processing_failure",
+            "system": "support-rag"
+          }
+        },
+        "inspection": {
+          "trace_path": "examples\\suite\\refund_processing_failure.json",
+          "query": "How long does refund processing take?",
+          "answer_preview": "Refunds are processed within 5 business days.",
+          "claims": [
+            {
+              "id": "claim_1",
+              "text": "Refunds are processed within 5 business days."
+            }
+          ],
+          "contexts": {
+            "count": 1,
+            "unique_ids": 1,
+            "duplicate_ids": [],
+            "empty_text_ids": []
+          },
+          "citations": {
+            "count": 0,
+            "source_ids": [],
+            "missing_source_ids": []
+          },
+          "metadata_keys": [
+            "run_id",
+            "system"
+          ],
+          "warnings": [
+            "Trace has factual claims but no citations; verification will check support without citation grounding."
+          ],
+          "suggested_next_commands": [
+            "contexttrace verify examples\\suite\\refund_processing_failure.json --report",
+            "contexttrace audit examples\\suite\\refund_processing_failure.json --corpus <corpus_dir> --report"
+          ]
+        },
+        "audit": null,
+        "next_actions": [
+          "Add an abstention rule: when retrieved contexts do not support the requested fact, say the information is unavailable instead of generating a factual answer.",
+          "Add claim-level citations or run verification without citation assumptions."
+        ],
+        "metadata": {
+          "run_id": "refund_processing_failure",
+          "system": "support-rag"
+        }
+      },
+      "current": {
+        "query": "How long does refund processing take?",
+        "answer": "Refunds are processed within 5 business days.",
+        "summary": {
+          "mode": "lexical",
+          "risk_score": 13,
+          "risk_level": "low",
+          "severity": "low",
+          "primary_issue": "citation_mismatch",
+          "corpus_audited": false,
+          "corpus_path": null,
+          "total_claims": 1,
+          "support_rate": 1.0,
+          "unsupported_claim_rate": 0.0,
+          "supported": 1,
+          "partially_supported": 0,
+          "unsupported": 0,
+          "unverifiable": 0,
+          "contradicted": 0,
+          "citation_mismatches": 1,
+          "should_abstain": false,
+          "verification_failure_type": "no_failure_detected",
+          "verification_primary_root_cause": "no_failure_detected",
+          "inspect_warnings": 1,
+          "audit_primary_label": null,
+          "has_audit_failures": false,
+          "failure_stages": {},
+          "top_recommended_actions": [],
+          "risk_signals": [
+            {
+              "label": "inspect_warning",
+              "title": "Trace inspection warning",
+              "points": 5,
+              "risk_band": "low"
+            },
+            {
+              "label": "citation_mismatch",
+              "title": "Citation mismatch",
+              "points": 8,
+              "risk_band": "low"
+            }
+          ]
+        },
+        "verification": {
+          "query": "How long does refund processing take?",
+          "answer": "Refunds are processed within 5 business days.",
+          "summary": {
+            "total_claims": 1,
+            "supported": 1,
+            "partially_supported": 0,
+            "unsupported": 0,
+            "contradicted": 0,
+            "unverifiable": 0,
+            "support_rate": 1.0,
+            "unsupported_claim_rate": 0.0,
+            "citation_mismatches": 1,
+            "should_abstain": false,
+            "root_causes": {
+              "no_failure_detected": 1
+            },
+            "primary_root_cause": "no_failure_detected",
+            "failure_type": "no_failure_detected",
+            "failure_types": [
+              "no_failure_detected"
+            ],
+            "suggested_fix": "No fix is needed for this trace based on the local verifier.",
+            "mode": "lexical"
+          },
+          "claims": [
+            {
+              "claim_id": "claim_1",
+              "claim": "Refunds are processed within 5 business days.",
+              "verdict": "supported",
+              "confidence": 1.0,
+              "best_context_id": "refund_policy",
+              "best_context_text": "Refunds are processed within 5 business days.",
+              "best_score": 1.0,
+              "evidence": "Refunds are processed within 5 business days.",
+              "evidence_span": {
+                "context_id": "refund_policy",
+                "text": "Refunds are processed within 5 business days.",
+                "start_char": 0,
+                "end_char": 45,
+                "span_hash": "sha256:d3100b6efe2d0113"
+              },
+              "supporting_spans": [
+                {
+                  "context_id": "refund_policy",
+                  "text": "Refunds are processed within 5 business days.",
+                  "start_char": 0,
+                  "end_char": 45,
+                  "span_hash": "sha256:d3100b6efe2d0113",
+                  "score": 1.0,
+                  "matched_terms": [
+                    "refunds",
+                    "processed",
+                    "5",
+                    "business",
+                    "days"
+                  ]
+                }
+              ],
+              "matched_terms": [
+                "refunds",
+                "processed",
+                "5",
+                "business",
+                "days"
+              ],
+              "required_facts": [
+                "Refunds are processed within 5 business days",
+                "5 business days"
+              ],
+              "matched_facts": [
+                "Refunds are processed within 5 business days",
+                "5 business days"
+              ],
+              "missing_facts": [],
+              "conflicting_facts": [],
+              "required_fact_details": [
+                {
+                  "text": "Refunds are processed within 5 business days",
+                  "type": "numeric"
+                },
+                {
+                  "text": "5 business days",
+                  "type": "numeric"
+                }
+              ],
+              "matched_fact_details": [
+                {
+                  "text": "Refunds are processed within 5 business days",
+                  "type": "numeric"
+                },
+                {
+                  "text": "5 business days",
+                  "type": "numeric"
+                }
+              ],
+              "missing_fact_details": [],
+              "conflicting_fact_details": [],
+              "reason": "The claim is supported by the retrieved evidence because all required facts were matched.",
+              "citation_status": "claim_has_no_citation",
+              "citation_source_id": null,
+              "root_cause": {
+                "label": "no_failure_detected",
+                "reason": "The claim is supported by retrieved evidence and no citation failure was detected.",
+                "missing_fact": null,
+                "closest_context_id": "refund_policy",
+                "closest_evidence": "Refunds are processed within 5 business days.",
+                "suggested_fix": "No fix needed for this claim."
+              }
+            }
+          ],
+          "abstention": {
+            "should_abstain": false,
+            "reason": "Most generated claims are supported by retrieved evidence."
+          },
+          "diagnostics": {
+            "failure_type": "no_failure_detected",
+            "failure_types": [
+              "no_failure_detected"
+            ],
+            "suggested_fix": "No fix is needed for this trace based on the local verifier."
+          },
+          "metadata": {
+            "system": "demo-rag",
+            "capture_source": "endpoint",
+            "endpoint": "http://127.0.0.1:50293/query",
+            "method": "POST",
+            "answer_path": "$.answer",
+            "contexts_path": "$.contexts",
+            "citations_path": "$.citations"
+          }
+        },
+        "inspection": {
+          "trace_path": null,
+          "query": "How long does refund processing take?",
+          "answer_preview": "Refunds are processed within 5 business days.",
+          "claims": [
+            {
+              "id": "claim_1",
+              "text": "Refunds are processed within 5 business days."
+            }
+          ],
+          "contexts": {
+            "count": 1,
+            "unique_ids": 1,
+            "duplicate_ids": [],
+            "empty_text_ids": []
+          },
+          "citations": {
+            "count": 0,
+            "source_ids": [],
+            "missing_source_ids": []
+          },
+          "metadata_keys": [
+            "answer_path",
+            "capture_source",
+            "citations_path",
+            "contexts_path",
+            "endpoint",
+            "method",
+            "system"
+          ],
+          "warnings": [
+            "Trace has factual claims but no citations; verification will check support without citation grounding."
+          ],
+          "suggested_next_commands": [
+            "contexttrace verify <trace.json> --report",
+            "contexttrace audit <trace.json> --corpus <corpus_dir> --report"
+          ]
+        },
+        "audit": null,
+        "next_actions": [
+          "Add claim-level citations or run verification without citation assumptions."
+        ],
+        "metadata": {
+          "system": "demo-rag",
+          "capture_source": "endpoint",
+          "endpoint": "http://127.0.0.1:50293/query",
+          "method": "POST",
+          "answer_path": "$.answer",
+          "contexts_path": "$.contexts",
+          "citations_path": "$.citations"
+        }
+      },
+      "comparison": {
+        "mode": "lexical",
+        "summary": {
+          "regression": false,
+          "improved": true,
+          "support_rate_before": 0.0,
+          "support_rate_after": 1.0,
+          "support_rate_delta": 1.0,
+          "unsupported_claim_rate_delta": -1.0,
+          "citation_mismatch_delta": 0,
+          "should_abstain_before": true,
+          "should_abstain_after": false,
+          "should_abstain_changed": true,
+          "should_abstain_regressed": false,
+          "new_failures": 0,
+          "resolved_failures": 1,
+          "new_unsupported": 0,
+          "new_citation_mismatches": 0,
+          "added_claims": 0,
+          "removed_claims": 0,
+          "changed_claims": 1,
+          "new_root_causes": [],
+          "resolved_root_causes": [
+            "should_have_abstained"
+          ]
+        },
+        "changes": [
+          {
+            "status": "resolved_failure",
+            "claim": "Refunds are processed within 5 business days.",
+            "match_score": 1.0,
+            "before": {
+              "claim_id": "claim_1",
+              "claim": "Refunds are processed within 5 business days.",
+              "verdict": "unsupported",
+              "confidence": 0.819,
+              "best_context_id": "refund_policy",
+              "citation_status": "claim_has_no_citation",
+              "root_cause": "should_have_abstained",
+              "missing_fact": "Refunds are processed within 5 business days",
+              "closest_evidence": "Customers may request refunds within 30 days of purchase.",
+              "suggested_fix": "Return an unavailable/insufficient-context answer unless retrieval returns evidence for the missing fact."
+            },
+            "after": {
+              "claim_id": "claim_1",
+              "claim": "Refunds are processed within 5 business days.",
+              "verdict": "supported",
+              "confidence": 1.0,
+              "best_context_id": "refund_policy",
+              "citation_status": "claim_has_no_citation",
+              "root_cause": "no_failure_detected",
+              "missing_fact": null,
+              "closest_evidence": "Refunds are processed within 5 business days.",
+              "suggested_fix": "No fix needed for this claim."
+            },
+            "suggested_fix": "No fix needed for this claim."
+          }
+        ],
+        "baseline": {
+          "query": "How long does refund processing take?",
+          "answer": "Refunds are processed within 5 business days.",
+          "summary": {
+            "total_claims": 1,
+            "supported": 0,
+            "partially_supported": 0,
+            "unsupported": 1,
+            "contradicted": 0,
+            "unverifiable": 0,
+            "support_rate": 0.0,
+            "unsupported_claim_rate": 1.0,
+            "citation_mismatches": 1,
+            "should_abstain": true,
+            "root_causes": {
+              "should_have_abstained": 1
+            },
+            "primary_root_cause": "should_have_abstained",
+            "failure_type": "should_have_abstained",
+            "failure_types": [
+              "should_have_abstained",
+              "unsupported_answer"
+            ],
+            "suggested_fix": "Add an abstention rule: when retrieved contexts do not support the requested fact, say the information is unavailable instead of generating a factual answer.",
+            "mode": "lexical"
+          },
+          "abstention": {
+            "should_abstain": true,
+            "reason": "The answer contains factual claims, but most important claims are unsupported or contradicted by the retrieved contexts."
+          },
+          "metadata": {
+            "run_id": "refund_processing_failure",
+            "system": "support-rag"
+          }
+        },
+        "current": {
+          "query": "How long does refund processing take?",
+          "answer": "Refunds are processed within 5 business days.",
+          "summary": {
+            "total_claims": 1,
+            "supported": 1,
+            "partially_supported": 0,
+            "unsupported": 0,
+            "contradicted": 0,
+            "unverifiable": 0,
+            "support_rate": 1.0,
+            "unsupported_claim_rate": 0.0,
+            "citation_mismatches": 1,
+            "should_abstain": false,
+            "root_causes": {
+              "no_failure_detected": 1
+            },
+            "primary_root_cause": "no_failure_detected",
+            "failure_type": "no_failure_detected",
+            "failure_types": [
+              "no_failure_detected"
+            ],
+            "suggested_fix": "No fix is needed for this trace based on the local verifier.",
+            "mode": "lexical"
+          },
+          "abstention": {
+            "should_abstain": false,
+            "reason": "Most generated claims are supported by retrieved evidence."
+          },
+          "metadata": {
+            "system": "demo-rag",
+            "capture_source": "endpoint",
+            "endpoint": "http://127.0.0.1:50293/query",
+            "method": "POST",
+            "answer_path": "$.answer",
+            "contexts_path": "$.contexts",
+            "citations_path": "$.citations"
+          }
+        }
+      },
+      "current_trace": {
+        "query": "How long does refund processing take?",
+        "answer": "Refunds are processed within 5 business days.",
+        "contexts": [
+          {
+            "id": "refund_policy",
+            "text": "Refunds are processed within 5 business days.",
+            "metadata": {}
+          }
+        ],
+        "metadata": {
+          "system": "demo-rag",
+          "capture_source": "endpoint",
+          "endpoint": "http://127.0.0.1:50293/query",
+          "method": "POST",
+          "answer_path": "$.answer",
+          "contexts_path": "$.contexts",
+          "citations_path": "$.citations"
+        }
+      },
+      "request_body": {
+        "question": "How long does refund processing take?"
+      },
+      "next_actions": [
+        "Add claim-level citations or run verification without citation assumptions."
+      ],
+      "expected": {
+        "policy": "must_pass",
+        "max_risk_level": "low",
+        "max_unsupported_claim_rate": 0.0,
+        "max_bad_citation_mismatches": 0,
+        "allow_should_abstain": false,
+        "allow_regression": false
+      }
+    }
+  ],
+  "metadata": {
+    "suite_schema_version": "0.1",
+    "corpus_path": null
+  }
+}

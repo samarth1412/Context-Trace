@@ -1,0 +1,177 @@
+{
+  "allow_missing_source_spans": true,
+  "artifacts": [
+    {
+      "bytes": 4179,
+      "name": "ragtruth_workflow_manifest.json",
+      "path": "ragtruth_workflow_manifest.json",
+      "required": true,
+      "sha256": "4227d243f1db13f301a1f0338f3c1f499f88e521bdae5e3321f900dbe9a14600",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\ragtruth_release\\ragtruth_workflow_manifest.json"
+    },
+    {
+      "bytes": 1321687,
+      "name": "ragtruth_case_pack.json",
+      "path": "ragtruth_case_pack.json",
+      "required": true,
+      "sha256": "85fc631840a830919e940efca9369cdf4375b35a18c6413a324ea13bce1c5a96",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\ragtruth_release\\ragtruth_case_pack.json"
+    },
+    {
+      "bytes": 732371,
+      "name": "ragtruth_review_queue.jsonl",
+      "path": "ragtruth_review_queue.jsonl",
+      "required": true,
+      "sha256": "b5feb96a32d2a2e821d3bd397c409a372ed9ec72fa8f41415012e6d8e9d73a09",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\ragtruth_release\\ragtruth_review_queue.jsonl"
+    },
+    {
+      "bytes": 708289,
+      "name": "ragtruth_review_packet.md",
+      "path": "ragtruth_review_packet.md",
+      "required": true,
+      "sha256": "ad7e9c0a1b2907e4a6f31d0c5931ae46ec6b3540a0698329e79254136733d23b",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\ragtruth_release\\ragtruth_review_packet.md"
+    },
+    {
+      "bytes": 794840,
+      "name": "ragtruth_reviewed_gpt51_assisted.jsonl",
+      "path": "ragtruth_review_signoff.jsonl",
+      "required": true,
+      "sha256": "8ef3eff72b501e359b5ed4e25c07977108118eb780f55f318237f9289c828c7c",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\ragtruth_official\\ragtruth_test200_review_workflow\\ragtruth_reviewed_gpt51_assisted.jsonl"
+    },
+    {
+      "bytes": 20697,
+      "name": "ragtruth_review_validation.json",
+      "path": "ragtruth_review_validation.json",
+      "required": true,
+      "sha256": "383b3647ab5a1148ed58e25b8b41156c8c879edf98240b36356184ea337560cf",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\ragtruth_release\\ragtruth_review_validation.json"
+    },
+    {
+      "bytes": 1398834,
+      "name": "ragtruth_reviewed_case_pack.json",
+      "path": "ragtruth_reviewed_case_pack.json",
+      "required": true,
+      "sha256": "9da69fc95829d1fd59745b46bbeede8706131251d95f7c4f311beb2fc8f798be",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\ragtruth_release\\ragtruth_reviewed_case_pack.json"
+    },
+    {
+      "bytes": 17549720,
+      "name": "contexttrace_bench_results.json",
+      "path": "scored/contexttrace_bench_results.json",
+      "required": true,
+      "sha256": "e14b2c257c8538a21c4a5f7665d4daae01cb2d4e0eed81f1f856b28434ff4f8b",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\ragtruth_release\\scored\\contexttrace_bench_results.json"
+    },
+    {
+      "bytes": 15710,
+      "name": "results.md",
+      "path": "scored/results.md",
+      "required": true,
+      "sha256": "a4e0f8876e008fe20dffda5bd246974ce1e379aa57ae202dab2ba300a554de8a",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\ragtruth_release\\scored\\results.md"
+    },
+    {
+      "bytes": 862,
+      "name": "leaderboard.md",
+      "path": "scored/leaderboard.md",
+      "required": true,
+      "sha256": "52912206a97ae1135d37e7a78cd5dd06687886d1282fdc3d52ff977ef6118660",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\ragtruth_release\\scored\\leaderboard.md"
+    },
+    {
+      "bytes": 396888,
+      "name": "report.html",
+      "path": "scored/report.html",
+      "required": true,
+      "sha256": "d5cc00da94a2825170f83182a40c2d303cfbb23c354f321057f8a92242c386d5",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\ragtruth_release\\scored\\report.html"
+    },
+    {
+      "bytes": 30305,
+      "name": "error_analysis.json",
+      "path": "scored/error_analysis.json",
+      "required": true,
+      "sha256": "3f2006388f19908d7f6026b5cb02542f0e49941dc46cba955bb9b655e9a853bc",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\ragtruth_release\\scored\\error_analysis.json"
+    },
+    {
+      "bytes": 12268,
+      "name": "error_analysis.md",
+      "path": "scored/error_analysis.md",
+      "required": true,
+      "sha256": "0644780a72b5c461a07dca53dd13abb1535b70da1b039cd71be889e7219188ee",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\ragtruth_release\\scored\\error_analysis.md"
+    },
+    {
+      "bytes": 74141,
+      "name": "ragtruth_error_analysis.json",
+      "path": "scored/ragtruth_error_analysis.json",
+      "required": true,
+      "sha256": "34f6ca05e433330fdc7733a28d26cd4f2685adf663207da2212c0f095e1edbc3",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\ragtruth_release\\scored\\ragtruth_error_analysis.json"
+    },
+    {
+      "bytes": 9561,
+      "name": "ragtruth_error_analysis.md",
+      "path": "scored/ragtruth_error_analysis.md",
+      "required": true,
+      "sha256": "854feb6bafaf8cafd4ce0cc840cf81615f958b14cd4e79d0a91312ca3a8830a0",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\ragtruth_release\\scored\\ragtruth_error_analysis.md"
+    },
+    {
+      "bytes": 1164092,
+      "name": "candidate_inputs.jsonl",
+      "path": "scored/candidate_inputs.jsonl",
+      "required": true,
+      "sha256": "f682aae7b20962d776738dc7a03391c208fcf91130dc55c85b054041a7736d12",
+      "source_path": "benchmarks\\contexttrace_bench\\out\\ragtruth_release\\scored\\candidate_inputs.jsonl"
+    }
+  ],
+  "bundle_status": "calibration_only",
+  "bundle_version": 1,
+  "case_count": 200,
+  "claim_policy": "This RAGTruth bundle is useful for calibration, but it is not publishable external validation. Reasons can include assisted review or intentionally missing source-side spans.",
+  "dataset": "RAGTruth",
+  "generated_at": "2026-06-20T16:49:31+00:00",
+  "missing_required_artifacts": [],
+  "require_reviewed": true,
+  "review": {
+    "errors": 0,
+    "requires_human_review": true,
+    "review_rows": 88,
+    "reviewed_rows": 88,
+    "valid": true,
+    "warnings": 12
+  },
+  "review_kind": "assisted",
+  "score": {
+    "baselines": 0,
+    "case_pack_dataset": "RAGTruth",
+    "case_set": "external_case_pack",
+    "summary": {
+      "cases": 200,
+      "citation_error_f1": 1.0,
+      "citation_error_precision": 1.0,
+      "citation_error_recall": 1.0,
+      "citation_status_reported_cases": 200,
+      "claim_verdict_macro_f1": 0.143,
+      "claim_verdict_match_rate": 0.0,
+      "cost_per_100_traces_usd": 0.0,
+      "dangerous_false_green_rate": 0.005,
+      "evidence_span_labeled_cases": 76,
+      "evidence_span_overlap": 0.551,
+      "evidence_span_reported_cases": 76,
+      "failure_label_exact_match_rate": 0.445,
+      "failure_label_macro_f1": 0.343,
+      "latency_p50_ms": 129.285,
+      "latency_p95_ms": 467.435,
+      "root_cause_accuracy": 0.45,
+      "root_cause_labeled_cases": 200,
+      "root_cause_reported_cases": 200
+    }
+  },
+  "workflow_status": "scored"
+}
