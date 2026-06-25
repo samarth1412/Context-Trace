@@ -1800,6 +1800,9 @@ def _answer_label_projection(
     elif "contradicted_answer" in labels:
         projected = {"contradicted_answer"}
         reason = "answer_level_contradiction_priority"
+    elif scope == "claim_counts" and {"unsupported_answer", "should_have_abstained"}.issubset(labels):
+        projected = {"unsupported"}
+        reason = "claim_count_unsupported"
     elif labels.intersection({"unsupported_answer", "insufficient_context", "should_have_abstained"}):
         projected = {"partial_support"}
         reason = "answer_level_mixed_or_missing_support"

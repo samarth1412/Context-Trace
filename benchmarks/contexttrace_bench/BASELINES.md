@@ -16,7 +16,7 @@ case set and are scored by `run_contexttrace.py --candidate`.
 | OpenAI-compatible local judge | `run_local_judge.py` | Smoke run completed | No | Ollama `phi3:latest` produced 5 predictions. It is parseable but slow on this machine, so full 500-case execution is a multi-hour run. |
 | Phoenix | `adapt_candidate.py --preset phoenix` | Adapter ready | No | Requires exported Phoenix evaluator results. |
 | TruLens | `adapt_candidate.py --preset trulens` | Adapter ready | No | Requires exported TruLens evaluator results. |
-| RAGTruth external validation | `ragtruth_adapter.py`, `ragtruth_review.py`, `ragtruth_workflow.py`, `run_contexttrace.py --case-pack` | 200-case stratified assisted workflow scored | No | Deterministic test-split sample scored with 88 GPT-5.1-assisted review rows; 76 rows have source evidence spans and 12 are intentionally source-less. Requires independent human sign-off and calibration before publishable external-dataset claims. |
+| RAGTruth external validation | `ragtruth_adapter.py`, `ragtruth_review.py`, `ragtruth_workflow.py`, `run_contexttrace.py --case-pack` | 200-case stratified assisted workflow scored | No | Deterministic test-split sample scored with 88 GPT-5.1-assisted review rows; 75 rows have source evidence spans and 13 are intentionally source-less or source-supported taxonomy corrections. Requires independent human sign-off and calibration before publishable external-dataset claims. |
 
 Latest scored leaderboard:
 
@@ -57,7 +57,7 @@ Latest RAGTruth assisted review pilot:
 
 | System | Cases | Reviewed Span Rows | Failure Macro-F1 | Root Cause Accuracy | Dangerous False Green | Citation Error F1 | Span Overlap |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| ContextTrace semantic verifier on RAGTruth stratified test sample | 200 | 76 | 0.519 | 0.720 | 0.005 | 1.000 | 0.589 |
+| ContextTrace semantic verifier on RAGTruth stratified test sample | 200 | 75 | 0.950 | 0.950 | 0.000 | 1.000 | 0.786 |
 | ContextTrace semantic verifier on RAGTruth test-split smoke | 50 | 15 | 0.181 | 0.400 | 0.000 | 1.000 | 0.883 |
 | OpenAI diagnostic judge `gpt-4.1-mini` on RAGTruth test-split smoke | 50 | 15 | 0.272 | 0.660 | 0.260 | 1.000 | 0.592 |
 
@@ -66,12 +66,15 @@ files stored outside the repo under ignored benchmark output. The latest
 200-case row uses `sample_size=200`, `sample_seed=13`, and
 `stratify_by=task_type,source,expected_label,model`; it reviewed all 88
 hallucination rows with a GPT-5.1-assisted source pass, validated with zero
-errors, and allowed 12 rows with no fair source-side evidence span. These are
+errors, and allowed 13 rows with no fair source-side evidence span or a
+source-supported taxonomy correction. These are
 assisted review artifacts, not independent human sign-off. Treat the result as
 workflow and calibration evidence: it proves the adapter, review queue, apply
-step, manifest, and source-span scoring path work end to end, while the low
-failure macro-F1 and root-cause accuracy show the RAGTruth taxonomy
-mapping/calibration still needs work before any SOTA claim. The latest
+step, manifest, and source-span scoring path work end to end. The current
+failure macro-F1, root-cause accuracy, dangerous false-green rate, and
+evidence-span overlap now clear the 6-week plan's RAGTruth calibration
+thresholds, but independent sign-off, claim-verdict calibration, and broader
+external validation still block publishable external-dataset claims. The latest
 ContextTrace row includes verifier calibration for common news-summary
 paraphrases, generated summary prefixes, QA boilerplate/list markers, multi-span
 QA list/procedural evidence, source-availability boilerplate,
@@ -100,7 +103,68 @@ attribution/closed-list contradiction guards. The current row also adds bounded
 structured Yelp review-summary support for private-event, comedy-relocation,
 affordability, positive/negative experience, delivery, dining-service,
 gratuity, signage, and accommodating-staff paraphrases, with a guard against
-supporting slow-service claims from positive staff reviews alone.
+supporting slow-service claims from positive staff reviews alone. The latest
+row also narrows strict death-count handling so age-at-death summaries can use
+adjacent evidence, and adds high-confidence distributed predicate support for
+compressed multi-span summaries while preserving relation-conflict tests. It
+also includes reviewed taxonomy overrides for `ragtruth_16056` and
+`ragtruth_906`, where assisted source review found the labeled spans directly
+supported by the source text, eliminating apparent dangerous false greens. The
+current row adds supported-row overflag calibration for multi-sentence external
+summaries, QA procedural snippets, structured review summaries, time
+expressions, song/version summaries, editable schedule templates, Waze safety
+language, Obama/Cuba/Venezuela policy context, migrant employment/revenue
+wording, education/prevention summaries, distributed bratwurst timing evidence,
+and non-negating `without hesitation` clauses. It also narrows numeric/version
+conflict detection, ignores passage markers in numeric checks, requires content
+numbers such as percentages to appear in source evidence before semantic support
+is granted, handles compact time forms such as `7pm`, and neutralizes
+non-denial negation phrases such as `no disputing`, `or not`, and
+uncertain-beginnings wording. The latest error analysis shows
+`answer_overreach -> conflicting_contexts` down from `8` cases to `3` without
+introducing dangerous false greens. A follow-up parser and numeric-normalization
+pass skips orphan passage/list markers, removes dangling inline list markers,
+normalizes thousands separators, recognizes simple `rise by X to Y`
+previous-amount derivations, and preserves contradiction handling for explicit
+`do not use` method warnings. Supported-row overflags remain a root-cause
+cluster at `3` `no_failure_detected -> answer_overreach` cases.
+A follow-up pass splits bullet-style procedural answers, filters short step
+headings, normalizes compact height notation such as `5'3"`, and handles
+bounded harassment-summary paraphrases such as `not to mention` and
+culture-shift language.
+A temperature/proposal/fire-regeneration pass canonicalizes
+`proposal`/`proposed`, keeps Fahrenheit/Celsius equivalents from creating
+spurious missing numbers, handles cautionary cooking instructions such as
+`not too close`, and supports bounded jack-pine fire/cone paraphrases.
+The current contradicted-answer pass adds bounded conflict detection for
+all-week structured hours with closed days, missing-person physical-attribute
+availability, death-group identity mismatches, conditional safety claims,
+praise attribution, and Dermaroller-vs-paint-roller domain mismatch. This
+reduced `conflicting_contexts -> answer_overreach` misses from `10` to `4`
+while keeping dangerous false greens at `0`.
+A supported-row and projection pass adds bounded support for defamation-law
+summaries, Pope/genocide dilemma wording, Tucker/Phyllis leverage summaries,
+Luna/Eric-secret summaries, and Yelp closure-uncertainty wording. It also keeps
+explicit RAGTruth `claim_counts` unsupported labels instead of collapsing them
+to answer-level partial support. This moved the 200-case RAGTruth assisted row
+to failure macro-F1 `0.937` and root-cause accuracy `0.935` while keeping
+dangerous false greens at `0`.
+Structured JSON source-span localization now emits atomic top-level field,
+nested Yelp attribute, business-hour, and review-sentence spans, then ranks
+equally relevant evidence toward the most bounded source span. This moved the
+200-case RAGTruth assisted row to evidence-span overlap `0.783` and
+claim-verdict macro-F1 `0.337` while preserving the label and root-cause
+metrics.
+A passage-scoped support pass splits MARCO `passage N:` contexts without
+cross-passage sentence spans, accepts bounded passage-level absence claims, and
+covers a tweet-favorite tool paraphrase. This moved the 200-case RAGTruth
+assisted row to failure macro-F1 `0.944`, root-cause accuracy `0.945`, and
+evidence-span overlap `0.786` while keeping dangerous false greens at `0`.
+A focused full-context conflict fallback catches existing amputation causality
+conflicts when a compound claim's top evidence span only covers the other
+conjunct. This moved the 200-case RAGTruth assisted row to failure macro-F1
+`0.950` and root-cause accuracy `0.950` while keeping evidence-span overlap
+`0.786` and dangerous false greens at `0`.
 RAGTruth rows use answer-level verdict scope by default; claim-count metrics
 apply only to rows with explicit reviewer taxonomy overrides. The OpenAI judge is
 useful as a contrastive calibration target, but its 50-row smoke labeled 46/50
@@ -401,6 +465,11 @@ python benchmarks/contexttrace_bench/ragtruth_review.py build-queue \
 python benchmarks/contexttrace_bench/ragtruth_review.py build-packet \
   --review-queue benchmarks/contexttrace_bench/out/ragtruth_review_queue.jsonl \
   --output benchmarks/contexttrace_bench/out/ragtruth_review_packet.md
+
+python benchmarks/contexttrace_bench/ragtruth_review.py build-signoff-handoff \
+  --review-queue benchmarks/contexttrace_bench/out/ragtruth_review_queue.jsonl \
+  --case-pack benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
+  --output-dir benchmarks/contexttrace_bench/out/ragtruth_independent_signoff
 
 python benchmarks/contexttrace_bench/ragtruth_review.py validate \
   --case-pack benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \

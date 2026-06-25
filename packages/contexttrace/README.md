@@ -1,14 +1,20 @@
 # ContextTrace
 
-**Local-first evidence-chain debugging for RAG and AI agents.**
+**Local-first evidence-chain forensics for RAG and AI agents.**
 
-ContextTrace shows where an answer stopped being grounded in the evidence you gave it:
+ContextTrace is a Python SDK and CLI for tracing a failed answer from the user
+query through retrieved context, answer claims, citations, verdicts, root cause,
+repair guidance, and CI regression tests.
 
 ```text
-query -> retrieved context -> answer claims -> citations -> verdicts -> root cause
+query -> retrieved context -> answer claims -> citations -> verdicts -> root cause -> regression test
 ```
 
-It is a Python SDK and CLI, not a hosted dashboard. Traces, reports, judge cache, and SQLite state stay local by default.
+Use it when a RAG or agent score is not enough: ContextTrace points at the
+unsupported or contradicted claim, the evidence span and citation involved, why
+the failure likely happened, and how to keep it from coming back. It is not a
+hosted dashboard. Traces, reports, judge cache, and SQLite state stay local by
+default.
 
 ## Install
 

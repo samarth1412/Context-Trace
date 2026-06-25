@@ -184,6 +184,150 @@ def build_review_packet(
     return "\n".join(lines).rstrip() + "\n"
 
 
+def build_independent_signoff_rows(review_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for row in review_rows:
+        if not isinstance(row, dict):
+            continue
+        signoff_row = dict(row)
+        signoff_row["review_status"] = "needs_review"
+        signoff_row["reviewer"] = ""
+        signoff_row["reviewed_at"] = ""
+        signoff_row["review_notes"] = ""
+        signoff_row["source_evidence_spans"] = []
+        signoff_row["taxonomy_override"] = {
+            "expected_labels": [],
+            "expected_primary_root_cause": "",
+            "expected_verdict_counts": {},
+        }
+        rows.append(signoff_row)
+    return rows
+
+
+def write_independent_signoff_handoff(
+    review_rows: list[dict[str, Any]],
+    output_dir: str | Path,
+    *,
+    case_pack_path: str | Path | None = None,
+    title: str = "RAGTruth Independent Source-Evidence Signoff Packet",
+    context_char_limit: int = 6000,
+    generated_at: str | None = None,
+) -> dict[str, Any]:
+    output_path = Path(output_dir)
+    output_path.mkdir(parents=True, exist_ok=True)
+    generated = generated_at or datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+    signoff_rows = build_independent_signoff_rows(review_rows)
+
+    template_path = output_path / "ragtruth_independent_review_template.jsonl"
+    packet_path = output_path / "ragtruth_independent_review_packet.md"
+    status_path = output_path / "ragtruth_independent_review_status.json"
+    readme_path = output_path / "ragtruth_independent_review_README.md"
+    validation_path = output_path / "ragtruth_independent_review_validation.json"
+    reviewed_case_pack_path = output_path / "ragtruth_independent_reviewed_case_pack.json"
+
+    write_jsonl(signoff_rows, template_path)
+    write_text(
+        build_review_packet(
+            signoff_rows,
+            title=title,
+            generated_at=generated,
+            context_char_limit=context_char_limit,
+        ),
+        packet_path,
+    )
+
+    status = {
+        "status": "pending_independent_review",
+        "generated_at": generated,
+        "review_rows": len(signoff_rows),
+        "case_pack": str(case_pack_path) if case_pack_path else "",
+        "artifacts": {
+            "signoff_template": str(template_path),
+            "review_packet": str(packet_path),
+            "readme": str(readme_path),
+            "status": str(status_path),
+        },
+        "required_reviewer_fields": ["review_status", "reviewer", "reviewed_at"],
+        "notes": [
+            "This handoff intentionally clears prior assisted reviewer fields.",
+            "Source-evidence suggestions are retained only as search aids; a reviewer must verify source text directly.",
+            "Rows with no fair source-side span should keep source_evidence_spans empty and explain the decision in review_notes.",
+        ],
+        "validation_command": _ragtruth_review_command(
+            "validate",
+            case_pack_path=case_pack_path,
+            review_path=template_path,
+            output_path=validation_path,
+            require_reviewed=True,
+            require_source_spans=False,
+        ),
+        "strict_source_span_validation_command": _ragtruth_review_command(
+            "validate",
+            case_pack_path=case_pack_path,
+            review_path=template_path,
+            output_path=validation_path,
+            require_reviewed=True,
+            require_source_spans=True,
+        ),
+        "apply_command": _ragtruth_review_command(
+            "apply",
+            case_pack_path=case_pack_path,
+            review_path=template_path,
+            output_path=reviewed_case_pack_path,
+            require_reviewed=True,
+            require_source_spans=False,
+        ),
+    }
+    write_json(status, status_path)
+    write_text(render_independent_signoff_readme(status), readme_path)
+    return status
+
+
+def render_independent_signoff_readme(status: dict[str, Any]) -> str:
+    artifacts = status.get("artifacts") or {}
+    lines = [
+        "# RAGTruth Independent Review Handoff",
+        "",
+        "Status: `%s`" % status.get("status"),
+        "Generated: `%s`" % status.get("generated_at"),
+        "Review rows: `%s`" % status.get("review_rows"),
+        "",
+        "## Files",
+        "",
+        "- Signoff template: `%s`" % artifacts.get("signoff_template"),
+        "- Review packet: `%s`" % artifacts.get("review_packet"),
+        "- Status JSON: `%s`" % artifacts.get("status"),
+        "",
+        "## Reviewer Rules",
+        "",
+        "- Fill `review_status`, `reviewer`, and `reviewed_at` only after direct source inspection.",
+        "- Copy minimal source text into `source_evidence_spans` when source text supports, contradicts, or bounds the labeled answer span.",
+        "- Leave `source_evidence_spans` empty only when no fair source-side span exists, and explain why in `review_notes`.",
+        "- Use `taxonomy_override` only when the adapted expected label, root cause, or verdict counts need correction.",
+        "",
+        "## Commands",
+        "",
+        "Validate completed independent review:",
+        "",
+        "```bash",
+        str(status.get("validation_command") or ""),
+        "```",
+        "",
+        "Strict validation when every hallucination row must have a source span:",
+        "",
+        "```bash",
+        str(status.get("strict_source_span_validation_command") or ""),
+        "```",
+        "",
+        "Apply completed review to the case pack:",
+        "",
+        "```bash",
+        str(status.get("apply_command") or ""),
+        "```",
+    ]
+    return "\n".join(lines).rstrip() + "\n"
+
+
 def validate_review_mappings(
     case_pack: dict[str, Any],
     review_rows: list[dict[str, Any]],
@@ -364,6 +508,35 @@ def _case_with_review(case: dict[str, Any], review: dict[str, Any], *, reviewed:
         "source_evidence_span_count": len(source_spans),
     }
     return updated
+
+
+def _ragtruth_review_command(
+    command: str,
+    *,
+    case_pack_path: str | Path | None,
+    review_path: str | Path,
+    output_path: str | Path,
+    require_reviewed: bool,
+    require_source_spans: bool,
+) -> str:
+    if not case_pack_path:
+        return "Provide --case-pack before running %s." % command
+    parts = [
+        "python",
+        "benchmarks/contexttrace_bench/ragtruth_review.py",
+        command,
+        "--case-pack",
+        str(case_pack_path),
+        "--review",
+        str(review_path),
+        "--output",
+        str(output_path),
+    ]
+    if require_reviewed:
+        parts.append("--require-reviewed")
+    if command == "validate" and require_source_spans:
+        parts.append("--require-source-spans")
+    return " ".join(parts)
 
 
 def _labels_from_review(review: dict[str, Any], override: dict[str, Any]) -> list[str]:
@@ -753,6 +926,13 @@ def main(argv: list[str] | None = None) -> int:
     packet_parser.add_argument("--title", default="RAGTruth Human Evidence Review Packet")
     packet_parser.add_argument("--context-char-limit", default=6000, type=int)
 
+    handoff_parser = subparsers.add_parser("build-signoff-handoff", help="Build an independent-review handoff from a JSONL review queue.")
+    handoff_parser.add_argument("--review-queue", "--input", dest="review_queue", required=True)
+    handoff_parser.add_argument("--output-dir", required=True)
+    handoff_parser.add_argument("--case-pack")
+    handoff_parser.add_argument("--title", default="RAGTruth Independent Source-Evidence Signoff Packet")
+    handoff_parser.add_argument("--context-char-limit", default=6000, type=int)
+
     validate_parser = subparsers.add_parser("validate", help="Validate a reviewed RAGTruth JSONL file.")
     validate_parser.add_argument("--case-pack", required=True)
     validate_parser.add_argument("--review", required=True)
@@ -783,6 +963,22 @@ def main(argv: list[str] | None = None) -> int:
         written = write_text(packet, args.output)
         print("Wrote %s" % written)
         print("Review rows: %s" % len(rows))
+        return 0
+
+    if args.command == "build-signoff-handoff":
+        rows = load_jsonl(args.review_queue)
+        status = write_independent_signoff_handoff(
+            rows,
+            args.output_dir,
+            case_pack_path=args.case_pack,
+            title=args.title,
+            context_char_limit=args.context_char_limit,
+        )
+        print("Status: %s" % status["status"])
+        print("Review rows: %s" % status["review_rows"])
+        print("Template: %s" % status["artifacts"]["signoff_template"])
+        print("Packet: %s" % status["artifacts"]["review_packet"])
+        print("Status JSON: %s" % status["artifacts"]["status"])
         return 0
 
     if args.command == "validate":

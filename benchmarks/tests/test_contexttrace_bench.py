@@ -20,6 +20,7 @@ from benchmarks.contexttrace_bench.diag150_release_workflow import (
 )
 from benchmarks.contexttrace_bench.run_deepeval import build_deepeval_rows
 from benchmarks.contexttrace_bench.run_contexttrace import (
+    _answer_label_projection,
     build_error_analysis,
     main as run_contexttrace_main,
     render_candidate_inputs_jsonl,
@@ -40,9 +41,11 @@ from benchmarks.contexttrace_bench.ragtruth_error_analysis import (
 )
 from benchmarks.contexttrace_bench.ragtruth_review import (
     apply_review_mappings,
+    build_independent_signoff_rows,
     build_review_packet,
     build_review_queue,
     validate_review_mappings,
+    write_independent_signoff_handoff,
 )
 from benchmarks.contexttrace_bench.ragtruth_workflow import run_ragtruth_review_workflow
 from benchmarks.contexttrace_bench.ragtruth_release_workflow import (
@@ -107,6 +110,32 @@ def test_contexttrace_bench_runs_public_holdout_without_generated_cases() -> Non
     assert summary["evidence_span_labeled_cases"] >= 25
     assert summary["dangerous_false_green_rate"] == 0.0
     assert any(row["id"] == "holdout_milvus_wrong_source_citation" for row in result["rows"])
+
+
+def test_ragtruth_claim_count_projection_preserves_unsupported_label() -> None:
+    result = {
+        "summary": {
+            "failure_type": "should_have_abstained",
+            "failure_types": ["should_have_abstained", "unsupported_answer", "partial_support"],
+        }
+    }
+
+    projection = _answer_label_projection(
+        {"should_have_abstained", "unsupported_answer", "partial_support"},
+        result,
+        dataset="RAGTruth",
+        scope="claim_counts",
+    )
+    answer_projection = _answer_label_projection(
+        {"should_have_abstained", "unsupported_answer", "partial_support"},
+        result,
+        dataset="RAGTruth",
+        scope="answer_label",
+    )
+
+    assert projection["labels"] == ["unsupported"]
+    assert projection["reason"] == "claim_count_unsupported"
+    assert answer_projection["labels"] == ["partial_support"]
 
 
 def test_diag150_audit_packet_validates_public_holdout() -> None:
@@ -917,11 +946,20 @@ def test_ragtruth_review_queue_and_mapping_updates_case_pack() -> None:
     queue[0]["reviewer"] = "unit-test"
     queue[0]["reviewed_at"] = "2026-06-12"
     queue[0]["source_evidence_spans"] = ["The source article mentions East Jerusalem, not Gaza Strip."]
+    queue[0]["taxonomy_override"] = {
+        "expected_labels": ["no_failure_detected"],
+        "expected_primary_root_cause": "no_failure_detected",
+        "expected_verdict_counts": {},
+    }
     reviewed = apply_review_mappings(case_pack, queue, require_reviewed=True, review_file="review.jsonl")
 
     assert reviewed["review"]["status"] == "reviewed"
     assert reviewed["review"]["reviewed_cases"] == 1
     reviewed_case = reviewed["cases"][0]
+    assert reviewed_case["expected_labels"] == ["no_failure_detected"]
+    assert reviewed_case["expected_primary_root_cause"] == "no_failure_detected"
+    assert reviewed_case["expected_verdict_scope"] == "answer_label"
+    assert reviewed_case["expected_verdict_counts"] == {}
     assert reviewed_case["expected_evidence_spans"] == ["The source article mentions East Jerusalem, not Gaza Strip."]
     assert reviewed_case["review_metadata"]["reviewed"] is True
     assert reviewed_case["review_metadata"]["reviewer"] == "unit-test"
@@ -973,6 +1011,72 @@ def test_ragtruth_review_packet_renders_human_checklist() -> None:
     assert "East Jerusalem" in packet
     assert "source_evidence_spans" in packet
     assert "Truncated in packet: `yes`" in packet
+
+
+def test_ragtruth_independent_signoff_handoff_resets_assisted_fields(tmp_path) -> None:
+    case_pack = adapt_ragtruth_rows(
+        [
+            {
+                "id": "1472",
+                "source_id": "11316",
+                "labels": [
+                    {
+                        "start": 219,
+                        "end": 229,
+                        "text": "Gaza Strip",
+                        "label_type": "Evident Baseless Info",
+                    }
+                ],
+                "quality": "good",
+                "response": "The answer adds Gaza Strip.",
+            }
+        ],
+        source_rows=[
+            {
+                "source_id": "11316",
+                "task_type": "Summary",
+                "source": "CNN/DM",
+                "source_info": "The source article mentions East Jerusalem, not Gaza Strip.",
+                "prompt": "Summarize the following news.",
+            }
+        ],
+    )
+    queue = build_review_queue(case_pack, suggest_source_spans=True, max_suggestions=1)
+    queue[0]["review_status"] = "reviewed"
+    queue[0]["reviewer"] = "assisted-review"
+    queue[0]["reviewed_at"] = "2026-06-13"
+    queue[0]["review_notes"] = "Assisted notes should not become independent signoff."
+    queue[0]["source_evidence_spans"] = ["The source article mentions East Jerusalem, not Gaza Strip."]
+
+    signoff_rows = build_independent_signoff_rows(queue)
+    assert signoff_rows[0]["review_status"] == "needs_review"
+    assert signoff_rows[0]["reviewer"] == ""
+    assert signoff_rows[0]["reviewed_at"] == ""
+    assert signoff_rows[0]["review_notes"] == ""
+    assert signoff_rows[0]["source_evidence_spans"] == []
+    assert signoff_rows[0]["source_evidence_span_suggestions"]
+
+    case_pack_path = tmp_path / "case_pack.json"
+    case_pack_path.write_text(json.dumps(case_pack), encoding="utf-8")
+    status = write_independent_signoff_handoff(
+        queue,
+        tmp_path / "handoff",
+        case_pack_path=case_pack_path,
+        generated_at="2026-06-25T00:00:00+00:00",
+    )
+
+    template_path = Path(status["artifacts"]["signoff_template"])
+    packet_path = Path(status["artifacts"]["review_packet"])
+    readme_path = Path(status["artifacts"]["readme"])
+    template = [json.loads(line) for line in template_path.read_text(encoding="utf-8").splitlines()]
+
+    assert status["status"] == "pending_independent_review"
+    assert status["review_rows"] == 1
+    assert template[0]["review_status"] == "needs_review"
+    assert "RAGTruth Independent Source-Evidence Signoff Packet" in packet_path.read_text(encoding="utf-8")
+    assert "--require-reviewed" in status["validation_command"]
+    assert "--require-source-spans" in status["strict_source_span_validation_command"]
+    assert "Validate completed independent review" in readme_path.read_text(encoding="utf-8")
 
 
 def test_ragtruth_review_validation_checks_signoff_and_source_spans() -> None:

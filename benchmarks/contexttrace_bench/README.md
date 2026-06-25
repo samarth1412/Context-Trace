@@ -441,6 +441,17 @@ python benchmarks/contexttrace_bench/ragtruth_review.py build-packet \
   --output benchmarks/contexttrace_bench/out/ragtruth_review_packet.md
 ```
 
+Or build the independent-review handoff in one step. This writes a blank
+signoff template, Markdown packet, README, and status JSON; prior assisted
+review fields are intentionally cleared.
+
+```bash
+python benchmarks/contexttrace_bench/ragtruth_review.py build-signoff-handoff \
+  --review-queue benchmarks/contexttrace_bench/out/ragtruth_review_queue.jsonl \
+  --case-pack benchmarks/contexttrace_bench/out/ragtruth_case_pack.json \
+  --output-dir benchmarks/contexttrace_bench/out/ragtruth_independent_signoff
+```
+
 Validate reviewed rows before applying them:
 
 ```bash

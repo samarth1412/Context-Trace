@@ -203,6 +203,19 @@ def test_claim_extraction_skips_numbered_list_markers_after_boilerplate():
     ]
 
 
+def test_claim_extraction_removes_inline_next_list_marker():
+    claims = extract_claims(
+        "Based on the given passages, the proper way to dispose of a worn US flag is to either: "
+        "1. Burn it in a peaceful manner, removing the blue field first and burying the ashes, or "
+        "2. Perform a proper ceremony."
+    )
+
+    assert [claim.text for claim in claims] == [
+        "Burn it in a peaceful manner, removing the blue field first and burying the ashes.",
+        "Perform a proper ceremony.",
+    ]
+
+
 def test_claim_extraction_strips_how_to_boilerplate_prefixes():
     claims = extract_claims(
         "Sure, here's how to clean the dryer vent based on the given passages: "
@@ -224,6 +237,12 @@ def test_claim_extraction_skips_orphan_option_marker_sentence():
     claims = extract_claims('Therefore, the answer is: "Option 1 or Option 2."')
 
     assert claims == []
+
+
+def test_claim_extraction_skips_orphan_passage_number_markers():
+    claims = extract_claims("(Passage 1) 2. Season the pork chops. (Passage 2) 4.")
+
+    assert [claim.text for claim in claims] == ["Season the pork chops."]
 
 
 def test_claim_extraction_strips_discourse_prefixes():
@@ -249,6 +268,31 @@ def test_claim_extraction_skips_source_availability_boilerplate():
     )
 
     assert claims == []
+
+
+def test_claim_extraction_skips_generic_it_does_not_provide_boilerplate():
+    claims = extract_claims(
+        "Passage 1 provides information on one skill move. However, it does not provide information on other skill moves."
+    )
+
+    assert [claim.text for claim in claims] == ["Passage 1 provides information on one skill move."]
+
+
+def test_claim_extraction_splits_bullet_style_procedure_answers():
+    claims = extract_claims(
+        "Based on the given passages, here is how you can make ribs: "
+        "Step 1: Prepare the ribs * Remove the membrane from the bottom of the ribs (passage 3) "
+        "* Season the ribs with a dry rub and mustard mixture (passage 2) "
+        "Step 2: Grill the ribs * Heat a gas or charcoal grill to medium heat (passage 1) "
+        "* Continue to cook every 5 minutes. Note: The passages do not mention the oven temperature."
+    )
+
+    assert [claim.text for claim in claims] == [
+        "Remove the membrane from the bottom of the ribs (passage 3).",
+        "Season the ribs with a dry rub and mustard mixture (passage 2).",
+        "Heat a gas or charcoal grill to medium heat (passage 1).",
+        "Continue to cook every 5 minutes.",
+    ]
 
 
 def test_claim_extraction_keeps_passage_specific_absence_claims():
@@ -285,6 +329,148 @@ def test_context_span_extraction_preserves_offsets_and_hashes():
     assert spans[0].start_char == 0
     assert context.text[spans[1].start_char : spans[1].end_char] == spans[1].text
     assert spans[0].span_hash.startswith("sha256:")
+
+
+def test_context_span_extraction_adds_structured_json_spans():
+    context = TraceContext(
+        id="yelp",
+        text=json.dumps(
+            {
+                "attributes": {
+                    "OutdoorSeating": None,
+                    "RestaurantsReservations": False,
+                    "WiFi": "no",
+                },
+                "city": "Santa Barbara",
+                "hours": {
+                    "Friday": "9:0-0:0",
+                    "Monday": "9:0-17:0",
+                },
+                "name": "Old Town Tavern",
+                "review_info": [
+                    {
+                        "review_stars": 3.0,
+                        "review_text": (
+                            "The chicken and shrimp were cooked very well and not overcooked. "
+                            "The patio was closed."
+                        ),
+                    }
+                ],
+            }
+        ),
+    )
+
+    span_texts = [span.text for span in split_context_spans(context)]
+
+    assert '"RestaurantsReservations": false' in span_texts
+    assert '"OutdoorSeating": null' in span_texts
+    assert '"WiFi": "no"' in span_texts
+    assert '"hours": {"Friday": "9:0-0:0", "Monday": "9:0-17:0"}' in span_texts
+    assert '"name": "Old Town Tavern"' in span_texts
+    assert "The chicken and shrimp were cooked very well and not overcooked." in span_texts
+
+
+def test_context_span_extraction_splits_passage_blocks_without_crossing():
+    context = TraceContext(
+        id="marco",
+        text=(
+            "passage 1:Alpha source text. "
+            "passage 2:UK Weather Warnings Map; Current Weather; Satellite cloud cover "
+            "passage 3:CLIMATE: AVERAGE MONTHLY WEATHER IN Bucharest, Romania."
+        ),
+    )
+
+    span_texts = [span.text for span in split_context_spans(context)]
+
+    assert "passage 2:UK Weather Warnings Map; Current Weather; Satellite cloud cover" in span_texts
+    assert "passage 3:CLIMATE: AVERAGE MONTHLY WEATHER IN Bucharest, Romania." in span_texts
+    assert not any("passage 2:" in text and "passage 3:" in text for text in span_texts)
+
+
+def test_semantic_mode_ranks_structured_json_atomic_spans():
+    context = TraceContext(
+        id="yelp",
+        text=json.dumps(
+            {
+                "attributes": {
+                    "OutdoorSeating": None,
+                    "RestaurantsReservations": False,
+                    "WiFi": "no",
+                },
+                "review_info": [
+                    {
+                        "review_stars": 3.0,
+                        "review_text": (
+                            "The chicken and shrimp were cooked very well and not overcooked. "
+                            "The patio was closed."
+                        ),
+                    }
+                ],
+            }
+        ),
+    )
+
+    reservations = find_best_evidence("The restaurant takes reservations.", [context], mode="semantic")
+    chicken = find_best_evidence("The chicken and shrimp were cooked very well and not overcooked.", [context], mode="semantic")
+
+    assert reservations.supporting_spans[0]["text"] == '"RestaurantsReservations": false'
+    assert chicken.supporting_spans[0]["text"] == "The chicken and shrimp were cooked very well and not overcooked."
+
+
+def test_semantic_mode_supports_passage_scoped_absence_claims():
+    context = TraceContext(
+        id="weather",
+        text=(
+            "passage 1:Today’s and tonight’s Bucharest, Romania weather forecast, weather conditions "
+            "and Doppler radar from The Weather Channel and Weather.com. "
+            "passage 2:UK Weather Warnings Map; UK Flood Warnings Map; Current Weather; Highway Conditions. "
+            "passage 3:CLIMATE: AVERAGE MONTHLY WEATHER IN Bucharest, Romania. "
+            "Bucharest has a humid continental climate."
+        ),
+    )
+    result = verify_trace(
+        RAGTrace(
+            query="What is the current temperature in Bucharest?",
+            answer=(
+                "Passage 1 does not provide real-time weather data, so I cannot find the current temperature in Bucharest. "
+                "Passage 2 provides a map of UK weather warnings and flood warnings, but it does not provide information "
+                "on the temperature in Bucharest. "
+                "Passage 3 provides general information about the climate in Bucharest, including the average monthly "
+                "weather patterns, but it does not provide the current temperature."
+            ),
+            contexts=[context],
+        ),
+        mode="semantic",
+    )
+
+    assert [claim["verdict"] for claim in result["claims"]] == ["supported", "supported", "supported"]
+    assert result["summary"]["failure_types"] == ["no_failure_detected"]
+
+
+def test_semantic_mode_does_not_accept_entity_present_related_absence_claim():
+    result = verify_trace(
+        RAGTrace(
+            query="What is the difference between sirloin steak and porterhouse steak?",
+            answer=(
+                "Passage 3 does not provide any information related to the difference between "
+                "sirloin steak and porterhouse steak."
+            ),
+            contexts=[
+                TraceContext(
+                    id="steak",
+                    text=(
+                        "passage 3:The sirloin steak is a steak cut from the back of the animal. "
+                        "In a common U.S. butchery, the steak is cut from the rear back portion of the animal, "
+                        "continuing off the short loin from which T-bone, porterhouse, and club steaks are cut."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert result["claims"][0]["verdict"] != "supported"
+    assert result["summary"]["failure_types"] != ["no_failure_detected"]
 
 
 def test_fact_extraction_and_matching_identifies_missing_detail():
@@ -784,6 +970,231 @@ def test_semantic_mode_ignores_negated_aside_when_affirmative_clause_supports_cl
     assert result["claims"][0]["verdict"] != "contradicted"
     assert result["claims"][0]["conflicting_facts"] == []
     assert "contradicted_answer" not in result["summary"]["failure_types"]
+
+
+def test_complete_fact_match_beats_weak_negation_contradiction():
+    result = verify_trace(
+        RAGTrace(
+            query="What did the bartender do?",
+            answer=(
+                "Eventually, the bartender apologized and offered to buy them a round of drinks and "
+                "shots, making their evening enjoyable."
+            ),
+            contexts=[
+                TraceContext(
+                    id="bar_review",
+                    text=(
+                        "The bartender eventually personally came to our table and apologized for us "
+                        "being neglected and without hesitation offered to buy us a round of beers and "
+                        "shots of tequila."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["conflicting_facts"] == []
+    assert "contradicted_answer" not in result["summary"]["failure_types"]
+
+
+def test_semantic_mode_does_not_treat_missing_decimal_addon_as_conflict():
+    result = verify_trace(
+        RAGTrace(
+            query="What are the sack totals?",
+            answer=(
+                "Young has 5 sacks this season, while the Dolphins' current starting defensive ends "
+                "have combined for only 7.5 sacks."
+            ),
+            contexts=[
+                TraceContext(
+                    id="dolphins",
+                    text=(
+                        "Trading for Young, who is five years younger and has 5 sacks this season, "
+                        "would be a massive upgrade for the Dolphins."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "partially_supported"
+    assert claim["conflicting_facts"] == []
+    assert "contradicted_answer" not in result["summary"]["failure_types"]
+
+
+def test_semantic_mode_ignores_passage_markers_in_numeric_conflicts():
+    match = compare_facts(
+        (
+            "Group A beta-hemolytic streptococci account for around 70% of "
+            "necrotizing fasciitis cases."
+        ),
+        (
+            "passage 3: Necrotizing fasciitis is caused by several kinds of bacteria. "
+            "Many cases are caused by group A beta-hemolytic streptococci."
+        ),
+        mode="semantic",
+    )
+
+    assert match.conflicting_facts == []
+    assert match.missing_facts != []
+
+
+def test_semantic_mode_handles_non_denial_negation_phrases():
+    paid = compare_facts(
+        "Automotive technicians can get paid in different ways, including hourly.",
+        (
+            "Whether mechanics and technicians are entitled to overtime depends on how they "
+            "are paid, commission or not, and how much they make. There are various combinations "
+            "of hourly and commission pay rates."
+        ),
+        mode="semantic",
+    )
+    easter = compare_facts(
+        "Efforts to unify the method of determining the date based on astronomical occurrences have not been successful.",
+        "In 1997, the World Council of Churches pushed for a unified method of determining a date based on astronomical occurrences.",
+        mode="semantic",
+    )
+    eggs = compare_facts(
+        "Eggs have roots in German traditions, with the first known mention of them in writing dating back to 1682.",
+        "German historians are not clear on its beginnings, but the first known mention of the bunny and the eggs in writing was in 1682.",
+        mode="semantic",
+    )
+    intimidation = compare_facts(
+        (
+            "Most people consider sexual violence as rape, but other forms of harassment such as "
+            "groping, stalking, and ogling are also intimidating."
+        ),
+        (
+            "Most people only think of sexual violence as rape and tend to overlook touching, "
+            "groping and stalking, not to mention ogling, even though all of this can be intimidating."
+        ),
+        mode="semantic",
+    )
+    harassment_shift = compare_facts(
+        "The author encourages women to speak up about their experiences and realizes that addressing sexual harassment requires a cultural shift.",
+        (
+            "I have been working to encourage women to talk about their experiences and realize "
+            "the power they hold through acknowledging the problem and being part of the change "
+            "to shift the culture around sexual harassment."
+        ),
+        mode="semantic",
+    )
+
+    assert paid.conflicting_facts == []
+    assert easter.conflicting_facts == []
+    assert eggs.conflicting_facts == []
+    assert intimidation.conflicting_facts == []
+    assert harassment_shift.missing_facts == []
+
+
+def test_semantic_mode_apology_role_reference_is_not_attribution_conflict():
+    result = verify_trace(
+        RAGTrace(
+            query="What did Patrick Cherry do?",
+            answer=(
+                "Detective Patrick Cherry apologized for his behavior, which included insulting "
+                "the driver's accent and using expletives."
+            ),
+            contexts=[
+                TraceContext(
+                    id="nypd",
+                    text=(
+                        "New York Police Department detective apologized Friday for an angry exchange "
+                        "with an Uber driver that was caught on video. I sincerely apologize, Patrick "
+                        "Cherry told WNBC's Jonathan Dienst. In the video, the detective mocked the "
+                        "driver's accent and used expletives toward the driver."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["conflicting_facts"] == []
+    assert claim["verdict"] != "contradicted"
+
+
+def test_semantic_mode_strips_discourse_wrappers_for_fact_support():
+    author = compare_facts(
+        (
+            "The author notes that while most people consider sexual violence as rape, "
+            "they also include other forms of harassment such as groping, stalking, and ogling."
+        ),
+        (
+            "Most people, including women, only think of sexual violence as rape and tend to "
+            "overlook touching, groping and stalking, not to mention the milder forms of ogling."
+        ),
+        mode="semantic",
+    )
+    passage = compare_facts(
+        "Additionally, passage 3 suggests that fires can allow jack pine and aspen to regain an advantage.",
+        "Should another fire disturb this cycle, the more fire-tolerant jack pine and aspen regain the advantage.",
+        mode="semantic",
+    )
+
+    assert "The author notes that" not in author.missing_facts
+    assert "Additionally, passage 3 suggests that" not in passage.missing_facts
+    assert passage.missing_facts == []
+
+
+def test_semantic_mode_supports_thousands_and_derived_previous_amounts():
+    social_security = compare_facts(
+        "Retired workers can expect an average monthly benefit of $1,907, up from $1,848.",
+        "The average monthly benefit for retired workers will rise by $59 to $1,907.",
+        mode="semantic",
+    )
+    warheads = compare_facts(
+        "The Pentagon projects China will operate nearly 1,000 nuclear warheads by 2030, up from 500.",
+        "The Pentagon mentioned a projection of nearly 1000 nuclear warheads being operational by 2030, up from a count of 500.",
+        mode="semantic",
+    )
+
+    assert social_security.missing_facts == []
+    assert social_security.conflicting_facts == []
+    assert warheads.missing_facts == []
+    assert warheads.conflicting_facts == []
+
+
+def test_semantic_mode_normalizes_compact_height_notation():
+    match = compare_facts(
+        "Chamberlain was described as 5'3\" with distinguishable features, including pierced ears and a scar.",
+        (
+            "Marilyne Chamberlain, when last seen, stood at 5 feet 3 inches and weighed around 145 pounds. "
+            "She was notably distinguished by pierced ears, a scar on her upper left arm, and glasses."
+        ),
+        mode="semantic",
+    )
+
+    assert match.missing_facts == []
+    assert match.conflicting_facts == []
+
+
+def test_semantic_mode_flags_explicit_do_not_use_method_conflict():
+    match = compare_facts(
+        "Using a high-pressure hose can also be effective depending on the type and size of the stain.",
+        (
+            "However, do not use a high pressure hose to clean off the affected area, "
+            "because you could end up pushing the oil deeper into the pavement."
+        ),
+        mode="semantic",
+    )
+    supported = compare_facts(
+        "It is important to avoid using a high-pressure hose as it may push the oil deeper into the pavement.",
+        (
+            "However, do not use a high pressure hose to clean off the affected area, "
+            "because you could end up pushing the oil deeper into the pavement."
+        ),
+        mode="semantic",
+    )
+
+    assert match.conflicting_facts != []
+    assert supported.conflicting_facts == []
 
 
 def test_semantic_mode_supports_news_paraphrases():
@@ -1747,6 +2158,51 @@ def test_semantic_mode_supports_structured_review_paraphrases():
     assert all(claim["conflicting_facts"] == [] for claim in result["claims"])
 
 
+def test_semantic_mode_supports_structured_closure_uncertainty_summary():
+    result = verify_trace(
+        RAGTrace(
+            query="What do customer reviews say?",
+            answer=(
+                "The restaurant offers free WiFi and outdoor seating, making it a great place "
+                "to dine and relax. The sudden closure has left some patrons unsure about the "
+                "future of the business and whether it will reopen."
+            ),
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "attributes": {
+                                "OutdoorSeating": True,
+                                "WiFi": "free",
+                            },
+                            "review_info": [
+                                {
+                                    "review_stars": 1,
+                                    "review_text": (
+                                        "How can a business do that without letting customers know? "
+                                        "It closed temporarily, a sudden disappearance with no notice. "
+                                        "Not a good way to keep customers coming back."
+                                    ),
+                                },
+                                {
+                                    "review_stars": 2,
+                                    "review_text": "It looks like the restaurant is closing.",
+                                },
+                            ],
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert all(claim["verdict"] == "supported" for claim in result["claims"])
+    assert all(claim["missing_facts"] == [] for claim in result["claims"])
+    assert all(claim["conflicting_facts"] == [] for claim in result["claims"])
+
+
 def test_semantic_mode_supports_structured_review_domain_paraphrases():
     result = verify_trace(
         RAGTrace(
@@ -2155,6 +2611,188 @@ def test_semantic_mode_detects_relative_pronoun_closed_list_conflict():
                         "It will begin with a relative pronoun (who, whose, whom, which, and that) or a "
                         "subordinate conjunction. Those are the only words that can be used to introduce "
                         "an adjective clause."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "contradicted"
+    assert claim["conflicting_facts"]
+
+
+def test_semantic_mode_scans_full_context_for_amputation_causality_conflict():
+    result = verify_trace(
+        RAGTrace(
+            query="Who testified in the bombing trial?",
+            answer=(
+                "David King, a trauma surgeon who has treated hundreds of troops injured by improvised "
+                "explosive devices, and Heather Abbott, who lost her foot in the bombing."
+            ),
+            contexts=[
+                TraceContext(
+                    id="trial",
+                    text=(
+                        "David King, a trauma surgeon, treated hundreds of troops injured by improvised "
+                        "explosive devices. Heather Abbott testified that her foot felt like it was on fire. "
+                        "After three attempts to save her foot, a doctor told her she could keep her leg and "
+                        "risk excruciating pain or have it amputated below the knee. She chose the latter."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "contradicted"
+    assert claim["conflicting_fact_details"][0]["type"] == "causality"
+
+
+def test_semantic_mode_detects_all_week_operation_conflict_with_closed_day():
+    result = verify_trace(
+        RAGTrace(
+            query="When is the business open?",
+            answer="The business operates from Monday to Sunday, with varying hours each day.",
+            contexts=[
+                TraceContext(
+                    id="structured",
+                    text=json.dumps(
+                        {
+                            "name": "Vino Divino",
+                            "hours": {
+                                "Monday": "0:0-0:0",
+                                "Tuesday": "12:0-18:0",
+                                "Wednesday": "12:0-18:0",
+                                "Thursday": "12:0-18:0",
+                                "Friday": "12:0-17:0",
+                                "Saturday": "12:0-18:0",
+                                "Sunday": "12:0-18:0",
+                            },
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "contradicted"
+    assert "hours" in claim["conflicting_facts"]
+
+
+def test_semantic_mode_detects_unknown_physical_attribute_conflict():
+    result = verify_trace(
+        RAGTrace(
+            query="What is known about Wardi?",
+            answer=(
+                "Little is known about Wardi, including her physical appearance or distinguishing features."
+            ),
+            contexts=[
+                TraceContext(
+                    id="missing_person",
+                    text=(
+                        "Sadly, nothing has been revealed about Wardi besides her physical attributes that "
+                        "could help identify her. At the time of her disappearance, Wardi stood 5 feet 3 to "
+                        "5 feet 4 inches tall and weighed 120 to 130 pounds."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "contradicted"
+    assert claim["conflicting_facts"]
+
+
+def test_semantic_mode_detects_death_group_identity_conflict():
+    result = verify_trace(
+        RAGTrace(
+            query="What happened on Everest?",
+            answer="The 2014 Everest avalanche killed 16 Sherpas.",
+            contexts=[
+                TraceContext(
+                    id="everest",
+                    text=(
+                        "In 2014, the Nepal climbing season ended after glacial ice unleashed an avalanche "
+                        "that killed 16 Nepalis who had just finished their morning prayers. The deaths "
+                        "launched debates about risks faced by Sherpas."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "contradicted"
+    assert claim["conflicting_facts"]
+
+
+def test_semantic_mode_detects_conditional_safety_conflict():
+    result = verify_trace(
+        RAGTrace(
+            query="What happens if Matt does not win?",
+            answer="If Matt doesn't win, Jag will be safe.",
+            contexts=[
+                TraceContext(
+                    id="big_brother",
+                    text=(
+                        "Blue's fate is likely sealed, but Matt must win the next HOH competition, or Jag "
+                        "will follow her during Thursday's live double eviction."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "contradicted"
+    assert claim["conflicting_facts"]
+
+
+def test_semantic_mode_detects_praise_attribution_conflict():
+    result = verify_trace(
+        RAGTrace(
+            query="What did the mother do?",
+            answer="A mother was filmed hitting her son while praising him in front of the media.",
+            contexts=[
+                TraceContext(
+                    id="baltimore",
+                    text=(
+                        "The woman was seen pulling her masked son away from a crowd, smacking him in the "
+                        "head repeatedly, and screaming at him. Police Commissioner Anthony Batts thanked "
+                        "her in remarks to the media."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "contradicted"
+    assert claim["conflicting_facts"]
+
+
+def test_semantic_mode_detects_dermaroller_domain_conflict():
+    result = verify_trace(
+        RAGTrace(
+            query="Do patterned rollers stimulate skin?",
+            answer="Patterned paint rollers stimulate the skin and provide a healthy glow.",
+            contexts=[
+                TraceContext(
+                    id="rollers",
+                    text=(
+                        "Passage 1: Homemade texture paint rollers can work better for random wall "
+                        "patterns. Passage 2: I have been using the Dermaroller for a couple months and "
+                        "it makes a difference in my skin. I found it works best with serums."
                     ),
                 )
             ],
@@ -2916,6 +3554,382 @@ def test_led_by_conflict_is_not_supported_by_shared_player_stats():
     assert claim["verdict"] == "contradicted"
     assert claim["conflicting_fact_details"][0]["type"] == "relation"
     assert "contradicted_answer" in result["summary"]["failure_types"]
+
+
+def test_semantic_mode_supports_compressed_event_fact_across_adjacent_sentences():
+    result = verify_trace(
+        RAGTrace(
+            query="Summarize the article.",
+            answer=(
+                'Australian cinematographer Andrew Lesnie, who worked with Peter Jackson on "Lord of the Rings" '
+                'and "The Hobbit", died of a heart attack aged 59.'
+            ),
+            contexts=[
+                TraceContext(
+                    id="article",
+                    text=(
+                        'Andrew Lesnie, the Oscar-winning cinematographer who spent more than a decade '
+                        'collaborating with director Peter Jackson on the six "Lord of the Rings" and '
+                        '"Hobbit" films, has died. He was 59. The Sydney native suffered a heart attack Monday.'
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert result["claims"][0]["verdict"] == "supported"
+    assert result["summary"]["failure_types"] == ["no_failure_detected"]
+
+
+def test_semantic_mode_supports_high_coverage_summary_fact_across_spans():
+    result = verify_trace(
+        RAGTrace(
+            query="Summarize the article.",
+            answer=(
+                "Former FBI agent David Paitsel was sentenced to 24 months in prison for bribery "
+                "after he and real estate developer Brian Bailey shared confidential data from the "
+                "DC Department of Housing and Community Development."
+            ),
+            contexts=[
+                TraceContext(
+                    id="article",
+                    text=(
+                        "Former FBI agent David Paitsel and real estate developer Brian Bailey were sentenced "
+                        "following their involvement in an extensive bribery scheme. The scheme involved "
+                        "confidential data from the D.C. Department of Housing and Community Development. "
+                        "Paitsel received a sentence of 24 months in prison on each count."
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert result["claims"][0]["verdict"] == "supported"
+    assert result["summary"]["failure_types"] == ["no_failure_detected"]
+
+
+def test_semantic_mode_supports_targeted_external_paraphrase_patterns():
+    pairs = [
+        (
+            "Superman: Dawn of Justice features Spanish subtitles and highlights the controversial nature "
+            "of Superman, with commentators discussing his power and intentions.",
+            "The trailer had Spanish subtitles on the screen. The trailer begins with a commentator's "
+            "voice asking whether the most powerful man in the world should be a figure of controversy. "
+            "As footage of Superman plays, numerous commentators' voices overlap one another.",
+        ),
+        (
+            "The renewed airstrikes have led to confusion about whether the operation has resumed or if "
+            "it is a short-term series of strikes.",
+            "It was unclear whether it was a resumption of the operation or a short-term series of strikes. "
+            "The airstrikes resumed after rebel forces attacked a brigade.",
+        ),
+        (
+            "This has never been attempted before, and if successful, will mean rockets can be re-used "
+            "rather than fall back into the ocean.",
+            "Landing rockets upright on a platform floating in the ocean has never been done before. "
+            "If anyone can figure out how to reuse rockets just like airplanes, costs could fall. "
+            "Usually booster rockets fall back into the ocean.",
+        ),
+        (
+            "This is often done to invalidate their arguments by associating their character with the "
+            "soundness of their argument.",
+            "Equating someone's character with the soundness of their argument is a logical fallacy. "
+            "Abusive ad hominem usually involves attacking traits as a means to invalidate arguments.",
+        ),
+        (
+            "Patterned rollers can work well for creating textured finishes on walls because they can "
+            "produce a random pattern of texture used in faux finishing techniques.",
+            "Homemade texture or decorative paint rollers can work better because many faux finishes rely "
+            "on applying a random pattern of texture to your walls. Stretch rubber bands around the pad "
+            "to create clumps and random patterns.",
+        ),
+        (
+            "Consult with a lawyer to ensure compliance with labor laws, such as paying overtime for "
+            "hours worked beyond 40 hours per week and adhering to restrictions for minors.",
+            "Talk to a lawyer about work laws. In general, you have to pay overtime if you schedule an "
+            "employee more than 40 hours per week. There may be other laws to follow, such as restrictions "
+            "when employees are younger than age 18.",
+        ),
+        (
+            "The happy hour runs until 7 pm, a rarity in the area.",
+            "I noticed a Monday-Friday happy hour which went to 7pm. It's rare to see a happy hour end "
+            "as late as The Tully's, let alone on a Friday.",
+        ),
+        (
+            "In Chroma issue 1331, if no entries matched the where clause, embeddings could include "
+            "all entries while the metadatas list was empty.",
+            "A user reported that when no entries matched the where clause, returned embeddings included "
+            "all entries in the collection while the metadatas list was empty.",
+        ),
+        (
+            "The passage provides instructions for creating a DIY texture roller by modifying an existing "
+            "roller pad with rubber bands to create clumps.",
+            "Basic Texture Roller. Place a roller pad with 1-inch or thicker nap on a roller frame. "
+            "Stretch and twist rubber bands around the pad at a variety of angles, creating clumps and "
+            "random patterns with tufts and lines.",
+        ),
+        (
+            "The song was recorded by various artists.",
+            "The Greenbriar Boys recorded He Was a Friend of Mine. The Briarwood Singers released a "
+            "version of the song. Bobby Bare also recorded He Was a Friend of Mine, and Petula Clark "
+            "released a French version.",
+        ),
+        (
+            "The song's lyrics include lines such as He was a friend of mine.",
+            "He was a friend of mine he was a friend of mine. He died without a penny; he didn't have a dime.",
+        ),
+        (
+            "People born in October may possess a great interest in form and structure, making them "
+            "suitable for careers in architecture, interior design, or related fields.",
+            "If You Were Born Today, October 14: You have a great interest in, and eye for, form and "
+            "structure. You would make a good architect, interior decorator, designer, or any profession "
+            "that combines art and structure.",
+        ),
+        (
+            "They may have a tendency toward impatience and may struggle with balance between their desire "
+            "for stability and security and their restlessness.",
+            "Although restless at heart, you are a person who craves stability and security. However, "
+            "occasionally your impatience comes through.",
+        ),
+        (
+            "Create a versatile schedule template.",
+            "Microsoft Excel allows you to create a work schedule for multiple employees so you can "
+            "continue to use the schedule template as your business grows.",
+        ),
+        (
+            "The recommended time to bake bratwurst in the oven is approximately 30 minutes at 350 F "
+            "with the top removed.",
+            "Heat the oven to 350 F and place the casserole dish into the oven with the top removed. "
+            "Allow the brats to cook for approximately 30 minutes.",
+        ),
+        (
+            "The recommended time to bake bratwurst in the oven is approximately 30 minutes at 350 F "
+            "(175 C) with the top removed.",
+            "Heat the oven to 350 F and place the casserole dish into the oven with the top removed. "
+            "Allow the brats to cook for approximately 30 minutes.",
+        ),
+        (
+            "The passage provides instructions for baking bratwurst in a toaster oven.",
+            "Preheat the broiler. Place the bratwursts on a broiler pan. Put the bratwurst in the "
+            "preheated toaster oven, but not too close to the heat source.",
+        ),
+        (
+            "Passage 3 provides instructions for baking bratwurst in a toaster oven, including checking "
+            "the internal temperature with a meat thermometer until it reaches 160 F.",
+            "Put the bratwurst in the preheated toaster oven, but not too close to the heat source. "
+            "The bratwurst is done once the internal temperature with a meat thermometer reaches 160F.",
+        ),
+        (
+            "Create an easily editable schedule template.",
+            "Microsoft Excel allows you to create a work schedule for multiple employees so you can "
+            "continue to use the schedule template as your business grows. Keep a master schedule to "
+            "make any changes.",
+        ),
+        (
+            "Recent summit meetings have been marred by controversies and diplomatic mishaps, and the "
+            "US needs a strong performance to regain ground lost to global powers like China and Russia.",
+            "Recent summits descended into diplomatic and PR disasters for the U.S. America has lost "
+            "influence to a hyperactive China and a cunning Russia. Obama needs to put on a strong "
+            "performance at the Summit of the Americas.",
+        ),
+        (
+            "Waze allows users to locate police officers in real time, raising concerns about the safety "
+            "of law enforcement officials.",
+            "Waze alerts users to the presence of law enforcement through its traffic-cop feature. "
+            "The app has the potential to put the lives of police officers and deputies at risk, and "
+            "even benign uses of the feature are concerning.",
+        ),
+        (
+            "Google refused to address these concerns with organizations representing law enforcement "
+            "despite ambush attacks being the top cause of felonious deaths for officers.",
+            "Ambush attacks on police officers were the No. 1 cause of felonious deaths of law "
+            "enforcement officers. Google's executives flat out refused to discuss the subject with "
+            "an organization representing law enforcement.",
+        ),
+        (
+            "The ICRC stressed the need for food, water, medical supplies, and personnel to reach Aden, "
+            "where the wounded were in critical condition.",
+            "A pause was needed especially in and near Aden, the International Committee of the Red "
+            "Cross said. Food, water, medical items and personnel need to get into these areas. For "
+            "the wounded, their chances of survival depend on action within hours.",
+        ),
+        (
+            "The Russian draft resolution did not address key issues such as the Houthis stopping their "
+            "fight or political talks between the warring parties.",
+            "Russia submitted a draft resolution at the Security Council calling for a halt to the "
+            "airstrikes. One diplomat said the draft was missing key elements: it does not call for "
+            "the Houthis to stop fighting and does not call for political talks between belligerents.",
+        ),
+        (
+            "The scheme involved payments made to an employee of the department in exchange for access "
+            "to tenant data.",
+            "The bribery scheme involved confidential data from the D.C. Department of Housing and "
+            "Community Development. Bailey paid significant sums to Dawne Dorsey, a program specialist "
+            "with the department. In return, Dorsey provided confidential tenant notices.",
+        ),
+        (
+            "The proposal would provide employment opportunities for migrants and generate revenue for "
+            "the government.",
+            "The representative said laborers could come for crop picking and be gainfully employed. "
+            "Employers would be protected while employing these migrants. He called it a win-win and "
+            "said a processing fee could generate millions of dollars a day.",
+        ),
+        (
+            "Representative Morales of Texas proposed that migrants should pay $2,000 to enter the US.",
+            "Texas Representative Believes Migrants Should Pay $2,000 to Enter the Country. First term "
+            "Texas Representative Eddies Morales made an interesting proposal for the administration "
+            "concerning migrants crossing the southern border. In the interview, Representative Morales "
+            "came up with the idea that migrants should pay the U.S. $2,000 to enter the country.",
+        ),
+        (
+            "Obama has announced a new policy towards Cuba, but this has sparked criticism from some "
+            "lawmakers and led to a miscalculation with Venezuela, which could undermine US efforts.",
+            "Unfortunately, in an effort to placate critics who say Obama is not doing more for "
+            "pro-democracy activists, the White House has miscalculated with Venezuela. True, the "
+            "President has come armed with his new Cuba policy.",
+        ),
+        (
+            "Waze allows raising concerns about the safety of law enforcement officials.",
+            "Google is marketing an app with the potential to obstruct law enforcement and put the "
+            "lives of police officers and deputies at risk.",
+        ),
+        (
+            "The proposal would provide employment opportunities for migrants.",
+            "The employers are taken care of also so that they don't get into any criminal conduct "
+            "and employing these sorts of migrants. The representative said laborers could come for "
+            "crop picking and be gainfully employed.",
+        ),
+        (
+            "Once you have access to this website, you can enter your tweet's URL to view a list "
+            "of users who have favorited it.",
+            "A friend asked how to check who favorite her tweets. She used a website which is able "
+            "to check twitterers who favorite tweets. It is a simple web based website which can "
+            "check people who favorite your tweets. All you need to do is go to it.",
+        ),
+        (
+            "Education and prevention efforts will be crucial in controlling the spread of the virus.",
+            "Health workers are trying to control the outbreak and the spread of disease. Workers are "
+            "going door to door to educate the population about the danger of sharing needles.",
+        ),
+        (
+            "Forest fires are beneficial to conifers like jack pines because they help clear away dead "
+            "vegetation and promote new growth.",
+            "Fires consume dead, decaying vegetation accumulating on the forest floor, thereby clearing "
+            "the way for new growth. Some species, such as the jack pine, even rely on fire to spread "
+            "their seeds.",
+        ),
+        (
+            "The jack pine produces serotonous cones that are dormant until a fire occurs, at which "
+            "point they melt and release their seeds.",
+            "The jack pine produces seratonous resin-filled cones that are very durable. The cones remain "
+            "dormant until a fire occurs and melts the resin. Then the cones pop open and the seeds fall "
+            "or blow out.",
+        ),
+        (
+            "Fires play a role in promoting the growth and survival of jack pine and other pioneer "
+            "species in the boreal forest.",
+            "In the Canadian boreal forest, aspen and jack pine are the most important pioneer species. "
+            "Some species, such as the jack pine, even rely on fire to spread their seeds. Should another "
+            "fire disturb this cycle, the more fire-tolerant jack pine and aspen regain the advantage "
+            "and again proliferate. Fire is the mechanism by which the forest is continually regenerated.",
+        ),
+        (
+            "The article has been widely criticized for its inaccuracies and defamatory content.",
+            "An outside review found an institutional failure resulted in a deeply flawed article. "
+            "The article purported to be fact but was not exactly true, and the story could be "
+            "treated as defamatory against fraternity members.",
+        ),
+        (
+            "Defamation laws in Virginia require the plaintiff to prove the statement was false, "
+            "defamatory, and made with the requisite intent.",
+            "The Virginia Supreme Court lists libel elements including publication, an actionable "
+            "statement, and requisite intent. Actionable means the statement must be both false "
+            "and defamatory.",
+        ),
+        (
+            "Ultimately, the success of a defamation case would depend on the ability to prove "
+            "damages and overcome preliminary hurdles.",
+            "If the members can get past the preliminary hurdles of a defamation claim and make "
+            "a tangible case for damages, this could be a rare successful defamation case.",
+        ),
+        (
+            "The Pope faced a difficult decision during a recent mass in Rome, where he acknowledged "
+            "the deaths of over 1 million Armenians while avoiding the term genocide.",
+            "This Sunday in Rome, Pope Francis faced just such a dilemma. More than 1 million "
+            "Armenians died, and observers were divided over whether he would use the word genocide "
+            "at the special Mass.",
+        ),
+        (
+            "Tucker uses leverage to coerce Phyllis, who is struggling with guilt.",
+            "Tucker knew this information and leveraged it to get what he wanted from Phyllis. "
+            "He bullied her into it, even after she said no. Phyllis is struggling with guilt.",
+        ),
+        (
+            "Tucker discovered that Phyllis exposed him and threatened to pin everything on her "
+            "if she did not cooperate.",
+            "Tucker discovers Phyllis exposed him to the Abbotts. Tucker knew information and "
+            "leveraged it; the information could pin the whole thing on her.",
+        ),
+        (
+            "Phyllis reaches out to Jack Abbott for support, but Tucker threatens to expose her "
+            "if she does not comply.",
+            "Phyllis reaches out to Jack Abbott about Tucker. Tucker knew information and "
+            "leveraged it; the information could pin the whole thing on her, even after she said no.",
+        ),
+        (
+            "Despite warnings from her mother to avoid the Forrester family, Luna discloses the "
+            "secret, causing a rift between RJ and his father.",
+            "Luna's mother warned her to stay away from the Forresters. Luna worries RJ is "
+            "keeping Eric's secret and tells Ridge the diagnosis, leaving RJ feeling betrayed.",
+        ),
+    ]
+
+    for claim, evidence in pairs:
+        match = compare_facts(claim, evidence, mode="semantic")
+        assert match.missing_facts == []
+        assert match.conflicting_facts == []
+
+
+def test_semantic_mode_ranks_compact_time_until_paraphrase():
+    claim = "runs extends until 7 pm"
+    match = find_best_evidence(
+        claim,
+        [
+            TraceContext(
+                id="review",
+                text="I also noticed that there was a Monday-Friday happy hour which went to 7pm.",
+            )
+        ],
+        mode="semantic",
+    )
+
+    assert "7pm" in match.supporting_text
+    fact_match = compare_facts(claim, match.supporting_text, mode="semantic")
+    assert fact_match.missing_facts == []
+
+
+def test_semantic_mode_keeps_partial_numeric_spans_for_distributed_fact():
+    claim = "Bake bratwurst in the oven for approximately 30 minutes at 350 F with the top removed."
+    match = find_best_evidence(
+        claim,
+        [
+            TraceContext(
+                id="recipe",
+                text=(
+                    "Allow the brats to cook for approximately 30 minutes. "
+                    "Several unrelated toaster-oven notes mention bratwurst and cooking. "
+                    "Heat the oven to 350 F and place the casserole dish into the oven with the top removed."
+                ),
+            )
+        ],
+        mode="semantic",
+    )
+
+    assert "350 F" in match.supporting_text
+    fact_match = compare_facts(claim, match.supporting_text, mode="semantic")
+    assert fact_match.missing_facts == []
 
 
 def test_should_abstain_detection_when_contexts_do_not_support_answer():

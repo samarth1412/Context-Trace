@@ -74,7 +74,7 @@ _MAIN_VERBS = {
 def extract_claims(answer: str) -> list[Claim]:
     """Split an answer into lightweight factual claim candidates."""
 
-    normalized_answer = _WHITESPACE_RE.sub(" ", str(answer or "")).strip()
+    normalized_answer = _normalize_answer_for_claim_splitting(answer)
     if not normalized_answer:
         return []
 
@@ -93,12 +93,32 @@ def extract_claims(answer: str) -> list[Claim]:
     return claims
 
 
+def _normalize_answer_for_claim_splitting(answer: str) -> str:
+    normalized = _WHITESPACE_RE.sub(" ", str(answer or "")).strip()
+    normalized = re.sub(r"\s+\*\s+", ". ", normalized)
+    normalized = re.sub(r"\s+(Step\s+\d+\s*:)", r". \1", normalized, flags=re.IGNORECASE)
+    normalized = re.sub(r"\s+(Total\s+[^:]{1,40}:)", r". \1", normalized, flags=re.IGNORECASE)
+    normalized = re.sub(r"\s+(Note\s*:)", r". \1", normalized, flags=re.IGNORECASE)
+    return normalized
+
+
 def _clean_sentence(value: str) -> str:
     cleaned = _WHITESPACE_RE.sub(" ", value).strip()
     cleaned = re.sub(r"^[\"'“”]\s+", "", cleaned)
     cleaned = cleaned.strip("-* \t")
     cleaned = _strip_generated_claim_prefix(cleaned)
-    return _strip_discourse_prefix(cleaned)
+    if _is_short_step_heading(cleaned):
+        return ""
+    cleaned = _strip_discourse_prefix(cleaned)
+    return re.sub(r",?\s+(?:or|and)\s+\d+(?=[.!?]?$)", "", cleaned, flags=re.IGNORECASE).strip()
+
+
+def _is_short_step_heading(value: str) -> bool:
+    match = re.match(r"^step\s+\d+\s*:\s*(?P<title>[^.!?]+)[.!?]?$", str(value or ""), flags=re.IGNORECASE)
+    if not match:
+        return False
+    words = re.findall(r"[A-Za-z0-9]+", match.group("title"))
+    return 0 < len(words) <= 4
 
 
 def _strip_generated_claim_prefix(value: str) -> str:
@@ -136,6 +156,12 @@ def _is_non_claim_marker(value: str) -> bool:
         return True
     if re.fullmatch(r"(?:option\s*)?(?:step\s*)?\d+", normalized, flags=re.IGNORECASE):
         return True
+    if re.fullmatch(
+        r"\(?\s*(?:passage|source)\s+\d+\s*\)?\s*(?:option\s*)?(?:step\s*)?\d+",
+        normalized,
+        flags=re.IGNORECASE,
+    ):
+        return True
     if re.search(r"\bfollow\s+(?:these\s+)?steps\s*:\s*(?:step\s*)?\d+$", normalized, flags=re.IGNORECASE):
         return True
     return bool(
@@ -154,6 +180,7 @@ def _strip_discourse_prefix(value: str) -> str:
         str(value or "").strip(),
         flags=re.IGNORECASE,
     ).strip()
+    cleaned = re.sub(r"^step\s+\d+\s*:\s*", "", cleaned, flags=re.IGNORECASE).strip()
     return cleaned or value
 
 
@@ -209,7 +236,11 @@ def _is_source_availability_marker(normalized: str) -> bool:
         return True
     if re.match(r"^(?:the\s+)?(?:provided|given)?\s*passages?\s+do(?:es)?\s+not\s+provide\b", normalized):
         return True
+    if re.match(r"^(?:the\s+)?(?:provided|given)?\s*passages?\s+do(?:es)?\s+not\s+mention\b", normalized):
+        return True
     if re.match(r"^it\s+does\s+not\s+provide\s+information\s+on\b", normalized):
+        return True
+    if re.match(r"^however,\s*it\s+does\s+not\s+provide\s+information\s+on\b", normalized):
         return True
     if re.match(r"^however,\s*(?:the\s+)?passages?\s+do(?:es)?\s+not\s+provide\b", normalized):
         return True

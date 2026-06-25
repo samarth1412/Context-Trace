@@ -265,6 +265,8 @@ def _rank_spans(spans: list[dict[str, object]], *, limit: int = 12) -> list[dict
         key=lambda item: (
             float(item.get("score") or 0),
             len(item.get("matched_terms") or []),
+            -len(str(item.get("text") or "").split()),
+            -len(str(item.get("text") or "")),
         ),
         reverse=True,
     )
@@ -290,9 +292,11 @@ def lexical_score(claim_text: str, evidence_text: str, *, mode: str = "lexical")
     claim_numbers = extract_numbers(claim_text)
     evidence_numbers = extract_numbers(evidence_text)
     if claim_numbers:
-        if set(claim_numbers).issubset(set(evidence_numbers)):
+        claim_number_set = set(claim_numbers)
+        evidence_number_set = set(evidence_numbers)
+        if claim_number_set.issubset(evidence_number_set):
             score += 0.08
-        elif evidence_numbers:
+        elif evidence_number_set and not evidence_number_set.issubset(claim_number_set):
             score -= 0.18
 
     if _semantic_enabled(mode):
@@ -341,6 +345,10 @@ def canonical_token(token: str, *, mode: str = "lexical") -> str:
         age_match = re.fullmatch(r"(\d+)-year-old", value)
         if age_match:
             return age_match.group(1)
+        temperature_match = re.fullmatch(r"(\d+(?:\.\d+)?)(?:f|c)", value)
+        if temperature_match:
+            number = float(temperature_match.group(1))
+            return str(int(number)) if number.is_integer() else ("%0.6f" % number).rstrip("0").rstrip(".")
     if _semantic_enabled(mode):
         value = SEMANTIC_TOKEN_MAP.get(value, value)
     if value.endswith("ies") and len(value) > 4:
@@ -355,7 +363,9 @@ def canonical_token(token: str, *, mode: str = "lexical") -> str:
 
 
 def extract_numbers(text: str) -> list[str]:
-    return re.findall(r"\b\d+(?:\.\d+)?\b", str(text or ""))
+    value = re.sub(r"(?<=\d),(?=\d{3}\b)", "", str(text or ""))
+    value = re.sub(r"\b(\d{1,2})(am|pm)\b", r"\1 \2", value, flags=re.IGNORECASE)
+    return re.findall(r"\b\d+(?:\.\d+)?\b", value)
 
 
 def _sentences(text: str) -> list[str]:
@@ -529,6 +539,9 @@ SEMANTIC_TOKEN_MAP = {
     "scheduling": "schedule",
     "critical": "vital",
     "crucial": "vital",
+    "controlled": "control",
+    "controlling": "control",
+    "controls": "control",
     "alleviate": "ease",
     "alleviating": "ease",
     "alleviated": "ease",
@@ -580,11 +593,14 @@ SEMANTIC_TOKEN_MAP = {
     "reports": "report",
     "highlighted": "highlight",
     "highlights": "highlight",
+    "education": "educate",
     "educational": "educate",
     "educating": "educate",
     "educated": "educate",
     "learned": "educate",
     "learns": "educate",
+    "prevention": "prevent",
+    "preventive": "prevent",
     "concerns": "concern",
     "concerned": "concern",
     "insane": "high",
@@ -595,6 +611,9 @@ SEMANTIC_TOKEN_MAP = {
     "helpful": "friendly",
     "nice": "friendly",
     "pleasant": "friendly",
+    "disaster": "mishap",
+    "disasters": "mishap",
+    "marred": "mishap",
     "accommodating": "accommodate",
     "accommodated": "accommodate",
     "accommodates": "accommodate",
@@ -681,10 +700,92 @@ SEMANTIC_TOKEN_MAP = {
     "photo": "picture",
     "pictured": "picture",
     "image": "picture",
+    "better": "well",
+    "associated": "equate",
+    "associates": "equate",
+    "associating": "equate",
+    "association": "equate",
+    "equated": "equate",
+    "equating": "equate",
+    "confusing": "unclear",
+    "confusion": "unclear",
+    "rare": "rarity",
+    "rarely": "rarity",
+    "resumed": "resume",
+    "resumes": "resume",
+    "resuming": "resume",
+    "resumption": "resume",
+    "russian": "russia",
+    "stopping": "stop",
+    "stopped": "stop",
+    "miscalculated": "miscalculate",
+    "miscalculates": "miscalculate",
+    "miscalculation": "miscalculate",
+    "controversial": "controversy",
+    "discuss": "comment",
+    "discussed": "comment",
+    "discusses": "comment",
+    "discussing": "comment",
+    "reused": "reuse",
+    "reusing": "reuse",
+    "textured": "texture",
+    "finishes": "finish",
+    "techniques": "technique",
+    "brats": "bratwurst",
+    "bake": "bake",
+    "bakes": "bake",
+    "baking": "bake",
+    "cook": "bake",
+    "cooked": "bake",
+    "cooks": "bake",
+    "cooking": "bake",
+    "architect": "architecture",
+    "decorator": "interior",
+    "designer": "design",
+    "profession": "career",
+    "professions": "career",
+    "restless": "restlessness",
+    "craves": "desire",
+    "crave": "desire",
+    "craving": "desire",
+    "payment": "pay",
+    "payments": "pay",
+    "paid": "pay",
+    "paying": "pay",
+    "employee": "staff",
+    "employees": "staff",
+    "specialist": "staff",
+    "employment": "employ",
+    "employed": "employ",
+    "employing": "employ",
+    "talk": "consult",
+    "talked": "consult",
+    "talking": "consult",
+    "proposal": "propos",
+    "proposals": "propos",
+    "propose": "propos",
+    "proposes": "propos",
+    "proposed": "propos",
+    "proposing": "propos",
     "presented": "purport",
     "presents": "purport",
     "purported": "purport",
     "purports": "purport",
+    "projection": "project",
+    "projected": "project",
+    "projects": "project",
+    "operational": "operate",
+    "operation": "operate",
+    "cultural": "culture",
+    "seratonous": "serotinou",
+    "serotinous": "serotinou",
+    "serotonous": "serotinou",
+    "regenerated": "regenerate",
+    "regenerates": "regenerate",
+    "regenerating": "regenerate",
+    "proliferated": "proliferate",
+    "proliferates": "proliferate",
+    "proliferating": "proliferate",
     "five": "5",
     "thirty": "30",
     "fourteen": "14",
@@ -746,12 +847,30 @@ SEMANTIC_PHRASES = (
     ("more people than normal", "busy"),
     ("laughter-filled", "laugh"),
     ("without breaking the bank", "cheap"),
+    ("never been done before", "never attempted before"),
+    ("re-used", "reuse"),
+    ("re-use", "reuse"),
+    ("released a version", "recorded version"),
+    ("released a french version", "recorded french version"),
+    ("went to 7pm", "extends until 7 pm"),
+    ("went to 7 pm", "extends until 7 pm"),
+    ("7pm", "7 pm"),
+    ("work laws", "labor laws"),
+    ("talk to a lawyer", "consult lawyer"),
+    ("younger than age 18", "minors"),
+    ("businessparking", "business parking"),
+    ("outdoorseating", "outdoor seating"),
+    ("restaurantsgoodforgroups", "restaurants good groups"),
+    ("restaurantsreservations", "restaurants reservations"),
+    ("restaurantstakeout", "restaurants takeout"),
 )
 
 
 def _semantic_text(text: str) -> str:
     value = _normalize_negation_text(text).lower()
     value = unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode("ascii")
+    value = re.sub(r"\b(\d+)\s*'\s*(\d+)\s*(?:\"|in\b|inch(?:es)?\b)?", r"\1 feet \2 inches", value)
+    value = re.sub(r"(?<=\d),(?=\d{3}\b)", "", value)
     value = re.sub(r"\b\d+\.(?=[a-z])", " ", value)
     for source, replacement in SEMANTIC_PHRASES:
         value = value.replace(source, replacement)

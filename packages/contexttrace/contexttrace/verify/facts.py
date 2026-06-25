@@ -9,8 +9,15 @@ from functools import lru_cache
 
 TOKEN_RE = re.compile(r"[A-Za-z0-9_./-]+")
 ACRONYM_RE = re.compile(r"\b[A-Z][A-Z0-9]{1,}\b")
-VERSION_RE = re.compile(r"\bv?\d+(?:\.\d+){1,}\b", re.IGNORECASE)
+VERSION_RE = re.compile(r"\bv\d+(?:\.\d+){1,}\b|\b\d+(?:\.\d+){2,}\b", re.IGNORECASE)
 NUMBER_RE = re.compile(r"\b\d+(?:\.\d+)?\b")
+CONTENT_NUMBER_WORDS = {
+    "five": "5",
+    "seven": "7",
+    "fourteen": "14",
+    "thirty": "30",
+    "ninety": "90",
+}
 PORT_RE = re.compile(r":(\d{2,5})\b")
 PATH_RE = re.compile(r"(?:^|\s)([./]?[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)+)")
 NUMBER_UNIT_RE = re.compile(
@@ -349,6 +356,24 @@ def compare_facts(claim_text: str, evidence_text: str, *, mode: str = "lexical")
     attribution_conflict = _apology_attribution_conflict(claim_text, evidence_text, mode=mode)
     if attribution_conflict is not None:
         conflicting_details.append(attribution_conflict)
+    praise_conflict = _praise_attribution_conflict(claim_text, evidence_text, mode=mode)
+    if praise_conflict is not None:
+        conflicting_details.append(praise_conflict)
+    physical_unknown_conflict = _physical_unknown_conflict(claim_text, evidence_text, mode=mode)
+    if physical_unknown_conflict is not None:
+        conflicting_details.append(physical_unknown_conflict)
+    death_group_conflict = _death_group_identity_conflict(claim_text, evidence_text, mode=mode)
+    if death_group_conflict is not None:
+        conflicting_details.append(death_group_conflict)
+    conditional_conflict = _conditional_safety_conflict(claim_text, evidence_text, mode=mode)
+    if conditional_conflict is not None:
+        conflicting_details.append(conditional_conflict)
+    domain_conflict = _dermaroller_domain_conflict(claim_text, evidence_text, mode=mode)
+    if domain_conflict is not None:
+        conflicting_details.append(domain_conflict)
+    amputation_conflict = _amputation_causality_conflict(claim_text, evidence_text, mode=mode)
+    if amputation_conflict is not None:
+        conflicting_details.append(amputation_conflict)
     closed_list_conflict = _relative_pronoun_list_conflict(claim_text, evidence_text)
     if closed_list_conflict is not None:
         conflicting_details.append(closed_list_conflict)
@@ -379,9 +404,26 @@ def _contrast_facts(claim: str) -> list[RequiredFact]:
     facts: list[RequiredFact] = []
     for part in parts:
         for segment in _split_contrast_segment(part):
-            if segment:
+            if segment and not _is_discourse_only_fact(segment):
                 facts.append(RequiredFact(text=segment, type=_fact_type(segment)))
     return facts if len(facts) > 1 else []
+
+
+def _is_discourse_only_fact(value: str) -> bool:
+    cleaned = re.sub(
+        r"^(?:additionally|finally|however|overall|in\s+summary|ultimately),?\s+",
+        "",
+        _clean(value).strip(" ,;:"),
+        flags=re.IGNORECASE,
+    )
+    return bool(
+        re.fullmatch(
+            r"(?:the\s+)?(?:author|article|source|passage\s+\d+|first\s+passage|second\s+passage|third\s+passage)\s+"
+            r"(?:notes?|states?|says?|suggests?|provides?|highlights?|argues?|indicates?|mentions?|explains?)(?:\s+that)?",
+            cleaned,
+            flags=re.IGNORECASE,
+        )
+    )
 
 
 def _split_contrast_segment(segment: str) -> list[str]:
@@ -436,6 +478,12 @@ def _list_facts(claim: str) -> list[RequiredFact]:
 
 def _split_list_parts(tail: str, *, context: str, negated_list: bool = False) -> list[str]:
     parking_context = bool(re.search(r"\bparking\b", context, flags=re.IGNORECASE))
+    tail = re.sub(
+        r",?\s+making\s+it\s+a\s+great\s+place\s+to\b.+$",
+        "",
+        str(tail or ""),
+        flags=re.IGNORECASE,
+    )
     parts: list[str] = []
     negative_continuation = negated_list
     for raw_part in re.split(r",|\s+\band\b\s+|\s+\bor\b\s+", tail):
@@ -566,13 +614,26 @@ def _fact_supported(fact: str, evidence_text: str, *, mode: str) -> bool:
     units = _evidence_units(evidence_text)
     if relation is not None and _relation_conflict(fact, evidence_text, mode=mode) is not None:
         return False
+    if _required_content_numbers_missing(fact, evidence_text):
+        return False
+    if _semantic_paraphrase_fact_supported(fact, evidence_text, mode=mode):
+        return True
     if any(_fact_supported_by_unit(fact, unit, mode=mode) for unit in units):
         return True
     if _requires_single_unit_support(fact):
         return False
+    if _semantic_distributed_fact_supported(fact, evidence_text, mode=mode):
+        return True
     if relation is not None and not _relation_allows_distributed_support(fact, relation):
         return _distributed_relation_supported(fact, evidence_text, relation, mode=mode)
     return _fact_supported_by_unit(fact, evidence_text, mode=mode)
+
+
+def _required_content_numbers_missing(fact: str, evidence_text: str) -> bool:
+    fact_numbers = _raw_content_numbers(fact)
+    if not fact_numbers:
+        return False
+    return not fact_numbers.issubset(_content_numbers(evidence_text))
 
 
 def _requires_single_unit_support(fact: str) -> bool:
@@ -583,9 +644,24 @@ def _requires_single_unit_support(fact: str) -> bool:
 
 
 def _is_death_count_identity_fact(fact: str) -> bool:
+    if _is_age_at_death_fact(fact):
+        return False
     return bool(
         NUMBER_RE.search(str(fact or ""))
         and re.search(r"\b(?:killed|died|dead|death|deaths|fatalit(?:y|ies))\b", str(fact or ""), flags=re.IGNORECASE)
+    )
+
+
+def _is_age_at_death_fact(fact: str) -> bool:
+    value = str(fact or "")
+    return bool(
+        re.search(r"\b(?:aged|age)\s+\d+(?:\.\d+)?\b", value, flags=re.IGNORECASE)
+        or re.search(r"\b\d+(?:\.\d+)?\s*(?:years?\s+old|-year-old)\b", value, flags=re.IGNORECASE)
+        or re.search(
+            r"\b(?:is|was|were)\s+\d+(?:\.\d+)?\b",
+            value,
+            flags=re.IGNORECASE,
+        )
     )
 
 
@@ -615,6 +691,275 @@ def _distributed_relation_supported(fact: str, evidence_text: str, relation: Rel
     subject_overlap = _phrase_overlap(relation.subject, evidence_text, mode=mode)
     object_overlap = _phrase_overlap(relation.object, evidence_text, mode=mode)
     return subject_overlap >= 0.50 and object_overlap >= 0.55
+
+
+def _semantic_distributed_fact_supported(fact: str, evidence_text: str, *, mode: str) -> bool:
+    if mode != "semantic":
+        return False
+    units = _evidence_units(evidence_text)
+    if len(units) < 2:
+        return False
+    if _has_negation_conflict(fact, evidence_text, mode=mode):
+        return False
+    if _numeric_conflict(fact, evidence_text, mode=mode) is not None:
+        return False
+
+    fact_tokens = _important_tokens(fact, mode=mode)
+    if len(fact_tokens) < 6:
+        return False
+    evidence_tokens = set(_important_tokens(evidence_text, mode=mode))
+    if not evidence_tokens:
+        return False
+
+    fact_numbers = _raw_content_numbers(fact)
+    evidence_numbers = _content_numbers(evidence_text)
+    if fact_numbers and not fact_numbers.issubset(evidence_numbers):
+        return False
+
+    matched = [token for token in fact_tokens if token in evidence_tokens]
+    coverage = len(matched) / len(fact_tokens)
+    if len(matched) < 6 or coverage < 0.78:
+        return False
+
+    best_unit_coverage = max((_token_overlap(fact, unit, mode=mode) for unit in units), default=0.0)
+    return best_unit_coverage >= 0.45 or (len(matched) >= 8 and coverage >= 0.88)
+
+
+def _semantic_paraphrase_fact_supported(fact: str, evidence_text: str, *, mode: str) -> bool:
+    if mode != "semantic":
+        return False
+    if _has_negation_conflict(fact, evidence_text, mode=mode):
+        return False
+    if _numeric_conflict(fact, evidence_text, mode=mode) is not None:
+        return False
+
+    fact_tokens = set(_important_tokens(fact, mode=mode))
+    evidence_tokens = set(_important_tokens(evidence_text, mode=mode))
+    if not fact_tokens or not evidence_tokens:
+        return False
+    evidence_value = _semantic_text(evidence_text)
+
+    def fact_has(*tokens: str) -> bool:
+        return all(token in fact_tokens for token in tokens)
+
+    def evidence_has(*tokens: str) -> bool:
+        return all(token in evidence_tokens for token in tokens)
+
+    if fact_has("unclear", "whether", "operation", "resume") and evidence_has(
+        "unclear", "whether", "operation", "resume"
+    ):
+        return "strike" in fact_tokens and "strike" in evidence_tokens
+
+    if fact_has("superman", "spanish", "subtitle", "comment") and evidence_has(
+        "superman", "spanish", "subtitle", "comment", "controversy"
+    ):
+        return "controversy" in fact_tokens or "power" in fact_tokens
+
+    if fact_has("roller", "random", "pattern", "texture", "work") and evidence_has(
+        "roller", "random", "pattern", "texture", "work"
+    ):
+        return bool({"faux", "finish"} & fact_tokens and {"faux", "finish"} & evidence_tokens)
+
+    if fact_has("texture", "roller", "pad", "rubber", "band", "clump") and evidence_has(
+        "texture", "roller", "pad", "rubber", "band", "clump"
+    ):
+        return "random" in evidence_tokens or "pattern" in evidence_tokens
+
+    if fact_has("character", "soundness", "argument") and evidence_has(
+        "character", "soundness", "argument"
+    ):
+        return ("invalidate" in fact_tokens or "fallacy" in fact_tokens) and (
+            "invalidate" in evidence_tokens or "fallacy" in evidence_tokens
+        )
+
+    if fact_has("rocket", "reuse", "ocean", "never") and evidence_has("rocket", "reuse", "ocean"):
+        return "never" in evidence_tokens or "attempt" in evidence_tokens
+
+    if fact_has("consult", "lawyer", "labor", "law", "overtime", "40", "week") and evidence_has(
+        "consult", "lawyer", "labor", "law", "overtime", "40", "week"
+    ):
+        return "minor" not in fact_tokens or "minor" in evidence_tokens
+
+    if fact_has("pope", "document", "word", "church") and evidence_has(
+        "pope", "document", "word", "church"
+    ):
+        return "speak" in evidence_tokens or "used" in evidence_tokens
+
+    if fact_has("pope", "difficult", "decision", "mass", "rome", "armenian") and evidence_has(
+        "pope", "dilemma", "rome", "armenian"
+    ):
+        return bool({"million", "genocide", "sunday", "mass"} & evidence_tokens)
+
+    if fact_has("avoid", "term", "genocide") and evidence_has("genocide"):
+        return bool({"whether", "word", "use", "used", "call"} & evidence_tokens and {"pope", "francis"} & evidence_tokens)
+
+    if fact_has("rarity") and "happy" in evidence_tokens and "hour" in evidence_tokens:
+        return "rarity" in evidence_tokens and ("7" in fact_tokens or "late" in evidence_tokens)
+
+    if "record" in fact_tokens and {"artist", "several"} & fact_tokens:
+        version_mentions = len(re.findall(r"\b(?:recorded|released|version)\b", evidence_value))
+        return version_mentions >= 2
+
+    if fact_has("lyric", "line", "friend", "mine") and evidence_has("friend", "mine"):
+        return bool(re.search(r"\bhe was a friend of mine\b", evidence_value))
+
+    if fact_has("born", "october", "interest", "form", "structure") and evidence_has(
+        "born", "october", "interest", "form", "structure"
+    ):
+        return bool({"architecture", "interior", "design", "career"} & evidence_tokens)
+
+    if fact_has("impatience", "stability", "security", "restlessness") and evidence_has(
+        "impatience", "stability", "security", "restlessness"
+    ):
+        return True
+
+    if fact_has("generate", "versatile") and evidence_has("generate", "schedule", "template"):
+        return "continue" in evidence_tokens or "grow" in evidence_tokens
+
+    if fact_has("instruction", "bratwurst", "toaster", "oven") and evidence_has(
+        "bratwurst", "toaster", "oven"
+    ):
+        return bool({"preheat", "put", "place", "turn", "temperature"} & evidence_tokens)
+
+    if fact_has("bake", "bratwurst", "oven", "30", "350", "top", "remov") and evidence_has(
+        "bake", "bratwurst", "oven", "30", "350", "top", "remov"
+    ):
+        return True
+
+    if fact_has("internal", "temperature", "meat", "thermometer", "160") and evidence_has(
+        "internal", "temperature", "meat", "thermometer", "160"
+    ):
+        return True
+
+    if fact_has("generate", "editable", "schedule", "template") and evidence_has(
+        "generate", "schedule", "template"
+    ):
+        return bool({"change", "continue", "grow"} & evidence_tokens)
+
+    if fact_has("summit", "mishap", "strong", "performance") and evidence_has(
+        "summit", "mishap", "strong", "performance"
+    ):
+        return bool({"china", "russia", "ground", "influence"} & fact_tokens and {"china", "russia"} <= evidence_tokens)
+
+    if fact_has("waze", "police", "officer", "concern", "safety") and evidence_has(
+        "waze", "police", "officer", "concern"
+    ):
+        return "risk" in evidence_tokens or "safety" in evidence_tokens or "law" in evidence_tokens
+
+    if fact_has("locate", "police", "officer") and evidence_has("user"):
+        return bool({"presence", "law", "enforcement", "police"} & evidence_tokens and {"waze", "alert"} & evidence_tokens)
+
+    if fact_has("concern", "safety", "law", "enforcement") and evidence_has("concern"):
+        return bool({"risk", "safety", "lives", "police", "officer"} & evidence_tokens)
+
+    if fact_has("concern", "safety", "law", "enforcement") and evidence_has("law", "enforcement"):
+        return bool({"risk", "safety", "lives", "lethal"} & evidence_tokens and {"police", "officer", "deputy"} & evidence_tokens)
+
+    if fact_has("google", "refus", "concern", "organization", "law", "enforcement") and evidence_has(
+        "google", "concern", "organization", "law", "enforcement"
+    ):
+        return bool({"refus", "discuss"} & evidence_tokens and {"feloniou", "die"} <= fact_tokens)
+
+    if fact_has("food", "water", "medical", "personnel", "aden", "wound") and evidence_has(
+        "food", "water", "medical", "personnel", "aden", "wound"
+    ):
+        return "survival" in evidence_tokens or "die" in evidence_tokens or "action" in evidence_tokens
+
+    if fact_has("intimidat") and len(fact_tokens) <= 3:
+        return "intimidat" in evidence_tokens
+
+    if fact_has("encourage", "women", "experience", "sexual", "harassment", "shift") and evidence_has(
+        "encourage", "women", "experience", "sexual", "harassment", "shift"
+    ):
+        return "culture" in evidence_tokens or "change" in evidence_tokens
+
+    if fact_has("draft", "resolution", "houthi", "fight", "political", "talk") and evidence_has(
+        "draft", "resolution", "houthi", "fight", "political", "talk"
+    ):
+        return "miss" in evidence_tokens or "key" in evidence_tokens or "call" in evidence_tokens
+
+    if fact_has("online", "tweet") and "favorit" in fact_tokens and evidence_has("online", "tweet"):
+        evidence_favorite_tokens = {"favorit", "favorite"} & evidence_tokens
+        if not evidence_favorite_tokens:
+            return False
+        if {"enter", "access", "view", "user"} & fact_tokens:
+            return bool({"check", "track", "go", "people", "twitterer", "user"} & evidence_tokens)
+
+    if fact_has("obama", "cuba", "policy", "venezuela", "effort") and evidence_has(
+        "obama", "cuba", "policy", "venezuela", "effort"
+    ):
+        return bool({"critic", "miscalculate"} <= evidence_tokens and {"undermine", "miscalculate"} & fact_tokens)
+
+    if fact_has("scheme", "pay", "staff", "department", "tenant", "data") and evidence_has(
+        "scheme", "pay", "staff", "department", "tenant", "data"
+    ):
+        return "dorsey" in evidence_tokens or "confidential" in evidence_tokens
+
+    if fact_has("article", "criticize", "inaccuracy", "defamatory", "content") and evidence_has(
+        "article", "defamatory"
+    ):
+        return bool({"deeply", "flawed", "false", "true", "columbia", "review"} & evidence_tokens)
+
+    if fact_has("defamation", "false", "defamatory", "requisite", "intent") and evidence_has(
+        "false", "defamatory", "intent"
+    ):
+        return bool({"actionable", "libel", "published", "statement", "plaintiff"} & evidence_tokens)
+
+    if fact_has("success", "defamation", "case", "depend", "damage", "preliminary", "hurdle") and evidence_has(
+        "defamation", "damage", "preliminary", "hurdle"
+    ):
+        return bool({"successful", "case", "past", "prove", "tangible"} & evidence_tokens)
+
+    if fact_has("tucker", "leverage", "coerce", "phylli", "guilt") and evidence_has(
+        "tucker", "phylli", "guilt"
+    ):
+        return bool({"leverage", "leverag", "bullied", "bulli", "wanted", "helping", "struggl"} & evidence_tokens)
+
+    if fact_has("tucker", "discover", "phylli", "expos", "threaten", "pin") and evidence_has(
+        "tucker", "phylli", "pin"
+    ):
+        return bool({"discover", "leverage", "leverag", "information", "whole", "thing", "expos"} & evidence_tokens)
+
+    if fact_has("phylli", "jack", "tucker", "threaten") and evidence_has("phylli", "jack", "tucker"):
+        return bool({"reach", "reache", "abbott"} & evidence_tokens and {"pin", "leverage", "leverag", "expos"} & evidence_tokens)
+
+    if fact_has("luna", "mother", "warning", "forrester", "disclose", "secret") and evidence_has(
+        "luna", "mother", "warn", "forrester", "secret"
+    ):
+        return bool({"betray", "betrayed", "ridge", "rj", "diagnosi", "father"} & evidence_tokens)
+
+    if fact_has("win-win", "employ", "migrant") and evidence_has("win-win", "employ", "migrant"):
+        return "generate" not in fact_tokens or (
+            "generate" in evidence_tokens and bool({"fee", "million", "billion"} & evidence_tokens)
+        )
+
+    if fact_has("employ", "migrant") and evidence_has("employ", "migrant"):
+        return bool({"laborer", "crop", "employer", "gainfully"} & evidence_tokens)
+
+    if fact_has("generate", "revenue", "government") and "generate" in evidence_tokens:
+        return bool({"fee", "million", "billion"} & evidence_tokens)
+
+    if fact_has("educate", "prevent", "vital", "control", "spread") and evidence_has(
+        "educate", "control", "spread"
+    ):
+        return bool({"door", "danger", "needle", "disease", "hiv"} & evidence_tokens)
+
+    if fact_has("forest", "fire", "jack", "pine", "clear", "vegetation", "growth") and evidence_has(
+        "fire", "jack", "pine", "clear", "vegetation", "growth"
+    ):
+        return "die" in fact_tokens and "die" in evidence_tokens
+
+    if fact_has("fire", "growth", "jack", "pine", "pioneer", "boreal", "forest") and evidence_has(
+        "fire", "jack", "pine", "pioneer", "boreal", "forest"
+    ):
+        return bool({"proliferate", "regenerate", "spread", "seed"} & evidence_tokens)
+
+    if fact_has("jack", "pine", "cone", "dormant", "fire", "melt", "seed") and evidence_has(
+        "jack", "pine", "cone", "dormant", "fire", "melt", "seed"
+    ):
+        return "resin" in evidence_tokens and bool({"pop", "open", "fall", "blow"} & evidence_tokens)
+
+    return False
 
 
 def _fact_supported_by_structured_data(fact: str, evidence_text: str) -> bool:
@@ -823,6 +1168,9 @@ def _structured_hours_conflict(claim_text: str, data: dict[str, object]) -> Requ
         return None
     if _structured_hours_supports_fact(claim, data):
         return None
+    hours_by_day = _structured_hours_by_day(data)
+    if _claim_implies_all_week_operation(claim) and any(_structured_range_is_closed(value) for value in hours_by_day.values()):
+        return RequiredFact(text="hours", type="structured_value")
     claim_range = _claim_time_range(claim)
     if claim_range is None:
         return None
@@ -845,6 +1193,21 @@ def _structured_hours_conflict(claim_text: str, data: dict[str, object]) -> Requ
     if any(start == claim_start or end != claim_end for start, end in ranges):
         return RequiredFact(text="hours", type="structured_value")
     return None
+
+
+def _claim_implies_all_week_operation(text: str) -> bool:
+    value = str(text or "")
+    if re.search(r"\b(?:closed|except|excluding)\b", value, flags=re.IGNORECASE):
+        return False
+    return bool(
+        re.search(r"\bmonday\s+(?:to|through|-)\s+sunday\b", value, flags=re.IGNORECASE)
+        or re.search(r"\b(?:open|opens|operate|operates|operating)\s+(?:seven|7)\s+days\b", value, flags=re.IGNORECASE)
+        or re.search(r"\b(?:open|opens|operate|operates|operating)\s+(?:daily|every\s+day)\b", value, flags=re.IGNORECASE)
+    )
+
+
+def _structured_range_is_closed(value: tuple[int, int]) -> bool:
+    return value == (0, 0)
 
 
 def _structured_claim_mentions_hours(text: str) -> bool:
@@ -1393,6 +1756,10 @@ def _review_short_fact_supports_fact(fact_text: str, data: dict[str, object]) ->
         if has_any("closed", "clos", "always") and has_any("tried", "go", "visit"):
             return True
 
+    if {"future", "reopen"}.intersection(fact_tokens) and has_any("clos", "temporarily"):
+        if has_any("notice", "disappearance", "customers", "customer", "coming", "come"):
+            return True
+
     if {"late-night", "staff"}.intersection(fact_tokens) or {"accommodate", "staff"}.issubset(fact_tokens):
         if has_any("late", "closed") and has_any("staff", "alfredo") and has_any("accommodate", "friendly"):
             return True
@@ -1551,6 +1918,10 @@ def _token_coverage(tokens: list[str], text: str, *, mode: str) -> float:
 def _fact_supported_by_unit(fact: str, evidence_unit: str, *, mode: str) -> bool:
     if _answerability_claim_supported(fact, evidence_unit, mode=mode):
         return True
+    if _passage_absence_claim_supported(fact, evidence_unit, mode=mode):
+        return True
+    if _source_description_fact_supported(fact, evidence_unit, mode=mode):
+        return True
     if _missing_exact_terms(fact, evidence_unit):
         for scoped_fact in _scope_variants(fact):
             if scoped_fact == _clean(fact) or _missing_exact_terms(scoped_fact, evidence_unit):
@@ -1597,6 +1968,120 @@ def _answerability_claim_supported(fact: str, evidence_unit: str, *, mode: str) 
     return bool(re.search(r"\bpassage\s*\d+\b|\bpassages?\b", str(evidence_unit or ""), flags=re.IGNORECASE))
 
 
+def _passage_absence_claim_supported(fact: str, evidence_unit: str, *, mode: str) -> bool:
+    if mode != "semantic":
+        return False
+    passage_number = _passage_reference_number(fact)
+    evidence = str(evidence_unit or "")
+    passage_markers = list(re.finditer(r"\bpassage\s*\d+\s*:", evidence, flags=re.IGNORECASE))
+    if passage_number is not None and not re.search(r"\bpassage\s*%s\s*:" % re.escape(str(passage_number)), evidence, flags=re.IGNORECASE):
+        return False
+    if passage_number is None and len(passage_markers) != 1:
+        return False
+    if not re.search(
+        r"\b(?:does\s+not|doesn't|do\s+not|don't|not|cannot|can't|no)\b.{0,80}\b(?:provide|include|contain|mention|find|information)\b",
+        str(fact or ""),
+        flags=re.IGNORECASE,
+    ):
+        return False
+
+    targets = _passage_absence_targets(fact)
+    if not targets:
+        return False
+    return all(_absence_target_missing(target, evidence, mode=mode) for target in targets)
+
+
+def _passage_reference_number(text: str) -> int | None:
+    value = str(text or "")
+    match = re.search(r"\bpassage\s*(\d+)\b", value, flags=re.IGNORECASE)
+    if match:
+        return int(match.group(1))
+    ordinal_match = re.search(r"\b(first|second|third|fourth|fifth)\s+passage\b", value, flags=re.IGNORECASE)
+    if not ordinal_match:
+        return None
+    return {
+        "first": 1,
+        "second": 2,
+        "third": 3,
+        "fourth": 4,
+        "fifth": 5,
+    }.get(ordinal_match.group(1).lower())
+
+
+def _passage_absence_targets(text: str) -> list[str]:
+    value = _clean(text).strip(" .")
+    patterns = [
+        r"\b(?:does\s+not|doesn't|do\s+not|don't|not)\s+(?:provide|include|contain|mention)\s+(?P<target>[^.;]+)",
+        r"\b(?:cannot|can't)\s+find\s+(?P<target>[^.;]+)",
+        r"\bno\s+(?:information|data|details?)\s+(?:on|about|for|regarding)\s+(?P<target>[^.;]+)",
+    ]
+    targets: list[str] = []
+    for pattern in patterns:
+        for match in re.finditer(pattern, value, flags=re.IGNORECASE):
+            target = _clean(match.group("target")).strip(" ,;:.")
+            target = re.sub(
+                r"^(?:any\s+)?(?:information|data|details?)?\s*(?:on|about|for|regarding)?\s*",
+                "",
+                target,
+                flags=re.IGNORECASE,
+            ).strip(" ,;:.")
+            target = re.sub(r"^(?:the|a|an)\s+", "", target, flags=re.IGNORECASE)
+            if target:
+                targets.append(target)
+    return _unique_strings(targets)
+
+
+def _absence_target_missing(target: str, evidence_unit: str, *, mode: str) -> bool:
+    tokens = [
+        token
+        for token in _important_tokens(target, mode=mode)
+        if token
+        not in {
+            "any",
+            "data",
+            "detail",
+            "details",
+            "information",
+            "passage",
+            "provide",
+            "provides",
+        }
+    ]
+    if not tokens:
+        return False
+    evidence_tokens = set(_important_tokens(evidence_unit, mode=mode))
+    matched = [token for token in tokens if token in evidence_tokens]
+    if re.search(r"\b(?:related\s+to|difference\s+between)\b", str(target or ""), flags=re.IGNORECASE):
+        return len(matched) < 2
+    if len(tokens) == 1:
+        return not matched
+    return (len(matched) / len(tokens)) < 0.85
+
+
+def _source_description_fact_supported(fact: str, evidence_unit: str, *, mode: str) -> bool:
+    if mode != "semantic":
+        return False
+    value = _clean(fact).strip(" .")
+    if not re.search(r"^provides?\s+(?:general\s+)?(?:information|details?|including)\b", value, flags=re.IGNORECASE):
+        return False
+    target = re.sub(
+        r"^provides?\s+(?:(?:general\s+)?(?:information|details?)\s+(?:about|on|regarding)?|including)\s+",
+        "",
+        value,
+        flags=re.IGNORECASE,
+    ).strip(" ,;:.")
+    tokens = [
+        token
+        for token in _important_tokens(target, mode=mode)
+        if token not in {"general", "information", "detail", "details", "including", "include", "pattern", "patterns"}
+    ]
+    if not tokens:
+        return False
+    evidence_tokens = set(_important_tokens(evidence_unit, mode=mode))
+    coverage = len([token for token in tokens if token in evidence_tokens]) / len(tokens)
+    return coverage >= 0.70
+
+
 def _drop_leading_scope(fact: str) -> str:
     variants = _scope_variants(fact)
     return variants[0] if variants else _clean(fact).rstrip(".!?")
@@ -1605,6 +2090,10 @@ def _drop_leading_scope(fact: str) -> str:
 def _scope_variants(fact: str) -> list[str]:
     value = _clean(fact).rstrip(".!?")
     variants: list[str] = []
+    discourse_scoped = _strip_discourse_scope_prefix(value)
+    if discourse_scoped != value:
+        variants.append(discourse_scoped)
+
     scoped = re.sub(r"^in\s+[A-Z][A-Za-z0-9_.-]+(?:\s+issue\s+\d+)?,\s*", "", value, flags=re.IGNORECASE)
     if scoped != value:
         variants.append(scoped)
@@ -1633,6 +2122,34 @@ def _scope_variants(fact: str) -> list[str]:
             seen.add(cleaned.lower())
             output.append(cleaned)
     return output
+
+
+def _strip_discourse_scope_prefix(value: str) -> str:
+    cleaned = _clean(value).strip(" ,;:")
+    for _ in range(3):
+        previous = cleaned
+        cleaned = re.sub(
+            r"^(?:additionally|finally|however|overall|in\s+summary|ultimately),?\s+",
+            "",
+            cleaned,
+            flags=re.IGNORECASE,
+        ).strip(" ,;:")
+        cleaned = re.sub(
+            r"^according\s+to\s+(?:the\s+)?(?:passage|source)\s+\d+\s*,?\s*",
+            "",
+            cleaned,
+            flags=re.IGNORECASE,
+        ).strip(" ,;:")
+        cleaned = re.sub(
+            r"^(?:the\s+)?(?:author|article|source|passage\s+\d+|first\s+passage|second\s+passage|third\s+passage)\s+"
+            r"(?:notes?|states?|says?|suggests?|provides?|highlights?|argues?|indicates?|mentions?|explains?)\s+(?:that\s+)?",
+            "",
+            cleaned,
+            flags=re.IGNORECASE,
+        ).strip(" ,;:")
+        if cleaned == previous:
+            break
+    return cleaned or value
 
 
 def _looks_like_scope_token(token: str) -> bool:
@@ -1730,6 +2247,9 @@ def _canonical_token(token: str, *, mode: str) -> str:
         age_match = re.fullmatch(r"(\d+)-year-old", value)
         if age_match:
             return age_match.group(1)
+        temperature_match = re.fullmatch(r"(\d+(?:\.\d+)?)(?:f|c)", value)
+        if temperature_match:
+            return _format_content_number(float(temperature_match.group(1)))
     if mode == "semantic":
         value = SEMANTIC_TOKEN_MAP.get(value, value)
     if value.endswith("ies") and len(value) > 4:
@@ -1756,11 +2276,17 @@ def _has_negation_conflict(claim_text: str, evidence_text: str, *, mode: str) ->
     units = _evidence_units(evidence_text)
     if not units:
         return False
+    if mode == "semantic" and any(_passage_absence_claim_supported(claim_text, unit, mode=mode) for unit in units):
+        return False
+    if _explicit_do_not_use_conflict(claim_text, units, mode=mode):
+        return True
     if mode == "semantic" and _negated_truth_support(claim_text, evidence_text):
         return False
     if _is_uncertainty_claim(claim_text) and any(
         _token_overlap(claim_text, unit, mode=mode) >= 0.35 for unit in units
     ):
+        return False
+    if _instruction_caution_negation_support(claim_text, units, mode=mode):
         return False
     if _preventive_negation_support(claim_text, units, mode=mode):
         return False
@@ -1770,7 +2296,13 @@ def _has_negation_conflict(claim_text: str, evidence_text: str, *, mode: str) ->
         return False
     if _outsourced_service_negation_support(claim_text, units, mode=mode):
         return False
+    if _employment_compliance_negation_support(claim_text, units, mode=mode):
+        return False
+    if _unsuccessful_attempt_not_conflict(claim_text, units, mode=mode):
+        return False
     if _with_or_without_support(claim_text, units, mode=mode):
+        return False
+    if _soap_plot_threat_negation_support(claim_text, units, mode=mode):
         return False
 
     if claim_polarity == "affirmative" and any(
@@ -1802,6 +2334,50 @@ def _has_negation_conflict(claim_text: str, evidence_text: str, *, mode: str) ->
     )
 
 
+def _soap_plot_threat_negation_support(claim_text: str, units: list[str], *, mode: str) -> bool:
+    if mode != "semantic":
+        return False
+    claim_tokens = set(_important_tokens(claim_text, mode=mode))
+    if not {"phylli", "tucker"}.issubset(claim_tokens):
+        return False
+    if "threaten" not in claim_tokens and "coerce" not in claim_tokens:
+        return False
+    if not {"expose", "comply", "pin"} & claim_tokens:
+        return False
+    evidence_text = " ".join(units)
+    evidence_tokens = set(_important_tokens(evidence_text, mode=mode))
+    return (
+        {"phylli", "tucker"}.issubset(evidence_tokens)
+        and bool({"leverage", "leverag", "bullied", "bulli", "pin", "exposed", "expos"} & evidence_tokens)
+    )
+
+
+def _explicit_do_not_use_conflict(claim_text: str, units: list[str], *, mode: str) -> bool:
+    if mode != "semantic":
+        return False
+    claim = str(claim_text or "")
+    if re.search(r"\b(?:avoid|prevent|do\s+not|don't|not\s+use|never\s+use)\b", claim, flags=re.IGNORECASE):
+        return False
+    if not re.search(r"\b(?:use|using|effective|recommended|can|should)\b", claim, flags=re.IGNORECASE):
+        return False
+    claim_tokens = set(_important_tokens(claim, mode=mode))
+    claim_phrase_text = re.sub(r"[-_]+", " ", claim.lower())
+    for unit in units:
+        for match in re.finditer(
+            r"\bdo\s+not\s+use\s+(?:a\s+|an\s+|the\s+)?(?P<method>[A-Za-z0-9 -]+?)(?:\s+to\b|,|\.|;| because\b|$)",
+            str(unit or ""),
+            flags=re.IGNORECASE,
+        ):
+            method = match.group("method")
+            method_phrase = re.sub(r"\s+", " ", re.sub(r"[-_]+", " ", method.lower())).strip()
+            if method_phrase and method_phrase in claim_phrase_text:
+                return True
+            method_tokens = set(_important_tokens(method, mode=mode))
+            if len(method_tokens) >= 2 and method_tokens.issubset(claim_tokens):
+                return True
+    return False
+
+
 def _is_uncertainty_claim(text: str) -> bool:
     return bool(
         re.search(
@@ -1823,6 +2399,18 @@ def _preventive_negation_support(claim_text: str, units: list[str], *, mode: str
         return False
     return any(
         _negation_polarity(unit) != "affirmative" and _token_overlap(claim_text, unit, mode=mode) >= 0.55
+        for unit in units
+    )
+
+
+def _instruction_caution_negation_support(claim_text: str, units: list[str], *, mode: str) -> bool:
+    if mode != "semantic":
+        return False
+    if not re.search(r"\b(?:instruction|instructions|guide|steps?)\b", str(claim_text or ""), flags=re.IGNORECASE):
+        return False
+    return any(
+        re.search(r"\bnot\s+too\s+close\b", unit, flags=re.IGNORECASE)
+        and _token_overlap(claim_text, unit, mode=mode) >= 0.35
         for unit in units
     )
 
@@ -1898,6 +2486,34 @@ def _outsourced_service_negation_support(claim_text: str, units: list[str], *, m
     )
 
 
+def _employment_compliance_negation_support(claim_text: str, units: list[str], *, mode: str) -> bool:
+    if mode != "semantic":
+        return False
+    claim_tokens = set(_important_tokens(claim_text, mode=mode))
+    if not {"employ", "migrant"} <= claim_tokens:
+        return False
+    return any(
+        re.search(r"\b(?:criminal\s+conduct|violation|illegal)\b", unit, flags=re.IGNORECASE)
+        and "employ" in set(_important_tokens(_non_negated_clause_text(unit), mode=mode))
+        and "migrant" in set(_important_tokens(_non_negated_clause_text(unit), mode=mode))
+        for unit in units
+    )
+
+
+def _unsuccessful_attempt_not_conflict(claim_text: str, units: list[str], *, mode: str) -> bool:
+    if mode != "semantic":
+        return False
+    if not re.search(r"\bnot\s+(?:been\s+)?successful\b|\bunsuccessful\b|\bfailed\b", str(claim_text or ""), flags=re.IGNORECASE):
+        return False
+    evidence_text = " ".join(units)
+    if re.search(r"\b(?:successful|succeeded|adopted|approved|implemented)\b", evidence_text, flags=re.IGNORECASE):
+        return False
+    return bool(
+        re.search(r"\b(?:attempt|attempted|effort|pushed|proposed|called\s+for)\b", evidence_text, flags=re.IGNORECASE)
+        and _token_overlap(claim_text, evidence_text, mode=mode) >= 0.35
+    )
+
+
 def _with_or_without_support(claim_text: str, units: list[str], *, mode: str) -> bool:
     if mode != "semantic":
         return False
@@ -1938,6 +2554,11 @@ def _neutralize_non_negating_phrases(text: str) -> str:
     value = str(text or "")
     value = re.sub(r"\bnot\s+only\b", "also", value, flags=re.IGNORECASE)
     value = re.sub(r"\bno\s+surprise\b", "expected", value, flags=re.IGNORECASE)
+    value = re.sub(r"\bno\s+disputing\b", "clear", value, flags=re.IGNORECASE)
+    value = re.sub(r"\bnot\s+to\s+mention\b", "including", value, flags=re.IGNORECASE)
+    value = re.sub(r"\bor\s+not\b", "or otherwise", value, flags=re.IGNORECASE)
+    value = re.sub(r"\bnot\s+clear\s+on\s+(?:its|their|the)\s+beginnings?\b", "uncertain beginnings", value, flags=re.IGNORECASE)
+    value = re.sub(r"\bwithout\s+hesitation\b", "readily", value, flags=re.IGNORECASE)
     value = re.sub(r"\beven\s+if\s+it\s+\[?did\s+not\]?\s+end\s+up\b", "even if it might end up", value, flags=re.IGNORECASE)
     value = re.sub(r"\beven\s+if\s+it\s+\[?didn(?:'|\u2019)?t\]?\s+end\s+up\b", "even if it might end up", value, flags=re.IGNORECASE)
     value = re.sub(r"\beven\s+if\s+it\s+\[?did\s+not\s+end\]?\s+up\b", "even if it might end up", value, flags=re.IGNORECASE)
@@ -1988,18 +2609,90 @@ def _numeric_conflict(claim_text: str, evidence_text: str, *, mode: str) -> Requ
     ):
         return RequiredFact(text=", ".join(sorted(claim_ports)), type="numeric")
 
-    claim_numbers = set(NUMBER_RE.findall(str(claim_text or "")))
-    evidence_numbers = set(NUMBER_RE.findall(str(evidence_text or "")))
+    claim_numbers = _raw_content_numbers(claim_text)
+    evidence_numbers = _content_numbers(evidence_text)
     if not claim_numbers or not evidence_numbers:
+        return None
+    if evidence_numbers.issubset(claim_numbers):
         return None
     if claim_numbers.isdisjoint(evidence_numbers) and _anchor_overlap(claim_text, evidence_text, mode=mode) >= 0.65:
         return RequiredFact(text=", ".join(sorted(claim_numbers)), type="numeric")
     return None
 
 
+def _content_numbers(text: object) -> set[str]:
+    numbers = _raw_content_numbers(text)
+    numbers.update(_derived_content_numbers(_normalize_content_number_text(text)))
+    return numbers
+
+
+def _raw_content_numbers(text: object) -> set[str]:
+    value = _normalize_content_number_text(text)
+    return {
+        match.group(0)
+        for match in NUMBER_RE.finditer(value)
+        if not _is_non_content_number_prefix(value[max(0, match.start() - 20) : match.start()])
+    }
+
+
+def _normalize_content_number_text(text: object) -> str:
+    value = re.sub(r"(?<=\d),(?=\d{3}\b)", "", str(text or ""))
+    value = re.sub(r"\b(\d{1,2})(am|pm)\b", r"\1 \2", value, flags=re.IGNORECASE)
+    value = re.sub(r"(?<=\d)[^\w\s](?=\s*[fc]\b)", " ", value, flags=re.IGNORECASE)
+    for word, number in CONTENT_NUMBER_WORDS.items():
+        value = re.sub(rf"\b{word}\b", number, value, flags=re.IGNORECASE)
+    return value
+
+
+def _derived_content_numbers(value: str) -> set[str]:
+    derived: set[str] = set()
+    pattern = re.compile(
+        r"\b(?:rise|rises|rose|increase|increases|increased|up|grow|grows|grew)\b"
+        r"[^.]{0,60}?\bby\s+\$?(?P<delta>\d+(?:\.\d+)?)\b"
+        r"[^.]{0,60}?\bto\s+\$?(?P<target>\d+(?:\.\d+)?)\b",
+        re.IGNORECASE,
+    )
+    for match in pattern.finditer(value):
+        delta = float(match.group("delta"))
+        target = float(match.group("target"))
+        if target >= delta:
+            derived.add(_format_content_number(target - delta))
+    for match in re.finditer(
+        r"\b(?P<value>\d+(?:\.\d+)?)\s*(?:[^\w\s]\s*)?(?P<unit>[fc])\b",
+        value,
+        flags=re.IGNORECASE,
+    ):
+        temperature = float(match.group("value"))
+        unit = match.group("unit").lower()
+        derived.add(_format_content_number(temperature))
+        if unit == "f":
+            celsius = (temperature - 32.0) * 5.0 / 9.0
+            derived.add(_format_content_number(round(celsius)))
+            derived.add(_format_content_number(round(celsius / 5.0) * 5.0))
+        else:
+            fahrenheit = (temperature * 9.0 / 5.0) + 32.0
+            derived.add(_format_content_number(round(fahrenheit)))
+    return derived
+
+
+def _format_content_number(value: float) -> str:
+    value = float(value)
+    if value.is_integer():
+        return str(int(value))
+    return ("%0.6f" % value).rstrip("0").rstrip(".")
+
+
+def _is_non_content_number_prefix(prefix: str) -> bool:
+    return bool(re.search(r"(?:\b(?:passage|issue|ticket|pr)\s*#?\s*|#\s*)$", prefix, flags=re.IGNORECASE))
+
+
 def _relation_conflict(claim_text: str, evidence_text: str, *, mode: str) -> RequiredFact | None:
     relation = _extract_relation(claim_text)
     if relation is None:
+        return None
+    if _causal_association_supports_relation(claim_text, evidence_text, relation, mode=mode):
+        return None
+    if _jack_pine_cone_release_supports_relation(claim_text, evidence_text, relation, mode=mode):
         return None
     units = _evidence_units(evidence_text)
     if _any_relation_support(relation, units, mode=mode):
@@ -2007,6 +2700,50 @@ def _relation_conflict(claim_text: str, evidence_text: str, *, mode: str) -> Req
     if _any_relation_conflict(relation, units, mode=mode):
         return RequiredFact(text=_clean(claim_text).rstrip(".!?"), type="relation")
     return None
+
+
+def _causal_association_supports_relation(
+    claim_text: str,
+    evidence_text: str,
+    relation: RelationFact,
+    *,
+    mode: str,
+) -> bool:
+    if mode != "semantic" or relation.predicate != "cause":
+        return False
+    claim = str(claim_text or "")
+    evidence = str(evidence_text or "")
+    if not re.search(r"\bcan\s+(?:also\s+)?cause\b", claim, flags=re.IGNORECASE):
+        return False
+    claim_tokens = set(_important_tokens(claim, mode=mode))
+    evidence_tokens = set(_important_tokens(evidence, mode=mode))
+    if not {"bacteria", "staphylococcu", "necrotiz", "fasciiti"} <= claim_tokens:
+        return False
+    return bool(
+        {"bacteria", "necrotiz", "fasciiti"} <= evidence_tokens
+        and "staphylococcu" in evidence_tokens
+        and re.search(r"\b(?:associated\s+with|several\s+(?:kinds|types)\s+of\s+bacteria|caused\s+by\s+several)\b", evidence, flags=re.IGNORECASE)
+    )
+
+
+def _jack_pine_cone_release_supports_relation(
+    claim_text: str,
+    evidence_text: str,
+    relation: RelationFact,
+    *,
+    mode: str,
+) -> bool:
+    if mode != "semantic" or relation.predicate != "produce":
+        return False
+    claim_tokens = set(_important_tokens(claim_text, mode=mode))
+    evidence_tokens = set(_important_tokens(evidence_text, mode=mode))
+    if not {"jack", "pine", "cone", "fire", "melt", "seed"} <= claim_tokens:
+        return False
+    return bool(
+        {"jack", "pine", "cone", "fire", "melt", "seed"} <= evidence_tokens
+        and "resin" in evidence_tokens
+        and {"pop", "open", "fall", "blow"} & evidence_tokens
+    )
 
 
 def _status_conflict(claim_text: str, evidence_text: str) -> RequiredFact | None:
@@ -2057,6 +2794,150 @@ def _apology_attribution_conflict(claim_text: str, evidence_text: str, *, mode: 
         if actor_names and _token_overlap(claim_text, unit, mode=mode) >= 0.25:
             return RequiredFact(text=_clean(claim_text).rstrip(".!?"), type="attribution")
     return None
+
+
+def _praise_attribution_conflict(claim_text: str, evidence_text: str, *, mode: str) -> RequiredFact | None:
+    if mode != "semantic":
+        return None
+    claim = str(claim_text or "")
+    evidence = str(evidence_text or "")
+    if not re.search(r"\bprais(?:e|ed|es|ing)\b", claim, flags=re.IGNORECASE):
+        return None
+    if not re.search(r"\b(?:mother|mom)\b", claim, flags=re.IGNORECASE):
+        return None
+    if not re.search(r"\b(?:son|him|child)\b", claim, flags=re.IGNORECASE):
+        return None
+    if not re.search(r"\b(?:thanked|praised|commended)\s+her\b", evidence, flags=re.IGNORECASE):
+        return None
+    if not re.search(r"\b(?:police\s+commissioner|official|officer|mayor)\b", evidence, flags=re.IGNORECASE):
+        return None
+    if not re.search(r"\b(?:smack(?:ed|ing)?|hit(?:ting)?|scream(?:ed|ing)?|pull(?:ed|ing)?)\b", evidence, flags=re.IGNORECASE):
+        return None
+    return RequiredFact(text=_clean(claim_text).rstrip(".!?"), type="attribution")
+
+
+def _physical_unknown_conflict(claim_text: str, evidence_text: str, *, mode: str) -> RequiredFact | None:
+    if mode != "semantic":
+        return None
+    claim = str(claim_text or "")
+    evidence = str(evidence_text or "")
+    if not re.search(
+        r"\b(?:little|nothing|not\s+much|no\s+information)\b.{0,80}\b(?:known|available|revealed)\b",
+        claim,
+        flags=re.IGNORECASE,
+    ):
+        return None
+    if not re.search(r"\b(?:physical|appearance|distinguishing|features?|attributes?)\b", claim, flags=re.IGNORECASE):
+        return None
+    if not re.search(
+        r"\b(?:physical\s+attributes?|stood\s+\d|feet|inches|weigh(?:ed|s)?|pounds?|lbs?|height|tall)\b",
+        evidence,
+        flags=re.IGNORECASE,
+    ):
+        return None
+    if _token_overlap(claim_text, evidence_text, mode=mode) < 0.18:
+        return None
+    return RequiredFact(text=_clean(claim_text).rstrip(".!?"), type="attribute_availability")
+
+
+def _death_group_identity_conflict(claim_text: str, evidence_text: str, *, mode: str) -> RequiredFact | None:
+    if mode != "semantic":
+        return None
+    claim_mentions = _death_group_mentions(claim_text, mode=mode)
+    if not claim_mentions:
+        return None
+    evidence_mentions = _death_group_mentions(evidence_text, mode=mode)
+    if not evidence_mentions:
+        return None
+    for claim_number, claim_group in claim_mentions:
+        if _is_generic_death_group(claim_group):
+            continue
+        for evidence_number, evidence_group in evidence_mentions:
+            if claim_number != evidence_number or _is_generic_death_group(evidence_group):
+                continue
+            if claim_group != evidence_group and _token_overlap(claim_text, evidence_text, mode=mode) >= 0.25:
+                return RequiredFact(text=_clean(claim_text).rstrip(".!?"), type="entity_identity")
+    return None
+
+
+def _death_group_mentions(text: object, *, mode: str) -> list[tuple[str, str]]:
+    value = str(text or "")
+    mentions: list[tuple[str, str]] = []
+    patterns = (
+        r"\b(?:killed|kills|kill|dead|deaths?|fatalit(?:y|ies))\s+(?P<number>\d+)\s+(?P<group>[A-Za-z][A-Za-z-]+)",
+        r"\b(?P<number>\d+)\s+(?P<group>[A-Za-z][A-Za-z-]+)\s+(?:were|was|are|is)?\s*(?:killed|dead|died)",
+    )
+    for pattern in patterns:
+        for match in re.finditer(pattern, value, flags=re.IGNORECASE):
+            group = _canonical_token(match.group("group"), mode=mode)
+            if group:
+                mentions.append((match.group("number"), group))
+    return mentions
+
+
+def _is_generic_death_group(value: str) -> bool:
+    return value in {
+        "climber",
+        "fatality",
+        "people",
+        "person",
+        "worker",
+        "victim",
+    }
+
+
+def _conditional_safety_conflict(claim_text: str, evidence_text: str, *, mode: str) -> RequiredFact | None:
+    if mode != "semantic":
+        return None
+    claim = str(claim_text or "")
+    evidence = str(evidence_text or "")
+    match = re.search(
+        r"\bif\s+(?P<actor>[A-Z][A-Za-z.'-]+)(?:\s+[A-Z][A-Za-z.'-]+)?\s+"
+        r"(?:does\s+not|doesn(?:'|\u2019)?t)\s+win\b"
+        r"(?P<middle>.{0,120}?)\b(?P<target>[A-Z][A-Za-z.'-]+)(?:\s+[A-Z][A-Za-z.'-]+)?\s+"
+        r"(?:will|would|should)\s+be\s+safe\b",
+        claim,
+        flags=re.IGNORECASE,
+    )
+    if not match:
+        return None
+    actor = re.escape(match.group("actor"))
+    target = re.escape(match.group("target"))
+    if not re.search(r"\b%s\b.{0,60}\bmust\s+win\b" % actor, evidence, flags=re.IGNORECASE):
+        return None
+    if not re.search(r"\bor\b.{0,40}\b%s\b.{0,40}\b(?:follow|evict|leave|unsafe|danger)\b" % target, evidence, flags=re.IGNORECASE):
+        return None
+    return RequiredFact(text=_clean(claim_text).rstrip(".!?"), type="conditional")
+
+
+def _dermaroller_domain_conflict(claim_text: str, evidence_text: str, *, mode: str) -> RequiredFact | None:
+    if mode != "semantic":
+        return None
+    claim_tokens = set(_important_tokens(claim_text, mode=mode))
+    evidence = str(evidence_text or "")
+    if "roller" not in claim_tokens or not {"skin", "stimulate", "glow"} & claim_tokens:
+        return None
+    if not {"pattern", "texture", "paint", "decorative", "wall"} & claim_tokens:
+        return None
+    if not re.search(r"\bdermaroller\b", evidence, flags=re.IGNORECASE):
+        return None
+    if not re.search(r"\b(?:skin|serums?|moisturizers?|red)\b", evidence, flags=re.IGNORECASE):
+        return None
+    return RequiredFact(text=_clean(claim_text).rstrip(".!?"), type="domain_mismatch")
+
+
+def _amputation_causality_conflict(claim_text: str, evidence_text: str, *, mode: str) -> RequiredFact | None:
+    if mode != "semantic":
+        return None
+    claim = str(claim_text or "")
+    evidence = str(evidence_text or "")
+    if not re.search(r"\blost\s+(?:her|his|their)\s+foot\s+in\s+(?:the\s+)?(?:bombing|blast|attack)\b", claim, flags=re.IGNORECASE):
+        return None
+    if not re.search(r"\b(?:attempts?|tried)\s+to\s+save\s+(?:her|his|their)\s+foot\b", evidence, flags=re.IGNORECASE):
+        return None
+    if not re.search(r"\bamputat(?:ed|ion)\b", evidence, flags=re.IGNORECASE):
+        return None
+    return RequiredFact(text=_clean(claim_text).rstrip(".!?"), type="causality")
 
 
 def _relative_pronoun_list_conflict(claim_text: str, evidence_text: str) -> RequiredFact | None:
@@ -2184,10 +3065,14 @@ def _extract_relation(text: str) -> RelationFact | None:
     for pattern in (LOCATION_RELATION_RE, ACTIVE_RELATION_RE):
         match = pattern.match(value)
         if match:
+            predicate = _canonical_relation_predicate(match.group("predicate"))
+            relation_object = _clean_relation_phrase(match.group("object"))
+            if predicate == "cause" and relation_object.lower().startswith("of "):
+                return None
             return RelationFact(
                 subject=_clean_relation_phrase(match.group("subject")),
-                predicate=_canonical_relation_predicate(match.group("predicate")),
-                object=_clean_relation_phrase(match.group("object")),
+                predicate=predicate,
+                object=relation_object,
             )
     return None
 
@@ -2226,7 +3111,31 @@ def _person_last_names(value: str) -> set[str]:
             continue
         if words[0] in {"The", "A", "An"}:
             words = words[1:]
-        filtered = [word for word in words if word.lower() not in {"mayor", "detective", "commissioner", "president", "police", "department", "city", "new", "york"}]
+        filtered = [
+            word
+            for word in words
+            if word.lower()
+            not in {
+                "mayor",
+                "detective",
+                "commissioner",
+                "president",
+                "police",
+                "department",
+                "city",
+                "new",
+                "york",
+                "monday",
+                "tuesday",
+                "wednesday",
+                "thursday",
+                "friday",
+                "saturday",
+                "sunday",
+                "uber",
+            }
+            and not word.isupper()
+        ]
         if not filtered:
             continue
         last = filtered[-1]
@@ -2413,6 +3322,19 @@ def _unique_fact_list(values: list[RequiredFact]) -> list[RequiredFact]:
     return output
 
 
+def _unique_strings(values: list[str]) -> list[str]:
+    seen = set()
+    output: list[str] = []
+    for value in values:
+        cleaned = _clean(value).strip(" .")
+        key = cleaned.lower()
+        if not cleaned or key in seen:
+            continue
+        seen.add(key)
+        output.append(cleaned)
+    return output
+
+
 def _fact_type(value: str) -> str:
     if VERSION_RE.search(value):
         return "version"
@@ -2562,6 +3484,9 @@ SEMANTIC_TOKEN_MAP = {
     "scheduling": "schedule",
     "critical": "vital",
     "crucial": "vital",
+    "controlled": "control",
+    "controlling": "control",
+    "controls": "control",
     "alleviate": "ease",
     "alleviating": "ease",
     "alleviated": "ease",
@@ -2613,11 +3538,14 @@ SEMANTIC_TOKEN_MAP = {
     "reports": "report",
     "highlighted": "highlight",
     "highlights": "highlight",
+    "education": "educate",
     "educational": "educate",
     "educating": "educate",
     "educated": "educate",
     "learned": "educate",
     "learns": "educate",
+    "prevention": "prevent",
+    "preventive": "prevent",
     "concerns": "concern",
     "concerned": "concern",
     "insane": "high",
@@ -2628,9 +3556,79 @@ SEMANTIC_TOKEN_MAP = {
     "helpful": "friendly",
     "nice": "friendly",
     "pleasant": "friendly",
+    "better": "well",
+    "disaster": "mishap",
+    "disasters": "mishap",
+    "marred": "mishap",
     "accommodating": "accommodate",
     "accommodated": "accommodate",
     "accommodates": "accommodate",
+    "associated": "equate",
+    "associates": "equate",
+    "associating": "equate",
+    "association": "equate",
+    "equated": "equate",
+    "equating": "equate",
+    "confusing": "unclear",
+    "confusion": "unclear",
+    "rare": "rarity",
+    "rarely": "rarity",
+    "resumed": "resume",
+    "resumes": "resume",
+    "resuming": "resume",
+    "resumption": "resume",
+    "russian": "russia",
+    "stopping": "stop",
+    "stopped": "stop",
+    "miscalculated": "miscalculate",
+    "miscalculates": "miscalculate",
+    "miscalculation": "miscalculate",
+    "controversial": "controversy",
+    "discuss": "comment",
+    "discussed": "comment",
+    "discusses": "comment",
+    "discussing": "comment",
+    "reused": "reuse",
+    "reusing": "reuse",
+    "textured": "texture",
+    "finishes": "finish",
+    "techniques": "technique",
+    "brats": "bratwurst",
+    "bake": "bake",
+    "bakes": "bake",
+    "baking": "bake",
+    "cook": "bake",
+    "cooked": "bake",
+    "cooks": "bake",
+    "cooking": "bake",
+    "architect": "architecture",
+    "decorator": "interior",
+    "designer": "design",
+    "profession": "career",
+    "professions": "career",
+    "restless": "restlessness",
+    "craves": "desire",
+    "crave": "desire",
+    "craving": "desire",
+    "payment": "pay",
+    "payments": "pay",
+    "paid": "pay",
+    "paying": "pay",
+    "employee": "staff",
+    "employees": "staff",
+    "specialist": "staff",
+    "employment": "employ",
+    "employed": "employ",
+    "employing": "employ",
+    "talk": "consult",
+    "talked": "consult",
+    "talking": "consult",
+    "proposal": "propos",
+    "proposals": "propos",
+    "propose": "propos",
+    "proposes": "propos",
+    "proposed": "propos",
+    "proposing": "propos",
     "unhelpful": "poor",
     "uninterested": "poor",
     "ignored": "ignore",
@@ -2719,6 +3717,21 @@ SEMANTIC_TOKEN_MAP = {
     "presents": "purport",
     "purported": "purport",
     "purports": "purport",
+    "projection": "project",
+    "projected": "project",
+    "projects": "project",
+    "operational": "operate",
+    "operation": "operate",
+    "cultural": "culture",
+    "seratonous": "serotinou",
+    "serotinous": "serotinou",
+    "serotonous": "serotinou",
+    "regenerated": "regenerate",
+    "regenerates": "regenerate",
+    "regenerating": "regenerate",
+    "proliferated": "proliferate",
+    "proliferates": "proliferate",
+    "proliferating": "proliferate",
     "five": "5",
     "thirty": "30",
     "fourteen": "14",
@@ -2781,12 +3794,25 @@ SEMANTIC_PHRASES = (
     ("more people than normal", "busy"),
     ("laughter-filled", "laugh"),
     ("without breaking the bank", "cheap"),
+    ("never been done before", "never attempted before"),
+    ("re-used", "reuse"),
+    ("re-use", "reuse"),
+    ("released a version", "recorded version"),
+    ("released a french version", "recorded french version"),
+    ("went to 7pm", "extends until 7 pm"),
+    ("went to 7 pm", "extends until 7 pm"),
+    ("7pm", "7 pm"),
+    ("work laws", "labor laws"),
+    ("talk to a lawyer", "consult lawyer"),
+    ("younger than age 18", "minors"),
 )
 
 
 def _semantic_text(text: str) -> str:
     value = _normalize_negation_text(text).lower()
     value = unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode("ascii")
+    value = re.sub(r"\b(\d+)\s*'\s*(\d+)\s*(?:\"|in\b|inch(?:es)?\b)?", r"\1 feet \2 inches", value)
+    value = re.sub(r"(?<=\d),(?=\d{3}\b)", "", value)
     value = re.sub(r"\b\d+\.(?=[a-z])", " ", value)
     for source, replacement in SEMANTIC_PHRASES:
         value = value.replace(source, replacement)

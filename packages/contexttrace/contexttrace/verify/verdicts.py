@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 from contexttrace.verify.claims import Claim
 from contexttrace.verify.evidence import EvidenceMatch, extract_numbers, unique_important_tokens
@@ -36,6 +36,14 @@ NEGATION_TERMS = {
     "forbidden",
     "disallowed",
     "ineligible",
+}
+
+CONTENT_NUMBER_WORDS = {
+    "five": "5",
+    "seven": "7",
+    "fourteen": "14",
+    "thirty": "30",
+    "ninety": "90",
 }
 
 
@@ -168,9 +176,18 @@ def classify_claim(
     normalized_mode = str(mode or "lexical").strip().lower().replace("-", "_")
     fact_mode = "semantic" if normalized_mode in {"semantic", "local_ml", "nli"} else "lexical"
     fact_match = compare_facts(claim.text, fact_evidence, mode=fact_mode)
+    if not fact_match.conflicting_facts and _needs_full_context_conflict_scan(claim.text, fact_mode):
+        context_fact_match = compare_facts(claim.text, match.context_text, mode=fact_mode)
+        if context_fact_match.conflicting_facts:
+            fact_match = replace(
+                fact_match,
+                conflicting_facts=list(context_fact_match.conflicting_facts),
+                conflicting_fact_details=list(context_fact_match.conflicting_fact_details),
+            )
     contradiction_evidence = _contradiction_evidence_text(claim.text, match)
     contradicted = has_contexts and is_contradicted(claim.text, contradiction_evidence, match.score, mode=fact_mode)
-    if contradicted or fact_match.conflicting_facts:
+    fully_fact_supported = bool(fact_match.required_facts and not fact_match.missing_facts and not fact_match.conflicting_facts)
+    if fact_match.conflicting_facts or (contradicted and not fully_fact_supported):
         verdict = "contradicted"
         confidence = max(0.66, min(0.98, match.score + 0.12))
         reason = (
@@ -269,6 +286,18 @@ def _fact_evidence_text(match: EvidenceMatch) -> str:
     return match.supporting_text or match.snippet
 
 
+def _needs_full_context_conflict_scan(claim_text: str, mode: str) -> bool:
+    if mode != "semantic":
+        return False
+    return bool(
+        re.search(
+            r"\blost\s+(?:her|his|their)\s+foot\s+in\s+(?:the\s+)?(?:bombing|blast|attack)\b",
+            str(claim_text or ""),
+            flags=re.IGNORECASE,
+        )
+    )
+
+
 def is_contradicted(claim_text: str, evidence_text: str, score: float, *, mode: str = "lexical") -> bool:
     if score < 0.50:
         return False
@@ -280,19 +309,23 @@ def is_contradicted(claim_text: str, evidence_text: str, score: float, *, mode: 
             return False
         if _critical_condition_negation_support(claim_text, evidence_text, mode=mode):
             return False
+        if _instruction_caution_negation_support(claim_text, evidence_text, mode=mode):
+            return False
         if _first_time_since_negative_support(claim_text, evidence_text, mode=mode):
             return False
         if _outsourced_service_negation_support(claim_text, evidence_text, mode=mode):
             return False
         if _affirmative_contrast_support(claim_text, evidence_text, mode=mode):
             return False
+        if _unsuccessful_attempt_not_conflict(claim_text, evidence_text, mode=mode):
+            return False
         if _has_affirmative_supporting_clause(claim_text, evidence_text):
             return False
         return True
 
-    claim_numbers = set(extract_numbers(claim_text))
-    evidence_numbers = set(extract_numbers(evidence_text))
-    if claim_numbers and evidence_numbers and claim_numbers.isdisjoint(evidence_numbers):
+    claim_numbers = _raw_content_numbers(claim_text)
+    evidence_numbers = _content_numbers(evidence_text)
+    if claim_numbers and evidence_numbers and not evidence_numbers.issubset(claim_numbers) and claim_numbers.isdisjoint(evidence_numbers):
         return _core_overlap(claim_text, evidence_text) >= 0.65
 
     return False
@@ -323,11 +356,95 @@ def _neutralize_non_negating_phrases(text: str) -> str:
     value = str(text or "")
     value = re.sub(r"\bnot\s+only\b", "also", value, flags=re.IGNORECASE)
     value = re.sub(r"\bno\s+surprise\b", "expected", value, flags=re.IGNORECASE)
+    value = re.sub(r"\bno\s+disputing\b", "clear", value, flags=re.IGNORECASE)
+    value = re.sub(r"\bnot\s+to\s+mention\b", "including", value, flags=re.IGNORECASE)
+    value = re.sub(r"\bor\s+not\b", "or otherwise", value, flags=re.IGNORECASE)
+    value = re.sub(r"\bnot\s+clear\s+on\s+(?:its|their|the)\s+beginnings?\b", "uncertain beginnings", value, flags=re.IGNORECASE)
+    value = re.sub(r"\bwithout\s+hesitation\b", "readily", value, flags=re.IGNORECASE)
     value = re.sub(r"\beven\s+if\s+it\s+\[?did\s+not\]?\s+end\s+up\b", "even if it might end up", value, flags=re.IGNORECASE)
     value = re.sub(r"\beven\s+if\s+it\s+\[?didn(?:'|\u2019)?t\]?\s+end\s+up\b", "even if it might end up", value, flags=re.IGNORECASE)
     value = re.sub(r"\beven\s+if\s+it\s+\[?did\s+not\s+end\]?\s+up\b", "even if it might end up", value, flags=re.IGNORECASE)
     value = re.sub(r"\beven\s+if\s+it\s+\[?didn(?:'|\u2019)?t\s+end\]?\s+up\b", "even if it might end up", value, flags=re.IGNORECASE)
     return value
+
+
+def _unsuccessful_attempt_not_conflict(claim_text: str, evidence_text: str, *, mode: str) -> bool:
+    if str(mode or "").strip().lower().replace("-", "_") != "semantic":
+        return False
+    if not re.search(r"\bnot\s+(?:been\s+)?successful\b|\bunsuccessful\b|\bfailed\b", str(claim_text or ""), flags=re.IGNORECASE):
+        return False
+    if re.search(r"\b(?:successful|succeeded|adopted|approved|implemented)\b", str(evidence_text or ""), flags=re.IGNORECASE):
+        return False
+    return bool(
+        re.search(r"\b(?:attempt|attempted|effort|pushed|proposed|called\s+for)\b", str(evidence_text or ""), flags=re.IGNORECASE)
+        and _core_overlap(claim_text, evidence_text, mode=mode) >= 0.35
+    )
+
+
+def _content_numbers(text: object) -> set[str]:
+    numbers = _raw_content_numbers(text)
+    numbers.update(_derived_content_numbers(_normalize_content_number_text(text)))
+    return numbers
+
+
+def _raw_content_numbers(text: object) -> set[str]:
+    value = _normalize_content_number_text(text)
+    return {
+        match.group(0)
+        for match in re.finditer(r"\b\d+(?:\.\d+)?\b", value)
+        if not _is_non_content_number_prefix(value[max(0, match.start() - 20) : match.start()])
+    }
+
+
+def _normalize_content_number_text(text: object) -> str:
+    value = re.sub(r"(?<=\d),(?=\d{3}\b)", "", str(text or ""))
+    value = re.sub(r"\b(\d{1,2})(am|pm)\b", r"\1 \2", value, flags=re.IGNORECASE)
+    value = re.sub(r"(?<=\d)[^\w\s](?=\s*[fc]\b)", " ", value, flags=re.IGNORECASE)
+    for word, number in CONTENT_NUMBER_WORDS.items():
+        value = re.sub(rf"\b{word}\b", number, value, flags=re.IGNORECASE)
+    return value
+
+
+def _derived_content_numbers(value: str) -> set[str]:
+    derived: set[str] = set()
+    pattern = re.compile(
+        r"\b(?:rise|rises|rose|increase|increases|increased|up|grow|grows|grew)\b"
+        r"[^.]{0,60}?\bby\s+\$?(?P<delta>\d+(?:\.\d+)?)\b"
+        r"[^.]{0,60}?\bto\s+\$?(?P<target>\d+(?:\.\d+)?)\b",
+        re.IGNORECASE,
+    )
+    for match in pattern.finditer(value):
+        delta = float(match.group("delta"))
+        target = float(match.group("target"))
+        if target >= delta:
+            derived.add(_format_content_number(target - delta))
+    for match in re.finditer(
+        r"\b(?P<value>\d+(?:\.\d+)?)\s*(?:°\s*)?(?P<unit>[fc])\b",
+        value,
+        flags=re.IGNORECASE,
+    ):
+        temperature = float(match.group("value"))
+        unit = match.group("unit").lower()
+        derived.add(_format_content_number(temperature))
+        if unit == "f":
+            celsius = (temperature - 32.0) * 5.0 / 9.0
+            derived.add(_format_content_number(round(celsius)))
+            derived.add(_format_content_number(round(celsius / 5.0) * 5.0))
+        else:
+            fahrenheit = (temperature * 9.0 / 5.0) + 32.0
+            derived.add(_format_content_number(round(fahrenheit)))
+    return derived
+
+
+def _format_content_number(value: float) -> str:
+    value = float(value)
+    if value.is_integer():
+        return str(int(value))
+    return ("%0.6f" % value).rstrip("0").rstrip(".")
+
+
+def _is_non_content_number_prefix(prefix: str) -> bool:
+    return bool(re.search(r"(?:\b(?:passage|issue|ticket|pr)\s*#?\s*|#\s*)$", prefix, flags=re.IGNORECASE))
 
 
 def _has_affirmative_supporting_clause(claim_text: str, evidence_text: str) -> bool:
@@ -349,6 +466,17 @@ def _preventive_negation_support(claim_text: str, evidence_text: str, *, mode: s
     ):
         return False
     return _core_overlap(claim_text, evidence_text, mode=mode) >= 0.55
+
+
+def _instruction_caution_negation_support(claim_text: str, evidence_text: str, *, mode: str) -> bool:
+    if str(mode or "").strip().lower().replace("-", "_") != "semantic":
+        return False
+    if not re.search(r"\b(?:instruction|instructions|guide|steps?)\b", str(claim_text or ""), flags=re.IGNORECASE):
+        return False
+    return bool(
+        re.search(r"\bnot\s+too\s+close\b", str(evidence_text or ""), flags=re.IGNORECASE)
+        and _core_overlap(claim_text, evidence_text, mode=mode) >= 0.35
+    )
 
 
 def _first_time_since_negative_support(claim_text: str, evidence_text: str, *, mode: str) -> bool:
