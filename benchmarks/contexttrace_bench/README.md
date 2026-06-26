@@ -364,6 +364,46 @@ themselves. Public claims still need the upstream dataset citation, frozen input
 file, exact adapter command, independent review where labels or source spans
 are ambiguous, and competitor rows scored on the same IDs.
 
+For the full reviewable workflow, use the wrapper. It adapts the rows, writes a
+review template and Markdown packet, scores ContextTrace, and creates a
+checksummed release bundle:
+
+```bash
+python benchmarks/contexttrace_bench/external_case_pack_workflow.py \
+  --input path/to/external_rows.jsonl \
+  --dataset ARES \
+  --output-dir benchmarks/contexttrace_bench/out/ares_release \
+  --bundle-dir benchmarks/contexttrace_bench/out/ares_release_bundle \
+  --query-field question \
+  --answer-field response \
+  --contexts-field retrieved_context \
+  --label-field label \
+  --sample-size 200 \
+  --sample-seed 13 \
+  --stratify-by split,label
+```
+
+The bundle remains `review_pending` until a completed review JSONL is supplied.
+After independent review, rerun the workflow with `--review` and
+`--review-kind independent`:
+
+```bash
+python benchmarks/contexttrace_bench/external_case_pack_workflow.py \
+  --input path/to/external_rows.jsonl \
+  --dataset ARES \
+  --output-dir benchmarks/contexttrace_bench/out/ares_release \
+  --bundle-dir benchmarks/contexttrace_bench/out/ares_release_bundle \
+  --query-field question \
+  --answer-field response \
+  --contexts-field retrieved_context \
+  --label-field label \
+  --sample-size 200 \
+  --sample-seed 13 \
+  --stratify-by split,label \
+  --review benchmarks/contexttrace_bench/out/ares_release/external_review_completed.jsonl \
+  --review-kind independent
+```
+
 The RAGTruth adapter creates a ContextTrace-style case pack from the official
 `response.jsonl` and `source_info.jsonl` exports:
 

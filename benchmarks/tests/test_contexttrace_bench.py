@@ -23,6 +23,10 @@ from benchmarks.contexttrace_bench.external_case_pack import (
     load_rows as load_external_rows,
     main as external_case_pack_main,
 )
+from benchmarks.contexttrace_bench.external_case_pack_workflow import (
+    run_external_case_pack_workflow,
+    render_workflow_summary as render_external_workflow_summary,
+)
 from benchmarks.contexttrace_bench.run_deepeval import build_deepeval_rows
 from benchmarks.contexttrace_bench.run_contexttrace import (
     _answer_label_projection,
@@ -1047,6 +1051,144 @@ def test_generic_external_adapter_cli_writes_case_pack(tmp_path, capsys) -> None
     assert payload["cases"][0]["query"] == "What does the source say?"
     assert load_external_rows(input_path)[0]["id"] == "one"
     assert "Cases: 1" in capsys.readouterr().out
+
+
+def test_generic_external_workflow_builds_review_pending_bundle(tmp_path) -> None:
+    input_path = tmp_path / "external_rows.jsonl"
+    input_path.write_text(
+        "\n".join(
+            json.dumps(row)
+            for row in [
+                {
+                    "id": "supported",
+                    "question": "What does the policy say?",
+                    "response": "Refunds are available within 30 days.",
+                    "retrieved_context": [{"doc_id": "policy", "text": "Refunds are available within 30 days."}],
+                    "label": "supported",
+                    "expected_evidence_spans": ["Refunds are available within 30 days."],
+                    "split": "dev",
+                },
+                {
+                    "id": "conflict",
+                    "question": "What does the policy say?",
+                    "response": "Refunds are always paid in cash.",
+                    "retrieved_context": [{"doc_id": "policy", "text": "Refunds are available as store credit only."}],
+                    "label": "contradiction",
+                    "split": "dev",
+                },
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    summary = run_external_case_pack_workflow(
+        input_path=input_path,
+        dataset="ARES",
+        output_dir=tmp_path / "workflow",
+        bundle_dir=tmp_path / "bundle",
+        query_field="question",
+        answer_field="response",
+        contexts_field="retrieved_context",
+        label_field="label",
+        sample_size=2,
+        sample_seed=11,
+        stratify_by=["split", "label"],
+        bootstrap_samples=10,
+    )
+    rendered = render_external_workflow_summary(summary)
+    manifest = json.loads((tmp_path / "bundle" / "manifest.json").read_text(encoding="utf-8"))
+
+    assert summary["status"] == "review_pending"
+    assert summary["workflow_status"] == "scored_review_pending"
+    assert summary["case_count"] == 2
+    assert manifest["bundle_status"] == "review_pending"
+    assert manifest["case_count"] == 2
+    assert any(artifact["path"] == "external_review_packet.md" for artifact in manifest["artifacts"])
+    assert any(artifact["path"] == "scored/contexttrace_bench_results.json" for artifact in manifest["artifacts"])
+    assert "Generic external case-pack workflow" in rendered
+
+
+def test_generic_external_workflow_scores_independent_review_bundle(tmp_path) -> None:
+    input_path = tmp_path / "external_rows.jsonl"
+    review_path = tmp_path / "review.jsonl"
+    input_path.write_text(
+        "\n".join(
+            json.dumps(row)
+            for row in [
+                {
+                    "id": "supported",
+                    "query": "What does the policy say?",
+                    "answer": "Refunds are available within 30 days.",
+                    "contexts": [{"doc_id": "policy", "text": "Refunds are available within 30 days."}],
+                    "expected_label": "supported",
+                    "expected_evidence_spans": ["Refunds are available within 30 days."],
+                },
+                {
+                    "id": "conflict",
+                    "query": "What does the policy say?",
+                    "answer": "Refunds are always paid in cash.",
+                    "contexts": [{"doc_id": "policy", "text": "Refunds are available as store credit only."}],
+                    "expected_label": "contradiction",
+                },
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    review_path.write_text(
+        "\n".join(
+            json.dumps(row)
+            for row in [
+                {
+                    "case_id": "ares_supported",
+                    "review_status": "reviewed",
+                    "reviewer": "unit-test",
+                    "reviewed_at": "2026-06-26",
+                    "context_fair": True,
+                    "label_correct": True,
+                    "root_cause_correct": True,
+                    "evidence_span_minimal": True,
+                    "expected_evidence_spans": ["Refunds are available within 30 days."],
+                },
+                {
+                    "case_id": "ares_conflict",
+                    "review_status": "approved",
+                    "reviewer": "unit-test",
+                    "reviewed_at": "2026-06-26",
+                    "context_fair": True,
+                    "label_correct": True,
+                    "root_cause_correct": True,
+                    "evidence_span_minimal": None,
+                },
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    summary = run_external_case_pack_workflow(
+        input_path=input_path,
+        dataset="ARES",
+        output_dir=tmp_path / "workflow_reviewed",
+        bundle_dir=tmp_path / "bundle",
+        review_path=review_path,
+        review_kind="independent",
+        sample_size=2,
+        sample_seed=11,
+        stratify_by=["expected_label"],
+        bootstrap_samples=10,
+    )
+    manifest = json.loads((tmp_path / "bundle" / "manifest.json").read_text(encoding="utf-8"))
+
+    assert summary["status"] == "publishable"
+    assert summary["workflow_status"] == "scored"
+    assert summary["review_valid"] is True
+    assert manifest["bundle_status"] == "publishable"
+    assert manifest["review"]["reviewed_rows"] == 2
+    assert any(artifact["path"] == "external_review_signoff.jsonl" for artifact in manifest["artifacts"])
+    assert any(artifact["path"] == "external_reviewed_case_pack.json" for artifact in manifest["artifacts"])
+    assert any(artifact["path"] == "scored/contexttrace_bench_results.json" for artifact in manifest["artifacts"])
 
 
 def test_ragtruth_review_queue_and_mapping_updates_case_pack() -> None:

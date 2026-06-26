@@ -17,7 +17,7 @@ case set and are scored by `run_contexttrace.py --candidate`.
 | Phoenix | `adapt_candidate.py --preset phoenix` | Adapter ready | No | Requires exported Phoenix evaluator results. |
 | TruLens | `adapt_candidate.py --preset trulens` | Adapter ready | No | Requires exported TruLens evaluator results. |
 | RAGTruth external validation | `ragtruth_adapter.py`, `ragtruth_review.py`, `ragtruth_workflow.py`, `run_contexttrace.py --case-pack` | 200-case stratified assisted workflow scored | No | Deterministic test-split sample scored with 88 GPT-5.1-assisted review rows; 75 rows have source evidence spans and 13 are intentionally source-less or source-supported taxonomy corrections. Requires independent human sign-off and calibration before publishable external-dataset claims. |
-| Generic external case-pack validation | `external_case_pack.py`, `run_contexttrace.py --case-pack` | Adapter ready | No | Normalizes CRAG/ARES-style JSON or JSONL exports with query, answer, contexts, and labels. Requires official export files, dataset documentation, and review/sign-off before publishable external claims. |
+| Generic external case-pack validation | `external_case_pack.py`, `external_case_pack_workflow.py`, `run_contexttrace.py --case-pack` | Workflow ready | No | Normalizes CRAG/ARES-style JSON or JSONL exports with query, answer, contexts, and labels, then writes review/release bundles. Requires official export files, dataset documentation, and review/sign-off before publishable external claims. |
 
 Latest scored leaderboard:
 
@@ -573,6 +573,30 @@ Before calling the row publishable, record the upstream dataset version or
 commit, the frozen input file checksum, the full adapter command, sampling
 metadata from `stats.sampling`, reviewed label/span decisions, and competitor
 prediction files scored on the same case IDs.
+
+Prefer the workflow wrapper for a reviewable release artifact:
+
+```bash
+python benchmarks/contexttrace_bench/external_case_pack_workflow.py \
+  --input path/to/ares_or_crag_rows.jsonl \
+  --dataset ARES \
+  --output-dir benchmarks/contexttrace_bench/out/ares_release \
+  --bundle-dir benchmarks/contexttrace_bench/out/ares_release_bundle \
+  --query-field question \
+  --answer-field response \
+  --contexts-field retrieved_context \
+  --label-field label \
+  --sample-size 200 \
+  --sample-seed 13 \
+  --stratify-by split,label
+```
+
+This writes `external_case_pack.json`, `external_review_template.jsonl`,
+`external_review_packet.md`, scored benchmark artifacts under `scored/`, and a
+bundle `manifest.json` with SHA256 checksums. The bundle stays
+`review_pending` until a completed review JSONL is supplied. Rerun with
+`--review completed_review.jsonl --review-kind independent` to validate and
+apply sign-off. Assisted or warning-bearing review remains `calibration_only`.
 
 ## Publishability Checklist
 

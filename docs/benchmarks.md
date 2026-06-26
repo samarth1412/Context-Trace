@@ -475,3 +475,26 @@ python benchmarks/contexttrace_bench/run_contexttrace.py \
 Use this for CRAG/ARES-style exports only after recording the upstream dataset
 version, frozen input checksum, field mapping, sampling metadata, and any
 independent review needed for labels or source evidence spans.
+
+For a complete review/release bundle, prefer the workflow wrapper:
+
+```bash
+python benchmarks/contexttrace_bench/external_case_pack_workflow.py \
+  --input path/to/external_rows.jsonl \
+  --dataset ARES \
+  --output-dir benchmarks/contexttrace_bench/out/ares_release \
+  --bundle-dir benchmarks/contexttrace_bench/out/ares_release_bundle \
+  --query-field question \
+  --answer-field response \
+  --contexts-field retrieved_context \
+  --label-field label \
+  --sample-size 200 \
+  --sample-seed 13 \
+  --stratify-by split,label
+```
+
+It writes the case pack, review JSONL template, reviewer packet, scored
+benchmark artifacts, and a checksummed bundle. Rerun it with
+`--review completed_review.jsonl --review-kind independent` after review to move
+from `review_pending` to a dataset-specific publishable bundle when validation
+passes.
