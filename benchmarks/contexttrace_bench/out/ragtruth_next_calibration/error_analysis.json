@@ -1,6 +1,6 @@
 {
   "benchmark": "ContextTrace-Bench",
-  "benchmark_miss_count": 14,
+  "benchmark_miss_count": 13,
   "case_count": 200,
   "case_set": "external_case_pack",
   "cases_to_review": [
@@ -56,25 +56,6 @@
       "id": "ragtruth_4211",
       "missing_facts": [
         "However, additional funding from Congress is needed to process more applications and reduce the current 30-day processing time"
-      ],
-      "predicted": [
-        "partial_support"
-      ],
-      "predicted_primary_root_cause": "answer_overreach"
-    },
-    {
-      "base_case_id": "ragtruth_7052",
-      "conflicting_facts": [],
-      "evidence": "{\"address\": \"5918 Hollister Ave\", \"attributes\": {\"Ambience\": {\"casual\": true, \"classy\": false, \"divey\": false, \"hipster\": false, \"intimate\": false, \"romantic\": false, \"touristy\": false, \"trendy\": false, \"upscale\": false}, \"BusinessParking\": {\"garage\": false, \"lot\": true, \"street\": false, \"valet\": false, \"validated\": false}, \"Music\": null, \"OutdoorSeating\": null, \"RestaurantsGoodForGroups\": true, \"RestaurantsReservations\": true, \"RestaurantsTakeOut\": true, \"WiFi\": \"no\"}, \"business_stars\": 3.5, \"categories\": \"Restaurants, Thai\", \"city\": \"Goleta\", \"hours\": {\"Friday\": \"17:0-21:0\", \"Saturday\": \"17:0-21:0\", \"Sunday\": \"17:0-21:0\", \"Thursday\": \"17:0-21:0\", \"Tuesday\": \"17:0-21:0\", \"Wednesday\": \"17:0-21:0\"}, \"name\": \"Pattaya Thai Restaurant\", \"review_info\": [{\"review_date\": \"2022-01-18 10:53:32\", \"review_stars\": 3.0, \"review_text\": \"Went in for lunch and felt like I'd gone back in time.",
-      "expected": [
-        "contradicted_answer"
-      ],
-      "expected_primary_root_cause": "conflicting_contexts",
-      "first_failed_claim": "The restaurant has outdoor seating available.",
-      "first_failed_verdict": "partially_supported",
-      "id": "ragtruth_7052",
-      "missing_facts": [
-        "The restaurant has outdoor seating available"
       ],
       "predicted": [
         "partial_support"
@@ -208,18 +189,13 @@
       "predicted": "no_failure_detected"
     },
     {
-      "count": 40,
+      "count": 41,
       "expected": "contradicted_answer",
       "predicted": "contradicted_answer"
     },
     {
       "count": 39,
       "expected": "partial_support",
-      "predicted": "partial_support"
-    },
-    {
-      "count": 3,
-      "expected": "contradicted_answer",
       "predicted": "partial_support"
     },
     {
@@ -231,6 +207,11 @@
       "count": 3,
       "expected": "partial_support",
       "predicted": "contradicted_answer"
+    },
+    {
+      "count": 2,
+      "expected": "contradicted_answer",
+      "predicted": "partial_support"
     },
     {
       "count": 1,
@@ -254,7 +235,7 @@
       "label": "contradicted_answer"
     }
   ],
-  "label_miss_count": 10,
+  "label_miss_count": 9,
   "mode": "semantic",
   "root_cause_confusion": [
     {
@@ -263,28 +244,28 @@
       "predicted_root_cause": "no_failure_detected"
     },
     {
+      "count": 41,
+      "expected_root_cause": "conflicting_contexts",
+      "predicted_root_cause": "conflicting_contexts"
+    },
+    {
       "count": 40,
       "expected_root_cause": "answer_overreach",
       "predicted_root_cause": "answer_overreach"
     },
     {
-      "count": 40,
-      "expected_root_cause": "conflicting_contexts",
-      "predicted_root_cause": "conflicting_contexts"
-    },
-    {
       "count": 3,
       "expected_root_cause": "answer_overreach",
       "predicted_root_cause": "conflicting_contexts"
-    },
-    {
-      "count": 3,
-      "expected_root_cause": "conflicting_contexts",
-      "predicted_root_cause": "answer_overreach"
     },
     {
       "count": 3,
       "expected_root_cause": "no_failure_detected",
+      "predicted_root_cause": "answer_overreach"
+    },
+    {
+      "count": 2,
+      "expected_root_cause": "conflicting_contexts",
       "predicted_root_cause": "answer_overreach"
     },
     {

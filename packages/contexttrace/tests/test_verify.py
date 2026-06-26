@@ -3080,6 +3080,62 @@ def test_semantic_mode_uses_structured_json_attributes_for_conflict():
     assert "contradicted_answer" in result["summary"]["failure_types"]
 
 
+def test_semantic_mode_treats_null_structured_feature_assertion_as_conflict():
+    result = verify_trace(
+        RAGTrace(
+            query="What amenities does the restaurant offer?",
+            answer="The restaurant has outdoor seating available.",
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "attributes": {
+                                "OutdoorSeating": None,
+                                "RestaurantsTakeOut": True,
+                            },
+                            "categories": "Thai, Restaurants",
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "contradicted"
+    assert claim["conflicting_facts"] == ["outdoor seating"]
+
+
+def test_semantic_mode_supports_null_structured_feature_absence_claim():
+    result = verify_trace(
+        RAGTrace(
+            query="What does the source say about outdoor seating?",
+            answer="The source does not provide information about outdoor seating.",
+            contexts=[
+                TraceContext(
+                    id="yelp_structured",
+                    text=json.dumps(
+                        {
+                            "attributes": {
+                                "OutdoorSeating": None,
+                                "RestaurantsTakeOut": True,
+                            },
+                            "categories": "Thai, Restaurants",
+                        }
+                    ),
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["conflicting_facts"] == []
+
+
 def test_semantic_mode_does_not_let_json_false_values_contradict_supported_field():
     result = verify_trace(
         RAGTrace(

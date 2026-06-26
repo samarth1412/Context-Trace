@@ -2,7 +2,7 @@
 
 | System | Mode | Cases | Failure Macro-F1 | Root Cause Accuracy | Citation Error F1 | Span Overlap | Latency p95 ms | Cost / 100 |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| ContextTrace | `semantic` | 200 | 0.95 | 0.95 | 1.0 | 0.786 | 1753.437 | 0.0 |
+| ContextTrace | `semantic` | 200 | 0.955 | 0.955 | 1.0 | 0.786 | 2279.817 | 0.0 |
 
 `N/A` means the candidate did not report that diagnostic field; it is not counted as an attempted failure.
 

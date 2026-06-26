@@ -57,7 +57,7 @@ Latest RAGTruth assisted review pilot:
 
 | System | Cases | Reviewed Span Rows | Failure Macro-F1 | Root Cause Accuracy | Dangerous False Green | Citation Error F1 | Span Overlap |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| ContextTrace semantic verifier on RAGTruth stratified test sample | 200 | 75 | 0.950 | 0.950 | 0.000 | 1.000 | 0.786 |
+| ContextTrace semantic verifier on RAGTruth stratified test sample | 200 | 75 | 0.955 | 0.955 | 0.000 | 1.000 | 0.786 |
 | ContextTrace semantic verifier on RAGTruth test-split smoke | 50 | 15 | 0.181 | 0.400 | 0.000 | 1.000 | 0.883 |
 | OpenAI diagnostic judge `gpt-4.1-mini` on RAGTruth test-split smoke | 50 | 15 | 0.272 | 0.660 | 0.260 | 1.000 | 0.592 |
 
@@ -165,6 +165,12 @@ conflicts when a compound claim's top evidence span only covers the other
 conjunct. This moved the 200-case RAGTruth assisted row to failure macro-F1
 `0.950` and root-cause accuracy `0.950` while keeping evidence-span overlap
 `0.786` and dangerous false greens at `0`.
+A structured-data pass treats a single-feature outdoor seating availability
+assertion as conflicting when the source JSON has `OutdoorSeating: null`, while
+leaving multi-amenity partial-support rows and explicit absence-of-information
+claims intact. This moved the 200-case RAGTruth assisted row to failure
+macro-F1 `0.955` and root-cause accuracy `0.955` while keeping evidence-span
+overlap `0.786` and dangerous false greens at `0`.
 RAGTruth rows use answer-level verdict scope by default; claim-count metrics
 apply only to rows with explicit reviewer taxonomy overrides. The OpenAI judge is
 useful as a contrastive calibration target, but its 50-row smoke labeled 46/50

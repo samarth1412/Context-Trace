@@ -1026,6 +1026,13 @@ def _structured_value_conflicts(claim_text: str, evidence_text: str) -> list[Req
             conflicts.append(RequiredFact(text=feature_name, type="structured_value"))
         if not claim_denies_feature and any(_value_is_negative(value) for value in values):
             conflicts.append(RequiredFact(text=feature_name, type="structured_value"))
+        if (
+            not claim_denies_feature
+            and not _claim_denies_information_about(claim, phrases)
+            and _claim_asserts_null_structured_feature_conflict(claim, feature_name, phrases)
+            and any(value is None for value in values)
+        ):
+            conflicts.append(RequiredFact(text=feature_name, type="structured_value"))
 
     if _claim_denies_parking(claim) and _structured_parking_has_available_option(data):
         conflicts.append(RequiredFact(text="parking", type="structured_value"))
@@ -1104,6 +1111,38 @@ def _claim_denies_information_about(text: str, phrases: tuple[str, ...]) -> bool
     if not re.search(r"\b(?:does\s+not|do\s+not|doesnt|dont|not)\s+(?:include|provide|contain|list)\s+information\b", normalized):
         return False
     return any(phrase in normalized for phrase in phrases)
+
+
+def _claim_asserts_structured_feature_available(text: str, phrases: tuple[str, ...]) -> bool:
+    normalized = str(text or "").lower()
+    for phrase in phrases:
+        escaped = re.escape(phrase)
+        if re.search(r"\b(?:has|have|offers?|provides?|includes?|with)\b.{0,55}\b%s\b" % escaped, normalized):
+            return True
+        if re.search(r"\b%s\b.{0,35}\b(?:available|offered|provided|included)\b" % escaped, normalized):
+            return True
+    return False
+
+
+def _claim_asserts_null_structured_feature_conflict(
+    text: str,
+    feature_name: str,
+    phrases: tuple[str, ...],
+) -> bool:
+    if feature_name != "outdoor seating":
+        return False
+    if _structured_feature_mention_count(text) != 1:
+        return False
+    return _claim_asserts_structured_feature_available(text, phrases)
+
+
+def _structured_feature_mention_count(text: str) -> int:
+    normalized = str(text or "").lower()
+    count = 0
+    for _, phrases, _ in STRUCTURED_FEATURES:
+        if any(phrase in normalized for phrase in phrases):
+            count += 1
+    return count
 
 
 def _explicit_ambience_claim(text: str) -> bool:

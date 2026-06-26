@@ -3,27 +3,6 @@
   "calibration_targets": {
     "contradicted_answer_misses": [
       {
-        "evidence_span_overlap": 0.797,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_7052",
-        "label_types": [
-          "Evident Baseless Info",
-          "Evident Conflict"
-        ],
-        "model": "mistral-7B-instruct",
-        "predicted": [
-          "partial_support"
-        ],
-        "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The source attributes list \"OutdoorSeating\": null, so claiming that the restaurant \"has outdoor seating available\" is baseless relative to the provided data. The Pad Thai review text explicitly states that the chicken and shrimp were cooked ve",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 2,
-        "task_type": "Data2txt"
-      },
-      {
         "evidence_span_overlap": 0.822,
         "expected": [
           "contradicted_answer"
@@ -128,27 +107,6 @@
       }
     ],
     "root_cause_misses": [
-      {
-        "evidence_span_overlap": 0.797,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_7052",
-        "label_types": [
-          "Evident Baseless Info",
-          "Evident Conflict"
-        ],
-        "model": "mistral-7B-instruct",
-        "predicted": [
-          "partial_support"
-        ],
-        "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The source attributes list \"OutdoorSeating\": null, so claiming that the restaurant \"has outdoor seating available\" is baseless relative to the provided data. The Pad Thai review text explicitly states that the chicken and shrimp were cooked ve",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 2,
-        "task_type": "Data2txt"
-      },
       {
         "evidence_span_overlap": 0.822,
         "expected": [
@@ -842,9 +800,9 @@
       {
         "cases": 43,
         "dangerous_false_greens": 0,
-        "miss_rate": 0.418605,
-        "misses": 18,
-        "root_cause_misses": 3,
+        "miss_rate": 0.395349,
+        "misses": 17,
+        "root_cause_misses": 2,
         "span_localization_misses": 15,
         "value": "contradicted_answer"
       },
@@ -880,18 +838,18 @@
       {
         "cases": 44,
         "dangerous_false_greens": 0,
-        "miss_rate": 0.409091,
-        "misses": 18,
-        "root_cause_misses": 4,
+        "miss_rate": 0.386364,
+        "misses": 17,
+        "root_cause_misses": 3,
         "span_localization_misses": 12,
         "value": "Evident Baseless Info"
       },
       {
         "cases": 41,
         "dangerous_false_greens": 0,
-        "miss_rate": 0.390244,
-        "misses": 16,
-        "root_cause_misses": 2,
+        "miss_rate": 0.365854,
+        "misses": 15,
+        "root_cause_misses": 1,
         "span_localization_misses": 14,
         "value": "Evident Conflict"
       },
@@ -952,15 +910,6 @@
         "value": "llama-2-70b-chat"
       },
       {
-        "cases": 34,
-        "dangerous_false_greens": 0,
-        "miss_rate": 0.147059,
-        "misses": 5,
-        "root_cause_misses": 1,
-        "span_localization_misses": 4,
-        "value": "mistral-7B-instruct"
-      },
-      {
         "cases": 32,
         "dangerous_false_greens": 0,
         "miss_rate": 0.125,
@@ -968,6 +917,15 @@
         "root_cause_misses": 1,
         "span_localization_misses": 1,
         "value": "gpt-3.5-turbo-0613"
+      },
+      {
+        "cases": 34,
+        "dangerous_false_greens": 0,
+        "miss_rate": 0.117647,
+        "misses": 4,
+        "root_cause_misses": 0,
+        "span_localization_misses": 4,
+        "value": "mistral-7B-instruct"
       },
       {
         "cases": 31,
@@ -986,28 +944,28 @@
         "predicted": "no_failure_detected"
       },
       {
+        "count": 41,
+        "expected": "conflicting_contexts",
+        "predicted": "conflicting_contexts"
+      },
+      {
         "count": 40,
         "expected": "answer_overreach",
         "predicted": "answer_overreach"
       },
       {
-        "count": 40,
-        "expected": "conflicting_contexts",
-        "predicted": "conflicting_contexts"
-      },
-      {
         "count": 3,
         "expected": "answer_overreach",
         "predicted": "conflicting_contexts"
-      },
-      {
-        "count": 3,
-        "expected": "conflicting_contexts",
-        "predicted": "answer_overreach"
       },
       {
         "count": 3,
         "expected": "no_failure_detected",
+        "predicted": "answer_overreach"
+      },
+      {
+        "count": 2,
+        "expected": "conflicting_contexts",
         "predicted": "answer_overreach"
       },
       {
@@ -1020,9 +978,9 @@
       {
         "cases": 64,
         "dangerous_false_greens": 0,
-        "miss_rate": 0.34375,
-        "misses": 22,
-        "root_cause_misses": 4,
+        "miss_rate": 0.328125,
+        "misses": 21,
+        "root_cause_misses": 3,
         "span_localization_misses": 17,
         "value": "Yelp"
       },
@@ -1058,9 +1016,9 @@
       {
         "cases": 64,
         "dangerous_false_greens": 0,
-        "miss_rate": 0.34375,
-        "misses": 22,
-        "root_cause_misses": 4,
+        "miss_rate": 0.328125,
+        "misses": 21,
+        "root_cause_misses": 3,
         "span_localization_misses": 17,
         "value": "Data2txt"
       },
@@ -1094,12 +1052,12 @@
     "dangerous_false_green_rate": 0.0,
     "dangerous_false_greens": 0,
     "evidence_span_overlap": 0.786,
-    "failure_label_macro_f1": 0.95,
-    "label_misses": 10,
-    "miss_rate": 0.19,
-    "misses": 38,
-    "root_cause_accuracy": 0.95,
-    "root_cause_misses": 10,
+    "failure_label_macro_f1": 0.955,
+    "label_misses": 9,
+    "miss_rate": 0.185,
+    "misses": 37,
+    "root_cause_accuracy": 0.955,
+    "root_cause_misses": 9,
     "source_span_bad_localization": 25,
     "span_localization_misses": 25,
     "span_overlap_threshold": 0.75,

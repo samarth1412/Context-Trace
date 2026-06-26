@@ -7,10 +7,10 @@ This report turns the RAGTruth calibration result into concrete engineering targ
 | Metric | Value |
 | --- | ---: |
 | Cases | 200 |
-| Misses | 38 |
-| Miss rate | 0.190 |
-| Failure macro-F1 | 0.950 |
-| Root-cause accuracy | 0.950 |
+| Misses | 37 |
+| Miss rate | 0.185 |
+| Failure macro-F1 | 0.955 |
+| Root-cause accuracy | 0.955 |
 | Evidence span overlap | 0.786 |
 | Dangerous false greens | 0 |
 | Span localization misses | 25 |
@@ -33,7 +33,6 @@ No cases in this bucket.
 
 | Case | Task | Source | Expected | Predicted | Root Cause | Span Overlap |
 | --- | --- | --- | --- | --- | --- | ---: |
-| `ragtruth_7052` | `Data2txt` | `Yelp` | `contradicted_answer` | `partial_support` | `conflicting_contexts -> answer_overreach` | 0.797 |
 | `ragtruth_4211` | `Summary` | `Recent News` | `contradicted_answer` | `partial_support` | `conflicting_contexts -> answer_overreach` | 0.822 |
 | `ragtruth_121` | `Summary` | `CNN/DM` | `contradicted_answer` | `partial_support` | `conflicting_contexts -> answer_overreach` | 0.864 |
 
@@ -56,7 +55,6 @@ No cases in this bucket.
 
 | Case | Task | Source | Expected | Predicted | Root Cause | Span Overlap |
 | --- | --- | --- | --- | --- | --- | ---: |
-| `ragtruth_7052` | `Data2txt` | `Yelp` | `contradicted_answer` | `partial_support` | `conflicting_contexts -> answer_overreach` | 0.797 |
 | `ragtruth_4211` | `Summary` | `Recent News` | `contradicted_answer` | `partial_support` | `conflicting_contexts -> answer_overreach` | 0.822 |
 | `ragtruth_730` | `Summary` | `CNN/DM` | `partial_support` | `contradicted_answer` | `answer_overreach -> conflicting_contexts` | 0.843 |
 | `ragtruth_14007` | `QA` | `MARCO` | `partial_support` | `contradicted_answer` | `answer_overreach -> conflicting_contexts` | 0.861 |
@@ -73,7 +71,7 @@ No cases in this bucket.
 
 | Value | Cases | Misses | Miss Rate | False Greens | Root Misses | Span Misses |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| `Data2txt` | 64 | 22 | 0.344 | 0 | 4 | 17 |
+| `Data2txt` | 64 | 21 | 0.328 | 0 | 3 | 17 |
 | `Summary` | 76 | 12 | 0.158 | 0 | 3 | 7 |
 | `QA` | 60 | 4 | 0.067 | 0 | 3 | 1 |
 
@@ -81,7 +79,7 @@ No cases in this bucket.
 
 | Value | Cases | Misses | Miss Rate | False Greens | Root Misses | Span Misses |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| `Yelp` | 64 | 22 | 0.344 | 0 | 4 | 17 |
+| `Yelp` | 64 | 21 | 0.328 | 0 | 3 | 17 |
 | `CNN/DM` | 49 | 8 | 0.163 | 0 | 2 | 4 |
 | `Recent News` | 27 | 4 | 0.148 | 0 | 1 | 3 |
 | `MARCO` | 60 | 4 | 0.067 | 0 | 3 | 1 |
@@ -93,16 +91,16 @@ No cases in this bucket.
 | `llama-2-7b-chat` | 33 | 11 | 0.333 | 0 | 2 | 8 |
 | `llama-2-13b-chat` | 35 | 9 | 0.257 | 0 | 4 | 5 |
 | `llama-2-70b-chat` | 35 | 7 | 0.200 | 0 | 1 | 6 |
-| `mistral-7B-instruct` | 34 | 5 | 0.147 | 0 | 1 | 4 |
 | `gpt-3.5-turbo-0613` | 32 | 4 | 0.125 | 0 | 1 | 1 |
+| `mistral-7B-instruct` | 34 | 4 | 0.118 | 0 | 0 | 4 |
 | `gpt-4-0613` | 31 | 2 | 0.065 | 0 | 1 | 1 |
 
 ### By RAGTruth Label Type
 
 | Value | Cases | Misses | Miss Rate | False Greens | Root Misses | Span Misses |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| `Evident Baseless Info` | 44 | 18 | 0.409 | 0 | 4 | 12 |
-| `Evident Conflict` | 41 | 16 | 0.390 | 0 | 2 | 14 |
+| `Evident Baseless Info` | 44 | 17 | 0.386 | 0 | 3 | 12 |
+| `Evident Conflict` | 41 | 15 | 0.366 | 0 | 1 | 14 |
 | `no_hallucination_span` | 112 | 4 | 0.036 | 0 | 4 | 0 |
 | `Subtle Conflict` | 2 | 2 | 1.000 | 0 | 1 | 1 |
 | `Subtle Baseless Info` | 11 | 2 | 0.182 | 0 | 0 | 1 |
@@ -111,7 +109,7 @@ No cases in this bucket.
 
 | Value | Cases | Misses | Miss Rate | False Greens | Root Misses | Span Misses |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| `contradicted_answer` | 43 | 18 | 0.419 | 0 | 3 | 15 |
+| `contradicted_answer` | 43 | 17 | 0.395 | 0 | 2 | 15 |
 | `partial_support` | 42 | 15 | 0.357 | 0 | 3 | 9 |
 | `no_failure_detected` | 114 | 4 | 0.035 | 0 | 4 | 0 |
 | `unsupported` | 1 | 1 | 1.000 | 0 | 0 | 1 |
@@ -121,9 +119,9 @@ No cases in this bucket.
 | Expected | Predicted | Count |
 | --- | --- | ---: |
 | `no_failure_detected` | `no_failure_detected` | 110 |
+| `conflicting_contexts` | `conflicting_contexts` | 41 |
 | `answer_overreach` | `answer_overreach` | 40 |
-| `conflicting_contexts` | `conflicting_contexts` | 40 |
 | `answer_overreach` | `conflicting_contexts` | 3 |
-| `conflicting_contexts` | `answer_overreach` | 3 |
 | `no_failure_detected` | `answer_overreach` | 3 |
+| `conflicting_contexts` | `answer_overreach` | 2 |
 | `no_failure_detected` | `conflicting_contexts` | 1 |

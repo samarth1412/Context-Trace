@@ -4,19 +4,19 @@
 - Mode: `semantic`
 - Case set: `external_case_pack`
 - Cases: `200`
-- Benchmark misses: `14`
-- Label misses: `10`
+- Benchmark misses: `13`
+- Label misses: `9`
 
 ## Confusion Matrix
 
 | Expected | Predicted | Count |
 | --- | --- | ---: |
 | `no_failure_detected` | `no_failure_detected` | 110 |
-| `contradicted_answer` | `contradicted_answer` | 40 |
+| `contradicted_answer` | `contradicted_answer` | 41 |
 | `partial_support` | `partial_support` | 39 |
-| `contradicted_answer` | `partial_support` | 3 |
 | `no_failure_detected` | `partial_support` | 3 |
 | `partial_support` | `contradicted_answer` | 3 |
+| `contradicted_answer` | `partial_support` | 2 |
 | `no_failure_detected` | `contradicted_answer` | 1 |
 | `unsupported` | `unsupported` | 1 |
 
@@ -25,11 +25,11 @@
 | Expected Root | Predicted Root | Count |
 | --- | --- | ---: |
 | `no_failure_detected` | `no_failure_detected` | 110 |
+| `conflicting_contexts` | `conflicting_contexts` | 41 |
 | `answer_overreach` | `answer_overreach` | 40 |
-| `conflicting_contexts` | `conflicting_contexts` | 40 |
 | `answer_overreach` | `conflicting_contexts` | 3 |
-| `conflicting_contexts` | `answer_overreach` | 3 |
 | `no_failure_detected` | `answer_overreach` | 3 |
+| `conflicting_contexts` | `answer_overreach` | 2 |
 | `no_failure_detected` | `conflicting_contexts` | 1 |
 
 ## False-Positive Labels
@@ -50,9 +50,6 @@
 - `ragtruth_4211`: expected `['contradicted_answer']`, predicted `['partial_support']`, root `conflicting_contexts -> answer_overreach`
   Claim: However, additional funding from Congress is needed to process more applications and reduce the current 30-day processing time.
   Missing: However, additional funding from Congress is needed to process more applications and reduce the current 30-day processing time
-- `ragtruth_7052`: expected `['contradicted_answer']`, predicted `['partial_support']`, root `conflicting_contexts -> answer_overreach`
-  Claim: The restaurant has outdoor seating available.
-  Missing: The restaurant has outdoor seating available
 - `ragtruth_7236`: expected `['partial_support']`, predicted `['contradicted_answer']`, root `answer_overreach -> conflicting_contexts`
   Claim: The restaurant is open from 7:00 AM to 10:30 PM on Mondays and Tuesdays, and from 5:00 PM to 9:30 PM from Wednesday to Sunday.
   Missing: The restaurant is open from 7:00 AM to 10:30 PM on Mondays and Tuesdays, and from 5:00 PM to 9:30 PM from Wednesday to Sunday

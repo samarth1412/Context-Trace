@@ -14,8 +14,8 @@ The reason is external validity. The verifier is strong on the built-in
 500-case benchmark and the 150-case public holdout, but the latest 200-case
 RAGTruth assisted run is still calibration-only:
 
-- Failure macro-F1: `0.950`
-- Root-cause accuracy: `0.950`
+- Failure macro-F1: `0.955`
+- Root-cause accuracy: `0.955`
 - Dangerous false-green rate: `0.000`
 - Evidence-span overlap: `0.786`
 - Claim-verdict macro-F1: `0.337` where claim-level overrides exist
@@ -64,7 +64,7 @@ Immediate targets from the latest error analysis:
   no hallucination span.
 - `no_failure_detected -> conflicting_contexts`: 1 case. Conflict detection is
   too eager on some supported rows.
-- `conflicting_contexts -> answer_overreach`: 3 cases, concentrated in
+- `conflicting_contexts -> answer_overreach`: 2 cases, concentrated in
   Data2txt/Yelp. These are contradicted-answer misses.
 - `answer_overreach -> conflicting_contexts`: 3 cases. These are
   partial-support misses being treated as contradictions.
@@ -292,6 +292,13 @@ Completed in the repo:
   other conjunct. This moved the 200-case RAGTruth assisted sample to failure
   macro-F1 `0.950` and root-cause accuracy `0.950` while preserving evidence
   span overlap `0.786` and dangerous false-green rate `0.000`.
+- A structured-data calibration pass now treats a single-feature outdoor
+  seating availability assertion as conflicting when the source JSON has
+  `OutdoorSeating: null`, while leaving multi-amenity partial-support rows and
+  explicit absence-of-information claims intact. This moved the 200-case
+  RAGTruth assisted sample to failure macro-F1 `0.955` and root-cause accuracy
+  `0.955` while preserving evidence span overlap `0.786` and dangerous
+  false-green rate `0.000`.
 - `ragtruth_review.py build-signoff-handoff` now creates a clean independent
   review handoff with blank reviewer fields, a Markdown packet, a status JSON,
   and exact validate/apply commands. The current 200-case RAGTruth handoff is
@@ -344,8 +351,8 @@ Current baseline status:
   error F1 `1.000`, evidence span overlap `0.921`.
 - RAGTruth assisted review pilot, ContextTrace semantic verifier: 200 official
   test-split stratified cases, 88 assisted-reviewed hallucination rows, 75
-  rows with source evidence spans, failure macro-F1 `0.950`, root-cause
-  accuracy `0.950`, citation error F1 `1.000`, evidence span overlap `0.786`,
+  rows with source evidence spans, failure macro-F1 `0.955`, root-cause
+  accuracy `0.955`, citation error F1 `1.000`, evidence span overlap `0.786`,
   and dangerous false-green rate `0.000`. This is not publishable without
   independent sign-off and calibration.
 - RAGTruth assisted review pilot, OpenAI diagnostic judge with `gpt-4.1-mini`:
