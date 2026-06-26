@@ -1138,10 +1138,21 @@ def test_ares_adapter_normalizes_official_example_tsv(tmp_path) -> None:
 
     assert by_id["supported"]["expected_label"] == ["no_failure_detected"]
     assert by_id["supported"]["expected_evidence_spans"] == ["Rockwell"]
-    assert by_id["bad_context"]["expected_label"] == ["should_have_abstained", "unsupported_answer"]
-    assert by_id["bad_context"]["expected_primary_root_cause"] == "should_have_abstained"
+    assert "bad_context" not in by_id
     assert by_id["bad_answer"]["expected_label"] == ["should_have_abstained", "unsupported_answer"]
     assert by_id["bad_answer"]["metadata"]["ares_mapping_reason"] == "ares_answer_not_faithful"
+
+    rows_with_retrieval_negatives = adapt_ares_rows(
+        load_ares_tsv(input_path),
+        dataset="ARES-NQ-example",
+        include_context_relevance_negatives=True,
+    )
+    by_id_with_retrieval_negatives = {row["id"]: row for row in rows_with_retrieval_negatives}
+    assert by_id_with_retrieval_negatives["bad_context"]["expected_label"] == [
+        "should_have_abstained",
+        "unsupported_answer",
+    ]
+    assert by_id_with_retrieval_negatives["bad_context"]["expected_primary_root_cause"] == "should_have_abstained"
 
 
 def test_ares_adapter_cli_writes_generic_rows(tmp_path, capsys) -> None:
@@ -1316,6 +1327,40 @@ def test_generic_external_workflow_scores_independent_review_bundle(tmp_path) ->
     assert any(artifact["path"] == "external_review_signoff.jsonl" for artifact in manifest["artifacts"])
     assert any(artifact["path"] == "external_reviewed_case_pack.json" for artifact in manifest["artifacts"])
     assert any(artifact["path"] == "scored/contexttrace_bench_results.json" for artifact in manifest["artifacts"])
+
+
+def test_ares_case_pack_projects_detailed_failures_to_binary_answer_labels(tmp_path) -> None:
+    case_pack = adapt_external_rows(
+        [
+            {
+                "id": "bad-answer",
+                "query": "Who starred in the film?",
+                "answer": "Dan Stevens",
+                "contexts": ["The film stars Joaquin Phoenix and Reese Witherspoon."],
+                "expected_label": ["should_have_abstained", "unsupported_answer"],
+                "expected_primary_root_cause": "should_have_abstained",
+            }
+        ],
+        dataset="ARES-NQ-example",
+    )
+    case_pack_path = tmp_path / "ares_case_pack.json"
+    case_pack_path.write_text(json.dumps(case_pack), encoding="utf-8")
+
+    result = run_contexttrace_case_pack(
+        mode="semantic",
+        case_pack_path=case_pack_path,
+        bootstrap_samples=10,
+    )
+    row = result["rows"][0]
+
+    assert row["expected"] == ["should_have_abstained", "unsupported_answer"]
+    assert row["predicted"] == ["should_have_abstained", "unsupported_answer"]
+    assert row["raw_predicted"] is not None
+    assert row["answer_label_projection"]["reason"] == "ares_binary_answer_failure"
+    assert row["predicted_primary_root_cause"] == "should_have_abstained"
+    assert row["root_cause_match"] is True
+    assert result["summary"]["failure_label_exact_match_rate"] == 1.0
+    assert result["summary"]["root_cause_accuracy"] == 1.0
 
 
 def test_ragtruth_review_queue_and_mapping_updates_case_pack() -> None:

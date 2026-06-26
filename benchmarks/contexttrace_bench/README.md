@@ -430,12 +430,14 @@ python benchmarks/contexttrace_bench/external_case_pack_workflow.py \
   --no-auto-candidates
 ```
 
-Current ARES example status: the full official example download produced 6,189
-eligible rows. The 200-row stratified smoke is `review_pending` with failure
-macro-F1 `0.554`, root-cause accuracy `0.905`, dangerous false-green rate
-`0.070`, citation error F1 `1.000`, and evidence span overlap `0.276`. This is
-calibration evidence only; the ARES component labels need independent review
-before they can support external-validation claims.
+Current ARES example status: the official example TSV contains 6,189 rows. The
+default adapter path keeps the 4,421 answer-grounding rows and skips
+context-relevance-only retrieval negatives unless
+`--include-context-relevance-negatives` is supplied. The 200-row stratified smoke
+is `review_pending` with failure macro-F1 `0.980`, root-cause accuracy `0.980`,
+dangerous false-green rate `0.010`, citation error F1 `1.000`, and evidence span
+overlap `0.302`. This is calibration evidence only; the ARES component labels
+need independent review before they can support external-validation claims.
 
 The RAGTruth adapter creates a ContextTrace-style case pack from the official
 `response.jsonl` and `source_info.jsonl` exports:

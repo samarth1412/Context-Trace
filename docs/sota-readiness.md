@@ -315,12 +315,15 @@ Completed in the repo:
   conservative statuses: `review_pending`, `calibration_only`, `publishable`,
   or `validation_failed`.
 - `benchmarks/contexttrace_bench/ares_adapter.py` now normalizes the official
-  ARES NQ example TSV into generic external JSONL rows. The official download
-  produced 6,189 eligible rows; a deterministic 200-row stratified smoke is
-  scored under `benchmarks/contexttrace_bench/out/ares_nq_example/smoke200_release/`.
-- The latest ARES NQ example smoke scores failure macro-F1 `0.554`, root-cause
-  accuracy `0.905`, dangerous false-green rate `0.070`, citation error F1
-  `1.000`, and evidence span overlap `0.276` on 200 rows. It is
+  ARES NQ example TSV into generic external JSONL rows. The official TSV
+  contains 6,189 rows; the default adapter keeps 4,421 answer-grounding rows and
+  skips context-relevance-only retrieval negatives unless
+  `--include-context-relevance-negatives` is supplied. A deterministic 200-row
+  stratified smoke is scored under
+  `benchmarks/contexttrace_bench/out/ares_nq_example/smoke200_release/`.
+- The latest ARES NQ example smoke scores failure macro-F1 `0.980`, root-cause
+  accuracy `0.980`, dangerous false-green rate `0.010`, citation error F1
+  `1.000`, and evidence span overlap `0.302` on 200 rows. It is
   `review_pending`, not publishable.
 - The current semantic verifier now clears the 6-week plan's RAGTruth
   calibration thresholds for failure macro-F1, root-cause accuracy, dangerous
@@ -382,11 +385,12 @@ Current baseline status:
   `0.592`, and dangerous false-green rate `0.260`. This is useful calibration
   evidence, but it is too under-sensitive to use as a publishable external row.
 - ARES NQ example smoke, ContextTrace semantic verifier: 200 official example
-  rows sampled from 6,189 eligible rows, failure macro-F1 `0.554`, root-cause
-  accuracy `0.905`, citation error F1 `1.000`, evidence span overlap `0.276`,
-  and dangerous false-green rate `0.070`. This proves the second external
-  workflow path but is `review_pending` and not publishable until the
-  ARES-to-ContextTrace label mapping and remaining false greens are reviewed.
+  rows sampled from the 4,421-row answer-grounding subset, failure macro-F1
+  `0.980`, root-cause accuracy `0.980`, citation error F1 `1.000`, evidence span
+  overlap `0.302`, and dangerous false-green rate `0.010`. This proves the
+  second external workflow path but is `review_pending` and not publishable until
+  the ARES-to-ContextTrace label mapping, span metric, and remaining false greens
+  are reviewed.
 - Ollama is reachable locally and `phi3:latest` completed a 5-case local-judge
   smoke run. The smoke took about 155 seconds, making a full 500-case run a
   multi-hour local job on this machine.

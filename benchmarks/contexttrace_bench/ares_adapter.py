@@ -50,9 +50,12 @@ def adapt_ares_rows(
     *,
     dataset: str = "ARES-NQ-example",
     source_name: str = "ARES/NQ example",
+    include_context_relevance_negatives: bool = False,
 ) -> list[dict[str, Any]]:
     output = []
     for row in rows:
+        if _context_relevance_only_negative(row) and not include_context_relevance_negatives:
+            continue
         labels, root_cause, mapping_reason = _expected_from_ares_labels(row)
         answer = str(row.get("Answer") or "").strip()
         document = str(row.get("Document") or "").strip()
@@ -89,6 +92,14 @@ def adapt_ares_rows(
             }
         )
     return output
+
+
+def _context_relevance_only_negative(row: dict[str, Any]) -> bool:
+    return (
+        _label_value(row.get("Context_Relevance_Label")) == "0.0"
+        and not _label_value(row.get("Answer_Faithfulness_Label"))
+        and not _label_value(row.get("Answer_Relevance_Label"))
+    )
 
 
 def write_jsonl_rows(rows: list[dict[str, Any]], path: str | Path) -> str:
@@ -156,6 +167,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output", required=True, help="Generic external JSONL rows to write.")
     parser.add_argument("--dataset", default="ARES-NQ-example")
     parser.add_argument("--source-name", default="ARES/NQ example")
+    parser.add_argument(
+        "--include-context-relevance-negatives",
+        action="store_true",
+        help=(
+            "Keep ARES rows where only Context_Relevance_Label is 0.0. "
+            "By default these retrieval-relevance rows are skipped for answer-grounding runs."
+        ),
+    )
     parser.add_argument("--download-example", choices=["labeled", "unlabeled"])
     parser.add_argument("--download-dir", default=str(Path(__file__).with_name("out") / "ares_nq_example"))
     args = parser.parse_args(argv)
@@ -170,6 +189,7 @@ def main(argv: list[str] | None = None) -> int:
         load_ares_tsv(input_path),
         dataset=args.dataset,
         source_name=args.source_name,
+        include_context_relevance_negatives=args.include_context_relevance_negatives,
     )
     written = write_jsonl_rows(rows, args.output)
     print("Wrote: %s" % written)

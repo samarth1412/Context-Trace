@@ -521,7 +521,11 @@ python benchmarks/contexttrace_bench/external_case_pack_workflow.py \
   --no-auto-candidates
 ```
 
-Current ARES status: 6,189 eligible official example rows, 200 sampled and
-scored, bundle `review_pending`, failure macro-F1 `0.554`, root-cause accuracy
-`0.905`, dangerous false-green rate `0.070`. Treat this as calibration evidence
-until independent review validates the ARES-to-ContextTrace label mapping.
+Current ARES status: the official example TSV contains 6,189 rows. The default
+adapter path keeps 4,421 answer-grounding rows and skips context-relevance-only
+retrieval negatives unless `--include-context-relevance-negatives` is supplied.
+The 200-row stratified smoke is scored, bundle `review_pending`, with failure
+macro-F1 `0.980`, root-cause accuracy `0.980`, dangerous false-green rate
+`0.010`, citation error F1 `1.000`, and evidence span overlap `0.302`. Treat this
+as calibration evidence until independent review validates the ARES-to-ContextTrace
+label mapping.

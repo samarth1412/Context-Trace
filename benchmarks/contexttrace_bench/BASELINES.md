@@ -183,15 +183,18 @@ Latest ARES NQ example smoke:
 
 | System | Cases | Eligible Rows | Failure Macro-F1 | Root Cause Accuracy | Dangerous False Green | Citation Error F1 | Span Overlap | Status |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| ContextTrace semantic verifier on official ARES NQ example stratified smoke | 200 | 6,189 | 0.554 | 0.905 | 0.070 | 1.000 | 0.276 | review_pending |
+| ContextTrace semantic verifier on official ARES NQ example answer-grounding stratified smoke | 200 | 4,421 | 0.980 | 0.980 | 0.010 | 1.000 | 0.302 | review_pending |
 
 This run uses the official ARES `nq_labeled_output.tsv` example file from
 `stanford-futuredata/ARES`, normalized by `ares_adapter.py`, then sampled with
 `sample_size=200`, `sample_seed=13`, and
 `stratify_by=metadata.ares_context_relevance_label,metadata.ares_answer_faithfulness_label,metadata.ares_answer_relevance_label`.
-It is a second external-dataset workflow proof, not a publishable row. The
-remaining blockers are independent review of the ARES component-label mapping,
-dangerous false-green calibration, and competitor rows on the same sampled IDs.
+The official TSV contains 6,189 rows; the default adapter keeps 4,421
+answer-grounding rows and skips context-relevance-only retrieval negatives unless
+`--include-context-relevance-negatives` is supplied. It is a second
+external-dataset workflow proof, not a publishable row. The remaining blockers
+are independent review of the ARES component-label mapping, evidence-span
+calibration, and competitor rows on the same sampled IDs.
 
 ## Full ContextTrace Run
 

@@ -1787,7 +1787,11 @@ def _answer_label_projection(
     dataset: str,
     scope: str,
 ) -> dict[str, Any] | None:
-    if str(dataset or "").lower() != "ragtruth":
+    dataset_name = str(dataset or "").strip()
+    dataset_key = dataset_name.lower()
+    if dataset_key.startswith("ares"):
+        return _ares_answer_label_projection(raw_labels, result, dataset=dataset_name)
+    if dataset_key != "ragtruth":
         return None
 
     labels = set(raw_labels or set())
@@ -1817,6 +1821,30 @@ def _answer_label_projection(
         "scope": "answer_label",
         "dataset": "RAGTruth",
         "verdict_scope": scope,
+        "raw_labels": sorted(labels),
+        "labels": sorted(projected),
+        "reason": reason,
+        "raw_failure_type": str((result.get("summary") or {}).get("failure_type") or ""),
+    }
+
+
+def _ares_answer_label_projection(
+    raw_labels: set[str],
+    result: dict[str, Any],
+    *,
+    dataset: str,
+) -> dict[str, Any]:
+    labels = set(raw_labels or set())
+    if not labels or labels == {"no_failure_detected"}:
+        projected = {"no_failure_detected"}
+        reason = "raw_no_failure"
+    else:
+        projected = {"should_have_abstained", "unsupported_answer"}
+        reason = "ares_binary_answer_failure"
+    return {
+        "scope": "answer_label",
+        "dataset": dataset,
+        "verdict_scope": "answer_label",
         "raw_labels": sorted(labels),
         "labels": sorted(projected),
         "reason": reason,
@@ -1996,6 +2024,8 @@ def _summary(
 def _predicted_primary_root_cause(row: dict[str, Any]) -> str:
     projection = row.get("answer_label_projection")
     if isinstance(projection, dict):
+        if _is_ares_binary_failure_projection(projection):
+            return "should_have_abstained"
         projected_root = _root_cause_from_answer_labels(set(projection.get("labels") or []))
         if projected_root:
             return projected_root
@@ -2008,6 +2038,13 @@ def _predicted_primary_root_cause(row: dict[str, Any]) -> str:
         if isinstance(root, dict) and root.get("label"):
             return str(root["label"])
     return "unknown"
+
+
+def _is_ares_binary_failure_projection(projection: dict[str, Any]) -> bool:
+    return (
+        str(projection.get("dataset") or "").lower().startswith("ares")
+        and str(projection.get("reason") or "") == "ares_binary_answer_failure"
+    )
 
 
 def _root_cause_from_answer_labels(labels: set[str]) -> str:
