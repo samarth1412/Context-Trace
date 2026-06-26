@@ -17,6 +17,7 @@ case set and are scored by `run_contexttrace.py --candidate`.
 | Phoenix | `adapt_candidate.py --preset phoenix` | Adapter ready | No | Requires exported Phoenix evaluator results. |
 | TruLens | `adapt_candidate.py --preset trulens` | Adapter ready | No | Requires exported TruLens evaluator results. |
 | RAGTruth external validation | `ragtruth_adapter.py`, `ragtruth_review.py`, `ragtruth_workflow.py`, `run_contexttrace.py --case-pack` | 200-case stratified assisted workflow scored | No | Deterministic test-split sample scored with 88 GPT-5.1-assisted review rows; 75 rows have source evidence spans and 13 are intentionally source-less or source-supported taxonomy corrections. Requires independent human sign-off and calibration before publishable external-dataset claims. |
+| Generic external case-pack validation | `external_case_pack.py`, `run_contexttrace.py --case-pack` | Adapter ready | No | Normalizes CRAG/ARES-style JSON or JSONL exports with query, answer, contexts, and labels. Requires official export files, dataset documentation, and review/sign-off before publishable external claims. |
 
 Latest scored leaderboard:
 
@@ -529,6 +530,49 @@ python benchmarks/contexttrace_bench/run_contexttrace.py `
   --bootstrap-samples 100 `
   --candidate benchmarks/contexttrace_bench/out/ragtruth_official/openai_judge_test50_predictions.json
 ```
+
+## Generic External Case Packs
+
+Use `external_case_pack.py` when the next external dataset is already available
+as JSON or JSONL rows with answer, context, and label fields. This is the
+shortest path for CRAG/ARES-style exports because it reuses the same
+`run_contexttrace.py --case-pack` scoring, candidate-input, leaderboard,
+confidence-interval, and error-analysis machinery as RAGTruth.
+
+```bash
+python benchmarks/contexttrace_bench/external_case_pack.py \
+  --input path/to/ares_or_crag_rows.jsonl \
+  --output benchmarks/contexttrace_bench/out/ares_case_pack.json \
+  --dataset ARES \
+  --query-field question \
+  --answer-field response \
+  --contexts-field retrieved_context \
+  --label-field label \
+  --sample-size 200 \
+  --sample-seed 13 \
+  --stratify-by split,label
+```
+
+The adapter accepts contexts as strings or objects with `text`, `content`,
+`passage`, or `document` fields. Use `--root-cause-field` and
+`--evidence-spans-field` when the dataset supplies richer labels. If evidence
+spans are not supplied by the dataset or an independent reviewer, span-overlap
+metrics should be described as unavailable or review-pending rather than
+publishable.
+
+Score the generated case pack:
+
+```bash
+python benchmarks/contexttrace_bench/run_contexttrace.py \
+  --mode semantic \
+  --case-pack benchmarks/contexttrace_bench/out/ares_case_pack.json \
+  --output-dir benchmarks/contexttrace_bench/out/ares
+```
+
+Before calling the row publishable, record the upstream dataset version or
+commit, the frozen input file checksum, the full adapter command, sampling
+metadata from `stats.sampling`, reviewed label/span decisions, and competitor
+prediction files scored on the same case IDs.
 
 ## Publishability Checklist
 

@@ -6,7 +6,7 @@ without making claims before the benchmark support exists.
 
 ## Reality Check: Not SOTA Yet
 
-As of June 25, 2026, ContextTrace has a credible benchmark and release-evidence
+As of June 26, 2026, ContextTrace has a credible benchmark and release-evidence
 pipeline, but it is not yet defensible as a broad state-of-the-art RAG
 evaluation product.
 
@@ -304,6 +304,11 @@ Completed in the repo:
   and exact validate/apply commands. The current 200-case RAGTruth handoff is
   generated under `benchmarks/contexttrace_bench/out/ragtruth_independent_signoff/`
   with 88 rows awaiting independent review.
+- A generic external case-pack adapter,
+  `benchmarks/contexttrace_bench/external_case_pack.py`, now normalizes
+  CRAG/ARES-style JSON or JSONL exports into the same `run_contexttrace.py
+  --case-pack` scoring path. It supports deterministic sampling, stratification,
+  field mapping, root-cause labels, and optional evidence-span labels.
 - The current semantic verifier now clears the 6-week plan's RAGTruth
   calibration thresholds for failure macro-F1, root-cause accuracy, dangerous
   false-green rate, and evidence-span overlap on the 200-case assisted sample.
@@ -323,9 +328,12 @@ Still pending for Week 1:
   before using the 200-case RAGTruth source-evidence mappings for publishable
   span-localization or external-dataset claims. Until then, the RAGTruth release
   bundle should remain `calibration_only`. This is tracked in GitHub issue #7.
-- Create full external dataset validation tracks for RAGTruth, RAGChecker, CRAG,
-  and ARES before making broad SOTA claims. RAGChecker, CRAG, and ARES follow-up
-  work is tracked in GitHub issues #3, #4, and #5.
+- Run a second official external dataset through the new generic case-pack path,
+  preferably CRAG or ARES. This still requires the frozen upstream export,
+  exact adapter command, dataset citation/version, review of ambiguous labels or
+  spans, and competitor rows on the same IDs before making broad SOTA claims.
+  RAGChecker, CRAG, and ARES follow-up work is tracked in GitHub issues #3, #4,
+  and #5.
 - Complete human audit sign-off for ContextTrace-Diag-150 before using
   frozen-split language. Use `audit_diag150.py` to generate the reviewer packet
   and validation artifacts before the independent review, then rerun it with

@@ -326,6 +326,44 @@ install them in separate venvs when collecting publishable comparison rows.
 
 ## External Dataset Scaffolding
 
+For CRAG, ARES, or another external export that already has query, answer,
+context, and label fields, first normalize it into a ContextTrace case pack:
+
+```bash
+python benchmarks/contexttrace_bench/external_case_pack.py \
+  --input path/to/external_rows.jsonl \
+  --output benchmarks/contexttrace_bench/out/ares_case_pack.json \
+  --dataset ARES \
+  --query-field question \
+  --answer-field response \
+  --contexts-field retrieved_context \
+  --label-field label \
+  --sample-size 200 \
+  --sample-seed 13 \
+  --stratify-by split,label
+```
+
+The generic adapter accepts JSON or JSONL rows. Contexts may be strings or
+objects with `text`, `content`, `passage`, or `document` fields. Use
+`--id-field`, `--root-cause-field`, and `--evidence-spans-field` when the
+export provides those columns under different names. Rows without answer text
+or contexts are skipped because they cannot be fairly verified. The generated
+case pack records skipped counts and sampling metadata under `stats`.
+
+Score the adapted pack with the normal external report path:
+
+```bash
+python benchmarks/contexttrace_bench/run_contexttrace.py \
+  --mode semantic \
+  --case-pack benchmarks/contexttrace_bench/out/ares_case_pack.json \
+  --output-dir benchmarks/contexttrace_bench/out/ares
+```
+
+Treat generic external packs as a documented bridge, not a publishable result by
+themselves. Public claims still need the upstream dataset citation, frozen input
+file, exact adapter command, independent review where labels or source spans
+are ambiguous, and competitor rows scored on the same IDs.
+
 The RAGTruth adapter creates a ContextTrace-style case pack from the official
 `response.jsonl` and `source_info.jsonl` exports:
 

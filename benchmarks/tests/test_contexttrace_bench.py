@@ -18,6 +18,11 @@ from benchmarks.contexttrace_bench.diag150_release_workflow import (
     render_workflow_summary,
     run_diag150_release_workflow,
 )
+from benchmarks.contexttrace_bench.external_case_pack import (
+    adapt_external_rows,
+    load_rows as load_external_rows,
+    main as external_case_pack_main,
+)
 from benchmarks.contexttrace_bench.run_deepeval import build_deepeval_rows
 from benchmarks.contexttrace_bench.run_contexttrace import (
     _answer_label_projection,
@@ -897,6 +902,151 @@ def test_ragtruth_adapter_builds_deterministic_stratified_sample() -> None:
     assert ("no_failure_detected",) in labels
     assert ("partial_support",) in labels
     assert ("contradicted_answer",) in labels
+
+
+def test_generic_external_adapter_builds_contexttrace_case_pack() -> None:
+    case_pack = adapt_external_rows(
+        [
+            {
+                "id": "case-1",
+                "query": "What is the refund policy?",
+                "answer": "Refunds are available within 30 days.",
+                "contexts": [{"doc_id": "policy", "text": "Refunds are available within 30 days."}],
+                "expected_label": "supported",
+                "expected_evidence_spans": ["Refunds are available within 30 days."],
+                "metadata": {"split": "dev"},
+            },
+            {
+                "id": "case-2",
+                "query": "What is the refund policy?",
+                "answer": "VIP customers get cash refunds.",
+                "contexts": [{"doc_id": "policy", "text": "Refunds are store credit only."}],
+                "expected_label": "contradiction",
+            },
+        ],
+        dataset="ARES",
+        source_name="ARES/dev",
+    )
+
+    assert case_pack["dataset"] == "ARES"
+    assert case_pack["adapter"] == "generic_external_contexttrace_case_pack"
+    assert case_pack["stats"]["input_rows"] == 2
+    assert case_pack["stats"]["output_cases"] == 2
+    supported = case_pack["cases"][0]
+    contradicted = case_pack["cases"][1]
+    assert supported["id"] == "ares_case_1"
+    assert supported["expected_labels"] == ["no_failure_detected"]
+    assert supported["expected_primary_root_cause"] == "no_failure_detected"
+    assert supported["contexts"][0]["id"] == "policy"
+    assert supported["dataset_metadata"]["upstream_metadata"]["split"] == "dev"
+    assert contradicted["expected_labels"] == ["contradicted_answer"]
+    assert contradicted["expected_primary_root_cause"] == "conflicting_contexts"
+
+
+def test_generic_external_adapter_sampling_is_deterministic() -> None:
+    rows = [
+        {
+            "id": "row-%s" % index,
+            "query": "Question?",
+            "answer": "Answer %s." % index,
+            "contexts": ["Answer %s." % index],
+            "expected_label": "supported" if index % 2 else "hallucinated",
+            "split": "dev" if index < 4 else "test",
+        }
+        for index in range(8)
+    ]
+
+    first = adapt_external_rows(
+        rows,
+        dataset="CRAG",
+        sample_size=4,
+        sample_seed=77,
+        stratify_by=["split", "expected_label"],
+    )
+    second = adapt_external_rows(
+        rows,
+        dataset="CRAG",
+        sample_size=4,
+        sample_seed=77,
+        stratify_by=["split", "expected_label"],
+    )
+
+    assert [case["id"] for case in first["cases"]] == [case["id"] for case in second["cases"]]
+    assert first["stats"]["sampling"]["method"] == "stratified"
+    assert first["stats"]["sampling"]["stratify_by"] == ["split", "expected_label"]
+    assert len(first["cases"]) == 4
+
+
+def test_generic_external_adapter_case_pack_scores(tmp_path) -> None:
+    case_pack = adapt_external_rows(
+        [
+            {
+                "id": "case-supported",
+                "query": "What does the policy say?",
+                "answer": "Refunds are available within 30 days.",
+                "contexts": ["Refunds are available within 30 days."],
+                "expected_label": "supported",
+                "expected_evidence_spans": ["Refunds are available within 30 days."],
+            }
+        ],
+        dataset="ARES",
+    )
+    case_pack_path = tmp_path / "ares_case_pack.json"
+    case_pack_path.write_text(json.dumps(case_pack), encoding="utf-8")
+
+    result = run_contexttrace_case_pack(
+        mode="semantic",
+        case_pack_path=case_pack_path,
+        bootstrap_samples=10,
+    )
+
+    assert result["case_pack_dataset"] == "ARES"
+    assert result["summary"]["failure_label_macro_f1"] == 1.0
+    assert result["summary"]["evidence_span_overlap"] == 1.0
+    assert result["rows"][0]["case_pack_metadata"]["dataset_metadata"]["source_row_id"] == "case-supported"
+
+
+def test_generic_external_adapter_cli_writes_case_pack(tmp_path, capsys) -> None:
+    input_path = tmp_path / "rows.jsonl"
+    input_path.write_text(
+        json.dumps(
+            {
+                "id": "one",
+                "question": "What does the source say?",
+                "response": "The source supports this answer.",
+                "retrieved_context": [{"doc_id": "doc", "text": "The source supports this answer."}],
+                "label": "supported",
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    output_path = tmp_path / "case_pack.json"
+
+    assert external_case_pack_main(
+        [
+            "--input",
+            str(input_path),
+            "--output",
+            str(output_path),
+            "--dataset",
+            "CRAG",
+            "--query-field",
+            "question",
+            "--answer-field",
+            "response",
+            "--contexts-field",
+            "retrieved_context",
+            "--label-field",
+            "label",
+        ]
+    ) == 0
+
+    payload = json.loads(output_path.read_text(encoding="utf-8"))
+    assert payload["dataset"] == "CRAG"
+    assert payload["cases"][0]["query"] == "What does the source say?"
+    assert load_external_rows(input_path)[0]["id"] == "one"
+    assert "Cases: 1" in capsys.readouterr().out
 
 
 def test_ragtruth_review_queue_and_mapping_updates_case_pack() -> None:

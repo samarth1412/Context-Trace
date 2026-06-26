@@ -449,3 +449,29 @@ py -3.11 -m venv $judgeVenv
 RAGChecker, Phoenix, and TruLens comparison rows can be adapted from exported
 evaluator results with `--preset ragchecker`, `--preset phoenix`, and
 `--preset trulens`.
+
+Generic external datasets with query, answer, contexts, and labels can be
+normalized into the same case-pack format:
+
+```bash
+python benchmarks/contexttrace_bench/external_case_pack.py \
+  --input path/to/external_rows.jsonl \
+  --output benchmarks/contexttrace_bench/out/ares_case_pack.json \
+  --dataset ARES \
+  --query-field question \
+  --answer-field response \
+  --contexts-field retrieved_context \
+  --label-field label \
+  --sample-size 200 \
+  --sample-seed 13 \
+  --stratify-by split,label
+
+python benchmarks/contexttrace_bench/run_contexttrace.py \
+  --mode semantic \
+  --case-pack benchmarks/contexttrace_bench/out/ares_case_pack.json \
+  --output-dir benchmarks/contexttrace_bench/out/ares
+```
+
+Use this for CRAG/ARES-style exports only after recording the upstream dataset
+version, frozen input checksum, field mapping, sampling metadata, and any
+independent review needed for labels or source evidence spans.
