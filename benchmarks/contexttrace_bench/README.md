@@ -404,6 +404,39 @@ python benchmarks/contexttrace_bench/external_case_pack_workflow.py \
   --review-kind independent
 ```
 
+The official ARES NQ example TSV can be normalized first:
+
+```bash
+python benchmarks/contexttrace_bench/ares_adapter.py \
+  --download-example labeled \
+  --download-dir benchmarks/contexttrace_bench/out/ares_nq_example \
+  --output benchmarks/contexttrace_bench/out/ares_nq_example/ares_nq_labeled_rows.jsonl \
+  --dataset ARES-NQ-example \
+  --source-name "ARES/NQ labeled example"
+```
+
+Then score a deterministic 200-row stratified smoke:
+
+```bash
+python benchmarks/contexttrace_bench/external_case_pack_workflow.py \
+  --input benchmarks/contexttrace_bench/out/ares_nq_example/ares_nq_labeled_rows.jsonl \
+  --dataset ARES-NQ-example \
+  --output-dir benchmarks/contexttrace_bench/out/ares_nq_example/smoke200_release \
+  --bundle-dir benchmarks/contexttrace_bench/out/ares_nq_example/smoke200_release_bundle \
+  --sample-size 200 \
+  --sample-seed 13 \
+  --stratify-by metadata.ares_context_relevance_label,metadata.ares_answer_faithfulness_label,metadata.ares_answer_relevance_label \
+  --bootstrap-samples 100 \
+  --no-auto-candidates
+```
+
+Current ARES example status: the full official example download produced 6,189
+eligible rows. The 200-row stratified smoke is `review_pending` with failure
+macro-F1 `0.554`, root-cause accuracy `0.905`, dangerous false-green rate
+`0.070`, citation error F1 `1.000`, and evidence span overlap `0.276`. This is
+calibration evidence only; the ARES component labels need independent review
+before they can support external-validation claims.
+
 The RAGTruth adapter creates a ContextTrace-style case pack from the official
 `response.jsonl` and `source_info.jsonl` exports:
 

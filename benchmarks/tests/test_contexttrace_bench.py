@@ -4,6 +4,11 @@ import json
 from pathlib import Path
 
 from benchmarks.contexttrace_bench.adapt_candidate import adapt_candidate_rows
+from benchmarks.contexttrace_bench.ares_adapter import (
+    adapt_ares_rows,
+    load_ares_tsv,
+    main as ares_adapter_main,
+)
 from benchmarks.contexttrace_bench.audit_diag150 import (
     build_diag150_audit_packet,
     build_human_review_template,
@@ -1051,6 +1056,128 @@ def test_generic_external_adapter_cli_writes_case_pack(tmp_path, capsys) -> None
     assert payload["cases"][0]["query"] == "What does the source say?"
     assert load_external_rows(input_path)[0]["id"] == "one"
     assert "Cases: 1" in capsys.readouterr().out
+
+
+def test_ares_adapter_normalizes_official_example_tsv(tmp_path) -> None:
+    input_path = tmp_path / "ares.tsv"
+    input_path.write_text(
+        "\n".join(
+            [
+                "\t".join(
+                    [
+                        "id",
+                        "input",
+                        "meta",
+                        "output",
+                        "wikipedia_id",
+                        "Document",
+                        "paragraph_number",
+                        "Answer",
+                        "Query",
+                        "Context_Relevance_Label",
+                        "Answer_Faithfulness_Label",
+                        "Answer_Relevance_Label",
+                    ]
+                ),
+                "\t".join(
+                    [
+                        "supported",
+                        "who sings somebody's watching me with michael jackson",
+                        "{}",
+                        "{}",
+                        "1551152",
+                        "Rockwell recorded Somebody's Watching Me in 1984.",
+                        "1",
+                        "Rockwell",
+                        "who sings somebody's watching me with michael jackson",
+                        "1.0",
+                        "1.0",
+                        "1.0",
+                    ]
+                ),
+                "\t".join(
+                    [
+                        "bad_context",
+                        "where was the uss maine",
+                        "{}",
+                        "{}",
+                        "0",
+                        "This unrelated document is about comics.",
+                        "1",
+                        "Havana Harbor",
+                        "where was the uss maine",
+                        "0.0",
+                        "",
+                        "",
+                    ]
+                ),
+                "\t".join(
+                    [
+                        "bad_answer",
+                        "who cracked enigma",
+                        "{}",
+                        "{}",
+                        "0",
+                        "Alan Turing worked on wartime codebreaking.",
+                        "1",
+                        "Ada Lovelace",
+                        "who cracked enigma",
+                        "1.0",
+                        "0.0",
+                        "0.0",
+                    ]
+                ),
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    rows = adapt_ares_rows(load_ares_tsv(input_path), dataset="ARES-NQ-example")
+    by_id = {row["id"]: row for row in rows}
+
+    assert by_id["supported"]["expected_label"] == ["no_failure_detected"]
+    assert by_id["supported"]["expected_evidence_spans"] == ["Rockwell"]
+    assert by_id["bad_context"]["expected_label"] == ["should_have_abstained", "unsupported_answer"]
+    assert by_id["bad_context"]["expected_primary_root_cause"] == "should_have_abstained"
+    assert by_id["bad_answer"]["expected_label"] == ["should_have_abstained", "unsupported_answer"]
+    assert by_id["bad_answer"]["metadata"]["ares_mapping_reason"] == "ares_answer_not_faithful"
+
+
+def test_ares_adapter_cli_writes_generic_rows(tmp_path, capsys) -> None:
+    input_path = tmp_path / "ares.tsv"
+    header = [
+        "id",
+        "input",
+        "meta",
+        "output",
+        "wikipedia_id",
+        "Document",
+        "paragraph_number",
+        "Answer",
+        "Query",
+        "Context_Relevance_Label",
+        "Answer_Faithfulness_Label",
+        "Answer_Relevance_Label",
+    ]
+    input_path.write_text(
+        "\n".join(
+            [
+                "\t".join(header),
+                "one\tq\t{}\t{}\t1\tThe source supports Alpha.\t1\tAlpha\tq\t1.0\t1.0\t1.0",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    output_path = tmp_path / "ares_rows.jsonl"
+
+    assert ares_adapter_main(["--input", str(input_path), "--output", str(output_path)]) == 0
+
+    rows = [json.loads(line) for line in output_path.read_text(encoding="utf-8").splitlines()]
+    assert rows[0]["id"] == "one"
+    assert rows[0]["expected_label"] == ["no_failure_detected"]
+    assert "Rows: 1" in capsys.readouterr().out
 
 
 def test_generic_external_workflow_builds_review_pending_bundle(tmp_path) -> None:

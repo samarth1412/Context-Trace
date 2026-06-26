@@ -314,6 +314,14 @@ Completed in the repo:
   ContextTrace scoring, release-bundle manifests, SHA256 checksums, and
   conservative statuses: `review_pending`, `calibration_only`, `publishable`,
   or `validation_failed`.
+- `benchmarks/contexttrace_bench/ares_adapter.py` now normalizes the official
+  ARES NQ example TSV into generic external JSONL rows. The official download
+  produced 6,189 eligible rows; a deterministic 200-row stratified smoke is
+  scored under `benchmarks/contexttrace_bench/out/ares_nq_example/smoke200_release/`.
+- The latest ARES NQ example smoke scores failure macro-F1 `0.554`, root-cause
+  accuracy `0.905`, dangerous false-green rate `0.070`, citation error F1
+  `1.000`, and evidence span overlap `0.276` on 200 rows. It is
+  `review_pending`, not publishable.
 - The current semantic verifier now clears the 6-week plan's RAGTruth
   calibration thresholds for failure macro-F1, root-cause accuracy, dangerous
   false-green rate, and evidence-span overlap on the 200-case assisted sample.
@@ -334,11 +342,11 @@ Still pending for Week 1:
   span-localization or external-dataset claims. Until then, the RAGTruth release
   bundle should remain `calibration_only`. This is tracked in GitHub issue #7.
 - Run a second official external dataset through the new generic workflow,
-  preferably CRAG or ARES. This still requires copying in the frozen upstream
-  export, recording the dataset citation/version, completing independent review
-  for ambiguous labels or spans, and scoring competitor rows on the same IDs
-  before making broad SOTA claims. RAGChecker, CRAG, and ARES follow-up work is
-  tracked in GitHub issues #3, #4, and #5.
+  preferably scaling from the current ARES NQ example smoke into an
+  independently reviewed ARES row. This still requires reviewing the component
+  label mapping, reducing dangerous false greens, and scoring competitor rows
+  on the same IDs before making broad SOTA claims. RAGChecker, CRAG, and ARES
+  follow-up work is tracked in GitHub issues #3, #4, and #5.
 - Complete human audit sign-off for ContextTrace-Diag-150 before using
   frozen-split language. Use `audit_diag150.py` to generate the reviewer packet
   and validation artifacts before the independent review, then rerun it with
@@ -373,6 +381,12 @@ Current baseline status:
   root-cause accuracy `0.660`, citation error F1 `1.000`, evidence span overlap
   `0.592`, and dangerous false-green rate `0.260`. This is useful calibration
   evidence, but it is too under-sensitive to use as a publishable external row.
+- ARES NQ example smoke, ContextTrace semantic verifier: 200 official example
+  rows sampled from 6,189 eligible rows, failure macro-F1 `0.554`, root-cause
+  accuracy `0.905`, citation error F1 `1.000`, evidence span overlap `0.276`,
+  and dangerous false-green rate `0.070`. This proves the second external
+  workflow path but is `review_pending` and not publishable until the
+  ARES-to-ContextTrace label mapping and remaining false greens are reviewed.
 - Ollama is reachable locally and `phi3:latest` completed a 5-case local-judge
   smoke run. The smoke took about 155 seconds, making a full 500-case run a
   multi-hour local job on this machine.

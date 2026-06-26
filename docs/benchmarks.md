@@ -498,3 +498,30 @@ benchmark artifacts, and a checksummed bundle. Rerun it with
 `--review completed_review.jsonl --review-kind independent` after review to move
 from `review_pending` to a dataset-specific publishable bundle when validation
 passes.
+
+The official ARES NQ example TSV has a dedicated normalizer:
+
+```bash
+python benchmarks/contexttrace_bench/ares_adapter.py \
+  --download-example labeled \
+  --download-dir benchmarks/contexttrace_bench/out/ares_nq_example \
+  --output benchmarks/contexttrace_bench/out/ares_nq_example/ares_nq_labeled_rows.jsonl \
+  --dataset ARES-NQ-example \
+  --source-name "ARES/NQ labeled example"
+
+python benchmarks/contexttrace_bench/external_case_pack_workflow.py \
+  --input benchmarks/contexttrace_bench/out/ares_nq_example/ares_nq_labeled_rows.jsonl \
+  --dataset ARES-NQ-example \
+  --output-dir benchmarks/contexttrace_bench/out/ares_nq_example/smoke200_release \
+  --bundle-dir benchmarks/contexttrace_bench/out/ares_nq_example/smoke200_release_bundle \
+  --sample-size 200 \
+  --sample-seed 13 \
+  --stratify-by metadata.ares_context_relevance_label,metadata.ares_answer_faithfulness_label,metadata.ares_answer_relevance_label \
+  --bootstrap-samples 100 \
+  --no-auto-candidates
+```
+
+Current ARES status: 6,189 eligible official example rows, 200 sampled and
+scored, bundle `review_pending`, failure macro-F1 `0.554`, root-cause accuracy
+`0.905`, dangerous false-green rate `0.070`. Treat this as calibration evidence
+until independent review validates the ARES-to-ContextTrace label mapping.

@@ -4009,6 +4009,28 @@ def test_should_abstain_detection_when_contexts_do_not_support_answer():
     assert result["claims"][0]["root_cause"]["label"] == "should_have_abstained"
 
 
+def test_short_year_answer_requires_context_support():
+    result = verify_trace(
+        RAGTrace(
+            query="When did the event happen?",
+            answer="1983",
+            contexts=[
+                TraceContext(
+                    id="history",
+                    text="The source describes prehistoric stone tools but does not mention the event date.",
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert [claim.text for claim in extract_claims("1983")] == ["1983."]
+    assert result["summary"]["should_abstain"] is True
+    assert result["summary"]["failure_type"] == "should_have_abstained"
+    assert result["claims"][0]["claim"] == "1983."
+    assert result["claims"][0]["verdict"] in {"unsupported", "unverifiable"}
+
+
 def test_report_generation(tmp_path):
     trace = RAGTrace(
         query="What is the refund policy?",

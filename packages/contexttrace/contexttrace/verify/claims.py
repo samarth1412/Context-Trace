@@ -154,6 +154,8 @@ def _is_non_claim_marker(value: str) -> bool:
     normalized = value.strip().strip(".:;,)\"'“”").strip()
     if not normalized or not re.search(r"[A-Za-z0-9]", normalized):
         return True
+    if re.fullmatch(r"\d{4}", normalized):
+        return False
     if re.fullmatch(r"(?:option\s*)?(?:step\s*)?\d+", normalized, flags=re.IGNORECASE):
         return True
     if re.fullmatch(

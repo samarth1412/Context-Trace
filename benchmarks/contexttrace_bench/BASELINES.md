@@ -17,6 +17,7 @@ case set and are scored by `run_contexttrace.py --candidate`.
 | Phoenix | `adapt_candidate.py --preset phoenix` | Adapter ready | No | Requires exported Phoenix evaluator results. |
 | TruLens | `adapt_candidate.py --preset trulens` | Adapter ready | No | Requires exported TruLens evaluator results. |
 | RAGTruth external validation | `ragtruth_adapter.py`, `ragtruth_review.py`, `ragtruth_workflow.py`, `run_contexttrace.py --case-pack` | 200-case stratified assisted workflow scored | No | Deterministic test-split sample scored with 88 GPT-5.1-assisted review rows; 75 rows have source evidence spans and 13 are intentionally source-less or source-supported taxonomy corrections. Requires independent human sign-off and calibration before publishable external-dataset claims. |
+| ARES NQ example external validation | `ares_adapter.py`, `external_case_pack_workflow.py`, `run_contexttrace.py --case-pack` | 200-row official example smoke scored | No | Official ARES NQ example TSV normalized to generic rows. Deterministic 200-row stratified smoke is `review_pending`; requires independent review and calibration before publishable claims. |
 | Generic external case-pack validation | `external_case_pack.py`, `external_case_pack_workflow.py`, `run_contexttrace.py --case-pack` | Workflow ready | No | Normalizes CRAG/ARES-style JSON or JSONL exports with query, answer, contexts, and labels, then writes review/release bundles. Requires official export files, dataset documentation, and review/sign-off before publishable external claims. |
 
 Latest scored leaderboard:
@@ -177,6 +178,20 @@ apply only to rows with explicit reviewer taxonomy overrides. The OpenAI judge i
 useful as a contrastive calibration target, but its 50-row smoke labeled 46/50
 rows as `no_failure_detected`, so its `0.260` dangerous false-green rate blocks
 any publishable claim from that smoke.
+
+Latest ARES NQ example smoke:
+
+| System | Cases | Eligible Rows | Failure Macro-F1 | Root Cause Accuracy | Dangerous False Green | Citation Error F1 | Span Overlap | Status |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| ContextTrace semantic verifier on official ARES NQ example stratified smoke | 200 | 6,189 | 0.554 | 0.905 | 0.070 | 1.000 | 0.276 | review_pending |
+
+This run uses the official ARES `nq_labeled_output.tsv` example file from
+`stanford-futuredata/ARES`, normalized by `ares_adapter.py`, then sampled with
+`sample_size=200`, `sample_seed=13`, and
+`stratify_by=metadata.ares_context_relevance_label,metadata.ares_answer_faithfulness_label,metadata.ares_answer_relevance_label`.
+It is a second external-dataset workflow proof, not a publishable row. The
+remaining blockers are independent review of the ARES component-label mapping,
+dangerous false-green calibration, and competitor rows on the same sampled IDs.
 
 ## Full ContextTrace Run
 
@@ -532,6 +547,17 @@ python benchmarks/contexttrace_bench/run_contexttrace.py `
 ```
 
 ## Generic External Case Packs
+
+Normalize the official ARES NQ example:
+
+```bash
+python benchmarks/contexttrace_bench/ares_adapter.py \
+  --download-example labeled \
+  --download-dir benchmarks/contexttrace_bench/out/ares_nq_example \
+  --output benchmarks/contexttrace_bench/out/ares_nq_example/ares_nq_labeled_rows.jsonl \
+  --dataset ARES-NQ-example \
+  --source-name "ARES/NQ labeled example"
+```
 
 Use `external_case_pack.py` when the next external dataset is already available
 as JSON or JSONL rows with answer, context, and label fields. This is the
