@@ -11,14 +11,14 @@ case set and are scored by `run_contexttrace.py --candidate`.
 | ContextTrace semantic verifier | `run_contexttrace.py --mode semantic` | Ready | Yes | Local-first product path. CI enforces default quality gates. |
 | RAGAS | `run_ragas.py` | Full OpenAI-backed candidate scored | Yes | `gpt-4.1-mini`, 500/500 rows, zero row errors. Faithfulness-only baseline; diagnostic fields are `N/A`. |
 | DeepEval | `run_deepeval.py` | Full OpenAI-backed candidate scored | Yes | `gpt-4.1-mini`, 500/500 rows, zero row errors. Faithfulness-only baseline; diagnostic fields are `N/A`. |
-| RAGChecker | `run_ragchecker.py`, `adapt_candidate.py --preset ragchecker` | 50-row OpenAI proxy smoke scored; reference sidecar ready | No | Requires Python 3.9+ and `gt_answer` per row. The `--use-response-as-gt` smoke verified runner/checkpointing but is not publishable; publishable runs should use `--reference-file`. |
+| RAGChecker | `run_ragchecker.py`, `adapt_candidate.py --preset ragchecker` | 200-row real-reference CRAG calibration scored | No | `gpt-4.1-mini`, 200/200 same-ID CRAG rows, real official-answer sidecar, all 11 metrics, and zero errors. The gold-answer grounding proxy remains review-pending, not publishable. |
 | OpenAI diagnostic judge | `run_local_judge.py` | Expanded public holdout and RAGTruth smoke candidates scored | Holdout only | `gpt-4.1-mini`, 150/150 public-holdout rows and 50/50 RAGTruth smoke rows, zero row errors. The RAGTruth smoke is calibration-only because it has high dangerous false-green rate. |
 | OpenAI-compatible local judge | `run_local_judge.py` | Smoke run completed | No | Ollama `phi3:latest` produced 5 predictions. It is parseable but slow on this machine, so full 500-case execution is a multi-hour run. |
 | Phoenix | `adapt_candidate.py --preset phoenix` | Adapter ready | No | Requires exported Phoenix evaluator results. |
 | TruLens | `adapt_candidate.py --preset trulens` | Adapter ready | No | Requires exported TruLens evaluator results. |
 | RAGTruth external validation | `ragtruth_adapter.py`, `ragtruth_review.py`, `ragtruth_workflow.py`, `run_contexttrace.py --case-pack` | 200-case stratified assisted workflow scored | No | Deterministic test-split sample scored with 88 GPT-5.1-assisted review rows; 75 rows have source evidence spans and 13 are intentionally source-less or source-supported taxonomy corrections. Requires independent human sign-off and calibration before publishable external-dataset claims. |
 | ARES NQ example external validation | `ares_adapter.py`, `external_case_pack_workflow.py`, `run_contexttrace.py --case-pack` | 200-row same-ID comparison scored | No | ContextTrace, RAGAS, and DeepEval were scored on 200 unique IDs from the official example. The checksummed bundle remains `review_pending`; independent label and source-evidence review is required. |
-| CRAG Task 1 v5 calibration | `crag_adapter.py`, `crag_calibration_report.py`, `external_case_pack_workflow.py` | 200-row official gold-answer grounding proxy scored | No | Pinned 739 MB archive, 200 unique stratified IDs, five web pages each, and a checksum-verified review bundle. Gold-answer correctness is not a grounding label; 105 flagged rows require independent review. |
+| CRAG Task 1 v5 calibration | `crag_adapter.py`, `crag_calibration_report.py`, `crag_ragchecker_report.py`, `external_case_pack_workflow.py` | 200-row same-ID ContextTrace/RAGChecker grounding proxy scored | No | Pinned 739 MB archive, 200 unique stratified IDs, five web pages each, and a checksum-verified review bundle. ContextTrace and RAGChecker agree on 150/200 rows; gold-answer correctness is not a grounding label. |
 | Generic external case-pack validation | `external_case_pack.py`, `external_case_pack_workflow.py`, `run_contexttrace.py --case-pack` | Workflow ready | No | Normalizes CRAG/ARES-style JSON or JSONL exports with query, answer, contexts, and labels, then writes review/release bundles. Requires official export files, dataset documentation, and review/sign-off before publishable external claims. |
 
 Latest scored leaderboard:
@@ -29,18 +29,21 @@ Latest scored leaderboard:
 | RAGAS `gpt-4.1-mini` | 500 | 0.200 | Faithfulness labels only; root cause, citation status, and spans are `N/A`. |
 | DeepEval `gpt-4.1-mini` | 500 | 0.069 | Faithfulness labels only; root cause, citation status, and spans are `N/A`. |
 
-Latest RAGChecker proxy smoke:
+Latest RAGChecker runs:
 
-| System | Cases | Failure Macro-F1 | Dangerous False Green | Notes |
-| --- | ---: | ---: | ---: | --- |
-| RAGChecker `openai/gpt-4.1-mini` response-as-gt proxy | 50 | 0.038 | 0.860 | Checkpointed chunks completed with zero runner errors. This is setup/calibration evidence only because `gt_answer` was proxied from the response. |
+| Run | Cases | Reference Mode | Result | Status |
+| --- | ---: | --- | --- | --- |
+| Built-in smoke, `openai/gpt-4.1-mini` | 50 | Response-as-gt proxy | Failure macro-F1 `0.038`, dangerous false green `0.860` | Setup only |
+| CRAG Task 1 v5, `openai/gpt-4.1-mini` | 200 | Official-answer sidecar | 93 proxy-accepted, 107 flagged, 200 complete metric rows, zero errors | `review_pending` |
 
 The RAGChecker smoke wrote `ragchecker_raw_results.json` and
 `ragchecker_predictions.json` under ignored benchmark output. It validated the
 native input builder, official RAGChecker API path, candidate adapter, and
 `--resume` checkpointing. Do not scale this proxy mode into a publishable row;
-use a real reference answer sidecar through `--reference-file` before spending
-on a full 500-case RAGChecker comparison.
+use a real reference answer sidecar through `--reference-file`. The CRAG run now
+validates that path across 200 same-ID rows; the built-in 500-case benchmark
+still needs an appropriate independent reference-answer source before a full
+RAGChecker row can be claimed.
 
 Latest public holdout:
 
@@ -225,6 +228,15 @@ The proxy asks whether ContextTrace accepts an official gold answer as grounded
 by the supplied web pages. It is not answer-correctness or verifier-accuracy
 ground truth; see [CRAG.md](CRAG.md). The generic harness macro-F1 must not be
 used as a CRAG comparison metric before independent grounding review.
+
+The same-ID RAGChecker run uses a real sidecar containing those official
+answers, not `--use-response-as-gt`. RAGChecker proxy-accepts 93/200 and
+ContextTrace proxy-accepts 95/200. They agree on 150/200 (`75.0%`), with Cohen's
+kappa `0.4982`, exact McNemar p-value `0.887725`, 26 ContextTrace-only accepts,
+and 24 RAGChecker-only accepts. RAGChecker completed all 11 metrics on all 200
+rows with zero errors; mean faithfulness is `0.5073` and mean claim recall is
+`0.4903`. These are evaluator-behavior diagnostics on gold-answer responses,
+not CRAG answer accuracy or a publishable SOTA result.
 
 ## Full ContextTrace Run
 

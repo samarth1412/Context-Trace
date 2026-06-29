@@ -338,6 +338,12 @@ Completed in the repo:
   reach the disclosed extraction cap. `crag_calibration_report.py` keeps these
   review-load statistics separate from failure accuracy. The bundle remains
   `review_pending` and is not publishable.
+- A same-ID RAGChecker `0.1.9` run now covers all 200 CRAG rows with official
+  answers supplied through a real reference sidecar, all 11 metrics complete,
+  and zero errors. RAGChecker proxy-accepts 93 rows versus ContextTrace's 95;
+  they agree on 150/200 (`75.0%`, kappa `0.4982`). This closes the engineering
+  baseline gap for the CRAG calibration, but independent grounding review is
+  still required before either system can be assessed for accuracy.
 - The current semantic verifier now clears the 6-week plan's RAGTruth
   calibration thresholds for failure macro-F1, root-cause accuracy, dangerous
   false-green rate, and evidence-span overlap on the 200-case assisted sample.
@@ -361,8 +367,9 @@ Still pending for Week 1:
   reviewed row. Same-ID ContextTrace, RAGAS, and DeepEval scoring is complete;
   the remaining ARES blocker is independent review of the component-label
   mapping and source evidence, especially the positive row pairing answer `one`
-  only with `The Bastard Executioner`. RAGChecker, CRAG, and ARES follow-up work
-  is tracked in GitHub issues #3, #4, and #5.
+  only with `The Bastard Executioner`. The CRAG RAGChecker baseline is complete;
+  independent CRAG and ARES review follow-up remains tracked in GitHub issues
+  #4 and #5.
 - Independently adjudicate the 105 CRAG grounding-review flags, with priority on
   the 25 false-premise and 15 real-time rows. The current gold-answer proxy does
   not prove whether a flag is a verifier miss, retrieval gap, page-truncation
@@ -415,7 +422,9 @@ Current baseline status:
   2,705 eligible cases, 95 proxy-accepted and 105 flagged for independent
   grounding review. The sample covers all five domains, eight question types,
   four temporal classes, and both splits; 511/1,000 contexts reach the 12,000
-  character extraction cap. This is a review-load result, not failure accuracy.
+  character extraction cap. Same-ID RAGChecker coverage is 200/200 with zero
+  errors; it proxy-accepts 93 rows, and the evaluators agree on 150/200. This is
+  a review-load and evaluator-behavior result, not failure accuracy.
 - Ollama is reachable locally and `phi3:latest` completed a 5-case local-judge
   smoke run. The smoke took about 155 seconds, making a full 500-case run a
   multi-hour local job on this machine.

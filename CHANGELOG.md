@@ -16,6 +16,9 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - A pinned, checksum-verified CRAG Task 1 v5 streaming adapter, deterministic
   200-row calibration track, independent-review packet, and CRAG-specific proxy
   acceptance report.
+- A 200-row same-ID CRAG RAGChecker calibration with real reference-answer
+  provenance, complete diagnostic coverage, evaluator agreement statistics,
+  and a checksummed review-pending bundle.
 
 ### Changed
 
@@ -27,6 +30,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
   competitor candidates are evaluated.
 - Flattened supplied context provenance metadata during generic case-pack
   normalization instead of nesting it under a second `metadata` key.
+- Hardened RAGChecker resume behavior against changed inputs, references, or
+  evaluator configuration and recorded exact input/reference hashes.
 
 ## [0.9.0] - 2026-06-05
 

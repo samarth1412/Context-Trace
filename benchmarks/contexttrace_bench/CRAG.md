@@ -62,11 +62,25 @@ particular, the generic harness's failure macro-F1 `0.107` is not a comparable
 CRAG accuracy metric because the proxy labels assume every gold answer is fully
 grounded.
 
+RAGChecker `0.1.9` was also run on the same 200 IDs with
+`openai/gpt-4.1-mini` as both extractor and checker, all 11 metrics enabled,
+and the official CRAG answers supplied through a real reference sidecar. It
+completed 200/200 rows with zero errors and complete metric coverage. Using the
+default candidate thresholds (faithfulness `0.75`, claim recall `0.50`),
+RAGChecker proxy-accepts 93 rows and flags 107. The systems agree on 150/200
+rows (`75.0%`, Cohen's kappa `0.4982`); exact McNemar p-value is `0.887725`.
+Mean RAGChecker faithfulness is `0.5073` and mean claim recall is `0.4903`.
+This compares grounding evaluators on official gold-answer responses; it is not
+a generated-RAG answer-quality comparison or verifier accuracy.
+
 Tracked aggregate evidence:
 
 - `out/crag_official/crag_task1_v5_adapter_manifest_200.json`
 - `out/crag_official/review200/crag_calibration_report.json`
 - `out/crag_official/review200/crag_calibration_report.md`
+- `out/crag_official/ragchecker/crag_full200_comparison.json`
+- `out/crag_official/ragchecker/crag_full200_comparison.md`
+- `out/crag_official/review200_ragchecker_bundle/manifest.json`
 
 The full archive, normalized rows, case pack, and reviewer packet remain ignored
 under `out/` because they contain CC BY-NC CRAG data. They are reproducible from
@@ -117,6 +131,40 @@ python benchmarks/contexttrace_bench/crag_calibration_report.py \
   --results benchmarks/contexttrace_bench/out/crag_official/review200/scored/contexttrace_bench_results.json \
   --output-json benchmarks/contexttrace_bench/out/crag_official/review200/crag_calibration_report.json \
   --output-markdown benchmarks/contexttrace_bench/out/crag_official/review200/crag_calibration_report.md
+```
+
+Run RAGChecker against the same IDs and real CRAG reference sidecar from an
+isolated Python 3.11 environment:
+
+```powershell
+$ragcheckerVenv = Join-Path $env:TEMP "contexttrace-ragchecker-crag"
+py -3.11 -m venv $ragcheckerVenv
+& "$ragcheckerVenv\Scripts\python.exe" -m pip install -r benchmarks/contexttrace_bench/requirements-ragchecker.txt
+& "$ragcheckerVenv\Scripts\python.exe" -m spacy download en_core_web_sm
+& "$ragcheckerVenv\Scripts\python.exe" benchmarks/contexttrace_bench/run_ragchecker.py `
+  --input benchmarks/contexttrace_bench/out/crag_official/review200/scored/candidate_inputs.jsonl `
+  --reference-file benchmarks/contexttrace_bench/out/crag_official/crag_task1_v5_ragchecker_references_200.jsonl `
+  --reference-id-field id `
+  --reference-answer-field gt_answer `
+  --ragchecker-input-output benchmarks/contexttrace_bench/out/crag_official/ragchecker/crag_full200_input.json `
+  --raw-output benchmarks/contexttrace_bench/out/crag_official/ragchecker/crag_full200_raw_results.json `
+  --candidate-output benchmarks/contexttrace_bench/out/crag_official/ragchecker/crag_full200_predictions.json `
+  --extractor-name openai/gpt-4.1-mini `
+  --checker-name openai/gpt-4.1-mini `
+  --metrics all_metrics `
+  --chunk-size 10 `
+  --resume
+```
+
+Render the fail-closed same-ID comparison:
+
+```bash
+python benchmarks/contexttrace_bench/crag_ragchecker_report.py \
+  --contexttrace-results benchmarks/contexttrace_bench/out/crag_official/review200/scored/contexttrace_bench_results.json \
+  --ragchecker-candidate benchmarks/contexttrace_bench/out/crag_official/ragchecker/crag_full200_predictions.json \
+  --ragchecker-raw benchmarks/contexttrace_bench/out/crag_official/ragchecker/crag_full200_raw_results.json \
+  --output-json benchmarks/contexttrace_bench/out/crag_official/ragchecker/crag_full200_comparison.json \
+  --output-markdown benchmarks/contexttrace_bench/out/crag_official/ragchecker/crag_full200_comparison.md
 ```
 
 After an independent reviewer validates answer grounding and corrects labels or

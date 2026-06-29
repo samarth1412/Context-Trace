@@ -507,6 +507,13 @@ for source-grounding review; 511/1,000 extracted contexts reach the disclosed
 The selected-ID SHA256 is
 `a782cf309506e2dff8f3b9c039fd2dc7bbab6f9cc3d98c9238693a1f64a9d80c`.
 
+The same 200 IDs also have a real-reference RAGChecker `0.1.9` calibration using
+`openai/gpt-4.1-mini` for extraction and checking. It completed all 11 metrics
+for 200/200 rows with zero errors. ContextTrace proxy-accepts 95 rows,
+RAGChecker proxy-accepts 93, and they agree on 150/200 (`75.0%`, kappa
+`0.4982`). See `CRAG.md` for reproduction commands and the strict boundary:
+this is gold-answer grounding-evaluator behavior, not answer accuracy.
+
 For a complete review/release bundle, prefer the workflow wrapper:
 
 ```bash
