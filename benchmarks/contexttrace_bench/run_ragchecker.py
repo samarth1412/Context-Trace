@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 import time
@@ -14,7 +15,6 @@ if str(SCRIPT_DIR) not in sys.path:
 from adapt_candidate import adapt_candidate_rows, write_candidate  # noqa: E402
 from baseline_common import (  # noqa: E402
     load_candidate_inputs,
-    load_raw_rows,
     response,
     trace_payload,
     user_input,
@@ -111,7 +111,7 @@ def run_ragchecker_baseline(
     pending: list[tuple[int, dict[str, Any]]] = []
     for index, row in enumerate(input_rows):
         existing = completed_by_id.get(row["query_id"])
-        if existing is None:
+        if existing is None or not resume_row_matches_input(existing, row):
             pending.append((index, row))
         else:
             outputs[index] = existing
@@ -193,6 +193,27 @@ def load_ragchecker_output(path: str | Path) -> dict[str, Any]:
     raise ValueError("Could not parse RAGChecker output from %s." % path)
 
 
+def validate_resume_metadata(
+    payload: dict[str, Any],
+    *,
+    extractor_name: str,
+    checker_name: str,
+    metrics: str,
+) -> None:
+    expected = {
+        "extractor_name": extractor_name,
+        "checker_name": checker_name,
+        "metrics": metrics,
+    }
+    for field, expected_value in expected.items():
+        actual = payload.get(field)
+        if actual is not None and actual != expected_value:
+            raise ValueError(
+                "Cannot resume RAGChecker with changed %s: expected %s, found %s."
+                % (field, expected_value, actual)
+            )
+
+
 def load_reference_answers(
     path: str | Path,
     *,
@@ -232,6 +253,36 @@ def load_reference_answers(
     raise ValueError("Could not parse reference answers from %s." % input_path)
 
 
+def build_reference_provenance(
+    *,
+    reference_file: str | Path | None,
+    reference_answers: dict[str, str] | None,
+    reference_id_field: str,
+    reference_answer_field: str,
+    gt_answer_field: str | None,
+    use_response_as_gt: bool,
+) -> dict[str, Any]:
+    reference_path = Path(reference_file) if reference_file else None
+    return {
+        "mode": (
+            "reference_file"
+            if reference_path
+            else "candidate_field"
+            if gt_answer_field
+            else "response_proxy"
+            if use_response_as_gt
+            else "missing"
+        ),
+        "reference_file": str(reference_path) if reference_path else None,
+        "reference_file_sha256": _file_sha256(reference_path) if reference_path else None,
+        "reference_id_field": reference_id_field if reference_path else None,
+        "reference_answer_field": reference_answer_field if reference_path else None,
+        "gt_answer_field": gt_answer_field,
+        "uses_response_as_gt": bool(use_response_as_gt),
+        "reference_count": len(reference_answers or {}),
+    }
+
+
 def _reference_answers_from_rows(
     rows: list[Any],
     *,
@@ -256,6 +307,21 @@ def _reference_answers_from_rows(
 
 def _completed_rows(rows: list[dict[str, Any] | None]) -> list[dict[str, Any]]:
     return [row for row in rows if row is not None]
+
+
+def resume_row_matches_input(existing: dict[str, Any], input_row: dict[str, Any]) -> bool:
+    return all(
+        existing.get(field) == input_row.get(field)
+        for field in ("query_id", "query", "gt_answer", "response", "retrieved_context")
+    )
+
+
+def _file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def _chunks(items: list[tuple[int, dict[str, Any]]], size: int) -> list[list[tuple[int, dict[str, Any]]]]:
@@ -527,6 +593,14 @@ def main(argv: list[str] | None = None) -> int:
         if args.reference_file
         else None
     )
+    reference_provenance = build_reference_provenance(
+        reference_file=args.reference_file,
+        reference_answers=reference_answers,
+        reference_id_field=args.reference_id_field,
+        reference_answer_field=args.reference_answer_field,
+        gt_answer_field=args.gt_answer_field,
+        use_response_as_gt=args.use_response_as_gt,
+    )
     input_rows = build_ragchecker_rows(
         candidate_inputs,
         reference_answers=reference_answers,
@@ -534,6 +608,11 @@ def main(argv: list[str] | None = None) -> int:
         use_response_as_gt=args.use_response_as_gt,
     )
     input_path = write_json({"results": input_rows}, args.ragchecker_input_output)
+    input_provenance = {
+        "path": input_path,
+        "sha256": _file_sha256(Path(input_path)),
+        "rows": len(input_rows),
+    }
     missing_gt = _missing_gt_answer_count(input_rows)
     if args.input_only:
         print("RAGChecker input: %s" % input_path)
@@ -574,6 +653,8 @@ def main(argv: list[str] | None = None) -> int:
                 "extractor_name": args.extractor_name,
                 "checker_name": args.checker_name,
                 "metrics": args.metrics,
+                "input": input_provenance,
+                "reference": reference_provenance,
                 "rows": rows,
                 "ragchecker_output": _aggregate_ragchecker_payload(rows),
                 "notes": [
@@ -585,6 +666,18 @@ def main(argv: list[str] | None = None) -> int:
         )
         write_candidate(candidate, args.candidate_output)
         print("RAGChecker progress: %s/%s" % (completed, total), flush=True)
+
+    existing_rows = None
+    raw_output_path = Path(args.raw_output)
+    if args.resume and raw_output_path.exists():
+        resume_payload = load_ragchecker_output(raw_output_path)
+        validate_resume_metadata(
+            resume_payload,
+            extractor_name=args.extractor_name,
+            checker_name=args.checker_name,
+            metrics=args.metrics,
+        )
+        existing_rows = _ragchecker_result_rows(resume_payload)
 
     result = run_ragchecker_baseline(
         candidate_inputs,
@@ -598,7 +691,7 @@ def main(argv: list[str] | None = None) -> int:
         batch_size_checker=args.batch_size_checker,
         faithfulness_threshold=args.faithfulness_threshold,
         context_recall_threshold=args.context_recall_threshold,
-        existing_rows=load_raw_rows(args.raw_output) if args.resume else None,
+        existing_rows=existing_rows,
         chunk_size=args.chunk_size,
         progress_callback=write_progress,
     )
@@ -608,6 +701,8 @@ def main(argv: list[str] | None = None) -> int:
             "extractor_name": result["extractor_name"],
             "checker_name": result["checker_name"],
             "metrics": result["metrics"],
+            "input": input_provenance,
+            "reference": reference_provenance,
             "elapsed_ms": result["elapsed_ms"],
             "rows": result["rows"],
             "ragchecker_output": result["ragchecker_output"],

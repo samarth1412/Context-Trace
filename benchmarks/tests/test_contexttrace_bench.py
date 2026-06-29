@@ -26,11 +26,17 @@ from benchmarks.contexttrace_bench.crag_adapter import (
     adapt_crag_archive,
     adapt_crag_row,
     archive_sha256,
+    build_ragchecker_reference_rows,
     main as crag_adapter_main,
 )
 from benchmarks.contexttrace_bench.crag_calibration_report import (
     build_crag_calibration_report,
     render_crag_calibration_markdown,
+)
+from benchmarks.contexttrace_bench.crag_ragchecker_report import (
+    RAGCHECKER_METRICS,
+    build_crag_ragchecker_report,
+    render_crag_ragchecker_markdown,
 )
 from benchmarks.contexttrace_bench.diag150_release_workflow import (
     render_workflow_summary,
@@ -81,8 +87,11 @@ from benchmarks.contexttrace_bench.ragtruth_release_workflow import (
 )
 from benchmarks.contexttrace_bench.run_ragas import build_ragas_rows
 from benchmarks.contexttrace_bench.run_ragchecker import (
+    build_reference_provenance,
     build_ragchecker_rows,
     load_reference_answers,
+    resume_row_matches_input,
+    validate_resume_metadata,
 )
 from benchmarks.contexttrace_bench.run_local_judge import _judge_prompt, _normalize_judge_output
 
@@ -746,6 +755,75 @@ def test_ragchecker_reference_loader_accepts_json_map(tmp_path) -> None:
     }
 
 
+def test_ragchecker_reference_provenance_distinguishes_real_sidecar(tmp_path) -> None:
+    references_path = tmp_path / "references.jsonl"
+    references_path.write_text(
+        json.dumps({"id": "case-1", "gt_answer": "Reference one"}) + "\n",
+        encoding="utf-8",
+    )
+
+    provenance = build_reference_provenance(
+        reference_file=references_path,
+        reference_answers={"case-1": "Reference one"},
+        reference_id_field="id",
+        reference_answer_field="gt_answer",
+        gt_answer_field=None,
+        use_response_as_gt=False,
+    )
+    proxy = build_reference_provenance(
+        reference_file=None,
+        reference_answers=None,
+        reference_id_field="id",
+        reference_answer_field="gt_answer",
+        gt_answer_field=None,
+        use_response_as_gt=True,
+    )
+
+    assert provenance["mode"] == "reference_file"
+    assert provenance["reference_count"] == 1
+    assert len(provenance["reference_file_sha256"]) == 64
+    assert provenance["uses_response_as_gt"] is False
+    assert proxy["mode"] == "response_proxy"
+    assert proxy["uses_response_as_gt"] is True
+
+
+def test_ragchecker_resume_reuses_only_exact_inputs() -> None:
+    input_row = {
+        "query_id": "case-1",
+        "query": "Question",
+        "gt_answer": "Reference",
+        "response": "Answer",
+        "retrieved_context": [{"doc_id": "doc-1", "text": "Evidence"}],
+    }
+    existing = {**input_row, "metrics": {"faithfulness": 1.0}}
+
+    assert resume_row_matches_input(existing, input_row) is True
+    assert resume_row_matches_input({**existing, "gt_answer": "Changed"}, input_row) is False
+    assert resume_row_matches_input({**existing, "retrieved_context": []}, input_row) is False
+
+
+def test_ragchecker_resume_rejects_changed_model_configuration() -> None:
+    payload = {
+        "extractor_name": "openai/extractor",
+        "checker_name": "openai/checker",
+        "metrics": "all_metrics",
+    }
+    validate_resume_metadata(
+        payload,
+        extractor_name="openai/extractor",
+        checker_name="openai/checker",
+        metrics="all_metrics",
+    )
+
+    with pytest.raises(ValueError, match="changed checker_name"):
+        validate_resume_metadata(
+            payload,
+            extractor_name="openai/extractor",
+            checker_name="openai/new-checker",
+            metrics="all_metrics",
+        )
+
+
 def test_baseline_runners_build_external_eval_rows(tmp_path) -> None:
     input_path = tmp_path / "candidate_inputs.jsonl"
     rows = [
@@ -1373,6 +1451,7 @@ def test_crag_adapter_cli_writes_rows_and_manifest(tmp_path, capsys) -> None:
     input_path = tmp_path / "crag.jsonl"
     output_path = tmp_path / "crag_rows.jsonl"
     manifest_path = tmp_path / "crag_manifest.json"
+    reference_path = tmp_path / "crag_references.jsonl"
     input_path.write_text(
         json.dumps(
             {
@@ -1405,6 +1484,8 @@ def test_crag_adapter_cli_writes_rows_and_manifest(tmp_path, capsys) -> None:
             str(output_path),
             "--manifest-output",
             str(manifest_path),
+            "--ragchecker-reference-output",
+            str(reference_path),
             "--sample-size",
             "1",
         ]
@@ -1412,9 +1493,29 @@ def test_crag_adapter_cli_writes_rows_and_manifest(tmp_path, capsys) -> None:
 
     adapted = [json.loads(line) for line in output_path.read_text(encoding="utf-8").splitlines()]
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    references = [json.loads(line) for line in reference_path.read_text(encoding="utf-8").splitlines()]
     assert adapted[0]["id"] == "official-case"
     assert manifest["sampling"]["selected_rows"] == 1
+    assert manifest["ragchecker_reference"]["uses_response_as_gt"] is False
+    assert manifest["ragchecker_reference"]["sha256"] == archive_sha256(reference_path)
+    assert references == [
+        {
+            "id": "crag_task1_v5_official_case",
+            "gt_answer": "Alpha",
+            "source_row_id": "official-case",
+        }
+    ]
     assert "Label scope: unreviewed_gold_answer_proxy" in capsys.readouterr().out
+
+
+def test_crag_ragchecker_reference_rows_reject_normalized_id_collisions() -> None:
+    with pytest.raises(ValueError, match="must be unique"):
+        build_ragchecker_reference_rows(
+            [
+                {"id": "duplicate-id", "answer": "Alpha"},
+                {"id": "duplicate_id", "answer": "Beta"},
+            ]
+        )
 
 
 def test_crag_adapter_cli_can_require_official_checksum(tmp_path) -> None:
@@ -1489,6 +1590,76 @@ def test_crag_calibration_report_keeps_proxy_metrics_separate() -> None:
     assert report["by_group"]["split"]["0"]["acceptance_rate"] == 1.0
     assert report["flagged_case_ids"] == ["flagged"]
     assert "not failure-detection accuracy" in markdown
+
+
+def test_crag_ragchecker_report_requires_real_reference_and_same_ids() -> None:
+    def contexttrace_row(case_id, accepted):
+        return {
+            "id": case_id,
+            "predicted": ["no_failure_detected"] if accepted else ["unsupported_answer"],
+            "case_pack_metadata": {
+                "dataset_metadata": {
+                    "upstream_metadata": {"crag_label_scope": "unreviewed_gold_answer_proxy"}
+                }
+            },
+        }
+
+    contexttrace = {
+        "case_pack_dataset": "CRAG-Task1-v5",
+        "mode": "semantic",
+        "rows": [
+            contexttrace_row("a", True),
+            contexttrace_row("b", True),
+            contexttrace_row("c", False),
+            contexttrace_row("d", False),
+        ],
+    }
+    candidate = {
+        "system": "RAGChecker",
+        "version": "fixture",
+        "predictions": [
+            {"id": "a", "predicted": ["no_failure_detected"]},
+            {"id": "b", "predicted": ["unsupported_answer"]},
+            {"id": "c", "predicted": ["no_failure_detected"]},
+            {"id": "d", "predicted": ["unsupported_answer"]},
+        ],
+    }
+    raw = {
+        "extractor_name": "openai/test",
+        "checker_name": "openai/test",
+        "input": {"rows": 4, "sha256": "b" * 64},
+        "reference": {
+            "mode": "reference_file",
+            "uses_response_as_gt": False,
+            "reference_file_sha256": "a" * 64,
+            "reference_count": 4,
+        },
+        "rows": [
+            {"query_id": case_id, "metrics": {metric: 0.5 for metric in RAGCHECKER_METRICS}}
+            for case_id in ("a", "b", "c", "d")
+        ],
+    }
+
+    report = build_crag_ragchecker_report(contexttrace, candidate, raw)
+    markdown = render_crag_ragchecker_markdown(report)
+
+    assert report["coverage"]["matched_ids"] == 4
+    assert report["coverage"]["ragchecker_error_rows"] == 0
+    assert report["systems"]["contexttrace"]["proxy_acceptance_rate"] == 0.5
+    assert report["systems"]["ragchecker"]["complete_metric_rows"] == 4
+    assert report["agreement"]["rate"] == 0.5
+    assert report["agreement"]["cohen_kappa"] == 0.0
+    assert report["agreement"]["mcnemar_exact_p_value"] == 1.0
+    assert "not a generated-RAG answer-quality comparison" in markdown
+
+    raw["reference"]["uses_response_as_gt"] = True
+    with pytest.raises(ValueError, match="real reference sidecar"):
+        build_crag_ragchecker_report(contexttrace, candidate, raw)
+
+    raw["reference"]["uses_response_as_gt"] = False
+    raw["reference"]["reference_count"] = 3
+    with pytest.raises(ValueError, match="reference count"):
+        build_crag_ragchecker_report(contexttrace, candidate, raw)
 
 
 def test_generic_external_workflow_builds_review_pending_bundle(tmp_path) -> None:

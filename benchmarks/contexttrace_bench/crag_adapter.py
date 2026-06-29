@@ -323,6 +323,32 @@ def write_manifest(manifest: dict[str, Any], path: str | Path) -> str:
     return str(output_path)
 
 
+def build_ragchecker_reference_rows(
+    rows: list[dict[str, Any]],
+    *,
+    dataset: str = "CRAG-Task1-v5",
+) -> list[dict[str, str]]:
+    references = []
+    seen_ids = set()
+    for row in rows:
+        source_row_id = str(row.get("id") or "").strip()
+        answer = str(row.get("answer") or "").strip()
+        if not source_row_id or not answer:
+            continue
+        case_id = _contexttrace_case_id(dataset, source_row_id)
+        if case_id in seen_ids:
+            raise ValueError("RAGChecker reference IDs must be unique; duplicate: %s" % case_id)
+        seen_ids.add(case_id)
+        references.append(
+            {
+                "id": case_id,
+                "gt_answer": answer,
+                "source_row_id": source_row_id,
+            }
+        )
+    return references
+
+
 def _select_metadata(
     rows: list[dict[str, Any]],
     *,
@@ -424,6 +450,12 @@ def _slug(value: Any) -> str:
     return "_".join(part for part in text.split("_") if part) or "case"
 
 
+def _contexttrace_case_id(dataset: str, source_row_id: str) -> str:
+    prefix = _slug(dataset)
+    value = _slug(source_row_id)
+    return value if value.startswith(prefix + "_") else "%s_%s" % (prefix, value)
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Normalize the official CRAG Task 1/2 v5 archive into review-pending ContextTrace rows."
@@ -434,6 +466,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--download-dir", default=str(Path(__file__).with_name("out") / "crag_official"))
     parser.add_argument("--output", required=True, help="Generic external JSONL rows to write.")
     parser.add_argument("--manifest-output", help="Adapter manifest JSON; defaults beside --output.")
+    parser.add_argument(
+        "--ragchecker-reference-output",
+        help="Optional JSONL sidecar with normalized case IDs and real CRAG gt_answer values.",
+    )
     parser.add_argument(
         "--require-official-checksum",
         action="store_true",
@@ -470,12 +506,26 @@ def main(argv: list[str] | None = None) -> int:
         source_sha256=digest,
     )
     output_path = write_jsonl_rows(rows, args.output)
+    reference_path = None
+    if args.ragchecker_reference_output:
+        references = build_ragchecker_reference_rows(rows, dataset=args.dataset)
+        reference_path = write_jsonl_rows(references, args.ragchecker_reference_output)
+        manifest["ragchecker_reference"] = {
+            "path": reference_path,
+            "rows": len(references),
+            "sha256": archive_sha256(reference_path),
+            "id_field": "id",
+            "answer_field": "gt_answer",
+            "uses_response_as_gt": False,
+        }
     manifest_path = args.manifest_output or str(Path(args.output).with_suffix(".manifest.json"))
     write_manifest(manifest, manifest_path)
     print("Wrote: %s" % output_path)
     print("Manifest: %s" % manifest_path)
     print("Input: %s" % input_path)
     print("Rows: %s" % len(rows))
+    if reference_path:
+        print("RAGChecker references: %s" % reference_path)
     print("Label scope: unreviewed_gold_answer_proxy")
     return 0
 

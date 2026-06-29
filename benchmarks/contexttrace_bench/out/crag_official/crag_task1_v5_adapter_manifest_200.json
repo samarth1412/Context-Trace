@@ -12,6 +12,14 @@
     "mode": "unreviewed_gold_answer_proxy",
     "publishable": false
   },
+  "ragchecker_reference": {
+    "answer_field": "gt_answer",
+    "id_field": "id",
+    "path": "benchmarks\\contexttrace_bench\\out\\crag_official\\crag_task1_v5_ragchecker_references_200.jsonl",
+    "rows": 200,
+    "sha256": "9a06ffb5028f6090a80ef4085d5b24e76bed160699f72cd8e4bfe6e0a2d226d4",
+    "uses_response_as_gt": false
+  },
   "sampling": {
     "eligible_rows": 2705,
     "method": "stratified_round_robin",

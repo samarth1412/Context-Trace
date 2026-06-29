@@ -83,6 +83,7 @@ python benchmarks/contexttrace_bench/crag_adapter.py \
   --download-dir benchmarks/contexttrace_bench/out/crag_official \
   --output benchmarks/contexttrace_bench/out/crag_official/crag_task1_v5_rows_200.jsonl \
   --manifest-output benchmarks/contexttrace_bench/out/crag_official/crag_task1_v5_adapter_manifest_200.json \
+  --ragchecker-reference-output benchmarks/contexttrace_bench/out/crag_official/crag_task1_v5_ragchecker_references_200.jsonl \
   --sample-size 200 \
   --sample-seed 13 \
   --stratify-by domain,question_type,static_or_dynamic,split \
