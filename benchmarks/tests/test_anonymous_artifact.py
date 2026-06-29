@@ -51,6 +51,9 @@ def test_anonymous_artifact_is_deterministic_and_valid_without_external_data(tmp
         assert names == sorted(names)
         assert all(info.date_time == ARCHIVE_TIMESTAMP for info in archive.infolist())
         assert "%s/README.md" % ZIP_ROOT in names
+        assert "%s/packages/contexttrace/contexttrace/repair.py" % ZIP_ROOT in names
+        assert "%s/packages/contexttrace/tests/test_repair.py" % ZIP_ROOT in names
+        assert "%s/examples/diagnose_agent_trace.json" % ZIP_ROOT in names
         assert not any(".git" in Path(name).parts for name in names)
         manifest = json.loads(archive.read("%s/ARTIFACT_MANIFEST.json" % ZIP_ROOT))
         assert manifest["paper_reproduction_ready"] is False

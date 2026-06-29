@@ -50,6 +50,19 @@ python benchmarks/contexttrace_bench/arr_actionability.py build --quick
 Generated files are written under ignored `out/` directories. Quick packets are
 workflow checks, not annotations or study outcomes.
 
+## Inspect Repair Planning
+
+Build an evidence-backed repair plan for the bundled agent failure example:
+
+```bash
+contexttrace repair examples/diagnose_agent_trace.json --out repair_plan.md --json-out repair_plan.json
+```
+
+For a portable RAG trace, add `--corpus PATH` to distinguish retrieval misses,
+reranking failures, chunking issues, corpus gaps, answer overreach, and stale or
+conflicting evidence. Generated suite commands must be run only after the fix is
+applied and a passing trace is recaptured.
+
 ## Data And Claims
 
 The included RAGTruth-derived pack is assisted calibration evidence pending

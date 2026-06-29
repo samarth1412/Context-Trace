@@ -53,6 +53,7 @@ EXTRA_WORKTREE_FILES = {
     "scripts/build_anonymous_artifact.py",
     "benchmarks/contexttrace_bench/artifact_runtime.py",
     "benchmarks/tests/test_anonymous_artifact.py",
+    "examples/diagnose_agent_trace.json",
 }
 ARTIFACT_README_SOURCE = "ANONYMOUS_ARTIFACT.md"
 ARTIFACT_README_PATH = "README.md"
@@ -136,6 +137,9 @@ REQUIRED_FILES = {
     "LICENSE",
     "REPRODUCIBILITY.md",
     "packages/contexttrace/pyproject.toml",
+    "packages/contexttrace/contexttrace/repair.py",
+    "packages/contexttrace/tests/test_repair.py",
+    "examples/diagnose_agent_trace.json",
     "benchmarks/contexttrace_bench/ARR_EXPERIMENTS.json",
     "benchmarks/contexttrace_bench/reproduce_arr_tables.py",
     "scripts/build_anonymous_artifact.py",
