@@ -1,0 +1,1036 @@
+{
+  "ablation_case_ids_sha256": "3d32bd4f1c1e64f97e52d2f5eb4a814878c02301856d093d3e45b51626496fbb",
+  "ablation_results": [
+    {
+      "confidence_intervals": {
+        "citation_error_f1": {
+          "estimate": 0.0,
+          "high": 0.0,
+          "level": 0.95,
+          "low": 0.0,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "claim_verdict_macro_f1": {
+          "estimate": 0.971,
+          "high": 1.0,
+          "level": 0.95,
+          "low": 0.878,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "dangerous_false_green_rate": {
+          "estimate": 0.232,
+          "high": 0.27,
+          "level": 0.95,
+          "low": 0.194,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "evidence_span_overlap": {
+          "estimate": 0.98,
+          "high": 0.994,
+          "level": 0.95,
+          "low": 0.964,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "failure_label_macro_f1": {
+          "estimate": 0.419,
+          "high": 0.443,
+          "level": 0.95,
+          "low": 0.355,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "root_cause_accuracy": {
+          "estimate": 0.0,
+          "high": 0.0,
+          "level": 0.95,
+          "low": 0.0,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        }
+      },
+      "id": "a0_lexical_core",
+      "label": "Lexical core",
+      "mode": "lexical",
+      "profile": {
+        "abstention_logic": false,
+        "citation_alignment": false,
+        "evidence_span_localization": false,
+        "root_cause_inference": false,
+        "source_assessment": false
+      },
+      "summary": {
+        "cases": 500,
+        "citation_error_f1": null,
+        "citation_error_precision": null,
+        "citation_error_recall": null,
+        "citation_status_reported_cases": 0,
+        "claim_verdict_macro_f1": 0.971,
+        "claim_verdict_match_rate": 0.998,
+        "cost_per_100_traces_usd": 0.0,
+        "dangerous_false_green_rate": 0.232,
+        "evidence_span_labeled_cases": 188,
+        "evidence_span_overlap": null,
+        "evidence_span_reported_cases": 0,
+        "failure_label_exact_match_rate": 0.118,
+        "failure_label_macro_f1": 0.419,
+        "latency_p50_ms": 1.509,
+        "latency_p95_ms": 3.169,
+        "root_cause_accuracy": null,
+        "root_cause_labeled_cases": 500,
+        "root_cause_reported_cases": 0
+      }
+    },
+    {
+      "confidence_intervals": {
+        "citation_error_f1": {
+          "estimate": 0.0,
+          "high": 0.0,
+          "level": 0.95,
+          "low": 0.0,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "claim_verdict_macro_f1": {
+          "estimate": 0.971,
+          "high": 1.0,
+          "level": 0.95,
+          "low": 0.878,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "dangerous_false_green_rate": {
+          "estimate": 0.232,
+          "high": 0.27,
+          "level": 0.95,
+          "low": 0.194,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "evidence_span_overlap": {
+          "estimate": 0.98,
+          "high": 0.994,
+          "level": 0.95,
+          "low": 0.964,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "failure_label_macro_f1": {
+          "estimate": 0.419,
+          "high": 0.443,
+          "level": 0.95,
+          "low": 0.355,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "root_cause_accuracy": {
+          "estimate": 0.0,
+          "high": 0.0,
+          "level": 0.95,
+          "low": 0.0,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        }
+      },
+      "id": "a1_semantic_core",
+      "label": "+ semantic matching",
+      "mode": "semantic",
+      "profile": {
+        "abstention_logic": false,
+        "citation_alignment": false,
+        "evidence_span_localization": false,
+        "root_cause_inference": false,
+        "source_assessment": false
+      },
+      "summary": {
+        "cases": 500,
+        "citation_error_f1": null,
+        "citation_error_precision": null,
+        "citation_error_recall": null,
+        "citation_status_reported_cases": 0,
+        "claim_verdict_macro_f1": 0.971,
+        "claim_verdict_match_rate": 0.998,
+        "cost_per_100_traces_usd": 0.0,
+        "dangerous_false_green_rate": 0.232,
+        "evidence_span_labeled_cases": 188,
+        "evidence_span_overlap": null,
+        "evidence_span_reported_cases": 0,
+        "failure_label_exact_match_rate": 0.118,
+        "failure_label_macro_f1": 0.419,
+        "latency_p50_ms": 4.42,
+        "latency_p95_ms": 18.822,
+        "root_cause_accuracy": null,
+        "root_cause_labeled_cases": 500,
+        "root_cause_reported_cases": 0
+      }
+    },
+    {
+      "confidence_intervals": {
+        "citation_error_f1": {
+          "estimate": 1.0,
+          "high": 1.0,
+          "level": 0.95,
+          "low": 1.0,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "claim_verdict_macro_f1": {
+          "estimate": 0.971,
+          "high": 1.0,
+          "level": 0.95,
+          "low": 0.878,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "dangerous_false_green_rate": {
+          "estimate": 0.112,
+          "high": 0.142,
+          "level": 0.95,
+          "low": 0.086,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "evidence_span_overlap": {
+          "estimate": 0.98,
+          "high": 0.994,
+          "level": 0.95,
+          "low": 0.964,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "failure_label_macro_f1": {
+          "estimate": 0.566,
+          "high": 0.59,
+          "level": 0.95,
+          "low": 0.512,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "root_cause_accuracy": {
+          "estimate": 0.0,
+          "high": 0.0,
+          "level": 0.95,
+          "low": 0.0,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        }
+      },
+      "id": "a2_citation_alignment",
+      "label": "+ citation alignment",
+      "mode": "semantic",
+      "profile": {
+        "abstention_logic": false,
+        "citation_alignment": true,
+        "evidence_span_localization": false,
+        "root_cause_inference": false,
+        "source_assessment": false
+      },
+      "summary": {
+        "cases": 500,
+        "citation_error_f1": 1.0,
+        "citation_error_precision": 1.0,
+        "citation_error_recall": 1.0,
+        "citation_status_reported_cases": 500,
+        "claim_verdict_macro_f1": 0.971,
+        "claim_verdict_match_rate": 0.998,
+        "cost_per_100_traces_usd": 0.0,
+        "dangerous_false_green_rate": 0.112,
+        "evidence_span_labeled_cases": 188,
+        "evidence_span_overlap": null,
+        "evidence_span_reported_cases": 0,
+        "failure_label_exact_match_rate": 0.238,
+        "failure_label_macro_f1": 0.566,
+        "latency_p50_ms": 6.277,
+        "latency_p95_ms": 26.419,
+        "root_cause_accuracy": null,
+        "root_cause_labeled_cases": 500,
+        "root_cause_reported_cases": 0
+      }
+    },
+    {
+      "confidence_intervals": {
+        "citation_error_f1": {
+          "estimate": 1.0,
+          "high": 1.0,
+          "level": 0.95,
+          "low": 1.0,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "claim_verdict_macro_f1": {
+          "estimate": 0.971,
+          "high": 1.0,
+          "level": 0.95,
+          "low": 0.878,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "dangerous_false_green_rate": {
+          "estimate": 0.112,
+          "high": 0.142,
+          "level": 0.95,
+          "low": 0.086,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "evidence_span_overlap": {
+          "estimate": 0.98,
+          "high": 0.994,
+          "level": 0.95,
+          "low": 0.964,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "failure_label_macro_f1": {
+          "estimate": 0.691,
+          "high": 0.715,
+          "level": 0.95,
+          "low": 0.637,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "root_cause_accuracy": {
+          "estimate": 0.886,
+          "high": 0.912,
+          "level": 0.95,
+          "low": 0.856,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        }
+      },
+      "id": "a3_diagnostic_inference",
+      "label": "+ abstention and root cause",
+      "mode": "semantic",
+      "profile": {
+        "abstention_logic": true,
+        "citation_alignment": true,
+        "evidence_span_localization": false,
+        "root_cause_inference": true,
+        "source_assessment": false
+      },
+      "summary": {
+        "cases": 500,
+        "citation_error_f1": 1.0,
+        "citation_error_precision": 1.0,
+        "citation_error_recall": 1.0,
+        "citation_status_reported_cases": 500,
+        "claim_verdict_macro_f1": 0.971,
+        "claim_verdict_match_rate": 0.998,
+        "cost_per_100_traces_usd": 0.0,
+        "dangerous_false_green_rate": 0.112,
+        "evidence_span_labeled_cases": 188,
+        "evidence_span_overlap": null,
+        "evidence_span_reported_cases": 0,
+        "failure_label_exact_match_rate": 0.886,
+        "failure_label_macro_f1": 0.691,
+        "latency_p50_ms": 5.733,
+        "latency_p95_ms": 21.529,
+        "root_cause_accuracy": 0.886,
+        "root_cause_labeled_cases": 500,
+        "root_cause_reported_cases": 500
+      }
+    },
+    {
+      "confidence_intervals": {
+        "citation_error_f1": {
+          "estimate": 1.0,
+          "high": 1.0,
+          "level": 0.95,
+          "low": 1.0,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "claim_verdict_macro_f1": {
+          "estimate": 1.0,
+          "high": 1.0,
+          "level": 0.95,
+          "low": 1.0,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "dangerous_false_green_rate": {
+          "estimate": 0.112,
+          "high": 0.142,
+          "level": 0.95,
+          "low": 0.086,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "evidence_span_overlap": {
+          "estimate": 0.862,
+          "high": 0.881,
+          "level": 0.95,
+          "low": 0.842,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "failure_label_macro_f1": {
+          "estimate": 0.708,
+          "high": 0.718,
+          "level": 0.95,
+          "low": 0.67,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "root_cause_accuracy": {
+          "estimate": 0.888,
+          "high": 0.914,
+          "level": 0.95,
+          "low": 0.858,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        }
+      },
+      "id": "a4_span_localization",
+      "label": "+ evidence-span localization",
+      "mode": "semantic",
+      "profile": {
+        "abstention_logic": true,
+        "citation_alignment": true,
+        "evidence_span_localization": true,
+        "root_cause_inference": true,
+        "source_assessment": false
+      },
+      "summary": {
+        "cases": 500,
+        "citation_error_f1": 1.0,
+        "citation_error_precision": 1.0,
+        "citation_error_recall": 1.0,
+        "citation_status_reported_cases": 500,
+        "claim_verdict_macro_f1": 1.0,
+        "claim_verdict_match_rate": 1.0,
+        "cost_per_100_traces_usd": 0.0,
+        "dangerous_false_green_rate": 0.112,
+        "evidence_span_labeled_cases": 188,
+        "evidence_span_overlap": 0.862,
+        "evidence_span_reported_cases": 188,
+        "failure_label_exact_match_rate": 0.888,
+        "failure_label_macro_f1": 0.708,
+        "latency_p50_ms": 5.018,
+        "latency_p95_ms": 17.394,
+        "root_cause_accuracy": 0.888,
+        "root_cause_labeled_cases": 500,
+        "root_cause_reported_cases": 500
+      }
+    },
+    {
+      "confidence_intervals": {
+        "citation_error_f1": {
+          "estimate": 1.0,
+          "high": 1.0,
+          "level": 0.95,
+          "low": 1.0,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "claim_verdict_macro_f1": {
+          "estimate": 1.0,
+          "high": 1.0,
+          "level": 0.95,
+          "low": 1.0,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "dangerous_false_green_rate": {
+          "estimate": 0.0,
+          "high": 0.0,
+          "level": 0.95,
+          "low": 0.0,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "evidence_span_overlap": {
+          "estimate": 0.862,
+          "high": 0.881,
+          "level": 0.95,
+          "low": 0.842,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "failure_label_macro_f1": {
+          "estimate": 1.0,
+          "high": 1.0,
+          "level": 0.95,
+          "low": 1.0,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "root_cause_accuracy": {
+          "estimate": 1.0,
+          "high": 1.0,
+          "level": 0.95,
+          "low": 1.0,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        }
+      },
+      "id": "a5_full",
+      "label": "Full ContextTrace",
+      "mode": "semantic",
+      "profile": {
+        "abstention_logic": true,
+        "citation_alignment": true,
+        "evidence_span_localization": true,
+        "root_cause_inference": true,
+        "source_assessment": true
+      },
+      "summary": {
+        "cases": 500,
+        "citation_error_f1": 1.0,
+        "citation_error_precision": 1.0,
+        "citation_error_recall": 1.0,
+        "citation_status_reported_cases": 500,
+        "claim_verdict_macro_f1": 1.0,
+        "claim_verdict_match_rate": 1.0,
+        "cost_per_100_traces_usd": 0.0,
+        "dangerous_false_green_rate": 0.0,
+        "evidence_span_labeled_cases": 188,
+        "evidence_span_overlap": 0.862,
+        "evidence_span_reported_cases": 188,
+        "failure_label_exact_match_rate": 1.0,
+        "failure_label_macro_f1": 1.0,
+        "latency_p50_ms": 11.58,
+        "latency_p95_ms": 38.331,
+        "root_cause_accuracy": 1.0,
+        "root_cause_labeled_cases": 500,
+        "root_cause_reported_cases": 500
+      }
+    }
+  ],
+  "baseline_results": [
+    {
+      "confidence_intervals": {
+        "claim_verdict_macro_f1": {
+          "estimate": 0.533,
+          "high": 1.0,
+          "level": 0.95,
+          "low": 0.4,
+          "method": "case_bootstrap",
+          "samples": 388,
+          "seed": 20260612
+        },
+        "dangerous_false_green_rate": {
+          "estimate": 0.3,
+          "high": 0.365,
+          "level": 0.95,
+          "low": 0.24,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "failure_label_macro_f1": {
+          "estimate": 0.152,
+          "high": 0.199,
+          "level": 0.95,
+          "low": 0.143,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        }
+      },
+      "cost_reported": false,
+      "coverage": {
+        "matched_predictions": 200,
+        "reference_cases": 200,
+        "submitted_predictions": 200
+      },
+      "summary": {
+        "cases": 200,
+        "citation_error_f1": null,
+        "citation_error_precision": null,
+        "citation_error_recall": null,
+        "citation_status_reported_cases": 0,
+        "claim_verdict_macro_f1": 0.533,
+        "claim_verdict_match_rate": 0.25,
+        "cost_per_100_traces_usd": 0.0,
+        "dangerous_false_green_rate": 0.3,
+        "evidence_span_labeled_cases": 0,
+        "evidence_span_overlap": null,
+        "evidence_span_reported_cases": 0,
+        "failure_label_exact_match_rate": 0.53,
+        "failure_label_macro_f1": 0.152,
+        "latency_p50_ms": 29358.407,
+        "latency_p95_ms": 48699.394,
+        "root_cause_accuracy": null,
+        "root_cause_labeled_cases": 0,
+        "root_cause_reported_cases": 0
+      },
+      "system": "RAGAS",
+      "version": "gpt-4.1-mini max_output_tokens=32768"
+    }
+  ],
+  "bootstrap_samples": 400,
+  "bootstrap_seed": 20260612,
+  "bootstrap_valid_draw_policy": {
+    "minimum_valid": 380,
+    "note": "Class-sensitive metrics may be undefined when a resample omits the evaluated class.",
+    "requested": 400
+  },
+  "broad_sota_claim_allowed": false,
+  "claim_boundary": "These are frozen pre-review results. Independent Diag-150 and RAGTruth review must pass before paper-result claims; broad state-of-the-art language remains blocked.",
+  "eligibility_gates": {
+    "independent_diag150_review_complete": false,
+    "independent_ragtruth_review_complete": false,
+    "matched_external_baseline_available": true,
+    "non_quick_run": true,
+    "ragtruth_case_pack_available": true
+  },
+  "error_analysis": {
+    "benchmark_miss_count": 13,
+    "case_count": 200,
+    "case_set": "external_case_pack",
+    "confusion": [
+      {
+        "count": 110,
+        "expected": "no_failure_detected",
+        "predicted": "no_failure_detected"
+      },
+      {
+        "count": 41,
+        "expected": "contradicted_answer",
+        "predicted": "contradicted_answer"
+      },
+      {
+        "count": 39,
+        "expected": "partial_support",
+        "predicted": "partial_support"
+      },
+      {
+        "count": 3,
+        "expected": "no_failure_detected",
+        "predicted": "partial_support"
+      },
+      {
+        "count": 3,
+        "expected": "partial_support",
+        "predicted": "contradicted_answer"
+      },
+      {
+        "count": 2,
+        "expected": "contradicted_answer",
+        "predicted": "partial_support"
+      },
+      {
+        "count": 1,
+        "expected": "no_failure_detected",
+        "predicted": "contradicted_answer"
+      },
+      {
+        "count": 1,
+        "expected": "unsupported",
+        "predicted": "unsupported"
+      }
+    ],
+    "dangerous_false_green_count": 0,
+    "false_positive_labels": [
+      {
+        "count": 3,
+        "label": "partial_support"
+      },
+      {
+        "count": 1,
+        "label": "contradicted_answer"
+      }
+    ],
+    "label_miss_count": 9,
+    "root_cause_confusion": [
+      {
+        "count": 110,
+        "expected_root_cause": "no_failure_detected",
+        "predicted_root_cause": "no_failure_detected"
+      },
+      {
+        "count": 41,
+        "expected_root_cause": "conflicting_contexts",
+        "predicted_root_cause": "conflicting_contexts"
+      },
+      {
+        "count": 40,
+        "expected_root_cause": "answer_overreach",
+        "predicted_root_cause": "answer_overreach"
+      },
+      {
+        "count": 3,
+        "expected_root_cause": "answer_overreach",
+        "predicted_root_cause": "conflicting_contexts"
+      },
+      {
+        "count": 3,
+        "expected_root_cause": "no_failure_detected",
+        "predicted_root_cause": "answer_overreach"
+      },
+      {
+        "count": 2,
+        "expected_root_cause": "conflicting_contexts",
+        "predicted_root_cause": "answer_overreach"
+      },
+      {
+        "count": 1,
+        "expected_root_cause": "no_failure_detected",
+        "predicted_root_cause": "conflicting_contexts"
+      }
+    ]
+  },
+  "external_results": [
+    {
+      "confidence_intervals": {
+        "citation_error_f1": {
+          "estimate": 1.0,
+          "high": 1.0,
+          "level": 0.95,
+          "low": 1.0,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "claim_verdict_macro_f1": {
+          "estimate": 0.337,
+          "high": 0.733,
+          "level": 0.95,
+          "low": 0.2,
+          "method": "case_bootstrap",
+          "samples": 388,
+          "seed": 20260612
+        },
+        "dangerous_false_green_rate": {
+          "estimate": 0.0,
+          "high": 0.0,
+          "level": 0.95,
+          "low": 0.0,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "evidence_span_overlap": {
+          "estimate": 0.786,
+          "high": 0.837,
+          "level": 0.95,
+          "low": 0.73,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "failure_label_macro_f1": {
+          "estimate": 0.955,
+          "high": 0.977,
+          "level": 0.95,
+          "low": 0.912,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "root_cause_accuracy": {
+          "estimate": 0.955,
+          "high": 0.98,
+          "level": 0.95,
+          "low": 0.92,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        }
+      },
+      "dataset": "RAGTruth",
+      "dataset_id": "ragtruth_primary",
+      "review_status": "assisted_review_pending_independent",
+      "role": "primary_external_calibration",
+      "summary": {
+        "cases": 200,
+        "citation_error_f1": 1.0,
+        "citation_error_precision": 1.0,
+        "citation_error_recall": 1.0,
+        "citation_status_reported_cases": 200,
+        "claim_verdict_macro_f1": 0.337,
+        "claim_verdict_match_rate": 0.0,
+        "cost_per_100_traces_usd": 0.0,
+        "dangerous_false_green_rate": 0.0,
+        "evidence_span_labeled_cases": 75,
+        "evidence_span_overlap": 0.786,
+        "evidence_span_reported_cases": 75,
+        "failure_label_exact_match_rate": 0.955,
+        "failure_label_macro_f1": 0.955,
+        "latency_p50_ms": 693.211,
+        "latency_p95_ms": 2320.898,
+        "root_cause_accuracy": 0.955,
+        "root_cause_labeled_cases": 200,
+        "root_cause_reported_cases": 200
+      }
+    },
+    {
+      "confidence_intervals": {
+        "citation_error_f1": {
+          "estimate": 1.0,
+          "high": 1.0,
+          "level": 0.95,
+          "low": 1.0,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "claim_verdict_macro_f1": {
+          "estimate": 1.0,
+          "high": 1.0,
+          "level": 0.95,
+          "low": 1.0,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "dangerous_false_green_rate": {
+          "estimate": 0.0,
+          "high": 0.0,
+          "level": 0.95,
+          "low": 0.0,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "evidence_span_overlap": {
+          "estimate": 0.95,
+          "high": 0.966,
+          "level": 0.95,
+          "low": 0.936,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "failure_label_macro_f1": {
+          "estimate": 1.0,
+          "high": 1.0,
+          "level": 0.95,
+          "low": 1.0,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        },
+        "root_cause_accuracy": {
+          "estimate": 1.0,
+          "high": 1.0,
+          "level": 0.95,
+          "low": 1.0,
+          "method": "case_bootstrap",
+          "samples": 400,
+          "seed": 20260612
+        }
+      },
+      "dataset": "ContextTrace-Diag-150",
+      "dataset_id": "diag150_primary",
+      "review_status": "pending_independent",
+      "role": "primary_public_document_holdout",
+      "summary": {
+        "cases": 150,
+        "citation_error_f1": 1.0,
+        "citation_error_precision": 1.0,
+        "citation_error_recall": 1.0,
+        "citation_status_reported_cases": 150,
+        "claim_verdict_macro_f1": 1.0,
+        "claim_verdict_match_rate": 1.0,
+        "cost_per_100_traces_usd": 0.0,
+        "dangerous_false_green_rate": 0.0,
+        "evidence_span_labeled_cases": 149,
+        "evidence_span_overlap": 0.95,
+        "evidence_span_reported_cases": 149,
+        "failure_label_exact_match_rate": 1.0,
+        "failure_label_macro_f1": 1.0,
+        "latency_p50_ms": 10.984,
+        "latency_p95_ms": 21.447,
+        "root_cause_accuracy": 1.0,
+        "root_cause_labeled_cases": 150,
+        "root_cause_reported_cases": 150
+      }
+    }
+  ],
+  "inputs": {
+    "candidate_predictions": [
+      {
+        "available": true,
+        "bytes": 65764,
+        "path": "benchmarks/contexttrace_bench/out/ragtruth_release_bundle/candidates/ragas_predictions.json",
+        "sha256": "85c39ffaed7d8be59a19af8e446692706963e37832a4e30021286029356404de"
+      }
+    ],
+    "experiment_spec": {
+      "available": true,
+      "bytes": 6032,
+      "path": "benchmarks/contexttrace_bench/ARR_EXPERIMENTS.json",
+      "sha256": "c013968d2bf09e093e0c955527abbc8bc7a85672a4989c77f0a02c091cd32e97"
+    },
+    "ragtruth_case_pack": {
+      "available": true,
+      "bytes": 1398575,
+      "path": "benchmarks/contexttrace_bench/out/ragtruth_release_bundle/ragtruth_reviewed_case_pack.json",
+      "sha256": "19294b50661931ae2f0d4e3c95d18c3220e52a021f5f0289fe459c760986ceaa"
+    },
+    "selected_ragtruth_case_pack": {
+      "available": true,
+      "bytes": 1398575,
+      "path": "benchmarks/contexttrace_bench/out/ragtruth_release_bundle/ragtruth_reviewed_case_pack.json",
+      "sha256": "19294b50661931ae2f0d4e3c95d18c3220e52a021f5f0289fe459c760986ceaa"
+    }
+  },
+  "paper_result_eligible": false,
+  "schema_version": 1,
+  "source_artifacts": [
+    {
+      "bytes": 27867,
+      "path": "benchmarks/contexttrace_bench/out/arr_reproduction_full/ablations/ablation_results.json",
+      "sha256": "5d7a884254c250040a9172e952d87566ff4fd1ecc7296ea829aef7fdcc7e72d4"
+    },
+    {
+      "bytes": 1247,
+      "path": "benchmarks/contexttrace_bench/out/arr_reproduction_full/ablations/ablation_table.md",
+      "sha256": "290aab28c45dce64b25580ee1790e52d7e3dec786c21188ebfa201377e730fcf"
+    },
+    {
+      "bytes": 6211,
+      "path": "benchmarks/contexttrace_bench/out/arr_reproduction_full/ablations/experiment_matrix.json",
+      "sha256": "ee9a833d59741403e93528829ea746f710f29e6b811712c62846fb8cc279709c"
+    },
+    {
+      "bytes": 333480,
+      "path": "benchmarks/contexttrace_bench/out/arr_reproduction_full/arr_tables.json",
+      "sha256": "d66b18961c8da24b9fecadd133097700bf3deb4231243ca7ae0259697a302e36"
+    },
+    {
+      "bytes": 9956,
+      "path": "benchmarks/contexttrace_bench/out/arr_reproduction_full/reproduction_manifest.json",
+      "sha256": "241879d78f1f407fc63619002c530b655c5133c3b53942334dc57ce434f0d857"
+    },
+    {
+      "bytes": 161612,
+      "path": "benchmarks/contexttrace_bench/out/arr_reproduction_full/runs/diag150/candidate_inputs.jsonl",
+      "sha256": "473e0b3bbd31ca434ce81a737bd2b6f5371437b5e1576196d54c7b34a32af46f"
+    },
+    {
+      "bytes": 1634984,
+      "path": "benchmarks/contexttrace_bench/out/arr_reproduction_full/runs/diag150/contexttrace_bench_results.json",
+      "sha256": "091499d0d1bff586c4e9153dbeacfe18e4b168092735ab645c3fc3ed91fc744a"
+    },
+    {
+      "bytes": 1757,
+      "path": "benchmarks/contexttrace_bench/out/arr_reproduction_full/runs/diag150/error_analysis.json",
+      "sha256": "e49d986f8587cdf1b9eb6a241a6ab82d054c4b070344aa8ada087bd5e79261e5"
+    },
+    {
+      "bytes": 1156,
+      "path": "benchmarks/contexttrace_bench/out/arr_reproduction_full/runs/diag150/error_analysis.md",
+      "sha256": "d3c2d1216a0ac2aba75d71eb8cecf2fb90b0429e32fda73c96664ed8977a83a8"
+    },
+    {
+      "bytes": 858,
+      "path": "benchmarks/contexttrace_bench/out/arr_reproduction_full/runs/diag150/leaderboard.md",
+      "sha256": "f9cbad5381861ac9550cc4416674dd5cdabf0cb8b21900ea9a5a68cdb162abf2"
+    },
+    {
+      "bytes": 71175,
+      "path": "benchmarks/contexttrace_bench/out/arr_reproduction_full/runs/diag150/report.html",
+      "sha256": "0c491d77ac66d632922ce159a745c12c928cbadcc6bd1e7295d485cb73988c74"
+    },
+    {
+      "bytes": 2286,
+      "path": "benchmarks/contexttrace_bench/out/arr_reproduction_full/runs/diag150/results.md",
+      "sha256": "991be3aa2f923fb4b7e454c8415aba2b6588db5fa2871735cc8bff94f99944ee"
+    },
+    {
+      "bytes": 269617,
+      "path": "benchmarks/contexttrace_bench/out/arr_reproduction_full/runs/ragtruth/baseline_results.json",
+      "sha256": "48ace1f65ce45cc6d0f1ad62a6efbca24354a48dd9a2809ee7323dbfce628bb2"
+    },
+    {
+      "bytes": 1164092,
+      "path": "benchmarks/contexttrace_bench/out/arr_reproduction_full/runs/ragtruth/candidate_inputs.jsonl",
+      "sha256": "f682aae7b20962d776738dc7a03391c208fcf91130dc55c85b054041a7736d12"
+    },
+    {
+      "bytes": 22442900,
+      "path": "benchmarks/contexttrace_bench/out/arr_reproduction_full/runs/ragtruth/contexttrace_bench_results.json",
+      "sha256": "6862f88dea421cdec37c796b44f921f55c12ed8e6d95ccd6dac03ba313b46dcf"
+    },
+    {
+      "bytes": 15771,
+      "path": "benchmarks/contexttrace_bench/out/arr_reproduction_full/runs/ragtruth/error_analysis.json",
+      "sha256": "b04be38e3ae3b3f9e0b77262e43de4f07762a5e219242911b23fa65db4188fbe"
+    },
+    {
+      "bytes": 4915,
+      "path": "benchmarks/contexttrace_bench/out/arr_reproduction_full/runs/ragtruth/error_analysis.md",
+      "sha256": "96f3dafabfb20f29e6adc9b5214bfc8df9fc8893624da8ef65a6b18f06582e6f"
+    },
+    {
+      "bytes": 1007,
+      "path": "benchmarks/contexttrace_bench/out/arr_reproduction_full/runs/ragtruth/leaderboard.md",
+      "sha256": "2e11305f2326d20b76f72604bd5ea4e28941eb907313d186757c6c164fa8024d"
+    },
+    {
+      "bytes": 142789,
+      "path": "benchmarks/contexttrace_bench/out/arr_reproduction_full/runs/ragtruth/report.html",
+      "sha256": "10594d2d8ffdefb7e3ef15c82de4d21f36f9280a1cd32b99ff3b9f4f2770bf77"
+    },
+    {
+      "bytes": 4678,
+      "path": "benchmarks/contexttrace_bench/out/arr_reproduction_full/runs/ragtruth/results.md",
+      "sha256": "9a31203203ffd760a0581ae39ac6a76cca8dfda690c934a3efee6af01b9bb622"
+    },
+    {
+      "bytes": 901,
+      "path": "benchmarks/contexttrace_bench/out/arr_reproduction_full/table_1_external_results.md",
+      "sha256": "5f5f680d9436972410858a71c4e61dfe86d3a70fcef50f3f743f571ca9d18211"
+    },
+    {
+      "bytes": 1256,
+      "path": "benchmarks/contexttrace_bench/out/arr_reproduction_full/table_2_ablations.md",
+      "sha256": "f22e88a3cab0a88cf9ad2e5d46657ec94357979d249e12ed48a3a86093bfcd20"
+    },
+    {
+      "bytes": 845,
+      "path": "benchmarks/contexttrace_bench/out/arr_reproduction_full/table_3_baselines.md",
+      "sha256": "2315c8e8c0629914215f96be06f354fd931363e008a519582a724010500b60ea"
+    },
+    {
+      "bytes": 1675,
+      "path": "benchmarks/contexttrace_bench/out/arr_reproduction_full/table_4_error_analysis.md",
+      "sha256": "e18e4cbf6686d7173a378a76cd506eded173607c0175b17fd5eeb2344decc5d3"
+    }
+  ],
+  "source_commit": "2e0a26ea0cc5d6fb1c996f993277358fda05d04c",
+  "source_generated_at": "2026-06-29T23:09:08+00:00",
+  "status": "pre_review_paper_candidate"
+}
