@@ -3,7 +3,6 @@ from __future__ import annotations
 import argparse
 import json
 import platform
-import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -16,11 +15,13 @@ if str(PACKAGE_ROOT) not in sys.path:
     sys.path.insert(0, str(PACKAGE_ROOT))
 
 try:
+    from benchmarks.contexttrace_bench.artifact_runtime import repository_revision
     from benchmarks.contexttrace_bench.run_contexttrace import (
         run_contexttrace_benchmark,
         write_benchmark_outputs,
     )
 except ModuleNotFoundError:  # pragma: no cover - direct script execution
+    from artifact_runtime import repository_revision  # type: ignore
     from run_contexttrace import run_contexttrace_benchmark, write_benchmark_outputs  # type: ignore
 
 from contexttrace.verify.runner import VerificationProfile
@@ -236,14 +237,7 @@ def _case_id_hash(case_ids: list[str]) -> str:
 
 
 def _git_commit() -> str:
-    completed = subprocess.run(
-        ["git", "rev-parse", "HEAD"],
-        cwd=REPO_ROOT,
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-    return completed.stdout.strip()
+    return repository_revision(REPO_ROOT)
 
 
 def _portable_path(path: str | Path | None) -> str | None:

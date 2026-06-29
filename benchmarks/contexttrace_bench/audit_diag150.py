@@ -4,7 +4,6 @@ import argparse
 import hashlib
 import json
 import shutil
-import subprocess
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
@@ -12,6 +11,7 @@ from typing import Any
 from urllib.parse import urlparse
 
 try:  # pragma: no cover - exercised when run as a script from this directory
+    from benchmarks.contexttrace_bench.artifact_runtime import ANONYMOUS_REVISION, repository_revision
     from benchmarks.contexttrace_bench.run_contexttrace import (
         DEFAULT_OUTPUT_DIR,
         render_candidate_inputs_jsonl,
@@ -19,6 +19,7 @@ try:  # pragma: no cover - exercised when run as a script from this directory
         write_benchmark_outputs,
     )
 except ModuleNotFoundError:  # pragma: no cover
+    from artifact_runtime import ANONYMOUS_REVISION, repository_revision  # type: ignore
     from run_contexttrace import (  # type: ignore
         DEFAULT_OUTPUT_DIR,
         render_candidate_inputs_jsonl,
@@ -722,16 +723,10 @@ def _manifest_metric(manifest: dict[str, Any], key: str) -> str:
 
 
 def current_git_commit() -> str:
-    try:
-        completed = subprocess.run(
-            ["git", "rev-parse", "--short", "HEAD"],
-            check=True,
-            capture_output=True,
-            text=True,
-        )
-    except (OSError, subprocess.CalledProcessError):
+    revision = repository_revision(Path(__file__).resolve().parents[2])
+    if revision == ANONYMOUS_REVISION:
         return "unknown"
-    return completed.stdout.strip() or "unknown"
+    return revision[:7]
 
 
 def _normalized_human_review(review: dict[str, Any]) -> dict[str, Any]:

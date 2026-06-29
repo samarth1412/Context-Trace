@@ -4,7 +4,6 @@ import argparse
 import hashlib
 import json
 import random
-import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -17,6 +16,7 @@ if str(PACKAGE_ROOT) not in sys.path:
     sys.path.insert(0, str(PACKAGE_ROOT))
 
 try:
+    from benchmarks.contexttrace_bench.artifact_runtime import repository_revision
     from benchmarks.contexttrace_bench.arr_ablation import (
         DEFAULT_SPEC_PATH,
         load_experiment_spec,
@@ -29,6 +29,7 @@ try:
         write_benchmark_outputs,
     )
 except ModuleNotFoundError:  # pragma: no cover - direct script execution
+    from artifact_runtime import repository_revision  # type: ignore
     from arr_ablation import DEFAULT_SPEC_PATH, load_experiment_spec, run_arr_ablations  # type: ignore
     from run_contexttrace import (  # type: ignore
         build_error_analysis,
@@ -609,14 +610,7 @@ def _sha256(path: Path) -> str:
 
 
 def _git_commit() -> str:
-    completed = subprocess.run(
-        ["git", "rev-parse", "HEAD"],
-        cwd=REPO_ROOT,
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-    return completed.stdout.strip()
+    return repository_revision(REPO_ROOT)
 
 
 def _portable_path(path: str | Path) -> str:

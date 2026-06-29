@@ -5,7 +5,6 @@ import hashlib
 import json
 import random
 import re
-import subprocess
 import sys
 from collections import Counter
 from datetime import datetime, timezone
@@ -18,6 +17,11 @@ if str(PACKAGE_ROOT) not in sys.path:
     sys.path.insert(0, str(PACKAGE_ROOT))
 
 from contexttrace.verify.benchmark import benchmark_cases  # noqa: E402
+
+try:
+    from benchmarks.contexttrace_bench.artifact_runtime import repository_revision
+except ModuleNotFoundError:  # pragma: no cover - direct script execution
+    from artifact_runtime import repository_revision  # type: ignore
 
 
 DEFAULT_OUTPUT_DIR = Path(__file__).with_name("out") / "arr_annotation"
@@ -582,14 +586,7 @@ def _dataset_name(*, case_set: str, case_pack_path: str | Path | None) -> str:
 
 
 def _git_commit() -> str:
-    completed = subprocess.run(
-        ["git", "rev-parse", "HEAD"],
-        cwd=REPO_ROOT,
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-    return completed.stdout.strip()
+    return repository_revision(REPO_ROOT)
 
 
 def main(argv: list[str] | None = None) -> int:

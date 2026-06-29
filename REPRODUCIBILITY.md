@@ -100,3 +100,18 @@ and external evaluator runs are sensitivity or baseline studies and must record
 provider, model revision, parameters, retries, token usage, and observed cost.
 Hardware and library differences can affect latency, so report the measurement
 machine and do not compare latency across unmatched environments.
+
+## Anonymous Artifact
+
+Build the deterministic supplementary ZIP with the licensed RAGTruth pack and
+matching candidate predictions:
+
+```bash
+python scripts/build_anonymous_artifact.py
+```
+
+The builder uses a tracked-file allowlist, replaces project-owned public links,
+excludes git history and private/ignored outputs, includes third-party licensing,
+and fails on identity markers, user paths, secrets, unsafe ZIP paths, or manifest
+checksum mismatches. Validate an existing ZIP with
+`python scripts/build_anonymous_artifact.py --validate-only PATH`.
