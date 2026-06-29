@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
@@ -28,14 +29,36 @@ from contexttrace.verify.statuses import attach_grounding_statuses
 from contexttrace.verify.verdicts import classify_claim
 
 
+@dataclass(frozen=True)
+class VerificationProfile:
+    citation_alignment: bool = True
+    abstention_logic: bool = True
+    source_assessment: bool = True
+    root_cause_inference: bool = True
+    evidence_span_localization: bool = True
+
+    def to_dict(self) -> dict[str, bool]:
+        return asdict(self)
+
+
+FULL_VERIFICATION_PROFILE = VerificationProfile()
+
+
 def verify_trace_file(
     path: str | Path,
     *,
     mode: str = "lexical",
     judge: ClaimJudge | None = None,
     nli: ClaimJudge | None = None,
+    profile: VerificationProfile | None = None,
 ) -> dict[str, Any]:
-    return verify_trace(load_trace_file(path), mode=mode, judge=judge, nli=nli)
+    return verify_trace(
+        load_trace_file(path),
+        mode=mode,
+        judge=judge,
+        nli=nli,
+        profile=profile,
+    )
 
 
 def verify_trace(
@@ -44,15 +67,22 @@ def verify_trace(
     mode: str = "lexical",
     judge: ClaimJudge | None = None,
     nli: ClaimJudge | None = None,
+    profile: VerificationProfile | None = None,
 ) -> dict[str, Any]:
     mode = _normalize_mode(mode)
+    profile = profile or FULL_VERIFICATION_PROFILE
     evidence_mode = _evidence_mode(mode)
     judge = _resolve_judge(mode=mode, judge=judge)
     nli = _resolve_nli(mode=mode, nli=nli)
     claims = extract_claims(trace.answer)
     verifications = []
     for claim in claims:
-        match = find_best_evidence(claim.text, trace.contexts, mode=evidence_mode)
+        match = find_best_evidence(
+            claim.text,
+            trace.contexts,
+            mode=evidence_mode,
+            localize_spans=profile.evidence_span_localization,
+        )
         verifications.append(
             classify_claim(claim, match, has_contexts=bool(trace.contexts), mode=evidence_mode)
         )
@@ -62,28 +92,49 @@ def verify_trace(
     elif nli is not None:
         verifications = _apply_judge_verdicts(trace, claims, verifications, nli)
 
-    verifications = attach_citation_statuses(claims, verifications, trace, mode=evidence_mode)
-    if judge is not None:
-        verifications = _apply_judge_citation_statuses(trace, claims, verifications, judge, mode=evidence_mode)
-    elif nli is not None:
-        verifications = _apply_judge_citation_statuses(trace, claims, verifications, nli, mode=evidence_mode)
-    abstention = judge_abstention(
-        query=trace.query,
-        claims=claims,
-        contexts=trace.contexts,
-        verifications=verifications,
-        mode=evidence_mode,
+    if profile.citation_alignment:
+        verifications = attach_citation_statuses(claims, verifications, trace, mode=evidence_mode)
+        if judge is not None:
+            verifications = _apply_judge_citation_statuses(trace, claims, verifications, judge, mode=evidence_mode)
+        elif nli is not None:
+            verifications = _apply_judge_citation_statuses(trace, claims, verifications, nli, mode=evidence_mode)
+    abstention = (
+        judge_abstention(
+            query=trace.query,
+            claims=claims,
+            contexts=trace.contexts,
+            verifications=verifications,
+            mode=evidence_mode,
+            localize_spans=profile.evidence_span_localization,
+        )
+        if profile.abstention_logic
+        else {
+            "should_abstain": False,
+            "reason": "Abstention logic disabled by the verification profile.",
+        }
     )
-    claim_results = attach_source_assessments(
-        [verification.to_dict() for verification in verifications],
-        trace,
-        mode=evidence_mode,
-    )
-    claim_results = attach_root_causes(claim_results, abstention)
+    base_claim_results = [verification.to_dict() for verification in verifications]
+    if profile.source_assessment:
+        claim_results = attach_source_assessments(
+            base_claim_results,
+            trace,
+            mode=evidence_mode,
+        )
+    else:
+        claim_results = [
+            {
+                **claim,
+                "source_status": "freshness_unknown",
+                "source_assessment": {},
+            }
+            for claim in base_claim_results
+        ]
+    if profile.root_cause_inference:
+        claim_results = attach_root_causes(claim_results, abstention)
     claim_results = attach_grounding_statuses(claim_results, trace)
     summary = _summary(verifications, abstention)
-    summary["root_causes"] = root_cause_summary(claim_results)
-    summary["primary_root_cause"] = primary_root_cause(claim_results)
+    summary["root_causes"] = root_cause_summary(claim_results) if profile.root_cause_inference else {}
+    summary["primary_root_cause"] = primary_root_cause(claim_results) if profile.root_cause_inference else ""
     summary["source_status"] = _source_status_summary(claim_results)
     diagnostics = _diagnostics(verifications, abstention)
     diagnostics = _augment_diagnostics_with_source_status(diagnostics, claim_results)
@@ -103,6 +154,7 @@ def verify_trace(
         "abstention": abstention,
         "diagnostics": diagnostics,
         "metadata": dict(trace.metadata),
+        "verification_profile": profile.to_dict(),
     }
 
 

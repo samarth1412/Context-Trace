@@ -175,6 +175,7 @@ def find_best_evidence(
     contexts: Iterable[TraceContext],
     *,
     mode: str = "lexical",
+    localize_spans: bool = True,
 ) -> EvidenceMatch:
     best = EvidenceMatch(
         context_id=None,
@@ -185,7 +186,12 @@ def find_best_evidence(
     )
     span_candidates: list[dict[str, object]] = []
     for context in contexts:
-        candidate = score_claim_against_context(claim_text, context, mode=mode)
+        candidate = score_claim_against_context(
+            claim_text,
+            context,
+            mode=mode,
+            localize_spans=localize_spans,
+        )
         span_candidates.extend(candidate.supporting_spans or [])
         if best.context_id is None or candidate.score > best.score:
             best = candidate
@@ -209,7 +215,20 @@ def score_claim_against_context(
     context: TraceContext,
     *,
     mode: str = "lexical",
+    localize_spans: bool = True,
 ) -> EvidenceMatch:
+    if not localize_spans:
+        score, terms = lexical_score(claim_text, context.text, mode=mode)
+        return EvidenceMatch(
+            context_id=context.id,
+            context_text=context.text,
+            score=score,
+            matched_terms=terms,
+            snippet=context.text.strip(),
+            supporting_spans=[],
+            supporting_text=context.text.strip(),
+        )
+
     spans = split_context_spans(context)
     best_score = 0.0
     best_terms: list[str] = []

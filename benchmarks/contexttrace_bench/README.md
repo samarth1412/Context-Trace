@@ -28,6 +28,18 @@ required human audit pass is tracked in [AUDIT.md](AUDIT.md). The official CRAG
 download, normalization, comparability boundary, and review process are in
 [CRAG.md](CRAG.md).
 
+The frozen August 2026 ARR study is defined by
+[ARR_EXPERIMENTS.json](ARR_EXPERIMENTS.json) and
+[ARR_EXPERIMENT_PROTOCOL.md](ARR_EXPERIMENT_PROTOCOL.md). Human review follows
+[ARR_ANNOTATION_PROTOCOL.md](ARR_ANNOTATION_PROTOCOL.md), and the repository-level
+commands and artifact rules are in [REPRODUCIBILITY.md](../../REPRODUCIBILITY.md).
+
+Validate the cumulative ablation harness without producing paper results:
+
+```bash
+python benchmarks/contexttrace_bench/arr_ablation.py --quick --case-set all
+```
+
 Run it from the repo root:
 
 ```bash

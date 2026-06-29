@@ -13,6 +13,7 @@ def judge_abstention(
     contexts: list[TraceContext],
     verifications: list[ClaimVerification],
     mode: str = "lexical",
+    localize_spans: bool = True,
 ) -> dict[str, object]:
     if not claims:
         return {
@@ -47,7 +48,12 @@ def judge_abstention(
             ),
         }
 
-    query_match = find_best_evidence(query, contexts, mode=mode)
+    query_match = find_best_evidence(
+        query,
+        contexts,
+        mode=mode,
+        localize_spans=localize_spans,
+    )
     if supported == 0 and query_match.score < 0.18:
         return {
             "should_abstain": True,

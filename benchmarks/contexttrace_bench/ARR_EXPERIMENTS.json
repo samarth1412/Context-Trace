@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "frozen_on": "2026-06-29",
+  "target": {
+    "review_cycle": "ARR August 2026",
+    "submission_date": "2026-08-03",
+    "paper_type": "long",
+    "content_page_limit": 8
+  },
+  "thesis": "ContextTrace formalizes evidence-chain forensics for localizing RAG and agent failures across claims, citations, evidence spans, source state, root causes, and regression tests.",
+  "claim_policy": {
+    "allowed": "ContextTrace is a benchmarked, local-first evidence-chain forensics system for claim-level RAG and agent failure diagnosis.",
+    "blocked": "ContextTrace is the state-of-the-art RAG evaluation framework.",
+    "broad_sota_requires_all_evidence_gates": true
+  },
+  "research_questions": [
+    {
+      "id": "RQ1",
+      "question": "How accurately does ContextTrace detect claim-level RAG failures on externally sourced and public-document cases?",
+      "hypothesis": "The full system improves failure macro-F1 and dangerous false-green rate over lexical and semantic-only profiles."
+    },
+    {
+      "id": "RQ2",
+      "question": "How accurately does ContextTrace localize evidence spans, citation failures, and primary root causes?",
+      "hypothesis": "Explicit citation alignment, span localization, and diagnostic inference improve their matched output metrics without increasing dangerous false greens."
+    },
+    {
+      "id": "RQ3",
+      "question": "Which pipeline stages contribute to diagnostic quality, latency, and output coverage?",
+      "hypothesis": "Cumulative ablations expose measurable quality gains and bounded latency costs for each diagnostic stage."
+    },
+    {
+      "id": "RQ4",
+      "question": "Are ContextTrace diagnoses correct and actionable to human reviewers?",
+      "hypothesis": "Blinded reviewers prefer evidence-chain diagnoses over score-only outputs for identifying a concrete repair."
+    }
+  ],
+  "datasets": [
+    {
+      "id": "ragtruth_primary",
+      "role": "primary_external_calibration",
+      "cases": 200,
+      "review_status": "assisted_review_pending_independent"
+    },
+    {
+      "id": "diag150_primary",
+      "role": "primary_public_document_holdout",
+      "cases": 150,
+      "review_status": "pending_independent"
+    },
+    {
+      "id": "ares_secondary",
+      "role": "secondary_calibration",
+      "cases": 200,
+      "review_status": "review_pending"
+    },
+    {
+      "id": "crag_secondary",
+      "role": "secondary_grounding_calibration",
+      "cases": 200,
+      "review_status": "review_pending"
+    },
+    {
+      "id": "contexttrace_bench",
+      "role": "engineering_regression_only",
+      "cases": 500,
+      "review_status": "not_independent_validation"
+    }
+  ],
+  "ablation": {
+    "default_case_set": "all",
+    "include_generated_cases": true,
+    "target_cases": 500,
+    "bootstrap_samples": 400,
+    "bootstrap_seed": 20260612,
+    "profiles": [
+      {
+        "id": "a0_lexical_core",
+        "label": "Lexical core",
+        "mode": "lexical",
+        "citation_alignment": false,
+        "abstention_logic": false,
+        "source_assessment": false,
+        "root_cause_inference": false,
+        "evidence_span_localization": false
+      },
+      {
+        "id": "a1_semantic_core",
+        "label": "+ semantic matching",
+        "mode": "semantic",
+        "citation_alignment": false,
+        "abstention_logic": false,
+        "source_assessment": false,
+        "root_cause_inference": false,
+        "evidence_span_localization": false
+      },
+      {
+        "id": "a2_citation_alignment",
+        "label": "+ citation alignment",
+        "mode": "semantic",
+        "citation_alignment": true,
+        "abstention_logic": false,
+        "source_assessment": false,
+        "root_cause_inference": false,
+        "evidence_span_localization": false
+      },
+      {
+        "id": "a3_diagnostic_inference",
+        "label": "+ abstention and root cause",
+        "mode": "semantic",
+        "citation_alignment": true,
+        "abstention_logic": true,
+        "source_assessment": false,
+        "root_cause_inference": true,
+        "evidence_span_localization": false
+      },
+      {
+        "id": "a4_span_localization",
+        "label": "+ evidence-span localization",
+        "mode": "semantic",
+        "citation_alignment": true,
+        "abstention_logic": true,
+        "source_assessment": false,
+        "root_cause_inference": true,
+        "evidence_span_localization": true
+      },
+      {
+        "id": "a5_full",
+        "label": "Full ContextTrace",
+        "mode": "semantic",
+        "citation_alignment": true,
+        "abstention_logic": true,
+        "source_assessment": true,
+        "root_cause_inference": true,
+        "evidence_span_localization": true
+      }
+    ]
+  },
+  "metrics": [
+    "failure_label_macro_f1",
+    "claim_verdict_macro_f1",
+    "root_cause_accuracy",
+    "citation_error_f1",
+    "evidence_span_overlap",
+    "dangerous_false_green_rate",
+    "latency_p50_ms",
+    "latency_p95_ms",
+    "cost_per_100_traces_usd"
+  ],
+  "controls": {
+    "same_case_ids_across_profiles": true,
+    "same_bootstrap_samples_across_profiles": true,
+    "unsupported_outputs_reported_as_null": true,
+    "quick_runs_are_not_paper_results": true,
+    "nli_and_judge_modes_are_sensitivity_studies_only": true
+  }
+}

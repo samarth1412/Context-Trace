@@ -17,7 +17,11 @@ if str(PACKAGE_ROOT) not in sys.path:
     sys.path.insert(0, str(PACKAGE_ROOT))
 
 from contexttrace.verify.benchmark import benchmark_cases, run_verify_benchmark  # noqa: E402
-from contexttrace.verify.runner import verify_trace  # noqa: E402
+from contexttrace.verify.runner import (  # noqa: E402
+    FULL_VERIFICATION_PROFILE,
+    VerificationProfile,
+    verify_trace,
+)
 from contexttrace.verify.schema import RAGTrace, TraceCitation, TraceContext, load_trace  # noqa: E402
 
 
@@ -80,7 +84,9 @@ def run_contexttrace_benchmark(
     target_cases: int = DEFAULT_TARGET_CASES,
     bootstrap_samples: int = DEFAULT_BOOTSTRAP_SAMPLES,
     bootstrap_seed: int = DEFAULT_BOOTSTRAP_SEED,
+    verification_profile: VerificationProfile | None = None,
 ) -> dict[str, Any]:
+    verification_profile = verification_profile or FULL_VERIFICATION_PROFILE
     if case_pack_path is not None:
         return run_contexttrace_case_pack(
             case_pack_path=case_pack_path,
@@ -89,12 +95,14 @@ def run_contexttrace_benchmark(
             estimated_cost_per_trace_usd=estimated_cost_per_trace_usd,
             bootstrap_samples=bootstrap_samples,
             bootstrap_seed=bootstrap_seed,
+            verification_profile=verification_profile,
         )
 
     verifier_result = run_verify_benchmark(
         mode=mode,
         case_set=case_set,
         time_cases=True,
+        profile=verification_profile,
     )
     trace_index = _base_trace_index(case_set)
     base_rows = [
@@ -113,6 +121,7 @@ def run_contexttrace_benchmark(
             case_set=case_set,
             current_case_count=len(base_rows),
             target_cases=target_cases,
+            verification_profile=verification_profile,
         )
         if include_generated_cases
         else []
@@ -141,6 +150,7 @@ def run_contexttrace_benchmark(
         "benchmark": "ContextTrace-Bench",
         "version": 2,
         "mode": mode,
+        "verification_profile": verification_profile.to_dict(),
         "case_set": verifier_result.get("case_set"),
         "case_source": case_source,
         "base_cases": len(base_rows),
@@ -167,13 +177,20 @@ def run_contexttrace_case_pack(
     estimated_cost_per_trace_usd: float = 0.0,
     bootstrap_samples: int = DEFAULT_BOOTSTRAP_SAMPLES,
     bootstrap_seed: int = DEFAULT_BOOTSTRAP_SEED,
+    verification_profile: VerificationProfile | None = None,
 ) -> dict[str, Any]:
+    verification_profile = verification_profile or FULL_VERIFICATION_PROFILE
     payload = _load_case_pack(case_pack_path)
     raw_cases = payload.get("cases") or []
     if not isinstance(raw_cases, list):
         raise ValueError("ContextTrace case pack must contain a cases list.")
     base_rows = [
-        _run_case_pack_case(item, mode=mode, dataset=str(payload.get("dataset") or "external_case_pack"))
+        _run_case_pack_case(
+            item,
+            mode=mode,
+            dataset=str(payload.get("dataset") or "external_case_pack"),
+            verification_profile=verification_profile,
+        )
         for item in raw_cases
         if isinstance(item, dict)
     ]
@@ -198,6 +215,7 @@ def run_contexttrace_case_pack(
         "benchmark": "ContextTrace-Bench",
         "version": 2,
         "mode": mode,
+        "verification_profile": verification_profile.to_dict(),
         "case_set": "external_case_pack",
         "case_source": _case_pack_source(payload, case_pack_path),
         "case_pack_path": _portable_path(case_pack_path),
@@ -1280,6 +1298,7 @@ def _generated_rows(
     case_set: str,
     current_case_count: int,
     target_cases: int,
+    verification_profile: VerificationProfile | None,
 ) -> list[dict[str, Any]]:
     needed = max(int(target_cases) - current_case_count, 0)
     if needed <= 0:
@@ -1313,14 +1332,26 @@ def _generated_rows(
             variant = builder(case, distractors)
             if variant is None:
                 continue
-            generated.append(_run_generated_variant(variant, mode=mode))
+            generated.append(
+                _run_generated_variant(
+                    variant,
+                    mode=mode,
+                    verification_profile=verification_profile,
+                )
+            )
 
     for case in supported_cases:
         for index, distractor in enumerate(_distractors_for_case(case, distractors)):
             if len(generated) >= needed:
                 return generated
             variant = _distractor_only_context_variant(case, distractor, index)
-            generated.append(_run_generated_variant(variant, mode=mode))
+            generated.append(
+                _run_generated_variant(
+                    variant,
+                    mode=mode,
+                    verification_profile=verification_profile,
+                )
+            )
     return generated
 
 
@@ -1365,10 +1396,16 @@ def _case_pack_limitations(payload: dict[str, Any]) -> list[str]:
     return _dedupe([*limitations, *notes])
 
 
-def _run_case_pack_case(item: dict[str, Any], *, mode: str, dataset: str) -> dict[str, Any]:
+def _run_case_pack_case(
+    item: dict[str, Any],
+    *,
+    mode: str,
+    dataset: str,
+    verification_profile: VerificationProfile | None,
+) -> dict[str, Any]:
     trace = _trace_from_case_pack_item(item, dataset=dataset)
     started = time.perf_counter()
-    result = verify_trace(trace, mode=mode)
+    result = verify_trace(trace, mode=mode, profile=verification_profile)
     latency_ms = round((time.perf_counter() - started) * 1000, 3)
     raw_predicted = _predicted_labels_from_result(result)
     expected_verdict_scope = _expected_verdict_scope(item)
@@ -1733,10 +1770,15 @@ def _distractor_only_context_variant(case: Any, distractor: Any, index: int) -> 
     }
 
 
-def _run_generated_variant(variant: dict[str, Any], *, mode: str) -> dict[str, Any]:
+def _run_generated_variant(
+    variant: dict[str, Any],
+    *,
+    mode: str,
+    verification_profile: VerificationProfile | None,
+) -> dict[str, Any]:
     trace = variant["trace"]
     started = time.perf_counter()
-    result = verify_trace(trace, mode=mode)
+    result = verify_trace(trace, mode=mode, profile=verification_profile)
     latency_ms = round((time.perf_counter() - started) * 1000, 3)
     predicted = _predicted_labels_from_result(result)
     expected = set(variant["expected_labels"])

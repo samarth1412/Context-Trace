@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from contexttrace.verify.judges import ClaimJudge
-from contexttrace.verify.runner import verify_trace
+from contexttrace.verify.runner import VerificationProfile, verify_trace
 from contexttrace.verify.schema import RAGTrace, load_trace
 
 
@@ -57,6 +57,7 @@ def run_verify_benchmark(
     judge: ClaimJudge | None = None,
     nli: ClaimJudge | None = None,
     time_cases: bool = False,
+    profile: VerificationProfile | None = None,
 ) -> dict[str, Any]:
     rows = []
     labels = set()
@@ -69,7 +70,13 @@ def run_verify_benchmark(
 
     for case in benchmark_cases(case_set=case_set):
         started = time.perf_counter()
-        result = verify_trace(case.trace, mode=mode, judge=judge, nli=nli)
+        result = verify_trace(
+            case.trace,
+            mode=mode,
+            judge=judge,
+            nli=nli,
+            profile=profile,
+        )
         latency_ms = round((time.perf_counter() - started) * 1000, 3)
         predicted = _predicted_labels(result)
         expected_verdict_counts = dict(case.expected_verdict_counts)
