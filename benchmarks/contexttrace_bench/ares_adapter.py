@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import re
 import urllib.request
 from pathlib import Path
 from typing import Any
@@ -53,6 +54,7 @@ def adapt_ares_rows(
     include_context_relevance_negatives: bool = False,
 ) -> list[dict[str, Any]]:
     output = []
+    id_occurrences: dict[str, int] = {}
     for row in rows:
         if _context_relevance_only_negative(row) and not include_context_relevance_negatives:
             continue
@@ -60,10 +62,14 @@ def adapt_ares_rows(
         answer = str(row.get("Answer") or "").strip()
         document = str(row.get("Document") or "").strip()
         evidence_spans = _evidence_spans(answer, document, labels)
-        source_id = "ares_doc_%s" % _slug(row.get("id") or len(output))
+        upstream_id = str(row.get("id") or len(output))
+        id_occurrences[upstream_id] = id_occurrences.get(upstream_id, 0) + 1
+        occurrence = id_occurrences[upstream_id]
+        case_id = upstream_id if occurrence == 1 else "%s__%s" % (upstream_id, occurrence)
+        source_id = "ares_doc_%s" % _slug(case_id)
         output.append(
             {
-                "id": str(row.get("id") or len(output)),
+                "id": case_id,
                 "source": source_name,
                 "query": str(row.get("Query") or row.get("input") or "").strip(),
                 "answer": answer,
@@ -82,7 +88,8 @@ def adapt_ares_rows(
                 "expected_evidence_spans": evidence_spans,
                 "metadata": {
                     "dataset": dataset,
-                    "ares_id": str(row.get("id") or ""),
+                    "ares_id": upstream_id,
+                    "ares_id_occurrence": occurrence,
                     "ares_input": str(row.get("input") or ""),
                     "ares_context_relevance_label": _label_value(row.get("Context_Relevance_Label")),
                     "ares_answer_faithfulness_label": _label_value(row.get("Answer_Faithfulness_Label")),
@@ -138,10 +145,14 @@ def _evidence_spans(answer: str, document: str, labels: list[str]) -> list[str]:
     document_text = str(document or "")
     if not answer_text:
         return []
-    index = document_text.lower().find(answer_text.lower())
-    if index < 0:
+    match = re.search(
+        r"(?<!\w)%s(?!\w)" % r"\s+".join(re.escape(part) for part in answer_text.split()),
+        document_text,
+        flags=re.IGNORECASE,
+    )
+    if match is None:
         return []
-    return [document_text[index : index + len(answer_text)]]
+    return [document_text[match.start() : match.end()]]
 
 
 def _label_value(value: Any) -> str:

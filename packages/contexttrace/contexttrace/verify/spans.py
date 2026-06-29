@@ -222,6 +222,12 @@ def _append_span(spans: list[tuple[int, int, str]], value: str, raw_start: int, 
 def _is_internal_period(text: str, index: int) -> bool:
     previous = text[index - 1] if index > 0 else ""
     next_char = text[index + 1] if index + 1 < len(text) else ""
+    if (
+        previous.isupper()
+        and re.search(r"\b[A-Z][a-z]+\s+[A-Z]$", text[:index])
+        and re.match(r"\s+[A-Z][a-z]", text[index + 1 :])
+    ):
+        return True
     if previous.isdigit() and next_char.isdigit():
         return True
     if previous.isalnum() and next_char.isalnum():

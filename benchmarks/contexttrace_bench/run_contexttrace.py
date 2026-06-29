@@ -725,7 +725,7 @@ def render_html_report(
 ) -> str:
     summary = result.get("summary") or {}
     misses = [row for row in result.get("rows") or [] if not row.get("benchmark_pass")]
-    return HTML_TEMPLATE.format(
+    rendered = HTML_TEMPLATE.format(
         benchmark=escape(str(result.get("benchmark") or "")),
         mode=escape(str(result.get("mode") or "")),
         case_set=escape(str(result.get("case_set") or "")),
@@ -741,6 +741,7 @@ def render_html_report(
         case_rows=_html_case_rows(result.get("rows") or []),
         raw_json=escape(json.dumps(_raw_report_summary(result), indent=2, sort_keys=True)),
     )
+    return "\n".join(line.rstrip() for line in rendered.split("\n"))
 
 
 def _leaderboard_markdown_row(system: str, mode: Any, summary: dict[str, Any]) -> str:

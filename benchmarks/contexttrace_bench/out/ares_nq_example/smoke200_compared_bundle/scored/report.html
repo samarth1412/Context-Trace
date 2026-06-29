@@ -1,0 +1,3019 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ContextTrace-Bench Report</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f8fa;
+      --panel: #ffffff;
+      --subtle: #fbfcfe;
+      --text: #202832;
+      --muted: #657286;
+      --line: #d9e0ea;
+      --ok: #176f44;
+      --bad: #b42318;
+      --warn: #946200;
+      --accent: #2458d3;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    main { max-width: 1200px; margin: 0 auto; padding: 32px 20px 56px; }
+    header { border-bottom: 1px solid var(--line); margin-bottom: 22px; padding-bottom: 18px; }
+    h1, h2 { margin: 0; }
+    h1 { font-size: 30px; }
+    h2 { font-size: 18px; margin-bottom: 12px; }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin: 16px 0;
+      padding: 18px;
+    }
+    .summary {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    }
+    .card, .item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--subtle);
+      padding: 12px;
+    }
+    .item + .item { margin-top: 10px; }
+    .label, .item-meta {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .value { margin-top: 4px; font-size: 20px; overflow-wrap: anywhere; }
+    .muted { color: var(--muted); }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { border-bottom: 1px solid var(--line); padding: 10px; text-align: left; vertical-align: top; }
+    th { color: var(--muted); font-size: 12px; text-transform: uppercase; }
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      padding: 3px 8px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .pass { color: var(--ok); background: #e9f7ef; }
+    .fail { color: var(--bad); background: #fdeceb; }
+    pre {
+      margin: 0;
+      overflow: auto;
+      background: #101828;
+      color: #f8fafc;
+      border-radius: 8px;
+      padding: 14px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>ContextTrace-Bench</h1>
+      <p class="muted">Mode: semantic. Case set: external_case_pack. Cases use ARES-NQ-example case pack adapted for ContextTrace external validation from generic JSON/JSONL rows. from benchmarks\contexttrace_bench\out\ares_nq_example\smoke200_compared\external_case_pack.json.</p>
+    </header>
+
+    <section>
+      <h2>Summary</h2>
+      <div class="summary">
+        <div class="card">
+          <div class="label">Cases</div>
+          <div class="value">200</div>
+        </div>
+
+
+        <div class="card">
+          <div class="label">Failure Macro-F1</div>
+          <div class="value">0.995</div>
+        </div>
+
+
+        <div class="card">
+          <div class="label">Verdict Macro-F1</div>
+          <div class="value">N/A</div>
+        </div>
+
+
+        <div class="card">
+          <div class="label">Root Cause Accuracy</div>
+          <div class="value">0.995</div>
+        </div>
+
+
+        <div class="card">
+          <div class="label">Citation Error F1</div>
+          <div class="value">1.0</div>
+        </div>
+
+
+        <div class="card">
+          <div class="label">Evidence Span Overlap</div>
+          <div class="value">1.0</div>
+        </div>
+
+
+        <div class="card">
+          <div class="label">Dangerous False Green</div>
+          <div class="value">0.0</div>
+        </div>
+
+
+        <div class="card">
+          <div class="label">Latency p95 ms</div>
+          <div class="value">18.619</div>
+        </div>
+        </div>
+    </section>
+
+
+    <section>
+      <h2>Limitations</h2>
+      <ul><li>Generic external case packs preserve upstream labels as supplied; publishable claims require documenting the upstream dataset and labeling protocol.</li>
+<li>Evidence-span metrics are only meaningful when expected_evidence_spans are supplied by the external dataset or an independent reviewer.</li>
+<li>External case-pack results validate this dataset and adapter path only; they are not general RAG-evaluation SOTA proof.</li>
+<li>Use this adapter for CRAG/ARES-style exports after normalizing rows to query, answer, contexts, and expected_label fields.</li>
+<li>Rows without answer text or contexts are skipped because ContextTrace cannot verify them fairly.</li></ul>
+    </section>
+
+
+    <section>
+      <h2>Confidence Intervals</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Estimate</th>
+            <th>95% CI</th>
+            <th>Resamples</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>failure_label_macro_f1</td>
+          <td>0.995</td>
+          <td>0.981 to 1.0</td>
+          <td>100</td>
+        </tr>
+
+
+        <tr>
+          <td>root_cause_accuracy</td>
+          <td>0.995</td>
+          <td>0.98 to 1.0</td>
+          <td>100</td>
+        </tr>
+
+
+        <tr>
+          <td>citation_error_f1</td>
+          <td>1.0</td>
+          <td>1.0 to 1.0</td>
+          <td>100</td>
+        </tr>
+
+
+        <tr>
+          <td>evidence_span_overlap</td>
+          <td>1.0</td>
+          <td>1.0 to 1.0</td>
+          <td>100</td>
+        </tr>
+
+
+        <tr>
+          <td>dangerous_false_green_rate</td>
+          <td>0.0</td>
+          <td>0.0 to 0.0</td>
+          <td>100</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Failure Label Breakdown</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Label</th>
+            <th>Precision</th>
+            <th>Recall</th>
+            <th>F1</th>
+            <th>TP</th>
+            <th>FP</th>
+            <th>FN</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>0.99</td>
+          <td>0.995</td>
+          <td>99</td>
+          <td>0</td>
+          <td>1</td>
+        </tr>
+
+
+        <tr>
+          <td>should_have_abstained</td>
+          <td>0.99</td>
+          <td>1.0</td>
+          <td>0.995</td>
+          <td>100</td>
+          <td>1</td>
+          <td>0</td>
+        </tr>
+
+
+        <tr>
+          <td>unsupported_answer</td>
+          <td>0.99</td>
+          <td>1.0</td>
+          <td>0.995</td>
+          <td>100</td>
+          <td>1</td>
+          <td>0</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>SOTA Readiness Gates</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Gate</th>
+            <th>Value</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>failure_label_macro_f1</td>
+          <td>&gt;= 0.95</td>
+          <td>0.995</td>
+          <td><span class="badge pass">pass</span></td>
+        </tr>
+
+
+        <tr>
+          <td>claim_verdict_macro_f1</td>
+          <td>&gt;= 0.95</td>
+          <td>0.0</td>
+          <td><span class="badge fail">fail</span></td>
+        </tr>
+
+
+        <tr>
+          <td>root_cause_accuracy</td>
+          <td>&gt;= 0.9</td>
+          <td>0.995</td>
+          <td><span class="badge pass">pass</span></td>
+        </tr>
+
+
+        <tr>
+          <td>citation_error_f1</td>
+          <td>&gt;= 0.9</td>
+          <td>1.0</td>
+          <td><span class="badge pass">pass</span></td>
+        </tr>
+
+
+        <tr>
+          <td>evidence_span_overlap</td>
+          <td>&gt;= 0.75</td>
+          <td>1.0</td>
+          <td><span class="badge pass">pass</span></td>
+        </tr>
+
+
+        <tr>
+          <td>dangerous_false_green_rate</td>
+          <td>&lt;= 0.01</td>
+          <td>0.0</td>
+          <td><span class="badge pass">pass</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Leaderboard</h2>
+      <p class="muted">N/A means the candidate did not report that diagnostic field; it is not counted as an attempted failure.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>System</th>
+            <th>Mode</th>
+            <th>Cases</th>
+            <th>Failure Macro-F1</th>
+            <th>Root Cause</th>
+            <th>Citation Error F1</th>
+            <th>Span Overlap</th>
+            <th>Latency p95 ms</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td>ContextTrace</td>
+      <td>semantic</td>
+      <td>200</td>
+      <td>0.995</td>
+      <td>0.995</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>18.619</td>
+    </tr>
+
+
+    <tr>
+      <td>RAGAS</td>
+      <td>gpt-4.1-mini</td>
+      <td>200</td>
+      <td>0.471</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>14821.814</td>
+    </tr>
+
+
+    <tr>
+      <td>DeepEval</td>
+      <td>gpt-4.1-mini</td>
+      <td>200</td>
+      <td>0.388</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>7934.588</td>
+    </tr>
+    </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Diagnostic Coverage</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>System</th>
+            <th>Root Cause Reported</th>
+            <th>Citation Status Reported</th>
+            <th>Evidence Spans Reported</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td>ContextTrace</td>
+      <td>200 / 200</td>
+      <td>200 / 200</td>
+      <td>89 / 200</td>
+    </tr>
+
+
+    <tr>
+      <td>RAGAS</td>
+      <td>0 / 200</td>
+      <td>0 / 200</td>
+      <td>0 / 200</td>
+    </tr>
+
+
+    <tr>
+      <td>DeepEval</td>
+      <td>0 / 200</td>
+      <td>0 / 200</td>
+      <td>0 / 200</td>
+    </tr>
+    </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Misses To Inspect</h2>
+
+            <article class="item">
+              <div class="item-meta">ares_nq_example_6751220433242447969_2</div>
+              <p><strong>Expected labels:</strong> no_failure_detected</p>
+              <p><strong>Predicted labels:</strong> should_have_abstained, unsupported_answer</p>
+              <p><strong>Expected root cause:</strong> no_failure_detected</p>
+              <p><strong>Predicted root cause:</strong> should_have_abstained</p>
+              <p><strong>Expected spans:</strong> none</p>
+              <p><strong>Predicted spans:</strong> The Bastard Executioner</p>
+            </article>
+
+    </section>
+
+    <section>
+      <h2>Case Results</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Case</th>
+            <th>Expected</th>
+            <th>Predicted</th>
+            <th>Expected Root</th>
+            <th>Predicted Root</th>
+            <th>Span Overlap</th>
+            <th>Latency</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_8111631832195028942</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>14.888</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_2269298549089163701</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>16.421</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_4092499579855624350</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>9.422</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_5147972604762913542</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>4.926</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_9169976182548289414</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>7.293</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_7527598871943656886</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>8.072</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6705627704423938484</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>7.754</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_8865736331308174082</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>25.978</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_8707879945343660137</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>2.334</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_1917333139201003378</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>2.797</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6365160075395818746</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>9.167</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_5841995020099553222</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>5.066</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_839669511198247322</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>3.086</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_4721622231665415813</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>3.345</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_3559055084635054736_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>2.378</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_1711944377965749852</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>None</td>
+          <td>10.681</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_3568942573258999273</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>4.644</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_243685073103458654</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>11.586</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_5745040113272333526</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>5.756</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_7729388021714760854</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>11.3</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_426246770431284105_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>11.643</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_1870248091120409120</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>9.689</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_7607921794902030568</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>17.872</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_1986464037797500492</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>8.468</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_5608421991404219229_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>6.842</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6553353802049563745</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>7.339</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_923934477516364422</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>18.647</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_8229835206359765152</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>None</td>
+          <td>23.015</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_2053640931063416368</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>3.927</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_7368254478874801356</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>6.217</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_9084604251611519852</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>9.828</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_2845443756485516190</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>12.684</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_3492797766982308854</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>18.006</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_684058159028311642_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>None</td>
+          <td>20.212</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6268752976507719216</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>6.62</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_765448266799898575</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>None</td>
+          <td>19.211</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_8466196474705624263</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>2.234</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_2522076069840987893</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>9.209</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6662395259728504920</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>11.118</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge fail">fail</span></td>
+          <td>ares_nq_example_6751220433242447969_2</td>
+          <td>no_failure_detected</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>no_failure_detected</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>3.296</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_4046851836203380467</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>9.336</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6544639991517260033_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>11.895</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_7032694139181071944</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>10.134</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_7639529212077881462_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>13.591</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_1996292107460275608</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>9.188</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_9187994979510737197</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>4.587</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_5320268832129970522</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>6.873</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6145868466021183224</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>3.127</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_3612945562446452821</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>9.48</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_4094570070863238215</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>10.018</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_7602825500085978355</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>3.379</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_3908725222525421557</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>10.535</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_4373262132142058334</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>11.769</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_4199405438415986663_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>14.741</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_7805719588487348587</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>10.57</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_3867705141367202061</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>2.95</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_119543419987074002</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>9.87</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_2870089333524299909_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>6.363</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6785327703850595221_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>8.513</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6449103613087792543</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>11.286</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6648524536408285205</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>10.766</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6047989319894692111</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>3.49</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_5147972604762913542_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>2.698</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_3330795627417233017</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>12.482</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_8488975200279464488</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>10.059</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6291722830448463311_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>5.097</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_5156262494346608389</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>13.975</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_5874093358022821909</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>7.136</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_3411217364166344563_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>8.954</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_2717754120713429146</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>6.214</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_1106714590515566575</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>6.652</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6848877582744849076_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>4.873</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_679914466501587278</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>10.792</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_8616078013378632610</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>None</td>
+          <td>6.242</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_1411792450237623098_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>11.714</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_1130612447890033483</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>3.946</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_590834235052106634</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>9.146</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_2136443645297570089</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>8.209</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_5819386267283467034</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>13.278</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_8521826207096650014</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>6.881</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_8227939188793834871_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>10.492</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_5682352906951331542</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>9.626</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_5644676080991349842</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>11.579</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_7933002036740390435_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>13.78</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_3165901349277199099_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>2.645</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_2223188268381215709_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>10.476</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_4245798066923223457</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>19.787</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_8034580104224221816</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>11.562</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_9078934592669508929_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>11.158</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6745303307988470742</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>6.922</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_7750414429766802805_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>5.785</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_8437192694659989578</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>7.339</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_8052136860650205450_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>6.22</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_4086158102790148091_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>10.674</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_907238223200158003_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>9.466</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6969539427365218166_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>3.971</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_8982983311407124347_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>6.41</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_5150934530929664244</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>8.03</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_8579271792005383992</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>9.548</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6050703859996827650</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>9.27</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6092484764352801171</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>18.619</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_4606135189354740425_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>14.924</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_4791954452980353113</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>11.892</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_411416507693122968</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>2.166</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_3182507307097242113_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>9.213</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_7555953957057409422</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>3.806</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_5640132611260516163</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>None</td>
+          <td>15.249</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_8947071197382617621</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>3.462</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_5406271458964804846_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>2.392</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_8958554260105256647</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>3.344</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6542642245388793003</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>None</td>
+          <td>17.243</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_2010294071842366580_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>7.958</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_5980486301760893723</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>18.388</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6284503594240226071_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>10.639</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_972568347460262100_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>12.379</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_2485791396969793161</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>5.279</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_54130238553389967_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>8.853</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6378606982206312510</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>12.408</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_1163524811252371834</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>2.104</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_4227398832220654666</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>5.504</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_7475061672965272250_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>10.352</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_2362041234838636399_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>5.249</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6651255565624706987_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>12.327</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_927966355158112429_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>17.368</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_3654809363614635590</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>7.601</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_1615626468308135253</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>7.339</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_3895386769528538506_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>3.155</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_8972183967530424533_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>12.055</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_2520046502679470257_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>3.118</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_5007497922163706548</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>12.436</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6553353802049563745_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>7.312</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_467684233955454366</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>None</td>
+          <td>20.239</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_7236492039847101221_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>5.554</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6770911139022104689</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>9.642</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_2485791396969793161_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>5.39</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_1281705529368409187</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>6.521</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_9070003128797416503_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>8.444</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_7615960389617916651_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>3.543</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_1609362606908546787</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>5.721</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_217684522847197793_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>14.156</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_5083423407995797659_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>7.124</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6563592320308552203_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>9.387</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_1668669287255788257_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>3.37</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_3544151584263258729</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>2.653</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_7901746249864619718_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>None</td>
+          <td>12.984</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6395885127392955720_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>13.456</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_2467509477831469982_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>7.017</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_2855755816946801432</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>5.172</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_2876182999155230775_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>7.951</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6244540977142172176</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>12.561</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_8188778280161966817_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>10.377</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_2032750066334794467_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>15.034</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_2905877218891850711</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>3.068</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_564063817056958231_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>14.063</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_1460738236019346895</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>11.859</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_5973003791441271262</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>5.32</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_24224390922062302_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>2.805</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_4395570541686945657_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>10.949</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_72470187726524890_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>10.354</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6223491322879193188_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>2.426</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6621623690879619950_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>10.253</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_5078709962400196312_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>10.125</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_4892429640540595424</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>11.913</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_1092628173964573043_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>13.356</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_9179702110514757818_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>11.308</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_1653574612763270615_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>9.691</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_7779530728701828621_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>12.28</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_9217499733870801634</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>5.01</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_3466298422174960041</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>10.388</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_1370486447842329054_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>5.553</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_2482202658787537401</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>8.558</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_3359008398677892283_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>15.519</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_8130289504436773028_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>6.538</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_1649058525465685033_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>17.634</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6101158474661235823</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>16.056</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_5298560410953979569_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>3.268</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_2099882460840294879_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>7.417</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6365160075395818746_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>12.249</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_599106694350296477_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>7.858</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6971297271942455076</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>10.265</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_2615988099636476869</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>21.056</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6243386362552941358_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>10.556</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_2595383962592690378_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>3.985</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_2529995246626301289_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>8.066</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_819495145099806596</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>9.824</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_143358760627476379</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>5.133</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_2419576910417046724_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>2.294</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_506675028665759748</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>14.48</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_1560261279486353160_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>6.515</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_8520286983945685639_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>33.03</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_4373262132142058334_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>9.584</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6345284186404798651_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>12.432</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_3339006116507262453_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>3.089</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_8803717720023296980</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>10.426</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_3530165048900528552_2</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained, unsupported_answer</td>
+          <td>should_have_abstained</td>
+          <td>should_have_abstained</td>
+          <td>None</td>
+          <td>11.387</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_7184968347544956967</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>11.332</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_530230237658072225_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>2.512</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_6482049414864375394_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>None</td>
+          <td>20.28</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_7569792100939124605</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>9.209</td>
+        </tr>
+
+
+        <tr>
+          <td><span class="badge pass">pass</span></td>
+          <td>ares_nq_example_333763277804609492_2</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>no_failure_detected</td>
+          <td>1.0</td>
+          <td>2.978</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Raw Summary</h2>
+      <pre>{
+  &quot;base_cases&quot;: 200,
+  &quot;benchmark&quot;: &quot;ContextTrace-Bench&quot;,
+  &quot;case_set&quot;: &quot;external_case_pack&quot;,
+  &quot;confidence_intervals&quot;: {
+    &quot;citation_error_f1&quot;: {
+      &quot;estimate&quot;: 1.0,
+      &quot;high&quot;: 1.0,
+      &quot;level&quot;: 0.95,
+      &quot;low&quot;: 1.0,
+      &quot;method&quot;: &quot;case_bootstrap&quot;,
+      &quot;samples&quot;: 100,
+      &quot;seed&quot;: 20260612
+    },
+    &quot;dangerous_false_green_rate&quot;: {
+      &quot;estimate&quot;: 0.0,
+      &quot;high&quot;: 0.0,
+      &quot;level&quot;: 0.95,
+      &quot;low&quot;: 0.0,
+      &quot;method&quot;: &quot;case_bootstrap&quot;,
+      &quot;samples&quot;: 100,
+      &quot;seed&quot;: 20260612
+    },
+    &quot;evidence_span_overlap&quot;: {
+      &quot;estimate&quot;: 1.0,
+      &quot;high&quot;: 1.0,
+      &quot;level&quot;: 0.95,
+      &quot;low&quot;: 1.0,
+      &quot;method&quot;: &quot;case_bootstrap&quot;,
+      &quot;samples&quot;: 100,
+      &quot;seed&quot;: 20260612
+    },
+    &quot;failure_label_macro_f1&quot;: {
+      &quot;estimate&quot;: 0.995,
+      &quot;high&quot;: 1.0,
+      &quot;level&quot;: 0.95,
+      &quot;low&quot;: 0.981,
+      &quot;method&quot;: &quot;case_bootstrap&quot;,
+      &quot;samples&quot;: 100,
+      &quot;seed&quot;: 20260612
+    },
+    &quot;root_cause_accuracy&quot;: {
+      &quot;estimate&quot;: 0.995,
+      &quot;high&quot;: 1.0,
+      &quot;level&quot;: 0.95,
+      &quot;low&quot;: 0.98,
+      &quot;method&quot;: &quot;case_bootstrap&quot;,
+      &quot;samples&quot;: 100,
+      &quot;seed&quot;: 20260612
+    }
+  },
+  &quot;generated_cases&quot;: 0,
+  &quot;limitations&quot;: [
+    &quot;Generic external case packs preserve upstream labels as supplied; publishable claims require documenting the upstream dataset and labeling protocol.&quot;,
+    &quot;Evidence-span metrics are only meaningful when expected_evidence_spans are supplied by the external dataset or an independent reviewer.&quot;,
+    &quot;External case-pack results validate this dataset and adapter path only; they are not general RAG-evaluation SOTA proof.&quot;,
+    &quot;Use this adapter for CRAG/ARES-style exports after normalizing rows to query, answer, contexts, and expected_label fields.&quot;,
+    &quot;Rows without answer text or contexts are skipped because ContextTrace cannot verify them fairly.&quot;
+  ],
+  &quot;misses&quot;: [
+    {
+      &quot;expected&quot;: [
+        &quot;no_failure_detected&quot;
+      ],
+      &quot;expected_primary_root_cause&quot;: &quot;no_failure_detected&quot;,
+      &quot;id&quot;: &quot;ares_nq_example_6751220433242447969_2&quot;,
+      &quot;predicted&quot;: [
+        &quot;should_have_abstained&quot;,
+        &quot;unsupported_answer&quot;
+      ],
+      &quot;predicted_primary_root_cause&quot;: &quot;should_have_abstained&quot;
+    }
+  ],
+  &quot;mode&quot;: &quot;semantic&quot;,
+  &quot;per_label&quot;: {
+    &quot;no_failure_detected&quot;: {
+      &quot;f1&quot;: 0.995,
+      &quot;fn&quot;: 1,
+      &quot;fp&quot;: 0,
+      &quot;precision&quot;: 1.0,
+      &quot;recall&quot;: 0.99,
+      &quot;tp&quot;: 99
+    },
+    &quot;should_have_abstained&quot;: {
+      &quot;f1&quot;: 0.995,
+      &quot;fn&quot;: 0,
+      &quot;fp&quot;: 1,
+      &quot;precision&quot;: 0.99,
+      &quot;recall&quot;: 1.0,
+      &quot;tp&quot;: 100
+    },
+    &quot;unsupported_answer&quot;: {
+      &quot;f1&quot;: 0.995,
+      &quot;fn&quot;: 0,
+      &quot;fp&quot;: 1,
+      &quot;precision&quot;: 0.99,
+      &quot;recall&quot;: 1.0,
+      &quot;tp&quot;: 100
+    }
+  },
+  &quot;quality_gates&quot;: [
+    {
+      &quot;metric&quot;: &quot;failure_label_macro_f1&quot;,
+      &quot;operator&quot;: &quot;&gt;=&quot;,
+      &quot;passed&quot;: true,
+      &quot;threshold&quot;: 0.95,
+      &quot;value&quot;: 0.995
+    },
+    {
+      &quot;metric&quot;: &quot;claim_verdict_macro_f1&quot;,
+      &quot;operator&quot;: &quot;&gt;=&quot;,
+      &quot;passed&quot;: false,
+      &quot;threshold&quot;: 0.95,
+      &quot;value&quot;: 0.0
+    },
+    {
+      &quot;metric&quot;: &quot;root_cause_accuracy&quot;,
+      &quot;operator&quot;: &quot;&gt;=&quot;,
+      &quot;passed&quot;: true,
+      &quot;threshold&quot;: 0.9,
+      &quot;value&quot;: 0.995
+    },
+    {
+      &quot;metric&quot;: &quot;citation_error_f1&quot;,
+      &quot;operator&quot;: &quot;&gt;=&quot;,
+      &quot;passed&quot;: true,
+      &quot;threshold&quot;: 0.9,
+      &quot;value&quot;: 1.0
+    },
+    {
+      &quot;metric&quot;: &quot;evidence_span_overlap&quot;,
+      &quot;operator&quot;: &quot;&gt;=&quot;,
+      &quot;passed&quot;: true,
+      &quot;threshold&quot;: 0.75,
+      &quot;value&quot;: 1.0
+    },
+    {
+      &quot;metric&quot;: &quot;dangerous_false_green_rate&quot;,
+      &quot;operator&quot;: &quot;&lt;=&quot;,
+      &quot;passed&quot;: true,
+      &quot;threshold&quot;: 0.01,
+      &quot;value&quot;: 0.0
+    }
+  ],
+  &quot;summary&quot;: {
+    &quot;cases&quot;: 200,
+    &quot;citation_error_f1&quot;: 1.0,
+    &quot;citation_error_precision&quot;: 1.0,
+    &quot;citation_error_recall&quot;: 1.0,
+    &quot;citation_status_reported_cases&quot;: 200,
+    &quot;claim_verdict_macro_f1&quot;: null,
+    &quot;claim_verdict_match_rate&quot;: null,
+    &quot;cost_per_100_traces_usd&quot;: 0.0,
+    &quot;dangerous_false_green_rate&quot;: 0.0,
+    &quot;evidence_span_labeled_cases&quot;: 89,
+    &quot;evidence_span_overlap&quot;: 1.0,
+    &quot;evidence_span_reported_cases&quot;: 89,
+    &quot;failure_label_exact_match_rate&quot;: 0.995,
+    &quot;failure_label_macro_f1&quot;: 0.995,
+    &quot;latency_p50_ms&quot;: 9.27,
+    &quot;latency_p95_ms&quot;: 18.619,
+    &quot;root_cause_accuracy&quot;: 0.995,
+    &quot;root_cause_labeled_cases&quot;: 200,
+    &quot;root_cause_reported_cases&quot;: 200
+  }
+}</pre>
+    </section>
+  </main>
+</body>
+</html>

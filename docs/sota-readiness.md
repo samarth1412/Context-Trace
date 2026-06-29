@@ -318,13 +318,16 @@ Completed in the repo:
   ARES NQ example TSV into generic external JSONL rows. The official TSV
   contains 6,189 rows; the default adapter keeps 4,421 answer-grounding rows and
   skips context-relevance-only retrieval negatives unless
-  `--include-context-relevance-negatives` is supplied. A deterministic 200-row
-  stratified smoke is scored under
-  `benchmarks/contexttrace_bench/out/ares_nq_example/smoke200_release/`.
-- The latest ARES NQ example smoke scores failure macro-F1 `0.980`, root-cause
-  accuracy `0.980`, dangerous false-green rate `0.010`, citation error F1
-  `1.000`, and evidence span overlap `0.302` on 200 rows. It is
-  `review_pending`, not publishable.
+  `--include-context-relevance-negatives` is supplied. Repeated raw IDs are now
+  disambiguated deterministically, while the generic adapter rejects duplicate
+  normalized IDs. The sampled comparison has 200 rows and 200 unique IDs.
+- The latest ARES NQ example smoke scores ContextTrace failure macro-F1 `0.995`
+  (95% CI `0.981-1.000`), root-cause accuracy `0.995`, dangerous false-green
+  rate `0.000`, citation error F1 `1.000`, and evidence span overlap `1.000`
+  across 89 auto-derived exact-answer span labels. Same-ID, zero-error
+  `gpt-4.1-mini` runs score RAGAS at `0.471` (95% CI `0.426-0.513`) and DeepEval
+  at `0.388` (95% CI `0.342-0.431`) failure macro-F1. Their diagnostic fields
+  are `N/A`. The checksummed bundle is `review_pending`, not publishable.
 - The current semantic verifier now clears the 6-week plan's RAGTruth
   calibration thresholds for failure macro-F1, root-cause accuracy, dangerous
   false-green rate, and evidence-span overlap on the 200-case assisted sample.
@@ -344,12 +347,12 @@ Still pending for Week 1:
   before using the 200-case RAGTruth source-evidence mappings for publishable
   span-localization or external-dataset claims. Until then, the RAGTruth release
   bundle should remain `calibration_only`. This is tracked in GitHub issue #7.
-- Run a second official external dataset through the new generic workflow,
-  preferably scaling from the current ARES NQ example smoke into an
-  independently reviewed ARES row. This still requires reviewing the component
-  label mapping, reducing dangerous false greens, and scoring competitor rows
-  on the same IDs before making broad SOTA claims. RAGChecker, CRAG, and ARES
-  follow-up work is tracked in GitHub issues #3, #4, and #5.
+- Convert the completed second-dataset ARES workflow into an independently
+  reviewed row. Same-ID ContextTrace, RAGAS, and DeepEval scoring is complete;
+  the remaining ARES blocker is independent review of the component-label
+  mapping and source evidence, especially the positive row pairing answer `one`
+  only with `The Bastard Executioner`. RAGChecker, CRAG, and ARES follow-up work
+  is tracked in GitHub issues #3, #4, and #5.
 - Complete human audit sign-off for ContextTrace-Diag-150 before using
   frozen-split language. Use `audit_diag150.py` to generate the reviewer packet
   and validation artifacts before the independent review, then rerun it with
@@ -386,11 +389,14 @@ Current baseline status:
   evidence, but it is too under-sensitive to use as a publishable external row.
 - ARES NQ example smoke, ContextTrace semantic verifier: 200 official example
   rows sampled from the 4,421-row answer-grounding subset, failure macro-F1
-  `0.980`, root-cause accuracy `0.980`, citation error F1 `1.000`, evidence span
-  overlap `0.302`, and dangerous false-green rate `0.010`. This proves the
-  second external workflow path but is `review_pending` and not publishable until
-  the ARES-to-ContextTrace label mapping, span metric, and remaining false greens
-  are reviewed.
+  `0.995` (95% CI `0.981-1.000`), root-cause accuracy `0.995`, citation error F1
+  `1.000`, evidence span overlap `1.000` across 89 synthetic exact-answer spans,
+  and dangerous false-green rate `0.000`. RAGAS and DeepEval cover the same 200
+  unique IDs with zero row errors and score failure macro-F1 `0.471` and `0.388`.
+  They report no diagnostic attribution fields. This proves the second external
+  workflow and same-ID comparison path but remains `review_pending` until the
+  ARES-to-ContextTrace label mapping and source evidence are independently
+  reviewed.
 - Ollama is reachable locally and `phi3:latest` completed a 5-case local-judge
   smoke run. The smoke took about 155 seconds, making a full 500-case run a
   multi-hour local job on this machine.

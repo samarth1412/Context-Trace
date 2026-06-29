@@ -17,7 +17,7 @@ case set and are scored by `run_contexttrace.py --candidate`.
 | Phoenix | `adapt_candidate.py --preset phoenix` | Adapter ready | No | Requires exported Phoenix evaluator results. |
 | TruLens | `adapt_candidate.py --preset trulens` | Adapter ready | No | Requires exported TruLens evaluator results. |
 | RAGTruth external validation | `ragtruth_adapter.py`, `ragtruth_review.py`, `ragtruth_workflow.py`, `run_contexttrace.py --case-pack` | 200-case stratified assisted workflow scored | No | Deterministic test-split sample scored with 88 GPT-5.1-assisted review rows; 75 rows have source evidence spans and 13 are intentionally source-less or source-supported taxonomy corrections. Requires independent human sign-off and calibration before publishable external-dataset claims. |
-| ARES NQ example external validation | `ares_adapter.py`, `external_case_pack_workflow.py`, `run_contexttrace.py --case-pack` | 200-row official example smoke scored | No | Official ARES NQ example TSV normalized to generic rows. Deterministic 200-row stratified smoke is `review_pending`; requires independent review and calibration before publishable claims. |
+| ARES NQ example external validation | `ares_adapter.py`, `external_case_pack_workflow.py`, `run_contexttrace.py --case-pack` | 200-row same-ID comparison scored | No | ContextTrace, RAGAS, and DeepEval were scored on 200 unique IDs from the official example. The checksummed bundle remains `review_pending`; independent label and source-evidence review is required. |
 | Generic external case-pack validation | `external_case_pack.py`, `external_case_pack_workflow.py`, `run_contexttrace.py --case-pack` | Workflow ready | No | Normalizes CRAG/ARES-style JSON or JSONL exports with query, answer, contexts, and labels, then writes review/release bundles. Requires official export files, dataset documentation, and review/sign-off before publishable external claims. |
 
 Latest scored leaderboard:
@@ -181,9 +181,11 @@ any publishable claim from that smoke.
 
 Latest ARES NQ example smoke:
 
-| System | Cases | Eligible Rows | Failure Macro-F1 | Root Cause Accuracy | Dangerous False Green | Citation Error F1 | Span Overlap | Status |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| ContextTrace semantic verifier on official ARES NQ example answer-grounding stratified smoke | 200 | 4,421 | 0.980 | 0.980 | 0.010 | 1.000 | 0.302 | review_pending |
+| System | Cases | Eligible Rows | Failure Macro-F1 | 95% CI | Root Cause Accuracy | Dangerous False Green | Citation Error F1 | Span Overlap | Status |
+| --- | ---: | ---: | ---: | --- | ---: | ---: | ---: | ---: | --- |
+| ContextTrace semantic verifier | 200 | 4,421 | 0.995 | 0.981-1.000 | 0.995 | 0.000 | 1.000 | 1.000 (89 labeled) | review_pending |
+| RAGAS `gpt-4.1-mini` | 200 | 4,421 | 0.471 | 0.426-0.513 | N/A | 0.030 | N/A | N/A | calibration only |
+| DeepEval `gpt-4.1-mini` | 200 | 4,421 | 0.388 | 0.342-0.431 | N/A | 0.360 | N/A | N/A | calibration only |
 
 This run uses the official ARES `nq_labeled_output.tsv` example file from
 `stanford-futuredata/ARES`, normalized by `ares_adapter.py`, then sampled with
@@ -191,10 +193,22 @@ This run uses the official ARES `nq_labeled_output.tsv` example file from
 `stratify_by=metadata.ares_context_relevance_label,metadata.ares_answer_faithfulness_label,metadata.ares_answer_relevance_label`.
 The official TSV contains 6,189 rows; the default adapter keeps 4,421
 answer-grounding rows and skips context-relevance-only retrieval negatives unless
-`--include-context-relevance-negatives` is supplied. It is a second
-external-dataset workflow proof, not a publishable row. The remaining blockers
-are independent review of the ARES component-label mapping, evidence-span
-calibration, and competitor rows on the same sampled IDs.
+`--include-context-relevance-negatives` is supplied. Repeated raw IDs are
+deterministically disambiguated and the generic adapter rejects duplicate IDs
+after normalization, so each candidate has `200/200` matched coverage with zero
+runner errors. RAGAS and DeepEval report faithfulness only; unreported diagnostic
+fields remain `N/A`.
+
+The tracked release evidence is in
+`out/ares_nq_example/smoke200_compared_bundle/`, with raw RAGAS and DeepEval
+runner outputs in `out/ares_nq_example/baselines_unique/`.
+
+The `1.000` span score applies to 89 auto-derived exact-answer spans and is not
+an independently labeled source-localization result. The sole ContextTrace
+disagreement is an ARES-positive row whose answer `one` is paired only with the
+title `The Bastard Executioner`. This remains a second external-dataset workflow
+proof, not a publishable row. Independent review of the ARES component-label
+mapping and source evidence is still required.
 
 ## Full ContextTrace Run
 

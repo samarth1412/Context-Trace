@@ -524,8 +524,29 @@ python benchmarks/contexttrace_bench/external_case_pack_workflow.py \
 Current ARES status: the official example TSV contains 6,189 rows. The default
 adapter path keeps 4,421 answer-grounding rows and skips context-relevance-only
 retrieval negatives unless `--include-context-relevance-negatives` is supplied.
-The 200-row stratified smoke is scored, bundle `review_pending`, with failure
-macro-F1 `0.980`, root-cause accuracy `0.980`, dangerous false-green rate
-`0.010`, citation error F1 `1.000`, and evidence span overlap `0.302`. Treat this
-as calibration evidence until independent review validates the ARES-to-ContextTrace
-label mapping.
+Repeated upstream IDs are deterministically disambiguated, and the generic
+adapter rejects any duplicate IDs that remain after normalization. The corrected
+stratified sample therefore has 200 rows and 200 unique case IDs.
+
+On those IDs, ContextTrace scores failure macro-F1 `0.995` (95% CI
+`0.981-1.000`), root-cause accuracy `0.995`, dangerous false-green rate `0.000`,
+citation error F1 `1.000`, and evidence span overlap `1.000` across 89 rows with
+auto-derived exact-answer spans. RAGAS and DeepEval, both using
+`gpt-4.1-mini`, completed the same 200 IDs with zero runner errors and score
+failure macro-F1 `0.471` (95% CI `0.426-0.513`) and `0.388` (95% CI
+`0.342-0.431`) respectively. Their root-cause, citation, and span fields are
+`N/A` because the runners report faithfulness only.
+
+The tracked evidence is under
+`benchmarks/contexttrace_bench/out/ares_nq_example/smoke200_compared_bundle/`.
+It contains the frozen case pack, candidate inputs and predictions,
+machine-readable baseline scores, reports, review packet, manifest, and SHA256
+checksums. Raw zero-error runner outputs are retained under
+`benchmarks/contexttrace_bench/out/ares_nq_example/baselines_unique/`.
+
+The checksummed bundle remains `review_pending`. The exact-answer spans are
+synthetic localization labels, not independent evidence-span annotations, and
+the sole ContextTrace disagreement is an ARES-positive row whose answer `one`
+has only the title `The Bastard Executioner` as context. Treat all ARES numbers
+as calibration evidence until independent review validates the component-label
+mapping and source evidence.

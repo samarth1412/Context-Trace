@@ -6,6 +6,23 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+### Added
+
+- Regression coverage for bare numeric answers, exact short-answer evidence,
+  local negation, cardinal-versus-ordinal boundaries, and names with middle
+  initials.
+- Same-ID RAGAS and DeepEval calibration rows for the 200-case ARES NQ example
+  sample, including confidence intervals and a checksummed review bundle.
+
+### Changed
+
+- Improved exact evidence-span localization and prevented substring-only or
+  unrelated-negation matches from changing short-answer verdicts.
+- Hardened external benchmark identity by disambiguating repeated ARES IDs and
+  rejecting duplicate case IDs after generic normalization.
+- Included machine-readable baseline scores in external release bundles whenever
+  competitor candidates are evaluated.
+
 ## [0.9.0] - 2026-06-05
 
 ### Added

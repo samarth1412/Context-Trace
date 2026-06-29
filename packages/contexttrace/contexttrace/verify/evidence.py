@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import re
 import unicodedata
 from dataclasses import dataclass
@@ -239,6 +240,20 @@ def score_claim_against_context(
             best_start = span.start_char
             best_end = span.end_char
             best_hash = span.span_hash
+    for start, end, text in exact_surface_spans(claim_text, context.text):
+        score, terms = lexical_score(claim_text, text, mode=mode)
+        span_candidates.append(
+            {
+                "context_id": context.id,
+                "text": text,
+                "start_char": start,
+                "end_char": end,
+                "span_hash": _surface_span_hash(context.id, text),
+                "score": max(score, 0.99),
+                "matched_terms": list(terms),
+                "span_kind": "exact_surface",
+            }
+        )
     return EvidenceMatch(
         context_id=context.id,
         context_text=context.text,
@@ -286,7 +301,7 @@ def lexical_score(claim_text: str, evidence_text: str, *, mode: str = "lexical")
     jaccard = len(matched_canonical) / union_size
 
     score = (0.78 * coverage) + (0.22 * jaccard)
-    if _compact_text(claim_text, mode=token_mode) and _compact_text(claim_text, mode=token_mode) in _compact_text(evidence_text, mode=token_mode):
+    if _contains_token_sequence(claim_text, evidence_text, mode=token_mode):
         score += 0.12
 
     claim_numbers = extract_numbers(claim_text)
@@ -368,6 +383,88 @@ def extract_numbers(text: str) -> list[str]:
     return re.findall(r"\b\d+(?:\.\d+)?\b", value)
 
 
+def exact_surface_spans(claim_text: str, evidence_text: str) -> list[tuple[int, int, str]]:
+    """Return exact claim mentions that are not locally negated by the evidence."""
+
+    surface = _claim_surface(claim_text)
+    evidence = str(evidence_text or "")
+    if not surface or not evidence:
+        return []
+    pattern = re.compile(
+        r"(?<!\w)%s(?!\w)" % r"\s+".join(re.escape(part) for part in surface.split()),
+        flags=re.IGNORECASE,
+    )
+    claim_is_negated = _contains_negation(surface)
+    spans: list[tuple[int, int, str]] = []
+    for match in pattern.finditer(evidence):
+        if not claim_is_negated and _locally_negated(evidence, match.start()):
+            continue
+        end = match.end()
+        if evidence[end : end + 1] in ".!?":
+            end += 1
+        spans.append((match.start(), end, evidence[match.start() : end]))
+    return spans
+
+
+def has_unnegated_exact_surface_match(claim_text: str, evidence_text: str) -> bool:
+    return bool(exact_surface_spans(claim_text, evidence_text))
+
+
+def _claim_surface(text: str) -> str:
+    value = " ".join(str(text or "").split()).strip()
+    value = value.strip(" \t\r\n\"'\u201c\u201d")
+    return value.rstrip(".!?;:").strip()
+
+
+def _contains_negation(text: str) -> bool:
+    return bool(
+        re.search(
+            r"\b(?:no|not|never|neither|nor|cannot|can't|unable|without|prohibited|forbidden|disallowed|ineligible)\b",
+            str(text or ""),
+            flags=re.IGNORECASE,
+        )
+    )
+
+
+def _locally_negated(text: str, start: int) -> bool:
+    prefix = str(text or "")[max(0, start - 80) : start]
+    prefix = re.split(r"[.!?;,:]", prefix)[-1]
+    return bool(
+        re.search(
+            r"\b(?:no|not|never|neither|nor|cannot|can't|unable|without|prohibited|forbidden|disallowed|ineligible|"
+            r"isn't|wasn't|aren't|weren't|doesn't|didn't|won't|wouldn't|shouldn't|couldn't)\b"
+            r"(?:\s+[A-Za-z0-9_-]+){0,3}\s*$",
+            prefix,
+            flags=re.IGNORECASE,
+        )
+    )
+
+
+def _surface_span_hash(context_id: str, text: str) -> str:
+    digest = hashlib.sha256(("%s\n%s" % (context_id, " ".join(text.split()))).encode("utf-8")).hexdigest()
+    return "sha256:%s" % digest[:16]
+
+
+def _contains_token_sequence(claim_text: str, evidence_text: str, *, mode: str) -> bool:
+    claim_tokens = [
+        canonical_token(token, mode=mode)
+        for token in TOKEN_RE.findall(_compact_text(claim_text, mode=mode))
+    ]
+    evidence_tokens = [
+        canonical_token(token, mode=mode)
+        for token in TOKEN_RE.findall(_compact_text(evidence_text, mode=mode))
+    ]
+    claim_tokens = [token for token in claim_tokens if token]
+    evidence_tokens = [token for token in evidence_tokens if token]
+    if not claim_tokens or len(claim_tokens) > len(evidence_tokens):
+        return False
+    width = len(claim_tokens)
+    return any(
+        evidence_tokens[index : index + width] == claim_tokens
+        for index in range(len(evidence_tokens) - width + 1)
+    )
+
+
 def _sentences(text: str) -> list[str]:
     value = str(text or "")
     sentences: list[str] = []
@@ -390,6 +487,12 @@ def _sentences(text: str) -> list[str]:
 def _is_internal_period(text: str, index: int) -> bool:
     previous = text[index - 1] if index > 0 else ""
     next_char = text[index + 1] if index + 1 < len(text) else ""
+    if (
+        previous.isupper()
+        and re.search(r"\b[A-Z][a-z]+\s+[A-Z]$", text[:index])
+        and re.match(r"\s+[A-Z][a-z]", text[index + 1 :])
+    ):
+        return True
     if previous.isdigit() and next_char.isdigit():
         return True
     if previous.isalnum() and next_char.isalnum():

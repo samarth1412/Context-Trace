@@ -4,7 +4,12 @@ import re
 from dataclasses import dataclass, replace
 
 from contexttrace.verify.claims import Claim
-from contexttrace.verify.evidence import EvidenceMatch, extract_numbers, unique_important_tokens
+from contexttrace.verify.evidence import (
+    EvidenceMatch,
+    extract_numbers,
+    has_unnegated_exact_surface_match,
+    unique_important_tokens,
+)
 from contexttrace.verify.facts import compare_facts
 
 
@@ -300,6 +305,8 @@ def _needs_full_context_conflict_scan(claim_text: str, mode: str) -> bool:
 
 def is_contradicted(claim_text: str, evidence_text: str, score: float, *, mode: str = "lexical") -> bool:
     if score < 0.50:
+        return False
+    if has_unnegated_exact_surface_match(claim_text, evidence_text):
         return False
     if _negated_truth_support(claim_text, evidence_text):
         return False

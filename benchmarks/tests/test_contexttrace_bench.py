@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+
 from benchmarks.contexttrace_bench.adapt_candidate import adapt_candidate_rows
 from benchmarks.contexttrace_bench.ares_adapter import (
     adapt_ares_rows,
@@ -532,6 +534,7 @@ def test_contexttrace_bench_markdown_outputs(tmp_path) -> None:
     assert "Confidence Intervals" in html_report
     assert "Failure Label Breakdown" in html_report
     assert "SOTA Readiness Gates" in html_report
+    assert all(line == line.rstrip() for line in html_report.splitlines())
 
     assert "ContextTrace-Bench Results" in (tmp_path / "results.md").read_text(encoding="utf-8")
     assert "ContextTrace-Bench Leaderboard" in (tmp_path / "leaderboard.md").read_text(encoding="utf-8")
@@ -952,6 +955,22 @@ def test_generic_external_adapter_builds_contexttrace_case_pack() -> None:
     assert contradicted["expected_primary_root_cause"] == "conflicting_contexts"
 
 
+def test_generic_external_adapter_rejects_duplicate_normalized_ids() -> None:
+    rows = [
+        {
+            "id": raw_id,
+            "query": "Question?",
+            "answer": "Answer.",
+            "contexts": ["Answer."],
+            "expected_label": "supported",
+        }
+        for raw_id in ("duplicate-id", "duplicate_id")
+    ]
+
+    with pytest.raises(ValueError, match="must be unique"):
+        adapt_external_rows(rows, dataset="ARES")
+
+
 def test_generic_external_adapter_sampling_is_deterministic() -> None:
     rows = [
         {
@@ -1127,6 +1146,38 @@ def test_ares_adapter_normalizes_official_example_tsv(tmp_path) -> None:
                         "0.0",
                     ]
                 ),
+                "\t".join(
+                    [
+                        "substring_only",
+                        "how many seasons",
+                        "{}",
+                        "{}",
+                        "0",
+                        "The Bastard Executioner",
+                        "1",
+                        "one",
+                        "how many seasons",
+                        "1.0",
+                        "1.0",
+                        "1.0",
+                    ]
+                ),
+                "\t".join(
+                    [
+                        "supported",
+                        "who else sings it",
+                        "{}",
+                        "{}",
+                        "1551152",
+                        "A second Rockwell document.",
+                        "2",
+                        "Rockwell",
+                        "who else sings it",
+                        "1.0",
+                        "1.0",
+                        "1.0",
+                    ]
+                ),
             ]
         )
         + "\n",
@@ -1141,6 +1192,9 @@ def test_ares_adapter_normalizes_official_example_tsv(tmp_path) -> None:
     assert "bad_context" not in by_id
     assert by_id["bad_answer"]["expected_label"] == ["should_have_abstained", "unsupported_answer"]
     assert by_id["bad_answer"]["metadata"]["ares_mapping_reason"] == "ares_answer_not_faithful"
+    assert by_id["substring_only"]["expected_evidence_spans"] == []
+    assert by_id["supported__2"]["metadata"]["ares_id"] == "supported"
+    assert by_id["supported__2"]["metadata"]["ares_id_occurrence"] == 2
 
     rows_with_retrieval_negatives = adapt_ares_rows(
         load_ares_tsv(input_path),
@@ -1193,6 +1247,7 @@ def test_ares_adapter_cli_writes_generic_rows(tmp_path, capsys) -> None:
 
 def test_generic_external_workflow_builds_review_pending_bundle(tmp_path) -> None:
     input_path = tmp_path / "external_rows.jsonl"
+    candidate_path = tmp_path / "candidate.json"
     input_path.write_text(
         "\n".join(
             json.dumps(row)
@@ -1219,6 +1274,19 @@ def test_generic_external_workflow_builds_review_pending_bundle(tmp_path) -> Non
         + "\n",
         encoding="utf-8",
     )
+    candidate_path.write_text(
+        json.dumps(
+            {
+                "system": "Fixture evaluator",
+                "version": "test",
+                "predictions": [
+                    {"id": "ares_supported", "predicted": ["no_failure_detected"]},
+                    {"id": "ares_conflict", "predicted": ["contradicted_answer"]},
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
 
     summary = run_external_case_pack_workflow(
         input_path=input_path,
@@ -1233,6 +1301,8 @@ def test_generic_external_workflow_builds_review_pending_bundle(tmp_path) -> Non
         sample_seed=11,
         stratify_by=["split", "label"],
         bootstrap_samples=10,
+        candidate_paths=[candidate_path],
+        auto_candidates=False,
     )
     rendered = render_external_workflow_summary(summary)
     manifest = json.loads((tmp_path / "bundle" / "manifest.json").read_text(encoding="utf-8"))
@@ -1240,10 +1310,16 @@ def test_generic_external_workflow_builds_review_pending_bundle(tmp_path) -> Non
     assert summary["status"] == "review_pending"
     assert summary["workflow_status"] == "scored_review_pending"
     assert summary["case_count"] == 2
+    assert summary["baseline_count"] == 1
     assert manifest["bundle_status"] == "review_pending"
     assert manifest["case_count"] == 2
     assert any(artifact["path"] == "external_review_packet.md" for artifact in manifest["artifacts"])
     assert any(artifact["path"] == "scored/contexttrace_bench_results.json" for artifact in manifest["artifacts"])
+    assert any(artifact["path"] == "scored/baseline_results.json" for artifact in manifest["artifacts"])
+    bundled_baselines = json.loads(
+        (tmp_path / "bundle" / "scored" / "baseline_results.json").read_text(encoding="utf-8")
+    )
+    assert bundled_baselines[0]["system"] == "Fixture evaluator"
     assert "Generic external case-pack workflow" in rendered
 
 

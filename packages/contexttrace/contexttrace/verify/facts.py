@@ -6,6 +6,8 @@ import unicodedata
 from dataclasses import dataclass
 from functools import lru_cache
 
+from contexttrace.verify.evidence import has_unnegated_exact_surface_match
+
 
 TOKEN_RE = re.compile(r"[A-Za-z0-9_./-]+")
 ACRONYM_RE = re.compile(r"\b[A-Z][A-Z0-9]{1,}\b")
@@ -1978,9 +1980,7 @@ def _fact_supported_by_unit(fact: str, evidence_unit: str, *, mode: str) -> bool
     if coverage >= 0.72:
         return True
 
-    compact_fact = _compact(fact, mode=mode)
-    compact_evidence = _compact(evidence_unit, mode=mode)
-    if compact_fact and compact_fact in compact_evidence:
+    if _contains_compact_phrase(fact, evidence_unit, mode=mode):
         return True
 
     if _list_item_supported(fact, evidence_unit, evidence_tokens, mode=mode):
@@ -2310,7 +2310,17 @@ def _token_overlap(claim_text: str, evidence_text: str, *, mode: str) -> float:
     return len([token for token in claim_tokens if token in evidence_tokens]) / len(claim_tokens)
 
 
+def _contains_compact_phrase(needle: str, haystack: str, *, mode: str) -> bool:
+    compact_needle = _compact(needle, mode=mode)
+    compact_haystack = _compact(haystack, mode=mode)
+    if not compact_needle or not compact_haystack:
+        return False
+    return bool(re.search(r"(?<!\w)%s(?!\w)" % re.escape(compact_needle), compact_haystack))
+
+
 def _has_negation_conflict(claim_text: str, evidence_text: str, *, mode: str) -> bool:
+    if has_unnegated_exact_surface_match(claim_text, evidence_text):
+        return False
     claim_polarity = _negation_polarity(claim_text)
     units = _evidence_units(evidence_text)
     if not units:
@@ -3333,6 +3343,12 @@ def _non_negated_clause_text(text: str) -> str:
 def _is_internal_period(text: str, index: int) -> bool:
     previous = text[index - 1] if index > 0 else ""
     next_char = text[index + 1] if index + 1 < len(text) else ""
+    if (
+        previous.isupper()
+        and re.search(r"\b[A-Z][a-z]+\s+[A-Z]$", text[:index])
+        and re.match(r"\s+[A-Z][a-z]", text[index + 1 :])
+    ):
+        return True
     if previous.isdigit() and next_char.isdigit():
         return True
     if previous.isalnum() and next_char.isalnum():

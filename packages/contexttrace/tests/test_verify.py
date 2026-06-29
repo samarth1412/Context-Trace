@@ -314,6 +314,10 @@ def test_claim_extraction_preserves_us_abbreviation_in_boilerplate_prefix():
     ]
 
 
+def test_claim_extraction_preserves_middle_initials():
+    assert [claim.text for claim in extract_claims("John C. Reilly")] == ["John C. Reilly."]
+
+
 def test_context_span_extraction_preserves_offsets_and_hashes():
     context = TraceContext(
         id="docs/local-mode.md",
@@ -4029,6 +4033,83 @@ def test_short_year_answer_requires_context_support():
     assert result["summary"]["failure_type"] == "should_have_abstained"
     assert result["claims"][0]["claim"] == "1983."
     assert result["claims"][0]["verdict"] in {"unsupported", "unverifiable"}
+
+
+def test_bare_numeric_answer_is_verified_instead_of_treated_as_a_list_marker():
+    result = verify_trace(
+        RAGTrace(
+            query="What is the catalog number?",
+            answer="775",
+            contexts=[TraceContext(id="catalog", text="The source only lists catalog number 812.")],
+        ),
+        mode="semantic",
+    )
+
+    assert [claim.text for claim in extract_claims("775")] == ["775."]
+    assert result["summary"]["should_abstain"] is True
+    assert result["claims"][0]["verdict"] in {"unsupported", "contradicted"}
+
+
+def test_cardinal_answer_does_not_match_an_ordinal_substring():
+    result = verify_trace(
+        RAGTrace(
+            query="Who played the older brother?",
+            answer="four",
+            contexts=[TraceContext(id="cast", text="During the fourth season, Eric left school for a year.")],
+        ),
+        mode="semantic",
+    )
+
+    assert result["summary"]["should_abstain"] is True
+    assert result["claims"][0]["verdict"] in {"unsupported", "unverifiable"}
+
+
+@pytest.mark.parametrize(
+    ("answer", "context", "expected_span"),
+    [
+        (
+            "unattainable",
+            "Points outside the production curve are unattainable because they cannot be produced with current resources.",
+            "unattainable",
+        ),
+        (
+            "Jennifer Grey",
+            "His sister Jeanie (Jennifer Grey) is not convinced by his story.",
+            "Jennifer Grey",
+        ),
+    ],
+)
+def test_exact_short_answer_is_not_contradicted_by_unrelated_sentence_negation(answer, context, expected_span):
+    result = verify_trace(
+        RAGTrace(
+            query="Who or what is the answer?",
+            answer=answer,
+            contexts=[TraceContext(id="source", text=context)],
+        ),
+        mode="semantic",
+    )
+
+    claim = result["claims"][0]
+    assert claim["verdict"] == "supported"
+    assert claim["conflicting_facts"] == []
+    exact_spans = [span for span in claim["supporting_spans"] if span.get("span_kind") == "exact_surface"]
+    assert [span["text"] for span in exact_spans] == [expected_span]
+
+
+def test_exact_surface_support_does_not_override_local_negation():
+    result = verify_trace(
+        RAGTrace(
+            query="Is the account active?",
+            answer="active",
+            contexts=[TraceContext(id="account", text="The account is not currently active.")],
+        ),
+        mode="semantic",
+    )
+
+    assert result["claims"][0]["verdict"] == "contradicted"
+    assert not any(
+        span.get("span_kind") == "exact_surface" for span in result["claims"][0]["supporting_spans"]
+    )
 
 
 def test_report_generation(tmp_path):

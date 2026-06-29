@@ -433,11 +433,22 @@ python benchmarks/contexttrace_bench/external_case_pack_workflow.py \
 Current ARES example status: the official example TSV contains 6,189 rows. The
 default adapter path keeps the 4,421 answer-grounding rows and skips
 context-relevance-only retrieval negatives unless
-`--include-context-relevance-negatives` is supplied. The 200-row stratified smoke
-is `review_pending` with failure macro-F1 `0.980`, root-cause accuracy `0.980`,
-dangerous false-green rate `0.010`, citation error F1 `1.000`, and evidence span
-overlap `0.302`. This is calibration evidence only; the ARES component labels
-need independent review before they can support external-validation claims.
+`--include-context-relevance-negatives` is supplied. Repeated upstream IDs are
+disambiguated deterministically, and duplicate normalized case IDs are rejected.
+The corrected stratified sample therefore contains 200 unique IDs.
+
+ContextTrace scores failure macro-F1 `0.995` (95% CI `0.981-1.000`), root-cause
+accuracy `0.995`, dangerous false-green rate `0.000`, citation error F1 `1.000`,
+and evidence span overlap `1.000` on the 89 rows with auto-derived exact-answer
+spans. Same-ID `gpt-4.1-mini` runs completed without row errors: RAGAS scores
+failure macro-F1 `0.471` (95% CI `0.426-0.513`) and DeepEval scores `0.388`
+(95% CI `0.342-0.431`). Their diagnostic attribution fields are `N/A`.
+
+The bundle is still `review_pending`. Its exact-answer spans are synthetic, and
+the sole ContextTrace disagreement is an ARES-positive row whose answer `one`
+has only `The Bastard Executioner` as context. Independent review of the ARES
+component-label mapping and source evidence is required before these calibration
+results can support external-validation claims.
 
 The RAGTruth adapter creates a ContextTrace-style case pack from the official
 `response.jsonl` and `source_info.jsonl` exports:

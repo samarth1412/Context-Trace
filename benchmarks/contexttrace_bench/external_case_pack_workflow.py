@@ -537,6 +537,15 @@ def write_external_release_bundle(
                 missing_required,
                 required=True,
             )
+        if candidate_files:
+            _copy_if_present(
+                score_dir / "baseline_results.json",
+                bundle_path / "scored" / "baseline_results.json",
+                bundle_path,
+                artifacts,
+                missing_required,
+                required=True,
+            )
     for candidate in candidate_files or []:
         _copy_if_present(
             candidate,

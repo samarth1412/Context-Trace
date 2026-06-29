@@ -124,6 +124,12 @@ def adapt_external_rows(
         stratify_by=stratify_by or [],
     )
     cases = [item["case"] for item in selected]
+    duplicate_case_ids = _duplicates([str(case.get("id") or "") for case in cases])
+    if duplicate_case_ids:
+        raise ValueError(
+            "External case IDs must be unique after normalization; duplicates: %s"
+            % ", ".join(duplicate_case_ids[:10])
+        )
     return {
         "description": (
             "%s case pack adapted for ContextTrace external validation from generic JSON/JSONL rows."
@@ -420,6 +426,16 @@ def _dedupe(values: list[str]) -> list[str]:
             seen.add(value)
             output.append(value)
     return output
+
+
+def _duplicates(values: list[str]) -> list[str]:
+    seen: set[str] = set()
+    duplicates: list[str] = []
+    for value in values:
+        if value in seen and value not in duplicates:
+            duplicates.append(value)
+        seen.add(value)
+    return duplicates
 
 
 def main(argv: list[str] | None = None) -> int:

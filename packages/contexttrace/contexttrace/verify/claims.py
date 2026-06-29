@@ -77,6 +77,8 @@ def extract_claims(answer: str) -> list[Claim]:
     normalized_answer = _normalize_answer_for_claim_splitting(answer)
     if not normalized_answer:
         return []
+    if re.fullmatch(r"[+-]?\d+(?:\.\d+)?", normalized_answer):
+        return [Claim(id="claim_1", text=_ensure_terminal(normalized_answer, "."))]
 
     sentences = _split_sentences(normalized_answer)
     if not sentences:
@@ -208,6 +210,12 @@ def _is_internal_period(text: str, index: int) -> bool:
     previous = text[index - 1] if index > 0 else ""
     next_char = text[index + 1] if index + 1 < len(text) else ""
     if text[: index + 1].lower().endswith(("u.s.", "u.k.")):
+        return True
+    if (
+        previous.isupper()
+        and re.search(r"\b[A-Z][a-z]+\s+[A-Z]$", text[:index])
+        and re.match(r"\s+[A-Z][a-z]", text[index + 1 :])
+    ):
         return True
     if previous.isdigit() and next_char.isdigit():
         return True
