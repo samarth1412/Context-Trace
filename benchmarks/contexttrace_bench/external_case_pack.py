@@ -319,11 +319,16 @@ def _context_from_item(item: Any, *, index: int, dataset: str, case_id: str) -> 
             or item.get("document")
             or ""
         ).strip()
-        metadata = {
-            key: value
-            for key, value in item.items()
-            if key not in {"id", "doc_id", "source_id", "text", "content", "passage", "document"}
-        }
+        supplied_metadata = item.get("metadata")
+        metadata = dict(supplied_metadata) if isinstance(supplied_metadata, dict) else {}
+        metadata.update(
+            {
+                key: value
+                for key, value in item.items()
+                if key
+                not in {"id", "doc_id", "source_id", "text", "content", "passage", "document", "metadata"}
+            }
+        )
         context_id = str(item.get("id") or item.get("doc_id") or item.get("source_id") or "")
         context_id = context_id or "%s_%s_context_%s" % (_slug(dataset), _slug(case_id), index)
     else:

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import bz2
 import json
 from pathlib import Path
 
@@ -21,6 +22,16 @@ from benchmarks.contexttrace_bench.audit_diag150 import (
     write_diag150_release_bundle,
 )
 from benchmarks.contexttrace_bench.baseline_common import load_candidate_inputs, write_json
+from benchmarks.contexttrace_bench.crag_adapter import (
+    adapt_crag_archive,
+    adapt_crag_row,
+    archive_sha256,
+    main as crag_adapter_main,
+)
+from benchmarks.contexttrace_bench.crag_calibration_report import (
+    build_crag_calibration_report,
+    render_crag_calibration_markdown,
+)
 from benchmarks.contexttrace_bench.diag150_release_workflow import (
     render_workflow_summary,
     run_diag150_release_workflow,
@@ -923,7 +934,14 @@ def test_generic_external_adapter_builds_contexttrace_case_pack() -> None:
                 "id": "case-1",
                 "query": "What is the refund policy?",
                 "answer": "Refunds are available within 30 days.",
-                "contexts": [{"doc_id": "policy", "text": "Refunds are available within 30 days."}],
+                "contexts": [
+                    {
+                        "doc_id": "policy",
+                        "text": "Refunds are available within 30 days.",
+                        "metadata": {"section": "refunds"},
+                        "retrieval_rank": 1,
+                    }
+                ],
                 "expected_label": "supported",
                 "expected_evidence_spans": ["Refunds are available within 30 days."],
                 "metadata": {"split": "dev"},
@@ -950,6 +968,7 @@ def test_generic_external_adapter_builds_contexttrace_case_pack() -> None:
     assert supported["expected_labels"] == ["no_failure_detected"]
     assert supported["expected_primary_root_cause"] == "no_failure_detected"
     assert supported["contexts"][0]["id"] == "policy"
+    assert supported["contexts"][0]["metadata"] == {"section": "refunds", "retrieval_rank": 1}
     assert supported["dataset_metadata"]["upstream_metadata"]["split"] == "dev"
     assert contradicted["expected_labels"] == ["contradicted_answer"]
     assert contradicted["expected_primary_root_cause"] == "conflicting_contexts"
@@ -1243,6 +1262,233 @@ def test_ares_adapter_cli_writes_generic_rows(tmp_path, capsys) -> None:
     assert rows[0]["id"] == "one"
     assert rows[0]["expected_label"] == ["no_failure_detected"]
     assert "Rows: 1" in capsys.readouterr().out
+
+
+def test_crag_adapter_streams_bz2_and_preserves_review_boundary(tmp_path) -> None:
+    input_path = tmp_path / "crag.jsonl.bz2"
+    rows = [
+        {
+            "interaction_id": "case-%s" % index,
+            "query": "Question %s?" % index,
+            "answer": "Answer %s" % index,
+            "alternative_answers": ["Alternative %s" % index],
+            "query_time": "2024-02-28 00:00:00",
+            "domain": ("finance", "movie", "open", "sports")[index],
+            "question_type": ("simple", "comparison", "set", "multi-hop")[index],
+            "static_or_dynamic": ("static", "slow-changing", "fast-changing", "real-time")[index],
+            "split": index % 2,
+            "search_results": [
+                {
+                    "page_name": "Page %s" % index,
+                    "page_url": "https://example.test/%s" % index,
+                    "page_snippet": "A concise snippet for answer %s." % index,
+                    "page_result": (
+                        "<html><script>secret script text</script><style>hidden css</style>"
+                        "<body><p>Visible supporting text for answer %s.</p></body></html>" % index
+                    ),
+                    "page_last_modified": "2024-02-27",
+                }
+            ],
+        }
+        for index in range(4)
+    ]
+    rows.append(
+        {
+            "interaction_id": "missing-answer",
+            "query": "This row should be skipped.",
+            "answer": "nan",
+            "domain": "open",
+            "question_type": "comparison",
+            "static_or_dynamic": "static",
+            "split": 0,
+            "search_results": [{"page_result": "<p>Not a usable gold answer.</p>"}],
+        }
+    )
+    with bz2.open(input_path, "wt", encoding="utf-8") as handle:
+        for row in rows:
+            handle.write(json.dumps(row) + "\n")
+
+    first, manifest = adapt_crag_archive(
+        input_path,
+        sample_size=3,
+        sample_seed=17,
+        stratify_by=["domain", "question_type"],
+        context_char_limit=500,
+    )
+    second, _ = adapt_crag_archive(
+        input_path,
+        sample_size=3,
+        sample_seed=17,
+        stratify_by=["domain", "question_type"],
+        context_char_limit=500,
+    )
+
+    assert [row["id"] for row in first] == [row["id"] for row in second]
+    assert len(first) == 3
+    assert manifest["source"]["sha256"] == archive_sha256(input_path)
+    assert manifest["source"]["matches_official_sha256"] is False
+    assert manifest["sampling"]["eligible_rows"] == 4
+    assert len(manifest["sampling"]["selected_ids_sha256"]) == 64
+    assert manifest["skipped"]["missing_or_sentinel_answer"] == 1
+    assert manifest["label_policy"]["publishable"] is False
+    assert manifest["label_policy"]["mode"] == "unreviewed_gold_answer_proxy"
+    for row in first:
+        assert row["expected_label"] == ["no_failure_detected"]
+        assert row["metadata"]["crag_requires_grounding_review"] is True
+        assert row["metadata"]["crag_alternative_answers"]
+        assert "Visible supporting text" in row["contexts"][0]["text"]
+        assert "secret script text" not in row["contexts"][0]["text"]
+        assert "hidden css" not in row["contexts"][0]["text"]
+        assert len(row["contexts"][0]["text"]) <= 500
+
+    false_premise = dict(rows[0])
+    false_premise.update(
+        {
+            "interaction_id": "false-premise",
+            "query": "What album did the nonexistent artist release?",
+            "answer": "invalid question",
+            "question_type": "false_premise",
+        }
+    )
+    adapted_false_premise = adapt_crag_row(false_premise, context_char_limit=500)
+    assert adapted_false_premise["answer"] == "invalid question"
+    assert adapted_false_premise["metadata"]["crag_question_type"] == "false_premise"
+    assert adapted_false_premise["metadata"]["crag_requires_grounding_review"] is True
+
+    serialized_alternatives = dict(rows[0])
+    serialized_alternatives["alternative_answers"] = "['Alt A', 'Alt B']"
+    adapted_alternatives = adapt_crag_row(serialized_alternatives, context_char_limit=500)
+    assert adapted_alternatives["metadata"]["crag_alternative_answers"] == ["Alt A", "Alt B"]
+
+    with pytest.raises(ValueError, match="source SHA256"):
+        adapt_crag_archive(
+            input_path,
+            sample_size=1,
+            source_sha256="0" * 64,
+            context_char_limit=500,
+        )
+
+
+def test_crag_adapter_cli_writes_rows_and_manifest(tmp_path, capsys) -> None:
+    input_path = tmp_path / "crag.jsonl"
+    output_path = tmp_path / "crag_rows.jsonl"
+    manifest_path = tmp_path / "crag_manifest.json"
+    input_path.write_text(
+        json.dumps(
+            {
+                "interaction_id": "official-case",
+                "query": "What is supported?",
+                "answer": "Alpha",
+                "domain": "open",
+                "question_type": "simple",
+                "static_or_dynamic": "static",
+                "split": 0,
+                "search_results": [
+                    {
+                        "page_name": "Alpha page",
+                        "page_url": "https://example.test/alpha",
+                        "page_snippet": "Alpha is supported.",
+                        "page_result": "<p>Alpha is supported by this page.</p>",
+                    }
+                ],
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    assert crag_adapter_main(
+        [
+            "--input",
+            str(input_path),
+            "--output",
+            str(output_path),
+            "--manifest-output",
+            str(manifest_path),
+            "--sample-size",
+            "1",
+        ]
+    ) == 0
+
+    adapted = [json.loads(line) for line in output_path.read_text(encoding="utf-8").splitlines()]
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    assert adapted[0]["id"] == "official-case"
+    assert manifest["sampling"]["selected_rows"] == 1
+    assert "Label scope: unreviewed_gold_answer_proxy" in capsys.readouterr().out
+
+
+def test_crag_adapter_cli_can_require_official_checksum(tmp_path) -> None:
+    input_path = tmp_path / "not-official.jsonl"
+    input_path.write_text("{}\n", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="checksum"):
+        crag_adapter_main(
+            [
+                "--input",
+                str(input_path),
+                "--output",
+                str(tmp_path / "rows.jsonl"),
+                "--require-official-checksum",
+            ]
+        )
+
+
+def test_crag_calibration_report_keeps_proxy_metrics_separate() -> None:
+    def result_row(case_id, predicted, *, domain, question_type, dynamic, split, truncated):
+        return {
+            "id": case_id,
+            "predicted": predicted,
+            "case_pack_metadata": {
+                "dataset_metadata": {
+                    "upstream_metadata": {
+                        "crag_label_scope": "unreviewed_gold_answer_proxy",
+                        "crag_domain": domain,
+                        "crag_question_type": question_type,
+                        "crag_static_or_dynamic": dynamic,
+                        "crag_split": split,
+                    }
+                }
+            },
+            "trace": {"contexts": [{"text": "Context ..." if truncated else "Context."}]},
+        }
+
+    report = build_crag_calibration_report(
+        {
+            "case_pack_dataset": "CRAG-Task1-v5",
+            "case_set": "external_case_pack",
+            "mode": "semantic",
+            "rows": [
+                result_row(
+                    "accepted",
+                    ["no_failure_detected"],
+                    domain="open",
+                    question_type="simple",
+                    dynamic="static",
+                    split=0,
+                    truncated=False,
+                ),
+                result_row(
+                    "flagged",
+                    ["should_have_abstained", "unsupported_answer"],
+                    domain="finance",
+                    question_type="multi-hop",
+                    dynamic="real-time",
+                    split=1,
+                    truncated=True,
+                ),
+            ],
+        }
+    )
+    markdown = render_crag_calibration_markdown(report)
+
+    assert report["publishable"] is False
+    assert report["summary"]["proxy_acceptance_rate"] == 0.5
+    assert report["summary"]["flagged_for_grounding_review_cases"] == 1
+    assert report["summary"]["truncated_context_rate"] == 0.5
+    assert report["by_group"]["domain"]["open"]["acceptance_rate"] == 1.0
+    assert report["by_group"]["split"]["0"]["acceptance_rate"] == 1.0
+    assert report["flagged_case_ids"] == ["flagged"]
+    assert "not failure-detection accuracy" in markdown
 
 
 def test_generic_external_workflow_builds_review_pending_bundle(tmp_path) -> None:

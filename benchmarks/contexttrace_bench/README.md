@@ -23,7 +23,9 @@ It documents label sources, generated-case limits, metrics, quality gates, and
 the public claim policy. Use [BASELINES.md](BASELINES.md) to collect publishable
 RAGAS, DeepEval, RAGChecker, local-judge, Phoenix, or TruLens comparison rows. The
 `public_holdout` track is documented in [DIAG150.md](DIAG150.md), and the
-required human audit pass is tracked in [AUDIT.md](AUDIT.md).
+required human audit pass is tracked in [AUDIT.md](AUDIT.md). The official CRAG
+download, normalization, comparability boundary, and review process are in
+[CRAG.md](CRAG.md).
 
 Run it from the repo root:
 

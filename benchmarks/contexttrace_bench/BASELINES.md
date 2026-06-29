@@ -18,6 +18,7 @@ case set and are scored by `run_contexttrace.py --candidate`.
 | TruLens | `adapt_candidate.py --preset trulens` | Adapter ready | No | Requires exported TruLens evaluator results. |
 | RAGTruth external validation | `ragtruth_adapter.py`, `ragtruth_review.py`, `ragtruth_workflow.py`, `run_contexttrace.py --case-pack` | 200-case stratified assisted workflow scored | No | Deterministic test-split sample scored with 88 GPT-5.1-assisted review rows; 75 rows have source evidence spans and 13 are intentionally source-less or source-supported taxonomy corrections. Requires independent human sign-off and calibration before publishable external-dataset claims. |
 | ARES NQ example external validation | `ares_adapter.py`, `external_case_pack_workflow.py`, `run_contexttrace.py --case-pack` | 200-row same-ID comparison scored | No | ContextTrace, RAGAS, and DeepEval were scored on 200 unique IDs from the official example. The checksummed bundle remains `review_pending`; independent label and source-evidence review is required. |
+| CRAG Task 1 v5 calibration | `crag_adapter.py`, `crag_calibration_report.py`, `external_case_pack_workflow.py` | 200-row official gold-answer grounding proxy scored | No | Pinned 739 MB archive, 200 unique stratified IDs, five web pages each, and a checksum-verified review bundle. Gold-answer correctness is not a grounding label; 105 flagged rows require independent review. |
 | Generic external case-pack validation | `external_case_pack.py`, `external_case_pack_workflow.py`, `run_contexttrace.py --case-pack` | Workflow ready | No | Normalizes CRAG/ARES-style JSON or JSONL exports with query, answer, contexts, and labels, then writes review/release bundles. Requires official export files, dataset documentation, and review/sign-off before publishable external claims. |
 
 Latest scored leaderboard:
@@ -209,6 +210,21 @@ disagreement is an ARES-positive row whose answer `one` is paired only with the
 title `The Bastard Executioner`. This remains a second external-dataset workflow
 proof, not a publishable row. Independent review of the ARES component-label
 mapping and source evidence is still required.
+
+Latest CRAG Task 1 v5 gold-answer grounding calibration:
+
+| Cases | Proxy Accepted | Flagged For Review | Contexts At Cap | False-Premise Accepted | Real-Time Accepted | Status |
+| ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| 200 | 95 (47.5%) | 105 (52.5%) | 511 / 1,000 | 0 / 25 | 4 / 15 | review_pending |
+
+This sample is drawn from 2,705 eligible rows in the pinned official archive,
+with all five domains, eight question types, four temporal classes, and both
+splits represented. Selected-ID SHA256 is
+`a782cf309506e2dff8f3b9c039fd2dc7bbab6f9cc3d98c9238693a1f64a9d80c`.
+The proxy asks whether ContextTrace accepts an official gold answer as grounded
+by the supplied web pages. It is not answer-correctness or verifier-accuracy
+ground truth; see [CRAG.md](CRAG.md). The generic harness macro-F1 must not be
+used as a CRAG comparison metric before independent grounding review.
 
 ## Full ContextTrace Run
 

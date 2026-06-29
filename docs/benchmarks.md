@@ -476,6 +476,36 @@ Use this for CRAG/ARES-style exports only after recording the upstream dataset
 version, frozen input checksum, field mapping, sampling metadata, and any
 independent review needed for labels or source evidence spans.
 
+The official CRAG Task 1/2 v5 archive has a dedicated streaming adapter:
+
+```bash
+python benchmarks/contexttrace_bench/crag_adapter.py \
+  --download-official \
+  --download-dir benchmarks/contexttrace_bench/out/crag_official \
+  --output benchmarks/contexttrace_bench/out/crag_official/crag_task1_v5_rows_200.jsonl \
+  --manifest-output benchmarks/contexttrace_bench/out/crag_official/crag_task1_v5_adapter_manifest_200.json \
+  --sample-size 200 \
+  --sample-seed 13 \
+  --stratify-by domain,question_type,static_or_dynamic,split
+```
+
+It pins the official repository commit and 739 MB archive SHA256, samples from
+compressed JSONL without unpacking the corpus, extracts visible text from five
+web pages per row, and writes a complete provenance manifest. CRAG gold answers
+are correctness references rather than grounding labels, so adapter output is
+marked `unreviewed_gold_answer_proxy` and remains review input. See
+[`CRAG.md`](../benchmarks/contexttrace_bench/CRAG.md) for metric comparability,
+license, limitations, and independent-review commands.
+
+Current calibration: the pinned archive has 2,705 eligible rows after one
+missing-value answer is excluded. The deterministic 200-row sample covers all
+five domains, eight question types, four temporal classes, and both splits.
+ContextTrace accepts 95 gold answers under the unreviewed proxy and flags 105
+for source-grounding review; 511/1,000 extracted contexts reach the disclosed
+12,000-character cap. These are review-load statistics, not failure accuracy.
+The selected-ID SHA256 is
+`a782cf309506e2dff8f3b9c039fd2dc7bbab6f9cc3d98c9238693a1f64a9d80c`.
+
 For a complete review/release bundle, prefer the workflow wrapper:
 
 ```bash

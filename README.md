@@ -235,6 +235,8 @@ Methodology and baseline runbooks live in
 and [`benchmarks/contexttrace_bench/BASELINES.md`](benchmarks/contexttrace_bench/BASELINES.md).
 The public holdout track is documented in
 [`benchmarks/contexttrace_bench/DIAG150.md`](benchmarks/contexttrace_bench/DIAG150.md).
+The pinned official CRAG calibration and review track is documented in
+[`benchmarks/contexttrace_bench/CRAG.md`](benchmarks/contexttrace_bench/CRAG.md).
 Human audit criteria for calling that split frozen are in
 [`benchmarks/contexttrace_bench/AUDIT.md`](benchmarks/contexttrace_bench/AUDIT.md).
 The Week 1 readiness checklist is in [`docs/sota-readiness.md`](docs/sota-readiness.md).

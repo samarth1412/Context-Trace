@@ -1,0 +1,246 @@
+{
+  "by_group": {
+    "domain": {
+      "finance": {
+        "acceptance_rate": 0.283,
+        "accepted": 17,
+        "cases": 60
+      },
+      "movie": {
+        "acceptance_rate": 0.405,
+        "accepted": 15,
+        "cases": 37
+      },
+      "music": {
+        "acceptance_rate": 0.61,
+        "accepted": 25,
+        "cases": 41
+      },
+      "open": {
+        "acceptance_rate": 0.619,
+        "accepted": 26,
+        "cases": 42
+      },
+      "sports": {
+        "acceptance_rate": 0.6,
+        "accepted": 12,
+        "cases": 20
+      }
+    },
+    "question_type": {
+      "aggregation": {
+        "acceptance_rate": 0.483,
+        "accepted": 14,
+        "cases": 29
+      },
+      "comparison": {
+        "acceptance_rate": 0.621,
+        "accepted": 18,
+        "cases": 29
+      },
+      "false_premise": {
+        "acceptance_rate": 0.0,
+        "accepted": 0,
+        "cases": 25
+      },
+      "multi-hop": {
+        "acceptance_rate": 0.5,
+        "accepted": 12,
+        "cases": 24
+      },
+      "post-processing": {
+        "acceptance_rate": 0.24,
+        "accepted": 6,
+        "cases": 25
+      },
+      "set": {
+        "acceptance_rate": 0.68,
+        "accepted": 17,
+        "cases": 25
+      },
+      "simple": {
+        "acceptance_rate": 0.609,
+        "accepted": 14,
+        "cases": 23
+      },
+      "simple_w_condition": {
+        "acceptance_rate": 0.7,
+        "accepted": 14,
+        "cases": 20
+      }
+    },
+    "split": {
+      "0": {
+        "acceptance_rate": 0.414,
+        "accepted": 41,
+        "cases": 99
+      },
+      "1": {
+        "acceptance_rate": 0.535,
+        "accepted": 54,
+        "cases": 101
+      }
+    },
+    "static_or_dynamic": {
+      "fast-changing": {
+        "acceptance_rate": 0.542,
+        "accepted": 26,
+        "cases": 48
+      },
+      "real-time": {
+        "acceptance_rate": 0.267,
+        "accepted": 4,
+        "cases": 15
+      },
+      "slow-changing": {
+        "acceptance_rate": 0.507,
+        "accepted": 34,
+        "cases": 67
+      },
+      "static": {
+        "acceptance_rate": 0.443,
+        "accepted": 31,
+        "cases": 70
+      }
+    }
+  },
+  "case_set": "external_case_pack",
+  "dataset": "CRAG-Task1-v5",
+  "flagged_case_ids": [
+    "crag_task1_v5_06511362_0742_4608_8fdf_d192d0d53743",
+    "crag_task1_v5_5aeb230a_cabb_48f6_8562_3670f05465ac",
+    "crag_task1_v5_ff7d4fd0_dccb_4d5c_8ad4_01c1187a324c",
+    "crag_task1_v5_35d9f1d3_9b51_4d69_9add_2adf20928b1b",
+    "crag_task1_v5_673bd952_6963_47e7_b1e7_53e3c6435643",
+    "crag_task1_v5_0b18bc03_a372_4860_a9e8_93e2e5b2b1a9",
+    "crag_task1_v5_787795e8_14c5_4f9a_8a8f_4a39030340e7",
+    "crag_task1_v5_b13a9d35_1637_4798_8744_1cf43249cee7",
+    "crag_task1_v5_a83450b2_fbb1_438e_8ad6_215232315500",
+    "crag_task1_v5_1e5a1b84_cf20_4654_b12e_1a6806beb8d3",
+    "crag_task1_v5_e09a9c97_9eb1_44a4_b7a3_74c53d2353a6",
+    "crag_task1_v5_1b1a3e0e_5725_4c5c_822c_3c5e06b1d16c",
+    "crag_task1_v5_e6b1f088_a55e_41bd_93ce_0576af64f007",
+    "crag_task1_v5_4767a282_a3a4_4025_81c3_b58c0bc541a0",
+    "crag_task1_v5_3a4206fb_5cd5_4db1_a330_9b4e5f3b073c",
+    "crag_task1_v5_10db2c9d_8d19_4690_b069_cf383ec9d8ed",
+    "crag_task1_v5_a0bb6352_121f_4c09_84be_01a8df60174a",
+    "crag_task1_v5_b4db3f46_a8f3_48bd_93c0_12ebf2ad8d43",
+    "crag_task1_v5_d8d0c89f_6720_465e_b0d5_a0f7aeb9a2af",
+    "crag_task1_v5_f2e5f13b_7f0a_4474_81e0_0aaa2391251d",
+    "crag_task1_v5_20cc4c72_2cdf_4cb8_a64b_6fbb1bad49de",
+    "crag_task1_v5_6fb8c5f9_9bea_44e0_b724_efb099459364",
+    "crag_task1_v5_06b29e05_348d_4ab1_aa68_9c6a6f62dc4b",
+    "crag_task1_v5_c7c019ce_6619_4181_931a_2c3e2d867ada",
+    "crag_task1_v5_94b8285c_0c08_428a_88ad_f9a08d73c8a6",
+    "crag_task1_v5_e6fe70a3_61b9_4b6f_b953_9ec181806b7d",
+    "crag_task1_v5_e22c611b_5dc8_4625_91f8_f6982b5dd4aa",
+    "crag_task1_v5_dd7eb731_8e8d_4ec2_83ab_2f58204468ff",
+    "crag_task1_v5_5aec8f2e_84c8_41ed_a213_98c11e83f688",
+    "crag_task1_v5_b0478535_e280_4360_b893_ad0c9a0c40a8",
+    "crag_task1_v5_24695d99_530d_4096_a1ea_2d9295dc06d3",
+    "crag_task1_v5_282305b3_25e5_4ce8_b13f_7c6cc51511e4",
+    "crag_task1_v5_461bb1ce_c717_4522_8ec0_cb20671c5bb1",
+    "crag_task1_v5_93aa82e4_1282_40d1_affd_bd61b696bbe9",
+    "crag_task1_v5_6156f3c8_81ad_4519_82e9_8ce44b1dbbe8",
+    "crag_task1_v5_2bd45683_a9a4_43fc_b437_d7b452d30822",
+    "crag_task1_v5_0435076b_77d6_4a36_b1cb_bf1ed5ac5910",
+    "crag_task1_v5_278fe73e_7fb1_4cac_a42b_969a5957dbd8",
+    "crag_task1_v5_e6af6789_0cba_4480_b25a_70904dbacbaf",
+    "crag_task1_v5_281b8c35_9b40_460d_88f7_ca6c1d61dee5",
+    "crag_task1_v5_58eda56d_233f_45d2_a1a1_1a9555ce58b3",
+    "crag_task1_v5_e9a7fc4a_aa56_418b_b1ac_70233124d3e4",
+    "crag_task1_v5_4c8a4d33_c11a_44aa_a4ce_9586c0f9c0d4",
+    "crag_task1_v5_d5f783d8_20a7_4909_9097_5b25bd7c3db4",
+    "crag_task1_v5_e07ba7d2_31c9_4add_bae4_469a17959c68",
+    "crag_task1_v5_8f723a0e_7904_4782_bbcf_b8bb8edfc74a",
+    "crag_task1_v5_4801cd23_c5bf_47a7_a3e5_a28376f3f173",
+    "crag_task1_v5_e742fef9_27ea_4aba_872d_e2df7a3e44c0",
+    "crag_task1_v5_758a8ddc_41d5_4175_a41c_c31fb1e1fc97",
+    "crag_task1_v5_820088ad_b169_4f03_97b9_ddd1fd221f86",
+    "crag_task1_v5_1033305a_2c5c_4ccb_9b9c_b8a7e9e43113",
+    "crag_task1_v5_64347468_1f36_432c_ac58_3c99fbbc6b71",
+    "crag_task1_v5_38eb2591_663b_40cf_9114_22622baf57c1",
+    "crag_task1_v5_061fac22_480f_4ff9_8a79_d76c5bbfe175",
+    "crag_task1_v5_5118ac04_0782_4e94_822d_01ef38f26209",
+    "crag_task1_v5_a430b727_d373_4842_bc79_3d58f68548f8",
+    "crag_task1_v5_3e13a713_25e0_4e25_b31e_bdf198d36ddb",
+    "crag_task1_v5_183c7979_cdef_48c7_9183_b08c5ec4900d",
+    "crag_task1_v5_ecc1e84c_b979_4479_8275_eaa62020643f",
+    "crag_task1_v5_dd7d7a5c_c934_45ce_be1a_67ce1c770a34",
+    "crag_task1_v5_72c035ef_196c_48e3_923f_459b9965608a",
+    "crag_task1_v5_2118bc07_be93_4f0c_a5b7_f6556b4c99bc",
+    "crag_task1_v5_6a743971_824e_40c3_a37a_9151b95791d1",
+    "crag_task1_v5_e6eba802_dce9_40d8_ad24_185cac455ab7",
+    "crag_task1_v5_ed41f128_b9ac_44d7_a190_b179d10bb91a",
+    "crag_task1_v5_3522e2e7_8b13_48f8_b141_a7620dff4864",
+    "crag_task1_v5_b2df77ab_0ae9_42a7_802b_29dbd32357f9",
+    "crag_task1_v5_c5cbaadf_effe_498e_88c0_460c1d817399",
+    "crag_task1_v5_95a3a0bc_7ae9_4c56_b9a5_db928d9be222",
+    "crag_task1_v5_17a351a7_20db_437e_88dd_e49935b17b31",
+    "crag_task1_v5_6cab38d7_3b41_4e18_8d6c_9c3dee73563a",
+    "crag_task1_v5_c5523b54_3fd4_4557_a2b2_a0c9e908f7a2",
+    "crag_task1_v5_55fcbdcc_62c2_4e33_a558_fb0cab44bda2",
+    "crag_task1_v5_359a998c_2d96_4f6e_9de5_26a5e143c2e4",
+    "crag_task1_v5_60084fd7_1889_4194_aab9_38ad898dfcf3",
+    "crag_task1_v5_8d6bf9c6_ee6a_4e67_9a8d_9cff95c1739d",
+    "crag_task1_v5_9f3ba4b4_f17d_4b7c_8c93_3f56d74e90ee",
+    "crag_task1_v5_aa127476_2ba7_4109_9a32_a07c3822d529",
+    "crag_task1_v5_6ed2f16e_b716_451a_bade_161576da4250",
+    "crag_task1_v5_0f000fec_9542_47c0_b1cf_368a0c42ad35",
+    "crag_task1_v5_5a4ab04b_910d_438b_91f2_f514b33e4eb1",
+    "crag_task1_v5_5886a4db_d131_43c4_bb42_4d164e50cbb6",
+    "crag_task1_v5_c5f6d097_614c_4c10_ae8c_19cbfd82d6ec",
+    "crag_task1_v5_d8cfdc82_9dd1_439b_98c4_04294dbc0209",
+    "crag_task1_v5_c87cc700_f79b_462d_938c_c5acf08ee426",
+    "crag_task1_v5_edd26a0f_be75_423a_bcb6_51ef66fdd4ea",
+    "crag_task1_v5_9f2a6a4b_1770_445e_8005_df4c9d58a6ba",
+    "crag_task1_v5_8f46c9d8_fd45_415d_aed6_96053a092c71",
+    "crag_task1_v5_e5ceb499_4b10_4cd3_baa9_76b940f476ae",
+    "crag_task1_v5_ad0871e9_657b_4d8a_8f8a_bcf1a5e9c066",
+    "crag_task1_v5_8592379b_e014_4004_bb0a_a79dc2867fcb",
+    "crag_task1_v5_f58fa34c_eb94_45fe_b1cf_2c9541869162",
+    "crag_task1_v5_1c3f10cb_91b6_4151_883d_37c5dadb5518",
+    "crag_task1_v5_1420e577_2bea_41b9_a6fa_49e62570ce75",
+    "crag_task1_v5_b857731e_51aa_46bd_b8d9_aedfb45e8bcb",
+    "crag_task1_v5_b10ffa4f_850a_47e5_9992_7b9bea3f985b",
+    "crag_task1_v5_53475c13_4df0_4084_8eca_f53316244e56",
+    "crag_task1_v5_f128b2c9_b4dd_4ff4_8baa_4493ac60caa6",
+    "crag_task1_v5_f2461f95_9ac1_458c_a75a_d3306c0c9f51",
+    "crag_task1_v5_b4d13708_95bf_4035_ac42_e4051f316d3b",
+    "crag_task1_v5_0381f083_8c0d_4d65_bbf4_08d57ebf1582",
+    "crag_task1_v5_016a9d25_be3b_4896_9714_585fab94e4fd",
+    "crag_task1_v5_9b02ae1d_e25a_49dc_9e6b_f21caf923e3a",
+    "crag_task1_v5_2ea865f1_f799_4be3_afa6_a7d4aa097ec9",
+    "crag_task1_v5_c34046db_727d_4633_b2aa_85ad0b579c4b"
+  ],
+  "label_scope": "unreviewed_gold_answer_proxy",
+  "limitations": [
+    "CRAG gold answers are correctness references, not independent labels that every answer claim is grounded by the supplied web pages.",
+    "Proxy acceptance means ContextTrace emitted only no_failure_detected for a gold answer; it is not failure-detection accuracy.",
+    "Flagged rows require independent source-grounding review before labels, spans, or public claims are valid.",
+    "Truncated page contexts can create legitimate grounding-review flags."
+  ],
+  "mode": "semantic",
+  "predicted_label_counts": {
+    "contradicted_answer": 17,
+    "insufficient_context": 24,
+    "no_failure_detected": 95,
+    "partial_support": 14,
+    "should_have_abstained": 91,
+    "unsupported_answer": 51
+  },
+  "publishable": false,
+  "report": "CRAG gold-answer grounding calibration",
+  "report_version": 1,
+  "source_result_sha256": "17b91b26f9366d9f6a5f95eaa66cc6f0f9a473d0e962d282e72bda5af900be16",
+  "summary": {
+    "cases": 200,
+    "contexts": 1000,
+    "flagged_for_grounding_review_cases": 105,
+    "flagged_for_grounding_review_rate": 0.525,
+    "proxy_acceptance_rate": 0.475,
+    "proxy_accepted_cases": 95,
+    "truncated_context_rate": 0.511,
+    "truncated_contexts": 511
+  }
+}

@@ -6,7 +6,7 @@ without making claims before the benchmark support exists.
 
 ## Reality Check: Not SOTA Yet
 
-As of June 26, 2026, ContextTrace has a credible benchmark and release-evidence
+As of June 28, 2026, ContextTrace has a credible benchmark and release-evidence
 pipeline, but it is not yet defensible as a broad state-of-the-art RAG
 evaluation product.
 
@@ -22,8 +22,8 @@ RAGTruth assisted run is still calibration-only:
 
 That is not SOTA. It is useful evidence that the harness, review workflow, and
 error-analysis path work, but the product still needs independent review,
-stronger claim-verdict calibration, and at least one more external dataset
-before public SOTA positioning is honest.
+stronger claim-verdict calibration, and reviewed grounding labels for its ARES
+and CRAG tracks before public SOTA positioning is honest.
 
 ## SOTA Gate
 
@@ -328,6 +328,16 @@ Completed in the repo:
   `gpt-4.1-mini` runs score RAGAS at `0.471` (95% CI `0.426-0.513`) and DeepEval
   at `0.388` (95% CI `0.342-0.431`) failure macro-F1. Their diagnostic fields
   are `N/A`. The checksummed bundle is `review_pending`, not publishable.
+- `crag_adapter.py` now pins and checksum-verifies the official CRAG Task 1/2
+  v5 archive, streams deterministic stratified samples from compressed JSONL,
+  extracts visible text from five web pages per row, and preserves domain,
+  question-type, temporal, split, query-time, and page provenance metadata.
+- The CRAG 200-row gold-answer grounding calibration covers all five domains,
+  eight question types, four temporal classes, and both splits. ContextTrace
+  proxy-accepts 95 rows and flags 105 for grounding review; 511/1,000 contexts
+  reach the disclosed extraction cap. `crag_calibration_report.py` keeps these
+  review-load statistics separate from failure accuracy. The bundle remains
+  `review_pending` and is not publishable.
 - The current semantic verifier now clears the 6-week plan's RAGTruth
   calibration thresholds for failure macro-F1, root-cause accuracy, dangerous
   false-green rate, and evidence-span overlap on the 200-case assisted sample.
@@ -353,6 +363,10 @@ Still pending for Week 1:
   mapping and source evidence, especially the positive row pairing answer `one`
   only with `The Bastard Executioner`. RAGChecker, CRAG, and ARES follow-up work
   is tracked in GitHub issues #3, #4, and #5.
+- Independently adjudicate the 105 CRAG grounding-review flags, with priority on
+  the 25 false-premise and 15 real-time rows. The current gold-answer proxy does
+  not prove whether a flag is a verifier miss, retrieval gap, page-truncation
+  effect, or a correct refusal to accept unsupported gold text.
 - Complete human audit sign-off for ContextTrace-Diag-150 before using
   frozen-split language. Use `audit_diag150.py` to generate the reviewer packet
   and validation artifacts before the independent review, then rerun it with
@@ -397,6 +411,11 @@ Current baseline status:
   workflow and same-ID comparison path but remains `review_pending` until the
   ARES-to-ContextTrace label mapping and source evidence are independently
   reviewed.
+- CRAG Task 1 v5 gold-answer grounding calibration: 200 official rows from
+  2,705 eligible cases, 95 proxy-accepted and 105 flagged for independent
+  grounding review. The sample covers all five domains, eight question types,
+  four temporal classes, and both splits; 511/1,000 contexts reach the 12,000
+  character extraction cap. This is a review-load result, not failure accuracy.
 - Ollama is reachable locally and `phi3:latest` completed a 5-case local-judge
   smoke run. The smoke took about 155 seconds, making a full 500-case run a
   multi-hour local job on this machine.

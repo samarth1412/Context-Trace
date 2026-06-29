@@ -13,6 +13,9 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
   initials.
 - Same-ID RAGAS and DeepEval calibration rows for the 200-case ARES NQ example
   sample, including confidence intervals and a checksummed review bundle.
+- A pinned, checksum-verified CRAG Task 1 v5 streaming adapter, deterministic
+  200-row calibration track, independent-review packet, and CRAG-specific proxy
+  acceptance report.
 
 ### Changed
 
@@ -22,6 +25,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
   rejecting duplicate case IDs after generic normalization.
 - Included machine-readable baseline scores in external release bundles whenever
   competitor candidates are evaluated.
+- Flattened supplied context provenance metadata during generic case-pack
+  normalization instead of nesting it under a second `metadata` key.
 
 ## [0.9.0] - 2026-06-05
 
