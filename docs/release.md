@@ -42,9 +42,11 @@ may appear in either archive.
 
 ## Publish
 
-The `Release Python SDK` GitHub Actions workflow uses PyPI trusted publishing.
-Run it manually with `publish_target=testpypi` for a release candidate, then
-with `publish_target=pypi` after verification.
+The `Release Python SDK` GitHub Actions workflow reads the project-scoped
+`PYPI_API_TOKEN` from the protected `pypi` environment. Run it manually with
+`publish_target=testpypi` for a release candidate, then with
+`publish_target=pypi` after verification. Issue #29 tracks migration to PyPI
+trusted publishing so the long-lived token can be retired.
 
 Tag the exact tested commit:
 
