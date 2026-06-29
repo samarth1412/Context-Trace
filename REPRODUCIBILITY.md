@@ -87,6 +87,11 @@ Follow `ARR_ANNOTATION_PROTOCOL.md`. Send only the packet to reviewers. Generate
 experiment outputs are ignored by Git; archive paper artifacts in controlled
 storage with hashes and publish only de-identified, license-compatible files.
 
+The diagnosis-actionability study is separate. Build its quick harness packet
+with `python benchmarks/contexttrace_bench/arr_actionability.py build --quick`
+and follow `ARR_ACTIONABILITY_PROTOCOL.md`. Send only
+`actionability_packet.json`; keep the condition key private.
+
 ## Determinism And Cost
 
 The frozen ablation seed is in `ARR_EXPERIMENTS.json`. Profiles must see identical

@@ -13,6 +13,13 @@ from benchmarks.contexttrace_bench.arr_annotation import (
     score_annotation_files,
     validate_blinded_packet,
 )
+from benchmarks.contexttrace_bench.arr_actionability import (
+    CONDITION_CORE,
+    CONDITION_EVIDENCE,
+    build_actionability_artifacts,
+    score_actionability_responses,
+    validate_actionability_packet,
+)
 from benchmarks.contexttrace_bench.reproduce_arr_tables import (
     _candidate_cost_reported,
     _write_quick_case_pack,
@@ -266,6 +273,215 @@ def test_candidate_cost_is_only_reported_when_present(tmp_path):
 
     assert _candidate_cost_reported(missing) is False
     assert _candidate_cost_reported(reported) is True
+
+
+def test_actionability_packet_is_balanced_deterministic_and_leak_free(tmp_path):
+    first = build_actionability_artifacts(
+        output_dir=tmp_path / "first",
+        case_set="public_holdout",
+        seed=23,
+        quick=True,
+    )
+    second = build_actionability_artifacts(
+        output_dir=tmp_path / "second",
+        case_set="public_holdout",
+        seed=23,
+        quick=True,
+    )
+    packet = _read(first["packet"])
+    key = _read(first["private_key"])
+    second_key = _read(second["private_key"])
+
+    assert packet["case_count"] == 12
+    assert packet["paper_result_eligible"] is False
+    assert validate_actionability_packet(packet)["status"] == "passed"
+    assert [case["original_id"] for case in key["cases"]] == [
+        case["original_id"] for case in second_key["cases"]
+    ]
+    assert [case["condition_by_option"] for case in key["cases"]] == [
+        case["condition_by_option"] for case in second_key["cases"]
+    ]
+    evidence_positions = [
+        next(option for option, condition in case["condition_by_option"].items() if condition == CONDITION_EVIDENCE)
+        for case in key["cases"]
+    ]
+    assert evidence_positions.count("option_1") == evidence_positions.count("option_2") == 6
+    public_text = json.dumps(packet)
+    assert "condition_by_option" not in public_text
+    assert "original_id" not in public_text
+    assert CONDITION_EVIDENCE not in public_text
+    assert CONDITION_CORE not in public_text
+    first_case = packet["cases"][0]
+    first_key = key["cases"][0]
+    evidence_option = next(
+        option for option, condition in first_key["condition_by_option"].items() if condition == CONDITION_EVIDENCE
+    )
+    core_option = next(
+        option for option, condition in first_key["condition_by_option"].items() if condition == CONDITION_CORE
+    )
+    assert "primary_root_cause" in first_case[evidence_option]["overall"]
+    assert "support_score" in first_case[core_option]["overall"]
+    assert "primary_root_cause" not in first_case[core_option]["overall"]
+
+
+def test_actionability_scoring_reports_paired_preference_and_disagreement(tmp_path):
+    key_path = tmp_path / "key.json"
+    key_cases = _actionability_key_cases(2)
+    key_path.write_text(
+        json.dumps({"dataset": "fixture", "quick": True, "cases": key_cases}),
+        encoding="utf-8",
+    )
+    reviewer_a = _write_actionability_response(
+        tmp_path / "reviewer-a.json",
+        key_cases,
+        reviewer="reviewer-a",
+        evidence_preferences={"ACT-0001", "ACT-0002"},
+    )
+    reviewer_b = _write_actionability_response(
+        tmp_path / "reviewer-b.json",
+        key_cases,
+        reviewer="reviewer-b",
+        evidence_preferences={"ACT-0001"},
+    )
+
+    report = score_actionability_responses(
+        key_path=key_path,
+        response_paths=[reviewer_a, reviewer_b],
+        output_dir=tmp_path / "scored",
+        bootstrap_samples=50,
+        bootstrap_seed=5,
+    )
+
+    first = report["reviewers"][0]
+    assert first["completed_cases"] == 2
+    assert first["evidence_wins"] == 2
+    assert first["evidence_preference"]["estimate"] == 1.0
+    assert first["paired_deltas"]["repair_actionable"]["estimate"] == 1.0
+    assert first["paired_deltas"]["repair_specificity"]["estimate"] == 4.0
+    assert first["mean_decision_time_seconds"] == 30.0
+    assert first["mean_confidence"] == 5.0
+    assert report["pairwise_preference_agreement"][0]["preference_exact_agreement"] == 0.5
+    assert report["disagreement_cases"] == 1
+    assert report["paper_result_eligible"] is False
+
+
+def test_actionability_result_requires_three_complete_independent_reviewers(tmp_path):
+    key_cases = _actionability_key_cases(40)
+    key_path = tmp_path / "key.json"
+    key_path.write_text(
+        json.dumps({"dataset": "fixture", "quick": False, "cases": key_cases}),
+        encoding="utf-8",
+    )
+    responses = [
+        _write_actionability_response(
+            tmp_path / ("reviewer-%s.json" % index),
+            key_cases,
+            reviewer="reviewer-%s" % index,
+            evidence_preferences={case["blind_id"] for case in key_cases},
+        )
+        for index in range(3)
+    ]
+
+    report = score_actionability_responses(
+        key_path=key_path,
+        response_paths=responses,
+        output_dir=tmp_path / "scored",
+        bootstrap_samples=20,
+    )
+
+    assert report["paper_result_eligible"] is True
+    assert all(report["eligibility_gates"].values())
+
+
+def test_actionability_result_rejects_duplicate_reviewer_ids(tmp_path):
+    import pytest
+
+    key_cases = _actionability_key_cases(1)
+    key_path = tmp_path / "key.json"
+    key_path.write_text(json.dumps({"quick": True, "cases": key_cases}), encoding="utf-8")
+    left = _write_actionability_response(
+        tmp_path / "left.json",
+        key_cases,
+        reviewer="same-reviewer",
+        evidence_preferences={"ACT-0001"},
+    )
+    right = _write_actionability_response(
+        tmp_path / "right.json",
+        key_cases,
+        reviewer="same-reviewer",
+        evidence_preferences={"ACT-0001"},
+    )
+
+    with pytest.raises(ValueError, match="distinct reviewer IDs"):
+        score_actionability_responses(
+            key_path=key_path,
+            response_paths=[left, right],
+            output_dir=tmp_path / "scored",
+        )
+
+
+def _actionability_key_cases(count: int) -> list[dict]:
+    return [
+        {
+            "blind_id": "ACT-%04d" % index,
+            "original_id": "case-%s" % index,
+            "condition_by_option": (
+                {"option_1": CONDITION_EVIDENCE, "option_2": CONDITION_CORE}
+                if index % 2
+                else {"option_1": CONDITION_CORE, "option_2": CONDITION_EVIDENCE}
+            ),
+        }
+        for index in range(1, count + 1)
+    ]
+
+
+def _write_actionability_response(
+    path: Path,
+    key_cases: list[dict],
+    *,
+    reviewer: str,
+    evidence_preferences: set[str],
+) -> Path:
+    cases = []
+    for key in key_cases:
+        evidence_option = next(
+            option for option, condition in key["condition_by_option"].items() if condition == CONDITION_EVIDENCE
+        )
+        core_option = next(
+            option for option, condition in key["condition_by_option"].items() if condition == CONDITION_CORE
+        )
+        review = {
+            evidence_option: {
+                "diagnosis_correct": True,
+                "repair_actionable": True,
+                "repair_specificity": 5,
+                "evidence_sufficiency": 5,
+            },
+            core_option: {
+                "diagnosis_correct": False,
+                "repair_actionable": False,
+                "repair_specificity": 1,
+                "evidence_sufficiency": 1,
+            },
+            "preferred_option": (
+                evidence_option if key["blind_id"] in evidence_preferences else core_option
+            ),
+            "decision_time_seconds": 30,
+            "confidence": 5,
+            "rationale": "fixture",
+        }
+        cases.append({"blind_id": key["blind_id"], "review": review})
+    path.write_text(
+        json.dumps(
+            {
+                "reviewer": reviewer,
+                "review_kind": "independent",
+                "cases": cases,
+            }
+        ),
+        encoding="utf-8",
+    )
+    return path
 
 
 def _read(path: str) -> dict:

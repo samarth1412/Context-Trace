@@ -136,6 +136,30 @@
       }
     ]
   },
+  "actionability": {
+    "status": "preregistered_before_human_results",
+    "preregistered_on": "2026-06-29",
+    "case_set": "public_holdout",
+    "failure_cases_only": true,
+    "sample_size": 40,
+    "quick_sample_size": 12,
+    "minimum_independent_reviewers": 3,
+    "seed": 20260629,
+    "counterbalanced_option_order": true,
+    "primary_outcome": "evidence_chain_preference_among_decisive_choices",
+    "primary_null_probability": 0.5,
+    "secondary_outcomes": [
+      "diagnosis_correct",
+      "repair_actionable",
+      "repair_specificity",
+      "evidence_sufficiency"
+    ],
+    "bootstrap_samples": 2000,
+    "contrast": {
+      "treatment": "full_evidence_chain_profile",
+      "control": "semantic_core_profile"
+    }
+  },
   "metrics": [
     "failure_label_macro_f1",
     "claim_verdict_macro_f1",

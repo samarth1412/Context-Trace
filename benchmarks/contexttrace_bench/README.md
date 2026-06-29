@@ -46,6 +46,14 @@ Generate all four ARR reviewer tables in one non-paper quick run:
 python benchmarks/contexttrace_bench/reproduce_arr_tables.py --quick
 ```
 
+The separate RQ4 human study is preregistered in
+[ARR_ACTIONABILITY_PROTOCOL.md](ARR_ACTIONABILITY_PROTOCOL.md). Build its
+balanced, condition-label-blinded quick packet with:
+
+```bash
+python benchmarks/contexttrace_bench/arr_actionability.py build --quick
+```
+
 Run it from the repo root:
 
 ```bash

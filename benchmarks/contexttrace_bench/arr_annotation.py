@@ -58,7 +58,7 @@ def build_blinded_annotation_artifacts(
     case_pack_path: str | Path | None = None,
     seed: int = 20260704,
 ) -> dict[str, str]:
-    records = _case_pack_records(case_pack_path) if case_pack_path else _builtin_records(case_set)
+    records = load_annotation_records(case_set=case_set, case_pack_path=case_pack_path)
     shuffled = list(records)
     random.Random(seed).shuffle(shuffled)
     packet_cases: list[dict[str, Any]] = []
@@ -119,6 +119,14 @@ def build_blinded_annotation_artifacts(
         "private_key": str(key_path),
         "validation": str(validation_path),
     }
+
+
+def load_annotation_records(
+    *,
+    case_set: str = "public_holdout",
+    case_pack_path: str | Path | None = None,
+) -> list[dict[str, Any]]:
+    return _case_pack_records(case_pack_path) if case_pack_path else _builtin_records(case_set)
 
 
 def validate_blinded_packet(packet: dict[str, Any]) -> dict[str, Any]:
