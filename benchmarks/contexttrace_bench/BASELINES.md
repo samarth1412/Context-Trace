@@ -210,9 +210,9 @@ after normalization, so each candidate has `200/200` matched coverage with zero
 runner errors. RAGAS and DeepEval report faithfulness only; unreported diagnostic
 fields remain `N/A`.
 
-The tracked release evidence is in
-`out/ares_nq_example/smoke200_compared_bundle/`, with raw RAGAS and DeepEval
-runner outputs in `out/ares_nq_example/baselines_unique/`.
+The generated release evidence is written to
+`out/ares_nq_example/smoke200_compared_bundle/`. Stable releases preserve the
+canonical bundle in the versioned benchmark evidence archive.
 
 The `1.000` span score applies to 89 auto-derived exact-answer spans and is not
 an independently labeled source-localization result. The sole ContextTrace

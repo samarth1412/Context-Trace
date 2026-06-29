@@ -6,6 +6,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-06-29
+
 ### Added
 
 - Regression coverage for bare numeric answers, exact short-answer evidence,
@@ -29,6 +31,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ### Changed
 
+- Declared the Python SDK and CLI stable at `1.0.0` after full package, API,
+  benchmark, build, and clean-install verification.
+- Removed generated runtime state and benchmark outputs from version control;
+  release evidence is now distributed as a checksummed GitHub release asset.
+- Consolidated duplicate integration and usage documentation, removed obsolete
+  migration notes and placeholder media, and replaced the historical readiness
+  diary with a concise evidence policy.
 - Improved exact evidence-span localization and prevented substring-only or
   unrelated-negation matches from changing short-answer verdicts.
 - Hardened external benchmark identity by disambiguating repeated ARES IDs and

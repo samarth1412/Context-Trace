@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping improve ContextTrace. The project is early, so the best contributions are focused, tested, and easy to review.
+Contributions should be focused, tested, and easy to review.
 
 ## Development Setup
 
@@ -10,13 +10,6 @@ Clone the repo and install the Python packages:
 cd ContextTrace
 python -m pip install -e "apps/api[test]"
 python -m pip install -e "packages/contexttrace[test]"
-```
-
-Install the web dependencies:
-
-```bash
-cd apps/web
-npm install
 ```
 
 Optional local infrastructure:
@@ -30,9 +23,14 @@ cp .env.example .env
 
 ```bash
 python -m pytest -q
-cd apps/web
-npm run typecheck
-npm run build
+python benchmarks/contexttrace_bench/run_contexttrace.py --mode semantic --case-set all --enforce-sota-gates
+bash scripts/release_check.sh
+```
+
+On Windows, run the release check with PowerShell:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/release_check.ps1
 ```
 
 ## Contribution Guidelines

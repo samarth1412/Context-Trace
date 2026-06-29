@@ -309,12 +309,12 @@ interval review, and fully reproducible competitor runs.
 - The public holdout has reached the 150-case ContextTrace-Diag-150 target, but
   it still needs human audit sign-off before being described as frozen.
 - Current benchmark artifacts are generated in `benchmarks/contexttrace_bench/out/`.
-  CI publishes complete run artifacts, while selected checksummed external
-  evidence bundles are committed for reproducible review.
+  CI publishes run artifacts, while stable releases attach selected checksummed
+  external evidence bundles as a versioned archive.
 
-## Week 1 Evidence Checklist
+## Release Evidence Checklist
 
-Before publishing a Week 1 credibility update, produce:
+Before publishing dataset-specific benchmark results, produce:
 
 - `contexttrace_bench_results.json`
 - `results.md`

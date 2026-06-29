@@ -174,7 +174,7 @@ test = ct.test_rag_endpoint(endpoint["id"], query="What is the refund policy?")
 run = ct.evaluate_rag_endpoint(endpoint["id"], eval_set_id="eval_set_id")
 ```
 
-See [Bring Your Own RAG API](bring-your-own-rag-api.md) for response mapping details.
+See [Bring Your Own RAG Endpoint](byo-rag-endpoint.md) for response mapping details.
 
 ## CI Evaluation CLI
 

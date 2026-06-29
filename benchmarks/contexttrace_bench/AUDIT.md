@@ -2,8 +2,8 @@
 
 Use this checklist before calling `public_holdout` a frozen public diagnostic
 split. The goal is to verify label quality, source grounding, and reproducible
-reporting, not to tune the verifier. The automated audit report is tracked in
-[AUDIT_REPORT.md](AUDIT_REPORT.md).
+reporting, not to tune the verifier. The automated audit command writes
+`out/public_holdout/AUDIT_REPORT.md` with the other generated artifacts.
 
 ## Case Source Audit
 

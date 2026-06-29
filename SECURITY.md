@@ -4,12 +4,13 @@ ContextTrace handles traces that may contain proprietary prompts, retrieved docu
 
 ## Supported Versions
 
-ContextTrace is pre-1.0. Security fixes are applied to the main branch and the latest published package when available.
+Security fixes are applied to the main branch and the latest stable package.
 
 | Version | Supported |
 | --- | --- |
 | `main` | Yes |
-| `< 0.1.0` | No |
+| `1.x` | Yes |
+| `< 1.0` | No |
 
 ## Reporting a Vulnerability
 
