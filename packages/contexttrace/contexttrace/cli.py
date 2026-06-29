@@ -29,6 +29,7 @@ from contexttrace.diagnose_report import DiagnoseReportGenerator
 from contexttrace.endpoint_eval import run_endpoint_eval
 from contexttrace.errors import ContextTraceError
 from contexttrace.regression import BENCHMARK_STRATEGIES, run_local_benchmark
+from contexttrace.repair import RepairInputError, build_repair_plan, write_repair_plan
 from contexttrace.report import ReportGenerator
 from contexttrace.storage import SQLiteTraceStore
 from contexttrace.thresholds import parse_thresholds, threshold_failures
@@ -439,6 +440,46 @@ def diagnose_command(
     for message in fail_messages:
         click.echo("Diagnosis failed: %s" % message, err=True)
     return 1 if fail_messages else 0
+
+
+@cli.command("repair")
+@click.argument("trace_json")
+@click.option("--corpus", "corpus_path", default=None, help="Optional local corpus directory or file for retrieval/corpus repair diagnosis.")
+@click.option("--out", default=None, help="Markdown repair-plan path. Defaults to .contexttrace/repairs/<trace>_repair.md.")
+@click.option("--json-out", default=None, help="Optional machine-readable repair-plan JSON path.")
+@click.option("--suite", "suite_path", default="contexttrace-suite.json", show_default=True, help="Regression suite path used in the post-fix command.")
+@click.option("--mode", default="semantic", show_default=True, type=click.Choice(BASIC_VERIFY_MODES), help="RAG evidence scoring mode.")
+def repair_command(
+    trace_json: str,
+    corpus_path: Optional[str],
+    out: Optional[str],
+    json_out: Optional[str],
+    suite_path: str,
+    mode: str,
+) -> int:
+    """Build an evidence-backed repair and regression plan for a failed trace."""
+
+    try:
+        plan = build_repair_plan(
+            trace_json,
+            corpus_path=corpus_path,
+            mode=mode,
+            suite_path=suite_path,
+        )
+        markdown_path = out or str(
+            Path(".contexttrace") / "repairs" / ("%s_repair.md" % Path(trace_json).stem)
+        )
+        outputs = write_repair_plan(plan, markdown_path=markdown_path, json_path=json_out)
+    except RepairInputError as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    click.echo("Status: %s" % plan["status"])
+    click.echo("Primary root cause: %s" % plan["primary_root_cause"])
+    click.echo("Repair actions: %s" % len(plan.get("actions") or []))
+    click.echo("Repair plan: %s" % outputs["markdown"])
+    if outputs.get("json"):
+        click.echo("Repair JSON: %s" % outputs["json"])
+    return 0
 
 
 @cli.command("qa")

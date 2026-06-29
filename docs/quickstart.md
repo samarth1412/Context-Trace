@@ -102,6 +102,19 @@ Localize the likely root cause:
 contexttrace diagnose traces/refund_trace.json --report --fail-on any_issue
 ```
 
+Turn the diagnosis into a repair plan, optionally auditing a broader local
+corpus to separate retrieval and corpus failures:
+
+```bash
+contexttrace repair traces/refund_trace.json \
+  --corpus docs/ \
+  --out .contexttrace/repairs/refund_repair.md \
+  --json-out .contexttrace/repairs/refund_repair.json
+```
+
+Apply the fix, recapture the trace, run the plan's verification commands, and
+only then add the passing trace to the must-pass regression suite.
+
 Agent traces can use the same command:
 
 ```bash

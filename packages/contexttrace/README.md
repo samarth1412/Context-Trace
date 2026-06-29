@@ -61,6 +61,7 @@ contexttrace inspect trace.json
 contexttrace verify trace.json --report
 contexttrace diagnose trace.json --report
 contexttrace qa trace.json --corpus docs/ --report
+contexttrace repair trace.json --corpus docs/ --out repair_plan.md
 ```
 
 ContextTrace classifies each claim as `supported`, `partially_supported`, `unsupported`, `unverifiable`, or `contradicted`, then exposes separate statuses for support, truth, source freshness, citation quality, and likely fix.
@@ -106,6 +107,23 @@ contexttrace diagnose examples/diagnose_agent_trace.json \
 
 pytest tests/contexttrace/test_calendar_agent_diagnosis.py
 ```
+
+## Build A Repair Plan
+
+`repair` turns diagnosis into an evidence-backed implementation plan. With a
+local corpus, it distinguishes retrieval miss, reranking failure, chunking
+issue, corpus gap, answer overreach, and stale or conflicting evidence:
+
+```bash
+contexttrace repair trace.json \
+  --corpus docs/ \
+  --out repair_plan.md \
+  --json-out repair_plan.json
+```
+
+The plan records the failed claim, retrieved and corpus evidence, prioritized
+root-cause-specific changes, and commands to verify the fix. Add only the
+recaptured passing trace to the generated must-pass regression command.
 
 ## Local Verification Modes
 

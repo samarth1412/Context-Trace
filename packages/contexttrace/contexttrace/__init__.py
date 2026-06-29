@@ -17,6 +17,7 @@ from contexttrace.integrations.langgraph import ContextTraceLangGraphTracer
 from contexttrace.integrations.llamaindex import ContextTraceLlamaIndexCallbackHandler
 from contexttrace.integrations.opentelemetry import OpenTelemetryExporter, export_contexttrace_trace
 from contexttrace.reliability import ReliabilityScore, ReliabilityScorer
+from contexttrace.repair import build_repair_plan, render_repair_plan, write_repair_plan
 from contexttrace.report import ReportGenerator
 
 __all__ = [
@@ -40,11 +41,14 @@ __all__ = [
     "capture_rag_trace",
     "capture_endpoint_trace",
     "capture_response_trace",
+    "build_repair_plan",
     "diagnose_payload",
     "diagnose_trace_file",
     "write_diagnosis_regression_test",
     "export_contexttrace_trace",
     "langchain_documents_to_contexts",
+    "render_repair_plan",
+    "write_repair_plan",
     "write_rag_trace",
     "__version__",
 ]

@@ -6,6 +6,11 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+### Added
+
+- `contexttrace repair` and SDK helpers for evidence-backed, root-cause-specific
+  repair plans, optional corpus audit, and post-fix regression commands.
+
 ## [1.0.0] - 2026-06-29
 
 ### Added
