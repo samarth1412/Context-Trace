@@ -68,6 +68,17 @@ python benchmarks/contexttrace_bench/arr_ablation.py \
   --output-dir benchmarks/contexttrace_bench/out/arr_ablations_paper
 ```
 
+After a complete full run, record its claim-safe checksummed snapshot with:
+
+```bash
+python benchmarks/contexttrace_bench/arr_snapshot.py
+```
+
+The snapshot command rejects quick runs, missing cases, incomplete baseline
+coverage, altered inputs, missing raw outputs, non-frozen bootstrap seeds,
+class-sensitive intervals with fewer than 95% valid draws, or any run incorrectly
+marked paper eligible. Ablation intervals must retain all 400 requested draws.
+
 For a frozen external pack, pass `--case-pack PATH` and use a new output
 directory. Preserve `ablation_results.json`, `ablation_table.md`,
 `experiment_matrix.json`, and every profile's raw outputs. The aggregate records

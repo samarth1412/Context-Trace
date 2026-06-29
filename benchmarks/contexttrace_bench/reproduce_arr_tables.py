@@ -275,7 +275,11 @@ def render_external_results_table(rows: list[dict[str, Any]], *, quick: bool) ->
         [
             "",
             "Review status is part of the result: assisted or pending review is calibration evidence, not independent validation.",
-            "Quick rows may use deterministic subsets and are never paper results.",
+            (
+                "Quick rows may use deterministic subsets and are never paper results."
+                if quick
+                else "These full estimates remain pre-review candidates until independent review gates pass."
+            ),
             "",
         ]
     )
@@ -422,7 +426,11 @@ def render_error_analysis_table(analysis: dict[str, Any], *, quick: bool) -> str
         [
             "",
             "Clusters are observed benchmark outcomes, not inferred causal explanations.",
-            "Quick-run counts are harness checks and must not be copied into the paper.",
+            (
+                "Quick-run counts are harness checks and must not be copied into the paper."
+                if quick
+                else "These full-run clusters remain pre-review findings until independent review gates pass."
+            ),
             "",
         ]
     )

@@ -201,7 +201,11 @@ def render_ablation_table(result: dict[str, Any]) -> str:
         [
             "",
             "Unsupported outputs are reported as `N/A`; they are never imputed from the full system.",
-            "Quick runs validate the harness and are not paper results.",
+            (
+                "Quick runs validate the harness and are not paper results."
+                if result.get("quick")
+                else "This full run is a pre-review paper candidate until independent dataset review passes."
+            ),
             "",
         ]
     )
