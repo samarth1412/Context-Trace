@@ -48,6 +48,7 @@ def run_ragas_baseline(
     candidate_inputs: list[dict[str, Any]],
     *,
     model: str | None = None,
+    max_output_tokens: int | None = None,
     include_context_recall: bool = False,
     use_response_as_reference: bool = False,
     faithfulness_threshold: float = 0.75,
@@ -83,6 +84,7 @@ def run_ragas_baseline(
             outputs[index] = _score_ragas_row(
                 row,
                 model=model,
+                max_output_tokens=max_output_tokens,
                 include_context_recall=include_context_recall,
                 use_response_as_reference=use_response_as_reference,
             )
@@ -96,6 +98,7 @@ def run_ragas_baseline(
                     _score_ragas_row,
                     row,
                     model=model,
+                    max_output_tokens=max_output_tokens,
                     include_context_recall=include_context_recall,
                     use_response_as_reference=use_response_as_reference,
                 ): index
@@ -113,7 +116,7 @@ def run_ragas_baseline(
     candidate = adapt_candidate_rows(
         rows,
         system="RAGAS",
-        version=model or "configured",
+        version=_evaluator_version(model, max_output_tokens=max_output_tokens),
         preset="ragas",
         faithfulness_threshold=faithfulness_threshold,
         context_recall_threshold=context_recall_threshold,
@@ -121,6 +124,7 @@ def run_ragas_baseline(
     return {
         "system": "RAGAS",
         "model": model or "",
+        "max_output_tokens": max_output_tokens,
         "rows": rows,
         "candidate": candidate,
         "notes": [
@@ -128,6 +132,13 @@ def run_ragas_baseline(
             "Context recall is emitted only when explicitly requested; ContextTrace-Bench does not ship hidden references to baseline runners.",
         ],
     }
+
+
+def _evaluator_version(model: str | None, *, max_output_tokens: int | None) -> str:
+    version = model or "configured"
+    if max_output_tokens is not None:
+        return "%s max_output_tokens=%s" % (version, max(1, int(max_output_tokens)))
+    return version
 
 
 def _completed_rows(rows: list[dict[str, Any] | None]) -> list[dict[str, Any]]:
@@ -138,6 +149,7 @@ def _score_ragas_row(
     row: dict[str, Any],
     *,
     model: str | None,
+    max_output_tokens: int | None,
     include_context_recall: bool,
     use_response_as_reference: bool,
 ) -> dict[str, Any]:
@@ -152,7 +164,7 @@ def _score_ragas_row(
             output["context_recall"] = 0.0
             output["reason"] = "No retrieved contexts were supplied."
         else:
-            scorer = _thread_local_scorer(model)
+            scorer = _thread_local_scorer(model, max_output_tokens=max_output_tokens)
             faithfulness, reason = _score_faithfulness(scorer, row)
             output["faithfulness"] = faithfulness
             output["reason"] = reason
@@ -164,17 +176,18 @@ def _score_ragas_row(
     return output
 
 
-def _thread_local_scorer(model: str | None) -> Any:
+def _thread_local_scorer(model: str | None, *, max_output_tokens: int | None = None) -> Any:
+    cache_key = (model, max_output_tokens)
     cached_model = getattr(_RAGAS_THREAD_LOCAL, "model", None)
     scorer = getattr(_RAGAS_THREAD_LOCAL, "scorer", None)
-    if scorer is None or cached_model != model:
-        scorer = _build_faithfulness_scorer(model)
-        _RAGAS_THREAD_LOCAL.model = model
+    if scorer is None or cached_model != cache_key:
+        scorer = _build_faithfulness_scorer(model, max_output_tokens=max_output_tokens)
+        _RAGAS_THREAD_LOCAL.model = cache_key
         _RAGAS_THREAD_LOCAL.scorer = scorer
     return scorer
 
 
-def _build_faithfulness_scorer(model: str | None) -> Any:
+def _build_faithfulness_scorer(model: str | None, *, max_output_tokens: int | None = None) -> Any:
     try:
         from ragas.metrics.collections import Faithfulness
     except ImportError:
@@ -191,15 +204,18 @@ def _build_faithfulness_scorer(model: str | None) -> Any:
         from openai import AsyncOpenAI
 
         client_kwargs: dict[str, str] = {}
+        model_kwargs: dict[str, int] = {}
+        if max_output_tokens is not None:
+            model_kwargs["max_tokens"] = max(1, int(max_output_tokens))
         api_key = os.environ.get("OPENAI_API_KEY") or os.environ.get("CONTEXTTRACE_JUDGE_API_KEY")
         if api_key:
             client_kwargs["api_key"] = api_key
         base_url = os.environ.get("OPENAI_BASE_URL") or os.environ.get("CONTEXTTRACE_JUDGE_BASE_URL")
         if base_url:
             client_kwargs["base_url"] = base_url
-        return Faithfulness(llm=llm_factory(model, client=AsyncOpenAI(**client_kwargs)))
+        return Faithfulness(llm=llm_factory(model, client=AsyncOpenAI(**client_kwargs), **model_kwargs))
     except TypeError:
-        return Faithfulness(llm=llm_factory(model))
+        return Faithfulness(llm=llm_factory(model, **model_kwargs))
 
 
 def _score_faithfulness(scorer: Any, row: dict[str, Any]) -> tuple[float | None, str]:
@@ -238,6 +254,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--raw-output", default=str(DEFAULT_RAW_OUTPUT), help="Raw RAGAS result JSON.")
     parser.add_argument("--candidate-output", default=str(DEFAULT_CANDIDATE_OUTPUT), help="Candidate JSON for leaderboard scoring.")
     parser.add_argument("--model", default=None, help="Optional RAGAS evaluator model name.")
+    parser.add_argument("--max-output-tokens", default=None, type=int, help="Optional evaluator output-token cap for long responses.")
     parser.add_argument("--limit", default=None, type=int, help="Limit cases for debugging.")
     parser.add_argument("--include-context-recall", action="store_true", help="Emit context_recall when references are available.")
     parser.add_argument("--use-response-as-reference", action="store_true", help="Use actual response as a proxy reference for context recall.")
@@ -260,7 +277,7 @@ def main(argv: list[str] | None = None) -> int:
         candidate = adapt_candidate_rows(
             rows,
             system="RAGAS",
-            version=args.model or "configured",
+            version=_evaluator_version(args.model, max_output_tokens=args.max_output_tokens),
             preset="ragas",
             faithfulness_threshold=args.faithfulness_threshold,
             context_recall_threshold=args.context_recall_threshold,
@@ -269,6 +286,7 @@ def main(argv: list[str] | None = None) -> int:
             {
                 "system": "RAGAS",
                 "model": args.model or "",
+                "max_output_tokens": args.max_output_tokens,
                 "rows": rows,
                 "notes": [
                     "Partial progress may be present while the runner is still active.",
@@ -283,6 +301,7 @@ def main(argv: list[str] | None = None) -> int:
     result = run_ragas_baseline(
         load_candidate_inputs(args.input, limit=args.limit),
         model=args.model,
+        max_output_tokens=args.max_output_tokens,
         include_context_recall=args.include_context_recall,
         use_response_as_reference=args.use_response_as_reference,
         faithfulness_threshold=args.faithfulness_threshold,

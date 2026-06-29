@@ -18,7 +18,8 @@ are useful for comparing local verifier modes and future baselines:
 - `cost_per_100_traces_usd`
 - `dangerous_false_green_rate`
 
-Read [METHODOLOGY.md](METHODOLOGY.md) before using results in launch material.
+Read [BENCHMARK_CARD.md](BENCHMARK_CARD.md) and [METHODOLOGY.md](METHODOLOGY.md)
+before using results in launch material.
 It documents label sources, generated-case limits, metrics, quality gates, and
 the public claim policy. Use [BASELINES.md](BASELINES.md) to collect publishable
 RAGAS, DeepEval, RAGChecker, local-judge, Phoenix, or TruLens comparison rows. The
@@ -130,7 +131,7 @@ the release bundle, and prints the final status. Add `--review-file ...` and
 `--require-human-signoff` after independent review to make frozen-split
 readiness a hard gate.
 
-Enforce the current SOTA readiness gates:
+Enforce the internal verifier regression gates:
 
 ```bash
 python benchmarks/contexttrace_bench/run_contexttrace.py \
@@ -147,6 +148,21 @@ Default gates:
 - `citation_error_f1 >= 0.90`
 - `evidence_span_overlap >= 0.75`
 - `dangerous_false_green_rate <= 0.01`
+
+These checks apply to one benchmark result. They do not verify independent
+review, external dataset count, release-bundle integrity, or same-ID competitor
+coverage. Run the fail-closed project-level evidence gate for broad-SOTA claim
+readiness:
+
+```bash
+python benchmarks/contexttrace_bench/sota_gate.py
+```
+
+The command validates bundle checksums, documented external tracks, the primary
+RAGTruth thresholds and confidence intervals, independent-review status,
+same-ID competitor coverage, and Diag-150 freeze status. It returns nonzero
+until every gate passes. Use `--allow-not-ready` only to refresh the JSON and
+Markdown status reports while blockers remain.
 
 ## Candidate Baselines
 
@@ -539,6 +555,25 @@ Scored RAGTruth bundles include `scored/ragtruth_error_analysis.json` and
 partial-support misses, contradicted-answer misses, source-span localization
 misses, and root-cause misses, then group them by task/source/model/label
 facets for calibration planning.
+
+Run the same-ID RAGAS faithfulness baseline on the release candidate inputs:
+
+```powershell
+& ".tmp-ragas-venv\Scripts\python.exe" benchmarks/contexttrace_bench/run_ragas.py `
+  --input benchmarks/contexttrace_bench/out/ragtruth_release_bundle/scored/candidate_inputs.jsonl `
+  --raw-output benchmarks/contexttrace_bench/out/ragtruth_release/ragas_raw_results.json `
+  --candidate-output benchmarks/contexttrace_bench/out/ragtruth_release/ragas_predictions.json `
+  --model gpt-4.1-mini `
+  --max-output-tokens 32768 `
+  --max-workers 4 `
+  --progress-every 10 `
+  --resume
+```
+
+The canonical row covers 200/200 IDs with zero errors and scores failure
+macro-F1 `0.152`. Root-cause, citation, and evidence-span diagnostics are `N/A`.
+The release workflow auto-discovers `ragas_predictions.json` in its output
+directory and includes `baseline_results.json` in the bundle.
 
 Score the adapted pack with the same benchmark reports:
 

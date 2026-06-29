@@ -60,6 +60,7 @@ deterministic generated variants derived from those traces.
 Before using these results publicly, read:
 
 - [ContextTrace-Bench methodology](../benchmarks/contexttrace_bench/METHODOLOGY.md)
+- [Public benchmark card](../benchmarks/contexttrace_bench/BENCHMARK_CARD.md)
 - [Baseline comparison runbook](../benchmarks/contexttrace_bench/BASELINES.md)
 - [ContextTrace-Diag-150 tracker](../benchmarks/contexttrace_bench/DIAG150.md)
 - [ContextTrace-Diag-150 audit checklist](../benchmarks/contexttrace_bench/AUDIT.md)
@@ -68,6 +69,18 @@ Before using these results publicly, read:
 The benchmark is a reproducible verifier-readiness benchmark. Passing its gates
 means the current verifier did not regress on the current labeled cases; it is
 not a general RAG-system state-of-the-art claim by itself.
+
+The internal result gates and broad claim gate are separate. Run the
+project-level, fail-closed evidence gate to validate external bundle checksums,
+independent review, thresholds, same-ID competitor rows, and Diag-150 sign-off:
+
+```bash
+python benchmarks/contexttrace_bench/sota_gate.py
+```
+
+Use `--allow-not-ready` to write the current reports without treating open gates
+as success. The generated status is documented in
+[SOTA_STATUS.md](../benchmarks/contexttrace_bench/SOTA_STATUS.md).
 
 ```bash
 python benchmarks/contexttrace_bench/run_contexttrace.py \
@@ -333,6 +346,12 @@ When scoring completes, the release bundle also includes
 source dataset, model, RAGTruth label type, expected label, root-cause
 confusion, and span-localization quality so calibration work can target the
 largest blockers before any publishable external-validation claim.
+
+The canonical 200-case release also includes a full same-ID RAGAS `0.4.2` row
+using `gpt-4.1-mini`. It completed with zero row errors and scores failure
+macro-F1 `0.152`; unsupported diagnostic fields are `N/A`. For long responses,
+run `run_ragas.py` with `--max-output-tokens 32768` and `--resume` so only
+output-cap failures are retried.
 
 Score the adapted case pack through the same report path:
 

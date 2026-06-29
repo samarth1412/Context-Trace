@@ -230,6 +230,8 @@ builds a ContextTrace-style case pack from RAGTruth `response.jsonl` and
 human evidence-span review queue. Treat unreviewed output as review input until
 answer-side hallucination spans are manually mapped to source evidence spans.
 
+The public benchmark card is
+[`benchmarks/contexttrace_bench/BENCHMARK_CARD.md`](benchmarks/contexttrace_bench/BENCHMARK_CARD.md).
 Methodology and baseline runbooks live in
 [`benchmarks/contexttrace_bench/METHODOLOGY.md`](benchmarks/contexttrace_bench/METHODOLOGY.md)
 and [`benchmarks/contexttrace_bench/BASELINES.md`](benchmarks/contexttrace_bench/BASELINES.md).
@@ -240,6 +242,9 @@ The pinned official CRAG calibration and review track is documented in
 Human audit criteria for calling that split frozen are in
 [`benchmarks/contexttrace_bench/AUDIT.md`](benchmarks/contexttrace_bench/AUDIT.md).
 The Week 1 readiness checklist is in [`docs/sota-readiness.md`](docs/sota-readiness.md).
+Run `python benchmarks/contexttrace_bench/sota_gate.py` for the fail-closed,
+machine-readable broad-claim gate; the current result is in
+[`benchmarks/contexttrace_bench/SOTA_STATUS.md`](benchmarks/contexttrace_bench/SOTA_STATUS.md).
 Treat the default 500-case run as verifier-readiness evidence; publish full
 competitor rows and independent external dataset results before making broad
 state-of-the-art claims.

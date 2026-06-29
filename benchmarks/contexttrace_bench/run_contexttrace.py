@@ -150,7 +150,7 @@ def run_contexttrace_benchmark(
         "confidence_intervals": confidence_intervals,
         "per_label": verifier_like["per_label"],
         "rows": rows,
-        "labels_path": str(labels_path),
+        "labels_path": _portable_path(labels_path),
         "verifier_result": {
             key: value
             for key, value in verifier_result.items()
@@ -200,7 +200,7 @@ def run_contexttrace_case_pack(
         "mode": mode,
         "case_set": "external_case_pack",
         "case_source": _case_pack_source(payload, case_pack_path),
-        "case_pack_path": str(case_pack_path),
+        "case_pack_path": _portable_path(case_pack_path),
         "case_pack_dataset": str(payload.get("dataset") or ""),
         "case_pack_adapter": str(payload.get("adapter") or ""),
         "base_cases": len(base_rows),
@@ -211,7 +211,7 @@ def run_contexttrace_case_pack(
         "per_label": verifier_like["per_label"],
         "limitations": _case_pack_limitations(payload),
         "rows": rows,
-        "labels_path": str(labels_path),
+        "labels_path": _portable_path(labels_path),
         "verifier_result": {
             "mode": mode,
             "case_set": "external_case_pack",
@@ -1330,6 +1330,14 @@ def _load_case_pack(path: str | Path) -> dict[str, Any]:
     if not isinstance(payload, dict):
         raise ValueError("ContextTrace case pack must be a JSON object.")
     return payload
+
+
+def _portable_path(path: str | Path) -> str:
+    resolved = Path(path).resolve()
+    try:
+        return resolved.relative_to(REPO_ROOT).as_posix()
+    except ValueError:
+        return str(resolved)
 
 
 def _case_pack_source(payload: dict[str, Any], path: str | Path) -> str:

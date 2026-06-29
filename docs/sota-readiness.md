@@ -344,6 +344,21 @@ Completed in the repo:
   they agree on 150/200 (`75.0%`, kappa `0.4982`). This closes the engineering
   baseline gap for the CRAG calibration, but independent grounding review is
   still required before either system can be assessed for accuracy.
+- The two assisted RAGTruth taxonomy corrections are now stored in the source
+  review JSONL rather than only in a derived case pack. A deterministic release
+  rerun reproduces failure macro-F1 `0.955`, root-cause accuracy `0.955`, span
+  overlap `0.786`, and dangerous false-green rate `0.000`; all 16 canonical
+  bundle artifact checksums validate.
+- `sota_gate.py` now evaluates the broad-claim requirements directly from
+  checksummed release manifests. It separates internal regression gates from
+  external evidence readiness and fails closed on incomplete independent review,
+  missing same-ID primary competitor rows, or an unsigned Diag-150 bundle. The
+  current evidence passes 8 of 10 gates; see `SOTA_STATUS.md`.
+- RAGAS `0.4.2` with `gpt-4.1-mini` now covers all 200 primary RAGTruth IDs with
+  zero row errors. It scores failure macro-F1 `0.152` and reports unsupported
+  root-cause, citation, and source-span diagnostics as `N/A`. The canonical
+  RAGTruth bundle includes the candidate predictions and machine-readable
+  baseline scores, closing the same-ID primary competitor gate.
 - The current semantic verifier now clears the 6-week plan's RAGTruth
   calibration thresholds for failure macro-F1, root-cause accuracy, dangerous
   false-green rate, and evidence-span overlap on the 200-case assisted sample.
@@ -351,13 +366,8 @@ Completed in the repo:
   claim until independent sign-off and broader external validation are done.
 - Documentation links now point reviewers to methodology and baseline status.
 
-Still pending for Week 1:
+Remaining broad-claim gates:
 
-- Broaden judge baselines beyond the current public-holdout and RAGTruth smoke
-  runs if local runtime is acceptable.
-- Use the RAGTruth error-analysis report to prioritize the remaining taxonomy
-  mapping, partial-support-vs-contradiction handling, and claim-verdict
-  calibration misses before rerunning external validation.
 - Have an independent reviewer complete
   `benchmarks/contexttrace_bench/out/ragtruth_independent_signoff/ragtruth_independent_review_template.jsonl`
   before using the 200-case RAGTruth source-evidence mappings for publishable

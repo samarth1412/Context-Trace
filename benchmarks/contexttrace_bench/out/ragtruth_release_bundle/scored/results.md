@@ -10,22 +10,22 @@
 | Metric | Value |
 | --- | ---: |
 | `cases` | 200 |
-| `failure_label_exact_match_rate` | 0.445 |
-| `failure_label_macro_f1` | 0.343 |
-| `claim_verdict_macro_f1` | 0.143 |
+| `failure_label_exact_match_rate` | 0.955 |
+| `failure_label_macro_f1` | 0.955 |
+| `claim_verdict_macro_f1` | 0.337 |
 | `claim_verdict_match_rate` | 0.0 |
-| `root_cause_accuracy` | 0.45 |
+| `root_cause_accuracy` | 0.955 |
 | `citation_error_precision` | 1.0 |
 | `citation_error_recall` | 1.0 |
 | `citation_error_f1` | 1.0 |
-| `evidence_span_overlap` | 0.551 |
+| `evidence_span_overlap` | 0.786 |
 | `root_cause_reported_cases` | 200 |
 | `citation_status_reported_cases` | 200 |
-| `evidence_span_reported_cases` | 76 |
-| `latency_p50_ms` | 129.285 |
-| `latency_p95_ms` | 467.435 |
+| `evidence_span_reported_cases` | 75 |
+| `latency_p50_ms` | 790.849 |
+| `latency_p95_ms` | 2442.996 |
 | `cost_per_100_traces_usd` | 0.0 |
-| `dangerous_false_green_rate` | 0.005 |
+| `dangerous_false_green_rate` | 0.0 |
 
 ## Limitations
 
@@ -41,146 +41,47 @@
 
 | Metric | Estimate | 95% CI | Resamples |
 | --- | ---: | ---: | ---: |
-| `failure_label_macro_f1` | 0.343 | 0.281 to 0.501 | 100 |
-| `claim_verdict_macro_f1` | 0.143 | 0.109 to 0.733 | 100 |
-| `root_cause_accuracy` | 0.45 | 0.37 to 0.515 | 100 |
+| `failure_label_macro_f1` | 0.955 | 0.922 to 0.977 | 100 |
+| `claim_verdict_macro_f1` | 0.337 | 0.2 to 0.733 | 100 |
+| `root_cause_accuracy` | 0.955 | 0.925 to 0.98 | 100 |
 | `citation_error_f1` | 1.0 | 1.0 to 1.0 | 100 |
-| `evidence_span_overlap` | 0.551 | 0.48 to 0.63 | 100 |
-| `dangerous_false_green_rate` | 0.005 | 0.0 to 0.015 | 100 |
+| `evidence_span_overlap` | 0.786 | 0.728 to 0.837 | 100 |
+| `dangerous_false_green_rate` | 0.0 | 0.0 to 0.0 | 100 |
 
 ## Failure Label Breakdown
 
 | Label | Precision | Recall | F1 | TP | FP | FN |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| `contradicted_answer` | 0.485 | 0.744 | 0.587 | 32 | 34 | 11 |
-| `no_failure_detected` | 0.963 | 0.232 | 0.374 | 26 | 1 | 86 |
-| `partial_support` | 0.29 | 0.705 | 0.411 | 31 | 76 | 13 |
-| `unsupported` | 1.0 | 0.0 | 0.0 | 0 | 0 | 1 |
+| `contradicted_answer` | 0.911 | 0.953 | 0.932 | 41 | 4 | 2 |
+| `no_failure_detected` | 1.0 | 0.965 | 0.982 | 110 | 0 | 4 |
+| `partial_support` | 0.886 | 0.929 | 0.907 | 39 | 5 | 3 |
+| `unsupported` | 1.0 | 1.0 | 1.0 | 1 | 0 | 0 |
 
 ## SOTA Readiness Gates
 
 | Metric | Gate | Value | Status |
 | --- | ---: | ---: | --- |
-| `failure_label_macro_f1` | `>= 0.95` | 0.343 | fail |
-| `claim_verdict_macro_f1` | `>= 0.95` | 0.143 | fail |
-| `root_cause_accuracy` | `>= 0.9` | 0.45 | fail |
+| `failure_label_macro_f1` | `>= 0.95` | 0.955 | pass |
+| `claim_verdict_macro_f1` | `>= 0.95` | 0.337 | fail |
+| `root_cause_accuracy` | `>= 0.9` | 0.955 | pass |
 | `citation_error_f1` | `>= 0.9` | 1.0 | pass |
-| `evidence_span_overlap` | `>= 0.75` | 0.551 | fail |
-| `dangerous_false_green_rate` | `<= 0.01` | 0.005 | pass |
+| `evidence_span_overlap` | `>= 0.75` | 0.786 | pass |
+| `dangerous_false_green_rate` | `<= 0.01` | 0.0 | pass |
 
 ## Misses
 
 | Case | Expected | Predicted | Root Cause |
 | --- | --- | --- | --- |
-| `ragtruth_58` | `partial_support` | `contradicted_answer` | `answer_overreach -> conflicting_contexts` |
-| `ragtruth_59` | `no_failure_detected` | `contradicted_answer` | `no_failure_detected -> conflicting_contexts` |
+| `ragtruth_121` | `contradicted_answer` | `partial_support` | `conflicting_contexts -> answer_overreach` |
 | `ragtruth_123` | `partial_support` | `partial_support` | `answer_overreach -> answer_overreach` |
-| `ragtruth_334` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_351` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_355` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_543` | `contradicted_answer` | `partial_support` | `conflicting_contexts -> answer_overreach` |
-| `ragtruth_586` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
 | `ragtruth_730` | `partial_support` | `contradicted_answer` | `answer_overreach -> conflicting_contexts` |
-| `ragtruth_878` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_906` | `partial_support` | `contradicted_answer` | `answer_overreach -> conflicting_contexts` |
-| `ragtruth_924` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_1153` | `no_failure_detected` | `contradicted_answer` | `no_failure_detected -> conflicting_contexts` |
-| `ragtruth_1355` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_1513` | `partial_support` | `contradicted_answer` | `answer_overreach -> conflicting_contexts` |
-| `ragtruth_1566` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_1648` | `no_failure_detected` | `contradicted_answer` | `no_failure_detected -> conflicting_contexts` |
-| `ragtruth_1678` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_1683` | `no_failure_detected` | `contradicted_answer` | `no_failure_detected -> conflicting_contexts` |
-| `ragtruth_1698` | `contradicted_answer` | `partial_support` | `conflicting_contexts -> answer_overreach` |
-| `ragtruth_1990` | `contradicted_answer` | `partial_support` | `conflicting_contexts -> answer_overreach` |
-| `ragtruth_2136` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_2359` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_2469` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_2653` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_2675` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_2892` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_3611` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_3638` | `partial_support` | `contradicted_answer` | `answer_overreach -> conflicting_contexts` |
-| `ragtruth_3639` | `contradicted_answer` | `partial_support` | `conflicting_contexts -> answer_overreach` |
-| `ragtruth_3770` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_3771` | `no_failure_detected` | `contradicted_answer` | `no_failure_detected -> conflicting_contexts` |
+| `ragtruth_1513` | `partial_support` | `partial_support` | `answer_overreach -> answer_overreach` |
 | `ragtruth_4211` | `contradicted_answer` | `partial_support` | `conflicting_contexts -> answer_overreach` |
-| `ragtruth_4263` | `contradicted_answer` | `partial_support` | `conflicting_contexts -> answer_overreach` |
-| `ragtruth_4348` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_4524` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_4527` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_4777` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_4955` | `no_failure_detected` | `contradicted_answer` | `no_failure_detected -> conflicting_contexts` |
-| `ragtruth_5201` | `no_failure_detected` | `contradicted_answer` | `no_failure_detected -> conflicting_contexts` |
-| `ragtruth_5274` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_5416` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_5417` | `unsupported` | `partial_support` | `answer_overreach -> answer_overreach` |
-| `ragtruth_5482` | `contradicted_answer` | `partial_support` | `conflicting_contexts -> answer_overreach` |
-| `ragtruth_5829` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_5850` | `no_failure_detected` | `contradicted_answer` | `no_failure_detected -> conflicting_contexts` |
-| `ragtruth_6250` | `partial_support` | `contradicted_answer` | `answer_overreach -> conflicting_contexts` |
-| `ragtruth_6913` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_6996` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_7008` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_7019` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_7052` | `contradicted_answer` | `partial_support` | `conflicting_contexts -> answer_overreach` |
+| `ragtruth_5417` | `unsupported` | `unsupported` | `answer_overreach -> answer_overreach` |
 | `ragtruth_7236` | `partial_support` | `contradicted_answer` | `answer_overreach -> conflicting_contexts` |
-| `ragtruth_7279` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_7281` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_8557` | `no_failure_detected` | `contradicted_answer` | `no_failure_detected -> conflicting_contexts` |
-| `ragtruth_8561` | `partial_support` | `contradicted_answer` | `answer_overreach -> conflicting_contexts` |
-| `ragtruth_8664` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_8778` | `no_failure_detected` | `contradicted_answer` | `no_failure_detected -> conflicting_contexts` |
-| `ragtruth_9212` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
 | `ragtruth_9604` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_9679` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_9775` | `partial_support` | `contradicted_answer` | `answer_overreach -> conflicting_contexts` |
-| `ragtruth_9937` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
+| `ragtruth_9775` | `partial_support` | `partial_support` | `answer_overreach -> answer_overreach` |
 | `ragtruth_10072` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_10111` | `partial_support` | `contradicted_answer` | `answer_overreach -> conflicting_contexts` |
-| `ragtruth_10352` | `no_failure_detected` | `contradicted_answer` | `no_failure_detected -> conflicting_contexts` |
-| `ragtruth_10463` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_10543` | `no_failure_detected` | `contradicted_answer` | `no_failure_detected -> conflicting_contexts` |
-| `ragtruth_10547` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_10819` | `no_failure_detected` | `contradicted_answer` | `no_failure_detected -> conflicting_contexts` |
-| `ragtruth_11286` | `no_failure_detected` | `contradicted_answer` | `no_failure_detected -> conflicting_contexts` |
-| `ragtruth_11520` | `no_failure_detected` | `contradicted_answer` | `no_failure_detected -> conflicting_contexts` |
-| `ragtruth_11908` | `partial_support` | `contradicted_answer` | `answer_overreach -> conflicting_contexts` |
-| `ragtruth_12240` | `no_failure_detected` | `contradicted_answer` | `no_failure_detected -> conflicting_contexts` |
-| `ragtruth_12298` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_12435` | `contradicted_answer` | `partial_support` | `conflicting_contexts -> answer_overreach` |
-| `ragtruth_12469` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_12690` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_12691` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_12917` | `contradicted_answer` | `partial_support` | `conflicting_contexts -> answer_overreach` |
-| `ragtruth_13073` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_13159` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_13233` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_13309` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_13430` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_13445` | `no_failure_detected` | `contradicted_answer` | `no_failure_detected -> conflicting_contexts` |
-| `ragtruth_13563` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_13720` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_13916` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_14005` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
 | `ragtruth_14007` | `partial_support` | `contradicted_answer` | `answer_overreach -> conflicting_contexts` |
-| `ragtruth_14323` | `contradicted_answer` | `partial_support` | `conflicting_contexts -> answer_overreach` |
-| `ragtruth_14327` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_14380` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_14508` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_14805` | `no_failure_detected` | `contradicted_answer` | `no_failure_detected -> conflicting_contexts` |
-| `ragtruth_15179` | `no_failure_detected` | `contradicted_answer` | `no_failure_detected -> conflicting_contexts` |
-| `ragtruth_15272` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_15467` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_15628` | `no_failure_detected` | `contradicted_answer` | `no_failure_detected -> conflicting_contexts` |
-| `ragtruth_15718` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_15780` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_15786` | `no_failure_detected` | `contradicted_answer` | `no_failure_detected -> conflicting_contexts` |
-| `ragtruth_15788` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
 | `ragtruth_15904` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
 | `ragtruth_15933` | `no_failure_detected` | `contradicted_answer` | `no_failure_detected -> conflicting_contexts` |
-| `ragtruth_15969` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_16056` | `partial_support` | `no_failure_detected` | `answer_overreach -> no_failure_detected` |
-| `ragtruth_16057` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_16119` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |
-| `ragtruth_16565` | `no_failure_detected` | `partial_support` | `no_failure_detected -> answer_overreach` |

@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import bz2
+import hashlib
 import json
 from pathlib import Path
 
 import pytest
 
+from benchmarks.contexttrace_bench import run_ragas as run_ragas_module
 from benchmarks.contexttrace_bench.adapt_candidate import adapt_candidate_rows
 from benchmarks.contexttrace_bench.ares_adapter import (
     adapt_ares_rows,
@@ -93,6 +95,7 @@ from benchmarks.contexttrace_bench.run_ragchecker import (
     resume_row_matches_input,
     validate_resume_metadata,
 )
+from benchmarks.contexttrace_bench.sota_gate import ExternalTrack, build_sota_readiness_report
 from benchmarks.contexttrace_bench.run_local_judge import _judge_prompt, _normalize_judge_output
 
 
@@ -101,6 +104,7 @@ def test_contexttrace_bench_reports_sota_metrics() -> None:
     summary = result["summary"]
 
     assert result["benchmark"] == "ContextTrace-Bench"
+    assert result["labels_path"] == "benchmarks/contexttrace_bench/labels.json"
     assert result["base_cases"] >= 50
     assert result["generated_cases"] >= 400
     assert summary["cases"] >= 500
@@ -878,10 +882,33 @@ def test_baseline_runners_build_external_eval_rows(tmp_path) -> None:
             ],
         }
     ]
-
     raw_path = write_json({"rows": ragas_rows}, tmp_path / "raw.json")
     assert json.loads((tmp_path / "raw.json").read_text(encoding="utf-8"))["rows"][0]["id"] == "case-1"
     assert raw_path.endswith("raw.json")
+
+
+def test_ragas_scorer_cache_keys_explicit_output_token_cap(monkeypatch) -> None:
+    calls = []
+
+    assert (
+        run_ragas_module._evaluator_version("gpt-4.1-mini", max_output_tokens=32768)
+        == "gpt-4.1-mini max_output_tokens=32768"
+    )
+
+    def fake_build(model, *, max_output_tokens=None):
+        calls.append((model, max_output_tokens))
+        return object()
+
+    monkeypatch.setattr(run_ragas_module, "_build_faithfulness_scorer", fake_build)
+    monkeypatch.delattr(run_ragas_module._RAGAS_THREAD_LOCAL, "model", raising=False)
+    monkeypatch.delattr(run_ragas_module._RAGAS_THREAD_LOCAL, "scorer", raising=False)
+
+    first = run_ragas_module._thread_local_scorer("gpt-4.1-mini", max_output_tokens=32768)
+    assert run_ragas_module._thread_local_scorer("gpt-4.1-mini", max_output_tokens=32768) is first
+    second = run_ragas_module._thread_local_scorer("gpt-4.1-mini", max_output_tokens=16384)
+
+    assert second is not first
+    assert calls == [("gpt-4.1-mini", 32768), ("gpt-4.1-mini", 16384)]
 
 
 def test_ragtruth_adapter_builds_contexttrace_case_pack() -> None:
@@ -2324,6 +2351,7 @@ def test_ragtruth_release_workflow_scores_reviewed_calibration_bundle(tmp_path) 
     response_path = tmp_path / "response.jsonl"
     source_path = tmp_path / "source_info.jsonl"
     review_path = tmp_path / "review.jsonl"
+    candidate_path = tmp_path / "candidate.json"
     response_path.write_text(
         "\n".join(
             json.dumps(row)
@@ -2387,6 +2415,19 @@ def test_ragtruth_release_workflow_scores_reviewed_calibration_bundle(tmp_path) 
         + "\n",
         encoding="utf-8",
     )
+    candidate_path.write_text(
+        json.dumps(
+            {
+                "system": "fixture-baseline",
+                "version": "1",
+                "predictions": [
+                    {"id": "ragtruth_supported", "predicted": ["no_failure_detected"]},
+                    {"id": "ragtruth_overreach", "predicted": ["partial_support"]},
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
 
     summary = run_ragtruth_release_workflow(
         response_path=response_path,
@@ -2398,17 +2439,20 @@ def test_ragtruth_release_workflow_scores_reviewed_calibration_bundle(tmp_path) 
         sample_seed=7,
         stratify_by=["expected_label"],
         bootstrap_samples=10,
+        candidate_paths=[candidate_path],
+        auto_candidates=False,
     )
     manifest = json.loads((tmp_path / "bundle" / "manifest.json").read_text(encoding="utf-8"))
 
     assert summary["status"] == "calibration_only"
     assert summary["workflow_status"] == "scored"
-    assert summary["baseline_count"] == 0
+    assert summary["baseline_count"] == 1
     assert manifest["bundle_status"] == "calibration_only"
     assert manifest["score"]["summary"]["cases"] == 2
     assert any(artifact["path"] == "scored/contexttrace_bench_results.json" for artifact in manifest["artifacts"])
     assert any(artifact["path"] == "scored/ragtruth_error_analysis.json" for artifact in manifest["artifacts"])
     assert any(artifact["path"] == "scored/ragtruth_error_analysis.md" for artifact in manifest["artifacts"])
+    assert any(artifact["path"] == "scored/baseline_results.json" for artifact in manifest["artifacts"])
     assert any(artifact["path"] == "ragtruth_review_signoff.jsonl" for artifact in manifest["artifacts"])
 
 
@@ -2710,3 +2754,227 @@ def test_local_judge_prompt_includes_citations_and_benchmark_taxonomy() -> None:
             "source_id": "source-a",
         }
     ]
+
+
+def test_sota_readiness_gate_accepts_complete_evidence(tmp_path) -> None:
+    primary_dir = tmp_path / "primary"
+    primary_manifest = _write_sota_external_bundle(
+        primary_dir,
+        dataset="RAGTruth",
+        bundle_status="publishable",
+        workflow_status="scored",
+        independent=True,
+        include_competitor=True,
+    )
+    secondary_dir = tmp_path / "secondary"
+    secondary_manifest = _write_sota_external_bundle(
+        secondary_dir,
+        dataset="External-Two",
+        bundle_status="review_pending",
+        workflow_status="scored_review_pending",
+        independent=False,
+        include_competitor=False,
+    )
+    diag150_manifest = _write_sota_diag150_bundle(tmp_path / "diag150", freeze_ready=True)
+    primary_doc = tmp_path / "ragtruth.md"
+    secondary_doc = tmp_path / "external-two.md"
+    primary_doc.write_text("python ragtruth_release_workflow.py", encoding="utf-8")
+    secondary_doc.write_text("python external_two_adapter.py", encoding="utf-8")
+
+    report = build_sota_readiness_report(
+        primary_manifest_path=primary_manifest,
+        external_tracks=[
+            ExternalTrack("RAGTruth", primary_manifest, primary_doc, "ragtruth_release_workflow.py"),
+            ExternalTrack("External-Two", secondary_manifest, secondary_doc, "external_two_adapter.py"),
+        ],
+        diag150_manifest_path=diag150_manifest,
+    )
+
+    assert report["status"] == "claim_ready"
+    assert report["claim_allowed"] is True
+    assert report["summary"] == {"checks": 10, "passed": 10, "failed": 0}
+
+
+def test_sota_readiness_gate_fails_closed_on_tampered_or_incomplete_evidence(tmp_path) -> None:
+    primary_dir = tmp_path / "primary"
+    primary_manifest = _write_sota_external_bundle(
+        primary_dir,
+        dataset="RAGTruth",
+        bundle_status="calibration_only",
+        workflow_status="scored",
+        independent=False,
+        include_competitor=False,
+    )
+    secondary_dir = tmp_path / "secondary"
+    secondary_manifest = _write_sota_external_bundle(
+        secondary_dir,
+        dataset="External-Two",
+        bundle_status="review_pending",
+        workflow_status="scored_review_pending",
+        independent=False,
+        include_competitor=False,
+    )
+    diag150_manifest = _write_sota_diag150_bundle(tmp_path / "diag150", freeze_ready=False)
+    primary_doc = tmp_path / "ragtruth.md"
+    secondary_doc = tmp_path / "external-two.md"
+    primary_doc.write_text("python ragtruth_release_workflow.py", encoding="utf-8")
+    secondary_doc.write_text("python external_two_adapter.py", encoding="utf-8")
+    (primary_dir / "scored" / "contexttrace_bench_results.json").write_text("{}", encoding="utf-8")
+
+    report = build_sota_readiness_report(
+        primary_manifest_path=primary_manifest,
+        external_tracks=[
+            ExternalTrack("RAGTruth", primary_manifest, primary_doc, "ragtruth_release_workflow.py"),
+            ExternalTrack("External-Two", secondary_manifest, secondary_doc, "external_two_adapter.py"),
+        ],
+        diag150_manifest_path=diag150_manifest,
+    )
+    checks = {check["name"]: check for check in report["checks"]}
+
+    assert report["status"] == "not_ready"
+    assert report["claim_allowed"] is False
+    assert checks["primary_bundle_integrity"]["passed"] is False
+    assert checks["primary_independent_review"]["passed"] is False
+    assert checks["primary_same_id_competitors"]["passed"] is False
+    assert checks["diag150_human_audit"]["passed"] is False
+
+
+def _write_sota_external_bundle(
+    root: Path,
+    *,
+    dataset: str,
+    bundle_status: str,
+    workflow_status: str,
+    independent: bool,
+    include_competitor: bool,
+) -> Path:
+    root.mkdir(parents=True)
+    scored = root / "scored"
+    scored.mkdir()
+    case_ids = ["case-1", "case-2"]
+    summary = {
+        "cases": 2,
+        "failure_label_macro_f1": 0.90,
+        "dangerous_false_green_rate": 0.0,
+        "root_cause_accuracy": 0.80,
+        "evidence_span_overlap": 0.80,
+    }
+    confidence_intervals = {
+        metric: {
+            "estimate": value,
+            "low": value,
+            "high": value,
+            "level": 0.95,
+            "method": "case_bootstrap",
+            "samples": 20,
+            "seed": 13,
+        }
+        for metric, value in summary.items()
+        if metric != "cases"
+    }
+    _write_json(root / "external_workflow_manifest.json", {"status": workflow_status})
+    _write_json(root / "external_case_pack.json", {"dataset": dataset, "cases": [{"id": case_id} for case_id in case_ids]})
+    _write_json(
+        scored / "contexttrace_bench_results.json",
+        {
+            "case_set": "external_case_pack",
+            "case_pack_dataset": dataset,
+            "summary": summary,
+            "confidence_intervals": confidence_intervals,
+            "rows": [{"id": case_id} for case_id in case_ids],
+        },
+    )
+    (scored / "candidate_inputs.jsonl").write_text(
+        "\n".join(json.dumps({"id": case_id}) for case_id in case_ids) + "\n",
+        encoding="utf-8",
+    )
+    artifact_paths = [
+        "external_workflow_manifest.json",
+        "external_case_pack.json",
+        "scored/contexttrace_bench_results.json",
+        "scored/candidate_inputs.jsonl",
+    ]
+    if include_competitor:
+        competitor_summary = {
+            "cases": 2,
+            "root_cause_reported_cases": 0,
+            "root_cause_accuracy": None,
+            "citation_status_reported_cases": 0,
+            "citation_error_f1": None,
+            "evidence_span_reported_cases": 0,
+            "evidence_span_overlap": None,
+        }
+        _write_json(
+            scored / "baseline_results.json",
+            [
+                {
+                    "system": "Competitor",
+                    "status": "scored",
+                    "summary": competitor_summary,
+                    "coverage": {
+                        "reference_cases": 2,
+                        "submitted_predictions": 2,
+                        "matched_predictions": 2,
+                    },
+                    "rows": [{"id": case_id} for case_id in case_ids],
+                }
+            ],
+        )
+        artifact_paths.append("scored/baseline_results.json")
+    manifest = {
+        "dataset": dataset,
+        "bundle_status": bundle_status,
+        "workflow_status": workflow_status,
+        "case_count": 2,
+        "review_kind": "independent" if independent else "assisted",
+        "review": {
+            "valid": True,
+            "review_rows": 2,
+            "reviewed_rows": 2,
+            "errors": 0,
+            "warnings": 0,
+        },
+        "score": {"summary": summary, "baselines": 1 if include_competitor else 0},
+        "missing_required_artifacts": [],
+        "artifacts": [_sota_artifact(root, path) for path in artifact_paths],
+    }
+    manifest_path = root / "manifest.json"
+    _write_json(manifest_path, manifest)
+    return manifest_path
+
+
+def _write_sota_diag150_bundle(root: Path, *, freeze_ready: bool) -> Path:
+    root.mkdir(parents=True)
+    artifact_paths = [
+        "contexttrace_bench_results.json",
+        "candidate_inputs.jsonl",
+        "diag150_audit_packet.json",
+        "diag150_audit_validation.json",
+    ]
+    for path in artifact_paths:
+        destination = root / path
+        destination.write_text("{}\n", encoding="utf-8")
+    manifest = {
+        "bundle_status": "freeze_ready" if freeze_ready else "review_pending",
+        "human_signoff_complete": freeze_ready,
+        "validation_status": "passed",
+        "missing_required_artifacts": [],
+        "artifacts": [_sota_artifact(root, path) for path in artifact_paths],
+    }
+    manifest_path = root / "manifest.json"
+    _write_json(manifest_path, manifest)
+    return manifest_path
+
+
+def _sota_artifact(root: Path, relative_path: str) -> dict[str, object]:
+    path = root / relative_path
+    return {
+        "path": relative_path,
+        "bytes": path.stat().st_size,
+        "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+        "required": True,
+    }
+
+
+def _write_json(path: Path, payload: object) -> None:
+    path.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")

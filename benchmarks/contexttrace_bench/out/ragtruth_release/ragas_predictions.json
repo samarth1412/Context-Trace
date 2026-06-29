@@ -1,0 +1,2808 @@
+{
+  "adapter": "contexttrace_bench",
+  "adapter_preset": "ragas",
+  "predictions": [
+    {
+      "id": "ragtruth_58",
+      "latency_ms": 57755.15,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_59",
+      "latency_ms": 57754.324,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_121",
+      "latency_ms": 53202.305,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_123",
+      "latency_ms": 47298.573,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_331",
+      "latency_ms": 47298.557,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_332",
+      "latency_ms": 62175.122,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_334",
+      "latency_ms": 20219.501,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_351",
+      "latency_ms": 18107.967,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_355",
+      "latency_ms": 14316.617,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_543",
+      "latency_ms": 22276.206,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_586",
+      "latency_ms": 18754.324,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_656",
+      "latency_ms": 15598.451,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_690",
+      "latency_ms": 30642.945,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_695",
+      "latency_ms": 30879.503,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_730",
+      "latency_ms": 29835.01,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_835",
+      "latency_ms": 29543.192,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_838",
+      "latency_ms": 15833.837,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_878",
+      "latency_ms": 15210.75,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_885",
+      "latency_ms": 15210.846,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_906",
+      "latency_ms": 32179.832,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_924",
+      "latency_ms": 32178.493,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_1153",
+      "latency_ms": 29358.407,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_1157",
+      "latency_ms": 122909.853,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_1355",
+      "latency_ms": 40466.927,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_1513",
+      "latency_ms": 31474.815,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_1566",
+      "latency_ms": 34423.933,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_1586",
+      "latency_ms": 27394.496,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_1587",
+      "latency_ms": 21023.072,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_1648",
+      "latency_ms": 21193.933,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_1678",
+      "latency_ms": 17057.287,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_1683",
+      "latency_ms": 35630.444,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_1698",
+      "latency_ms": 44649.338,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_1967",
+      "latency_ms": 20448.357,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_1990",
+      "latency_ms": 25100.97,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_2123",
+      "latency_ms": 29369.51,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_2136",
+      "latency_ms": 27665.143,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_2359",
+      "latency_ms": 44649.907,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_2454",
+      "latency_ms": 31704.011,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_2469",
+      "latency_ms": 22829.654,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_2653",
+      "latency_ms": 22168.618,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_2668",
+      "latency_ms": 17783.617,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_2675",
+      "latency_ms": 45958.793,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_2876",
+      "latency_ms": 45181.791,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_2892",
+      "latency_ms": 14561.313,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_2894",
+      "latency_ms": 30319.846,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_3560",
+      "latency_ms": 29960.001,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_3611",
+      "latency_ms": 31185.892,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_3638",
+      "latency_ms": 29379.446,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_3639",
+      "latency_ms": 30571.765,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_3770",
+      "latency_ms": 14629.001,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_3771",
+      "latency_ms": 31676.653,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_3814",
+      "latency_ms": 28365.082,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_3866",
+      "latency_ms": 38984.102,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_3952",
+      "latency_ms": 37790.868,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_4052",
+      "latency_ms": 22057.157,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_4064",
+      "latency_ms": 22056.206,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_4065",
+      "latency_ms": 14612.041,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_4196",
+      "latency_ms": 29656.361,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_4211",
+      "latency_ms": 14612.069,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_4218",
+      "latency_ms": 28996.096,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_4226",
+      "latency_ms": 35330.874,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_4263",
+      "latency_ms": 35330.785,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_4339",
+      "latency_ms": 20946.314,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_4348",
+      "latency_ms": 20285.636,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_4524",
+      "latency_ms": 18303.58,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_4527",
+      "latency_ms": 18303.396,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_4573",
+      "latency_ms": 33103.055,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_4575",
+      "latency_ms": 18301.957,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_4777",
+      "latency_ms": 14800.903,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_4781",
+      "latency_ms": 40136.71,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_4955",
+      "latency_ms": 23304.15,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_5201",
+      "latency_ms": 25336.29,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_5274",
+      "latency_ms": 25335.169,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_5416",
+      "latency_ms": 16831.298,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_5417",
+      "latency_ms": 14630.061,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_5482",
+      "latency_ms": 16339.901,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_5691",
+      "latency_ms": 43837.969,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_5829",
+      "latency_ms": 17670.613,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_5850",
+      "latency_ms": 37836.984,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_6051",
+      "latency_ms": 30665.213,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_6052",
+      "latency_ms": 34795.073,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_6250",
+      "latency_ms": 44089.894,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_6256",
+      "latency_ms": 35339.01,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_6550",
+      "latency_ms": 46574.482,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_6686",
+      "latency_ms": 34730.889,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_6913",
+      "latency_ms": 32903.8,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_6927",
+      "latency_ms": 18758.489,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_6996",
+      "latency_ms": 18758.513,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_7008",
+      "latency_ms": 42329.382,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_7011",
+      "latency_ms": 31333.002,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_7019",
+      "latency_ms": 29032.858,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_7036",
+      "latency_ms": 32899.621,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_7052",
+      "latency_ms": 30580.986,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_7137",
+      "latency_ms": 19637.925,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_7138",
+      "latency_ms": 26430.308,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_7153",
+      "latency_ms": 33352.52,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_7236",
+      "latency_ms": 33351.707,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_7262",
+      "latency_ms": 13216.826,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_7265",
+      "latency_ms": 37631.422,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_7279",
+      "latency_ms": 41388.542,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_7281",
+      "latency_ms": 33697.815,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_7292",
+      "latency_ms": 53678.799,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_7301",
+      "latency_ms": 41688.893,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_8153",
+      "latency_ms": 33917.125,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_8474",
+      "latency_ms": 50060.891,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_8557",
+      "latency_ms": 47406.982,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_8561",
+      "latency_ms": 37715.94,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_8625",
+      "latency_ms": 17017.363,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_8627",
+      "latency_ms": 29223.203,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_8664",
+      "latency_ms": 32254.138,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_8672",
+      "latency_ms": 18619.489,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_8727",
+      "latency_ms": 32969.226,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_8778",
+      "latency_ms": 31611.808,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_8939",
+      "latency_ms": 20467.974,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_9069",
+      "latency_ms": 18029.712,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_9071",
+      "latency_ms": 27254.193,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_9212",
+      "latency_ms": 24645.15,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_9542",
+      "latency_ms": 31500.211,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_9552",
+      "latency_ms": 36811.851,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_9553",
+      "latency_ms": 35577.574,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_9604",
+      "latency_ms": 22792.475,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_9679",
+      "latency_ms": 31848.096,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_9775",
+      "latency_ms": 47018.107,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_9840",
+      "latency_ms": 23565.94,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_9937",
+      "latency_ms": 33653.502,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_10006",
+      "latency_ms": 17331.955,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_10072",
+      "latency_ms": 28570.228,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_10111",
+      "latency_ms": 62278.653,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_10352",
+      "latency_ms": 31016.788,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_10366",
+      "latency_ms": 50121.997,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_10463",
+      "latency_ms": 50117.19,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_10543",
+      "latency_ms": 48699.394,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_10547",
+      "latency_ms": 39756.143,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_10819",
+      "latency_ms": 39762.549,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_11286",
+      "latency_ms": 41382.896,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_11447",
+      "latency_ms": 39754.823,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_11450",
+      "latency_ms": 39230.054,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_11520",
+      "latency_ms": 39755.742,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_11522",
+      "latency_ms": 33575.669,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_11524",
+      "latency_ms": 37973.693,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_11908",
+      "latency_ms": 28851.911,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_12022",
+      "latency_ms": 28281.044,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_12218",
+      "latency_ms": 16282.274,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_12240",
+      "latency_ms": 15321.275,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_12298",
+      "latency_ms": 18491.302,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_12435",
+      "latency_ms": 18491.244,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_12469",
+      "latency_ms": 18494.839,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_12690",
+      "latency_ms": 18486.117,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_12691",
+      "latency_ms": 17738.251,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_12917",
+      "latency_ms": 17732.552,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_13070",
+      "latency_ms": 17735.961,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_13073",
+      "latency_ms": 17728.93,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_13159",
+      "latency_ms": 23974.624,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_13160",
+      "latency_ms": 23973.632,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_13163",
+      "latency_ms": 33574.181,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_13233",
+      "latency_ms": 33574.276,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_13293",
+      "latency_ms": 22861.951,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_13309",
+      "latency_ms": 29581.199,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_13363",
+      "latency_ms": 29581.007,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_13430",
+      "latency_ms": 21711.114,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_13442",
+      "latency_ms": 27583.833,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_13445",
+      "latency_ms": 15758.232,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_13560",
+      "latency_ms": 15757.616,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_13563",
+      "latency_ms": 33033.218,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_13720",
+      "latency_ms": 17276.857,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_13916",
+      "latency_ms": 17276.702,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_14005",
+      "latency_ms": 17276.619,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_14007",
+      "latency_ms": 32460.537,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_14098",
+      "latency_ms": 32458.753,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_14286",
+      "latency_ms": 32459.409,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_14323",
+      "latency_ms": 32458.887,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_14327",
+      "latency_ms": 17743.057,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_14380",
+      "latency_ms": 17737.455,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_14508",
+      "latency_ms": 17735.701,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_14511",
+      "latency_ms": 17742.204,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_14805",
+      "latency_ms": 15305.073,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_14861",
+      "latency_ms": 15303.247,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_14995",
+      "latency_ms": 15297.694,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_15179",
+      "latency_ms": 15297.791,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_15270",
+      "latency_ms": 15914.256,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_15272",
+      "latency_ms": 15899.671,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_15467",
+      "latency_ms": 15906.665,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_15628",
+      "latency_ms": 15905.532,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_15712",
+      "latency_ms": 31601.314,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_15718",
+      "latency_ms": 31595.367,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_15755",
+      "latency_ms": 31594.284,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_15780",
+      "latency_ms": 31586.846,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_15786",
+      "latency_ms": 33567.32,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_15788",
+      "latency_ms": 14899.845,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_15904",
+      "latency_ms": 41198.693,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_15933",
+      "latency_ms": 18893.908,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_15969",
+      "latency_ms": 15718.658,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_16056",
+      "latency_ms": 14708.36,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_16057",
+      "latency_ms": 14657.476,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_16118",
+      "latency_ms": 8334.4,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_16119",
+      "latency_ms": 16242.988,
+      "predicted": [
+        "unsupported_answer"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 0,
+        "unsupported": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_16565",
+      "latency_ms": 29744.766,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_16795",
+      "latency_ms": 29694.15,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_16895",
+      "latency_ms": 28307.472,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "id": "ragtruth_17250",
+      "latency_ms": 16435.06,
+      "predicted": [
+        "no_failure_detected"
+      ],
+      "predicted_verdict_counts": {
+        "contradicted": 0,
+        "partially_supported": 0,
+        "supported": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      }
+    }
+  ],
+  "system": "RAGAS",
+  "version": "gpt-4.1-mini max_output_tokens=32768"
+}

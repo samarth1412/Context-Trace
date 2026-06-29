@@ -3,87 +3,6 @@
   "calibration_targets": {
     "contradicted_answer_misses": [
       {
-        "evidence_span_overlap": 0.5,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_4263",
-        "label_types": [
-          "Evident Conflict"
-        ],
-        "model": "llama-2-7b-chat",
-        "predicted": [
-          "partial_support"
-        ],
-        "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer span claims that little is known about Wardi, including her physical appearance, clothing, or distinguishing features, which conflicts with the source that provides detailed physical attributes and distinguishing marks; only clothin",
-        "source_dataset": "Recent News",
-        "source_evidence_span_count": 3,
-        "task_type": "Summary"
-      },
-      {
-        "evidence_span_overlap": 0.327,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_7052",
-        "label_types": [
-          "Evident Baseless Info",
-          "Evident Conflict"
-        ],
-        "model": "mistral-7B-instruct",
-        "predicted": [
-          "partial_support"
-        ],
-        "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The source attributes list \"OutdoorSeating\": null, so claiming that the restaurant \"has outdoor seating available\" is baseless relative to the provided data. The Pad Thai review text explicitly states that the chicken and shrimp were cooked ve",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 2,
-        "task_type": "Data2txt"
-      },
-      {
-        "evidence_span_overlap": 0.636,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_1990",
-        "label_types": [
-          "Evident Conflict"
-        ],
-        "model": "llama-2-13b-chat",
-        "predicted": [
-          "partial_support"
-        ],
-        "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer claims the mother was \"praising him in front of the media,\" but the source only describes her smacking and screaming at him, and a police official thanking her. There is no mention of her praising her son, so this span is in evident",
-        "source_dataset": "CNN/DM",
-        "source_evidence_span_count": 2,
-        "task_type": "Summary"
-      },
-      {
-        "evidence_span_overlap": 0.785,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_3639",
-        "label_types": [
-          "Evident Conflict"
-        ],
-        "model": "llama-2-7b-chat",
-        "predicted": [
-          "partial_support"
-        ],
-        "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer claims that Mayor Bill de Blasio issued an apology to the driver and passengers, but the source shows that the apology was issued by Police Commissioner William Bratton, while de Blasio explicitly said he had not seen the video and ",
-        "source_dataset": "CNN/DM",
-        "source_evidence_span_count": 2,
-        "task_type": "Summary"
-      },
-      {
         "evidence_span_overlap": 0.822,
         "expected": [
           "contradicted_answer"
@@ -104,229 +23,28 @@
         "task_type": "Summary"
       },
       {
-        "evidence_span_overlap": 0.938,
+        "evidence_span_overlap": 0.864,
         "expected": [
           "contradicted_answer"
         ],
         "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_12435",
-        "label_types": [
-          "Evident Conflict"
-        ],
-        "model": "llama-2-7b-chat",
-        "predicted": [
-          "partial_support"
-        ],
-        "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The label span claims constipation is supported by passages 2 & 3, but only passage 3 lists constipation as a symptom; passage 2 discusses causes/risk factors, not constipation as a symptom. This creates an evident conflict with the cited supp",
-        "source_dataset": "MARCO",
-        "source_evidence_span_count": 2,
-        "task_type": "QA"
-      },
-      {
-        "evidence_span_overlap": 1.0,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_12917",
-        "label_types": [
-          "Evident Conflict"
-        ],
-        "model": "llama-2-70b-chat",
-        "predicted": [
-          "partial_support"
-        ],
-        "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer span claims the drawer is intended for warming food rather than for storage, but the sources state that on some oven models it is a warming drawer and on others it is used for storage, so the categorical \"rather than for storage\" co",
-        "source_dataset": "MARCO",
-        "source_evidence_span_count": 2,
-        "task_type": "QA"
-      },
-      {
-        "evidence_span_overlap": 0.5,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_543",
-        "label_types": [
-          "Evident Conflict"
-        ],
-        "model": "llama-2-7b-chat",
-        "predicted": [
-          "partial_support"
-        ],
-        "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer span says \"Heather Abbott, who lost her foot,\" implying traumatic loss in the bombing. The article explains that after failed attempts to save her foot, she chose amputation below the knee. This contradicts the characterization as s",
-        "source_dataset": "CNN/DM",
-        "source_evidence_span_count": 1,
-        "task_type": "Summary"
-      },
-      {
-        "evidence_span_overlap": 0.667,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_1698",
+        "id": "ragtruth_121",
         "label_types": [
           "Subtle Conflict"
         ],
-        "model": "gpt-4-0613",
+        "model": "gpt-3.5-turbo-0613",
         "predicted": [
           "partial_support"
         ],
         "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer text says 'killed 16 Sherpas', but the source specifies 'killed 16 Nepalis' and only then discusses Sherpas more generally. This is a subtle conflict: the death toll is correct but the group is misidentified.",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The labeled span \"her desire\" refers to Letourneau Fualaau wanting her sex offender status lifted. The source states this as her \"intentions\" rather than \"desire,\" which is a subtle wording difference but not a factual conflict; it is still su",
         "source_dataset": "CNN/DM",
         "source_evidence_span_count": 1,
         "task_type": "Summary"
-      },
-      {
-        "evidence_span_overlap": 0.763,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_5482",
-        "label_types": [
-          "Evident Conflict"
-        ],
-        "model": "llama-2-13b-chat",
-        "predicted": [
-          "partial_support"
-        ],
-        "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The labeled span says \"If Matt doesn't win, Jag will be safe,\" which directly contradicts the source, where Matt must win HOH to keep Jag safe and otherwise Jag may follow Blue in the double eviction. This is an evident conflict, so the expect",
-        "source_dataset": "Recent News",
-        "source_evidence_span_count": 1,
-        "task_type": "Summary"
-      },
-      {
-        "evidence_span_overlap": 0.821,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_14323",
-        "label_types": [
-          "Evident Conflict"
-        ],
-        "model": "gpt-3.5-turbo-0613",
-        "predicted": [
-          "partial_support"
-        ],
-        "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. Passage 2 refers to a Dermaroller (a skin microneedling device), not to patterned paint rollers. There is no source text stating that patterned rollers stimulate the skin or provide a healthy glow, so the labeled span is in conflict with the p",
-        "source_dataset": "MARCO",
-        "source_evidence_span_count": 1,
-        "task_type": "QA"
       }
     ],
-    "dangerous_false_greens": [
-      {
-        "evidence_span_overlap": 1.0,
-        "expected": [
-          "partial_support"
-        ],
-        "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_16056",
-        "label_types": [
-          "Evident Baseless Info"
-        ],
-        "model": "gpt-4-0613",
-        "predicted": [
-          "no_failure_detected"
-        ],
-        "predicted_primary_root_cause": "no_failure_detected",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The labeled span about video guides is directly supported by the source, which states that video guides showing what each skill move looks like are at the top of the page.",
-        "source_dataset": "MARCO",
-        "source_evidence_span_count": 1,
-        "task_type": "QA"
-      }
-    ],
+    "dangerous_false_greens": [],
     "partial_support_misses": [
-      {
-        "evidence_span_overlap": 1.0,
-        "expected": [
-          "partial_support"
-        ],
-        "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_16056",
-        "label_types": [
-          "Evident Baseless Info"
-        ],
-        "model": "gpt-4-0613",
-        "predicted": [
-          "no_failure_detected"
-        ],
-        "predicted_primary_root_cause": "no_failure_detected",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The labeled span about video guides is directly supported by the source, which states that video guides showing what each skill move looks like are at the top of the page.",
-        "source_dataset": "MARCO",
-        "source_evidence_span_count": 1,
-        "task_type": "QA"
-      },
-      {
-        "evidence_span_overlap": 0.144,
-        "expected": [
-          "partial_support"
-        ],
-        "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_9775",
-        "label_types": [
-          "Subtle Baseless Info"
-        ],
-        "model": "gpt-3.5-turbo-0613",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The phrase \"Peabody's is a local business in Santa Barbara\" is supported by the structured data providing the business name and city; 'local business' is a reasonable, mild inference consistent with the context, so this span is best treated as",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 2,
-        "task_type": "Data2txt"
-      },
-      {
-        "evidence_span_overlap": 0.155,
-        "expected": [
-          "partial_support"
-        ],
-        "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_6250",
-        "label_types": [
-          "Evident Baseless Info"
-        ],
-        "model": "llama-2-13b-chat",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer claims it is a great spot for \"dates\", implying a romantic suitability. The source context explicitly marks the ambience attribute \"romantic\": false, which contradicts the dating/romantic implication. The provided spans show this co",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 2,
-        "task_type": "Data2txt"
-      },
-      {
-        "evidence_span_overlap": 0.615,
-        "expected": [
-          "partial_support"
-        ],
-        "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_8561",
-        "label_types": [
-          "Evident Baseless Info"
-        ],
-        "model": "llama-2-70b-chat",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The phrase \"vegetarian dishes\" is unsupported by the structured data or reviews and remains hallucinated, but the business is explicitly labeled \"Gluten-Free,\" so only that part is grounded. The phrase \"provides friendly service\" is partially ",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 2,
-        "task_type": "Data2txt"
-      },
       {
         "evidence_span_overlap": 0.843,
         "expected": [
@@ -348,87 +66,7 @@
         "task_type": "Summary"
       },
       {
-        "evidence_span_overlap": 0.905,
-        "expected": [
-          "partial_support"
-        ],
-        "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_906",
-        "label_types": [
-          "Evident Baseless Info"
-        ],
-        "model": "gpt-4-0613",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The labeled span is well supported by the source, which explicitly states UVA's admission about never expelling a student for sexual assault, the institution of a zero-tolerance policy that was never defined, and the concurrent Title IX invest",
-        "source_dataset": "CNN/DM",
-        "source_evidence_span_count": 2,
-        "task_type": "Summary"
-      },
-      {
-        "evidence_span_overlap": 0.932,
-        "expected": [
-          "partial_support"
-        ],
-        "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_3638",
-        "label_types": [
-          "Subtle Baseless Info"
-        ],
-        "model": "mistral-7B-instruct",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The source does not explicitly say the incident raised questions about police brutality or discrimination against minority communities nationwide, so that portion is overreach. However, there is partial thematic support that the incident affec",
-        "source_dataset": "CNN/DM",
-        "source_evidence_span_count": 2,
-        "task_type": "Summary"
-      },
-      {
-        "evidence_span_overlap": 0.054,
-        "expected": [
-          "partial_support"
-        ],
-        "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_10111",
-        "label_types": [
-          "Evident Baseless Info"
-        ],
-        "model": "gpt-3.5-turbo-0613",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The source only lists \"OutdoorSeating\": null, which indicates missing/unknown information rather than confirming the business does not have outdoor seating. This neither supports nor contradicts the claim that it \"does not have outdoor seating",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 1,
-        "task_type": "Data2txt"
-      },
-      {
-        "evidence_span_overlap": 0.061,
-        "expected": [
-          "partial_support"
-        ],
-        "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_7236",
-        "label_types": [
-          "Evident Baseless Info"
-        ],
-        "model": "gpt-4-0613",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The phrase \"a trendy\" partially overreaches. The source explicitly marks ambience as \"casual\" and \"hipster\" but sets \"trendy\": null, so there is support for a casual/hipster vibe yet no explicit evidence that it is trendy. Thus the label is re",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 1,
-        "task_type": "Data2txt"
-      },
-      {
-        "evidence_span_overlap": 0.735,
+        "evidence_span_overlap": 0.861,
         "expected": [
           "partial_support"
         ],
@@ -448,229 +86,28 @@
         "task_type": "QA"
       },
       {
-        "evidence_span_overlap": 0.765,
+        "evidence_span_overlap": 1.0,
         "expected": [
           "partial_support"
         ],
         "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_1513",
+        "id": "ragtruth_7236",
         "label_types": [
           "Evident Baseless Info"
         ],
-        "model": "gpt-3.5-turbo-0613",
+        "model": "gpt-4-0613",
         "predicted": [
           "contradicted_answer"
         ],
         "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The labeled span about the first known mention of the bunny and eggs in 1682 is directly supported by the source text, so it is partially supported rather than baseless.",
-        "source_dataset": "CNN/DM",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The phrase \"a trendy\" partially overreaches. The source explicitly marks ambience as \"casual\" and \"hipster\" but sets \"trendy\": null, so there is support for a casual/hipster vibe yet no explicit evidence that it is trendy. Thus the label is re",
+        "source_dataset": "Yelp",
         "source_evidence_span_count": 1,
-        "task_type": "Summary"
-      },
-      {
-        "evidence_span_overlap": null,
-        "expected": [
-          "partial_support"
-        ],
-        "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_58",
-        "label_types": [
-          "Evident Baseless Info"
-        ],
-        "model": "llama-2-13b-chat",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The source discusses defamation elements, group vs. individual plaintiffs, and financial harm, but does not mention that the sensitivity of the topic (sexual assault) may impact the legal approach. That causal connection is not supported or co",
-        "source_dataset": "CNN/DM",
-        "source_evidence_span_count": 0,
-        "task_type": "Summary"
-      },
-      {
-        "evidence_span_overlap": null,
-        "expected": [
-          "partial_support"
-        ],
-        "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_11908",
-        "label_types": [
-          "Evident Baseless Info"
-        ],
-        "model": "llama-2-13b-chat",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The specific claim about \"the lowest average pay in Mississippi ($18.60 per hour or $38,900 per year)\" does not appear anywhere in the provided source_contexts; only Alaska, Connecticut, Maryland, Massachusetts, Washington D.C., and aerospace ",
-        "source_dataset": "MARCO",
-        "source_evidence_span_count": 0,
-        "task_type": "QA"
+        "task_type": "Data2txt"
       }
     ],
     "root_cause_misses": [
       {
-        "evidence_span_overlap": 1.0,
-        "expected": [
-          "partial_support"
-        ],
-        "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_16056",
-        "label_types": [
-          "Evident Baseless Info"
-        ],
-        "model": "gpt-4-0613",
-        "predicted": [
-          "no_failure_detected"
-        ],
-        "predicted_primary_root_cause": "no_failure_detected",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The labeled span about video guides is directly supported by the source, which states that video guides showing what each skill move looks like are at the top of the page.",
-        "source_dataset": "MARCO",
-        "source_evidence_span_count": 1,
-        "task_type": "QA"
-      },
-      {
-        "evidence_span_overlap": 0.5,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_4263",
-        "label_types": [
-          "Evident Conflict"
-        ],
-        "model": "llama-2-7b-chat",
-        "predicted": [
-          "partial_support"
-        ],
-        "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer span claims that little is known about Wardi, including her physical appearance, clothing, or distinguishing features, which conflicts with the source that provides detailed physical attributes and distinguishing marks; only clothin",
-        "source_dataset": "Recent News",
-        "source_evidence_span_count": 3,
-        "task_type": "Summary"
-      },
-      {
-        "evidence_span_overlap": 0.144,
-        "expected": [
-          "partial_support"
-        ],
-        "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_9775",
-        "label_types": [
-          "Subtle Baseless Info"
-        ],
-        "model": "gpt-3.5-turbo-0613",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The phrase \"Peabody's is a local business in Santa Barbara\" is supported by the structured data providing the business name and city; 'local business' is a reasonable, mild inference consistent with the context, so this span is best treated as",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 2,
-        "task_type": "Data2txt"
-      },
-      {
-        "evidence_span_overlap": 0.155,
-        "expected": [
-          "partial_support"
-        ],
-        "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_6250",
-        "label_types": [
-          "Evident Baseless Info"
-        ],
-        "model": "llama-2-13b-chat",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer claims it is a great spot for \"dates\", implying a romantic suitability. The source context explicitly marks the ambience attribute \"romantic\": false, which contradicts the dating/romantic implication. The provided spans show this co",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 2,
-        "task_type": "Data2txt"
-      },
-      {
-        "evidence_span_overlap": 0.327,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_7052",
-        "label_types": [
-          "Evident Baseless Info",
-          "Evident Conflict"
-        ],
-        "model": "mistral-7B-instruct",
-        "predicted": [
-          "partial_support"
-        ],
-        "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The source attributes list \"OutdoorSeating\": null, so claiming that the restaurant \"has outdoor seating available\" is baseless relative to the provided data. The Pad Thai review text explicitly states that the chicken and shrimp were cooked ve",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 2,
-        "task_type": "Data2txt"
-      },
-      {
-        "evidence_span_overlap": 0.615,
-        "expected": [
-          "partial_support"
-        ],
-        "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_8561",
-        "label_types": [
-          "Evident Baseless Info"
-        ],
-        "model": "llama-2-70b-chat",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The phrase \"vegetarian dishes\" is unsupported by the structured data or reviews and remains hallucinated, but the business is explicitly labeled \"Gluten-Free,\" so only that part is grounded. The phrase \"provides friendly service\" is partially ",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 2,
-        "task_type": "Data2txt"
-      },
-      {
-        "evidence_span_overlap": 0.636,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_1990",
-        "label_types": [
-          "Evident Conflict"
-        ],
-        "model": "llama-2-13b-chat",
-        "predicted": [
-          "partial_support"
-        ],
-        "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer claims the mother was \"praising him in front of the media,\" but the source only describes her smacking and screaming at him, and a police official thanking her. There is no mention of her praising her son, so this span is in evident",
-        "source_dataset": "CNN/DM",
-        "source_evidence_span_count": 2,
-        "task_type": "Summary"
-      },
-      {
-        "evidence_span_overlap": 0.785,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_3639",
-        "label_types": [
-          "Evident Conflict"
-        ],
-        "model": "llama-2-7b-chat",
-        "predicted": [
-          "partial_support"
-        ],
-        "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer claims that Mayor Bill de Blasio issued an apology to the driver and passengers, but the source shows that the apology was issued by Police Commissioner William Bratton, while de Blasio explicitly said he had not seen the video and ",
-        "source_dataset": "CNN/DM",
-        "source_evidence_span_count": 2,
-        "task_type": "Summary"
-      },
-      {
         "evidence_span_overlap": 0.822,
         "expected": [
           "contradicted_answer"
@@ -711,167 +148,7 @@
         "task_type": "Summary"
       },
       {
-        "evidence_span_overlap": 0.905,
-        "expected": [
-          "partial_support"
-        ],
-        "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_906",
-        "label_types": [
-          "Evident Baseless Info"
-        ],
-        "model": "gpt-4-0613",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The labeled span is well supported by the source, which explicitly states UVA's admission about never expelling a student for sexual assault, the institution of a zero-tolerance policy that was never defined, and the concurrent Title IX invest",
-        "source_dataset": "CNN/DM",
-        "source_evidence_span_count": 2,
-        "task_type": "Summary"
-      },
-      {
-        "evidence_span_overlap": 0.932,
-        "expected": [
-          "partial_support"
-        ],
-        "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_3638",
-        "label_types": [
-          "Subtle Baseless Info"
-        ],
-        "model": "mistral-7B-instruct",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The source does not explicitly say the incident raised questions about police brutality or discrimination against minority communities nationwide, so that portion is overreach. However, there is partial thematic support that the incident affec",
-        "source_dataset": "CNN/DM",
-        "source_evidence_span_count": 2,
-        "task_type": "Summary"
-      },
-      {
-        "evidence_span_overlap": 0.938,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_12435",
-        "label_types": [
-          "Evident Conflict"
-        ],
-        "model": "llama-2-7b-chat",
-        "predicted": [
-          "partial_support"
-        ],
-        "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The label span claims constipation is supported by passages 2 & 3, but only passage 3 lists constipation as a symptom; passage 2 discusses causes/risk factors, not constipation as a symptom. This creates an evident conflict with the cited supp",
-        "source_dataset": "MARCO",
-        "source_evidence_span_count": 2,
-        "task_type": "QA"
-      },
-      {
-        "evidence_span_overlap": 1.0,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_12917",
-        "label_types": [
-          "Evident Conflict"
-        ],
-        "model": "llama-2-70b-chat",
-        "predicted": [
-          "partial_support"
-        ],
-        "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer span claims the drawer is intended for warming food rather than for storage, but the sources state that on some oven models it is a warming drawer and on others it is used for storage, so the categorical \"rather than for storage\" co",
-        "source_dataset": "MARCO",
-        "source_evidence_span_count": 2,
-        "task_type": "QA"
-      },
-      {
-        "evidence_span_overlap": 0.054,
-        "expected": [
-          "partial_support"
-        ],
-        "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_10111",
-        "label_types": [
-          "Evident Baseless Info"
-        ],
-        "model": "gpt-3.5-turbo-0613",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The source only lists \"OutdoorSeating\": null, which indicates missing/unknown information rather than confirming the business does not have outdoor seating. This neither supports nor contradicts the claim that it \"does not have outdoor seating",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 1,
-        "task_type": "Data2txt"
-      },
-      {
-        "evidence_span_overlap": 0.061,
-        "expected": [
-          "partial_support"
-        ],
-        "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_7236",
-        "label_types": [
-          "Evident Baseless Info"
-        ],
-        "model": "gpt-4-0613",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The phrase \"a trendy\" partially overreaches. The source explicitly marks ambience as \"casual\" and \"hipster\" but sets \"trendy\": null, so there is support for a casual/hipster vibe yet no explicit evidence that it is trendy. Thus the label is re",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 1,
-        "task_type": "Data2txt"
-      },
-      {
-        "evidence_span_overlap": 0.5,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_543",
-        "label_types": [
-          "Evident Conflict"
-        ],
-        "model": "llama-2-7b-chat",
-        "predicted": [
-          "partial_support"
-        ],
-        "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer span says \"Heather Abbott, who lost her foot,\" implying traumatic loss in the bombing. The article explains that after failed attempts to save her foot, she chose amputation below the knee. This contradicts the characterization as s",
-        "source_dataset": "CNN/DM",
-        "source_evidence_span_count": 1,
-        "task_type": "Summary"
-      },
-      {
-        "evidence_span_overlap": 0.667,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_1698",
-        "label_types": [
-          "Subtle Conflict"
-        ],
-        "model": "gpt-4-0613",
-        "predicted": [
-          "partial_support"
-        ],
-        "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer text says 'killed 16 Sherpas', but the source specifies 'killed 16 Nepalis' and only then discusses Sherpas more generally. This is a subtle conflict: the death toll is correct but the group is misidentified.",
-        "source_dataset": "CNN/DM",
-        "source_evidence_span_count": 1,
-        "task_type": "Summary"
-      },
-      {
-        "evidence_span_overlap": 0.735,
+        "evidence_span_overlap": 0.861,
         "expected": [
           "partial_support"
         ],
@@ -891,150 +168,129 @@
         "task_type": "QA"
       },
       {
-        "evidence_span_overlap": 0.763,
+        "evidence_span_overlap": 0.864,
         "expected": [
           "contradicted_answer"
         ],
         "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_5482",
+        "id": "ragtruth_121",
         "label_types": [
-          "Evident Conflict"
+          "Subtle Conflict"
+        ],
+        "model": "gpt-3.5-turbo-0613",
+        "predicted": [
+          "partial_support"
+        ],
+        "predicted_primary_root_cause": "answer_overreach",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The labeled span \"her desire\" refers to Letourneau Fualaau wanting her sex offender status lifted. The source states this as her \"intentions\" rather than \"desire,\" which is a subtle wording difference but not a factual conflict; it is still su",
+        "source_dataset": "CNN/DM",
+        "source_evidence_span_count": 1,
+        "task_type": "Summary"
+      },
+      {
+        "evidence_span_overlap": 1.0,
+        "expected": [
+          "partial_support"
+        ],
+        "expected_primary_root_cause": "answer_overreach",
+        "id": "ragtruth_7236",
+        "label_types": [
+          "Evident Baseless Info"
+        ],
+        "model": "gpt-4-0613",
+        "predicted": [
+          "contradicted_answer"
+        ],
+        "predicted_primary_root_cause": "conflicting_contexts",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The phrase \"a trendy\" partially overreaches. The source explicitly marks ambience as \"casual\" and \"hipster\" but sets \"trendy\": null, so there is support for a casual/hipster vibe yet no explicit evidence that it is trendy. Thus the label is re",
+        "source_dataset": "Yelp",
+        "source_evidence_span_count": 1,
+        "task_type": "Data2txt"
+      },
+      {
+        "evidence_span_overlap": null,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_primary_root_cause": "no_failure_detected",
+        "id": "ragtruth_9604",
+        "label_types": [
+          "no_hallucination_span"
         ],
         "model": "llama-2-13b-chat",
         "predicted": [
           "partial_support"
         ],
         "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The labeled span says \"If Matt doesn't win, Jag will be safe,\" which directly contradicts the source, where Matt must win HOH to keep Jag safe and otherwise Jag may follow Blue in the double eviction. This is an evident conflict, so the expect",
-        "source_dataset": "Recent News",
-        "source_evidence_span_count": 1,
-        "task_type": "Summary"
+        "review_notes": "",
+        "source_dataset": "Yelp",
+        "source_evidence_span_count": 0,
+        "task_type": "Data2txt"
       },
       {
-        "evidence_span_overlap": 0.765,
+        "evidence_span_overlap": null,
         "expected": [
-          "partial_support"
+          "no_failure_detected"
         ],
-        "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_1513",
+        "expected_primary_root_cause": "no_failure_detected",
+        "id": "ragtruth_10072",
         "label_types": [
-          "Evident Baseless Info"
+          "no_hallucination_span"
         ],
-        "model": "gpt-3.5-turbo-0613",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The labeled span about the first known mention of the bunny and eggs in 1682 is directly supported by the source text, so it is partially supported rather than baseless.",
-        "source_dataset": "CNN/DM",
-        "source_evidence_span_count": 1,
-        "task_type": "Summary"
-      },
-      {
-        "evidence_span_overlap": 0.821,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_14323",
-        "label_types": [
-          "Evident Conflict"
-        ],
-        "model": "gpt-3.5-turbo-0613",
+        "model": "llama-2-13b-chat",
         "predicted": [
           "partial_support"
         ],
         "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. Passage 2 refers to a Dermaroller (a skin microneedling device), not to patterned paint rollers. There is no source text stating that patterned rollers stimulate the skin or provide a healthy glow, so the labeled span is in conflict with the p",
+        "review_notes": "",
+        "source_dataset": "Yelp",
+        "source_evidence_span_count": 0,
+        "task_type": "Data2txt"
+      },
+      {
+        "evidence_span_overlap": null,
+        "expected": [
+          "no_failure_detected"
+        ],
+        "expected_primary_root_cause": "no_failure_detected",
+        "id": "ragtruth_15904",
+        "label_types": [
+          "no_hallucination_span"
+        ],
+        "model": "llama-2-13b-chat",
+        "predicted": [
+          "partial_support"
+        ],
+        "predicted_primary_root_cause": "answer_overreach",
+        "review_notes": "",
         "source_dataset": "MARCO",
-        "source_evidence_span_count": 1,
+        "source_evidence_span_count": 0,
         "task_type": "QA"
       },
       {
         "evidence_span_overlap": null,
         "expected": [
-          "partial_support"
-        ],
-        "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_58",
-        "label_types": [
-          "Evident Baseless Info"
-        ],
-        "model": "llama-2-13b-chat",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The source discusses defamation elements, group vs. individual plaintiffs, and financial harm, but does not mention that the sensitivity of the topic (sexual assault) may impact the legal approach. That causal connection is not supported or co",
-        "source_dataset": "CNN/DM",
-        "source_evidence_span_count": 0,
-        "task_type": "Summary"
-      },
-      {
-        "evidence_span_overlap": null,
-        "expected": [
           "no_failure_detected"
         ],
         "expected_primary_root_cause": "no_failure_detected",
-        "id": "ragtruth_59",
+        "id": "ragtruth_15933",
         "label_types": [
           "no_hallucination_span"
         ],
-        "model": "llama-2-70b-chat",
+        "model": "llama-2-7b-chat",
         "predicted": [
           "contradicted_answer"
         ],
         "predicted_primary_root_cause": "conflicting_contexts",
         "review_notes": "",
-        "source_dataset": "CNN/DM",
+        "source_dataset": "MARCO",
         "source_evidence_span_count": 0,
-        "task_type": "Summary"
-      },
-      {
-        "evidence_span_overlap": null,
-        "expected": [
-          "no_failure_detected"
-        ],
-        "expected_primary_root_cause": "no_failure_detected",
-        "id": "ragtruth_334",
-        "label_types": [
-          "no_hallucination_span"
-        ],
-        "model": "llama-2-13b-chat",
-        "predicted": [
-          "partial_support"
-        ],
-        "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "",
-        "source_dataset": "CNN/DM",
-        "source_evidence_span_count": 0,
-        "task_type": "Summary"
+        "task_type": "QA"
       }
     ],
     "source_span_bad_localization": [
       {
-        "evidence_span_overlap": 0.654,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_6550",
-        "label_types": [
-          "Evident Conflict",
-          "Subtle Baseless Info"
-        ],
-        "model": "llama-2-13b-chat",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The menu item list and claims about chef creativity and locally-sourced ingredients, as well as details about how mimosas are made and poured, are not in the source and are correctly labeled as baseless. The description of the ambiance as 'int",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 5,
-        "task_type": "Data2txt"
-      },
-      {
-        "evidence_span_overlap": 0.174,
+        "evidence_span_overlap": 0.586,
         "expected": [
           "contradicted_answer"
         ],
@@ -1052,68 +308,6 @@
         "review_notes": "GPT-5.1 assisted review; not independent human sign-off. All labeled spans are unsupported by the structured data. Parking details explicitly contradict \"validated parking lot\"; other amenities (Wi-Fi, outdoor seating, reservations, groups, takeout, ambience, cozy atmosphere) are null/unspecified, s",
         "source_dataset": "Yelp",
         "source_evidence_span_count": 4,
-        "task_type": "Data2txt"
-      },
-      {
-        "evidence_span_overlap": 0.099,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_8474",
-        "label_types": [
-          "Evident Baseless Info",
-          "Evident Conflict"
-        ],
-        "model": "mistral-7B-instruct",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer claims WiFi availability, which conflicts with the source specifying \"WiFi\": \"no\". It also states the restaurant is open until 10:30 PM on weekends, but the hours show closing at 21:30 on Friday and Saturday and 21:0 on Sunday, cont",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 3,
-        "task_type": "Data2txt"
-      },
-      {
-        "evidence_span_overlap": 0.113,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_9552",
-        "label_types": [
-          "Evident Baseless Info",
-          "Evident Conflict"
-        ],
-        "model": "gpt-4-0613",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The hours span is contradicted by the structured hours (Monday closes at 17:00, not midnight or later). WiFi and reservations are null/unspecified in the source, so the claim that there is no WiFi or that they do not take reservations is basel",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 3,
-        "task_type": "Data2txt"
-      },
-      {
-        "evidence_span_overlap": 0.115,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_8727",
-        "label_types": [
-          "Evident Conflict"
-        ],
-        "model": "llama-2-7b-chat",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. Both hallucinated spans are directly contradicted by the structured attributes: WiFi is explicitly listed as \"no\" and validated parking is explicitly set to false, while the answer claims the bar offers Wi-Fi and validated parking options.",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 3,
         "task_type": "Data2txt"
       },
       {
@@ -1138,104 +332,23 @@
         "task_type": "Data2txt"
       },
       {
-        "evidence_span_overlap": 0.5,
+        "evidence_span_overlap": 0.487,
         "expected": [
           "contradicted_answer"
         ],
         "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_4263",
+        "id": "ragtruth_8727",
         "label_types": [
           "Evident Conflict"
         ],
         "model": "llama-2-7b-chat",
         "predicted": [
-          "partial_support"
+          "contradicted_answer"
         ],
-        "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer span claims that little is known about Wardi, including her physical appearance, clothing, or distinguishing features, which conflicts with the source that provides detailed physical attributes and distinguishing marks; only clothin",
-        "source_dataset": "Recent News",
+        "predicted_primary_root_cause": "conflicting_contexts",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. Both hallucinated spans are directly contradicted by the structured attributes: WiFi is explicitly listed as \"no\" and validated parking is explicitly set to false, while the answer claims the bar offers Wi-Fi and validated parking options.",
+        "source_dataset": "Yelp",
         "source_evidence_span_count": 3,
-        "task_type": "Summary"
-      },
-      {
-        "evidence_span_overlap": 0.086,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_7138",
-        "label_types": [
-          "Evident Conflict"
-        ],
-        "model": "llama-2-13b-chat",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer states the hours as \"7:30am to 6:00pm,\" but the provided structured data shows closing time as \"16:0\" (4:00pm) for all listed days, so this span is contradicted by the source.",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 2,
-        "task_type": "Data2txt"
-      },
-      {
-        "evidence_span_overlap": 0.137,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_5691",
-        "label_types": [
-          "Evident Baseless Info",
-          "Evident Conflict"
-        ],
-        "model": "llama-2-7b-chat",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The phrase 'locally owned' is not mentioned anywhere in the structured data or reviews, so it is baseless. The source context explicitly describes the ambience as 'classy' and 'casual' and marks 'intimate' as false, which contradicts the claim",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 2,
-        "task_type": "Data2txt"
-      },
-      {
-        "evidence_span_overlap": 0.144,
-        "expected": [
-          "partial_support"
-        ],
-        "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_9775",
-        "label_types": [
-          "Subtle Baseless Info"
-        ],
-        "model": "gpt-3.5-turbo-0613",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The phrase \"Peabody's is a local business in Santa Barbara\" is supported by the structured data providing the business name and city; 'local business' is a reasonable, mild inference consistent with the context, so this span is best treated as",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 2,
-        "task_type": "Data2txt"
-      },
-      {
-        "evidence_span_overlap": 0.148,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_7153",
-        "label_types": [
-          "Evident Conflict"
-        ],
-        "model": "gpt-3.5-turbo-0613",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The source data shows explicit daily hours, including a Monday entry of \"0:0-0:0\" (closed). The answer's claim that the business \"operates from Monday to Sunday\" conflicts with this, since Monday is listed as non-operational.",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 2,
         "task_type": "Data2txt"
       },
       {
@@ -1259,7 +372,7 @@
         "task_type": "Data2txt"
       },
       {
-        "evidence_span_overlap": 0.155,
+        "evidence_span_overlap": 0.393,
         "expected": [
           "partial_support"
         ],
@@ -1270,157 +383,16 @@
         ],
         "model": "llama-2-13b-chat",
         "predicted": [
-          "contradicted_answer"
+          "partial_support"
         ],
-        "predicted_primary_root_cause": "conflicting_contexts",
+        "predicted_primary_root_cause": "answer_overreach",
         "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer claims it is a great spot for \"dates\", implying a romantic suitability. The source context explicitly marks the ambience attribute \"romantic\": false, which contradicts the dating/romantic implication. The provided spans show this co",
         "source_dataset": "Yelp",
         "source_evidence_span_count": 2,
         "task_type": "Data2txt"
       },
       {
-        "evidence_span_overlap": 0.164,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_11522",
-        "label_types": [
-          "Evident Conflict"
-        ],
-        "model": "mistral-7B-instruct",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer claims uniform daily hours 10 am\u20137 pm, but the source shows varying hours by day, directly contradicting the span.",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 2,
-        "task_type": "Data2txt"
-      },
-      {
-        "evidence_span_overlap": 0.196,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_11450",
-        "label_types": [
-          "Evident Conflict"
-        ],
-        "model": "mistral-7B-instruct",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer calls the ambiance \"trendy,\" but the provided structured data explicitly marks the ambience attribute \"trendy\" as false, so this is an evident conflict.",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 2,
-        "task_type": "Data2txt"
-      },
-      {
-        "evidence_span_overlap": 0.327,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_7052",
-        "label_types": [
-          "Evident Baseless Info",
-          "Evident Conflict"
-        ],
-        "model": "mistral-7B-instruct",
-        "predicted": [
-          "partial_support"
-        ],
-        "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The source attributes list \"OutdoorSeating\": null, so claiming that the restaurant \"has outdoor seating available\" is baseless relative to the provided data. The Pad Thai review text explicitly states that the chicken and shrimp were cooked ve",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 2,
-        "task_type": "Data2txt"
-      },
-      {
-        "evidence_span_overlap": 0.464,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_1157",
-        "label_types": [
-          "Evident Conflict"
-        ],
-        "model": "llama-2-70b-chat",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer incorrectly attributes the criminal investigation to the EPA; the source context clearly states that the U.S. Department of Justice initiated the criminal investigation.",
-        "source_dataset": "CNN/DM",
-        "source_evidence_span_count": 2,
-        "task_type": "Summary"
-      },
-      {
-        "evidence_span_overlap": 0.474,
-        "expected": [
-          "contradicted_answer"
-        ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_13442",
-        "label_types": [
-          "Evident Conflict"
-        ],
-        "model": "mistral-7B-instruct",
-        "predicted": [
-          "contradicted_answer"
-        ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The source contexts show that high-pressure/pressure washer use is recommended only after applying detergent, and one passage explicitly warns not to use a high-pressure hose because it could push oil deeper into the pavement. This contradicts",
-        "source_dataset": "MARCO",
-        "source_evidence_span_count": 2,
-        "task_type": "QA"
-      },
-      {
-        "evidence_span_overlap": 0.492,
-        "expected": [
-          "unsupported"
-        ],
-        "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_5417",
-        "label_types": [
-          "Evident Baseless Info"
-        ],
-        "model": "llama-2-70b-chat",
-        "predicted": [
-          "partial_support"
-        ],
-        "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The claim that the idea \"is met with skepticism\" and that \"some argue it would only exacerbate the problem and create further hardship\" is not supported or mentioned in the provided source. The article only presents Morales's proposal and his ",
-        "source_dataset": "Recent News",
-        "source_evidence_span_count": 2,
-        "task_type": "Summary"
-      },
-      {
-        "evidence_span_overlap": 0.494,
-        "expected": [
-          "partial_support"
-        ],
-        "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_7011",
-        "label_types": [
-          "Evident Baseless Info"
-        ],
-        "model": "llama-2-7b-chat",
-        "predicted": [
-          "partial_support"
-        ],
-        "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The phrase \"modern and functional atmosphere\" is partially grounded by the ambience attributes and the review describing the venue as great with modern and functional bathrooms, but the specific wording about the overall atmosphere is somewhat",
-        "source_dataset": "Yelp",
-        "source_evidence_span_count": 2,
-        "task_type": "Data2txt"
-      },
-      {
-        "evidence_span_overlap": 0.5,
+        "evidence_span_overlap": 0.525,
         "expected": [
           "contradicted_answer"
         ],
@@ -1440,28 +412,27 @@
         "task_type": "Data2txt"
       },
       {
-        "evidence_span_overlap": 0.53,
+        "evidence_span_overlap": 0.577,
         "expected": [
-          "contradicted_answer"
+          "partial_support"
         ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_10366",
+        "expected_primary_root_cause": "answer_overreach",
+        "id": "ragtruth_7011",
         "label_types": [
-          "Evident Baseless Info",
-          "Evident Conflict"
+          "Evident Baseless Info"
         ],
-        "model": "llama-2-13b-chat",
+        "model": "llama-2-7b-chat",
         "predicted": [
-          "contradicted_answer"
+          "partial_support"
         ],
-        "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The bar is described as a full bar with basic liquors and cocktails; there is no mention of craft beers or wines, so that phrase is unsupported. The structured ambience data explicitly marks 'upscale' as false, conflicting with the answer\u2019s 'u",
+        "predicted_primary_root_cause": "answer_overreach",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The phrase \"modern and functional atmosphere\" is partially grounded by the ambience attributes and the review describing the venue as great with modern and functional bathrooms, but the specific wording about the overall atmosphere is somewhat",
         "source_dataset": "Yelp",
         "source_evidence_span_count": 2,
         "task_type": "Data2txt"
       },
       {
-        "evidence_span_overlap": 0.577,
+        "evidence_span_overlap": 0.6,
         "expected": [
           "contradicted_answer"
         ],
@@ -1481,43 +452,344 @@
         "task_type": "Summary"
       },
       {
-        "evidence_span_overlap": 0.615,
+        "evidence_span_overlap": 0.629,
+        "expected": [
+          "unsupported"
+        ],
+        "expected_primary_root_cause": "answer_overreach",
+        "id": "ragtruth_5417",
+        "label_types": [
+          "Evident Baseless Info"
+        ],
+        "model": "llama-2-70b-chat",
+        "predicted": [
+          "unsupported"
+        ],
+        "predicted_primary_root_cause": "answer_overreach",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The claim that the idea \"is met with skepticism\" and that \"some argue it would only exacerbate the problem and create further hardship\" is not supported or mentioned in the provided source. The article only presents Morales's proposal and his ",
+        "source_dataset": "Recent News",
+        "source_evidence_span_count": 2,
+        "task_type": "Summary"
+      },
+      {
+        "evidence_span_overlap": 0.643,
+        "expected": [
+          "contradicted_answer"
+        ],
+        "expected_primary_root_cause": "conflicting_contexts",
+        "id": "ragtruth_5691",
+        "label_types": [
+          "Evident Baseless Info",
+          "Evident Conflict"
+        ],
+        "model": "llama-2-7b-chat",
+        "predicted": [
+          "contradicted_answer"
+        ],
+        "predicted_primary_root_cause": "conflicting_contexts",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The phrase 'locally owned' is not mentioned anywhere in the structured data or reviews, so it is baseless. The source context explicitly describes the ambience as 'classy' and 'casual' and marks 'intimate' as false, which contradicts the claim",
+        "source_dataset": "Yelp",
+        "source_evidence_span_count": 2,
+        "task_type": "Data2txt"
+      },
+      {
+        "evidence_span_overlap": 0.664,
+        "expected": [
+          "contradicted_answer"
+        ],
+        "expected_primary_root_cause": "conflicting_contexts",
+        "id": "ragtruth_11450",
+        "label_types": [
+          "Evident Conflict"
+        ],
+        "model": "mistral-7B-instruct",
+        "predicted": [
+          "contradicted_answer"
+        ],
+        "predicted_primary_root_cause": "conflicting_contexts",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer calls the ambiance \"trendy,\" but the provided structured data explicitly marks the ambience attribute \"trendy\" as false, so this is an evident conflict.",
+        "source_dataset": "Yelp",
+        "source_evidence_span_count": 2,
+        "task_type": "Data2txt"
+      },
+      {
+        "evidence_span_overlap": 0.682,
         "expected": [
           "partial_support"
         ],
         "expected_primary_root_cause": "answer_overreach",
-        "id": "ragtruth_8561",
+        "id": "ragtruth_8625",
         "label_types": [
           "Evident Baseless Info"
+        ],
+        "model": "llama-2-7b-chat",
+        "predicted": [
+          "partial_support"
+        ],
+        "predicted_primary_root_cause": "answer_overreach",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The span \"great option for groups\" is not supported by the data; the only similar phrase is \"Aksum is a great option for Ethiopian food in Santa Barbara,\" which refers to food quality, not suitability for groups, so the label as baseless is fa",
+        "source_dataset": "Yelp",
+        "source_evidence_span_count": 2,
+        "task_type": "Data2txt"
+      },
+      {
+        "evidence_span_overlap": 0.747,
+        "expected": [
+          "partial_support"
+        ],
+        "expected_primary_root_cause": "answer_overreach",
+        "id": "ragtruth_13293",
+        "label_types": [
+          "Subtle Baseless Info"
+        ],
+        "model": "llama-2-7b-chat",
+        "predicted": [
+          "partial_support"
+        ],
+        "predicted_primary_root_cause": "answer_overreach",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer\u2019s claim that group A beta-hemolytic streptococci account for around 70% of cases is not supported by the passages; they only state that many cases or commonly are caused by this organism without giving any percentage. The hallucinat",
+        "source_dataset": "MARCO",
+        "source_evidence_span_count": 2,
+        "task_type": "QA"
+      },
+      {
+        "evidence_span_overlap": 0.219,
+        "expected": [
+          "contradicted_answer"
+        ],
+        "expected_primary_root_cause": "conflicting_contexts",
+        "id": "ragtruth_7262",
+        "label_types": [
+          "Evident Conflict"
+        ],
+        "model": "mistral-7B-instruct",
+        "predicted": [
+          "contradicted_answer"
+        ],
+        "predicted_primary_root_cause": "conflicting_contexts",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer says there are no parking facilities, but the source context explicitly lists a parking lot as available, so this span is directly contradicted by the source.",
+        "source_dataset": "Yelp",
+        "source_evidence_span_count": 1,
+        "task_type": "Data2txt"
+      },
+      {
+        "evidence_span_overlap": 0.235,
+        "expected": [
+          "contradicted_answer"
+        ],
+        "expected_primary_root_cause": "conflicting_contexts",
+        "id": "ragtruth_9553",
+        "label_types": [
+          "Evident Conflict"
+        ],
+        "model": "gpt-3.5-turbo-0613",
+        "predicted": [
+          "contradicted_answer"
+        ],
+        "predicted_primary_root_cause": "conflicting_contexts",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The business hours in the source show Monday closing at 17:00, while other days close at 0:00 (midnight). The answer claim that it is open from 9:00 am to 12:00 am every day directly conflicts with this structured hours data.",
+        "source_dataset": "Yelp",
+        "source_evidence_span_count": 1,
+        "task_type": "Data2txt"
+      },
+      {
+        "evidence_span_overlap": 0.31,
+        "expected": [
+          "partial_support"
+        ],
+        "expected_primary_root_cause": "answer_overreach",
+        "id": "ragtruth_9071",
+        "label_types": [
+          "Evident Baseless Info"
+        ],
+        "model": "llama-2-70b-chat",
+        "predicted": [
+          "partial_support"
+        ],
+        "predicted_primary_root_cause": "answer_overreach",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer phrase \u201cand intimate,\u201d asserts an ambience attribute that is not supported by the structured data: in the source, the 'intimate' ambience field is null, so there is no evidence it is intimate. This makes the claim baseless given the",
+        "source_dataset": "Yelp",
+        "source_evidence_span_count": 1,
+        "task_type": "Data2txt"
+      },
+      {
+        "evidence_span_overlap": 0.4,
+        "expected": [
+          "contradicted_answer"
+        ],
+        "expected_primary_root_cause": "conflicting_contexts",
+        "id": "ragtruth_6927",
+        "label_types": [
+          "Evident Conflict"
+        ],
+        "model": "llama-2-7b-chat",
+        "predicted": [
+          "contradicted_answer"
+        ],
+        "predicted_primary_root_cause": "conflicting_contexts",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer claims \"with garage parking available,\" but the BusinessParking attribute explicitly shows \"garage\": false, so this span is directly contradicted by the source context.",
+        "source_dataset": "Yelp",
+        "source_evidence_span_count": 1,
+        "task_type": "Data2txt"
+      },
+      {
+        "evidence_span_overlap": 0.4,
+        "expected": [
+          "contradicted_answer"
+        ],
+        "expected_primary_root_cause": "conflicting_contexts",
+        "id": "ragtruth_7292",
+        "label_types": [
+          "Evident Conflict"
+        ],
+        "model": "mistral-7B-instruct",
+        "predicted": [
+          "contradicted_answer"
+        ],
+        "predicted_primary_root_cause": "conflicting_contexts",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer claims the restaurant \"has a parking garage,\" but the BusinessParking.garage attribute in the source is explicitly false, so this is directly contradicted by the context.",
+        "source_dataset": "Yelp",
+        "source_evidence_span_count": 1,
+        "task_type": "Data2txt"
+      },
+      {
+        "evidence_span_overlap": 0.4,
+        "expected": [
+          "contradicted_answer"
+        ],
+        "expected_primary_root_cause": "conflicting_contexts",
+        "id": "ragtruth_11447",
+        "label_types": [
+          "Evident Conflict"
         ],
         "model": "llama-2-70b-chat",
         "predicted": [
           "contradicted_answer"
         ],
         "predicted_primary_root_cause": "conflicting_contexts",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The phrase \"vegetarian dishes\" is unsupported by the structured data or reviews and remains hallucinated, but the business is explicitly labeled \"Gluten-Free,\" so only that part is grounded. The phrase \"provides friendly service\" is partially ",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer claims that there are valet services available, but the BusinessParking attribute in the source explicitly lists \"valet\": false, directly contradicting this statement.",
         "source_dataset": "Yelp",
-        "source_evidence_span_count": 2,
+        "source_evidence_span_count": 1,
         "task_type": "Data2txt"
       },
       {
-        "evidence_span_overlap": 0.636,
+        "evidence_span_overlap": 0.43,
         "expected": [
-          "contradicted_answer"
+          "partial_support"
         ],
-        "expected_primary_root_cause": "conflicting_contexts",
-        "id": "ragtruth_1990",
+        "expected_primary_root_cause": "answer_overreach",
+        "id": "ragtruth_6256",
         "label_types": [
-          "Evident Conflict"
+          "Evident Baseless Info"
         ],
         "model": "llama-2-13b-chat",
         "predicted": [
           "partial_support"
         ],
         "predicted_primary_root_cause": "answer_overreach",
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer claims the mother was \"praising him in front of the media,\" but the source only describes her smacking and screaming at him, and a police official thanking her. There is no mention of her praising her son, so this span is in evident",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The attributes OutdoorSeating, WiFi, and RestaurantsTakeOut are all explicitly null in the structured data, so the answer's claims that the business \"features\" outdoor seating, WiFi, and takeout options are overreaches beyond what the source s",
+        "source_dataset": "Yelp",
+        "source_evidence_span_count": 1,
+        "task_type": "Data2txt"
+      },
+      {
+        "evidence_span_overlap": 0.522,
+        "expected": [
+          "partial_support"
+        ],
+        "expected_primary_root_cause": "answer_overreach",
+        "id": "ragtruth_885",
+        "label_types": [
+          "Evident Baseless Info"
+        ],
+        "model": "llama-2-7b-chat",
+        "predicted": [
+          "partial_support"
+        ],
+        "predicted_primary_root_cause": "answer_overreach",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The article describes the underground city as dark and maze-like, making exploration and research difficult, but does not mention the graffiti being hidden beneath layers of earth and debris. That detail is not supported, contradicted, or boun",
         "source_dataset": "CNN/DM",
-        "source_evidence_span_count": 2,
+        "source_evidence_span_count": 1,
+        "task_type": "Summary"
+      },
+      {
+        "evidence_span_overlap": 0.594,
+        "expected": [
+          "contradicted_answer"
+        ],
+        "expected_primary_root_cause": "conflicting_contexts",
+        "id": "ragtruth_543",
+        "label_types": [
+          "Evident Conflict"
+        ],
+        "model": "llama-2-7b-chat",
+        "predicted": [
+          "contradicted_answer"
+        ],
+        "predicted_primary_root_cause": "conflicting_contexts",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer span says \"Heather Abbott, who lost her foot,\" implying traumatic loss in the bombing. The article explains that after failed attempts to save her foot, she chose amputation below the knee. This contradicts the characterization as s",
+        "source_dataset": "CNN/DM",
+        "source_evidence_span_count": 1,
+        "task_type": "Summary"
+      },
+      {
+        "evidence_span_overlap": 0.667,
+        "expected": [
+          "contradicted_answer"
+        ],
+        "expected_primary_root_cause": "conflicting_contexts",
+        "id": "ragtruth_1698",
+        "label_types": [
+          "Subtle Conflict"
+        ],
+        "model": "gpt-4-0613",
+        "predicted": [
+          "contradicted_answer"
+        ],
+        "predicted_primary_root_cause": "conflicting_contexts",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer text says 'killed 16 Sherpas', but the source specifies 'killed 16 Nepalis' and only then discusses Sherpas more generally. This is a subtle conflict: the death toll is correct but the group is misidentified.",
+        "source_dataset": "CNN/DM",
+        "source_evidence_span_count": 1,
+        "task_type": "Summary"
+      },
+      {
+        "evidence_span_overlap": 0.667,
+        "expected": [
+          "partial_support"
+        ],
+        "expected_primary_root_cause": "answer_overreach",
+        "id": "ragtruth_3814",
+        "label_types": [
+          "Evident Baseless Info"
+        ],
+        "model": "llama-2-13b-chat",
+        "predicted": [
+          "partial_support"
+        ],
+        "predicted_primary_root_cause": "answer_overreach",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The source states only that 'Cirie Fields just set a Big Brother record' without specifying it was for most times nominated for eviction, so the answer over-specifies the nature of the record. This is partial support and aligns with answer_ove",
+        "source_dataset": "Recent News",
+        "source_evidence_span_count": 1,
+        "task_type": "Summary"
+      },
+      {
+        "evidence_span_overlap": 0.682,
+        "expected": [
+          "partial_support"
+        ],
+        "expected_primary_root_cause": "answer_overreach",
+        "id": "ragtruth_4196",
+        "label_types": [
+          "Evident Baseless Info"
+        ],
+        "model": "mistral-7B-instruct",
+        "predicted": [
+          "partial_support"
+        ],
+        "predicted_primary_root_cause": "answer_overreach",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer\u2019s phrase \"raising two children\" specifies a number of children that is not mentioned in the source. The source only states that she balanced being a mother and an entrepreneur, so the child-count detail is baseless while the general",
+        "source_dataset": "Recent News",
+        "source_evidence_span_count": 1,
         "task_type": "Summary"
       }
     ]
@@ -1526,31 +798,31 @@
   "groups": {
     "expected_label": [
       {
-        "cases": 112,
-        "dangerous_false_greens": 0,
-        "miss_rate": 0.767857,
-        "misses": 86,
-        "root_cause_misses": 86,
-        "span_localization_misses": 0,
-        "value": "no_failure_detected"
-      },
-      {
         "cases": 43,
         "dangerous_false_greens": 0,
-        "miss_rate": 0.837209,
-        "misses": 36,
-        "root_cause_misses": 11,
-        "span_localization_misses": 30,
+        "miss_rate": 0.395349,
+        "misses": 17,
+        "root_cause_misses": 2,
+        "span_localization_misses": 15,
         "value": "contradicted_answer"
       },
       {
-        "cases": 44,
-        "dangerous_false_greens": 1,
-        "miss_rate": 0.568182,
-        "misses": 25,
-        "root_cause_misses": 13,
-        "span_localization_misses": 17,
+        "cases": 42,
+        "dangerous_false_greens": 0,
+        "miss_rate": 0.357143,
+        "misses": 15,
+        "root_cause_misses": 3,
+        "span_localization_misses": 9,
         "value": "partial_support"
+      },
+      {
+        "cases": 114,
+        "dangerous_false_greens": 0,
+        "miss_rate": 0.035088,
+        "misses": 4,
+        "root_cause_misses": 4,
+        "span_localization_misses": 0,
+        "value": "no_failure_detected"
       },
       {
         "cases": 1,
@@ -1564,213 +836,208 @@
     ],
     "label_type": [
       {
-        "cases": 112,
+        "cases": 44,
         "dangerous_false_greens": 0,
-        "miss_rate": 0.767857,
-        "misses": 86,
-        "root_cause_misses": 86,
-        "span_localization_misses": 0,
-        "value": "no_hallucination_span"
+        "miss_rate": 0.386364,
+        "misses": 17,
+        "root_cause_misses": 3,
+        "span_localization_misses": 12,
+        "value": "Evident Baseless Info"
       },
       {
         "cases": 41,
         "dangerous_false_greens": 0,
-        "miss_rate": 0.853659,
-        "misses": 35,
-        "root_cause_misses": 10,
-        "span_localization_misses": 29,
+        "miss_rate": 0.365854,
+        "misses": 15,
+        "root_cause_misses": 1,
+        "span_localization_misses": 14,
         "value": "Evident Conflict"
       },
       {
-        "cases": 44,
-        "dangerous_false_greens": 1,
-        "miss_rate": 0.681818,
-        "misses": 30,
-        "root_cause_misses": 12,
-        "span_localization_misses": 23,
-        "value": "Evident Baseless Info"
-      },
-      {
-        "cases": 11,
+        "cases": 112,
         "dangerous_false_greens": 0,
-        "miss_rate": 0.363636,
+        "miss_rate": 0.035714,
         "misses": 4,
-        "root_cause_misses": 2,
-        "span_localization_misses": 3,
-        "value": "Subtle Baseless Info"
+        "root_cause_misses": 4,
+        "span_localization_misses": 0,
+        "value": "no_hallucination_span"
       },
       {
         "cases": 2,
         "dangerous_false_greens": 0,
-        "miss_rate": 0.5,
-        "misses": 1,
+        "miss_rate": 1.0,
+        "misses": 2,
         "root_cause_misses": 1,
         "span_localization_misses": 1,
         "value": "Subtle Conflict"
+      },
+      {
+        "cases": 11,
+        "dangerous_false_greens": 0,
+        "miss_rate": 0.181818,
+        "misses": 2,
+        "root_cause_misses": 0,
+        "span_localization_misses": 1,
+        "value": "Subtle Baseless Info"
       }
     ],
     "model": [
       {
         "cases": 33,
         "dangerous_false_greens": 0,
-        "miss_rate": 0.848485,
-        "misses": 28,
-        "root_cause_misses": 18,
-        "span_localization_misses": 12,
+        "miss_rate": 0.333333,
+        "misses": 11,
+        "root_cause_misses": 2,
+        "span_localization_misses": 8,
         "value": "llama-2-7b-chat"
       },
       {
         "cases": 35,
         "dangerous_false_greens": 0,
-        "miss_rate": 0.8,
-        "misses": 28,
-        "root_cause_misses": 20,
-        "span_localization_misses": 10,
+        "miss_rate": 0.257143,
+        "misses": 9,
+        "root_cause_misses": 4,
+        "span_localization_misses": 5,
         "value": "llama-2-13b-chat"
       },
       {
         "cases": 35,
         "dangerous_false_greens": 0,
-        "miss_rate": 0.742857,
-        "misses": 26,
-        "root_cause_misses": 18,
-        "span_localization_misses": 9,
+        "miss_rate": 0.2,
+        "misses": 7,
+        "root_cause_misses": 1,
+        "span_localization_misses": 6,
         "value": "llama-2-70b-chat"
-      },
-      {
-        "cases": 31,
-        "dangerous_false_greens": 1,
-        "miss_rate": 0.774194,
-        "misses": 24,
-        "root_cause_misses": 22,
-        "span_localization_misses": 4,
-        "value": "gpt-4-0613"
       },
       {
         "cases": 32,
         "dangerous_false_greens": 0,
-        "miss_rate": 0.75,
-        "misses": 24,
-        "root_cause_misses": 22,
-        "span_localization_misses": 4,
+        "miss_rate": 0.125,
+        "misses": 4,
+        "root_cause_misses": 1,
+        "span_localization_misses": 1,
         "value": "gpt-3.5-turbo-0613"
       },
       {
         "cases": 34,
         "dangerous_false_greens": 0,
-        "miss_rate": 0.529412,
-        "misses": 18,
-        "root_cause_misses": 10,
-        "span_localization_misses": 9,
+        "miss_rate": 0.117647,
+        "misses": 4,
+        "root_cause_misses": 0,
+        "span_localization_misses": 4,
         "value": "mistral-7B-instruct"
+      },
+      {
+        "cases": 31,
+        "dangerous_false_greens": 0,
+        "miss_rate": 0.064516,
+        "misses": 2,
+        "root_cause_misses": 1,
+        "span_localization_misses": 1,
+        "value": "gpt-4-0613"
       }
     ],
     "root_cause_confusion": [
       {
-        "count": 64,
-        "expected": "no_failure_detected",
-        "predicted": "answer_overreach"
-      },
-      {
-        "count": 32,
-        "expected": "answer_overreach",
-        "predicted": "answer_overreach"
-      },
-      {
-        "count": 32,
-        "expected": "conflicting_contexts",
-        "predicted": "conflicting_contexts"
-      },
-      {
-        "count": 26,
+        "count": 110,
         "expected": "no_failure_detected",
         "predicted": "no_failure_detected"
       },
       {
-        "count": 22,
-        "expected": "no_failure_detected",
+        "count": 41,
+        "expected": "conflicting_contexts",
         "predicted": "conflicting_contexts"
       },
       {
-        "count": 12,
+        "count": 40,
+        "expected": "answer_overreach",
+        "predicted": "answer_overreach"
+      },
+      {
+        "count": 3,
         "expected": "answer_overreach",
         "predicted": "conflicting_contexts"
       },
       {
-        "count": 11,
+        "count": 3,
+        "expected": "no_failure_detected",
+        "predicted": "answer_overreach"
+      },
+      {
+        "count": 2,
         "expected": "conflicting_contexts",
         "predicted": "answer_overreach"
       },
       {
         "count": 1,
-        "expected": "answer_overreach",
-        "predicted": "no_failure_detected"
+        "expected": "no_failure_detected",
+        "predicted": "conflicting_contexts"
       }
     ],
     "source_dataset": [
       {
         "cases": 64,
         "dangerous_false_greens": 0,
-        "miss_rate": 0.890625,
-        "misses": 57,
-        "root_cause_misses": 29,
-        "span_localization_misses": 34,
+        "miss_rate": 0.328125,
+        "misses": 21,
+        "root_cause_misses": 3,
+        "span_localization_misses": 17,
         "value": "Yelp"
-      },
-      {
-        "cases": 60,
-        "dangerous_false_greens": 1,
-        "miss_rate": 0.683333,
-        "misses": 41,
-        "root_cause_misses": 39,
-        "span_localization_misses": 3,
-        "value": "MARCO"
       },
       {
         "cases": 49,
         "dangerous_false_greens": 0,
-        "miss_rate": 0.673469,
-        "misses": 33,
-        "root_cause_misses": 29,
-        "span_localization_misses": 6,
+        "miss_rate": 0.163265,
+        "misses": 8,
+        "root_cause_misses": 2,
+        "span_localization_misses": 4,
         "value": "CNN/DM"
       },
       {
         "cases": 27,
         "dangerous_false_greens": 0,
-        "miss_rate": 0.62963,
-        "misses": 17,
-        "root_cause_misses": 13,
-        "span_localization_misses": 5,
+        "miss_rate": 0.148148,
+        "misses": 4,
+        "root_cause_misses": 1,
+        "span_localization_misses": 3,
         "value": "Recent News"
+      },
+      {
+        "cases": 60,
+        "dangerous_false_greens": 0,
+        "miss_rate": 0.066667,
+        "misses": 4,
+        "root_cause_misses": 3,
+        "span_localization_misses": 1,
+        "value": "MARCO"
       }
     ],
     "task_type": [
       {
         "cases": 64,
         "dangerous_false_greens": 0,
-        "miss_rate": 0.890625,
-        "misses": 57,
-        "root_cause_misses": 29,
-        "span_localization_misses": 34,
+        "miss_rate": 0.328125,
+        "misses": 21,
+        "root_cause_misses": 3,
+        "span_localization_misses": 17,
         "value": "Data2txt"
       },
       {
         "cases": 76,
         "dangerous_false_greens": 0,
-        "miss_rate": 0.657895,
-        "misses": 50,
-        "root_cause_misses": 42,
-        "span_localization_misses": 11,
+        "miss_rate": 0.157895,
+        "misses": 12,
+        "root_cause_misses": 3,
+        "span_localization_misses": 7,
         "value": "Summary"
       },
       {
         "cases": 60,
-        "dangerous_false_greens": 1,
-        "miss_rate": 0.683333,
-        "misses": 41,
-        "root_cause_misses": 39,
-        "span_localization_misses": 3,
+        "dangerous_false_greens": 0,
+        "miss_rate": 0.066667,
+        "misses": 4,
+        "root_cause_misses": 3,
+        "span_localization_misses": 1,
         "value": "QA"
       }
     ]
@@ -1782,17 +1049,17 @@
   ],
   "summary": {
     "cases": 200,
-    "dangerous_false_green_rate": 0.005,
-    "dangerous_false_greens": 1,
-    "evidence_span_overlap": 0.551,
-    "failure_label_macro_f1": 0.343,
-    "label_misses": 111,
-    "miss_rate": 0.74,
-    "misses": 148,
-    "root_cause_accuracy": 0.45,
-    "root_cause_misses": 110,
-    "source_span_bad_localization": 48,
-    "span_localization_misses": 48,
+    "dangerous_false_green_rate": 0.0,
+    "dangerous_false_greens": 0,
+    "evidence_span_overlap": 0.786,
+    "failure_label_macro_f1": 0.955,
+    "label_misses": 9,
+    "miss_rate": 0.185,
+    "misses": 37,
+    "root_cause_accuracy": 0.955,
+    "root_cause_misses": 9,
+    "source_span_bad_localization": 25,
+    "span_localization_misses": 25,
     "span_overlap_threshold": 0.75,
     "verdict_misses": 4
   }

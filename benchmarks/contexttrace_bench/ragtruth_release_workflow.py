@@ -59,6 +59,7 @@ BUNDLE_SCORED = (
     "ragtruth_error_analysis.md",
     "candidate_inputs.jsonl",
 )
+BASELINE_RESULTS_ARTIFACT = "baseline_results.json"
 
 
 def run_ragtruth_release_workflow(
@@ -198,7 +199,10 @@ def write_ragtruth_release_bundle(
             _copy_if_present(output_path / name, bundle_path / name, bundle_path, artifacts, missing_required, required=True)
     score_dir = output_path / "scored"
     if manifest.get("status") == "scored":
-        for name in BUNDLE_SCORED:
+        scored_artifacts = list(BUNDLE_SCORED)
+        if int((manifest.get("score") or {}).get("baselines") or 0) > 0:
+            scored_artifacts.append(BASELINE_RESULTS_ARTIFACT)
+        for name in scored_artifacts:
             _copy_if_present(score_dir / name, bundle_path / "scored" / name, bundle_path, artifacts, missing_required, required=True)
     for candidate in candidate_files or []:
         _copy_if_present(candidate, bundle_path / "candidates" / candidate.name, bundle_path, artifacts, missing_required, required=False)

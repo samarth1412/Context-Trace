@@ -78,8 +78,8 @@
       "case_id": "ragtruth_906",
       "error_count": 0,
       "reviewed": true,
-      "source_evidence_span_count": 2,
-      "warning_count": 0
+      "source_evidence_span_count": 0,
+      "warning_count": 1
     },
     {
       "answer_hallucination_span_count": 1,
@@ -714,11 +714,16 @@
       "warning_count": 0
     }
   ],
-  "source_span_rows": 76,
+  "source_span_rows": 75,
   "valid": true,
   "warnings": [
     {
       "case_id": "ragtruth_58",
+      "check": "row",
+      "message": "Reviewed hallucination row has no source_evidence_spans."
+    },
+    {
+      "case_id": "ragtruth_906",
       "check": "row",
       "message": "Reviewed hallucination row has no source_evidence_spans."
     },

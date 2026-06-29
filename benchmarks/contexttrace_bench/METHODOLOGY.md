@@ -308,8 +308,9 @@ interval review, and fully reproducible competitor runs.
   external evaluator does not natively expose ContextTrace labels.
 - The public holdout has reached the 150-case ContextTrace-Diag-150 target, but
   it still needs human audit sign-off before being described as frozen.
-- Current benchmark artifacts are generated in `benchmarks/contexttrace_bench/out/`
-  and published by CI artifacts rather than committed to source control.
+- Current benchmark artifacts are generated in `benchmarks/contexttrace_bench/out/`.
+  CI publishes complete run artifacts, while selected checksummed external
+  evidence bundles are committed for reproducible review.
 
 ## Week 1 Evidence Checklist
 

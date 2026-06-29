@@ -19,6 +19,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - A 200-row same-ID CRAG RAGChecker calibration with real reference-answer
   provenance, complete diagnostic coverage, evaluator agreement statistics,
   and a checksummed review-pending bundle.
+- A fail-closed broad-SOTA evidence gate covering release-bundle integrity,
+  external dataset count, independent review, metric thresholds, confidence
+  intervals, same-ID competitor rows, and Diag-150 freeze status.
+- A public benchmark card and machine-generated SOTA status report.
+- A complete same-ID RAGAS `0.4.2` comparison on the 200-case primary RAGTruth
+  sample, including resumable high-output-token evaluation and bundled baseline
+  scores.
 
 ### Changed
 
@@ -32,6 +39,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
   normalization instead of nesting it under a second `metadata` key.
 - Hardened RAGChecker resume behavior against changed inputs, references, or
   evaluator configuration and recorded exact input/reference hashes.
+- Moved the two assisted RAGTruth taxonomy corrections into the source review
+  JSONL and regenerated the canonical 200-case bundle at failure macro-F1
+  `0.955`, root-cause accuracy `0.955`, span overlap `0.786`, and zero dangerous
+  false greens.
+- Included RAGTruth `baseline_results.json` in release bundles whenever
+  candidate rows are scored.
 
 ## [0.9.0] - 2026-06-05
 

@@ -2489,7 +2489,7 @@
         "split": "test"
       },
       "review_metadata": {
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer\u00e2\u20ac\u2122s phrase \"raising two children\" specifies a number of children that is not mentioned in the source. The source only states that she balanced being a mother and an entrepreneur, so the child-count detail is baseless while the general motherhood aspect is supported. This matches a partial_support/answer_overreach characterization.",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer\u2019s phrase \"raising two children\" specifies a number of children that is not mentioned in the source. The source only states that she balanced being a mother and an entrepreneur, so the child-count detail is baseless while the general motherhood aspect is supported. This matches a partial_support/answer_overreach characterization.",
         "review_status": "reviewed",
         "reviewed": true,
         "reviewed_at": "2026-06-13T05:58:52+00:00",
@@ -2543,7 +2543,7 @@
         "split": "test"
       },
       "review_metadata": {
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The source states USCIS is committed to completing work permit applications in a 30-day window on average but does not say that is the current processing time or that increased funding is needed specifically to reduce that 30-day timeframe. The answer\u00e2\u20ac\u2122s claim about reducing the current 30-day processing time conflicts with the source\u00e2\u20ac\u2122s framing of 30 days as a goal/commitment rather than an existing baseline.",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The source states USCIS is committed to completing work permit applications in a 30-day window on average but does not say that is the current processing time or that increased funding is needed specifically to reduce that 30-day timeframe. The answer\u2019s claim about reducing the current 30-day processing time conflicts with the source\u2019s framing of 30 days as a goal/commitment rather than an existing baseline.",
         "review_status": "reviewed",
         "reviewed": true,
         "reviewed_at": "2026-06-13T05:58:52+00:00",
@@ -3097,7 +3097,7 @@
       ],
       "expected_citation_statuses": [],
       "expected_evidence_spans": [
-        "According to Yahoo News, Representative Morales said:\n\"We can have these workforce agreements between a governor in Mexico and the governor of Texas. We need 100 laborers, let's say in Uvalde for some crop picking, they can do a joint cooperation agreement where they send them over here for a period of time and they're paying again, they're gainfully employed. The employers are taken care of also so that they don't get into any criminal conduct and employing these sorts of migrants. And it's a win-win situation for everyone.\u00e2\u20ac\u009d",
+        "According to Yahoo News, Representative Morales said:\n\"We can have these workforce agreements between a governor in Mexico and the governor of Texas. We need 100 laborers, let's say in Uvalde for some crop picking, they can do a joint cooperation agreement where they send them over here for a period of time and they're paying again, they're gainfully employed. The employers are taken care of also so that they don't get into any criminal conduct and employing these sorts of migrants. And it's a win-win situation for everyone.\u201d",
         "Do you think charging migrants $2,000 is a win-win for the country?"
       ],
       "expected_labels": [
@@ -3370,7 +3370,7 @@
         "split": "test"
       },
       "review_metadata": {
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer claims uniform hours of 4 pm\u00e2\u20ac\u201c10 pm Monday\u00e2\u20ac\u201cSaturday and 11 am\u00e2\u20ac\u201c10 pm Sunday, which conflicts with the structured hours in the source context that show closing at 9 pm most days, 10 pm only on Friday and Saturday, and 9 pm on Sunday.",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer claims uniform hours of 4 pm\u201310 pm Monday\u2013Saturday and 11 am\u201310 pm Sunday, which conflicts with the structured hours in the source context that show closing at 9 pm most days, 10 pm only on Friday and Saturday, and 9 pm on Sunday.",
         "review_status": "reviewed",
         "reviewed": true,
         "reviewed_at": "2026-06-13T05:58:52+00:00",
@@ -4088,7 +4088,7 @@
         "split": "test"
       },
       "review_metadata": {
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The claim that the cafe has a \u00e2\u20ac\u0153loyal following among both locals and tourists\u00e2\u20ac\u009d is not directly supported or contradicted by the provided structured data or reviews. While one reviewer notes they don\u00e2\u20ac\u2122t live in the area and would return, this single comment does not substantiate a broader loyal following among both locals and tourists. No concise span in the source text fairly supports, contradicts, or tightly bounds this generalized claim.",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The claim that the cafe has a \u201cloyal following among both locals and tourists\u201d is not directly supported or contradicted by the provided structured data or reviews. While one reviewer notes they don\u2019t live in the area and would return, this single comment does not substantiate a broader loyal following among both locals and tourists. No concise span in the source text fairly supports, contradicts, or tightly bounds this generalized claim.",
         "review_status": "reviewed",
         "reviewed": true,
         "reviewed_at": "2026-06-13T05:58:52+00:00",
@@ -5029,7 +5029,7 @@
         "split": "test"
       },
       "review_metadata": {
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer\u00e2\u20ac\u2122s mention of a 5-star rating on Google is unsupported because the source only shows a generic `business_stars\": 5.0` field without specifying Google or any other platform. There is no text in the source contexts that mentions Google, so no exact span can be cited to support or contradict that specific claim.",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer\u2019s mention of a 5-star rating on Google is unsupported because the source only shows a generic `business_stars\": 5.0` field without specifying Google or any other platform. There is no text in the source contexts that mentions Google, so no exact span can be cited to support or contradict that specific claim.",
         "review_status": "reviewed",
         "reviewed": true,
         "reviewed_at": "2026-06-13T05:59:43+00:00",
@@ -5286,7 +5286,7 @@
         "split": "test"
       },
       "review_metadata": {
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer phrase \u00e2\u20ac\u0153and intimate,\u00e2\u20ac\u009d asserts an ambience attribute that is not supported by the structured data: in the source, the 'intimate' ambience field is null, so there is no evidence it is intimate. This makes the claim baseless given the instruction to rely only on provided data.",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer phrase \u201cand intimate,\u201d asserts an ambience attribute that is not supported by the structured data: in the source, the 'intimate' ambience field is null, so there is no evidence it is intimate. This makes the claim baseless given the instruction to rely only on provided data.",
         "review_status": "reviewed",
         "reviewed": true,
         "reviewed_at": "2026-06-13T05:59:43+00:00",
@@ -5972,7 +5972,7 @@
         "split": "test"
       },
       "review_metadata": {
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The bar is described as a full bar with basic liquors and cocktails; there is no mention of craft beers or wines, so that phrase is unsupported. The structured ambience data explicitly marks 'upscale' as false, conflicting with the answer\u00e2\u20ac\u2122s 'upscale' description. The term 'trendy' is neither supported nor contradicted in the structured ambience (set to null), but the user was instructed not to make up information, so it is baseless with respect to the provided data.",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The bar is described as a full bar with basic liquors and cocktails; there is no mention of craft beers or wines, so that phrase is unsupported. The structured ambience data explicitly marks 'upscale' as false, conflicting with the answer\u2019s 'upscale' description. The term 'trendy' is neither supported nor contradicted in the structured ambience (set to null), but the user was instructed not to make up information, so it is baseless with respect to the provided data.",
         "review_status": "reviewed",
         "reviewed": true,
         "reviewed_at": "2026-06-13T06:00:35+00:00",
@@ -6337,7 +6337,7 @@
         "split": "test"
       },
       "review_metadata": {
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer claims uniform daily hours 10 am\u00e2\u20ac\u201c7 pm, but the source shows varying hours by day, directly contradicting the span.",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer claims uniform daily hours 10 am\u20137 pm, but the source shows varying hours by day, directly contradicting the span.",
         "review_status": "reviewed",
         "reviewed": true,
         "reviewed_at": "2026-06-13T06:00:35+00:00",
@@ -6390,7 +6390,7 @@
         "split": "test"
       },
       "review_metadata": {
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer claims The Spot is open Monday through Sunday from 10am to 8pm with extended hours on weekends, but the provided hours show varying closing times (4pm Monday, 7pm Tue\u00e2\u20ac\u201cThu, 8pm Fri\u00e2\u20ac\u201cSat, 5pm Sunday), directly contradicting the statement.",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer claims The Spot is open Monday through Sunday from 10am to 8pm with extended hours on weekends, but the provided hours show varying closing times (4pm Monday, 7pm Tue\u2013Thu, 8pm Fri\u2013Sat, 5pm Sunday), directly contradicting the statement.",
         "review_status": "reviewed",
         "reviewed": true,
         "reviewed_at": "2026-06-13T06:00:35+00:00",
@@ -6840,7 +6840,7 @@
         "split": "test"
       },
       "review_metadata": {
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The claim that the 'normal range for PSA levels varies depending on factors such as age and medical history, and different ranges may apply to different individuals' is not discussed in the provided passages. The sources mention PSA measurement units, indications of elevated levels, and a specific 4.0\u00e2\u20ac\u201c10.0 ng/ml range possibly indicating certain conditions, but do not address age-based variation, medical history dependence, or individualized normal ranges.",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The claim that the 'normal range for PSA levels varies depending on factors such as age and medical history, and different ranges may apply to different individuals' is not discussed in the provided passages. The sources mention PSA measurement units, indications of elevated levels, and a specific 4.0\u201310.0 ng/ml range possibly indicating certain conditions, but do not address age-based variation, medical history dependence, or individualized normal ranges.",
         "review_status": "reviewed",
         "reviewed": true,
         "reviewed_at": "2026-06-13T06:00:35+00:00",
@@ -7114,7 +7114,7 @@
         "split": "test"
       },
       "review_metadata": {
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer\u00e2\u20ac\u2122s claim that group A beta-hemolytic streptococci account for around 70% of cases is not supported by the passages; they only state that many cases or commonly are caused by this organism without giving any percentage. The hallucination label and root cause (answer_overreach) are appropriate.",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The answer\u2019s claim that group A beta-hemolytic streptococci account for around 70% of cases is not supported by the passages; they only state that many cases or commonly are caused by this organism without giving any percentage. The hallucination label and root cause (answer_overreach) are appropriate.",
         "review_status": "reviewed",
         "reviewed": true,
         "reviewed_at": "2026-06-13T06:00:35+00:00",
@@ -8800,9 +8800,9 @@
     "stratified samples are deterministic and should record sample_size, sample_seed, and stratify_by fields before review."
   ],
   "review": {
-    "applied_at": "2026-06-23T22:41:51+00:00",
+    "applied_at": "2026-06-29T14:55:14+00:00",
     "required_review_cases": 88,
-    "review_file": "benchmarks\\contexttrace_bench\\out\\ragtruth_release_bundle\\ragtruth_review_signoff.jsonl",
+    "review_file": "benchmarks/contexttrace_bench/out/ragtruth_official/ragtruth_test200_review_workflow/ragtruth_reviewed_gpt51_assisted.jsonl",
     "reviewed_cases": 88,
     "status": "reviewed",
     "total_cases": 200

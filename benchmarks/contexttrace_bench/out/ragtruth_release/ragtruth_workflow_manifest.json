@@ -8,6 +8,7 @@
     "reviewed_case_pack": "benchmarks\\contexttrace_bench\\out\\ragtruth_release\\ragtruth_reviewed_case_pack.json",
     "score_output_dir": "benchmarks\\contexttrace_bench\\out\\ragtruth_release\\scored",
     "score_paths": {
+      "baseline_results_json": "benchmarks\\contexttrace_bench\\out\\ragtruth_release\\scored\\baseline_results.json",
       "candidate_inputs_jsonl": "benchmarks\\contexttrace_bench\\out\\ragtruth_release\\scored\\candidate_inputs.jsonl",
       "error_analysis_json": "benchmarks\\contexttrace_bench\\out\\ragtruth_release\\scored\\error_analysis.json",
       "error_analysis_md": "benchmarks\\contexttrace_bench\\out\\ragtruth_release\\scored\\error_analysis.md",
@@ -68,10 +69,10 @@
     "review_rows": 88,
     "reviewed_rows": 88,
     "valid": true,
-    "warnings": 12
+    "warnings": 13
   },
   "score": {
-    "baselines": 0,
+    "baselines": 1,
     "case_pack_dataset": "RAGTruth",
     "case_set": "external_case_pack",
     "summary": {
@@ -80,23 +81,23 @@
       "citation_error_precision": 1.0,
       "citation_error_recall": 1.0,
       "citation_status_reported_cases": 200,
-      "claim_verdict_macro_f1": 0.143,
+      "claim_verdict_macro_f1": 0.337,
       "claim_verdict_match_rate": 0.0,
       "cost_per_100_traces_usd": 0.0,
-      "dangerous_false_green_rate": 0.005,
-      "evidence_span_labeled_cases": 76,
-      "evidence_span_overlap": 0.551,
-      "evidence_span_reported_cases": 76,
-      "failure_label_exact_match_rate": 0.445,
-      "failure_label_macro_f1": 0.343,
-      "latency_p50_ms": 129.285,
-      "latency_p95_ms": 467.435,
-      "root_cause_accuracy": 0.45,
+      "dangerous_false_green_rate": 0.0,
+      "evidence_span_labeled_cases": 75,
+      "evidence_span_overlap": 0.786,
+      "evidence_span_reported_cases": 75,
+      "failure_label_exact_match_rate": 0.955,
+      "failure_label_macro_f1": 0.955,
+      "latency_p50_ms": 790.849,
+      "latency_p95_ms": 2442.996,
+      "root_cause_accuracy": 0.955,
       "root_cause_labeled_cases": 200,
       "root_cause_reported_cases": 200
     }
   },
-  "started_at": "2026-06-20T16:48:55+00:00",
+  "started_at": "2026-06-29T14:55:13+00:00",
   "status": "scored",
   "workflow": "ragtruth_review_workflow"
 }

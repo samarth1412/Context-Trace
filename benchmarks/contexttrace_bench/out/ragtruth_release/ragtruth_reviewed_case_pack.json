@@ -818,14 +818,11 @@
         }
       ],
       "expected_citation_statuses": [],
-      "expected_evidence_spans": [
-        "After the article published, UVA admitted this and instituted a zero-tolerance policy on sexual assault going forward -- although that policy was never defined, so it's unclear what it means.",
-        "Along with the O'Melveny & Myers investigation, there's also an open Title IX investigation into UVA by the U.S. Department of Education as a result of a civil suit."
-      ],
+      "expected_evidence_spans": [],
       "expected_labels": [
-        "partial_support"
+        "no_failure_detected"
       ],
-      "expected_primary_root_cause": "answer_overreach",
+      "expected_primary_root_cause": "no_failure_detected",
       "expected_should_abstain": false,
       "expected_verdict_counts": {},
       "expected_verdict_scope": "answer_label",
@@ -850,12 +847,12 @@
         "split": "test"
       },
       "review_metadata": {
-        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The labeled span is well supported by the source, which explicitly states UVA's admission about never expelling a student for sexual assault, the institution of a zero-tolerance policy that was never defined, and the concurrent Title IX investigation by the U.S. Department of Education. This is partial_support, matching the expected taxonomy.",
+        "review_notes": "GPT-5.1 assisted review; not independent human sign-off. The labeled span is fully supported by the source: the source explicitly states UVA admitted never expelling a student for sexual assault, instituted a zero-tolerance policy that was never defined, and had a concurrent Title IX investigation by the U.S. Department of Education as a result of a civil suit. Override the original RAGTruth hallucination taxonomy to no_failure_detected; independent human sign-off is still required before treating this as final.",
         "review_status": "reviewed",
         "reviewed": true,
-        "reviewed_at": "2026-06-13T05:58:08+00:00",
+        "reviewed_at": "2026-06-23T00:00:00+00:00",
         "reviewer": "Codex GPT-5.1 assisted source review",
-        "source_evidence_span_count": 2
+        "source_evidence_span_count": 0
       },
       "source": "RAGTruth/Summary/CNN/DM"
     },
@@ -8488,9 +8485,9 @@
         "Note: Video guides to show what each Skill Move looks like are at the top of this page!"
       ],
       "expected_labels": [
-        "partial_support"
+        "no_failure_detected"
       ],
-      "expected_primary_root_cause": "answer_overreach",
+      "expected_primary_root_cause": "no_failure_detected",
       "expected_should_abstain": false,
       "expected_verdict_counts": {},
       "expected_verdict_scope": "answer_label",
@@ -8803,7 +8800,7 @@
     "stratified samples are deterministic and should record sample_size, sample_seed, and stratify_by fields before review."
   ],
   "review": {
-    "applied_at": "2026-06-20T16:48:56+00:00",
+    "applied_at": "2026-06-29T14:55:14+00:00",
     "required_review_cases": 88,
     "review_file": "benchmarks/contexttrace_bench/out/ragtruth_official/ragtruth_test200_review_workflow/ragtruth_reviewed_gpt51_assisted.jsonl",
     "reviewed_cases": 88,
