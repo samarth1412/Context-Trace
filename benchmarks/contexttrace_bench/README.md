@@ -40,6 +40,12 @@ Validate the cumulative ablation harness without producing paper results:
 python benchmarks/contexttrace_bench/arr_ablation.py --quick --case-set all
 ```
 
+Generate all four ARR reviewer tables in one non-paper quick run:
+
+```bash
+python benchmarks/contexttrace_bench/reproduce_arr_tables.py --quick
+```
+
 Run it from the repo root:
 
 ```bash

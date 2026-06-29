@@ -283,7 +283,13 @@ def write_benchmark_outputs(
     return paths
 
 
-def score_candidate_predictions(reference_result: dict[str, Any], candidate: dict[str, Any]) -> dict[str, Any]:
+def score_candidate_predictions(
+    reference_result: dict[str, Any],
+    candidate: dict[str, Any],
+    *,
+    bootstrap_samples: int = DEFAULT_BOOTSTRAP_SAMPLES,
+    bootstrap_seed: int = DEFAULT_BOOTSTRAP_SEED,
+) -> dict[str, Any]:
     """Score a third-party or hand-written benchmark candidate against ContextTrace-Bench.
 
     The candidate format is intentionally small so RAGAS, DeepEval, RAGChecker,
@@ -303,6 +309,8 @@ def score_candidate_predictions(reference_result: dict[str, Any], candidate: dic
     confidence_intervals = _confidence_intervals(
         rows,
         estimated_cost_per_trace_usd=estimated_cost,
+        samples=bootstrap_samples,
+        seed=bootstrap_seed,
     )
     return {
         "benchmark": reference_result.get("benchmark", "ContextTrace-Bench"),
@@ -330,8 +338,19 @@ def load_candidate_predictions(path: str | Path) -> dict[str, Any]:
     return payload
 
 
-def score_candidate_file(reference_result: dict[str, Any], path: str | Path) -> dict[str, Any]:
-    return score_candidate_predictions(reference_result, load_candidate_predictions(path))
+def score_candidate_file(
+    reference_result: dict[str, Any],
+    path: str | Path,
+    *,
+    bootstrap_samples: int = DEFAULT_BOOTSTRAP_SAMPLES,
+    bootstrap_seed: int = DEFAULT_BOOTSTRAP_SEED,
+) -> dict[str, Any]:
+    return score_candidate_predictions(
+        reference_result,
+        load_candidate_predictions(path),
+        bootstrap_samples=bootstrap_samples,
+        bootstrap_seed=bootstrap_seed,
+    )
 
 
 def render_candidate_inputs_jsonl(result: dict[str, Any]) -> str:
@@ -2555,7 +2574,15 @@ def main(argv: list[str] | None = None) -> int:
         bootstrap_samples=args.bootstrap_samples,
         bootstrap_seed=args.bootstrap_seed,
     )
-    baseline_results = [score_candidate_file(result, candidate_path) for candidate_path in args.candidate]
+    baseline_results = [
+        score_candidate_file(
+            result,
+            candidate_path,
+            bootstrap_samples=args.bootstrap_samples,
+            bootstrap_seed=args.bootstrap_seed,
+        )
+        for candidate_path in args.candidate
+    ]
     paths = write_benchmark_outputs(result, output_dir=args.output_dir, baseline_results=baseline_results or None)
     gate_failures = quality_gate_failures(result) if args.enforce_sota_gates else []
     if args.json:

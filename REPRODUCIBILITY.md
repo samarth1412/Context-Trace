@@ -17,7 +17,22 @@ python -m pip install -e packages/contexttrace
 python -m pytest
 ```
 
-## Harness Check
+## One-Command Harness Check
+
+Generate all four reviewer tables with one command:
+
+```bash
+python benchmarks/contexttrace_bench/reproduce_arr_tables.py --quick
+```
+
+This writes external evaluation, cumulative ablation, same-ID baseline, and
+error-analysis tables plus a machine-readable manifest under
+`benchmarks/contexttrace_bench/out/arr_reproduction/`. When the ignored
+RAGTruth release bundle is available, quick mode selects a deterministic 25-case
+subset and scores the matching RAGAS predictions. Missing external artifacts are
+reported as unavailable, never as zero-valued evidence.
+
+## Ablation Harness Check
 
 Run the fast cumulative ablation check:
 
@@ -34,7 +49,18 @@ generation. It must not be reported as a paper result.
 
 ## Frozen Paper Run
 
-After dataset review is complete, run the frozen matrix without `--quick`:
+After the full dataset pack and matched baseline predictions are available, run
+the one-command paper candidate workflow:
+
+```bash
+python benchmarks/contexttrace_bench/reproduce_arr_tables.py \
+  --ragtruth-case-pack PATH \
+  --candidate PATH
+```
+
+Full mode fails unless the RAGTruth pack and at least one same-ID candidate are
+available. Its output remains a pre-review paper candidate until independent
+review reports pass. To run only the frozen matrix without `--quick`:
 
 ```bash
 python benchmarks/contexttrace_bench/arr_ablation.py \

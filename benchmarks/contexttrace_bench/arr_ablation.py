@@ -29,13 +29,14 @@ from contexttrace.verify.runner import VerificationProfile
 DEFAULT_SPEC_PATH = Path(__file__).with_name("ARR_EXPERIMENTS.json")
 DEFAULT_OUTPUT_DIR = Path(__file__).with_name("out") / "arr_ablations"
 TABLE_METRICS = (
-    ("failure_label_macro_f1", "Failure F1"),
+    ("failure_label_macro_f1", "Failure F1 [95% CI]"),
     ("claim_verdict_macro_f1", "Claim F1"),
     ("citation_error_f1", "Citation F1"),
     ("root_cause_accuracy", "Root cause"),
     ("evidence_span_overlap", "Span overlap"),
-    ("dangerous_false_green_rate", "False green"),
+    ("dangerous_false_green_rate", "False green [95% CI]"),
     ("latency_p95_ms", "p95 ms"),
+    ("cost_per_100_traces_usd", "Cost / 100"),
 )
 
 
@@ -120,7 +121,13 @@ def run_arr_ablations(
         "generated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
         "commit": _git_commit(),
         "quick": quick,
-        "paper_result_eligible": not quick,
+        "paper_run_candidate": not quick,
+        "paper_result_eligible": False,
+        "eligibility_reason": (
+            "Quick runs only validate the harness."
+            if quick
+            else "Independent dataset review must pass before this run is a paper result."
+        ),
         "case_set": "external_case_pack" if case_pack_path else resolved_case_set,
         "case_pack_path": _portable_path(case_pack_path) if case_pack_path else None,
         "case_count": len(reference_ids or []),
@@ -171,7 +178,8 @@ def render_ablation_table(result: dict[str, Any]) -> str:
     lines = [
         "# ARR Ablation Results",
         "",
-        "Status: `%s`" % ("quick_non_paper_run" if result.get("quick") else "paper_eligible_run"),
+        "Status: `%s`"
+        % ("quick_non_paper_run" if result.get("quick") else "pre_review_paper_candidate"),
         "",
         "Cases: `%s`" % result.get("case_count"),
         "",
@@ -185,7 +193,7 @@ def render_ablation_table(result: dict[str, Any]) -> str:
             % (
                 profile.get("label"),
                 profile.get("mode"),
-                " | ".join(_metric(summary.get(key)) for key, _ in TABLE_METRICS),
+                " | ".join(_profile_metric(profile, summary, key) for key, _ in TABLE_METRICS),
             )
         )
     lines.extend(
@@ -205,6 +213,20 @@ def _metric(value: Any) -> str:
     if isinstance(value, float):
         return "%.3f" % value
     return str(value)
+
+
+def _profile_metric(profile: dict[str, Any], summary: dict[str, Any], key: str) -> str:
+    value = summary.get(key)
+    if value is None or key not in {"failure_label_macro_f1", "dangerous_false_green_rate"}:
+        return _metric(value)
+    interval = (profile.get("confidence_intervals") or {}).get(key) or {}
+    if interval.get("low") is None or interval.get("high") is None:
+        return _metric(value)
+    return "%s [%s, %s]" % (
+        _metric(value),
+        _metric(interval.get("low")),
+        _metric(interval.get("high")),
+    )
 
 
 def _case_id_hash(case_ids: list[str]) -> str:
