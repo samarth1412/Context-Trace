@@ -2,7 +2,7 @@
 
 Status: `passed`.
 
-Files scanned: `1246`; blocking findings: `0`; quarantined non-release occurrences: `136`.
+Files scanned: `1248`; blocking findings: `0`; quarantined non-release occurrences: `136`.
 
 Scanned roots:
 

@@ -34,7 +34,7 @@ without the corresponding artifact.
 - [x] Current release-surface identity scan reports zero blocking findings.
 - [ ] Git history and release links are absent from anonymous supplementary files.
 - [ ] Private condition keys and reviewer identities are excluded.
-- [ ] Re-run clean-room install and artifact tests for the latest expanded artifact.
+- [x] Clean-room artifact tests and the full reproduction command pass for the expanded artifact.
 - [x] Current archive SHA-256 and file count are recorded in the artifact report.
 
 ## Submission
