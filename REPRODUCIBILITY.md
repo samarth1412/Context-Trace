@@ -94,9 +94,19 @@ python benchmarks/contexttrace_bench/arr_annotation.py build \
   --output-dir benchmarks/contexttrace_bench/out/arr_annotation_diag150
 ```
 
-Follow `ARR_ANNOTATION_PROTOCOL.md`. Send only the packet to reviewers. Generated
-experiment outputs are ignored by Git; archive paper artifacts in controlled
-storage with hashes and publish only de-identified, license-compatible files.
+Build the validated reviewer-only handoff bundle with:
+
+```bash
+python benchmarks/contexttrace_bench/arr_annotation.py bundle \
+  --packet benchmarks/contexttrace_bench/out/arr_annotation_diag150/annotation_packet.json \
+  --output out/contexttrace-arr-review-diag150.zip
+```
+
+Follow `ARR_ANNOTATION_PROTOCOL.md` and `ARR_LABEL_GUIDE.md`. Send only the
+reviewer ZIP; never send `annotation_key.private.json` or benchmark
+`labels.json`. Generated experiment outputs are ignored by Git; archive paper
+artifacts in controlled storage with hashes and publish only de-identified,
+license-compatible files.
 
 The diagnosis-actionability study is separate. Build its quick harness packet
 with `python benchmarks/contexttrace_bench/arr_actionability.py build --quick`

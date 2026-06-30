@@ -6,9 +6,10 @@ import json
 import random
 import re
 import sys
+import zipfile
 from collections import Counter
 from datetime import datetime, timezone
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -53,6 +54,42 @@ LABEL_KEYS = {
     "benchmark_note",
     "hallucination_labels",
 }
+REVIEW_BUNDLE_ROOT = "contexttrace-arr-review"
+REVIEW_BUNDLE_TIMESTAMP = (2026, 1, 1, 0, 0, 0)
+REVIEW_BUNDLE_MANIFEST = "BUNDLE_MANIFEST.json"
+DEFAULT_PROTOCOL_PATH = Path(__file__).with_name("ARR_ANNOTATION_PROTOCOL.md")
+DEFAULT_LABEL_GUIDE_PATH = Path(__file__).with_name("ARR_LABEL_GUIDE.md")
+REVIEW_BUNDLE_REQUIRED = {
+    "README.md",
+    "annotation_packet.json",
+    "ARR_ANNOTATION_PROTOCOL.md",
+    "ARR_LABEL_GUIDE.md",
+    REVIEW_BUNDLE_MANIFEST,
+}
+REVIEW_PACKET_FORBIDDEN_KEYS = {
+    *LABEL_KEYS,
+    "original_id",
+    "expected_verdict_counts",
+    "raw_predicted",
+    "answer_label_projection",
+}
+REVIEW_BUNDLE_README = """# ARR Independent Annotation Bundle
+
+This bundle contains a blinded annotation packet and the complete reviewer
+protocol. It contains no expected labels, system predictions, original case
+IDs, private key, or author identity.
+
+1. Read `ARR_ANNOTATION_PROTOCOL.md` and `ARR_LABEL_GUIDE.md` before annotating.
+2. Set packet-level `reviewer` to a stable pseudonymous ID.
+3. Set `review_kind` to `independent` only if you are not an author and have not
+   inspected predictions, expected labels, or the private key.
+4. Complete every assigned case's `annotation` object in
+   `annotation_packet.json` without changing case content or blind IDs.
+5. Return only the completed `annotation_packet.json` to the study coordinator.
+
+Do not inspect the project repository or run the system while labeling. Record
+uncertainty in `notes` rather than inferring hidden retrieval or model state.
+"""
 
 
 def build_blinded_annotation_artifacts(
@@ -157,6 +194,134 @@ def validate_blinded_packet(packet: dict[str, Any]) -> dict[str, Any]:
     return {
         "status": "passed" if not errors else "failed",
         "case_count": len(cases),
+        "errors": errors,
+    }
+
+
+def build_reviewer_bundle(
+    *,
+    packet_path: str | Path,
+    output_path: str | Path,
+    protocol_path: str | Path = DEFAULT_PROTOCOL_PATH,
+    label_guide_path: str | Path = DEFAULT_LABEL_GUIDE_PATH,
+) -> dict[str, Any]:
+    packet = _load_json_object(Path(packet_path))
+    packet_validation = validate_blinded_packet(packet)
+    if packet_validation["status"] != "passed":
+        raise ValueError("Reviewer packet failed leakage validation: %s" % packet_validation["errors"])
+    if str(packet.get("reviewer") or "").strip() or str(packet.get("review_kind") or "").strip():
+        raise ValueError("Reviewer bundle source must be an unassigned blank packet.")
+
+    payload = {
+        "README.md": REVIEW_BUNDLE_README.encode("utf-8"),
+        "annotation_packet.json": (json.dumps(packet, indent=2, sort_keys=True) + "\n").encode("utf-8"),
+        "ARR_ANNOTATION_PROTOCOL.md": Path(protocol_path).read_text(encoding="utf-8").encode("utf-8"),
+        "ARR_LABEL_GUIDE.md": Path(label_guide_path).read_text(encoding="utf-8").encode("utf-8"),
+    }
+    manifest = {
+        "schema_version": 1,
+        "bundle_type": "blinded_independent_annotation",
+        "archive_root": REVIEW_BUNDLE_ROOT,
+        "dataset": packet.get("dataset"),
+        "case_count": packet.get("case_count"),
+        "seed": packet.get("seed"),
+        "files": [
+            {
+                "path": path,
+                "bytes": len(content),
+                "sha256": _sha256_bytes(content),
+            }
+            for path, content in sorted(payload.items())
+        ],
+    }
+    payload[REVIEW_BUNDLE_MANIFEST] = (
+        json.dumps(manifest, indent=2, sort_keys=True) + "\n"
+    ).encode("utf-8")
+    destination = Path(output_path)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    _write_reviewer_zip(destination, payload)
+    validation = validate_reviewer_bundle(destination)
+    if validation["status"] != "passed":
+        destination.unlink(missing_ok=True)
+        raise ValueError("Reviewer bundle validation failed: %s" % validation["errors"])
+    bundle_sha = _sha256_file(destination)
+    checksum_path = destination.with_suffix(destination.suffix + ".sha256")
+    validation_path = destination.with_suffix(destination.suffix + ".validation.json")
+    checksum_path.write_text("%s  %s\n" % (bundle_sha, destination.name), encoding="ascii")
+    validation_path.write_text(json.dumps(validation, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return {
+        "bundle": str(destination),
+        "sha256": bundle_sha,
+        "checksum": str(checksum_path),
+        "validation": str(validation_path),
+        "dataset": packet.get("dataset"),
+        "case_count": packet.get("case_count"),
+        "file_count": validation["file_count"],
+    }
+
+
+def validate_reviewer_bundle(path: str | Path) -> dict[str, Any]:
+    archive_path = Path(path)
+    errors: list[dict[str, Any]] = []
+    payload: dict[str, bytes] = {}
+    try:
+        with zipfile.ZipFile(archive_path, "r") as archive:
+            infos = archive.infolist()
+            names = [info.filename for info in infos]
+            if names != sorted(names):
+                errors.append({"name": "archive_order", "message": "ZIP entries are not sorted."})
+            if len(names) != len(set(names)):
+                errors.append({"name": "duplicate_paths", "message": "ZIP contains duplicate paths."})
+            for info in infos:
+                relative = _review_bundle_relative_path(info.filename)
+                if relative is None:
+                    errors.append({"name": "archive_path", "path": info.filename})
+                    continue
+                if info.date_time != REVIEW_BUNDLE_TIMESTAMP:
+                    errors.append({"name": "timestamp", "path": relative})
+                lowered = relative.lower()
+                if "annotation_key" in lowered or ".private" in lowered or "private_key" in lowered:
+                    errors.append({"name": "private_material", "path": relative})
+                payload[relative] = archive.read(info)
+    except (OSError, zipfile.BadZipFile) as exc:
+        return {
+            "status": "failed",
+            "file_count": 0,
+            "case_count": 0,
+            "errors": [{"name": "archive_read", "message": str(exc)}],
+        }
+
+    missing = sorted(REVIEW_BUNDLE_REQUIRED - set(payload))
+    if missing:
+        errors.append({"name": "required_files", "missing": missing})
+    unexpected = sorted(set(payload) - REVIEW_BUNDLE_REQUIRED)
+    if unexpected:
+        errors.append({"name": "unexpected_files", "paths": unexpected})
+    packet: dict[str, Any] = {}
+    packet_bytes = payload.get("annotation_packet.json")
+    if packet_bytes is not None:
+        try:
+            parsed = json.loads(packet_bytes.decode("utf-8-sig"))
+            if not isinstance(parsed, dict):
+                raise ValueError("packet must be a JSON object")
+            packet = parsed
+            packet_validation = validate_blinded_packet(packet)
+            errors.extend(
+                {"name": "packet_%s" % item.get("name"), **{k: v for k, v in item.items() if k != "name"}}
+                for item in packet_validation["errors"]
+            )
+            leaked_keys = sorted(_find_forbidden_keys(packet, REVIEW_PACKET_FORBIDDEN_KEYS))
+            if leaked_keys:
+                errors.append({"name": "packet_leakage", "keys": leaked_keys})
+            if str(packet.get("reviewer") or "").strip() or str(packet.get("review_kind") or "").strip():
+                errors.append({"name": "packet_assignment", "message": "Bundle packet must be unassigned."})
+        except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as exc:
+            errors.append({"name": "packet_json", "message": str(exc)})
+    _validate_reviewer_manifest(payload, packet, errors)
+    return {
+        "status": "passed" if not errors else "failed",
+        "file_count": len(payload),
+        "case_count": len(packet.get("cases") or []),
         "errors": errors,
     }
 
@@ -578,6 +743,116 @@ def _jsonl(rows: list[dict[str, Any]]) -> str:
     return "".join(json.dumps(row, sort_keys=True) + "\n" for row in rows)
 
 
+def _load_json_object(path: Path) -> dict[str, Any]:
+    payload = json.loads(path.read_text(encoding="utf-8-sig"))
+    if not isinstance(payload, dict):
+        raise ValueError("Expected a JSON object: %s" % path)
+    return payload
+
+
+def _write_reviewer_zip(destination: Path, payload: dict[str, bytes]) -> None:
+    with zipfile.ZipFile(destination, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
+        for relative_path, content in sorted(payload.items()):
+            info = zipfile.ZipInfo(
+                "%s/%s" % (REVIEW_BUNDLE_ROOT, relative_path),
+                date_time=REVIEW_BUNDLE_TIMESTAMP,
+            )
+            info.compress_type = zipfile.ZIP_DEFLATED
+            info.external_attr = 0o100644 << 16
+            archive.writestr(info, content)
+
+
+def _review_bundle_relative_path(path: str) -> str | None:
+    pure = PurePosixPath(path)
+    parts = pure.parts
+    if len(parts) != 2 or parts[0] != REVIEW_BUNDLE_ROOT:
+        return None
+    if any(part in {"", ".", ".."} for part in parts):
+        return None
+    return parts[1]
+
+
+def _find_forbidden_keys(value: Any, forbidden: set[str]) -> set[str]:
+    found: set[str] = set()
+    if isinstance(value, dict):
+        for key, nested in value.items():
+            if str(key) in forbidden:
+                found.add(str(key))
+            found.update(_find_forbidden_keys(nested, forbidden))
+    elif isinstance(value, list):
+        for nested in value:
+            found.update(_find_forbidden_keys(nested, forbidden))
+    return found
+
+
+def _validate_reviewer_manifest(
+    payload: dict[str, bytes],
+    packet: dict[str, Any],
+    errors: list[dict[str, Any]],
+) -> None:
+    raw_manifest = payload.get(REVIEW_BUNDLE_MANIFEST)
+    if raw_manifest is None:
+        return
+    try:
+        manifest = json.loads(raw_manifest.decode("utf-8-sig"))
+        records = manifest.get("files") if isinstance(manifest, dict) else None
+        if not isinstance(records, list):
+            raise ValueError("manifest files must be a list")
+    except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as exc:
+        errors.append({"name": "manifest_json", "message": str(exc)})
+        return
+
+    for key, expected in (
+        ("archive_root", REVIEW_BUNDLE_ROOT),
+        ("dataset", packet.get("dataset")),
+        ("case_count", packet.get("case_count")),
+        ("seed", packet.get("seed")),
+    ):
+        if manifest.get(key) != expected:
+            errors.append(
+                {
+                    "name": "manifest_metadata",
+                    "field": key,
+                    "expected": expected,
+                    "actual": manifest.get(key),
+                }
+            )
+
+    indexed = {
+        str(record.get("path")): record
+        for record in records
+        if isinstance(record, dict) and record.get("path")
+    }
+    expected_paths = set(payload) - {REVIEW_BUNDLE_MANIFEST}
+    if set(indexed) != expected_paths:
+        errors.append(
+            {
+                "name": "manifest_paths",
+                "missing": sorted(expected_paths - set(indexed)),
+                "extra": sorted(set(indexed) - expected_paths),
+            }
+        )
+    for path in sorted(expected_paths & set(indexed)):
+        content = payload[path]
+        record = indexed[path]
+        if int(record.get("bytes") or -1) != len(content):
+            errors.append({"name": "manifest_bytes", "path": path})
+        if record.get("sha256") != _sha256_bytes(content):
+            errors.append({"name": "manifest_sha256", "path": path})
+
+
+def _sha256_bytes(content: bytes) -> str:
+    return hashlib.sha256(content).hexdigest()
+
+
+def _sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def _dataset_name(*, case_set: str, case_pack_path: str | Path | None) -> str:
     if not case_pack_path:
         return case_set
@@ -597,6 +872,11 @@ def main(argv: list[str] | None = None) -> int:
     build.add_argument("--case-set", default="public_holdout", choices=["contexttrace", "external", "public_holdout", "all"])
     build.add_argument("--case-pack", default=None)
     build.add_argument("--seed", type=int, default=20260704)
+    bundle = subparsers.add_parser("bundle")
+    bundle.add_argument("--packet", required=True)
+    bundle.add_argument("--output", required=True)
+    bundle.add_argument("--protocol", default=str(DEFAULT_PROTOCOL_PATH))
+    bundle.add_argument("--label-guide", default=str(DEFAULT_LABEL_GUIDE_PATH))
     score = subparsers.add_parser("score")
     score.add_argument("--key", required=True)
     score.add_argument("--annotations", nargs="+", required=True)
@@ -612,6 +892,19 @@ def main(argv: list[str] | None = None) -> int:
         print("Packet: %s" % paths["packet"])
         print("Private key: %s" % paths["private_key"])
         print("Validation: %s" % paths["validation"])
+        return 0
+    if args.command == "bundle":
+        result = build_reviewer_bundle(
+            packet_path=args.packet,
+            output_path=args.output,
+            protocol_path=args.protocol,
+            label_guide_path=args.label_guide,
+        )
+        print("Bundle: %s" % result["bundle"])
+        print("SHA256: %s" % result["sha256"])
+        print("Dataset: %s" % result["dataset"])
+        print("Cases: %s" % result["case_count"])
+        print("Validation: %s" % result["validation"])
         return 0
     report = score_annotation_files(
         key_path=args.key,

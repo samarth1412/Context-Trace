@@ -33,14 +33,29 @@ Set the packet-level `reviewer` and `review_kind`, fill the `annotation` object
 for each assigned case, and preserve blind IDs. Do not modify query, answer,
 context, or citation fields.
 
+Build the deterministic reviewer-only handoff ZIP after creating a blank packet:
+
+```bash
+python benchmarks/contexttrace_bench/arr_annotation.py bundle \
+  --packet benchmarks/contexttrace_bench/out/arr_annotation_diag150/annotation_packet.json \
+  --output out/contexttrace-arr-review-diag150.zip
+```
+
+The bundle contains only the blank packet, this protocol, the leak-free label
+guide, reviewer instructions, and a checksum manifest. Its validator rejects
+assigned packets, original IDs, expected labels, predictions, private-key
+filenames, altered payloads, and path traversal. Send the ZIP to reviewers;
+never send `annotation_key.private.json`.
+
 ## Labels
 
 `failure_labels` is the minimal set of observable failure categories. Use
 `no_failure_detected` only when every material answer claim is supported.
 
 `primary_root_cause` is the single most direct upstream cause supported by the
-trace. Do not infer unavailable system internals. Use the repository label
-inventory in `labels.json`; record ambiguity in `notes`.
+trace. Do not infer unavailable system internals. Use the leak-free
+`ARR_LABEL_GUIDE.md`; never send reviewers `labels.json`, which is benchmark
+scoring metadata. Record ambiguity in `notes`.
 
 `citation_statuses` records one status per material cited claim where applicable.
 `should_abstain` is true only when the available evidence is insufficient for a
