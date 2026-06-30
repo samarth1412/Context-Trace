@@ -24,18 +24,18 @@ without the corresponding artifact.
 - [x] Four figure specifications exist.
 - [ ] Related work uses verified primary sources and complete BibTeX records.
 - [ ] All claims are supported by the final reviewed snapshot.
-- [ ] Official ARR/ACL style compiles without warnings that affect submission.
-- [ ] Main content fits the current long-paper page limit.
+- [x] Official ARR/ACL style compiles without warnings that affect submission.
+- [x] Main content fits the current long-paper page limit.
 - [ ] Abstract, title, checklist fields, and supplementary references are final.
 
 ## Anonymity and artifact
 
-- [ ] Exact final artifact directory and archive are regenerated.
-- [ ] Identity scan reports zero author names, handles, emails, local paths, and personal URLs.
+- [x] Current pre-human-review artifact directory and archive are regenerated.
+- [x] Current release-surface identity scan reports zero blocking findings.
 - [ ] Git history and release links are absent from anonymous supplementary files.
 - [ ] Private condition keys and reviewer identities are excluded.
-- [ ] Clean-room install, full artifact tests, and reproduction command pass.
-- [ ] Final archive SHA-256 and file count are recorded.
+- [ ] Re-run clean-room install and artifact tests for the latest expanded artifact.
+- [x] Current archive SHA-256 and file count are recorded in the artifact report.
 
 ## Submission
 

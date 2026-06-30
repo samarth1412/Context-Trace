@@ -22,3 +22,11 @@ The current ContextTrace row has nine failure-label misses and zero dangerous
 false greens. Independent review may change both the denominator and the error
 taxonomy. Review corrections must be versioned, not edited directly into this
 summary.
+
+## Simulated-review sensitivity
+
+Three simulated agents disagree on 142/200 RAGTruth cases and 29/150 Diag
+cases. Their majority suggestions disagree with 214 frozen labels. Replacing
+those labels in a sensitivity-only calculation lowers combined accuracy from
+`0.974` to `0.380` and macro-F1 from `0.978` to `0.139`. No simulated suggestion
+is applied; the result demonstrates the need for human adjudication.

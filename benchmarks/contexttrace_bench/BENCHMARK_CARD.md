@@ -1,6 +1,6 @@
 # ContextTrace Benchmark Card
 
-Last updated: 2026-06-29
+Last updated: 2026-06-30
 
 ## Scope
 
@@ -74,8 +74,9 @@ python benchmarks/contexttrace_bench/sota_gate.py
 ```
 
 Use `--allow-not-ready` to refresh reports without a nonzero exit while review is
-still pending. The current evidence passes 8 of 10 gates. The remaining blockers
-are independent RAGTruth review and independent ContextTrace-Diag-150 sign-off.
+still pending. The current evidence passes 8 of 11 gates. The remaining blockers
+are publishable external-review status, independent RAGTruth review, and
+independent ContextTrace-Diag-150 sign-off.
 See [SOTA_STATUS.md](SOTA_STATUS.md)
 for the machine-generated result.
 
@@ -93,3 +94,11 @@ Not allowed yet:
 Dataset licenses and upstream usage constraints still apply to external raw data.
 Large raw archives and licensed corpus content are not redistributed in release
 bundles unless their licenses permit it.
+## Simulated Review Status
+
+Three controlled LLM reviewer roles completed 1,410/1,410 annotation and RQ4
+judgments with zero final parse failures. These outputs are protocol stress
+tests, not independent human validation. They produced 214 unapplied label
+suggestions; sensitivity analysis shows that substituting their majorities would
+materially reduce measured performance. Human review and broad-SOTA gates remain
+blocked. See `SIMULATED_REVIEW_STATUS.md` and `CORRECTION_POLICY.md`.

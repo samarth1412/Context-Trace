@@ -2,6 +2,11 @@
 
 Status: pending. No independent reviewer response files are present.
 
+A controlled three-agent LLM simulation is complete for all 200 RAGTruth and
+150 Diag cases. It is a protocol stress test only: RAGTruth Fleiss kappa is
+`0.033`, Diag-150 kappa is `0.679`, and all 214 label suggestions remain
+unapplied. Simulated output does not change this document's pending status.
+
 Prepared reviewer archives:
 
 - `out/contexttrace-arr-review-diag150.zip`

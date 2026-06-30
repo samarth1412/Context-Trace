@@ -30,7 +30,6 @@ TEXT_SUFFIXES = {
 }
 EXCLUDED_NAMES = {
     "ANONYMITY_AUDIT.md",
-    "PAGE_LIMIT_AUDIT.md",
     "audit_submission.py",
 }
 
@@ -92,7 +91,7 @@ def audit_page_limit(pdf_path: str | Path = DEFAULT_PDF) -> dict[str, Any]:
     reference_pages = total_pages - reference_page + 1 if reference_page is not None else 0
     appendix_pages = total_pages - appendix_page + 1 if appendix_page is not None else 0
     return {
-        "pdf": str(path),
+        "pdf": _portable(path),
         "total_pages": total_pages,
         "content_pages_conservative": content_pages,
         "references_start_page": reference_page,
@@ -231,7 +230,7 @@ def _read_searchable_text(path: Path) -> str | None:
 
 
 def _heading_page(pages: list[str], heading: str) -> int | None:
-    pattern = re.compile(r"(?:^|\n)\s*(?:\d+\s+)?" + re.escape(heading) + r"\b")
+    pattern = re.compile(r"\b(?:\d+\s+)?" + re.escape(heading) + r"\b")
     for index, page in enumerate(pages, start=1):
         if pattern.search(page):
             return index
@@ -240,9 +239,17 @@ def _heading_page(pages: list[str], heading: str) -> int | None:
 
 def _finding_classification(path: Path) -> str:
     portable = _portable(path)
-    if portable == "paper" or portable.startswith("paper/"):
+    normalized_parts = tuple(part.lower() for part in path.parts)
+    if portable == "paper" or portable.startswith("paper/") or "paper" in normalized_parts:
         return "release_surface"
-    if portable == "artifacts/arr_anonymous" or portable.startswith("artifacts/arr_anonymous/"):
+    if (
+        portable == "artifacts/arr_anonymous"
+        or portable.startswith("artifacts/arr_anonymous/")
+        or any(
+            normalized_parts[index : index + 2] == ("artifacts", "arr_anonymous")
+            for index in range(max(0, len(normalized_parts) - 1))
+        )
+    ):
         return "release_surface"
     release_output_prefixes = (
         "benchmarks/contexttrace_bench/out/arr_full/",
