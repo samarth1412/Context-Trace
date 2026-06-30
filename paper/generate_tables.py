@@ -118,22 +118,46 @@ def _rq4(result: dict[str, Any] | None) -> list[dict[str, Any]]:
                 "Study": "Preregistered paired actionability study",
                 "Review status": "pending three independent reviewers",
                 "Cases": 40,
-                "Reviewers": "0/3",
-                "Preference": "N/A",
-                "Actionability delta": "N/A",
-                "Decision time": "N/A",
+                "Reviewers / agents": "0/3 humans",
+                "Root cause": "N/A",
+                "Fix proxy": "N/A",
+                "Actionability": "N/A",
+                "False green": "N/A",
             }
         ]
+    if result.get("pilot_type") == "controlled_llm_simulated_actionability_not_human_validation":
+        rows = _rq4(None)
+        labels = {
+            "raw_trace": "Simulated A: raw trace",
+            "score_only": "Simulated B: score only",
+            "contexttrace": "Simulated C: evidence chain",
+        }
+        for setting in ("raw_trace", "score_only", "contexttrace"):
+            summary = (result.get("settings") or {}).get(setting) or {}
+            rows.append(
+                {
+                    "Study": labels[setting],
+                    "Review status": "LLM-simulated pilot; not human validation",
+                    "Cases": result.get("case_count"),
+                    "Reviewers / agents": result.get("simulated_reviewer_agents"),
+                    "Root cause": _metric(summary.get("root_cause_accuracy")),
+                    "Fix proxy": _metric(summary.get("fix_correctness_proxy")),
+                    "Actionability": _metric(summary.get("actionability_score")),
+                    "False green": _metric(summary.get("dangerous_false_green_rate")),
+                }
+            )
+        return rows
     summary = result.get("summary") or result
     return [
         {
             "Study": "Preregistered paired actionability study",
             "Review status": "human study" if result.get("paper_result_eligible") else "incomplete human study",
             "Cases": summary.get("case_count") or result.get("case_count"),
-            "Reviewers": len(result.get("reviewers") or []),
-            "Preference": _metric(summary.get("evidence_preference")),
-            "Actionability delta": _metric(summary.get("repair_actionable_delta")),
-            "Decision time": _metric(summary.get("mean_decision_time_seconds")),
+            "Reviewers / agents": len(result.get("reviewers") or []),
+            "Root cause": "N/A",
+            "Fix proxy": "N/A",
+            "Actionability": _metric(summary.get("repair_actionable_delta")),
+            "False green": "N/A",
         }
     ]
 

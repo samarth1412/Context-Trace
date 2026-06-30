@@ -1,0 +1,272 @@
+{
+  "backend": "openai",
+  "claim_policy": "Report these outputs only as controlled LLM-simulated pilots. They do not replace independent human review and cannot support broad SOTA language.",
+  "completed": 1410,
+  "corrections": {
+    "applied": 0,
+    "status": "simulated_suggestions_only",
+    "suggested": 214
+  },
+  "diag150": {
+    "ambiguous_cases": 0,
+    "case_count": 150,
+    "complete_three_agent_cases": 150,
+    "dataset": "diag150",
+    "disagreement_cases": 29,
+    "fleiss_kappa": 0.678769,
+    "frozen_label_disagreement_cases": 77,
+    "high_risk_disagreement_cases": 0,
+    "human_review": false,
+    "pairwise_exact_agreement": {
+      "developer_actionability__skeptical_arr": 0.806667,
+      "strict_evidence__developer_actionability": 0.866667,
+      "strict_evidence__skeptical_arr": 0.94
+    },
+    "paper_result_eligible": false,
+    "pilot_type": "llm_simulated_review_not_human_validation",
+    "recommended_corrections": 77,
+    "schema_version": 1,
+    "sota_gate_eligible": false,
+    "unanimous_cases": 121
+  },
+  "estimated_cost_usd": 0.29633,
+  "generated_at": "2026-06-30T12:51:00+00:00",
+  "human_review": {
+    "diag150": "pending",
+    "ragtruth": "pending",
+    "rq4": "pending_three_non_author_reviewers"
+  },
+  "model": "gpt-4.1-nano-2025-04-14",
+  "paper_result_eligible": false,
+  "parse_failures": 0,
+  "ragtruth": {
+    "ambiguous_cases": 0,
+    "case_count": 200,
+    "complete_three_agent_cases": 200,
+    "dataset": "ragtruth",
+    "disagreement_cases": 142,
+    "fleiss_kappa": 0.033477,
+    "frozen_label_disagreement_cases": 137,
+    "high_risk_disagreement_cases": 5,
+    "human_review": false,
+    "pairwise_exact_agreement": {
+      "developer_actionability__skeptical_arr": 0.38,
+      "strict_evidence__developer_actionability": 0.44,
+      "strict_evidence__skeptical_arr": 0.76
+    },
+    "paper_result_eligible": false,
+    "pilot_type": "llm_simulated_review_not_human_validation",
+    "recommended_corrections": 137,
+    "schema_version": 1,
+    "sota_gate_eligible": false,
+    "unanimous_cases": 58
+  },
+  "rq4": {
+    "case_count": 40,
+    "fix_correctness_definition": "Proxy equals exact normalized root-cause match, actionability score >=4, and a non-empty fix recommendation.",
+    "human_review": false,
+    "improvements": {
+      "contexttrace_minus_raw": {
+        "actionability_score": -0.433334,
+        "confidence": -0.044658,
+        "dangerous_false_green_rate": -0.225,
+        "fix_correctness_proxy": 0.333334,
+        "root_cause_accuracy": 0.841666
+      },
+      "contexttrace_minus_score_only": {
+        "actionability_score": -0.275,
+        "confidence": -0.033733,
+        "dangerous_false_green_rate": -0.15,
+        "fix_correctness_proxy": 0.325,
+        "root_cause_accuracy": 0.791666
+      },
+      "score_only_minus_raw": {
+        "actionability_score": -0.158334,
+        "confidence": -0.010925,
+        "dangerous_false_green_rate": -0.075,
+        "fix_correctness_proxy": 0.008334,
+        "root_cause_accuracy": 0.05
+      }
+    },
+    "model": "gpt-4.1-nano-2025-04-14",
+    "paper_result_eligible": false,
+    "pilot_type": "controlled_llm_simulated_actionability_not_human_validation",
+    "schema_version": 1,
+    "settings": {
+      "contexttrace": {
+        "actionability_score": 3.333333,
+        "by_agent": {
+          "developer_actionability": {
+            "actionability_score": 3.975,
+            "completed_rows": 40,
+            "confidence": 0.8648,
+            "dangerous_false_green_rate": 0.875,
+            "expected_rows": 40,
+            "fix_correctness_proxy": 0.95,
+            "parse_failure_rate": 0.0,
+            "root_cause_accuracy": 0.975
+          },
+          "skeptical_arr": {
+            "actionability_score": 2.925,
+            "completed_rows": 40,
+            "confidence": 0.784175,
+            "dangerous_false_green_rate": 0.275,
+            "expected_rows": 40,
+            "fix_correctness_proxy": 0.025,
+            "parse_failure_rate": 0.0,
+            "root_cause_accuracy": 0.8
+          },
+          "strict_evidence": {
+            "actionability_score": 3.1,
+            "completed_rows": 40,
+            "confidence": 0.8158,
+            "dangerous_false_green_rate": 0.05,
+            "expected_rows": 40,
+            "fix_correctness_proxy": 0.05,
+            "parse_failure_rate": 0.0,
+            "root_cause_accuracy": 0.95
+          }
+        },
+        "completed_rows": 120,
+        "confidence": 0.821592,
+        "dangerous_false_green_rate": 0.4,
+        "estimated_cost_usd": 0.018607,
+        "expected_rows": 120,
+        "fix_correctness_proxy": 0.341667,
+        "input_tokens": 98752,
+        "output_tokens": 21830,
+        "parse_failure_rate": 0.0,
+        "root_cause_accuracy": 0.908333
+      },
+      "raw_trace": {
+        "actionability_score": 3.766667,
+        "by_agent": {
+          "developer_actionability": {
+            "actionability_score": 3.925,
+            "completed_rows": 40,
+            "confidence": 0.92375,
+            "dangerous_false_green_rate": 0.875,
+            "expected_rows": 40,
+            "fix_correctness_proxy": 0.025,
+            "parse_failure_rate": 0.0,
+            "root_cause_accuracy": 0.05
+          },
+          "skeptical_arr": {
+            "actionability_score": 3.375,
+            "completed_rows": 40,
+            "confidence": 0.83625,
+            "dangerous_false_green_rate": 0.5,
+            "expected_rows": 40,
+            "fix_correctness_proxy": 0.0,
+            "parse_failure_rate": 0.0,
+            "root_cause_accuracy": 0.15
+          },
+          "strict_evidence": {
+            "actionability_score": 4.0,
+            "completed_rows": 40,
+            "confidence": 0.83875,
+            "dangerous_false_green_rate": 0.5,
+            "expected_rows": 40,
+            "fix_correctness_proxy": 0.0,
+            "parse_failure_rate": 0.0,
+            "root_cause_accuracy": 0.0
+          }
+        },
+        "completed_rows": 120,
+        "confidence": 0.86625,
+        "dangerous_false_green_rate": 0.625,
+        "estimated_cost_usd": 0.014794,
+        "expected_rows": 120,
+        "fix_correctness_proxy": 0.008333,
+        "input_tokens": 69553,
+        "output_tokens": 19596,
+        "parse_failure_rate": 0.0,
+        "root_cause_accuracy": 0.066667
+      },
+      "score_only": {
+        "actionability_score": 3.608333,
+        "by_agent": {
+          "developer_actionability": {
+            "actionability_score": 3.975,
+            "completed_rows": 40,
+            "confidence": 0.884325,
+            "dangerous_false_green_rate": 0.8,
+            "expected_rows": 40,
+            "fix_correctness_proxy": 0.05,
+            "parse_failure_rate": 0.0,
+            "root_cause_accuracy": 0.05
+          },
+          "skeptical_arr": {
+            "actionability_score": 3.25,
+            "completed_rows": 40,
+            "confidence": 0.8305,
+            "dangerous_false_green_rate": 0.5,
+            "expected_rows": 40,
+            "fix_correctness_proxy": 0.0,
+            "parse_failure_rate": 0.0,
+            "root_cause_accuracy": 0.225
+          },
+          "strict_evidence": {
+            "actionability_score": 3.6,
+            "completed_rows": 40,
+            "confidence": 0.85115,
+            "dangerous_false_green_rate": 0.35,
+            "expected_rows": 40,
+            "fix_correctness_proxy": 0.0,
+            "parse_failure_rate": 0.0,
+            "root_cause_accuracy": 0.075
+          }
+        },
+        "completed_rows": 120,
+        "confidence": 0.855325,
+        "dangerous_false_green_rate": 0.55,
+        "estimated_cost_usd": 0.01637,
+        "expected_rows": 120,
+        "fix_correctness_proxy": 0.016667,
+        "input_tokens": 83011,
+        "output_tokens": 20171,
+        "parse_failure_rate": 0.0,
+        "root_cause_accuracy": 0.116667
+      }
+    },
+    "simulated_reviewer_agents": 3,
+    "sota_gate_eligible": false,
+    "treatment_improved_preregistered_proxies": false
+  },
+  "schema_version": 1,
+  "sensitivity": {
+    "analysis_type": "simulated_label_sensitivity_not_corrected_results",
+    "cases": 350,
+    "corrections_applied": 0,
+    "paper_result_eligible": false,
+    "scenarios": {
+      "best_case_flagged_labels": {
+        "accuracy": 0.991429,
+        "cases": 350,
+        "macro_f1": 0.994115
+      },
+      "frozen_labels": {
+        "accuracy": 0.974286,
+        "cases": 350,
+        "macro_f1": 0.978024
+      },
+      "simulated_majority_suggestions": {
+        "accuracy": 0.38,
+        "cases": 350,
+        "macro_f1": 0.13949
+      },
+      "worst_case_flagged_labels": {
+        "accuracy": 0.38,
+        "cases": 350,
+        "macro_f1": 0.117318
+      }
+    },
+    "schema_version": 1,
+    "sota_gate_eligible": false,
+    "suggested_correction_cases": 214,
+    "warning": "Simulated suggestions are not applied labels and do not replace independent review."
+  },
+  "sota_gate_eligible": false,
+  "status": "simulated_pilots_complete_human_review_pending",
+  "tasks": 1410
+}

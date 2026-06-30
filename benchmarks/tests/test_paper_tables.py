@@ -1,4 +1,5 @@
 from pathlib import Path
+import json
 
 from paper.generate_tables import generate_paper_tables
 
@@ -33,3 +34,37 @@ def test_generated_latex_tables_escape_review_statuses(tmp_path):
     assert "assisted\\_review\\_pending\\_independent" in main
     assert "N/A" in rq4
     assert "\\begin{table*}" in main
+
+
+def test_paper_table_generation_keeps_simulated_rq4_separate(tmp_path):
+    rq4 = tmp_path / "rq4.json"
+    rq4.write_text(
+        json.dumps(
+            {
+                "pilot_type": "controlled_llm_simulated_actionability_not_human_validation",
+                "case_count": 40,
+                "simulated_reviewer_agents": 3,
+                "settings": {
+                    setting: {
+                        "root_cause_accuracy": 0.1,
+                        "fix_correctness_proxy": 0.2,
+                        "actionability_score": 3.0,
+                        "dangerous_false_green_rate": 0.4,
+                    }
+                    for setting in ("raw_trace", "score_only", "contexttrace")
+                },
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    generate_paper_tables(
+        tex_dir=tmp_path / "tex",
+        markdown_dir=tmp_path / "markdown",
+        rq4_results_path=rq4,
+    )
+    table = (tmp_path / "markdown" / "table4_rq4_actionability.md").read_text(encoding="utf-8")
+
+    assert "pending three independent reviewers" in table
+    assert "LLM-simulated pilot; not human validation" in table
+    assert "Simulated C: evidence chain" in table

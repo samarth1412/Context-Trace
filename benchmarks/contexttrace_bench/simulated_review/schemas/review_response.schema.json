@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ContextTrace simulated review response",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "agent_id",
+    "failure_label",
+    "root_cause",
+    "evidence_span",
+    "citation_status",
+    "dangerous_false_green_risk",
+    "fix_recommendation",
+    "actionability_score",
+    "confidence",
+    "rationale",
+    "overclaim_warning"
+  ],
+  "properties": {
+    "case_id": {"type": "string", "minLength": 1},
+    "agent_id": {
+      "type": "string",
+      "enum": ["strict_evidence", "developer_actionability", "skeptical_arr"]
+    },
+    "failure_label": {
+      "type": "string",
+      "enum": ["supported", "partially_supported", "unsupported", "contradicted", "unverifiable", "unsure"]
+    },
+    "root_cause": {
+      "type": "string",
+      "enum": [
+        "retrieval_miss",
+        "reranking_failure",
+        "chunking_issue",
+        "corpus_gap",
+        "answer_overreach",
+        "citation_mismatch",
+        "conflicting_contexts",
+        "stale_source",
+        "should_have_abstained",
+        "tool_result_ignored",
+        "memory_contamination",
+        "no_failure_detected",
+        "unsure",
+        "other"
+      ]
+    },
+    "evidence_span": {"type": ["string", "null"]},
+    "citation_status": {
+      "type": "string",
+      "enum": ["correct", "incorrect", "missing", "not_applicable", "unsure"]
+    },
+    "dangerous_false_green_risk": {
+      "type": "string",
+      "enum": ["low", "medium", "high"]
+    },
+    "fix_recommendation": {"type": "string"},
+    "actionability_score": {"type": "integer", "minimum": 1, "maximum": 5},
+    "confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+    "rationale": {"type": "string", "minLength": 1},
+    "overclaim_warning": {"type": ["string", "null"]}
+  }
+}
