@@ -1,0 +1,28 @@
+\section{Related Work}
+\paragraph{RAG evaluation.}
+RAGAS decomposes automatic evaluation into faithfulness, answer relevance, and
+context relevance \citep{es2024ragas}. ARES uses synthetic training data and
+lightweight judges for context relevance, answer faithfulness, and answer
+relevance \citep{saadfalcon2024ares}. DeepEval provides a software-oriented
+collection of LLM evaluation metrics \citep{deepeval2026}. These tools make
+automatic testing practical, but their outputs are not interchangeable with
+root-cause, citation, and span diagnostics. Our baseline tables therefore score
+only common outputs and mark unsupported fields N/A.
+
+\paragraph{Diagnostic benchmarks.}
+RAGChecker introduces fine-grained retriever and generator diagnostics
+\citep{ru2024ragchecker}. RAGTruth supplies word-level hallucination annotations
+across RAG tasks \citep{niu2024ragtruth}, while CRAG evaluates factual and
+temporally dynamic retrieval settings \citep{yang2024crag}. ContextTrace uses
+RAGTruth as external calibration evidence and CRAG as a secondary track; it
+adds an explicit serialized chain from claims to repairs. The current external
+annotations remain review-pending.
+
+\paragraph{Model judges and observability.}
+LLM judges can approximate human preferences \citep{zheng2023judge}, but order,
+self-enhancement, and fairness biases remain material \citep{wang2024fair}. We
+therefore report our model-based review solely as a simulated pilot. At the
+systems layer, OpenTelemetry defines vendor-neutral trace concepts
+\citep{opentelemetry2026}, and OpenInference extends semantic conventions to AI
+workloads \citep{openinference2026}. ContextTrace accepts such trace-like
+records but targets semantic evidence diagnosis rather than telemetry transport.

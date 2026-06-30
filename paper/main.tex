@@ -1,5 +1,6 @@
 \documentclass[11pt]{article}
-\IfFileExists{acl.sty}{\usepackage[review]{acl}}{\usepackage[margin=1in]{geometry}}
+\IfFileExists{acl.sty}{\usepackage[review]{acl}}{\usepackage[margin=1in]{geometry}\usepackage{natbib}}
+\usepackage{amsmath}
 \usepackage{booktabs}
 \usepackage{graphicx}
 \usepackage{microtype}
@@ -11,29 +12,38 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-Retrieval-augmented generation evaluators often reduce a trace to aggregate
-quality scores, leaving engineers to reconstruct why an answer failed and what
-to repair. ContextTrace is a local-first evaluator that maps claims through
-retrieved evidence, citations, source conditions, and abstention behavior to
-structured failure diagnoses. This draft defines the system, benchmark
-protocol, and preregistered actionability study. All quantitative tables report
-frozen pre-review evidence and identify review-pending results explicitly.
+Retrieval-augmented generation (RAG) evaluators often reduce a trace to scalar
+quality scores, leaving developers to reconstruct which claim failed, which
+evidence mattered, and which component should change. We introduce
+\textsc{ContextTrace}, a local-first evidence-chain forensics system that maps
+answer claims to retrieved spans, citation edges, source conditions,
+abstention decisions, failure labels, root causes, and repair suggestions. A
+frozen pre-review evaluation covers 150 public-document diagnostic cases, 200
+RAGTruth cases, a same-ID RAGAS baseline, and eleven registered ablation rows.
+The current system obtains 0.955 failure-label macro-F1 and zero dangerous
+false greens on the RAGTruth sample, but claim-verdict macro-F1 is 0.337 and
+independent label review remains incomplete. We additionally run a controlled
+1,410-judgment LLM-simulated protocol stress test. The simulated evidence-chain
+condition improves root-cause accuracy but not mean actionability, so it does
+not support the preregistered positive RQ4 claim and does not replace human
+validation. We release a deterministic experiment and anonymous-artifact
+workflow with fail-closed claim gates.
 \end{abstract}
 
-\input{sections/introduction}
-\input{sections/related_work}
-\input{sections/evidence_chain}
-\input{sections/system}
-\input{sections/benchmark_protocol}
-\input{sections/experiments}
-\input{sections/ablations}
-\input{sections/rq4}
-\input{sections/error_analysis}
-\input{sections/discussion}
-\input{sections/conclusion}
-\input{sections/limitations}
-\input{sections/ethics}
+\input{sections/01_intro}
+\input{sections/02_related_work}
+\input{sections/03_evidence_chain_forensics}
+\input{sections/04_system}
+\input{sections/05_benchmark_protocol}
+\input{sections/06_experiments}
+\input{sections/07_ablations}
+\input{sections/08_rq4_actionability}
+\input{sections/09_error_analysis}
+\input{sections/10_discussion}
+\input{sections/11_conclusion}
+\input{sections/12_limitations}
+\input{sections/13_ethics}
 
-\bibliographystyle{acl_natbib}
+\IfFileExists{acl.sty}{}{\bibliographystyle{plainnat}}
 \bibliography{references}
 \end{document}

@@ -1,0 +1,28 @@
+\section{Limitations}
+The primary limitation is evidence status: no independent reviewer has signed
+off the RAGTruth or Diag-150 labels, and the human RQ4 study has not begun. All
+headline metrics are therefore pre-review calibration evidence. The
+LLM-simulated pilots use one model family under three prompts, not independent
+humans or independent model populations. Their low RAGTruth agreement and poor
+label-replacement sensitivity preclude using them as ground truth.
+
+ContextTrace-Diag-150 is synthetic and designed around the implemented taxonomy.
+The external RAGTruth experiment uses a 200-case deterministic sample rather
+than the entire corpus. Answer-level labels do not always map cleanly to atomic
+claim verdicts, which contributes to the 0.337 claim-verdict macro-F1. The
+evidence-span metric is token overlap and does not directly measure boundary
+minimality or multi-span recall.
+
+The verifier uses deterministic lexical and semantic heuristics rather than a
+general entailment model. It may fail on implicit reasoning, long dependency
+chains, domain-specific numerical relations, multilingual traces, and evidence
+distributed across many documents. Source trust and freshness require metadata
+that many production traces omit. Grounding against supplied contexts does not
+establish external factual truth.
+
+NLI-only and judge-only ablations are unavailable because no qualifying frozen
+model artifacts were registered. Latency measurements are workstation-specific.
+The same-ID baseline cache does not expose every ContextTrace diagnostic and its
+original generation cost is unavailable. Finally, the anonymous artifact can
+reproduce software results but cannot redistribute human identities, private
+condition keys, or future licensed response data.

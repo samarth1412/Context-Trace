@@ -1,0 +1,25 @@
+﻿ContextTrace ARR paper compile log (sanitized)
+
+Official style source:
+  acl-org/acl-style-files@d5adc823ff0f80f98c80405ca0ab66c68e684409
+
+latexmk attempt:
+  unavailable because the local MiKTeX wrapper has no Perl script engine.
+
+Equivalent successful build:
+  pdflatex -interaction=nonstopmode -halt-on-error -output-directory=build main.tex
+  bibtex build/main
+  pdflatex -interaction=nonstopmode -halt-on-error -output-directory=build main.tex
+  pdflatex -interaction=nonstopmode -halt-on-error -output-directory=build main.tex
+
+Result:
+  exit status: 0
+  PDF: build/main.pdf
+  pages: 8
+  undefined citations: 0
+  undefined references: 0
+  overfull boxes: 0
+  LaTeX errors: 0
+
+Environment note:
+  MiKTeX reported that its local installation update check has not been run.

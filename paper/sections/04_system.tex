@@ -1,0 +1,27 @@
+\section{System}
+ContextTrace accepts a JSON trace containing query, answer, contexts, citations,
+and optional metadata. The implementation normalizes the trace, decomposes the
+answer into claims, discovers candidate evidence, evaluates support and
+contradiction, checks citation alignment, assesses source metadata, decides
+whether abstention was required, and infers a primary root cause. Each stage
+returns typed JSON consumed by the next stage and by the final report.
+
+Claim verification combines lexical anchors with deterministic semantic
+normalization for entities, quantities, dates, negation, and common relational
+paraphrases. Contradiction checks are independent of citation checks: a claim
+may be contradicted by one source while citing a different source, or it may be
+supported by the retrieved set while citing the wrong source. Evidence-span
+localization records the source ID and minimal matched text. Source assessment
+uses freshness, authority, and canonical-source metadata only when provided.
+
+The diagnosis layer aggregates claim records into observable failure types and
+a primary root cause. Repair planning ties a suggested change to cited evidence
+and emits a regression-test target rather than claiming the change has already
+worked. Production profiles expose citation, contradiction, abstention, source,
+root-cause, and span modules as explicit switches; ablations therefore execute
+the shipping verifier rather than a parallel research implementation.
+
+The default pipeline is local, deterministic, and free of API cost. Model-based
+judges are optional. A provider/model/prompt/cache/cost tuple must be frozen
+before such outputs enter a result table. No qualifying NLI-only or judge-only
+configuration existed at freeze time, so both remain registered as unavailable.

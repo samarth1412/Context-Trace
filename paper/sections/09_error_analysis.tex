@@ -1,0 +1,26 @@
+\section{Error Analysis}
+The frozen RAGTruth run contains nine primary failure-label misses and no
+dangerous false greens under the current labels. Table~\ref{tab:table5-error-analysis}
+separates observed clusters from categories that were not measured. Four clean
+cases are overflagged, two contradictions are missed, and nine primary root
+causes differ. The same-ID score-only baseline produces 60 dangerous false
+greens. Span breadth, multi-span attribution, numeric/date normalization, and
+stale-source behavior lack dedicated external tags and remain
+\texttt{not\_measured}; judge parse failures are \texttt{not\_run}.
+
+The simulated annotation stress test sharpens the uncertainty rather than
+resolving it. Three agents disagree on 142 of 200 RAGTruth cases (Fleiss
+$\kappa=0.033$) and 29 of 150 Diag cases ($\kappa=0.679$). Simulated majorities
+disagree with 137 and 77 frozen labels respectively. All 214 suggestions remain
+unapplied. Under a sensitivity-only replacement of those labels, combined
+classification accuracy falls from 0.974 to 0.380 and macro-F1 from 0.978 to
+0.139. This instability demonstrates why model consensus cannot be substituted
+for independent adjudication.
+
+The high RAGTruth failure score and low claim-verdict score also expose a scope
+boundary: detecting an answer-level failure does not guarantee a correct
+claim-by-claim decomposition. Final analysis will preserve raw reviewer
+responses, report disagreements, and apply only separately versioned,
+rationalized corrections.
+
+\input{tables/table5_error_analysis}

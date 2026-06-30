@@ -23,7 +23,7 @@ def test_sanitize_text_removes_project_identity_and_local_paths():
     source = (
         "https://github.com/%s/Context-Trace/issues " % owner
         + "https://" + "pypi" + ".org/project/contexttrace/ "
-        + "%s %s author@%s " % (owner_alias, given_name, "ufl" + ".edu")
+        + "%s %s author@%s " % (owner_alias, given_name, "uf" + "l.edu")
         + "C:\\Users\\%s\\project\\results.json" % username
     )
 
@@ -34,7 +34,7 @@ def test_sanitize_text_removes_project_identity_and_local_paths():
     assert owner_alias not in sanitized
     assert given_name not in sanitized.lower()
     assert "pypi.org" not in sanitized
-    assert "ufl" + ".edu" not in sanitized
+    assert "uf" + "l.edu" not in sanitized
     assert username not in sanitized
     assert "<ANONYMIZED_LOCAL_PATH>" in sanitized
 

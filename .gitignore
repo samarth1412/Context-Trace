@@ -20,4 +20,7 @@ node_modules/
 *.log
 out/
 artifacts/arr_anonymous/
+paper/build/*
+!paper/build/
+!paper/build/main.pdf
 .tmp-*/

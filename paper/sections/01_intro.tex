@@ -1,0 +1,29 @@
+\section{Introduction}
+Retrieval-augmented generation (RAG) conditions generation on external
+documents, improving access to knowledge without encoding every fact in model
+parameters \citep{lewis2020rag}. The same decomposition creates a debugging
+problem. A wrong answer may follow from retrieval failure, evidence that is
+present but misranked, a citation attached to the wrong source, an unsupported
+answer extension, conflicting or stale sources, or a failure to abstain. A
+single faithfulness score identifies none of these repair targets.
+
+We study \emph{evidence-chain forensics}: reconstructing a verifiable path from
+each answer claim through retrieved evidence and citation edges to an observable
+failure and a concrete repair. This framing requires more than detecting
+hallucination. It requires preserving intermediate decisions, refusing to
+impute diagnostics a baseline does not expose, and distinguishing grounding in
+supplied evidence from real-world truth.
+
+\textsc{ContextTrace} implements this framing as a deterministic, local-first
+pipeline. It consumes portable RAG or agent traces and emits claim verdicts,
+minimal evidence spans, citation states, source assessments, abstention
+decisions, failure labels, primary root causes, and evidence-backed repair and
+regression suggestions. Figure~\ref{fig:pipeline} summarizes the pipeline.
+
+Our contributions are: (1) a typed evidence-chain representation and diagnostic
+contract; (2) a production-path benchmark protocol with same-ID comparisons,
+case-bootstrap intervals, eleven registered ablation rows, and fail-closed claim
+gates; (3) frozen pre-review results on ContextTrace-Diag-150 and a 200-case
+RAGTruth sample; and (4) a preregistered human actionability protocol plus a
+clearly separated 1,410-judgment LLM-simulated stress test. Independent human
+review is pending, so we make dataset-specific pre-review claims only.

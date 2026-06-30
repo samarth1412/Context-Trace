@@ -1,0 +1,22 @@
+\section{Ablations}
+Table~\ref{tab:table3-ablations} reports eleven registered variants on 500
+engineering cases. Nine execute through production profile switches. Lexical-
+and semantic-only verification each obtain 0.419 failure F1 and a 0.232 false-
+green rate, showing that claim matching alone is insufficient for trace-level
+diagnosis. Removing citation alignment lowers failure F1 to 0.831 and raises
+false greens to 0.122. Removing source trust/freshness produces the largest
+available full-pipeline degradation: 0.708 failure F1 and 0.112 false greens.
+
+Contradiction checks primarily affect claim decisions: without them,
+claim-verdict F1 falls to 0.706 and failure F1 to 0.812. Removing abstention
+logic leaves citation and claim metrics intact but lowers root-cause accuracy to
+0.372. Removing the root-cause classifier leaves detection unchanged while
+correctly making root-cause accuracy unavailable. Removing evidence-span
+localization makes span overlap unavailable and slightly changes claim and
+failure behavior because localized evidence also constrains downstream matching.
+
+NLI-only and judge-only rows are N/A. Downloading a model after viewing results
+would violate the frozen contract; pinning these variants is future work rather
+than a reason to omit their registered rows.
+
+\input{tables/table3_ablations}

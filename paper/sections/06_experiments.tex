@@ -1,0 +1,24 @@
+\section{Experiments}
+We ask whether ContextTrace detects failures (RQ1), localizes diagnostic
+structure (RQ2), depends on each pipeline stage (RQ3), and improves repair
+decisions (RQ4). The full command evaluates the frozen Diag-150 and RAGTruth
+inputs, scores the same-ID RAGAS prediction file, runs all executable ablations,
+and regenerates tables and manifests. Quick runs are harness checks and are
+never paper results.
+
+Table~\ref{tab:table1-main-results} reports the pre-review external results.
+ContextTrace obtains 0.955 failure-label macro-F1, 0.955 root-cause accuracy,
+1.000 citation-error F1, 0.786 span overlap, and zero dangerous false greens on
+the 200 RAGTruth cases. Diag-150 scores are 1.000 for failure, root-cause, and
+citation metrics, with 0.950 span overlap. These estimates are calibration
+evidence because independent review is incomplete.
+
+Table~\ref{tab:table2-baselines} compares common outputs on identical RAGTruth
+IDs. ContextTrace has higher failure-label F1 and lower false-green rate than the
+cached RAGAS row, while RAGAS has higher claim-verdict F1 (0.533 versus 0.337).
+RAGAS does not expose matched root-cause, citation, or span fields in this cache;
+we report N/A rather than attributing implicit zeros. Consequently, the results
+do not establish broad dominance.
+
+\input{tables/table1_main_results}
+\input{tables/table2_baselines}

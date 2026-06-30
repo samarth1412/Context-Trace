@@ -1,0 +1,32 @@
+\section{Discussion}
+The experiments support a bounded conclusion: ContextTrace provides a
+reproducible local evidence-forensics contract and strong pre-review
+failure-detection behavior on the frozen samples. They do not establish that it
+is universally more accurate than RAG evaluators, nor that its suggested fixes
+improve human debugging. The matched RAGAS comparison favors different systems
+on different common metrics, and unsupported diagnostic outputs are not a fair
+basis for dominance claims.
+
+The ablations suggest that diagnostic modules matter jointly. Source state and
+citation alignment substantially reduce false greens, while abstention logic is
+important for root-cause assignment. This supports exposing the chain rather
+than only its final score. At the same time, the simulated RQ4 result shows that
+more structure can reduce perceived actionability: a detailed report may be
+correct yet cognitively expensive or insufficiently prioritized. Human study
+design should therefore measure time and preference, not only diagnosis match.
+
+\paragraph{Claim boundary.}
+We claim a benchmarked, local-first evidence-chain forensics system with frozen
+pre-review results. We do not claim broad SOTA, independent review, human
+actionability improvement, or real-world truth verification. Dataset-specific
+metrics must retain sample, baseline, and review status. The machine-readable
+gate currently blocks broad SOTA while review is pending.
+
+\paragraph{Reproducibility.}
+The full workflow pins case IDs, profiles, bootstrap seed, candidate files,
+dependency versions, command, hashes, runtime, and cost metadata.
+Table~\ref{tab:table6-reproducibility} summarizes the run. A post-simulated-review
+rerun from a committed revision preserves all case hashes and reported metrics,
+applies zero corrections, and includes sensitivity artifacts separately.
+
+\input{tables/table6_reproducibility}

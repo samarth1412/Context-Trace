@@ -1,0 +1,33 @@
+\section{Benchmark Protocol}
+We preregister case sets, profiles, seeds, metrics, and claim gates in a
+machine-readable experiment specification. Prediction, scoring, review, and
+claim authorization are separate stages (Figure~\ref{fig:protocol}). Every
+bundle records case-ID hashes, candidate hashes, output hashes, dependency
+versions, runtime, and reported cost.
+
+\paragraph{Datasets.}
+ContextTrace-Diag-150 contains 150 public-document traces covering support,
+contradiction, abstention, citation, source, and root-cause behavior. The
+external primary track is a deterministic 200-case sample derived from
+RAGTruth \citep{niu2024ragtruth}. ARES and CRAG adapters provide secondary
+calibration tracks. The 500-case engineering suite supports module regression
+and ablation analysis; it is not independent validation.
+
+\paragraph{Metrics.}
+Primary detection uses failure-label macro-F1 and dangerous false-green rate,
+where a false green is a trace with a material labeled failure that is reported
+as clean. Diagnostic outputs use root-cause accuracy, citation-error F1, and
+token-level evidence-span overlap. Claim-verdict macro-F1 is reported separately
+because answer-level RAGTruth labels do not always determine an unambiguous
+claim-level projection. We report deterministic 95\% case-bootstrap intervals
+with 400 draws for the frozen experiment.
+
+\paragraph{Review and claims.}
+The reviewer packets hide predictions, expected labels, original IDs, and
+private keys. Human sign-off is a distinct gate. Scored, assisted, or
+LLM-simulated outputs cannot become ``independent'' through naming. The broad
+claim gate validates bundle integrity, external coverage, review status,
+thresholds, confidence intervals, same-ID competitor coverage, and Diag-150
+sign-off. A single failed check blocks broad SOTA wording.
+
+\input{figures/figure3_benchmark_protocol}

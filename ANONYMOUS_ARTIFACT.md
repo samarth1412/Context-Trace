@@ -2,7 +2,9 @@
 
 This anonymous supplementary artifact contains the ContextTrace verifier,
 benchmark harness, frozen ARR protocols, tests, and licensed RAGTruth evaluation
-inputs needed for the submitted experiments. It intentionally contains no git
+inputs needed for the submitted experiments. It also contains the anonymous
+paper PDF/source, frozen post-review tables, aggregate simulated-pilot status,
+and sensitivity analysis. It intentionally contains no git
 history, author identity, public project repository link, package-index link, or
 private annotation key.
 
@@ -10,6 +12,11 @@ private annotation key.
 
 - Python 3.10 or newer is recommended.
 - Core quick runs require no network API and incur no API cost.
+- The measured full deterministic run takes about four minutes on the reference
+  workstation and incurs no ContextTrace API cost.
+- The cached LLM-simulated pilots used a pinned model, 1,410 requests, and an
+  estimated total API cost of $0.296. Re-running them is optional and requires
+  a separately supplied API key.
 - Commands are run from the extracted artifact root.
 
 ```bash
@@ -62,6 +69,11 @@ python benchmarks/contexttrace_bench/arr_actionability.py build --quick
 
 Generated files are written under ignored `out/` directories. Quick packets are
 workflow checks, not annotations or study outcomes.
+
+The included simulated-review aggregate is a protocol stress test. Human
+RAGTruth, Diag-150, and RQ4 review remain pending; simulated output cannot satisfy
+the independent-review or broad-SOTA gates. See `REVIEW_STATUS.md` and
+`CLAIM_POLICY.md`.
 
 ## Inspect Repair Planning
 

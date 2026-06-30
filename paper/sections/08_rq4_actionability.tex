@@ -1,0 +1,30 @@
+\section{RQ4: Diagnosis Actionability}
+The preregistered human study contains 40 stratified failure cases and compares
+a semantic score/claim output against the full evidence-chain report. Option
+order is counterbalanced and condition names are hidden. At least three
+non-author reviewers must rate diagnosis correctness, repair actionability,
+specificity, evidence sufficiency, preference, confidence, and time. No human
+responses are currently available; the primary human RQ4 outcome is therefore
+N/A.
+
+We separately execute a controlled LLM-simulated protocol stress test using
+three role prompts: strict evidence, developer actionability, and skeptical ARR
+review. Each role evaluates all 40 cases under raw trace (A), score-only (B), and
+evidence-chain (C) settings, yielding 360 RQ4 judgments. The model is pinned to
+\texttt{gpt-4.1-nano-2025-04-14}; strict schema validation produces zero parse
+failures. Private labels are loaded only after responses are frozen.
+
+Table~\ref{tab:table4-rq4-actionability} shows the simulated results. Setting C
+raises normalized root-cause accuracy from 0.067/0.117 (A/B) to 0.908 and lowers
+false greens from 0.625/0.550 to 0.400. However, mean actionability falls from
+3.767 (A) and 3.608 (B) to 3.333 (C). Thus the evidence-chain condition does not
+improve every registered proxy, and the preregistered positive simulated-pilot
+claim is not supported. The fix-correctness value is an operational proxy, not
+a human rating. Figure~\ref{fig:rq4} summarizes the protocol.
+
+We include this controlled LLM-simulated review and actionability pilot as a
+stress test of the review protocol. These results are reported separately and
+do not replace independent human validation.
+
+\input{tables/table4_rq4_actionability}
+\input{figures/figure4_rq4_settings}

@@ -59,6 +59,7 @@ EXTRA_WORKTREE_FILES = {
     "benchmarks/contexttrace_bench/artifact_runtime.py",
     "benchmarks/tests/test_anonymous_artifact.py",
     "examples/diagnose_agent_trace.json",
+    "paper/build/main.pdf",
 }
 ARTIFACT_README_SOURCE = "ANONYMOUS_ARTIFACT.md"
 ARTIFACT_README_PATH = "README.md"
@@ -77,8 +78,33 @@ FULL_OUTPUT_NAMES = (
     "error_analysis.json",
 )
 FULL_OUTPUT_ROOT = "benchmarks/contexttrace_bench/out/arr_full"
+AFTER_REVIEW_OUTPUT_ROOT = "benchmarks/contexttrace_bench/out/arr_full_after_review"
+AFTER_REVIEW_OUTPUT_NAMES = (
+    *FULL_OUTPUT_NAMES,
+    "sensitivity_analysis.md",
+    "sensitivity_analysis.json",
+    "simulated_review_status.json",
+)
+SIMULATED_AGGREGATE_FILES = (
+    "benchmarks/contexttrace_bench/out/simulated_review/ragtruth/agreement.json",
+    "benchmarks/contexttrace_bench/out/simulated_review/ragtruth/review_summary.md",
+    "benchmarks/contexttrace_bench/out/simulated_review/ragtruth/run_manifest.json",
+    "benchmarks/contexttrace_bench/out/simulated_review/diag150/agreement.json",
+    "benchmarks/contexttrace_bench/out/simulated_review/diag150/review_summary.md",
+    "benchmarks/contexttrace_bench/out/simulated_review/diag150/run_manifest.json",
+    "benchmarks/contexttrace_bench/out/rq4/simulated/rq4_results.json",
+    "benchmarks/contexttrace_bench/out/rq4/simulated/rq4_results.md",
+    "benchmarks/contexttrace_bench/out/rq4/simulated/run_manifest.json",
+    "benchmarks/contexttrace_bench/out/corrections/correction_summary.md",
+    "benchmarks/contexttrace_bench/out/corrections/sensitivity_analysis.json",
+    "benchmarks/contexttrace_bench/out/corrections/sensitivity_analysis.md",
+)
 MANIFEST_PATH = "ARTIFACT_MANIFEST.json"
 ZIP_ROOT = "contexttrace-arr-artifact"
+CLAIM_POLICY_PATH = "CLAIM_POLICY.md"
+REVIEW_STATUS_PATH = "REVIEW_STATUS.md"
+ANONYMIZATION_CHECKLIST_PATH = "ANONYMIZATION_CHECKLIST.md"
+BINARY_SUFFIXES = {".pdf"}
 
 RAGTRUTH_LICENSE = """MIT License
 
@@ -115,12 +141,32 @@ metadata, not independent human validation. Consult the artifact's frozen study
 protocol before making empirical claims.
 """
 
+CLAIM_POLICY = """# Claim policy
+
+Allowed: ContextTrace is a benchmarked, local-first evidence-chain forensics
+system with frozen pre-review dataset-specific results.
+
+Blocked: broad SOTA, independent human validation, and improved human
+actionability. LLM-simulated pilots are protocol stress tests only and cannot
+satisfy human-review or SOTA gates.
+"""
+
+ANONYMIZATION_CHECKLIST = """# Anonymization checklist
+
+- Author names, handles, emails, affiliations, local paths, repository links,
+  package-index links, and common secrets are scanned.
+- Git history, private annotation keys, private condition keys, raw reviewer
+  identities, and non-anonymous release links are excluded.
+- The paper PDF and text sources use an anonymous author block.
+- A failed validator blocks artifact creation.
+"""
+
 PROJECT_OWNER = "sam" + "arth" + "1412"
 PROJECT_OWNER_ALT = "sam" + "arth" + "vinayaka"
 AUTHOR_GIVEN_NAME = "sam" + "arth"
 LOCAL_USERNAME = "ma" + "nnv"
-GMAIL_DOMAIN = "gma" + "il.com"
-UFL_DOMAIN = "ufl" + ".edu"
+PERSONAL_MAIL_DOMAIN = "gma" + "il.com"
+UNIVERSITY_MAIL_DOMAIN = "uf" + "l.edu"
 PROJECT_REPOSITORY_URL = "https://github.com/" + PROJECT_OWNER + "/Context-Trace"
 PACKAGE_INDEX_URL = "https://" + "pypi" + ".org/project/contexttrace"
 
@@ -132,8 +178,8 @@ TEXT_REPLACEMENTS = (
     (re.compile(re.escape(PROJECT_OWNER_ALT), re.IGNORECASE), "anonymous"),
     (re.compile(r"\b" + re.escape(AUTHOR_GIVEN_NAME) + r"\b", re.IGNORECASE), "Anonymous"),
     (re.compile(re.escape(LOCAL_USERNAME), re.IGNORECASE), "anonymous"),
-    (re.compile(re.escape(GMAIL_DOMAIN), re.IGNORECASE), "example.invalid"),
-    (re.compile(re.escape(UFL_DOMAIN), re.IGNORECASE), "example.invalid"),
+    (re.compile(re.escape(PERSONAL_MAIL_DOMAIN), re.IGNORECASE), "example.invalid"),
+    (re.compile(re.escape(UNIVERSITY_MAIL_DOMAIN), re.IGNORECASE), "example.invalid"),
 )
 IDENTITY_PATTERNS = (
     ("repository_owner", re.compile(re.escape(PROJECT_OWNER), re.IGNORECASE)),
@@ -142,8 +188,8 @@ IDENTITY_PATTERNS = (
     ("local_username", re.compile(re.escape(LOCAL_USERNAME), re.IGNORECASE)),
     ("public_repository", re.compile(re.escape(PROJECT_REPOSITORY_URL.split("://", 1)[1]), re.IGNORECASE)),
     ("package_index", re.compile(re.escape(PACKAGE_INDEX_URL.split("://", 1)[1]), re.IGNORECASE)),
-    ("gmail_domain", re.compile(re.escape(GMAIL_DOMAIN), re.IGNORECASE)),
-    ("university_domain", re.compile(re.escape(UFL_DOMAIN), re.IGNORECASE)),
+    ("personal_mail_domain", re.compile(re.escape(PERSONAL_MAIL_DOMAIN), re.IGNORECASE)),
+    ("university_mail_domain", re.compile(re.escape(UNIVERSITY_MAIL_DOMAIN), re.IGNORECASE)),
     ("email_address", re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.IGNORECASE)),
     ("windows_user_path", re.compile(r"[A-Z]:\\Users\\[^\\]+\\", re.IGNORECASE)),
     ("posix_user_path", re.compile(r"/(?:Users|home)/[^/]+/", re.IGNORECASE)),
@@ -173,9 +219,13 @@ REQUIRED_FILES = {
     "benchmarks/contexttrace_bench/reproduce_arr_tables.py",
     "docs/arr-submission-checklist.md",
     "paper/main.tex",
+    "paper/build/main.pdf",
     "paper/tables/table1_main_results.tex",
     "scripts/build_anonymous_artifact.py",
     MANIFEST_PATH,
+    CLAIM_POLICY_PATH,
+    REVIEW_STATUS_PATH,
+    ANONYMIZATION_CHECKLIST_PATH,
 }
 
 
@@ -199,10 +249,22 @@ def build_anonymous_artifact(
             if relative_path in {ARTIFACT_README_SOURCE, ARTIFACT_README_PATH}
             else relative_path
         )
-        text = source.read_text(encoding="utf-8")
-        sanitized, replacements = sanitize_text(text)
-        redaction_count += replacements
-        payload[archive_path] = sanitized.encode("utf-8")
+        if source.suffix.lower() in BINARY_SUFFIXES:
+            payload[archive_path] = source.read_bytes()
+        else:
+            text = source.read_text(encoding="utf-8")
+            sanitized, replacements = sanitize_text(text)
+            redaction_count += replacements
+            payload[archive_path] = sanitized.encode("utf-8")
+
+    payload[CLAIM_POLICY_PATH] = CLAIM_POLICY.encode("utf-8")
+    payload[ANONYMIZATION_CHECKLIST_PATH] = ANONYMIZATION_CHECKLIST.encode("utf-8")
+    review_status_source = REPO_ROOT / "benchmarks" / "contexttrace_bench" / "SIMULATED_REVIEW_STATUS.md"
+    if not review_status_source.is_file():
+        raise FileNotFoundError("Tracked simulated-review status is missing.")
+    review_status, replacements = sanitize_text(review_status_source.read_text(encoding="utf-8"))
+    redaction_count += replacements
+    payload[REVIEW_STATUS_PATH] = review_status.encode("utf-8")
 
     external_data = False
     full_outputs = False
@@ -232,6 +294,29 @@ def build_anonymous_artifact(
             sanitized, replacements = sanitize_text(source.read_text(encoding="utf-8-sig"))
             redaction_count += replacements
             payload["%s/%s" % (FULL_OUTPUT_ROOT, name)] = sanitized.encode("utf-8")
+        after_review_dir = REPO_ROOT / AFTER_REVIEW_OUTPUT_ROOT
+        missing_after_review = [
+            name for name in AFTER_REVIEW_OUTPUT_NAMES if not (after_review_dir / name).is_file()
+        ]
+        if missing_after_review:
+            raise FileNotFoundError(
+                "Frozen after-review outputs are missing: %s" % ", ".join(missing_after_review)
+            )
+        for name in AFTER_REVIEW_OUTPUT_NAMES:
+            source = after_review_dir / name
+            sanitized, replacements = sanitize_text(source.read_text(encoding="utf-8-sig"))
+            redaction_count += replacements
+            payload["%s/%s" % (AFTER_REVIEW_OUTPUT_ROOT, name)] = sanitized.encode("utf-8")
+        missing_simulated = [path for path in SIMULATED_AGGREGATE_FILES if not (REPO_ROOT / path).is_file()]
+        if missing_simulated:
+            raise FileNotFoundError(
+                "Simulated aggregate outputs are missing: %s" % ", ".join(missing_simulated)
+            )
+        for relative in SIMULATED_AGGREGATE_FILES:
+            source = REPO_ROOT / relative
+            sanitized, replacements = sanitize_text(source.read_text(encoding="utf-8-sig"))
+            redaction_count += replacements
+            payload[relative] = sanitized.encode("utf-8")
         full_outputs = True
 
     manifest = {
@@ -310,6 +395,8 @@ def validate_anonymous_artifact(path: str | Path) -> dict[str, Any]:
     if missing:
         errors.append({"name": "required_files", "missing": missing})
     for relative, content in payload.items():
+        if Path(relative).suffix.lower() in BINARY_SUFFIXES:
+            continue
         try:
             text = content.decode("utf-8")
         except UnicodeDecodeError:
@@ -476,6 +563,13 @@ def _validate_manifest(payload: dict[str, bytes], errors: list[dict[str, Any]]) 
         )
         if missing_full_outputs:
             errors.append({"name": "full_outputs", "missing": missing_full_outputs})
+        missing_after_review = sorted(
+            "%s/%s" % (AFTER_REVIEW_OUTPUT_ROOT, name)
+            for name in AFTER_REVIEW_OUTPUT_NAMES
+            if "%s/%s" % (AFTER_REVIEW_OUTPUT_ROOT, name) not in payload
+        )
+        if missing_after_review:
+            errors.append({"name": "after_review_outputs", "missing": missing_after_review})
     declared = {str(row.get("path")): row for row in manifest.get("files") or [] if isinstance(row, dict)}
     actual = {path: content for path, content in payload.items() if path != MANIFEST_PATH}
     if set(declared) != set(actual):

@@ -1,0 +1,30 @@
+\section{Evidence-Chain Forensics}
+Let a trace be $T=(q,a,C,Z,M)$, where $q$ is a query, $a$ an answer,
+$C=\{c_j\}$ retrieved contexts, $Z$ citation edges, and $M$ optional source and
+execution metadata. Claim decomposition produces $A=\{a_i\}$. For each claim,
+the verifier emits
+\begin{equation}
+ y_i=(v_i,e_i,z_i,s_i,r_i,f_i),
+\end{equation}
+where $v_i$ is a support verdict, $e_i$ a localized evidence span, $z_i$ a
+citation state, $s_i$ a source-state assessment, $r_i$ a reason, and $f_i$ a
+claim-level fix. An aggregate diagnosis $D(T)$ contains failure labels, one
+primary observable root cause, an abstention decision, and a regression target.
+
+Evidence-chain forensics imposes three invariants. \emph{Traceability}: a
+supported verdict points to source text. \emph{Coverage honesty}: unavailable
+outputs remain N/A rather than zero or inferred. \emph{Repair locality}: root
+causes describe the earliest observable component supported by the trace, not
+hidden implementation state. For example, missing evidence can support
+``retrieval miss'' only when a supplied corpus or retrieval contract establishes
+that the evidence should have been available; otherwise the safer label is
+``should have abstained'' or ``corpus gap.''
+
+Figure~\ref{fig:trace} illustrates a contradiction chain. The evidence says
+refunds must be requested within 30 days while the answer claims 60 days. The
+chain preserves the contradictory span and links it to answer overreach and a
+specific answer constraint. This structure is intended to make diagnoses
+inspectable by both developers and reviewers.
+
+\input{figures/figure1_pipeline}
+\input{figures/figure2_trace_example}
