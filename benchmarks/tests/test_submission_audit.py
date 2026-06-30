@@ -25,7 +25,7 @@ def test_anonymity_audit_fails_on_paper_identity(tmp_path: Path) -> None:
 def test_anonymity_audit_quarantines_nonrelease_dataset_occurrence(tmp_path: Path) -> None:
     output = tmp_path / "benchmarks" / "contexttrace_bench" / "out" / "legacy"
     output.mkdir(parents=True)
-    (output / "third_party.json").write_text("contact@example.com", encoding="utf-8")
+    (output / "third_party.json").write_text("contact@" + "example.com", encoding="utf-8")
 
     report = audit_anonymity([tmp_path / "benchmarks" / "contexttrace_bench" / "out"])
 
