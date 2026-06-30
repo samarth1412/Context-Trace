@@ -92,6 +92,19 @@ def write_pre_review_snapshot(
         ),
         "source_commit": manifest.get("commit"),
         "source_generated_at": manifest.get("generated_at"),
+        "reproduction": {
+            "command": manifest.get("command"),
+            "quick": manifest.get("quick"),
+            "full": manifest.get("full", not bool(manifest.get("quick"))),
+            "runtime_seconds": manifest.get("runtime_seconds"),
+            "python": dict(manifest.get("python") or {}),
+            "platform": dict(manifest.get("platform") or {}),
+            "dependencies": dict(manifest.get("dependencies") or {}),
+            "cost": dict(manifest.get("cost") or {}),
+            "case_id_hashes": dict(manifest.get("case_id_hashes") or {}),
+            "prediction_hashes": list(manifest.get("prediction_hashes") or []),
+            "scoring_hashes": list(manifest.get("scoring_hashes") or []),
+        },
         "bootstrap_samples": manifest.get("bootstrap_samples"),
         "bootstrap_seed": manifest.get("bootstrap_seed"),
         "bootstrap_valid_draw_policy": {
@@ -114,6 +127,7 @@ def write_pre_review_snapshot(
             "root_cause_confusion": list(error.get("root_cause_confusion") or []),
             "false_positive_labels": list(error.get("false_positive_labels") or []),
             "dangerous_false_green_count": len(error.get("dangerous_false_greens") or []),
+            "cases_to_review": list(error.get("cases_to_review") or []),
         },
         "source_artifacts": _artifact_records(manifest_path, tables_path, manifest),
     }

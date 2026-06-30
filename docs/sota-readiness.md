@@ -6,7 +6,7 @@ not claim broad state-of-the-art performance until every evidence gate passes.
 
 ## Current Status
 
-The machine-readable gate currently passes `8/10` checks. Product release is
+The machine-readable gate currently passes `8/11` checks. Product release is
 allowed, but a broad SOTA claim is not.
 
 Passed evidence includes:
@@ -20,8 +20,10 @@ Passed evidence includes:
 
 Open evidence requirements:
 
-1. Independent review of the 88-row primary RAGTruth review set.
-2. Independent sign-off on all 150 ContextTrace-Diag-150 cases.
+1. Every external track used in a broad claim must be independently publishable;
+   scored, calibration-only, and review-pending runs do not qualify.
+2. Independent review of the 88-row primary RAGTruth review set.
+3. Independent sign-off on all 150 ContextTrace-Diag-150 cases.
 
 Until both are complete, use the positioning "benchmarked, local-first
 evidence-chain forensics" and do not describe ContextTrace as broadly SOTA.

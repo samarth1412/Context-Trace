@@ -1,0 +1,19 @@
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[
+  node distance=5mm,
+  item/.style={draw, rounded corners=2pt, align=left, text width=68mm, font=\footnotesize, inner sep=4pt},
+  arrow/.style={-{Latex[length=1.8mm]}, thick}
+]
+\node[item] (case) {Fixed failure case: query, answer, and retrieved contexts};
+\node[item, below=of case] (options) {Blinded option order: semantic-core output versus full evidence-chain output};
+\node[item, below=of options] (ratings) {Reviewer judgments: correctness, actionability, specificity, evidence sufficiency, time};
+\node[item, below=of ratings] (analysis) {Preregistered analysis: decisive preference, paired deltas, intervals, and disagreement};
+\draw[arrow] (case) -- (options);
+\draw[arrow] (options) -- (ratings);
+\draw[arrow] (ratings) -- (analysis);
+\end{tikzpicture}
+\caption{RQ4 study settings. The protocol is frozen; responses have not yet
+been collected.}
+\label{fig:rq4}
+\end{figure}

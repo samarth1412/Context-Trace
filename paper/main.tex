@@ -1,0 +1,39 @@
+\documentclass[11pt]{article}
+\IfFileExists{acl.sty}{\usepackage[review]{acl}}{\usepackage[margin=1in]{geometry}}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,fit,positioning}
+\title{ContextTrace: Evidence-Chain Forensics for Retrieval-Augmented Generation}
+\author{Anonymous ARR submission}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+Retrieval-augmented generation evaluators often reduce a trace to aggregate
+quality scores, leaving engineers to reconstruct why an answer failed and what
+to repair. ContextTrace is a local-first evaluator that maps claims through
+retrieved evidence, citations, source conditions, and abstention behavior to
+structured failure diagnoses. This draft defines the system, benchmark
+protocol, and preregistered actionability study. All quantitative tables report
+frozen pre-review evidence and identify review-pending results explicitly.
+\end{abstract}
+
+\input{sections/introduction}
+\input{sections/related_work}
+\input{sections/evidence_chain}
+\input{sections/system}
+\input{sections/benchmark_protocol}
+\input{sections/experiments}
+\input{sections/ablations}
+\input{sections/rq4}
+\input{sections/error_analysis}
+\input{sections/discussion}
+\input{sections/conclusion}
+\input{sections/limitations}
+\input{sections/ethics}
+
+\bibliographystyle{acl_natbib}
+\bibliography{references}
+\end{document}

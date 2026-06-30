@@ -67,6 +67,33 @@
     },
     {
       "evidence": {
+        "review_pending_tracks": [
+          {
+            "bundle_status": "calibration_only",
+            "dataset": "RAGTruth",
+            "name": "RAGTruth",
+            "workflow_status": "scored"
+          },
+          {
+            "bundle_status": "review_pending",
+            "dataset": "ARES-NQ-example",
+            "name": "ARES-NQ-example",
+            "workflow_status": "scored_review_pending"
+          },
+          {
+            "bundle_status": "review_pending",
+            "dataset": "CRAG-Task1-v5",
+            "name": "CRAG-Task1-v5",
+            "workflow_status": "scored_review_pending"
+          }
+        ]
+      },
+      "name": "no_review_pending_external_claims",
+      "passed": false,
+      "requirement": "Every external track used for a SOTA claim is independently publishable; review-pending and calibration-only tracks cannot satisfy the broad claim gate."
+    },
+    {
+      "evidence": {
         "bundle_status": "calibration_only",
         "errors": 0,
         "review_kind": "assisted",
@@ -205,12 +232,12 @@
   "claim_allowed": false,
   "claim_policy": "Do not claim broad SOTA; use the benchmarked, local-first evidence-chain forensics positioning.",
   "gate": "ContextTrace broad SOTA claim",
-  "gate_version": 1,
-  "generated_at": "2026-06-29T14:58:37+00:00",
+  "gate_version": 2,
+  "generated_at": "2026-06-30T03:09:45+00:00",
   "status": "not_ready",
   "summary": {
-    "checks": 10,
-    "failed": 2,
+    "checks": 11,
+    "failed": 3,
     "passed": 8
   }
 }

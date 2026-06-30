@@ -1,0 +1,22 @@
+\begin{figure*}[t]
+\centering
+\begin{tikzpicture}[
+  node distance=6mm and 5mm,
+  box/.style={draw, rounded corners=2pt, align=center, minimum height=9mm, text width=23mm, font=\small},
+  gate/.style={draw, double, align=center, minimum height=9mm, text width=25mm, font=\small},
+  arrow/.style={-{Latex[length=2mm]}, thick}
+]
+\node[box] (freeze) {Freeze case IDs, labels, profiles, seeds};
+\node[box, right=of freeze] (predict) {Generate or load candidate outputs};
+\node[box, right=of predict] (score) {Score same IDs and bootstrap cases};
+\node[box, right=of score] (review) {Independent blinded review};
+\node[gate, right=of review] (claim) {Fail-closed claim gate};
+\draw[arrow] (freeze) -- (predict);
+\draw[arrow] (predict) -- (score);
+\draw[arrow] (score) -- (review);
+\draw[arrow] (review) -- (claim);
+\end{tikzpicture}
+\caption{Benchmark protocol. Scoring completion alone does not authorize a
+broad claim; review status is a separate machine-checked gate.}
+\label{fig:protocol}
+\end{figure*}

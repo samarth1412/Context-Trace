@@ -1,0 +1,11 @@
+\section{Limitations}
+Current quantitative results are not independently signed off. The diagnostic
+benchmark contains synthetic cases, while the external evaluation uses a
+restricted sample rather than every available record. RAGTruth claim-verdict
+performance is substantially lower than its failure-label score. Some modules
+depend on metadata that real traces may omit. The lexical and semantic matchers
+are deterministic heuristics, not general entailment models. NLI-only and
+judge-only ablations are unavailable because no offline, version-pinned models
+were frozen. The RQ4 study has not been run, and its paired outputs cannot fully
+blind reviewers to which condition is more detailed. Grounding against supplied
+contexts does not establish real-world truth.

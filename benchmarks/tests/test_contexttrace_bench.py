@@ -2770,9 +2770,9 @@ def test_sota_readiness_gate_accepts_complete_evidence(tmp_path) -> None:
     secondary_manifest = _write_sota_external_bundle(
         secondary_dir,
         dataset="External-Two",
-        bundle_status="review_pending",
-        workflow_status="scored_review_pending",
-        independent=False,
+        bundle_status="publishable",
+        workflow_status="scored",
+        independent=True,
         include_competitor=False,
     )
     diag150_manifest = _write_sota_diag150_bundle(tmp_path / "diag150", freeze_ready=True)
@@ -2792,7 +2792,7 @@ def test_sota_readiness_gate_accepts_complete_evidence(tmp_path) -> None:
 
     assert report["status"] == "claim_ready"
     assert report["claim_allowed"] is True
-    assert report["summary"] == {"checks": 10, "passed": 10, "failed": 0}
+    assert report["summary"] == {"checks": 11, "passed": 11, "failed": 0}
 
 
 def test_sota_readiness_gate_fails_closed_on_tampered_or_incomplete_evidence(tmp_path) -> None:
@@ -2834,6 +2834,7 @@ def test_sota_readiness_gate_fails_closed_on_tampered_or_incomplete_evidence(tmp
     assert report["status"] == "not_ready"
     assert report["claim_allowed"] is False
     assert checks["primary_bundle_integrity"]["passed"] is False
+    assert checks["no_review_pending_external_claims"]["passed"] is False
     assert checks["primary_independent_review"]["passed"] is False
     assert checks["primary_same_id_competitors"]["passed"] is False
     assert checks["diag150_human_audit"]["passed"] is False

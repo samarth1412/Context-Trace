@@ -1,0 +1,19 @@
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[
+  node distance=4mm,
+  item/.style={draw, rounded corners=2pt, align=left, text width=68mm, font=\footnotesize, inner sep=4pt},
+  arrow/.style={-{Latex[length=1.8mm]}, thick}
+]
+\node[item] (claim) {Claim: ``The policy allows a refund after 60 days.''};
+\node[item, below=of claim] (span) {Evidence span: ``Refund requests must be made within 30 days.''};
+\node[item, below=of span] (verdict) {Verdict: contradicted; citation target found};
+\node[item, below=of verdict] (repair) {Diagnosis: answer overreach; repair: constrain the answer to the stated window};
+\draw[arrow] (claim) -- (span);
+\draw[arrow] (span) -- (verdict);
+\draw[arrow] (verdict) -- (repair);
+\end{tikzpicture}
+\caption{Illustrative evidence-chain trace. The example describes the output
+schema and is not a scored benchmark result.}
+\label{fig:trace}
+\end{figure}

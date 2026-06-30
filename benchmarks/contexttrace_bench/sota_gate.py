@@ -113,6 +113,26 @@ def build_sota_readiness_report(
             "tracks": track_evidence,
         },
     )
+    review_pending_tracks = [
+        {
+            "name": item.get("name"),
+            "dataset": item.get("dataset"),
+            "bundle_status": item.get("bundle_status"),
+            "workflow_status": item.get("workflow_status"),
+        }
+        for item in track_evidence
+        if item.get("scored") and item.get("bundle_status") != "publishable"
+    ]
+    _append_check(
+        checks,
+        name="no_review_pending_external_claims",
+        passed=not review_pending_tracks,
+        requirement=(
+            "Every external track used for a SOTA claim is independently publishable; "
+            "review-pending and calibration-only tracks cannot satisfy the broad claim gate."
+        ),
+        evidence={"review_pending_tracks": review_pending_tracks},
+    )
 
     primary_manifest = primary_evidence.get("manifest") or {}
     primary_review = primary_manifest.get("review") or {}
@@ -198,7 +218,7 @@ def build_sota_readiness_report(
     status = "claim_ready" if passed_checks == len(checks) else "not_ready"
     return {
         "gate": "ContextTrace broad SOTA claim",
-        "gate_version": 1,
+        "gate_version": 2,
         "generated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
         "status": status,
         "claim_allowed": status == "claim_ready",

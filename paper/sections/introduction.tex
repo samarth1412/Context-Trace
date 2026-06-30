@@ -1,0 +1,12 @@
+\section{Introduction}
+RAG failures can arise from retrieval, evidence quality, citation alignment,
+claim overreach, contradiction, or a missing abstention. Aggregate scores do
+not identify which component should change. We study evidence-chain forensics:
+the task of producing a traceable diagnosis from answer claims to supporting
+or conflicting spans and then to a concrete failure class.
+
+ContextTrace implements this task as a deterministic, local-first verification
+pipeline. The intended contribution is not another scalar judge. It is an
+inspectable diagnostic contract, an evaluation protocol that preserves
+unsupported outputs as unavailable rather than imputing them, and a human
+study designed to test whether the added structure improves repair decisions.

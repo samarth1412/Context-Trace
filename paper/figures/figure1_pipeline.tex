@@ -1,0 +1,21 @@
+\begin{figure*}[t]
+\centering
+\begin{tikzpicture}[
+  node distance=5mm and 5mm,
+  box/.style={draw, rounded corners=2pt, align=center, minimum height=8mm, text width=22mm, font=\small},
+  arrow/.style={-{Latex[length=2mm]}, thick}
+]
+\node[box] (trace) {RAG trace\\query, answer, contexts};
+\node[box, right=of trace] (claims) {Claim\\decomposition};
+\node[box, right=of claims] (evidence) {Evidence and\\citation checks};
+\node[box, right=of evidence] (conditions) {Source and\\abstention checks};
+\node[box, right=of conditions] (diagnosis) {Root cause and\\repair record};
+\draw[arrow] (trace) -- (claims);
+\draw[arrow] (claims) -- (evidence);
+\draw[arrow] (evidence) -- (conditions);
+\draw[arrow] (conditions) -- (diagnosis);
+\end{tikzpicture}
+\caption{ContextTrace production pipeline. Each stage emits a serializable
+record used by downstream diagnosis and audit.}
+\label{fig:pipeline}
+\end{figure*}

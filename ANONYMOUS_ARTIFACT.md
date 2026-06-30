@@ -19,15 +19,28 @@ python -m pytest -q
 
 ## Reproduce Reviewer Tables
 
-Generate the four non-paper harness-check tables:
+Generate the frozen full experiment outputs:
+
+```bash
+python benchmarks/contexttrace_bench/reproduce_arr_tables.py --full
+```
+
+For a faster non-paper harness check:
 
 ```bash
 python benchmarks/contexttrace_bench/reproduce_arr_tables.py --quick
 ```
 
-The command writes external evaluation, cumulative ablation, same-ID baseline,
-and error-analysis tables under `benchmarks/contexttrace_bench/out/`. Every quick
-output is marked ineligible for paper claims.
+Both commands write external evaluation, ablation, same-ID baseline, and error
+analysis under `benchmarks/contexttrace_bench/out/`. Quick output is marked
+ineligible for paper claims. The artifact also includes the frozen compact full
+outputs used to generate the draft tables.
+
+Regenerate TeX and Markdown paper tables with:
+
+```bash
+python paper/generate_tables.py
+```
 
 ## Inspect Frozen Protocols
 

@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import re
+import shutil
 import subprocess
 import sys
 import zipfile
@@ -13,6 +14,7 @@ from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT = REPO_ROOT / "out" / "anonymous-contexttrace-artifact.zip"
+DEFAULT_DIRECTORY = REPO_ROOT / "artifacts" / "arr_anonymous"
 DEFAULT_RAGTRUTH_PACK = (
     REPO_ROOT
     / "benchmarks"
@@ -36,11 +38,14 @@ ROOT_FILES = {
     "pytest.ini",
     "REPRODUCIBILITY.md",
     "benchmarks/__init__.py",
+    "docs/arr-readiness.md",
+    "docs/arr-submission-checklist.md",
 }
 ALLOWED_PREFIXES = (
     "packages/contexttrace/",
     "benchmarks/contexttrace_bench/",
     "benchmarks/tests/",
+    "paper/",
 )
 EXCLUDED_PATHS = {
     "benchmarks/contexttrace_bench/SOTA_STATUS.json",
@@ -61,6 +66,17 @@ RAGTRUTH_PACK_PATH = "benchmarks/contexttrace_bench/out/ragtruth_release_bundle/
 RAGTRUTH_CANDIDATE_PATH = "benchmarks/contexttrace_bench/out/ragtruth_release_bundle/candidates/ragas_predictions.json"
 RAGTRUTH_LICENSE_PATH = "THIRD_PARTY_LICENSES/RAGTruth-LICENSE.txt"
 RAGTRUTH_README_PATH = "THIRD_PARTY_LICENSES/README.md"
+FULL_OUTPUT_NAMES = (
+    "main_results.md",
+    "baseline_comparison.md",
+    "ablations.md",
+    "error_analysis.md",
+    "reproducibility_summary.md",
+    "manifest.json",
+    "ablations.json",
+    "error_analysis.json",
+)
+FULL_OUTPUT_ROOT = "benchmarks/contexttrace_bench/out/arr_full"
 MANIFEST_PATH = "ARTIFACT_MANIFEST.json"
 ZIP_ROOT = "contexttrace-arr-artifact"
 
@@ -99,22 +115,35 @@ metadata, not independent human validation. Consult the artifact's frozen study
 protocol before making empirical claims.
 """
 
-PROJECT_OWNER = "samarth" + "1412"
+PROJECT_OWNER = "sam" + "arth" + "1412"
+PROJECT_OWNER_ALT = "sam" + "arth" + "vinayaka"
+AUTHOR_GIVEN_NAME = "sam" + "arth"
 LOCAL_USERNAME = "ma" + "nnv"
+GMAIL_DOMAIN = "gma" + "il.com"
+UFL_DOMAIN = "ufl" + ".edu"
 PROJECT_REPOSITORY_URL = "https://github.com/" + PROJECT_OWNER + "/Context-Trace"
 PACKAGE_INDEX_URL = "https://" + "pypi" + ".org/project/contexttrace"
 
 TEXT_REPLACEMENTS = (
+    (re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.IGNORECASE), "<ANONYMIZED_EMAIL>"),
     (re.compile(re.escape(PROJECT_REPOSITORY_URL), re.IGNORECASE), "https://example.invalid/anonymous-artifact"),
     (re.compile(re.escape(PACKAGE_INDEX_URL) + r"/?", re.IGNORECASE), "https://example.invalid/anonymous-package"),
     (re.compile(re.escape(PROJECT_OWNER), re.IGNORECASE), "anonymous"),
+    (re.compile(re.escape(PROJECT_OWNER_ALT), re.IGNORECASE), "anonymous"),
+    (re.compile(r"\b" + re.escape(AUTHOR_GIVEN_NAME) + r"\b", re.IGNORECASE), "Anonymous"),
     (re.compile(re.escape(LOCAL_USERNAME), re.IGNORECASE), "anonymous"),
+    (re.compile(re.escape(GMAIL_DOMAIN), re.IGNORECASE), "example.invalid"),
+    (re.compile(re.escape(UFL_DOMAIN), re.IGNORECASE), "example.invalid"),
 )
 IDENTITY_PATTERNS = (
     ("repository_owner", re.compile(re.escape(PROJECT_OWNER), re.IGNORECASE)),
+    ("repository_owner_alias", re.compile(re.escape(PROJECT_OWNER_ALT), re.IGNORECASE)),
+    ("author_given_name", re.compile(r"\b" + re.escape(AUTHOR_GIVEN_NAME) + r"\b", re.IGNORECASE)),
     ("local_username", re.compile(re.escape(LOCAL_USERNAME), re.IGNORECASE)),
     ("public_repository", re.compile(re.escape(PROJECT_REPOSITORY_URL.split("://", 1)[1]), re.IGNORECASE)),
     ("package_index", re.compile(re.escape(PACKAGE_INDEX_URL.split("://", 1)[1]), re.IGNORECASE)),
+    ("gmail_domain", re.compile(re.escape(GMAIL_DOMAIN), re.IGNORECASE)),
+    ("university_domain", re.compile(re.escape(UFL_DOMAIN), re.IGNORECASE)),
     ("email_address", re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.IGNORECASE)),
     ("windows_user_path", re.compile(r"[A-Z]:\\Users\\[^\\]+\\", re.IGNORECASE)),
     ("posix_user_path", re.compile(r"/(?:Users|home)/[^/]+/", re.IGNORECASE)),
@@ -142,6 +171,9 @@ REQUIRED_FILES = {
     "examples/diagnose_agent_trace.json",
     "benchmarks/contexttrace_bench/ARR_EXPERIMENTS.json",
     "benchmarks/contexttrace_bench/reproduce_arr_tables.py",
+    "docs/arr-submission-checklist.md",
+    "paper/main.tex",
+    "paper/tables/table1_main_results.tex",
     "scripts/build_anonymous_artifact.py",
     MANIFEST_PATH,
 }
@@ -153,6 +185,7 @@ def build_anonymous_artifact(
     ragtruth_case_pack_path: str | Path | None = DEFAULT_RAGTRUTH_PACK,
     ragtruth_candidate_path: str | Path | None = DEFAULT_RAGTRUTH_CANDIDATE,
     include_external_data: bool = True,
+    output_directory: str | Path | None = None,
 ) -> dict[str, Any]:
     destination = Path(output_path)
     destination.parent.mkdir(parents=True, exist_ok=True)
@@ -172,6 +205,7 @@ def build_anonymous_artifact(
         payload[archive_path] = sanitized.encode("utf-8")
 
     external_data = False
+    full_outputs = False
     if include_external_data:
         case_pack = Path(ragtruth_case_pack_path) if ragtruth_case_pack_path else None
         candidate = Path(ragtruth_candidate_path) if ragtruth_candidate_path else None
@@ -189,6 +223,16 @@ def build_anonymous_artifact(
         payload[RAGTRUTH_LICENSE_PATH] = RAGTRUTH_LICENSE.encode("utf-8")
         payload[RAGTRUTH_README_PATH] = RAGTRUTH_README.encode("utf-8")
         external_data = True
+        full_output_dir = REPO_ROOT / FULL_OUTPUT_ROOT
+        missing_full_outputs = [name for name in FULL_OUTPUT_NAMES if not (full_output_dir / name).is_file()]
+        if missing_full_outputs:
+            raise FileNotFoundError("Frozen full-run outputs are missing: %s" % ", ".join(missing_full_outputs))
+        for name in FULL_OUTPUT_NAMES:
+            source = full_output_dir / name
+            sanitized, replacements = sanitize_text(source.read_text(encoding="utf-8-sig"))
+            redaction_count += replacements
+            payload["%s/%s" % (FULL_OUTPUT_ROOT, name)] = sanitized.encode("utf-8")
+        full_outputs = True
 
     manifest = {
         "schema_version": 1,
@@ -196,7 +240,8 @@ def build_anonymous_artifact(
         "archive_root": ZIP_ROOT,
         "deterministic_timestamp": "2026-01-01T00:00:00Z",
         "external_ragtruth_data_included": external_data,
-        "paper_reproduction_ready": external_data,
+        "paper_reproduction_ready": external_data and full_outputs,
+        "frozen_full_outputs_included": full_outputs,
         "redactions_applied": redaction_count,
         "files": [
             {
@@ -209,6 +254,9 @@ def build_anonymous_artifact(
     }
     payload[MANIFEST_PATH] = (json.dumps(manifest, indent=2, sort_keys=True) + "\n").encode("utf-8")
     _write_deterministic_zip(destination, payload)
+    materialized_directory = None
+    if output_directory is not None:
+        materialized_directory = _materialize_directory(Path(output_directory), payload)
 
     validation = validate_anonymous_artifact(destination)
     if validation["status"] != "passed":
@@ -227,6 +275,8 @@ def build_anonymous_artifact(
         "file_count": validation["file_count"],
         "bytes": destination.stat().st_size,
         "external_ragtruth_data_included": external_data,
+        "frozen_full_outputs_included": full_outputs,
+        "materialized_directory": materialized_directory,
     }
 
 
@@ -375,6 +425,21 @@ def _write_deterministic_zip(path: Path, payload: dict[str, bytes]) -> None:
             archive.writestr(info, content, compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)
 
 
+def _materialize_directory(path: Path, payload: dict[str, bytes]) -> str:
+    destination = path.resolve()
+    if destination == REPO_ROOT.resolve() or destination.parent == destination or not destination.name:
+        raise ValueError("Refusing unsafe materialized artifact target.")
+    if destination.exists():
+        if destination.is_symlink() or not destination.is_dir():
+            raise ValueError("Materialized artifact target must be a real directory.")
+        shutil.rmtree(destination)
+    for relative, content in sorted(payload.items()):
+        output = destination / relative
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_bytes(content)
+    return str(destination)
+
+
 def _relative_archive_path(name: str) -> str | None:
     path = PurePosixPath(name)
     if path.is_absolute() or ".." in path.parts or not path.parts or path.parts[0] != ZIP_ROOT:
@@ -398,6 +463,19 @@ def _validate_manifest(payload: dict[str, bytes], errors: list[dict[str, Any]]) 
     except (UnicodeDecodeError, json.JSONDecodeError) as exc:
         errors.append({"name": "manifest_json", "message": str(exc)})
         return
+    expected_ready = bool(manifest.get("external_ragtruth_data_included")) and bool(
+        manifest.get("frozen_full_outputs_included")
+    )
+    if bool(manifest.get("paper_reproduction_ready")) != expected_ready:
+        errors.append({"name": "manifest_readiness", "message": "Paper readiness flags are inconsistent."})
+    if manifest.get("frozen_full_outputs_included"):
+        missing_full_outputs = sorted(
+            "%s/%s" % (FULL_OUTPUT_ROOT, name)
+            for name in FULL_OUTPUT_NAMES
+            if "%s/%s" % (FULL_OUTPUT_ROOT, name) not in payload
+        )
+        if missing_full_outputs:
+            errors.append({"name": "full_outputs", "missing": missing_full_outputs})
     declared = {str(row.get("path")): row for row in manifest.get("files") or [] if isinstance(row, dict)}
     actual = {path: content for path, content in payload.items() if path != MANIFEST_PATH}
     if set(declared) != set(actual):
@@ -427,6 +505,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--ragtruth-case-pack", default=str(DEFAULT_RAGTRUTH_PACK))
     parser.add_argument("--ragtruth-candidate", default=str(DEFAULT_RAGTRUTH_CANDIDATE))
     parser.add_argument("--no-external-data", action="store_true")
+    parser.add_argument("--directory", default=None, help="Also materialize the exact anonymous payload directory.")
     parser.add_argument("--validate-only", default=None)
     args = parser.parse_args(argv)
     if args.validate_only:
@@ -438,11 +517,15 @@ def main(argv: list[str] | None = None) -> int:
         ragtruth_case_pack_path=args.ragtruth_case_pack,
         ragtruth_candidate_path=args.ragtruth_candidate,
         include_external_data=not args.no_external_data,
+        output_directory=args.directory,
     )
     print("Archive: %s" % result["archive"])
     print("SHA256: %s" % result["sha256"])
     print("Files: %s" % result["file_count"])
     print("External RAGTruth data: %s" % result["external_ragtruth_data_included"])
+    print("Frozen full outputs: %s" % result["frozen_full_outputs_included"])
+    if result["materialized_directory"]:
+        print("Directory: %s" % result["materialized_directory"])
     print("Validation: %s" % result["validation"])
     return 0
 

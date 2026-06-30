@@ -1,9 +1,9 @@
 # ContextTrace SOTA Readiness Gate
 
 Status: `not_ready`
-Generated: `2026-06-29T14:58:37+00:00`
+Generated: `2026-06-30T03:09:45+00:00`
 Claim allowed: `false`
-Checks passed: `8/10`
+Checks passed: `8/11`
 
 ## Claim Policy
 
@@ -15,6 +15,7 @@ Do not claim broad SOTA; use the benchmarked, local-first evidence-chain forensi
 | --- | --- | --- |
 | `primary_bundle_integrity` | `passed` | The primary external bundle and every listed artifact pass checksum and structure validation. |
 | `external_dataset_count` | `passed` | At least 2 external datasets are scored end to end with frozen artifacts and documented commands. |
+| `no_review_pending_external_claims` | `failed` | Every external track used for a SOTA claim is independently publishable; review-pending and calibration-only tracks cannot satisfy the broad claim gate. |
 | `primary_independent_review` | `failed` | The primary external run has complete independent review with zero validation errors or warnings. |
 | `primary_failure_label_macro_f1` | `passed` | Primary external `failure_label_macro_f1` must be >= 0.75. |
 | `primary_dangerous_false_green_rate` | `passed` | Primary external `dangerous_false_green_rate` must be <= 0.01. |
@@ -26,5 +27,6 @@ Do not claim broad SOTA; use the benchmarked, local-first evidence-chain forensi
 
 ## Remaining Blockers
 
+- `no_review_pending_external_claims`: {"review_pending_tracks": [{"bundle_status": "calibration_only", "dataset": "RAGTruth", "name": "RAGTruth", "workflow_status": "scored"}, {"bundle_status": "review_pending", "dataset": "ARES-NQ-example", "name": "ARES-NQ-example", "workflow_status": "scored_review_pending"}, {"bundle_status": "revie
 - `primary_independent_review`: bundle status `calibration_only`, review kind `assisted`.
 - `diag150_human_audit`: human sign-off `False`, bundle status `review_pending`.

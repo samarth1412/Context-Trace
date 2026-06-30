@@ -16,19 +16,25 @@ from benchmarks.contexttrace_bench.artifact_runtime import ANONYMOUS_REVISION, r
 
 
 def test_sanitize_text_removes_project_identity_and_local_paths():
-    owner = "samarth" + "1412"
+    owner = "sam" + "arth" + "1412"
+    owner_alias = "sam" + "arth" + "vinayaka"
+    given_name = "sam" + "arth"
     username = "ma" + "nnv"
     source = (
         "https://github.com/%s/Context-Trace/issues " % owner
         + "https://" + "pypi" + ".org/project/contexttrace/ "
+        + "%s %s author@%s " % (owner_alias, given_name, "ufl" + ".edu")
         + "C:\\Users\\%s\\project\\results.json" % username
     )
 
     sanitized, count = sanitize_text(source)
 
-    assert count >= 3
+    assert count >= 6
     assert owner not in sanitized
+    assert owner_alias not in sanitized
+    assert given_name not in sanitized.lower()
     assert "pypi.org" not in sanitized
+    assert "ufl" + ".edu" not in sanitized
     assert username not in sanitized
     assert "<ANONYMIZED_LOCAL_PATH>" in sanitized
 
@@ -41,11 +47,13 @@ def test_anonymous_artifact_is_deterministic_and_valid_without_external_data(tmp
     second = build_anonymous_artifact(
         output_path=tmp_path / "second.zip",
         include_external_data=False,
+        output_directory=tmp_path / "materialized",
     )
 
     assert first["sha256"] == second["sha256"]
     assert first["external_ragtruth_data_included"] is False
     assert validate_anonymous_artifact(first["archive"])["status"] == "passed"
+    assert (Path(second["materialized_directory"]) / "ARTIFACT_MANIFEST.json").is_file()
     with zipfile.ZipFile(first["archive"], "r") as archive:
         names = archive.namelist()
         assert names == sorted(names)
@@ -60,7 +68,7 @@ def test_anonymous_artifact_is_deterministic_and_valid_without_external_data(tmp
 
 
 def test_anonymous_artifact_validator_rejects_identity_and_secret(tmp_path):
-    owner = "samarth" + "1412"
+    owner = "sam" + "arth" + "1412"
     fake_key = "sk-" + "abcdefghijklmnopqrstuvwxyz"
     path = tmp_path / "bad.zip"
     with zipfile.ZipFile(path, "w") as archive:

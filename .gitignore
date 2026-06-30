@@ -19,4 +19,5 @@ node_modules/
 *.tsbuildinfo
 *.log
 out/
+artifacts/arr_anonymous/
 .tmp-*/
