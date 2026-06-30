@@ -1,0 +1,153 @@
+# Anonymity audit
+
+Status: `passed`.
+
+Files scanned: `1246`; blocking findings: `0`; quarantined non-release occurrences: `136`.
+
+Scanned roots:
+
+- `paper`
+- `artifacts/arr_anonymous`
+- `benchmarks/contexttrace_bench/out`
+
+| Pattern | Path | Line | Classification |
+| --- | --- | ---: | --- |
+| local_username | `benchmarks/contexttrace_bench/out/ares_nq_example/full_release/scored/contexttrace_bench_results.json` | 57 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/ares_nq_example/full_release_bundle/scored/contexttrace_bench_results.json` | 57 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/ares_nq_example/release/scored/contexttrace_bench_results.json` | 57 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/ares_nq_example/release_bundle/scored/contexttrace_bench_results.json` | 57 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/ares_nq_example/smoke200_compared/scored/contexttrace_bench_results.json` | 57 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/ares_nq_example/smoke200_compared_bundle/scored/contexttrace_bench_results.json` | 57 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/ares_nq_example/smoke200_localized/scored/contexttrace_bench_results.json` | 57 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/ares_nq_example/smoke200_localized_v2/scored/contexttrace_bench_results.json` | 57 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/ares_nq_example/smoke200_localized_v2_bundle/scored/contexttrace_bench_results.json` | 57 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/ares_nq_example/smoke200_localized_v3/scored/contexttrace_bench_results.json` | 57 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/ares_nq_example/smoke200_localized_v3_bundle/scored/contexttrace_bench_results.json` | 57 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/ares_nq_example/smoke200_release/scored/contexttrace_bench_results.json` | 57 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/ares_nq_example/smoke200_release_bundle/scored/contexttrace_bench_results.json` | 57 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/ares_nq_example/smoke200_unique/scored/contexttrace_bench_results.json` | 57 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/ares_nq_example/smoke200_unique_bundle/scored/contexttrace_bench_results.json` | 57 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/crag_task1_v5_rows_200.jsonl` | 90 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/crag_task1_v5_rows_200.jsonl` | 42 | third_party_or_nonrelease_output |
+| university_affiliation | `benchmarks/contexttrace_bench/out/crag_official/crag_task1_v5_rows_200.jsonl` | 12 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/crag_task1_v5_rows_200.jsonl` | 8 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/example10_bundle/external_case_pack.json` | 733 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/example10_bundle/external_review_template.jsonl` | 8 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/example10_bundle/scored/candidate_inputs.jsonl` | 8 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/crag_official/example10_bundle/scored/contexttrace_bench_results.json` | 48 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/example10_bundle/scored/contexttrace_bench_results.json` | 3335 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/crag_official/example10_manifest.json` | 57 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/example10_rows.jsonl` | 8 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/example10_workflow/external_case_pack.json` | 733 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/example10_workflow/external_review_template.jsonl` | 8 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/example10_workflow/scored/candidate_inputs.jsonl` | 8 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/crag_official/example10_workflow/scored/contexttrace_bench_results.json` | 48 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/example10_workflow/scored/contexttrace_bench_results.json` | 3335 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/ragchecker/crag_full200_input.json` | 2515 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/ragchecker/crag_full200_input.json` | 1159 | third_party_or_nonrelease_output |
+| university_affiliation | `benchmarks/contexttrace_bench/out/crag_official/ragchecker/crag_full200_input.json` | 331 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/ragchecker/crag_full200_input.json` | 211 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/ragchecker/crag_full200_raw_results.json` | 9335 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/ragchecker/crag_full200_raw_results.json` | 4347 | third_party_or_nonrelease_output |
+| university_affiliation | `benchmarks/contexttrace_bench/out/crag_official/ragchecker/crag_full200_raw_results.json` | 1158 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/ragchecker/crag_full200_raw_results.json` | 767 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/ragchecker/scored_full200/candidate_inputs.jsonl` | 90 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/ragchecker/scored_full200/candidate_inputs.jsonl` | 42 | third_party_or_nonrelease_output |
+| university_affiliation | `benchmarks/contexttrace_bench/out/crag_official/ragchecker/scored_full200/candidate_inputs.jsonl` | 12 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/ragchecker/scored_full200/candidate_inputs.jsonl` | 8 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/ragchecker/scored_full200/contexttrace_bench_results.json` | 37919 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/ragchecker/scored_full200/contexttrace_bench_results.json` | 17844 | third_party_or_nonrelease_output |
+| university_affiliation | `benchmarks/contexttrace_bench/out/crag_official/ragchecker/scored_full200/contexttrace_bench_results.json` | 5238 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/ragchecker/scored_full200/contexttrace_bench_results.json` | 3263 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/review200/external_case_pack.json` | 7611 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/review200/external_case_pack.json` | 3501 | third_party_or_nonrelease_output |
+| university_affiliation | `benchmarks/contexttrace_bench/out/crag_official/review200/external_case_pack.json` | 981 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/review200/external_case_pack.json` | 621 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/review200/external_review_packet.md` | 10971 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/review200/external_review_packet.md` | 2453 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/review200/external_review_packet.md` | 3249 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/review200/external_review_template.jsonl` | 90 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/review200/external_review_template.jsonl` | 42 | third_party_or_nonrelease_output |
+| university_affiliation | `benchmarks/contexttrace_bench/out/crag_official/review200/external_review_template.jsonl` | 12 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/review200/external_review_template.jsonl` | 8 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/review200/scored/candidate_inputs.jsonl` | 90 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/review200/scored/candidate_inputs.jsonl` | 42 | third_party_or_nonrelease_output |
+| university_affiliation | `benchmarks/contexttrace_bench/out/crag_official/review200/scored/candidate_inputs.jsonl` | 12 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/review200/scored/candidate_inputs.jsonl` | 8 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/crag_official/review200/scored/contexttrace_bench_results.json` | 48 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/review200/scored/contexttrace_bench_results.json` | 37919 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/review200/scored/contexttrace_bench_results.json` | 17844 | third_party_or_nonrelease_output |
+| university_affiliation | `benchmarks/contexttrace_bench/out/crag_official/review200/scored/contexttrace_bench_results.json` | 5238 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/review200/scored/contexttrace_bench_results.json` | 3263 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/review200_bundle/external_case_pack.json` | 7611 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/review200_bundle/external_case_pack.json` | 3501 | third_party_or_nonrelease_output |
+| university_affiliation | `benchmarks/contexttrace_bench/out/crag_official/review200_bundle/external_case_pack.json` | 981 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/review200_bundle/external_case_pack.json` | 621 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/review200_bundle/external_review_packet.md` | 10971 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/review200_bundle/external_review_packet.md` | 2453 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/review200_bundle/external_review_packet.md` | 3249 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/review200_bundle/external_review_template.jsonl` | 90 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/review200_bundle/external_review_template.jsonl` | 42 | third_party_or_nonrelease_output |
+| university_affiliation | `benchmarks/contexttrace_bench/out/crag_official/review200_bundle/external_review_template.jsonl` | 12 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/review200_bundle/external_review_template.jsonl` | 8 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/review200_bundle/scored/candidate_inputs.jsonl` | 90 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/review200_bundle/scored/candidate_inputs.jsonl` | 42 | third_party_or_nonrelease_output |
+| university_affiliation | `benchmarks/contexttrace_bench/out/crag_official/review200_bundle/scored/candidate_inputs.jsonl` | 12 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/review200_bundle/scored/candidate_inputs.jsonl` | 8 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/crag_official/review200_bundle/scored/contexttrace_bench_results.json` | 48 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/review200_bundle/scored/contexttrace_bench_results.json` | 37919 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/review200_bundle/scored/contexttrace_bench_results.json` | 17844 | third_party_or_nonrelease_output |
+| university_affiliation | `benchmarks/contexttrace_bench/out/crag_official/review200_bundle/scored/contexttrace_bench_results.json` | 5238 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/review200_bundle/scored/contexttrace_bench_results.json` | 3263 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker/external_case_pack.json` | 7611 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker/external_case_pack.json` | 3501 | third_party_or_nonrelease_output |
+| university_affiliation | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker/external_case_pack.json` | 981 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker/external_case_pack.json` | 621 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker/external_review_packet.md` | 10971 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker/external_review_packet.md` | 2453 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker/external_review_packet.md` | 3249 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker/external_review_template.jsonl` | 90 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker/external_review_template.jsonl` | 42 | third_party_or_nonrelease_output |
+| university_affiliation | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker/external_review_template.jsonl` | 12 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker/external_review_template.jsonl` | 8 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker/scored/candidate_inputs.jsonl` | 90 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker/scored/candidate_inputs.jsonl` | 42 | third_party_or_nonrelease_output |
+| university_affiliation | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker/scored/candidate_inputs.jsonl` | 12 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker/scored/candidate_inputs.jsonl` | 8 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker/scored/contexttrace_bench_results.json` | 48 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker/scored/contexttrace_bench_results.json` | 37919 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker/scored/contexttrace_bench_results.json` | 17844 | third_party_or_nonrelease_output |
+| university_affiliation | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker/scored/contexttrace_bench_results.json` | 5238 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker/scored/contexttrace_bench_results.json` | 3263 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker_bundle/external_case_pack.json` | 7611 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker_bundle/external_case_pack.json` | 3501 | third_party_or_nonrelease_output |
+| university_affiliation | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker_bundle/external_case_pack.json` | 981 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker_bundle/external_case_pack.json` | 621 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker_bundle/external_review_packet.md` | 10971 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker_bundle/external_review_packet.md` | 2453 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker_bundle/external_review_packet.md` | 3249 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker_bundle/external_review_template.jsonl` | 90 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker_bundle/external_review_template.jsonl` | 42 | third_party_or_nonrelease_output |
+| university_affiliation | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker_bundle/external_review_template.jsonl` | 12 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker_bundle/external_review_template.jsonl` | 8 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker_bundle/scored/candidate_inputs.jsonl` | 90 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker_bundle/scored/candidate_inputs.jsonl` | 42 | third_party_or_nonrelease_output |
+| university_affiliation | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker_bundle/scored/candidate_inputs.jsonl` | 12 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker_bundle/scored/candidate_inputs.jsonl` | 8 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker_bundle/scored/contexttrace_bench_results.json` | 48 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker_bundle/scored/contexttrace_bench_results.json` | 37919 | third_party_or_nonrelease_output |
+| ufl | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker_bundle/scored/contexttrace_bench_results.json` | 17844 | third_party_or_nonrelease_output |
+| university_affiliation | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker_bundle/scored/contexttrace_bench_results.json` | 5238 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/crag_official/review200_ragchecker_bundle/scored/contexttrace_bench_results.json` | 3263 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/diag150_release_bundle/contexttrace_bench_results.json` | 63 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/external_case_pack_bundle/scored/contexttrace_bench_results.json` | 57 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/public_holdout/contexttrace_bench_results.json` | 63 | third_party_or_nonrelease_output |
+| local_username | `benchmarks/contexttrace_bench/out/ragtruth_official/ragtruth_test200_review_workflow/scored/contexttrace_bench_results.json` | 66 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/ragtruth_official/response.jsonl` | 14677 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/ragtruth_official/response.jsonl` | 14809 | third_party_or_nonrelease_output |
+| gmail | `benchmarks/contexttrace_bench/out/ragtruth_official/source_info.jsonl` | 721 | third_party_or_nonrelease_output |
+| university_affiliation | `benchmarks/contexttrace_bench/out/ragtruth_official/source_info.jsonl` | 108 | third_party_or_nonrelease_output |
+| email | `benchmarks/contexttrace_bench/out/ragtruth_official/source_info.jsonl` | 721 | third_party_or_nonrelease_output |
+
+Non-release occurrences are third-party dataset text or legacy generated outputs excluded from the anonymous artifact.
+A release-surface finding blocks anonymous artifact or submission release.

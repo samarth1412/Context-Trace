@@ -51,6 +51,8 @@ EXCLUDED_PATHS = {
     "benchmarks/contexttrace_bench/SOTA_STATUS.json",
     "benchmarks/contexttrace_bench/SOTA_STATUS.md",
     "benchmarks/tests/test_benchmark_metrics.py",
+    "paper/ANONYMITY_AUDIT.md",
+    "paper/PAGE_LIMIT_AUDIT.md",
 }
 EXCLUDED_PREFIXES = ("benchmarks/contexttrace_bench/out/",)
 EXTRA_WORKTREE_FILES = {
