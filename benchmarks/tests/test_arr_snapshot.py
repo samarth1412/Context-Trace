@@ -105,7 +105,7 @@ def _write_full_reproduction_fixture(tmp_path: Path) -> tuple[Path, dict[str, Pa
             "confidence_intervals": {"failure_label_macro_f1": interval},
         },
     ]
-    profile_ids = ["a%s" % index for index in range(6)]
+    profile_ids = ["a%s" % index for index in range(9)]
     profiles = [
         {
             "id": profile_id,
@@ -115,6 +115,28 @@ def _write_full_reproduction_fixture(tmp_path: Path) -> tuple[Path, dict[str, Pa
         }
         for profile_id in profile_ids
     ]
+    profiles.extend(
+        [
+            {
+                "id": "nli_only",
+                "label": "NLI-only mode",
+                "mode": "nli",
+                "availability": "not_available",
+                "unavailable_reason": "No pinned model.",
+                "reported_summary": {},
+                "confidence_intervals": {},
+            },
+            {
+                "id": "judge_only",
+                "label": "Judge-only mode",
+                "mode": "judge",
+                "availability": "not_available",
+                "unavailable_reason": "No frozen provider.",
+                "reported_summary": {},
+                "confidence_intervals": {},
+            },
+        ]
+    )
     baseline = {
         "system": "RAGAS",
         "summary": {"cases": 200, "failure_label_macro_f1": 0.152},

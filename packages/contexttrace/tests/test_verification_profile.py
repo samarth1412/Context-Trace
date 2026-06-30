@@ -56,3 +56,22 @@ def test_disabled_modules_do_not_emit_ablation_outputs():
     assert result["summary"]["root_causes"] == {}
     assert result["summary"]["primary_root_cause"] == ""
     assert result["verification_profile"] == profile.to_dict()
+
+
+def test_contradiction_checks_can_be_disabled_for_ablation_only():
+    trace = RAGTrace(
+        query="Are refunds allowed within 30 days?",
+        answer="Refunds are not allowed within 30 days.",
+        contexts=[TraceContext(id="policy", text="Refunds are allowed within 30 days.")],
+    )
+
+    full = verify_trace(trace, mode="semantic")
+    ablated = verify_trace(
+        trace,
+        mode="semantic",
+        profile=VerificationProfile(contradiction_checks=False),
+    )
+
+    assert full["claims"][0]["verdict"] == "contradicted"
+    assert ablated["claims"][0]["verdict"] != "contradicted"
+    assert ablated["verification_profile"]["contradiction_checks"] is False

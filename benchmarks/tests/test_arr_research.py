@@ -27,32 +27,28 @@ from benchmarks.contexttrace_bench.reproduce_arr_tables import (
 )
 
 
-def test_frozen_ablation_profiles_are_unique_and_cumulative():
+def test_frozen_ablation_profiles_cover_required_variants_and_unavailable_modes():
     profiles = load_experiment_spec()["ablation"]["profiles"]
 
     assert [profile["id"] for profile in profiles] == [
-        "a0_lexical_core",
-        "a1_semantic_core",
-        "a2_citation_alignment",
-        "a3_diagnostic_inference",
-        "a4_span_localization",
-        "a5_full",
+        "full_contexttrace",
+        "lexical_only",
+        "semantic_only",
+        "no_citation_module",
+        "no_contradiction_checks",
+        "no_abstention_logic",
+        "no_root_cause_classifier",
+        "no_source_trust",
+        "no_evidence_spans",
+        "nli_only",
+        "judge_only",
     ]
-    enabled = [
-        {
-            key
-            for key in (
-                "citation_alignment",
-                "abstention_logic",
-                "source_assessment",
-                "root_cause_inference",
-                "evidence_span_localization",
-            )
-            if profile[key]
-        }
-        for profile in profiles
-    ]
-    assert all(left <= right for left, right in zip(enabled, enabled[1:]))
+    assert len([profile for profile in profiles if profile.get("availability", "available") == "available"]) == 9
+    unavailable = [profile for profile in profiles if profile.get("availability") == "not_available"]
+    assert {profile["id"] for profile in unavailable} == {"nli_only", "judge_only"}
+    assert all(profile.get("unavailable_reason") for profile in unavailable)
+    no_contradiction = next(profile for profile in profiles if profile["id"] == "no_contradiction_checks")
+    assert no_contradiction["contradiction_checks"] is False
 
 
 def test_reported_summary_masks_outputs_disabled_by_profile():
@@ -63,7 +59,11 @@ def test_reported_summary_masks_outputs_disabled_by_profile():
         "root_cause_accuracy": 1.0,
         "evidence_span_overlap": 1.0,
     }
-    profile = load_experiment_spec()["ablation"]["profiles"][0]
+    profile = next(
+        profile
+        for profile in load_experiment_spec()["ablation"]["profiles"]
+        if profile["id"] == "lexical_only"
+    )
 
     reported = reported_summary(summary, profile)
 
@@ -83,15 +83,20 @@ def test_quick_ablation_run_uses_identical_cases_and_is_not_paper_eligible(tmp_p
     assert result["paper_run_candidate"] is False
     assert result["bootstrap_samples"] == 50
     assert result["case_count"] > 0
-    assert len(result["profiles"]) == 6
+    assert len(result["profiles"]) == 11
+    assert len([profile for profile in result["profiles"] if profile["availability"] == "available"]) == 9
     assert len(result["case_ids_sha256"]) == 64
-    assert result["profiles"][0]["reported_summary"]["citation_error_f1"] is None
-    assert result["profiles"][-1]["reported_summary"]["citation_error_f1"] is not None
+    lexical = next(profile for profile in result["profiles"] if profile["id"] == "lexical_only")
+    full = next(profile for profile in result["profiles"] if profile["id"] == "full_contexttrace")
+    assert lexical["reported_summary"]["citation_error_f1"] is None
+    assert full["reported_summary"]["citation_error_f1"] is not None
+    assert result["profiles"][-1]["availability"] == "not_available"
+    assert result["profiles"][-1]["paths"] == {}
     assert (tmp_path / "ablation_results.json").is_file()
     assert "Quick runs validate the harness" in (tmp_path / "ablation_table.md").read_text(
         encoding="utf-8"
     )
-    assert result["profiles"][0]["confidence_intervals"]["failure_label_macro_f1"]["samples"] == 50
+    assert full["confidence_intervals"]["failure_label_macro_f1"]["samples"] == 50
 
 
 def test_blinded_packet_is_deterministic_and_contains_no_labels(tmp_path):
@@ -229,6 +234,14 @@ def test_quick_reproduction_writes_four_tables_and_fails_closed_on_missing_evide
         "table_2_ablations.md",
         "table_3_baselines.md",
         "table_4_error_analysis.md",
+        "main_results.md",
+        "baseline_comparison.md",
+        "ablations.md",
+        "error_analysis.md",
+        "ablations.json",
+        "error_analysis.json",
+        "reproducibility_summary.md",
+        "manifest.json",
     ))
     external_table = (output_dir / "table_1_external_results.md").read_text(encoding="utf-8")
     baseline_table = (output_dir / "table_3_baselines.md").read_text(encoding="utf-8")
@@ -238,6 +251,16 @@ def test_quick_reproduction_writes_four_tables_and_fails_closed_on_missing_evide
     assert "No matched baseline artifact" in baseline_table
     manifest = _read(str(output_dir / "reproduction_manifest.json"))
     assert manifest["outputs"]["manifest"].endswith("reproduction_manifest.json")
+    assert manifest["outputs"]["paper_manifest"].endswith("manifest.json")
+    assert manifest["quick"] is True
+    assert manifest["full"] is False
+    assert "--quick" in manifest["command"]
+    assert manifest["runtime_seconds"] > 0
+    assert manifest["python"]["version"]
+    assert manifest["dependencies"]["contexttrace"]
+    assert len(manifest["case_id_hashes"]["diag150"]) == 64
+    assert manifest["cost"]["contexttrace_api_cost_usd"] == 0.0
+    assert manifest["scoring_hashes"]
 
 
 def test_full_reproduction_requires_external_pack_and_candidate(tmp_path):

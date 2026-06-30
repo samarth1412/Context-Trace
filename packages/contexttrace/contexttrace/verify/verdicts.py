@@ -176,12 +176,13 @@ def classify_claim(
     *,
     has_contexts: bool,
     mode: str = "lexical",
+    contradiction_checks: bool = True,
 ) -> ClaimVerification:
     fact_evidence = _fact_evidence_text(match)
     normalized_mode = str(mode or "lexical").strip().lower().replace("-", "_")
     fact_mode = "semantic" if normalized_mode in {"semantic", "local_ml", "nli"} else "lexical"
     fact_match = compare_facts(claim.text, fact_evidence, mode=fact_mode)
-    if not fact_match.conflicting_facts and _needs_full_context_conflict_scan(claim.text, fact_mode):
+    if contradiction_checks and not fact_match.conflicting_facts and _needs_full_context_conflict_scan(claim.text, fact_mode):
         context_fact_match = compare_facts(claim.text, match.context_text, mode=fact_mode)
         if context_fact_match.conflicting_facts:
             fact_match = replace(
@@ -189,8 +190,18 @@ def classify_claim(
                 conflicting_facts=list(context_fact_match.conflicting_facts),
                 conflicting_fact_details=list(context_fact_match.conflicting_fact_details),
             )
+    if not contradiction_checks and fact_match.conflicting_facts:
+        fact_match = replace(
+            fact_match,
+            conflicting_facts=[],
+            conflicting_fact_details=[],
+        )
     contradiction_evidence = _contradiction_evidence_text(claim.text, match)
-    contradicted = has_contexts and is_contradicted(claim.text, contradiction_evidence, match.score, mode=fact_mode)
+    contradicted = bool(
+        contradiction_checks
+        and has_contexts
+        and is_contradicted(claim.text, contradiction_evidence, match.score, mode=fact_mode)
+    )
     fully_fact_supported = bool(fact_match.required_facts and not fact_match.missing_facts and not fact_match.conflicting_facts)
     if fact_match.conflicting_facts or (contradicted and not fully_fact_supported):
         verdict = "contradicted"

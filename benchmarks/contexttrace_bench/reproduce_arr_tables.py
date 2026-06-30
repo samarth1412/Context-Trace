@@ -2,9 +2,13 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.metadata
 import json
+import platform
 import random
+import shlex
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -40,6 +44,7 @@ except ModuleNotFoundError:  # pragma: no cover - direct script execution
 
 
 DEFAULT_OUTPUT_DIR = Path(__file__).with_name("out") / "arr_reproduction"
+DEFAULT_FULL_OUTPUT_DIR = Path(__file__).with_name("out") / "arr_full"
 DEFAULT_RAGTRUTH_PACK = (
     Path(__file__).with_name("out")
     / "ragtruth_release_bundle"
@@ -59,6 +64,13 @@ TABLE_FILENAMES = {
     "baselines": "table_3_baselines.md",
     "error_analysis": "table_4_error_analysis.md",
 }
+PAPER_FILENAMES = {
+    "external_results": "main_results.md",
+    "baselines": "baseline_comparison.md",
+    "ablations": "ablations.md",
+    "error_analysis": "error_analysis.md",
+}
+DEPENDENCY_NAMES = ("contexttrace", "click", "httpx", "typing-extensions")
 
 
 def run_arr_reproduction(
@@ -69,7 +81,9 @@ def run_arr_reproduction(
     candidate_paths: list[str | Path] | None = None,
     quick: bool = False,
     discover_defaults: bool = True,
+    command: str | None = None,
 ) -> dict[str, Any]:
+    started = time.perf_counter()
     spec = load_experiment_spec(spec_path)
     destination = Path(output_dir)
     destination.mkdir(parents=True, exist_ok=True)
@@ -173,10 +187,25 @@ def run_arr_reproduction(
         "error_analysis": render_error_analysis_table(error_analysis, quick=quick),
     }
     table_paths: dict[str, str] = {}
+    paper_paths: dict[str, str] = {}
     for table_id, filename in TABLE_FILENAMES.items():
         path = destination / filename
         path.write_text(table_text[table_id], encoding="utf-8")
         table_paths[table_id] = _portable_path(path)
+        paper_path = destination / PAPER_FILENAMES[table_id]
+        paper_path.write_text(table_text[table_id], encoding="utf-8")
+        paper_paths[table_id] = _portable_path(paper_path)
+
+    ablations_json_path = destination / "ablations.json"
+    error_analysis_json_path = destination / "error_analysis.json"
+    ablations_json_path.write_text(
+        json.dumps(ablation, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    error_analysis_json_path.write_text(
+        json.dumps(error_analysis, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
 
     gates = {
         "non_quick_run": not quick,
@@ -185,20 +214,73 @@ def run_arr_reproduction(
         "independent_diag150_review_complete": False,
         "independent_ragtruth_review_complete": False,
     }
-    manifest_path = destination / "reproduction_manifest.json"
+    manifest_path = destination / "manifest.json"
+    compatibility_manifest_path = destination / "reproduction_manifest.json"
     results_path = destination / "arr_tables.json"
-    manifest = {
+    results_payload = {
         "schema_version": 1,
+        "external_results": external_rows,
+        "ablation_results": ablation["profiles"],
+        "baseline_results": scored_baselines,
+        "error_analysis": error_analysis,
+    }
+    results_path.write_text(
+        json.dumps(results_payload, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    runtime_seconds = round(time.perf_counter() - started, 3)
+    output_files = [
+        *[Path(_resolve_repo_path(path)) for path in table_paths.values()],
+        *[Path(_resolve_repo_path(path)) for path in paper_paths.values()],
+        *[
+            Path(_resolve_repo_path(path))
+            for path in [*diag_paths.values(), *ragtruth_paths.values(), *ablation["outputs"].values()]
+        ],
+        ablations_json_path,
+        error_analysis_json_path,
+        results_path,
+    ]
+    reproducibility_path = destination / "reproducibility_summary.md"
+    manifest = {
+        "schema_version": 2,
         "workflow": "ContextTrace ARR table reproduction",
+        "command": command or _canonical_command(
+            output_dir=destination,
+            spec_path=spec_path,
+            ragtruth_case_pack_path=ragtruth_path,
+            candidate_paths=candidates,
+            quick=quick,
+        ),
         "generated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
         "commit": _git_commit(),
+        "python": {
+            "version": platform.python_version(),
+            "implementation": platform.python_implementation(),
+            "executable": Path(sys.executable).name,
+        },
+        "platform": {
+            "system": platform.system(),
+            "release": platform.release(),
+            "machine": platform.machine(),
+        },
+        "dependencies": _dependency_versions(),
         "quick": quick,
+        "full": not quick,
         "result_scope": "harness_validation_only" if quick else "pre_review_paper_candidate",
         "paper_run_candidate": bool(not quick and ragtruth_result and scored_baselines),
         "paper_result_eligible": all(gates.values()),
         "eligibility_gates": gates,
         "bootstrap_samples": bootstrap_samples,
         "bootstrap_seed": bootstrap_seed,
+        "runtime_seconds": runtime_seconds,
+        "cost": {
+            "contexttrace_api_cost_usd": 0.0,
+            "candidate_predictions_cached": bool(candidates),
+            "candidate_cost_reported": bool(scored_baselines)
+            and all(bool(row.get("cost_reported")) for row in scored_baselines),
+            "candidate_total_cost_usd": None,
+            "note": "Local ContextTrace scoring uses no API. Cached candidate cost remains N/A unless explicitly reported by the candidate artifact.",
+        },
         "inputs": {
             "experiment_spec": _input_record(spec_path),
             "ragtruth_case_pack": _input_record(ragtruth_path),
@@ -206,6 +288,13 @@ def run_arr_reproduction(
             "candidate_predictions": [_input_record(path) for path in candidates],
         },
         "datasets": external_rows,
+        "case_id_hashes": {
+            "diag150": _ids_sha256(list(diag_result.get("rows") or [])),
+            "ragtruth": _ids_sha256(list((ragtruth_result or {}).get("rows") or []))
+            if ragtruth_result is not None
+            else None,
+            "ablations": ablation.get("case_ids_sha256"),
+        },
         "baselines": [
             {
                 "system": baseline.get("system"),
@@ -218,28 +307,39 @@ def run_arr_reproduction(
         "rejected_baselines": rejected_baselines,
         "outputs": {
             "tables": table_paths,
+            "paper_tables": paper_paths,
             "diag150": {key: _portable_path(value) for key, value in diag_paths.items()},
             "ragtruth": {key: _portable_path(value) for key, value in ragtruth_paths.items()},
             "ablations": dict(ablation["outputs"]),
-            "manifest": _portable_path(manifest_path),
+            "manifest": _portable_path(compatibility_manifest_path),
+            "paper_manifest": _portable_path(manifest_path),
             "machine_readable_tables": _portable_path(results_path),
+            "ablations_json": _portable_path(ablations_json_path),
+            "error_analysis_json": _portable_path(error_analysis_json_path),
+            "reproducibility_summary": _portable_path(reproducibility_path),
         },
+        "output_artifacts": _artifact_records(output_files),
     }
-    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
-    results_path.write_text(
-        json.dumps(
-            {
-                "schema_version": 1,
-                "external_results": external_rows,
-                "ablation_results": ablation["profiles"],
-                "baseline_results": scored_baselines,
-                "error_analysis": error_analysis,
-            },
-            indent=2,
-            sort_keys=True,
-        ),
-        encoding="utf-8",
-    )
+    manifest["prediction_hashes"] = [
+        {
+            "path": _portable_path(path),
+            "sha256": _sha256(path),
+        }
+        for path in candidates
+    ]
+    manifest["scoring_hashes"] = [
+        {"path": record["path"], "sha256": record["sha256"]}
+        for record in manifest["output_artifacts"]
+    ]
+    reproducibility_path.write_text(render_reproducibility_summary(manifest), encoding="utf-8")
+    manifest["output_artifacts"].append(_artifact_record(reproducibility_path))
+    manifest["scoring_hashes"] = [
+        {"path": record["path"], "sha256": record["sha256"]}
+        for record in manifest["output_artifacts"]
+    ]
+    serialized_manifest = json.dumps(manifest, indent=2, sort_keys=True) + "\n"
+    manifest_path.write_text(serialized_manifest, encoding="utf-8")
+    compatibility_manifest_path.write_text(serialized_manifest, encoding="utf-8")
     return manifest
 
 
@@ -572,6 +672,114 @@ def _render_table_2(path: str | Path) -> str:
     return content.replace("# ARR Ablation Results", "# Table 2: Cumulative Ablations", 1)
 
 
+def render_reproducibility_summary(manifest: dict[str, Any]) -> str:
+    inputs = manifest.get("inputs") or {}
+    case_hashes = manifest.get("case_id_hashes") or {}
+    cost = manifest.get("cost") or {}
+    lines = [
+        "# ARR Reproducibility Summary",
+        "",
+        "- Scope: `%s`" % manifest.get("result_scope"),
+        "- Command: `%s`" % manifest.get("command"),
+        "- Generated: `%s`" % manifest.get("generated_at"),
+        "- Git revision: `%s`" % manifest.get("commit"),
+        "- Python: `%s`" % ((manifest.get("python") or {}).get("version")),
+        "- Runtime seconds: `%s`" % manifest.get("runtime_seconds"),
+        "- Bootstrap: `%s` samples, seed `%s`"
+        % (manifest.get("bootstrap_samples"), manifest.get("bootstrap_seed")),
+        "- Full mode: `%s`; quick mode: `%s`" % (manifest.get("full"), manifest.get("quick")),
+        "- Paper result eligible: `%s`" % manifest.get("paper_result_eligible"),
+        "",
+        "## Environment",
+        "",
+        "| Dependency | Version |",
+        "| --- | --- |",
+    ]
+    for name, version in sorted((manifest.get("dependencies") or {}).items()):
+        lines.append("| `%s` | `%s` |" % (name, version))
+    lines.extend(["", "## Inputs", "", "| Input | Path | SHA-256 |", "| --- | --- | --- |"])
+    for name in ("experiment_spec", "ragtruth_case_pack", "selected_ragtruth_case_pack"):
+        record = inputs.get(name) or {}
+        lines.append("| %s | `%s` | `%s` |" % (name, record.get("path"), record.get("sha256")))
+    for index, record in enumerate(inputs.get("candidate_predictions") or [], start=1):
+        lines.append(
+            "| candidate_%s | `%s` | `%s` |" % (index, record.get("path"), record.get("sha256"))
+        )
+    lines.extend(["", "## Case IDs", ""])
+    for name, digest in sorted(case_hashes.items()):
+        lines.append("- `%s`: `%s`" % (name, digest))
+    lines.extend(
+        [
+            "",
+            "## Cost And Caching",
+            "",
+            "- ContextTrace API cost: `%s` USD." % cost.get("contexttrace_api_cost_usd"),
+            "- Candidate predictions cached: `%s`." % cost.get("candidate_predictions_cached"),
+            "- Candidate cost reported: `%s`." % cost.get("candidate_cost_reported"),
+            "- Candidate total cost: `%s`." % (
+                "N/A" if cost.get("candidate_total_cost_usd") is None else cost.get("candidate_total_cost_usd")
+            ),
+            "",
+            "Every scoring artifact listed in `manifest.json` includes byte size and SHA-256. "
+            "Review-pending results are pre-review evidence, not independently validated paper results.",
+            "",
+        ]
+    )
+    return "\n".join(lines)
+
+
+def _canonical_command(
+    *,
+    output_dir: Path,
+    spec_path: str | Path,
+    ragtruth_case_pack_path: Path | None,
+    candidate_paths: list[Path],
+    quick: bool,
+) -> str:
+    parts = [
+        "python",
+        "benchmarks/contexttrace_bench/reproduce_arr_tables.py",
+        "--quick" if quick else "--full",
+        "--output-dir",
+        _portable_path(output_dir),
+        "--spec",
+        _portable_path(spec_path),
+    ]
+    if ragtruth_case_pack_path is not None:
+        parts.extend(["--ragtruth-case-pack", _portable_path(ragtruth_case_pack_path)])
+    for path in candidate_paths:
+        parts.extend(["--candidate", _portable_path(path)])
+    return shlex.join(parts)
+
+
+def _dependency_versions() -> dict[str, str]:
+    versions = {}
+    for name in DEPENDENCY_NAMES:
+        try:
+            versions[name] = importlib.metadata.version(name)
+        except importlib.metadata.PackageNotFoundError:
+            versions[name] = "not_installed"
+    return versions
+
+
+def _artifact_records(paths: list[Path]) -> list[dict[str, Any]]:
+    unique = sorted({path.resolve() for path in paths if path.is_file()})
+    return [_artifact_record(path) for path in unique]
+
+
+def _artifact_record(path: Path) -> dict[str, Any]:
+    return {
+        "path": _portable_path(path),
+        "bytes": path.stat().st_size,
+        "sha256": _sha256(path),
+    }
+
+
+def _resolve_repo_path(path: str | Path) -> Path:
+    candidate = Path(path)
+    return candidate if candidate.is_absolute() else REPO_ROOT / candidate
+
+
 def _metric(value: Any) -> str:
     if value is None:
         return "N/A"
@@ -631,22 +839,37 @@ def _portable_path(path: str | Path) -> str:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Reproduce the four ContextTrace ARR result tables.")
-    parser.add_argument("--output-dir", default=str(DEFAULT_OUTPUT_DIR))
+    parser.add_argument("--output-dir", default=None)
     parser.add_argument("--spec", default=str(DEFAULT_SPEC_PATH))
     parser.add_argument("--ragtruth-case-pack", default=None)
     parser.add_argument("--candidate", action="append", default=None)
-    parser.add_argument(
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument(
         "--quick",
         action="store_true",
         help="Run deterministic harness checks; generated tables are never paper results.",
     )
+    mode.add_argument(
+        "--full",
+        action="store_true",
+        help="Run the full pre-review paper-candidate workflow and write paper-facing artifacts.",
+    )
     args = parser.parse_args(argv)
+    output_dir = args.output_dir or str(DEFAULT_FULL_OUTPUT_DIR if args.full else DEFAULT_OUTPUT_DIR)
+    command_parts = ["python", "benchmarks/contexttrace_bench/reproduce_arr_tables.py"]
+    command_parts.append("--quick" if args.quick else "--full")
+    command_parts.extend(["--output-dir", output_dir])
+    if args.ragtruth_case_pack:
+        command_parts.extend(["--ragtruth-case-pack", args.ragtruth_case_pack])
+    for candidate in args.candidate or []:
+        command_parts.extend(["--candidate", candidate])
     result = run_arr_reproduction(
-        output_dir=args.output_dir,
+        output_dir=output_dir,
         spec_path=args.spec,
         ragtruth_case_pack_path=args.ragtruth_case_pack,
         candidate_paths=args.candidate,
         quick=args.quick,
+        command=shlex.join(command_parts),
     )
     print("ARR tables: %s" % len(result["outputs"]["tables"]))
     print("Scope: %s" % result["result_scope"])

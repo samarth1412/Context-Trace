@@ -32,6 +32,7 @@ from contexttrace.verify.verdicts import classify_claim
 @dataclass(frozen=True)
 class VerificationProfile:
     citation_alignment: bool = True
+    contradiction_checks: bool = True
     abstention_logic: bool = True
     source_assessment: bool = True
     root_cause_inference: bool = True
@@ -84,7 +85,13 @@ def verify_trace(
             localize_spans=profile.evidence_span_localization,
         )
         verifications.append(
-            classify_claim(claim, match, has_contexts=bool(trace.contexts), mode=evidence_mode)
+            classify_claim(
+                claim,
+                match,
+                has_contexts=bool(trace.contexts),
+                mode=evidence_mode,
+                contradiction_checks=profile.contradiction_checks,
+            )
         )
 
     if judge is not None:

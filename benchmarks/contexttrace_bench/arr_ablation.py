@@ -57,6 +57,7 @@ def load_experiment_spec(path: str | Path = DEFAULT_SPEC_PATH) -> dict[str, Any]
 def verification_profile(profile: dict[str, Any]) -> VerificationProfile:
     return VerificationProfile(
         citation_alignment=bool(profile.get("citation_alignment")),
+        contradiction_checks=bool(profile.get("contradiction_checks", True)),
         abstention_logic=bool(profile.get("abstention_logic")),
         source_assessment=bool(profile.get("source_assessment")),
         root_cause_inference=bool(profile.get("root_cause_inference")),
@@ -86,6 +87,23 @@ def run_arr_ablations(
     reference_ids: list[str] | None = None
     for profile_spec in ablation["profiles"]:
         profile_id = str(profile_spec["id"])
+        availability = str(profile_spec.get("availability") or "available")
+        if availability != "available":
+            records.append(
+                {
+                    "id": profile_id,
+                    "label": str(profile_spec.get("label") or profile_id),
+                    "mode": str(profile_spec.get("mode") or "not_available"),
+                    "availability": "not_available",
+                    "unavailable_reason": str(profile_spec.get("unavailable_reason") or "Not configured."),
+                    "profile": None,
+                    "reported_summary": {key: None for key, _ in TABLE_METRICS},
+                    "raw_summary": {},
+                    "confidence_intervals": {},
+                    "paths": {},
+                }
+            )
+            continue
         result = run_contexttrace_benchmark(
             mode=str(profile_spec.get("mode") or "semantic"),
             case_set=resolved_case_set,
@@ -108,6 +126,8 @@ def run_arr_ablations(
                 "id": profile_id,
                 "label": str(profile_spec.get("label") or profile_id),
                 "mode": str(profile_spec.get("mode") or "semantic"),
+                "availability": "available",
+                "unavailable_reason": None,
                 "profile": verification_profile(profile_spec).to_dict(),
                 "reported_summary": reported_summary(result["summary"], profile_spec),
                 "raw_summary": dict(result["summary"]),
@@ -118,7 +138,7 @@ def run_arr_ablations(
 
     aggregate = {
         "schema_version": 1,
-        "experiment": "ContextTrace ARR cumulative ablations",
+        "experiment": "ContextTrace ARR module ablations",
         "generated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
         "commit": _git_commit(),
         "quick": quick,
@@ -175,7 +195,7 @@ def reported_summary(summary: dict[str, Any], profile: dict[str, Any]) -> dict[s
 
 
 def render_ablation_table(result: dict[str, Any]) -> str:
-    headers = ["Profile", "Mode", *[label for _, label in TABLE_METRICS]]
+    headers = ["Profile", "Mode", "Availability", *[label for _, label in TABLE_METRICS]]
     lines = [
         "# ARR Ablation Results",
         "",
@@ -185,22 +205,34 @@ def render_ablation_table(result: dict[str, Any]) -> str:
         "Cases: `%s`" % result.get("case_count"),
         "",
         "| %s |" % " | ".join(headers),
-        "| %s |" % " | ".join(["---", "---", *(["---:"] * len(TABLE_METRICS))]),
+        "| %s |" % " | ".join(["---", "---", "---", *(["---:"] * len(TABLE_METRICS))]),
     ]
     for profile in result.get("profiles") or []:
         summary = profile.get("reported_summary") or {}
         lines.append(
-            "| %s | %s | %s |"
+            "| %s | %s | %s | %s |"
             % (
                 profile.get("label"),
                 profile.get("mode"),
+                profile.get("availability") or "available",
                 " | ".join(_profile_metric(profile, summary, key) for key, _ in TABLE_METRICS),
             )
         )
+    unavailable = [
+        profile for profile in result.get("profiles") or [] if profile.get("availability") == "not_available"
+    ]
+    if unavailable:
+        lines.extend(["", "Unavailable variants:"])
+        for profile in unavailable:
+            lines.append(
+                "- `%s`: %s"
+                % (profile.get("id"), profile.get("unavailable_reason") or "Not configured.")
+            )
     lines.extend(
         [
             "",
             "Unsupported outputs are reported as `N/A`; they are never imputed from the full system.",
+            "`not_available` variants require an explicitly pinned local model/provider and are never silently skipped.",
             (
                 "Quick runs validate the harness and are not paper results."
                 if result.get("quick")

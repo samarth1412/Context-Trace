@@ -16,6 +16,8 @@ EXPECTED_CASES = {
     "diag150_primary": 150,
 }
 EXPECTED_ABLATION_CASES = 500
+EXPECTED_ABLATION_PROFILES = 11
+EXPECTED_AVAILABLE_ABLATION_PROFILES = 9
 EXPECTED_BOOTSTRAP_SAMPLES = 400
 MIN_VALID_BOOTSTRAP_SAMPLES = 380
 EXPECTED_GATES = {
@@ -59,6 +61,8 @@ def write_pre_review_snapshot(
             "id": row.get("id"),
             "label": row.get("label"),
             "mode": row.get("mode"),
+            "availability": row.get("availability") or "available",
+            "unavailable_reason": row.get("unavailable_reason"),
             "profile": dict(row.get("profile") or {}),
             "summary": dict(row.get("reported_summary") or {}),
             "confidence_intervals": dict(row.get("confidence_intervals") or {}),
@@ -172,16 +176,17 @@ def render_pre_review_snapshot(snapshot: dict[str, Any]) -> str:
             "",
             "## Cumulative Ablations",
             "",
-            "| Profile | Cases | Failure F1 [95% CI] | Claim F1 | Citation F1 | Root cause | Span overlap | False green [95% CI] |",
-            "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+            "| Profile | Availability | Cases | Failure F1 [95% CI] | Claim F1 | Citation F1 | Root cause | Span overlap | False green [95% CI] |",
+            "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
         ]
     )
     for row in snapshot.get("ablation_results") or []:
         summary = row.get("summary") or {}
         lines.append(
-            "| %s | %s | %s | %s | %s | %s | %s | %s |"
+            "| %s | %s | %s | %s | %s | %s | %s | %s | %s |"
             % (
                 row.get("label"),
+                row.get("availability"),
                 summary.get("cases"),
                 _metric_ci(row, "failure_label_macro_f1"),
                 _metric(summary.get("claim_verdict_macro_f1")),
@@ -307,11 +312,15 @@ def _validate_pre_review_run(
         raise ValueError("Ablation source must record the aligned case-ID SHA-256.")
     profiles = tables.get("ablation_results") or []
     source_profiles = ablation_run.get("profiles") or []
-    if len(profiles) != 6 or len(source_profiles) != 6:
-        raise ValueError("Snapshot source must contain six ablation profiles.")
+    if len(profiles) != EXPECTED_ABLATION_PROFILES or len(source_profiles) != EXPECTED_ABLATION_PROFILES:
+        raise ValueError("Snapshot source must contain all eleven required ablation variants.")
     if [row.get("id") for row in profiles] != [row.get("id") for row in source_profiles]:
         raise ValueError("Ablation table profiles must match the raw ablation source.")
     for profile in source_profiles:
+        if profile.get("availability") == "not_available":
+            if not profile.get("unavailable_reason"):
+                raise ValueError("Unavailable ablation variants must explain why they were not run.")
+            continue
         if int((profile.get("reported_summary") or {}).get("cases") or 0) != EXPECTED_ABLATION_CASES:
             raise ValueError("Every raw ablation profile must contain 500 aligned cases.")
         _validate_intervals(
@@ -320,6 +329,10 @@ def _validate_pre_review_run(
             expected_seed=manifest.get("bootstrap_seed"),
         )
     for profile in profiles:
+        if profile.get("availability") == "not_available":
+            if not profile.get("unavailable_reason"):
+                raise ValueError("Unavailable ablation table variants must include a reason.")
+            continue
         if int((profile.get("reported_summary") or {}).get("cases") or 0) != EXPECTED_ABLATION_CASES:
             raise ValueError("Every ablation profile must contain 500 aligned cases.")
         _validate_intervals(
@@ -327,6 +340,8 @@ def _validate_pre_review_run(
             label=str(profile.get("id") or "ablation profile"),
             expected_seed=manifest.get("bootstrap_seed"),
         )
+    if len([profile for profile in profiles if profile.get("availability") != "not_available"]) != EXPECTED_AVAILABLE_ABLATION_PROFILES:
+        raise ValueError("Snapshot source must contain nine executable ablation variants.")
     baselines = tables.get("baseline_results") or []
     if not baselines:
         raise ValueError("Snapshot source requires a same-ID baseline.")

@@ -75,64 +75,117 @@
     "bootstrap_seed": 20260612,
     "profiles": [
       {
-        "id": "a0_lexical_core",
-        "label": "Lexical core",
-        "mode": "lexical",
-        "citation_alignment": false,
-        "abstention_logic": false,
-        "source_assessment": false,
-        "root_cause_inference": false,
-        "evidence_span_localization": false
-      },
-      {
-        "id": "a1_semantic_core",
-        "label": "+ semantic matching",
-        "mode": "semantic",
-        "citation_alignment": false,
-        "abstention_logic": false,
-        "source_assessment": false,
-        "root_cause_inference": false,
-        "evidence_span_localization": false
-      },
-      {
-        "id": "a2_citation_alignment",
-        "label": "+ citation alignment",
-        "mode": "semantic",
-        "citation_alignment": true,
-        "abstention_logic": false,
-        "source_assessment": false,
-        "root_cause_inference": false,
-        "evidence_span_localization": false
-      },
-      {
-        "id": "a3_diagnostic_inference",
-        "label": "+ abstention and root cause",
-        "mode": "semantic",
-        "citation_alignment": true,
-        "abstention_logic": true,
-        "source_assessment": false,
-        "root_cause_inference": true,
-        "evidence_span_localization": false
-      },
-      {
-        "id": "a4_span_localization",
-        "label": "+ evidence-span localization",
-        "mode": "semantic",
-        "citation_alignment": true,
-        "abstention_logic": true,
-        "source_assessment": false,
-        "root_cause_inference": true,
-        "evidence_span_localization": true
-      },
-      {
-        "id": "a5_full",
+        "id": "full_contexttrace",
         "label": "Full ContextTrace",
         "mode": "semantic",
         "citation_alignment": true,
+        "contradiction_checks": true,
         "abstention_logic": true,
         "source_assessment": true,
         "root_cause_inference": true,
         "evidence_span_localization": true
+      },
+      {
+        "id": "lexical_only",
+        "label": "Lexical-only verifier",
+        "mode": "lexical",
+        "citation_alignment": false,
+        "contradiction_checks": true,
+        "abstention_logic": false,
+        "source_assessment": false,
+        "root_cause_inference": false,
+        "evidence_span_localization": false
+      },
+      {
+        "id": "semantic_only",
+        "label": "Semantic-only verifier",
+        "mode": "semantic",
+        "citation_alignment": false,
+        "contradiction_checks": true,
+        "abstention_logic": false,
+        "source_assessment": false,
+        "root_cause_inference": false,
+        "evidence_span_localization": false
+      },
+      {
+        "id": "no_citation_module",
+        "label": "No citation module",
+        "mode": "semantic",
+        "citation_alignment": false,
+        "contradiction_checks": true,
+        "abstention_logic": true,
+        "source_assessment": true,
+        "root_cause_inference": true,
+        "evidence_span_localization": true
+      },
+      {
+        "id": "no_contradiction_checks",
+        "label": "No contradiction checks",
+        "mode": "semantic",
+        "citation_alignment": true,
+        "contradiction_checks": false,
+        "abstention_logic": true,
+        "source_assessment": true,
+        "root_cause_inference": true,
+        "evidence_span_localization": true
+      },
+      {
+        "id": "no_abstention_logic",
+        "label": "No abstention logic",
+        "mode": "semantic",
+        "citation_alignment": true,
+        "contradiction_checks": true,
+        "abstention_logic": false,
+        "source_assessment": true,
+        "root_cause_inference": true,
+        "evidence_span_localization": true
+      },
+      {
+        "id": "no_root_cause_classifier",
+        "label": "No root-cause classifier",
+        "mode": "semantic",
+        "citation_alignment": true,
+        "contradiction_checks": true,
+        "abstention_logic": true,
+        "source_assessment": true,
+        "root_cause_inference": false,
+        "evidence_span_localization": true
+      },
+      {
+        "id": "no_source_trust",
+        "label": "No source trust/freshness",
+        "mode": "semantic",
+        "citation_alignment": true,
+        "contradiction_checks": true,
+        "abstention_logic": true,
+        "source_assessment": false,
+        "root_cause_inference": true,
+        "evidence_span_localization": true
+      },
+      {
+        "id": "no_evidence_spans",
+        "label": "No evidence-span localization",
+        "mode": "semantic",
+        "citation_alignment": true,
+        "contradiction_checks": true,
+        "abstention_logic": true,
+        "source_assessment": true,
+        "root_cause_inference": true,
+        "evidence_span_localization": false
+      },
+      {
+        "id": "nli_only",
+        "label": "NLI-only mode",
+        "mode": "nli",
+        "availability": "not_available",
+        "unavailable_reason": "No pinned offline NLI model artifact is distributed with the anonymous ARR package; automatic model download is forbidden."
+      },
+      {
+        "id": "judge_only",
+        "label": "Judge-only mode",
+        "mode": "judge",
+        "availability": "not_available",
+        "unavailable_reason": "No frozen judge provider, model revision, response cache, and complete cost record are available for this submission."
       }
     ]
   },
