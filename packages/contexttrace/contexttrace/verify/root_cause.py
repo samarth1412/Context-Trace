@@ -14,6 +14,7 @@ CONFLICTING_CONTEXTS = "conflicting_contexts"
 STALE_CONTEXT = "stale_context"
 LOW_AUTHORITY_SOURCE = "low_authority_source"
 INSUFFICIENT_CONTEXT = "insufficient_context"
+CORPUS_GAP = "corpus_gap"
 SHOULD_HAVE_ABSTAINED = "should_have_abstained"
 
 
@@ -53,6 +54,7 @@ def primary_root_cause(claims: list[dict[str, Any]]) -> str:
         PARTIAL_CONTEXT_SUPPORT,
         WRONG_SOURCE_CITED,
         MISSING_CITED_SOURCE,
+        CORPUS_GAP,
         INSUFFICIENT_CONTEXT,
     ]
     return max(
@@ -75,7 +77,7 @@ def diagnose_claim(claim: dict[str, Any], abstention: dict[str, Any]) -> dict[st
     source_status = _string(claim.get("source_status"))
     source_assessment = claim.get("source_assessment") if isinstance(claim.get("source_assessment"), dict) else {}
 
-    if verdict == "supported" and source_status == "grounded_but_conflicted":
+    if source_status in {"grounded_but_conflicted", "conflicting_source"}:
         conflict = _first_source_signal(source_assessment.get("stronger_conflicting_sources") or source_assessment.get("conflicting_sources") or [])
         return _diagnosis(
             label=CONFLICTING_CONTEXTS,
@@ -89,7 +91,7 @@ def diagnose_claim(claim: dict[str, Any], abstention: dict[str, Any]) -> dict[st
             closest_evidence=closest_evidence,
         )
 
-    if verdict == "supported" and source_status == "grounded_but_stale":
+    if source_status in {"grounded_but_stale", "stale_source", "stale_or_version_conflicted"}:
         newer = _first_source_signal(source_assessment.get("newer_related_sources") or [])
         reason = "The claim is grounded, but the supporting source appears stale or explicitly marked stale."
         if newer:
@@ -206,10 +208,24 @@ def diagnose_claim(claim: dict[str, Any], abstention: dict[str, Any]) -> dict[st
                 closest_context_id=closest_context_id,
                 closest_evidence=closest_evidence,
             )
+        best_source = source_assessment.get("best_source") or {}
+        authoritative_current_gap = bool(
+            best_source.get("canonical")
+            and not best_source.get("stale")
+            and bool(abstention.get("should_abstain"))
+        )
         return _diagnosis(
-            label=INSUFFICIENT_CONTEXT,
-            reason="The closest retrieved context overlaps with the claim but is too weak or ambiguous.",
-            suggested_fix="Retrieve more specific context or require the answer to qualify the claim.",
+            label=CORPUS_GAP if authoritative_current_gap else INSUFFICIENT_CONTEXT,
+            reason=(
+                "The closest current canonical context is topically relevant, but the requested fact is absent from the available corpus."
+                if authoritative_current_gap
+                else "The closest retrieved context overlaps with the claim but is too weak or ambiguous."
+            ),
+            suggested_fix=(
+                "Expand the source corpus or abstain until an authoritative source contains the requested fact."
+                if authoritative_current_gap
+                else "Retrieve more specific context or require the answer to qualify the claim."
+            ),
             missing_fact=missing_fact,
             closest_context_id=closest_context_id,
             closest_evidence=closest_evidence,

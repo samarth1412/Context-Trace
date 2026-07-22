@@ -1,0 +1,8 @@
+id: temporal
+version: 1.0.0
+enabled_by_default: false
+status: scaffold
+scope:
+  - source_freshness
+  - version_precedence
+  - time_sensitive_queries

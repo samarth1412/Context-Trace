@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contexttrace.dev/schemas/regression-case-v1.schema.json",
+  "title": "RegressionCaseV1",
+  "type": "object",
+  "required": ["schema_version", "taxonomy_version", "verifier_version", "profile_id", "case_id", "trace", "expected"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "taxonomy_version": {"type": "string", "minLength": 1},
+    "verifier_version": {"type": "string", "minLength": 1},
+    "profile_id": {"type": "string", "minLength": 1},
+    "case_id": {"type": "string", "minLength": 1},
+    "trace": {"type": "object"},
+    "expected": {"type": "object"}
+  },
+  "additionalProperties": false
+}

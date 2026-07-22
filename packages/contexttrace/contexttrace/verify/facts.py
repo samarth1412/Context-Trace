@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from functools import lru_cache
 
 from contexttrace.verify.evidence import has_unnegated_exact_surface_match
+from contexttrace.verify.semantic_normalization import extract_normalized_dates, normalize_semantic_text
 
 
 TOKEN_RE = re.compile(r"[A-Za-z0-9_./-]+")
@@ -379,6 +380,9 @@ def compare_facts(claim_text: str, evidence_text: str, *, mode: str = "lexical")
     closed_list_conflict = _relative_pronoun_list_conflict(claim_text, evidence_text)
     if closed_list_conflict is not None:
         conflicting_details.append(closed_list_conflict)
+    passage_conflict = _passage_attribution_conflict(claim_text, evidence_text, mode=mode)
+    if passage_conflict is not None:
+        conflicting_details.append(passage_conflict)
 
     return FactMatch(
         required_facts=[fact.text for fact in required_details],
@@ -2648,6 +2652,16 @@ def _version_conflict(claim_text: str, evidence_text: str, *, mode: str) -> Requ
 
 
 def _numeric_conflict(claim_text: str, evidence_text: str, *, mode: str) -> RequiredFact | None:
+    claim_dates = extract_normalized_dates(claim_text)
+    evidence_dates = extract_normalized_dates(evidence_text)
+    if (
+        claim_dates
+        and evidence_dates
+        and claim_dates.isdisjoint(evidence_dates)
+        and _anchor_overlap(claim_text, evidence_text, mode=mode) >= 0.45
+    ):
+        return RequiredFact(text=", ".join(sorted(claim_dates)), type="date")
+
     claim_ports = set(PORT_RE.findall(str(claim_text or "")))
     evidence_ports = set(PORT_RE.findall(str(evidence_text or "")))
     if (
@@ -2666,6 +2680,42 @@ def _numeric_conflict(claim_text: str, evidence_text: str, *, mode: str) -> Requ
         return None
     if claim_numbers.isdisjoint(evidence_numbers) and _anchor_overlap(claim_text, evidence_text, mode=mode) >= 0.65:
         return RequiredFact(text=", ".join(sorted(claim_numbers)), type="numeric")
+    return None
+
+
+def _passage_attribution_conflict(claim_text: str, evidence_text: str, *, mode: str) -> RequiredFact | None:
+    attribution = re.search(
+        r"\bpassages?\s+(?P<ids>\d+(?:\s*(?:&|and|,)\s*\d+)*)",
+        str(claim_text or ""),
+        flags=re.IGNORECASE,
+    )
+    if not attribution:
+        return None
+    passage_ids = re.findall(r"\d+", attribution.group("ids"))
+    if len(passage_ids) < 2:
+        return None
+    blocks: dict[str, str] = {}
+    matches = list(re.finditer(r"\bpassage\s+(?P<id>\d+)\s*:", str(evidence_text or ""), flags=re.IGNORECASE))
+    for index, match in enumerate(matches):
+        end = matches[index + 1].start() if index + 1 < len(matches) else len(str(evidence_text or ""))
+        blocks[match.group("id")] = str(evidence_text or "")[match.end() : end]
+    if not all(passage_id in blocks for passage_id in passage_ids):
+        return None
+    core_claim = re.sub(r"\([^)]*\bpassages?\s+[^)]*\)", "", str(claim_text or ""), flags=re.IGNORECASE)
+    core_claim = re.sub(r"\bpassages?\s+\d+(?:\s*(?:&|and|,)\s*\d+)*", "", core_claim, flags=re.IGNORECASE)
+    core_claim = _clean(core_claim).strip(" .,:;-")
+    if not core_claim:
+        return None
+    unsupported = [
+        passage_id
+        for passage_id in passage_ids
+        if _token_overlap(core_claim, blocks[passage_id], mode=mode) < 0.65
+    ]
+    if unsupported:
+        return RequiredFact(
+            text="claim attribution is not supported by passage(s) %s" % ", ".join(unsupported),
+            type="attribution",
+        )
     return None
 
 
@@ -3864,8 +3914,7 @@ SEMANTIC_PHRASES = (
 
 
 def _semantic_text(text: str) -> str:
-    value = _normalize_negation_text(text).lower()
-    value = unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode("ascii")
+    value = normalize_semantic_text(_normalize_negation_text(text))
     value = re.sub(r"\b(\d+)\s*'\s*(\d+)\s*(?:\"|in\b|inch(?:es)?\b)?", r"\1 feet \2 inches", value)
     value = re.sub(r"(?<=\d),(?=\d{3}\b)", "", value)
     value = re.sub(r"\b\d+\.(?=[a-z])", " ", value)

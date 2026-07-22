@@ -4,12 +4,14 @@ import json
 from pathlib import Path
 from typing import Any
 
+from contexttrace.contracts import REPAIR_PLAN_SCHEMA_VERSION, artifact_provenance
+
 from contexttrace.diagnose import DiagnoseInputError, diagnose_trace_file
 from contexttrace.verify.qa import qa_trace
 from contexttrace.verify.schema import VerificationInputError, load_trace_file
 
 
-REPAIR_SCHEMA_VERSION = "0.1"
+REPAIR_SCHEMA_VERSION = REPAIR_PLAN_SCHEMA_VERSION
 
 _ACTION_TEMPLATES: dict[str, list[tuple[str, str]]] = {
     "retrieval_miss": [
@@ -200,7 +202,7 @@ def build_repair_plan(
         )
     )
     return {
-        "schema_version": REPAIR_SCHEMA_VERSION,
+        **artifact_provenance(schema_version=REPAIR_SCHEMA_VERSION),
         "status": "repair_required" if repair_required else "no_repair_needed",
         "trace_path": str(source_path),
         "trace_type": trace_type,

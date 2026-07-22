@@ -202,8 +202,13 @@ def classify_claim(
         and has_contexts
         and is_contradicted(claim.text, contradiction_evidence, match.score, mode=fact_mode)
     )
+    opposed_predicate = bool(
+        contradiction_checks
+        and has_contexts
+        and _opposed_predicate_conflict(claim.text, contradiction_evidence, mode=fact_mode)
+    )
     fully_fact_supported = bool(fact_match.required_facts and not fact_match.missing_facts and not fact_match.conflicting_facts)
-    if fact_match.conflicting_facts or (contradicted and not fully_fact_supported):
+    if fact_match.conflicting_facts or opposed_predicate or (contradicted and not fully_fact_supported):
         verdict = "contradicted"
         confidence = max(0.66, min(0.98, match.score + 0.12))
         reason = (
@@ -305,6 +310,12 @@ def _fact_evidence_text(match: EvidenceMatch) -> str:
 def _needs_full_context_conflict_scan(claim_text: str, mode: str) -> bool:
     if mode != "semantic":
         return False
+    if re.search(
+        r"\bpassages?\s+\d+(?:\s*(?:&|and|,)\s*\d+)+",
+        str(claim_text or ""),
+        flags=re.IGNORECASE,
+    ):
+        return True
     return bool(
         re.search(
             r"\blost\s+(?:her|his|their)\s+foot\s+in\s+(?:the\s+)?(?:bombing|blast|attack)\b",
@@ -315,6 +326,10 @@ def _needs_full_context_conflict_scan(claim_text: str, mode: str) -> bool:
 
 
 def is_contradicted(claim_text: str, evidence_text: str, score: float, *, mode: str = "lexical") -> bool:
+    if _denied_existence_conflicts_with_lifecycle_claim(claim_text, evidence_text, mode=mode):
+        return True
+    if _opposed_predicate_conflict(claim_text, evidence_text, mode=mode):
+        return True
     if score < 0.50:
         return False
     if has_unnegated_exact_surface_match(claim_text, evidence_text):
@@ -347,6 +362,102 @@ def is_contradicted(claim_text: str, evidence_text: str, score: float, *, mode: 
         return _core_overlap(claim_text, evidence_text) >= 0.65
 
     return False
+
+
+def _opposed_predicate_conflict(claim_text: str, evidence_text: str, *, mode: str) -> bool:
+    """Catch a small set of explicit verbal antonyms with a shared subject/object.
+
+    Token overlap makes pairs such as ``enables``/``disables`` look nearly
+    identical. Requiring substantial non-predicate overlap keeps this rule
+    narrow and avoids treating unrelated uses of an antonym as evidence.
+    """
+    claim = str(claim_text or "")
+    evidence = str(evidence_text or "")
+    if _explicit_replacement_conflict(claim, evidence, mode=mode):
+        return True
+    predicate_pairs = (
+        (r"\benabl(?:e|es|ed|ing)\b", r"\bdisabl(?:e|es|ed|ing)\b"),
+        (r"\bactivat(?:e|es|ed|ing)\b", r"\bdeactivat(?:e|es|ed|ing)\b"),
+        (r"\bpermit(?:s|ted|ting)?\b", r"\bprohibit(?:s|ed|ing)?\b"),
+    )
+    opposed = any(
+        (re.search(left, claim, flags=re.IGNORECASE) and re.search(right, evidence, flags=re.IGNORECASE))
+        or (re.search(right, claim, flags=re.IGNORECASE) and re.search(left, evidence, flags=re.IGNORECASE))
+        for left, right in predicate_pairs
+    )
+    return bool(
+        opposed
+        and not has_unnegated_exact_surface_match(claim, evidence)
+        and _core_overlap(claim, evidence, mode=mode) >= 0.50
+    )
+
+
+def _explicit_replacement_conflict(claim_text: str, evidence_text: str, *, mode: str) -> bool:
+    """Detect guidance that explicitly replaces the object recommended by a claim.
+
+    Mention-only matching otherwise mistakes ``use New instead of Old`` as
+    support for ``use Old``. The rule requires an action-oriented claim, an
+    explicit replacement construction, and shared topical context.
+    """
+    claim = str(claim_text or "")
+    evidence = str(evidence_text or "")
+    if not re.search(
+        r"\b(?:use|uses|using|construct|constructs|call|calls|import|imports|target|targets)\b",
+        claim,
+        flags=re.IGNORECASE,
+    ):
+        return False
+    replaced: list[str] = []
+    patterns = (
+        r"\binstead\s+of\s+(?P<old>[A-Za-z][A-Za-z0-9_.-]*)",
+        r"\brenamed\s+(?P<old>[A-Za-z][A-Za-z0-9_.-]*)\s+to\s+[A-Za-z][A-Za-z0-9_.-]*",
+        r"\breplac(?:e|es|ed|ing)\s+(?P<old>[A-Za-z][A-Za-z0-9_.-]*)\s+with\s+[A-Za-z][A-Za-z0-9_.-]*",
+    )
+    for pattern in patterns:
+        replaced.extend(match.group("old") for match in re.finditer(pattern, evidence, flags=re.IGNORECASE))
+    if not replaced:
+        return False
+    claim_tokens = {
+        token.lower().strip(".-")
+        for token in re.findall(r"[A-Za-z][A-Za-z0-9_.-]*", claim)
+    }
+    return bool(
+        any(value.lower().strip(".") in claim_tokens for value in replaced)
+        and _core_overlap(claim, evidence, mode=mode) >= 0.35
+    )
+
+
+def _denied_existence_conflicts_with_lifecycle_claim(
+    claim_text: str,
+    evidence_text: str,
+    *,
+    mode: str,
+) -> bool:
+    """Detect false-premise claims whose event presupposes an explicitly denied entity.
+
+    Discontinuing, retiring, or cancelling a thing entails that it previously existed.
+    A current source saying that it was never offered/created/operated is therefore a
+    contradiction even when ordinary token overlap is below the general threshold.
+    """
+    claim = str(claim_text or "")
+    evidence = str(evidence_text or "")
+    lifecycle_event = re.search(
+        r"\b(?:discontinued|retired|sunset|sunsetted|cancelled|canceled|terminated|"
+        r"shut\s+down|phased\s+out|withdrew|withdrawn|removed)\b",
+        claim,
+        flags=re.IGNORECASE,
+    )
+    denied_existence = re.search(
+        r"\b(?:never|not)\s+(?:previously\s+|ever\s+)?"
+        r"(?:offered|created|launched|operated|provided|supported|sold|issued|maintained)\b",
+        evidence,
+        flags=re.IGNORECASE,
+    )
+    return bool(
+        lifecycle_event
+        and denied_existence
+        and _core_overlap(claim, evidence, mode=mode) >= 0.30
+    )
 
 
 def _has_negation(text: str) -> bool:

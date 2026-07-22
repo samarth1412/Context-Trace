@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contexttrace.dev/schemas/repair-plan-v1.schema.json",
+  "title": "RepairPlanV1",
+  "type": "object",
+  "required": ["schema_version", "taxonomy_version", "verifier_version", "profile_id", "status", "primary_root_cause", "evidence", "actions", "verification"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "taxonomy_version": {"type": "string", "minLength": 1},
+    "verifier_version": {"type": "string", "minLength": 1},
+    "profile_id": {"type": "string", "minLength": 1},
+    "status": {"type": "string"},
+    "trace_type": {"type": "string"},
+    "primary_root_cause": {"type": "string"},
+    "corpus_audited": {"type": "boolean"},
+    "evidence": {"type": "array", "items": {"type": "object"}},
+    "actions": {"type": "array", "items": {"type": "object"}},
+    "verification": {"type": "object"},
+    "diagnostic_summary": {"type": "object"}
+  },
+  "additionalProperties": true
+}

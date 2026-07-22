@@ -1,5 +1,14 @@
 # ContextTrace-Bench Methodology
 
+## Calibration status
+
+The current repository benchmark, ContextTrace-Diag-150, Naturalistic Eval v2,
+and the 200-case RAGTruth sample are development/calibration sets for
+`semantic_v1_calibrated`. Results on them must not be described as untouched
+external-test performance. No successor-verifier rule or threshold may be
+changed in response to their errors. The source/domain/time-disjoint freeze
+protocol is documented in `docs/verifier-governance.md`.
+
 ContextTrace-Bench measures ContextTrace as a verifier, not as a retriever or
 answer generator. A case is a portable RAG trace with a query, answer, retrieved
 contexts, optional citations, and expected diagnostic labels.

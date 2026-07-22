@@ -1,5 +1,10 @@
 # Baseline Comparison Runbook
 
+> **Calibration notice:** all ContextTrace results in this file, including the
+> RAGTruth 200-case sample, are calibration/development evidence for the frozen
+> `semantic_v1_calibrated` verifier. They are not untouched external-test results.
+> See `docs/verifier-governance.md` for the successor-verifier protocol.
+
 This file tracks competitor and reference baseline work for ContextTrace-Bench.
 Rows should only be described as publishable after they cover the full benchmark
 case set and are scored by `run_contexttrace.py --candidate`.
@@ -8,7 +13,7 @@ case set and are scored by `run_contexttrace.py --candidate`.
 
 | System | Runner or Adapter | Status | Publishable | Notes |
 | --- | --- | --- | --- | --- |
-| ContextTrace semantic verifier | `run_contexttrace.py --mode semantic` | Ready | Yes | Local-first product path. CI enforces default quality gates. |
+| ContextTrace `semantic_v1_calibrated` verifier | `run_contexttrace.py --mode semantic` | Frozen calibration | No | Local-first compatibility path. Repeatedly calibrated on repository and RAGTruth cases; not external test evidence. |
 | RAGAS | `run_ragas.py` | Full OpenAI-backed candidate scored | Yes | `gpt-4.1-mini`, 500/500 rows, zero row errors. Faithfulness-only baseline; diagnostic fields are `N/A`. |
 | DeepEval | `run_deepeval.py` | Full OpenAI-backed candidate scored | Yes | `gpt-4.1-mini`, 500/500 rows, zero row errors. Faithfulness-only baseline; diagnostic fields are `N/A`. |
 | RAGChecker | `run_ragchecker.py`, `adapt_candidate.py --preset ragchecker` | 200-row real-reference CRAG calibration scored | No | `gpt-4.1-mini`, 200/200 same-ID CRAG rows, real official-answer sidecar, all 11 metrics, and zero errors. The gold-answer grounding proxy remains review-pending, not publishable. |

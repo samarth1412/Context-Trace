@@ -5,6 +5,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+from contexttrace.contracts import DEFAULT_PROFILE_ID, TAXONOMY_VERSION, TRACE_SCHEMA_VERSION, VERIFIER_VERSION
+
 
 class VerificationInputError(ValueError):
     """Raised when a portable verification trace cannot be loaded."""
@@ -45,9 +47,17 @@ class RAGTrace:
     contexts: list[TraceContext]
     citations: list[TraceCitation] = field(default_factory=list)
     metadata: dict[str, Any] = field(default_factory=dict)
+    schema_version: str = TRACE_SCHEMA_VERSION
+    taxonomy_version: str = TAXONOMY_VERSION
+    verifier_version: str = VERIFIER_VERSION
+    profile_id: str = DEFAULT_PROFILE_ID
 
     def to_dict(self) -> dict[str, Any]:
         payload: dict[str, Any] = {
+            "schema_version": self.schema_version,
+            "taxonomy_version": self.taxonomy_version,
+            "verifier_version": self.verifier_version,
+            "profile_id": self.profile_id,
             "query": self.query,
             "answer": self.answer,
             "contexts": [context.to_dict() for context in self.contexts],
@@ -106,6 +116,10 @@ def load_trace(payload: Any, *, source: str = "trace") -> RAGTrace:
         contexts=contexts,
         citations=citations,
         metadata=metadata,
+        schema_version=str(payload.get("schema_version") or TRACE_SCHEMA_VERSION),
+        taxonomy_version=str(payload.get("taxonomy_version") or TAXONOMY_VERSION),
+        verifier_version=str(payload.get("verifier_version") or VERIFIER_VERSION),
+        profile_id=str(payload.get("profile_id") or DEFAULT_PROFILE_ID),
     )
 
 

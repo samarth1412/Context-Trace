@@ -839,7 +839,6 @@ SEMANTIC_TOKEN_MAP = {
     "resumption": "resume",
     "russian": "russia",
     "stopping": "stop",
-    "stopped": "stop",
     "miscalculated": "miscalculate",
     "miscalculates": "miscalculate",
     "miscalculation": "miscalculate",
