@@ -2,10 +2,19 @@ from __future__ import annotations
 
 import inspect
 import time
+from contextvars import ContextVar
+from dataclasses import dataclass, field
 from functools import wraps
 from typing import Any, Callable, Optional
 
 from contexttrace.client import ContextTrace, TraceSession
+
+
+@dataclass
+class _RunState:
+    trace: Optional[TraceSession] = None
+    query: Optional[str] = None
+    node_starts: dict[str, float] = field(default_factory=dict)
 
 
 class ContextTraceLangGraphTracer:
@@ -27,11 +36,20 @@ class ContextTraceLangGraphTracer:
             client = ContextTrace(**kwargs)
         self.client = client
         self.trace_metadata = trace_metadata or {}
-        self.trace: Optional[TraceSession] = None
-        self.query: Optional[str] = None
-        self._node_starts: dict[str, float] = {}
+        self._default_state = _RunState()
+        self._current_state: ContextVar[_RunState | None] = ContextVar(
+            "contexttrace_langgraph_run_state", default=None
+        )
+        self._run_states: dict[str, _RunState] = {}
 
-    def start_trace(self, query: str, *, metadata: Optional[dict[str, Any]] = None) -> TraceSession:
+    def start_trace(
+        self,
+        query: str,
+        *,
+        metadata: Optional[dict[str, Any]] = None,
+        run_id: str | None = None,
+    ) -> TraceSession:
+        state = self._activate(run_id, create=True)
         if self.trace is not None:
             return self.trace
         self.query = query
@@ -41,6 +59,8 @@ class ContextTraceLangGraphTracer:
             "integration": "langgraph",
         }
         self.trace = self.client.trace(query=query, metadata=trace_metadata).__enter__()
+        if run_id:
+            self._run_states[str(run_id)] = state
         return self.trace
 
     def end_trace(
@@ -48,7 +68,9 @@ class ContextTraceLangGraphTracer:
         *,
         answer: Optional[str] = None,
         metadata: Optional[dict[str, Any]] = None,
+        run_id: str | None = None,
     ) -> Optional[TraceSession]:
+        state = self._activate(run_id)
         if self.trace is None:
             return None
         if answer:
@@ -61,6 +83,7 @@ class ContextTraceLangGraphTracer:
             )
         trace = self.trace
         self.trace = None
+        self._release_state(state)
         return trace
 
     def on_node_start(
@@ -70,7 +93,9 @@ class ContextTraceLangGraphTracer:
         *,
         event_type: str = "planner_step",
         metadata: Optional[dict[str, Any]] = None,
+        run_id: str | None = None,
     ) -> None:
+        self._activate(run_id)
         trace = self._ensure_trace(input_json)
         self._node_starts[name] = time.perf_counter()
         trace.log_agent_event(
@@ -87,7 +112,9 @@ class ContextTraceLangGraphTracer:
         *,
         event_type: str = "planner_step",
         metadata: Optional[dict[str, Any]] = None,
+        run_id: str | None = None,
     ) -> None:
+        self._activate(run_id)
         trace = self._ensure_trace(output_json)
         trace.log_agent_event(
             event_type=event_type,
@@ -97,7 +124,15 @@ class ContextTraceLangGraphTracer:
             latency_ms=_elapsed_ms(self._node_starts.get(name)),
         )
 
-    def on_tool_start(self, name: str, input_json: Any = None, *, metadata: Optional[dict[str, Any]] = None) -> None:
+    def on_tool_start(
+        self,
+        name: str,
+        input_json: Any = None,
+        *,
+        metadata: Optional[dict[str, Any]] = None,
+        run_id: str | None = None,
+    ) -> None:
+        self._activate(run_id)
         self._node_starts[name] = time.perf_counter()
         self._ensure_trace(input_json).log_tool_call(name, input_json=input_json, metadata=metadata)
 
@@ -108,7 +143,9 @@ class ContextTraceLangGraphTracer:
         *,
         input_json: Any = None,
         metadata: Optional[dict[str, Any]] = None,
+        run_id: str | None = None,
     ) -> None:
+        self._activate(run_id)
         self._ensure_trace(output_json).log_tool_result(
             name,
             input_json=input_json,
@@ -117,7 +154,15 @@ class ContextTraceLangGraphTracer:
             latency_ms=_elapsed_ms(self._node_starts.get(name)),
         )
 
-    def on_error(self, name: str, error: BaseException, *, input_json: Any = None) -> None:
+    def on_error(
+        self,
+        name: str,
+        error: BaseException,
+        *,
+        input_json: Any = None,
+        run_id: str | None = None,
+    ) -> None:
+        self._activate(run_id)
         self._ensure_trace(input_json).log_agent_error(
             str(error),
             name=name,
@@ -168,6 +213,48 @@ class ContextTraceLangGraphTracer:
             return self.trace
         query = _query_from_value(value) or self.query or "langgraph run"
         return self.start_trace(query)
+
+    def _activate(self, run_id: str | None, *, create: bool = False) -> _RunState:
+        key = str(run_id) if run_id else ""
+        state = self._run_states.get(key) if key else None
+        current = self._current_state.get()
+        if state is None and create and (
+            key or current is None or (current.trace is None and current.query is not None)
+        ):
+            state = _RunState()
+        if state is None:
+            state = current or self._default_state
+        if key:
+            self._run_states[key] = state
+        self._current_state.set(state)
+        return state
+
+    def _release_state(self, state: _RunState) -> None:
+        for run_id in [key for key, value in self._run_states.items() if value is state]:
+            self._run_states.pop(run_id, None)
+
+    def _state(self) -> _RunState:
+        return self._current_state.get() or self._default_state
+
+    @property
+    def trace(self) -> Optional[TraceSession]:
+        return self._state().trace
+
+    @trace.setter
+    def trace(self, value: Optional[TraceSession]) -> None:
+        self._state().trace = value
+
+    @property
+    def query(self) -> Optional[str]:
+        return self._state().query
+
+    @query.setter
+    def query(self, value: Optional[str]) -> None:
+        self._state().query = value
+
+    @property
+    def _node_starts(self) -> dict[str, float]:
+        return self._state().node_starts
 
 
 def _elapsed_ms(start_time: Optional[float]) -> Optional[int]:
