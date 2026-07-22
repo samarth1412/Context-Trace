@@ -8,6 +8,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ### Added
 
+- Release-candidate preparation for `1.1.0rc1`, including versioned public JSON
+  schemas, artifact provenance, strict privacy controls, streaming-safe capture,
+  concurrent integration isolation, verification limits, and batch verification.
+- Python 3.10--3.13, optional-integration, dependency-audit, 80% coverage, and
+  cross-platform wheel quality gates.
+- Golden TraceV1 compatibility coverage and adversarial tests for nested
+  redaction, stream chunking, queue saturation, concurrency, and oversized input.
 - `contexttrace repair` and SDK helpers for evidence-backed, root-cause-specific
   repair plans, optional corpus audit, and post-fix regression commands.
 
