@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/samarth1412/Context-Trace/actions/workflows/ci.yml/badge.svg)](https://github.com/samarth1412/Context-Trace/actions)
 [![PyPI](https://img.shields.io/pypi/v/contexttrace.svg)](https://pypi.org/project/contexttrace/)
-[![Python](https://img.shields.io/badge/python-3.8%2B-blue)](packages/contexttrace/pyproject.toml)
+[![Python](https://img.shields.io/badge/python-3.10%2B-blue)](packages/contexttrace/pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 **Local-first evidence-chain forensics for RAG and AI agents.**
@@ -20,6 +20,23 @@ unsupported or contradicted claim, the evidence span and citation involved, why
 the failure likely happened, and how to keep it from coming back. It is not a
 hosted dashboard. Traces, reports, judge cache, and SQLite state stay local by
 default.
+
+Latest stable release: **[ContextTrace 1.1.0](https://github.com/samarth1412/Context-Trace/releases/tag/v1.1.0)**,
+tested on Python 3.10 through 3.13.
+
+## What's New In 1.1.0
+
+- Versioned public JSON schemas with golden compatibility tests for v1.0 traces.
+- Recursive privacy redaction plus streaming-safe, concurrency-isolated framework
+  integrations.
+- Bounded single-trace and batch verification with explicit payload, queue, and
+  worker limits.
+- A frozen `semantic_v1_calibrated` verifier boundary with separate generic,
+  policy, temporal, and legacy calibration rule packs.
+- Expanded cross-platform packaging, dependency-audit, and 80% coverage gates.
+
+See the [1.1.0 release notes](release/v1.1.0.md) and
+[public artifact schemas](docs/artifact-schemas.md) for details.
 
 ## Install
 
@@ -351,6 +368,8 @@ ContextTrace is a diagnostic tool, not a correctness proof. It verifies groundin
 ## Links
 
 - PyPI: https://pypi.org/project/contexttrace/
+- Latest release: https://github.com/samarth1412/Context-Trace/releases/tag/v1.1.0
 - Docs: [docs](docs)
+- Artifact schemas: [docs/artifact-schemas.md](docs/artifact-schemas.md)
 - Issues: https://github.com/samarth1412/Context-Trace/issues
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
