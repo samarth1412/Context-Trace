@@ -59,6 +59,7 @@ def test_endpoint_eval_creates_local_traces_and_report(tmp_path):
     finally:
         server.shutdown()
         thread.join(timeout=2)
+        server.server_close()
 
     assert result.questions_tested == 1
     assert result.failure_rate == 0.0

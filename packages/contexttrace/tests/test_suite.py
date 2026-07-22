@@ -121,6 +121,7 @@ def test_run_suite_passes_when_saved_failure_is_fixed(tmp_path):
     finally:
         server.shutdown()
         thread.join(timeout=2)
+        server.server_close()
 
     assert result["summary"]["status"] == "passed"
     assert result["summary"]["passed"] == 1
@@ -140,6 +141,7 @@ def test_run_suite_fails_when_failure_still_reproduces(tmp_path):
     finally:
         server.shutdown()
         thread.join(timeout=2)
+        server.server_close()
 
     assert result["summary"]["status"] == "failed"
     assert result["summary"]["failed"] == 1
@@ -159,6 +161,7 @@ def test_suite_report_generation(tmp_path):
     finally:
         server.shutdown()
         thread.join(timeout=2)
+        server.server_close()
 
     written = SuiteReportGenerator().generate(result, path=str(report_path))
 
@@ -250,6 +253,7 @@ def test_suite_cli_create_run_and_report(tmp_path, capsys):
     finally:
         server.shutdown()
         thread.join(timeout=2)
+        server.server_close()
 
     output = capsys.readouterr().out
     assert exit_code == 0
