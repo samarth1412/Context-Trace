@@ -6,9 +6,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-07-22
+
 ### Added
 
-- Release-candidate preparation for `1.1.0rc1`, including versioned public JSON
+- The `1.1.0` release, validated through the `1.1.0rc1` TestPyPI candidate,
+  including versioned public JSON
   schemas, artifact provenance, strict privacy controls, streaming-safe capture,
   concurrent integration isolation, verification limits, and batch verification.
 - Python 3.10--3.13, optional-integration, dependency-audit, 80% coverage, and
