@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import time
+from contextvars import ContextVar
+from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, Iterable, Optional
 
 from contexttrace.client import ContextTrace
@@ -14,6 +16,17 @@ except Exception:  # pragma: no cover - exercised when llama-index-core is not i
 QueryExtractor = Callable[[Any], Optional[str]]
 ResponseExtractor = Callable[[Any], Optional[str]]
 NodeConverter = Callable[[Any, int], Dict[str, Any]]
+
+
+@dataclass
+class _RunState:
+    trace: Any = None
+    query: Optional[str] = None
+    start_time: Optional[float] = None
+    retrieve_start_time: Optional[float] = None
+    retrieved_chunks: list[dict[str, Any]] = field(default_factory=list)
+    source_chunks: list[dict[str, Any]] = field(default_factory=list)
+    answer_logged: bool = False
 
 
 class ContextTraceLlamaIndexCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
@@ -53,13 +66,11 @@ class ContextTraceLlamaIndexCallbackHandler(BaseCallbackHandler):  # type: ignor
         self.query_extractor = query_extractor or _extract_query
         self.response_extractor = response_extractor or _extract_response_text
         self.node_converter = node_converter or llamaindex_node_to_chunk
-        self.trace = None
-        self.query: Optional[str] = None
-        self.start_time: Optional[float] = None
-        self.retrieve_start_time: Optional[float] = None
-        self.retrieved_chunks: list[dict[str, Any]] = []
-        self.source_chunks: list[dict[str, Any]] = []
-        self.answer_logged = False
+        self._default_state = _RunState()
+        self._current_state: ContextVar[_RunState | None] = ContextVar(
+            "contexttrace_llamaindex_run_state", default=None
+        )
+        self._event_states: dict[str, _RunState] = {}
 
     def start_trace(self, trace_id: Optional[str] = None) -> None:
         return None
@@ -79,6 +90,7 @@ class ContextTraceLlamaIndexCallbackHandler(BaseCallbackHandler):  # type: ignor
         parent_id: str = "",
         **kwargs: Any,
     ) -> str:
+        self._activate(event_id=event_id, parent_id=parent_id, new_root=_event_matches(event_type, "query"))
         if _event_matches(event_type, "query"):
             query = self.query_extractor(payload)
             if query:
@@ -98,14 +110,20 @@ class ContextTraceLlamaIndexCallbackHandler(BaseCallbackHandler):  # type: ignor
         event_id: str = "",
         **kwargs: Any,
     ) -> None:
+        state = self._activate(event_id=event_id, parent_id=str(kwargs.get("parent_id") or ""))
         if _event_matches(event_type, "retrieve", "retriever"):
             self._handle_retrieval_end(event_type, payload, event_id, kwargs)
             return
 
         if _event_matches(event_type, "query", "synthesize", "response"):
             self._handle_response_end(event_type, payload, event_id, kwargs)
+        if _event_matches(event_type, "query") and self.answer_logged:
+            self._release_state(state)
 
     def trace_query(self, query: str, *, metadata: Optional[dict[str, Any]] = None) -> None:
+        current = self._current_state.get()
+        if current is None or current.answer_logged:
+            self._current_state.set(_RunState())
         self._ensure_trace(query=query, event="manual_query", metadata=metadata or {})
 
     def trace_retrieved_nodes(self, nodes: Iterable[Any], *, metadata: Optional[dict[str, Any]] = None) -> None:
@@ -233,6 +251,85 @@ class ContextTraceLlamaIndexCallbackHandler(BaseCallbackHandler):  # type: ignor
         if self.start_time is None:
             return 0
         return int((time.perf_counter() - self.start_time) * 1000)
+
+    def _activate(self, *, event_id: str = "", parent_id: str = "", new_root: bool = False) -> _RunState:
+        state = self._event_states.get(event_id)
+        if state is None and not new_root:
+            state = self._event_states.get(parent_id)
+        current = self._current_state.get()
+        if state is None and new_root:
+            state = _RunState()
+        if state is None:
+            state = current or self._default_state
+        if event_id:
+            self._event_states[event_id] = state
+        if parent_id:
+            self._event_states[parent_id] = state
+        self._current_state.set(state)
+        return state
+
+    def _release_state(self, state: _RunState) -> None:
+        for event_id in [key for key, value in self._event_states.items() if value is state]:
+            self._event_states.pop(event_id, None)
+
+    def _state(self) -> _RunState:
+        return self._current_state.get() or self._default_state
+
+    @property
+    def trace(self) -> Any:
+        return self._state().trace
+
+    @trace.setter
+    def trace(self, value: Any) -> None:
+        self._state().trace = value
+
+    @property
+    def query(self) -> Optional[str]:
+        return self._state().query
+
+    @query.setter
+    def query(self, value: Optional[str]) -> None:
+        self._state().query = value
+
+    @property
+    def start_time(self) -> Optional[float]:
+        return self._state().start_time
+
+    @start_time.setter
+    def start_time(self, value: Optional[float]) -> None:
+        self._state().start_time = value
+
+    @property
+    def retrieve_start_time(self) -> Optional[float]:
+        return self._state().retrieve_start_time
+
+    @retrieve_start_time.setter
+    def retrieve_start_time(self, value: Optional[float]) -> None:
+        self._state().retrieve_start_time = value
+
+    @property
+    def retrieved_chunks(self) -> list[dict[str, Any]]:
+        return self._state().retrieved_chunks
+
+    @retrieved_chunks.setter
+    def retrieved_chunks(self, value: list[dict[str, Any]]) -> None:
+        self._state().retrieved_chunks = value
+
+    @property
+    def source_chunks(self) -> list[dict[str, Any]]:
+        return self._state().source_chunks
+
+    @source_chunks.setter
+    def source_chunks(self, value: list[dict[str, Any]]) -> None:
+        self._state().source_chunks = value
+
+    @property
+    def answer_logged(self) -> bool:
+        return self._state().answer_logged
+
+    @answer_logged.setter
+    def answer_logged(self, value: bool) -> None:
+        self._state().answer_logged = value
 
 
 def llamaindex_node_to_chunk(node_or_node_with_score: Any, index: int = 0) -> dict[str, Any]:

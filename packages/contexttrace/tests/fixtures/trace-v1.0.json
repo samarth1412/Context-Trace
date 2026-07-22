@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "taxonomy_version": "1.0",
+  "verifier_version": "semantic_v1_calibrated",
+  "profile_id": "full_v1",
+  "query": "What is the documented refund window?",
+  "answer": "The documented refund window is 30 days.",
+  "contexts": [
+    {
+      "id": "refund-policy-v1#window",
+      "text": "Customers may request a refund within 30 days of purchase.",
+      "metadata": {
+        "source": "refund-policy-v1",
+        "publication_window": "2025-Q1"
+      }
+    }
+  ],
+  "citations": [
+    {
+      "claim": "The documented refund window is 30 days.",
+      "source_id": "refund-policy-v1#window",
+      "metadata": {
+        "citation_index": 1
+      }
+    }
+  ],
+  "metadata": {
+    "fixture": "trace-v1.0"
+  }
+}

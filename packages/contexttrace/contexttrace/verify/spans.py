@@ -104,6 +104,15 @@ def _passage_context_spans(context: TraceContext) -> list[EvidenceSpan]:
             if sentence_start == 0 and sentence_end == len(block_text.strip()):
                 continue
             _append_evidence_span(spans, context, raw_start + sentence_start, raw_start + sentence_end)
+            sentence_text = block_text[sentence_start:sentence_end]
+            prefix = re.match(r"(?i)^\s*passage\s*\d+\s*:\s*", sentence_text)
+            if prefix and prefix.end() < len(sentence_text):
+                _append_evidence_span(
+                    spans,
+                    context,
+                    raw_start + sentence_start + prefix.end(),
+                    raw_start + sentence_end,
+                )
     return spans
 
 

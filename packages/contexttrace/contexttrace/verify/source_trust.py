@@ -12,6 +12,7 @@ from contexttrace.verify.verdicts import classify_claim
 
 GROUNDING_SOURCE_UNKNOWN = "freshness_unknown"
 SUPPORTED_BY_CANONICAL_SOURCE = "supported_by_canonical_source"
+CURRENT_CANONICAL_SOURCE = "current_canonical_source"
 GROUNDED_BUT_STALE = "grounded_but_stale"
 GROUNDED_BUT_CONFLICTED = "grounded_but_conflicted"
 GROUNDED_BY_LOW_AUTHORITY_SOURCE = "grounded_by_low_authority_source"
@@ -68,7 +69,12 @@ def source_assessment(
         for context in trace.contexts
     ]
     supporting = [signal for signal in context_signals if signal["verdict"] == "supported"]
-    conflicting = [signal for signal in context_signals if signal["verdict"] == "contradicted"]
+    conflicting = [
+        signal
+        for signal in context_signals
+        if signal["verdict"] == "contradicted"
+        or _direct_polarity_conflict(claim_text, str(signal.get("evidence") or ""))
+    ]
     newer_sources = _newer_related_sources(best_signal, context_signals)
     stronger_conflicts = _stronger_conflicts(best_signal, conflicting)
     explicit_status = _metadata_status(best_signal["metadata"] if best_signal else {})
@@ -81,7 +87,12 @@ def source_assessment(
         "has_conflict": bool(conflicting),
         "has_stronger_conflict": bool(stronger_conflicts),
         "has_newer_related_source": bool(newer_sources),
+        "has_direct_polarity_conflict": any(
+            _direct_polarity_conflict(claim_text, str(signal.get("evidence") or ""))
+            for signal in stronger_conflicts
+        ),
         "explicit_source_status": explicit_status,
+        "query_requests_current": _query_requests_current(trace.query),
     }
 
 
@@ -92,17 +103,38 @@ def source_status_from_assessment(claim: dict[str, Any], assessment: dict[str, A
     if not best:
         return "no_source"
     if verdict != "supported":
-        if assessment.get("has_stronger_conflict") or assessment.get("has_conflict"):
+        # A current source contradicting the *answer* is not itself a source conflict.
+        # Reserve this label for disagreement among retrieved sources.
+        if assessment.get("has_stronger_conflict"):
             return CONFLICTING_SOURCE
+        if explicit_status in {"stale", "stale_source", GROUNDED_BUT_STALE}:
+            return STALE_SOURCE
+        if explicit_status == "incomplete":
+            return "incomplete"
+        if explicit_status in {"current", "fresh", "active", "latest"} and (
+            bool(best.get("canonical")) or float(best.get("authority_score") or 0.0) >= HIGH_AUTHORITY_THRESHOLD
+        ):
+            return CURRENT_CANONICAL_SOURCE
         if explicit_status:
             return explicit_status
+        if bool(best.get("canonical")) or float(best.get("authority_score") or 0.0) >= HIGH_AUTHORITY_THRESHOLD:
+            return CURRENT_CANONICAL_SOURCE
         return GROUNDING_SOURCE_UNKNOWN
-    if explicit_status in {GROUNDED_BUT_STALE, STALE_SOURCE, "stale_or_version_conflicted"}:
+    explicitly_stale = explicit_status in {
+        GROUNDED_BUT_STALE,
+        STALE_SOURCE,
+        "stale_or_version_conflicted",
+    } or bool(best.get("stale"))
+    if explicitly_stale and assessment.get("query_requests_current"):
         return GROUNDED_BUT_STALE
-    if bool(best.get("stale")) or assessment.get("has_newer_related_source"):
+    if assessment.get("has_direct_polarity_conflict"):
+        return GROUNDED_BUT_CONFLICTED
+    if assessment.get("has_newer_related_source"):
         return GROUNDED_BUT_STALE
     if assessment.get("has_stronger_conflict"):
         return GROUNDED_BUT_CONFLICTED
+    if explicitly_stale:
+        return GROUNDED_BUT_STALE
     if float(best.get("authority_score") or 0.0) < LOW_AUTHORITY_THRESHOLD:
         return GROUNDED_BY_LOW_AUTHORITY_SOURCE
     if bool(best.get("canonical")) or float(best.get("authority_score") or 0.0) >= HIGH_AUTHORITY_THRESHOLD:
@@ -110,6 +142,42 @@ def source_status_from_assessment(claim: dict[str, Any], assessment: dict[str, A
     if explicit_status:
         return explicit_status
     return GROUNDING_SOURCE_UNKNOWN
+
+
+def _query_requests_current(query: str) -> bool:
+    return bool(
+        re.search(
+            r"\b(?:current|currently|latest|newest|now|today|active|in force|effective)\b",
+            str(query or ""),
+            flags=re.IGNORECASE,
+        )
+    )
+
+
+def _direct_polarity_conflict(claim_text: str, evidence_text: str) -> bool:
+    claim = str(claim_text or "").lower()
+    evidence = str(evidence_text or "").lower()
+    pairs = (
+        ("enable", "disable"),
+        ("allow", "prohibit"),
+        ("permit", "forbid"),
+        ("require", "optional"),
+        ("increase", "decrease"),
+        ("accept", "reject"),
+    )
+    paired = any(
+        (left in claim and right in evidence)
+        or (right in claim and left in evidence)
+        for left, right in pairs
+    )
+    lifecycle_conflict = bool(
+        re.search(r"\b(?:use|should use|can use)\b", claim)
+        and re.search(
+            r"\b(?:removed|retired|deprecated|renamed|moved|no longer|end.of.support|recommends? (?:migrating|migration))\b",
+            evidence,
+        )
+    )
+    return paired or lifecycle_conflict
 
 
 def _context_signal(context: Any, claim_text: str, *, mode: str) -> dict[str, Any]:

@@ -7,6 +7,13 @@ from typing import Any, Iterable, Optional
 from contexttrace.config import ContextTraceConfig, load_config
 from contexttrace.errors import ContextTraceConfigError
 from contexttrace.local import LocalTransport
+from contexttrace.privacy import (
+    AsyncPrivacyTransport,
+    PrivacyPolicy,
+    PrivacyTransport,
+    Redactor,
+    TextCipher,
+)
 from contexttrace.report import ReportGenerator
 from contexttrace.transport import AsyncHttpTransport, AsyncTransport, HttpTransport, Transport
 
@@ -31,6 +38,15 @@ class ContextTrace:
         storage_path: Optional[str] = None,
         log_chunk_text: Optional[bool] = None,
         log_answer_text: Optional[bool] = None,
+        privacy: Optional[str] = None,
+        privacy_policy: PrivacyPolicy | None = None,
+        metadata_allowlist: tuple[str, ...] | None = None,
+        redaction_patterns: tuple[str, ...] = (),
+        custom_redactors: tuple[Redactor, ...] = (),
+        hash_only: Optional[bool] = None,
+        hash_salt: str = "",
+        retention_days: Optional[int] = None,
+        text_cipher: TextCipher | None = None,
         config_path: Optional[str] = None,
     ) -> None:
         self.config = load_config(
@@ -47,12 +63,30 @@ class ContextTrace:
             storage_path=storage_path,
             log_chunk_text=log_chunk_text,
             log_answer_text=log_answer_text,
+            privacy=privacy,
+            metadata_allowlist=metadata_allowlist,
+            hash_only=hash_only,
+            retention_days=retention_days,
             config_path=config_path,
         )
         _configure_logging(self.config)
         self.project = self.config.project
         self.mode = self.config.mode
-        self._transport = transport or self._build_transport(self.config)
+        base_transport = transport or self._build_transport(self.config)
+        policy = privacy_policy or PrivacyPolicy(
+            profile=self.config.privacy,
+            metadata_allowlist=(
+                frozenset(self.config.metadata_allowlist)
+                if self.config.metadata_allowlist is not None
+                else (frozenset() if self.config.privacy == "strict" else None)
+            ),
+            redaction_patterns=redaction_patterns,
+            custom_redactors=custom_redactors,
+            hash_only=self.config.hash_only,
+            hash_salt=hash_salt,
+            cipher=text_cipher,
+        )
+        self._transport = PrivacyTransport(base_transport, policy)
 
     def _build_transport(self, config: ContextTraceConfig) -> Transport:
         if config.mode == "local":
@@ -62,6 +96,7 @@ class ContextTrace:
                 debug=config.debug,
                 log_chunk_text=config.log_chunk_text,
                 log_answer_text=config.log_answer_text,
+                retention_days=config.retention_days,
             )
         if not config.api_key:
             raise ContextTraceConfigError(
@@ -514,6 +549,15 @@ class AsyncContextTrace:
         storage_path: Optional[str] = None,
         log_chunk_text: Optional[bool] = None,
         log_answer_text: Optional[bool] = None,
+        privacy: Optional[str] = None,
+        privacy_policy: PrivacyPolicy | None = None,
+        metadata_allowlist: tuple[str, ...] | None = None,
+        redaction_patterns: tuple[str, ...] = (),
+        custom_redactors: tuple[Redactor, ...] = (),
+        hash_only: Optional[bool] = None,
+        hash_salt: str = "",
+        retention_days: Optional[int] = None,
+        text_cipher: TextCipher | None = None,
         config_path: Optional[str] = None,
     ) -> None:
         self.config = load_config(
@@ -530,12 +574,30 @@ class AsyncContextTrace:
             storage_path=storage_path,
             log_chunk_text=log_chunk_text,
             log_answer_text=log_answer_text,
+            privacy=privacy,
+            metadata_allowlist=metadata_allowlist,
+            hash_only=hash_only,
+            retention_days=retention_days,
             config_path=config_path,
         )
         _configure_logging(self.config)
         self.project = self.config.project
         self.mode = self.config.mode
-        self._transport = transport or self._build_transport(self.config)
+        base_transport = transport or self._build_transport(self.config)
+        policy = privacy_policy or PrivacyPolicy(
+            profile=self.config.privacy,
+            metadata_allowlist=(
+                frozenset(self.config.metadata_allowlist)
+                if self.config.metadata_allowlist is not None
+                else (frozenset() if self.config.privacy == "strict" else None)
+            ),
+            redaction_patterns=redaction_patterns,
+            custom_redactors=custom_redactors,
+            hash_only=self.config.hash_only,
+            hash_salt=hash_salt,
+            cipher=text_cipher,
+        )
+        self._transport = AsyncPrivacyTransport(base_transport, policy)
 
     def _build_transport(self, config: ContextTraceConfig) -> AsyncTransport:
         if config.mode == "local":
@@ -546,6 +608,7 @@ class AsyncContextTrace:
                     debug=config.debug,
                     log_chunk_text=config.log_chunk_text,
                     log_answer_text=config.log_answer_text,
+                    retention_days=config.retention_days,
                 )
             )
         if not config.api_key:

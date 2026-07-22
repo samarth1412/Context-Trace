@@ -20,17 +20,24 @@ class LocalTransport:
         debug: bool = False,
         log_chunk_text: bool = True,
         log_answer_text: bool = True,
+        retention_days: Optional[int] = None,
     ) -> None:
         self.storage_path = storage_path or str(Path(store_dir) / "contexttrace.db")
         self.store = SQLiteTraceStore(self.storage_path)
+        self.retention_days = retention_days
+        if retention_days is not None:
+            self.store.cleanup_expired(retention_days=retention_days)
         self.debug = debug
         self.log_chunk_text = log_chunk_text
         self.log_answer_text = log_answer_text
+        self.trace_restorer = lambda value: value
 
     def post(self, path: str, payload: Optional[dict[str, Any]] = None) -> dict[str, Any]:
         payload = payload or {}
         self._debug("POST", path, payload)
         if path == "/v1/traces/start":
+            if self.retention_days is not None:
+                self.store.cleanup_expired(retention_days=self.retention_days)
             trace = self.store.create_trace(
                 project=payload["project"],
                 query=payload["query"],
@@ -87,7 +94,7 @@ class LocalTransport:
             return self.store.add_agent_event(trace_id, payload)
 
         if action == "evaluate":
-            trace = self.store.get_trace(trace_id)
+            trace = self.trace_restorer(self.store.get_trace(trace_id))
             evaluation = _evaluate_trace(trace)
             self.store.save_evaluation(trace_id, evaluation)
             return evaluation

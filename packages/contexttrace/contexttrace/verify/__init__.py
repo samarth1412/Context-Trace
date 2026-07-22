@@ -1,4 +1,4 @@
-from contexttrace.verify.runner import verify_trace, verify_trace_file
+from contexttrace.verify.runner import VerificationLimits, verify_trace, verify_trace_file, verify_traces
 from contexttrace.verify.audit import audit_failures, audit_trace, audit_trace_file, audit_trace_with_corpus, load_corpus
 from contexttrace.verify.audit_benchmark import run_audit_benchmark
 from contexttrace.verify.compare import compare_failures, compare_trace_files, compare_verifications
@@ -82,6 +82,7 @@ __all__ = [
     "TraceCitation",
     "TraceContext",
     "VerificationInputError",
+    "VerificationLimits",
     "audit_failures",
     "audit_trace",
     "audit_trace_file",
@@ -116,6 +117,7 @@ __all__ = [
     "truth_status",
     "verify_trace",
     "verify_trace_file",
+    "verify_traces",
     "write_judge_calibration_report",
     "write_nli_calibration_report",
 ]

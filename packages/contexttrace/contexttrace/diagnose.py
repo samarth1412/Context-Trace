@@ -4,6 +4,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+from contexttrace.contracts import DIAGNOSIS_SCHEMA_VERSION, artifact_provenance
+
 from contexttrace.verify.runner import verify_trace
 from contexttrace.verify.schema import RAGTrace, TraceCitation, TraceContext, VerificationInputError, load_trace
 
@@ -71,6 +73,7 @@ def diagnose_payload(payload: dict[str, Any], *, mode: str = "semantic", trace_p
     summary = _summary(trace_type, rag_result, agent_result, findings, failure_types)
 
     return {
+        **artifact_provenance(schema_version=DIAGNOSIS_SCHEMA_VERSION),
         "trace_path": trace_path or "",
         "trace_type": trace_type,
         "summary": summary,

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import asyncio
+import fnmatch
 import inspect
 import json
 import time
@@ -15,8 +17,8 @@ ShouldTrace = Callable[[Dict[str, Any]], bool]
 class ContextTraceFastAPIMiddleware:
     """ASGI middleware for tracing RAG-style FastAPI endpoints.
 
-    The middleware buffers JSON request and response bodies, extracts RAG fields, and logs a
-    ContextTrace trace after the endpoint completes. Custom extractors can return:
+    The middleware tees bounded JSON request and response bodies while forwarding ASGI
+    messages immediately. Custom extractors can return:
     query, metadata, retrieved_chunks, selected_context, answer, citations, model, and usage.
     """
 
@@ -34,6 +36,11 @@ class ContextTraceFastAPIMiddleware:
         should_trace: Optional[ShouldTrace] = None,
         trace_metadata: Optional[dict[str, Any]] = None,
         raise_logging_errors: bool = False,
+        max_capture_bytes: int = 1_048_576,
+        content_type_allowlist: tuple[str, ...] = ("application/json",),
+        route_allowlist: tuple[str, ...] | None = None,
+        background_logging: bool = False,
+        max_pending_logs: int = 100,
     ) -> None:
         self.app = app
         self.client = client or ContextTrace(
@@ -47,6 +54,24 @@ class ContextTraceFastAPIMiddleware:
         self.should_trace = should_trace
         self.trace_metadata = trace_metadata or {}
         self.raise_logging_errors = raise_logging_errors
+        if max_capture_bytes < 0:
+            raise ValueError("max_capture_bytes must be zero or greater.")
+        if max_pending_logs < 1:
+            raise ValueError("max_pending_logs must be at least one.")
+        self.max_capture_bytes = max_capture_bytes
+        self.content_type_allowlist = tuple(item.lower() for item in content_type_allowlist)
+        self.route_allowlist = route_allowlist
+        self.background_logging = background_logging
+        self.max_pending_logs = max_pending_logs
+        self._pending_logs: set[asyncio.Task[Any]] = set()
+        self.metrics = {
+            "traces_attempted": 0,
+            "logging_failures": 0,
+            "logging_dropped": 0,
+            "request_capture_truncated": 0,
+            "response_capture_truncated": 0,
+            "streaming_responses_skipped": 0,
+        }
 
     async def __call__(
         self,
@@ -58,29 +83,87 @@ class ContextTraceFastAPIMiddleware:
             await self.app(scope, receive, send)
             return
 
-        request_body, request_messages = await _read_request_body(receive)
-        request_info = _request_info(scope, request_body)
+        request_info = _request_info(scope, b"")
+        if not _route_allowed(str(request_info.get("path") or ""), self.route_allowlist):
+            await self.app(scope, receive, send)
+            return
+        if not _content_type_allowed(request_info.get("headers") or {}, self.content_type_allowlist):
+            await self.app(scope, receive, send)
+            return
         if self.should_trace and not self.should_trace(request_info):
-            await self.app(scope, _replay_receive(request_messages), send)
+            await self.app(scope, receive, send)
             return
 
         start_time = time.perf_counter()
-        response_messages: list[dict[str, Any]] = []
+        request_capture = _BodyCapture(self.max_capture_bytes)
+        response_capture = _BodyCapture(self.max_capture_bytes)
+        response_start: dict[str, Any] = {}
+
+        async def capture_receive() -> dict[str, Any]:
+            message = await receive()
+            if message.get("type") == "http.request":
+                request_capture.add(message.get("body", b""))
+            return message
 
         async def capture_send(message: dict[str, Any]) -> None:
-            response_messages.append(message)
+            if message.get("type") == "http.response.start":
+                response_start.update(message)
+            await send(message)
+            if message.get("type") == "http.response.body":
+                headers = _headers(response_start.get("headers") or [])
+                if _response_capture_allowed(headers, self.content_type_allowlist):
+                    response_capture.add(message.get("body", b""))
 
         try:
-            await self.app(scope, _replay_receive(request_messages), capture_send)
+            await self.app(scope, capture_receive, capture_send)
         except BaseException as exc:
+            request_info = _request_info(scope, request_capture.body)
+            request_info["capture_truncated"] = request_capture.truncated
             await self._log_exception(request_info, exc, start_time)
             raise
 
-        response_info = _response_info(response_messages, start_time)
-        await self._log_trace(request_info, response_info)
+        request_info = _request_info(scope, request_capture.body)
+        request_info["capture_truncated"] = request_capture.truncated
+        response_info = _response_info(
+            response_start,
+            response_capture,
+            start_time,
+            content_type_allowlist=self.content_type_allowlist,
+        )
+        if request_capture.truncated:
+            self.metrics["request_capture_truncated"] += 1
+        if response_capture.truncated:
+            self.metrics["response_capture_truncated"] += 1
+        if response_info.get("streaming_capture_skipped"):
+            self.metrics["streaming_responses_skipped"] += 1
+        await self._submit_log(self._log_trace(request_info, response_info))
 
-        for message in response_messages:
-            await send(message)
+    async def drain(self) -> None:
+        """Wait for background trace writes, normally during application shutdown."""
+
+        if self._pending_logs:
+            await asyncio.gather(*tuple(self._pending_logs), return_exceptions=True)
+
+    async def _submit_log(self, operation: Awaitable[None]) -> None:
+        self.metrics["traces_attempted"] += 1
+        if not self.background_logging or self.raise_logging_errors:
+            await operation
+            return
+        if len(self._pending_logs) >= self.max_pending_logs:
+            self.metrics["logging_dropped"] += 1
+            operation.close() if inspect.iscoroutine(operation) else None
+            return
+        task = asyncio.create_task(operation)
+        self._pending_logs.add(task)
+        task.add_done_callback(self._background_log_done)
+        await asyncio.sleep(0)
+
+    def _background_log_done(self, task: asyncio.Task[Any]) -> None:
+        self._pending_logs.discard(task)
+        try:
+            task.result()
+        except BaseException:
+            self.metrics["logging_failures"] += 1
 
     async def _log_exception(
         self,
@@ -107,6 +190,7 @@ class ContextTraceFastAPIMiddleware:
                     latency_ms=_elapsed_ms(start_time),
                 )
         except Exception:
+            self.metrics["logging_failures"] += 1
             if self.raise_logging_errors:
                 raise
 
@@ -126,6 +210,12 @@ class ContextTraceFastAPIMiddleware:
                 **(response_data.get("metadata") or {}),
                 "integration": "fastapi",
                 "http": _http_metadata(request_info, response_info),
+                "capture": {
+                    "request_truncated": bool(request_info.get("capture_truncated")),
+                    "response_truncated": bool(response_info.get("capture_truncated")),
+                    "streaming_capture_skipped": bool(response_info.get("streaming_capture_skipped")),
+                    "max_capture_bytes": self.max_capture_bytes,
+                },
             }
 
             with self.client.trace(query=str(query), metadata=metadata) as trace:
@@ -152,6 +242,7 @@ class ContextTraceFastAPIMiddleware:
                 if citations:
                     trace.log_citations(citations)
         except Exception:
+            self.metrics["logging_failures"] += 1
             if self.raise_logging_errors:
                 raise
 
@@ -185,38 +276,8 @@ def default_response_extractor(response: dict[str, Any], request: Optional[dict[
     }
 
 
-async def _read_request_body(
-    receive: Callable[[], Awaitable[dict[str, Any]]],
-) -> tuple[bytes, list[dict[str, Any]]]:
-    body_parts: list[bytes] = []
-    messages: list[dict[str, Any]] = []
-    while True:
-        message = await receive()
-        messages.append(message)
-        if message.get("type") != "http.request":
-            break
-        body_parts.append(message.get("body", b""))
-        if not message.get("more_body", False):
-            break
-    return b"".join(body_parts), messages
-
-
-def _replay_receive(messages: list[dict[str, Any]]) -> Callable[[], Awaitable[dict[str, Any]]]:
-    pending = list(messages)
-
-    async def receive() -> dict[str, Any]:
-        if pending:
-            return pending.pop(0)
-        return {"type": "http.request", "body": b"", "more_body": False}
-
-    return receive
-
-
 def _request_info(scope: dict[str, Any], body: bytes) -> dict[str, Any]:
-    headers = {
-        key.decode("latin1").lower(): value.decode("latin1")
-        for key, value in scope.get("headers", [])
-    }
+    headers = _headers(scope.get("headers", []))
     return {
         "method": scope.get("method"),
         "path": scope.get("path"),
@@ -227,27 +288,77 @@ def _request_info(scope: dict[str, Any], body: bytes) -> dict[str, Any]:
     }
 
 
-def _response_info(messages: list[dict[str, Any]], start_time: float) -> dict[str, Any]:
-    status_code = None
-    headers: dict[str, str] = {}
-    body_parts: list[bytes] = []
-    for message in messages:
-        if message.get("type") == "http.response.start":
-            status_code = message.get("status")
-            headers = {
-                key.decode("latin1").lower(): value.decode("latin1")
-                for key, value in message.get("headers", [])
-            }
-        if message.get("type") == "http.response.body":
-            body_parts.append(message.get("body", b""))
-    body = b"".join(body_parts)
+def _response_info(
+    start_message: dict[str, Any],
+    capture: "_BodyCapture",
+    start_time: float,
+    *,
+    content_type_allowlist: tuple[str, ...],
+) -> dict[str, Any]:
+    headers = _headers(start_message.get("headers") or [])
+    body = capture.body
+    capture_allowed = _response_capture_allowed(headers, content_type_allowlist)
     return {
-        "status_code": status_code,
+        "status_code": start_message.get("status"),
         "headers": headers,
         "body": body,
         "json": _decode_json(body),
         "latency_ms": _elapsed_ms(start_time),
+        "capture_truncated": capture.truncated,
+        "streaming_capture_skipped": not capture_allowed,
     }
+
+
+class _BodyCapture:
+    def __init__(self, limit: int) -> None:
+        self.limit = limit
+        self.parts: list[bytes] = []
+        self.size = 0
+        self.truncated = False
+
+    @property
+    def body(self) -> bytes:
+        return b"".join(self.parts)
+
+    def add(self, value: Any) -> None:
+        chunk = bytes(value or b"")
+        remaining = max(0, self.limit - self.size)
+        if len(chunk) > remaining:
+            self.truncated = True
+        if remaining:
+            captured = chunk[:remaining]
+            self.parts.append(captured)
+            self.size += len(captured)
+
+
+def _headers(raw_headers: Any) -> dict[str, str]:
+    return {
+        key.decode("latin1").lower(): value.decode("latin1")
+        for key, value in raw_headers
+    }
+
+
+def _route_allowed(path: str, allowlist: tuple[str, ...] | None) -> bool:
+    if allowlist is None:
+        return True
+    return any(fnmatch.fnmatch(path, pattern) for pattern in allowlist)
+
+
+def _content_type_allowed(headers: dict[str, str], allowlist: tuple[str, ...]) -> bool:
+    content_type = str(headers.get("content-type") or "").split(";", 1)[0].strip().lower()
+    if not content_type:
+        return True
+    return any(content_type == allowed or (allowed.endswith("/*") and content_type.startswith(allowed[:-1])) for allowed in allowlist)
+
+
+def _response_capture_allowed(headers: dict[str, str], allowlist: tuple[str, ...]) -> bool:
+    content_type = str(headers.get("content-type") or "").split(";", 1)[0].strip().lower()
+    disposition = str(headers.get("content-disposition") or "").lower()
+    if content_type == "text/event-stream" or "attachment" in disposition:
+        return False
+    if content_type.endswith("+json"):
+        return True
+    return _content_type_allowed(headers, allowlist)
 
 
 async def _call_extractor(extractor: Extractor, *args: Any) -> dict[str, Any]:

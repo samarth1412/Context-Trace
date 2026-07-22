@@ -1,8 +1,14 @@
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 from typing import Any
+
+from contexttrace.contracts import (
+    CLAIM_VERIFICATION_SCHEMA_VERSION,
+    artifact_provenance,
+    verification_profile_id,
+)
 
 from contexttrace.verify.abstention import judge_abstention
 from contexttrace.verify.citations import (
@@ -24,6 +30,7 @@ from contexttrace.verify.root_cause import (
     root_cause_summary,
 )
 from contexttrace.verify.schema import RAGTrace, TraceContext, load_trace_file
+from contexttrace.verify.semantic_normalization import semantic_normalization
 from contexttrace.verify.source_trust import attach_source_assessments
 from contexttrace.verify.statuses import attach_grounding_statuses
 from contexttrace.verify.verdicts import classify_claim
@@ -37,12 +44,28 @@ class VerificationProfile:
     source_assessment: bool = True
     root_cause_inference: bool = True
     evidence_span_localization: bool = True
+    semantic_normalization: bool = True
 
     def to_dict(self) -> dict[str, bool]:
         return asdict(self)
 
 
 FULL_VERIFICATION_PROFILE = VerificationProfile()
+
+
+@dataclass(frozen=True)
+class VerificationLimits:
+    """Optional explicit bounds for production verification workloads."""
+
+    max_contexts: int | None = None
+    max_context_chars: int | None = None
+    max_answer_chars: int | None = None
+
+    def __post_init__(self) -> None:
+        for name in ("max_contexts", "max_context_chars", "max_answer_chars"):
+            value = getattr(self, name)
+            if value is not None and value < 0:
+                raise ValueError("%s must be zero or greater." % name)
 
 
 def verify_trace_file(
@@ -52,6 +75,7 @@ def verify_trace_file(
     judge: ClaimJudge | None = None,
     nli: ClaimJudge | None = None,
     profile: VerificationProfile | None = None,
+    limits: VerificationLimits | None = None,
 ) -> dict[str, Any]:
     return verify_trace(
         load_trace_file(path),
@@ -59,6 +83,7 @@ def verify_trace_file(
         judge=judge,
         nli=nli,
         profile=profile,
+        limits=limits,
     )
 
 
@@ -69,9 +94,102 @@ def verify_trace(
     judge: ClaimJudge | None = None,
     nli: ClaimJudge | None = None,
     profile: VerificationProfile | None = None,
+    limits: VerificationLimits | None = None,
 ) -> dict[str, Any]:
     mode = _normalize_mode(mode)
     profile = profile or FULL_VERIFICATION_PROFILE
+    trace, truncation = _apply_limits(trace, limits)
+    with semantic_normalization(profile.semantic_normalization):
+        result = _verify_trace_with_profile(trace, mode=mode, judge=judge, nli=nli, profile=profile)
+    result["truncation"] = truncation
+    return result
+
+
+def verify_traces(
+    traces: list[RAGTrace],
+    *,
+    mode: str = "lexical",
+    judge: ClaimJudge | None = None,
+    nli: ClaimJudge | None = None,
+    profile: VerificationProfile | None = None,
+    limits: VerificationLimits | None = None,
+) -> list[dict[str, Any]]:
+    """Verify a batch with one stable profile and explicit workload limits."""
+
+    return [
+        verify_trace(
+            trace,
+            mode=mode,
+            judge=judge,
+            nli=nli,
+            profile=profile,
+            limits=limits,
+        )
+        for trace in traces
+    ]
+
+
+def _apply_limits(
+    trace: RAGTrace,
+    limits: VerificationLimits | None,
+) -> tuple[RAGTrace, dict[str, Any]]:
+    original_context_count = len(trace.contexts)
+    original_context_chars = sum(len(context.text) for context in trace.contexts)
+    original_answer_chars = len(trace.answer)
+    if limits is None:
+        return trace, {
+            "applied": False,
+            "contexts_original": original_context_count,
+            "contexts_used": original_context_count,
+            "context_chars_original": original_context_chars,
+            "context_chars_used": original_context_chars,
+            "answer_chars_original": original_answer_chars,
+            "answer_chars_used": original_answer_chars,
+        }
+
+    contexts = list(trace.contexts)
+    if limits.max_contexts is not None:
+        contexts = contexts[: limits.max_contexts]
+    if limits.max_context_chars is not None:
+        remaining = limits.max_context_chars
+        bounded: list[TraceContext] = []
+        for context in contexts:
+            if remaining <= 0:
+                break
+            text = context.text[:remaining]
+            metadata = dict(context.metadata)
+            if len(text) < len(context.text):
+                metadata["contexttrace_truncated"] = True
+            if text:
+                bounded.append(replace(context, text=text, metadata=metadata))
+            remaining -= len(text)
+        contexts = bounded
+    answer = trace.answer
+    if limits.max_answer_chars is not None:
+        answer = answer[: limits.max_answer_chars]
+    limited = replace(trace, contexts=contexts, answer=answer)
+    used_context_chars = sum(len(context.text) for context in contexts)
+    return limited, {
+        "applied": True,
+        "contexts_original": original_context_count,
+        "contexts_used": len(contexts),
+        "context_chars_original": original_context_chars,
+        "context_chars_used": used_context_chars,
+        "answer_chars_original": original_answer_chars,
+        "answer_chars_used": len(answer),
+        "contexts_truncated": len(contexts) < original_context_count or used_context_chars < original_context_chars,
+        "answer_truncated": len(answer) < original_answer_chars,
+    }
+
+
+def _verify_trace_with_profile(
+    trace: RAGTrace,
+    *,
+    mode: str,
+    judge: ClaimJudge | None,
+    nli: ClaimJudge | None,
+    profile: VerificationProfile,
+) -> dict[str, Any]:
     evidence_mode = _evidence_mode(mode)
     judge = _resolve_judge(mode=mode, judge=judge)
     nli = _resolve_nli(mode=mode, nli=nli)
@@ -105,6 +223,7 @@ def verify_trace(
             verifications = _apply_judge_citation_statuses(trace, claims, verifications, judge, mode=evidence_mode)
         elif nli is not None:
             verifications = _apply_judge_citation_statuses(trace, claims, verifications, nli, mode=evidence_mode)
+    verifications = _refine_authoritative_corpus_gaps(verifications, trace)
     abstention = (
         judge_abstention(
             query=trace.query,
@@ -136,6 +255,7 @@ def verify_trace(
             }
             for claim in base_claim_results
         ]
+    abstention = _augment_abstention_with_source_status(abstention, claim_results)
     if profile.root_cause_inference:
         claim_results = attach_root_causes(claim_results, abstention)
     claim_results = attach_grounding_statuses(claim_results, trace)
@@ -154,6 +274,10 @@ def verify_trace(
         }
     )
     return {
+        **artifact_provenance(
+            schema_version=CLAIM_VERIFICATION_SCHEMA_VERSION,
+            profile_id=verification_profile_id(profile.to_dict()),
+        ),
         "query": trace.query,
         "answer": trace.answer,
         "summary": summary,
@@ -429,6 +553,8 @@ def _augment_diagnostics_with_source_status(
     source_statuses = {str(claim.get("source_status") or "") for claim in claims}
     if "grounded_but_conflicted" in source_statuses:
         failure_types.append("source_conflict")
+        if any(_has_direct_polarity_conflict(claim) for claim in claims):
+            failure_types.append("contradicted_answer")
     if "grounded_but_stale" in source_statuses:
         failure_types.append("stale_source")
     if "grounded_by_low_authority_source" in source_statuses:
@@ -445,6 +571,96 @@ def _augment_diagnostics_with_source_status(
         "failure_types": deduped,
         "suggested_fix": _suggested_fix(deduped),
     }
+
+
+def _refine_authoritative_corpus_gaps(verifications: list[Any], trace: RAGTrace) -> list[Any]:
+    """Separate absent facts in an authoritative topical source from unrelated misses."""
+    contexts = {context.id: context for context in trace.contexts}
+    refined = []
+    for verification in verifications:
+        context = contexts.get(verification.best_context_id)
+        metadata = dict(getattr(context, "metadata", {}) or {})
+        freshness = str(
+            metadata.get("freshness")
+            or metadata.get("freshness_status")
+            or metadata.get("source_status")
+            or ""
+        ).strip().lower()
+        explicitly_incomplete = freshness == "incomplete" or metadata.get("source_status") == "incomplete"
+        is_gap = bool(
+            verification.verdict == "unsupported"
+            and float(verification.best_score or 0.0) >= 0.15
+            and verification.matched_terms
+            and metadata.get("canonical") is True
+            and not metadata.get("stale")
+            and (freshness in {"current", "fresh", "active", "latest"} or explicitly_incomplete)
+            and verification.missing_facts
+        )
+        if is_gap:
+            refined.append(
+                replace(
+                    verification,
+                    verdict="unverifiable",
+                    confidence=round(max(0.55, float(verification.best_score or 0.0)), 3),
+                    reason=(
+                        "A current canonical context is topically relevant, but it does not contain "
+                        "the requested fact; absence is not evidence that the claim is false."
+                    ),
+                )
+            )
+        else:
+            refined.append(verification)
+    return refined
+
+
+def _augment_abstention_with_source_status(
+    abstention: dict[str, object],
+    claims: list[dict[str, Any]],
+) -> dict[str, object]:
+    unsafe = set()
+    for claim in claims:
+        status = str(claim.get("source_status") or "")
+        assessment = claim.get("source_assessment") if isinstance(claim.get("source_assessment"), dict) else {}
+        if status == "grounded_but_conflicted":
+            unsafe.add(status)
+        elif status == "grounded_but_stale" and assessment.get("query_requests_current"):
+            unsafe.add(status)
+        best_metadata = ((assessment.get("best_source") or {}).get("metadata") or {})
+        if status == "incomplete" and bool(best_metadata.get("requires_abstention")):
+            unsafe.add("incomplete_context")
+    if not unsafe:
+        return abstention
+    return {
+        **abstention,
+        "should_abstain": True,
+        "reason": (
+            "The answer is textually grounded, but the selected evidence is stale or conflicts "
+            "with a stronger retrieved source."
+        ),
+        "source_safety_override": sorted(unsafe),
+    }
+
+
+def _has_direct_polarity_conflict(claim: dict[str, Any]) -> bool:
+    assessment = claim.get("source_assessment") if isinstance(claim.get("source_assessment"), dict) else {}
+    claim_text = str(claim.get("claim") or "").lower()
+    pairs = (
+        ("enable", "disable"),
+        ("allow", "prohibit"),
+        ("permit", "forbid"),
+        ("require", "optional"),
+        ("increase", "decrease"),
+        ("accept", "reject"),
+    )
+    for signal in assessment.get("stronger_conflicting_sources") or []:
+        evidence = str((signal or {}).get("evidence") or "").lower()
+        if any(
+            (left in claim_text and right in evidence)
+            or (right in claim_text and left in evidence)
+            for left, right in pairs
+        ):
+            return True
+    return False
 
 
 def _suggested_fix(failure_types: list[str]) -> str:

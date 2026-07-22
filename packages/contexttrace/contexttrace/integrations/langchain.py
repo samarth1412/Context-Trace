@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import time
 from collections.abc import Iterable as RuntimeIterable
+from contextvars import ContextVar
+from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, Iterable, Optional
 
 from contexttrace.client import ContextTrace
@@ -17,6 +19,20 @@ AnswerExtractor = Callable[[Any], Optional[str]]
 CitationExtractor = Callable[[Any], Iterable[Dict[str, Any]]]
 DocumentConverter = Callable[[Any, int], Dict[str, Any]]
 MetadataExtractor = Callable[[Any, Dict[str, Any]], Dict[str, Any]]
+
+
+@dataclass
+class _RunState:
+    trace: Any = None
+    query: Optional[str] = None
+    retrieved_chunks: list[dict[str, Any]] = field(default_factory=list)
+    start_time: Optional[float] = None
+    retriever_start_time: Optional[float] = None
+    llm_model: Optional[str] = None
+    llm_usage: dict[str, Any] = field(default_factory=dict)
+    answer_logged: bool = False
+    tool_start_times: dict[str, float] = field(default_factory=dict)
+    tool_names: dict[str, str] = field(default_factory=dict)
 
 
 class ContextTraceCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
@@ -51,16 +67,11 @@ class ContextTraceCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
         self.document_converter = document_converter or langchain_document_to_chunk
         self.metadata_extractor = metadata_extractor
         self.log_agent_events = log_agent_events
-        self.trace = None
-        self.query: Optional[str] = None
-        self.retrieved_chunks: list[dict[str, Any]] = []
-        self.start_time: Optional[float] = None
-        self.retriever_start_time: Optional[float] = None
-        self.llm_model: Optional[str] = None
-        self.llm_usage: dict[str, Any] = {}
-        self.answer_logged = False
-        self._tool_start_times: dict[str, float] = {}
-        self._tool_names: dict[str, str] = {}
+        self._default_state = _RunState()
+        self._current_state: ContextVar[_RunState | None] = ContextVar(
+            "contexttrace_langchain_run_state", default=None
+        )
+        self._run_states: dict[str, _RunState] = {}
 
     def on_chain_start(
         self,
@@ -68,6 +79,7 @@ class ContextTraceCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
         inputs: Any,
         **kwargs: Any,
     ) -> None:
+        self._activate(kwargs, new_root=not kwargs.get("parent_run_id"))
         query = self.query_extractor(inputs)
         if query:
             self._ensure_trace(
@@ -82,6 +94,7 @@ class ContextTraceCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
         query: str,
         **kwargs: Any,
     ) -> None:
+        self._activate(kwargs)
         self.retriever_start_time = time.perf_counter()
         self._ensure_trace(
             query=query,
@@ -90,6 +103,7 @@ class ContextTraceCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
         )
 
     def on_retriever_end(self, documents: Iterable[Any], **kwargs: Any) -> None:
+        self._activate(kwargs)
         chunks = [self.document_converter(document, index) for index, document in enumerate(documents)]
         self.retrieved_chunks = chunks
 
@@ -121,6 +135,7 @@ class ContextTraceCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
         )
 
     def on_llm_start(self, serialized: dict[str, Any], prompts: list[str], **kwargs: Any) -> None:
+        self._activate(kwargs)
         model = _serialized_name(serialized)
         if model:
             self.llm_model = model
@@ -133,10 +148,12 @@ class ContextTraceCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
             )
 
     def on_llm_end(self, response: Any, **kwargs: Any) -> None:
+        self._activate(kwargs)
         self.llm_usage = _extract_token_usage(response)
         self.llm_model = _extract_model(response) or self.llm_model
 
     def on_chain_end(self, outputs: Any, **kwargs: Any) -> None:
+        state = self._activate(kwargs)
         answer = self.answer_extractor(outputs)
         if not answer:
             return
@@ -167,8 +184,11 @@ class ContextTraceCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
         if citations:
             self.trace.log_citations(citations)
         self.answer_logged = True
+        if not kwargs.get("parent_run_id"):
+            self._release_state(state)
 
     def on_chain_error(self, error: BaseException, **kwargs: Any) -> None:
+        state = self._activate(kwargs)
         if self.trace is not None and self.log_agent_events:
             self.trace.log_agent_error(
                 str(error),
@@ -189,8 +209,11 @@ class ContextTraceCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
                 },
             )
             self.answer_logged = True
+        if not kwargs.get("parent_run_id"):
+            self._release_state(state)
 
     def on_tool_start(self, serialized: dict[str, Any], input_str: str, **kwargs: Any) -> None:
+        self._activate(kwargs)
         if not self.log_agent_events:
             return
         if self.trace is None:
@@ -212,6 +235,7 @@ class ContextTraceCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
         )
 
     def on_tool_end(self, output: Any, **kwargs: Any) -> None:
+        self._activate(kwargs)
         if not self.log_agent_events or self.trace is None:
             return
         run_id = str(kwargs.get("run_id") or "langchain_tool")
@@ -224,6 +248,7 @@ class ContextTraceCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
         )
 
     def on_tool_error(self, error: BaseException, **kwargs: Any) -> None:
+        self._activate(kwargs)
         if not self.log_agent_events or self.trace is None:
             return
         run_id = str(kwargs.get("run_id") or "langchain_tool")
@@ -274,6 +299,101 @@ class ContextTraceCallbackHandler(BaseCallbackHandler):  # type: ignore[misc]
         merged = dict(base)
         merged.update(extracted)
         return merged
+
+    def _activate(self, kwargs: dict[str, Any], *, new_root: bool = False) -> _RunState:
+        run_id = str(kwargs.get("run_id")) if kwargs.get("run_id") is not None else ""
+        parent_id = str(kwargs.get("parent_run_id")) if kwargs.get("parent_run_id") is not None else ""
+        state = self._run_states.get(parent_id) or self._run_states.get(run_id)
+        current = self._current_state.get()
+        if state is None and new_root and (run_id or current is None or current.answer_logged):
+            state = _RunState()
+        if state is None:
+            state = current or self._default_state
+        if run_id:
+            self._run_states[run_id] = state
+        if parent_id:
+            self._run_states[parent_id] = state
+        self._current_state.set(state)
+        return state
+
+    def _release_state(self, state: _RunState) -> None:
+        for run_id in [key for key, value in self._run_states.items() if value is state]:
+            self._run_states.pop(run_id, None)
+
+    def _state(self) -> _RunState:
+        return self._current_state.get() or self._default_state
+
+    @property
+    def trace(self) -> Any:
+        return self._state().trace
+
+    @trace.setter
+    def trace(self, value: Any) -> None:
+        self._state().trace = value
+
+    @property
+    def query(self) -> Optional[str]:
+        return self._state().query
+
+    @query.setter
+    def query(self, value: Optional[str]) -> None:
+        self._state().query = value
+
+    @property
+    def retrieved_chunks(self) -> list[dict[str, Any]]:
+        return self._state().retrieved_chunks
+
+    @retrieved_chunks.setter
+    def retrieved_chunks(self, value: list[dict[str, Any]]) -> None:
+        self._state().retrieved_chunks = value
+
+    @property
+    def start_time(self) -> Optional[float]:
+        return self._state().start_time
+
+    @start_time.setter
+    def start_time(self, value: Optional[float]) -> None:
+        self._state().start_time = value
+
+    @property
+    def retriever_start_time(self) -> Optional[float]:
+        return self._state().retriever_start_time
+
+    @retriever_start_time.setter
+    def retriever_start_time(self, value: Optional[float]) -> None:
+        self._state().retriever_start_time = value
+
+    @property
+    def llm_model(self) -> Optional[str]:
+        return self._state().llm_model
+
+    @llm_model.setter
+    def llm_model(self, value: Optional[str]) -> None:
+        self._state().llm_model = value
+
+    @property
+    def llm_usage(self) -> dict[str, Any]:
+        return self._state().llm_usage
+
+    @llm_usage.setter
+    def llm_usage(self, value: dict[str, Any]) -> None:
+        self._state().llm_usage = value
+
+    @property
+    def answer_logged(self) -> bool:
+        return self._state().answer_logged
+
+    @answer_logged.setter
+    def answer_logged(self, value: bool) -> None:
+        self._state().answer_logged = value
+
+    @property
+    def _tool_start_times(self) -> dict[str, float]:
+        return self._state().tool_start_times
+
+    @property
+    def _tool_names(self) -> dict[str, str]:
+        return self._state().tool_names
 
 
 def langchain_document_to_chunk(document: Any, index: int = 0) -> dict[str, Any]:

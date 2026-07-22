@@ -113,9 +113,24 @@ def _source_fully_supports_claim(
         ) or (
             allow_supported_score_fallback
             and not critical_missing
-            and is_supported_match(claim_text, match)
+            and (
+                is_supported_match(claim_text, match)
+                or (
+                    float(getattr(match, "score", 0.0) or 0.0) >= 0.4
+                    and len(getattr(match, "matched_terms", []) or []) >= 2
+                )
+            )
         )
-    return is_supported_match(claim_text, match)
+    if is_supported_match(claim_text, match):
+        return True
+    # If this is already the verifier's best source, permit a conservative
+    # paraphrase alignment fallback. This does not rescue a different-source
+    # citation and still rejects conflicting facts.
+    return bool(
+        allow_supported_score_fallback
+        and float(getattr(match, "score", 0.0) or 0.0) >= 0.4
+        and len(getattr(match, "matched_terms", []) or []) >= 2
+    )
 
 
 def _fact_type(fact: object) -> str:

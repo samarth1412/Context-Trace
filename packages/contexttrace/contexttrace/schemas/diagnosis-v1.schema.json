@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contexttrace.dev/schemas/diagnosis-v1.schema.json",
+  "title": "DiagnosisV1",
+  "type": "object",
+  "required": ["schema_version", "taxonomy_version", "verifier_version", "profile_id", "trace_type", "summary", "findings", "next_actions"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "taxonomy_version": {"type": "string", "minLength": 1},
+    "verifier_version": {"type": "string", "minLength": 1},
+    "profile_id": {"type": "string", "minLength": 1},
+    "trace_path": {"type": "string"},
+    "trace_type": {"type": "string"},
+    "summary": {"type": "object"},
+    "findings": {"type": "array", "items": {"type": "object"}},
+    "rag": {"type": ["object", "null"]},
+    "agent": {"type": ["object", "null"]},
+    "next_actions": {"type": "array"}
+  },
+  "additionalProperties": true
+}

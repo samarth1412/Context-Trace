@@ -3,6 +3,7 @@ from contexttrace.capture import capture_rag_trace, langchain_documents_to_conte
 from contexttrace.capture_endpoint import EndpointCapture, capture_endpoint_trace, capture_response_trace
 from contexttrace.client import AsyncContextTrace, ContextTrace
 from contexttrace.config import ContextTraceConfig
+from contexttrace.contracts import build_regression_case, load_json_schema
 from contexttrace.diagnose import diagnose_payload, diagnose_trace_file, write_diagnosis_regression_test
 from contexttrace.diagnose_report import DiagnoseReportGenerator
 from contexttrace.errors import (
@@ -16,6 +17,7 @@ from contexttrace.integrations.langchain import ContextTraceCallbackHandler
 from contexttrace.integrations.langgraph import ContextTraceLangGraphTracer
 from contexttrace.integrations.llamaindex import ContextTraceLlamaIndexCallbackHandler
 from contexttrace.integrations.opentelemetry import OpenTelemetryExporter, export_contexttrace_trace
+from contexttrace.privacy import PrivacyPolicy, TextCipher
 from contexttrace.reliability import ReliabilityScore, ReliabilityScorer
 from contexttrace.repair import build_repair_plan, render_repair_plan, write_repair_plan
 from contexttrace.report import ReportGenerator
@@ -35,18 +37,22 @@ __all__ = [
     "DiagnoseReportGenerator",
     "EndpointCapture",
     "OpenTelemetryExporter",
+    "PrivacyPolicy",
     "ReliabilityScore",
     "ReliabilityScorer",
     "ReportGenerator",
+    "TextCipher",
     "capture_rag_trace",
     "capture_endpoint_trace",
     "capture_response_trace",
     "build_repair_plan",
+    "build_regression_case",
     "diagnose_payload",
     "diagnose_trace_file",
     "write_diagnosis_regression_test",
     "export_contexttrace_trace",
     "langchain_documents_to_contexts",
+    "load_json_schema",
     "render_repair_plan",
     "write_repair_plan",
     "write_rag_trace",

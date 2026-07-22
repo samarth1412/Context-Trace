@@ -1,0 +1,12 @@
+id: generic_v1
+version: 1.0.0
+enabled_by_default: true
+status: scaffold
+scope:
+  - lexical_identity
+  - numeric_consistency
+  - explicit_negation
+notes: >-
+  New generic rules belong here after validation on development data. The frozen
+  semantic_v1_calibrated implementation remains the compatibility path until a
+  rule-pack loader is released.

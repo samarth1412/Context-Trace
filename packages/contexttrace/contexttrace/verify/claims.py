@@ -14,7 +14,7 @@ class Claim:
 
 
 _WHITESPACE_RE = re.compile(r"\s+")
-_COMPOUND_SPLIT_RE = re.compile(r"\s+(?:and|but)\s+", re.IGNORECASE)
+_COMPOUND_SPLIT_RE = re.compile(r"\s*(?:;|\b(?:and|but)\b)\s*", re.IGNORECASE)
 
 _FILLER_EXACT = {
     "thanks",
@@ -96,7 +96,9 @@ def extract_claims(answer: str) -> list[Claim]:
 
 
 def _normalize_answer_for_claim_splitting(answer: str) -> str:
-    normalized = _WHITESPACE_RE.sub(" ", str(answer or "")).strip()
+    normalized = str(answer or "")
+    normalized = re.sub(r"(?:^|\n)\s*(?:[-*\u2022]|\d+[.)])\s+", ". ", normalized)
+    normalized = _WHITESPACE_RE.sub(" ", normalized).strip().lstrip(". ")
     normalized = re.sub(r"\s+\*\s+", ". ", normalized)
     normalized = re.sub(r"\s+(Step\s+\d+\s*:)", r". \1", normalized, flags=re.IGNORECASE)
     normalized = re.sub(r"\s+(Total\s+[^:]{1,40}:)", r". \1", normalized, flags=re.IGNORECASE)

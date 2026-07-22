@@ -99,6 +99,7 @@ def test_capture_endpoint_cli_writes_trace_and_verification_report(tmp_path, cap
     finally:
         server.shutdown()
         thread.join(timeout=2)
+        server.server_close()
 
     output = capsys.readouterr().out
     assert exit_code == 0

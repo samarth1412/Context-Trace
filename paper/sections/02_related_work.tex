@@ -11,12 +11,28 @@ only common outputs and mark unsupported fields N/A.
 
 \paragraph{Diagnostic benchmarks.}
 RAGChecker introduces fine-grained retriever and generator diagnostics
-\citep{ru2024ragchecker}. RAGTruth supplies word-level hallucination annotations
+\citep{ru2024ragchecker}, the closest existing analogue to our contract, but
+its diagnostics characterize retrieval and generation quality and do not model
+source condition -- staleness, authority, or canonical-source status -- so a
+RAGChecker-clean case can still cite a source that is stale or superseded.
+RAGTruth supplies word-level hallucination annotations
 across RAG tasks \citep{niu2024ragtruth}, while CRAG evaluates factual and
 temporally dynamic retrieval settings \citep{yang2024crag}. ContextTrace uses
 RAGTruth as external calibration evidence and CRAG as a secondary track; it
-adds an explicit serialized chain from claims to repairs. The current external
-annotations remain review-pending.
+adds an explicit serialized chain from claims to repairs.
+
+Recent systems overlap more directly with actionable diagnosis. RAGXplain uses
+LLM reasoning to translate metric assessments into explanations and repair
+recommendations \citep{cohen2025ragxplain}. RAGTrace is an interactive system
+for exploring retrieval--generation dynamics and locating failures
+\citep{cheng2025ragtrace}. A 2026 enterprise benchmark proposes a
+multi-dimensional taxonomy spanning reasoning, retrieval difficulty, source
+structure, and operational explainability \citep{narita2026enterprise}.
+ContextTrace differs by emitting deterministic, replayable, local
+claim--evidence--source-condition records and CI regression targets, rather than
+LLM-generated recommendations or primarily interactive exploration. These are
+complementary system designs; our experiments do not establish superior human
+actionability.
 
 \paragraph{Model judges and observability.}
 LLM judges can approximate human preferences \citep{zheng2023judge}, but order,
@@ -26,3 +42,9 @@ systems layer, OpenTelemetry defines vendor-neutral trace concepts
 \citep{opentelemetry2026}, and OpenInference extends semantic conventions to AI
 workloads \citep{openinference2026}. ContextTrace accepts such trace-like
 records but targets semantic evidence diagnosis rather than telemetry transport.
+TRAIL further shows that issue localization in agent workflows is a distinct
+and difficult task, providing 148 human-annotated OpenTelemetry-structured
+traces and a fine-grained error taxonomy \citep{deshpande2025trail}. We treat
+TRAIL as the appropriate external transfer benchmark for future agent-trace
+claims; the present evaluation is predominantly RAG and does not establish
+agent-trace generalization.

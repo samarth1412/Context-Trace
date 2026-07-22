@@ -677,6 +677,94 @@ def test_canonical_supported_source_wins_over_lower_authority_conflict():
     assert claim["source_assessment"]["conflicting_sources"][0]["context_id"] == "policy_old"
 
 
+def test_direct_stronger_conflict_overrides_stale_support_and_forces_abstention():
+    result = verify_trace(
+        RAGTrace(
+            query="Is public access enabled by default?",
+            answer="Orion enables public access by default.",
+            contexts=[
+                TraceContext(
+                    id="old_guide",
+                    text="Orion enables public access by default.",
+                    metadata={"stale": True, "source_authority": "secondary", "source_group": "orion"},
+                ),
+                TraceContext(
+                    id="current_control",
+                    text="Orion disables public access by default.",
+                    metadata={"canonical": True, "source_authority": "official", "source_group": "orion"},
+                ),
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert result["claims"][0]["source_status"] == "grounded_but_conflicted"
+    assert result["claims"][0]["root_cause"]["label"] == "conflicting_contexts"
+    assert result["abstention"]["should_abstain"] is True
+    assert "source_conflict" in result["summary"]["failure_types"]
+    assert "contradicted_answer" in result["summary"]["failure_types"]
+
+
+def test_current_query_preserves_stale_classification_when_versions_conflict():
+    result = verify_trace(
+        RAGTrace(
+            query="What is Orion's current cancellation window?",
+            answer="Orion allows cancellation within 30 days.",
+            contexts=[
+                TraceContext(
+                    id="old_policy",
+                    text="Orion allows cancellation within 30 days.",
+                    metadata={"stale": True, "source_authority": "secondary", "source_group": "orion"},
+                ),
+                TraceContext(
+                    id="current_policy",
+                    text="Orion allows cancellation within 14 days.",
+                    metadata={"canonical": True, "source_authority": "official", "source_group": "orion"},
+                ),
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert result["claims"][0]["source_status"] == "grounded_but_stale"
+    assert result["claims"][0]["root_cause"]["label"] == "stale_context"
+    assert result["abstention"]["should_abstain"] is True
+
+
+def test_missing_fact_in_current_canonical_context_is_unverifiable_corpus_gap():
+    result = verify_trace(
+        RAGTrace(
+            query="What was Orion's private incident count?",
+            answer="Orion recorded 42 private incidents.",
+            contexts=[
+                TraceContext(
+                    id="operations_summary",
+                    text="Orion publishes regional uptime summaries.",
+                    metadata={"canonical": True, "freshness": "current", "source_authority": "official"},
+                )
+            ],
+        ),
+        mode="semantic",
+    )
+
+    assert result["claims"][0]["verdict"] == "unverifiable"
+    assert result["claims"][0]["root_cause"]["label"] == "corpus_gap"
+    assert result["abstention"]["should_abstain"] is True
+
+
+def test_missing_fact_without_explicit_canonical_current_metadata_stays_unsupported():
+    result = verify_trace(
+        RAGTrace(
+            query="What was Orion's private incident count?",
+            answer="Orion recorded 42 private incidents.",
+            contexts=[TraceContext(id="operations_summary", text="Orion publishes regional uptime summaries.")],
+        ),
+        mode="semantic",
+    )
+
+    assert result["claims"][0]["verdict"] == "unsupported"
+
+
 def test_low_authority_supported_source_is_flagged():
     result = verify_trace(
         RAGTrace(

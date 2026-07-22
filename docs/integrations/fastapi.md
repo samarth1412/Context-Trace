@@ -23,8 +23,22 @@ app.add_middleware(
     ContextTraceFastAPIMiddleware,
     client=ct,
     should_trace=lambda request: request["path"] == "/query",
+    route_allowlist=("/query", "/v1/rag/*"),
+    content_type_allowlist=("application/json",),
+    max_capture_bytes=1_048_576,
 )
 ```
+
+Request and response bodies are bounded tees: ASGI messages are forwarded as
+they arrive, while at most `max_capture_bytes` is retained for extraction.
+Server-sent events and attachment responses are forwarded without capturing
+their bodies. Truncation and skipped-stream counters are available through
+`middleware.metrics`.
+
+Set `background_logging=True` with `max_pending_logs=` to move persistence out
+of the request path. Call `await middleware.drain()` during application shutdown
+to flush queued writes. When the queue is full, traces are dropped instead of
+applying unbounded backpressure, and `logging_dropped` is incremented.
 
 The default extractor looks for:
 
@@ -59,4 +73,3 @@ app.add_middleware(
 ```
 
 Logging failures are swallowed by default so tracing does not break the production endpoint. Set `raise_logging_errors=True` during development.
-

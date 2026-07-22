@@ -30,6 +30,10 @@ class ContextTraceConfig:
     storage_path: str = DEFAULT_STORAGE_PATH
     log_chunk_text: bool = True
     log_answer_text: bool = True
+    privacy: str = "standard"
+    hash_only: bool = False
+    retention_days: Optional[int] = None
+    metadata_allowlist: tuple[str, ...] | None = None
     eval_endpoint: Optional[str] = None
     judge_provider: str = "local"
     judge_base_url: str = ""
@@ -54,6 +58,10 @@ def load_config(
     storage_path: Optional[str] = None,
     log_chunk_text: Optional[bool] = None,
     log_answer_text: Optional[bool] = None,
+    privacy: Optional[str] = None,
+    hash_only: Optional[bool] = None,
+    retention_days: Optional[int] = None,
+    metadata_allowlist: tuple[str, ...] | None = None,
     eval_endpoint: Optional[str] = None,
     judge_provider: Optional[str] = None,
     judge_base_url: Optional[str] = None,
@@ -167,6 +175,36 @@ def load_config(
                 True,
             )
         ),
+        privacy=str(
+            _first(
+                privacy,
+                os.getenv("CONTEXTTRACE_PRIVACY"),
+                file_values.get("privacy"),
+                "standard",
+            )
+        ),
+        hash_only=_as_bool(
+            _first(
+                hash_only,
+                os.getenv("CONTEXTTRACE_HASH_ONLY"),
+                file_values.get("hash_only"),
+                False,
+            )
+        ),
+        retention_days=_optional_int(
+            _first(
+                retention_days,
+                os.getenv("CONTEXTTRACE_RETENTION_DAYS"),
+                file_values.get("retention_days"),
+            )
+        ),
+        metadata_allowlist=_as_tuple(
+            _first(
+                metadata_allowlist,
+                os.getenv("CONTEXTTRACE_METADATA_ALLOWLIST"),
+                file_values.get("metadata_allowlist"),
+            )
+        ),
         eval_endpoint=_first(
             eval_endpoint,
             os.getenv("CONTEXTTRACE_EVAL_ENDPOINT"),
@@ -221,6 +259,10 @@ def load_config(
 
     if resolved.mode not in {"hosted", "local"}:
         raise ContextTraceConfigError("ContextTrace mode must be 'hosted' or 'local'.")
+    if resolved.privacy not in {"standard", "strict"}:
+        raise ContextTraceConfigError("ContextTrace privacy must be 'standard' or 'strict'.")
+    if resolved.retention_days is not None and resolved.retention_days < 0:
+        raise ContextTraceConfigError("ContextTrace retention_days must be zero or greater.")
     return resolved
 
 
@@ -238,6 +280,10 @@ def write_default_config(path: str = CONFIG_FILE, *, overwrite: bool = False) ->
                 "storage_path: .contexttrace/contexttrace.db",
                 "log_chunk_text: true",
                 "log_answer_text: true",
+                "privacy: standard",
+                "hash_only: false",
+                "retention_days: ''",
+                "metadata_allowlist: ''",
                 "judge_provider: local",
                 "judge_base_url: ''",
                 "judge_api_key: ''",
@@ -296,3 +342,17 @@ def _as_bool(value: Any) -> bool:
     if value is None:
         return False
     return str(value).strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _optional_int(value: Any) -> Optional[int]:
+    if value is None or str(value).strip() == "":
+        return None
+    return int(value)
+
+
+def _as_tuple(value: Any) -> tuple[str, ...] | None:
+    if value is None:
+        return None
+    if isinstance(value, (list, tuple, set)):
+        return tuple(str(item).strip() for item in value if str(item).strip())
+    return tuple(part.strip() for part in str(value).split(",") if part.strip())

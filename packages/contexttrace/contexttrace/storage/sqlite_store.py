@@ -1,11 +1,14 @@
 from __future__ import annotations
 
 import json
+import os
 import sqlite3
 import time
 import uuid
+from contextlib import contextmanager
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any, Iterator, Optional
 
 
 SCHEMA_VERSION = 1
@@ -15,7 +18,31 @@ class SQLiteTraceStore:
     def __init__(self, path: str = ".contexttrace/contexttrace.db") -> None:
         self.path = Path(path)
         self.path.parent.mkdir(parents=True, exist_ok=True)
+        self.path.parent.chmod(0o700)
         self._init_db()
+        self._secure_permissions()
+
+    def cleanup_expired(self, *, retention_days: int) -> int:
+        """Delete traces and dependent rows older than the configured TTL."""
+
+        if retention_days < 0:
+            raise ValueError("retention_days must be zero or greater.")
+        cutoff_time = datetime.now(timezone.utc) - timedelta(days=retention_days)
+        cutoff = cutoff_time.strftime("%Y-%m-%dT%H:%M:%SZ")
+        operator = "<=" if retention_days == 0 else "<"
+        with self._connect() as db:
+            rows = db.execute(
+                "SELECT id FROM traces WHERE created_at %s ?" % operator,
+                (cutoff,),
+            ).fetchall()
+            trace_ids = [str(row["id"]) for row in rows]
+            for trace_id in trace_ids:
+                for table in ("chunks", "answers", "citation_checks", "failure_reports", "agent_events"):
+                    db.execute("DELETE FROM %s WHERE trace_id = ?" % table, (trace_id,))
+                db.execute("DELETE FROM eval_questions WHERE trace_id = ?", (trace_id,))
+                db.execute("DELETE FROM traces WHERE id = ?", (trace_id,))
+        self._secure_permissions()
+        return len(trace_ids)
 
     def create_trace(self, *, project: str, query: str, metadata: dict[str, Any]) -> dict[str, Any]:
         trace_id = _new_id("trace")
@@ -465,10 +492,35 @@ class SQLiteTraceStore:
                 (str(SCHEMA_VERSION),),
             )
 
-    def _connect(self) -> sqlite3.Connection:
+    @contextmanager
+    def _connect(self) -> Iterator[sqlite3.Connection]:
         db = sqlite3.connect(str(self.path))
         db.row_factory = sqlite3.Row
-        return db
+        try:
+            self.path.chmod(0o600)
+        except OSError:
+            pass
+        try:
+            yield db
+            db.commit()
+        except BaseException:
+            db.rollback()
+            raise
+        finally:
+            db.close()
+            self._secure_permissions()
+
+    def _secure_permissions(self) -> None:
+        try:
+            self.path.parent.chmod(0o700)
+        except OSError:
+            pass
+        for candidate in self.path.parent.glob(self.path.name + "*"):
+            try:
+                if candidate.is_file():
+                    os.chmod(candidate, 0o600)
+            except OSError:
+                pass
 
     def _set_status(self, db: sqlite3.Connection, trace_id: str, status: str) -> None:
         db.execute(

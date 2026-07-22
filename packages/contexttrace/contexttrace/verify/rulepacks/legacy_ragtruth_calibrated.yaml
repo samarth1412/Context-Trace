@@ -1,0 +1,21 @@
+id: legacy_ragtruth_calibrated
+version: 1.0.0
+verifier_version: semantic_v1_calibrated
+enabled_by_default: false
+status: frozen
+implementation: contexttrace.verify.facts
+implementation_sha256: 4fa507db2126423c8d0787811e78d0d6ffecf5d7603828b6a6d9b23ca8207bc4
+frozen_at: 2026-07-22
+calibration_sets:
+  - RAGTruth stratified 200-case sample
+  - ContextTrace-Diag-150
+  - Naturalistic Eval v2
+known_narrow_rules:
+  - jack_pine_fire_cone_paraphrase
+  - dermaroller_domain_conflict
+  - amputation_causality_conflict
+  - bounded_character_and_review_summaries
+change_policy: >-
+  Do not change this implementation in response to errors from any listed
+  calibration set. A behavior change requires a new verifier_version and an
+  untouched, pre-registered test manifest.

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contexttrace.dev/schemas/trace-v1.schema.json",
+  "title": "TraceV1",
+  "type": "object",
+  "required": ["schema_version", "taxonomy_version", "verifier_version", "profile_id", "query", "answer", "contexts"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "taxonomy_version": {"type": "string", "minLength": 1},
+    "verifier_version": {"type": "string", "minLength": 1},
+    "profile_id": {"type": "string", "minLength": 1},
+    "query": {"type": "string", "minLength": 1},
+    "answer": {"type": "string", "minLength": 1},
+    "contexts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "text"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "text": {"type": "string", "minLength": 1},
+          "metadata": {"type": "object"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "citations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["claim", "source_id"],
+        "properties": {
+          "claim": {"type": "string", "minLength": 1},
+          "source_id": {"type": "string", "minLength": 1},
+          "metadata": {"type": "object"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "metadata": {"type": "object"}
+  },
+  "additionalProperties": false
+}

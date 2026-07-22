@@ -36,10 +36,12 @@ def client(judge_provider):
 
     app.dependency_overrides[get_db] = override_get_db
     app.dependency_overrides[get_llm_judge_provider] = lambda: judge_provider
-    with TestClient(app) as test_client:
-        yield test_client
-
-    Base.metadata.drop_all(bind=engine)
+    try:
+        with TestClient(app) as test_client:
+            yield test_client
+    finally:
+        Base.metadata.drop_all(bind=engine)
+        engine.dispose()
 
 
 @pytest.fixture()
