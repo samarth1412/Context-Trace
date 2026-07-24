@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "phase": "phase_1_research_questions_and_preregistration",
+  "status": "internally_frozen_before_data_collection",
+  "freeze_date": "2026-07-24",
+  "external_registration_published": false,
+  "external_publication_requires_user_authorization": true,
+  "pre_freeze_attestations": {
+    "contexttrace_unseen_v1_collection_started": false,
+    "contexttrace_unseen_v1_manifest_exists": false,
+    "contexttrace_unseen_v1_labels_exist": false,
+    "semantic_core_v2_implemented": false,
+    "untouched_evaluation_started": false,
+    "developer_participants_recruited": false
+  },
+  "documents": [
+    {
+      "path": "research/cain2027/PREREGISTRATION.md",
+      "sha256": "a5c1605dedad30e5198f99a06e1e130b9aba86273fe7e6922ff0ca2853af1dae"
+    },
+    {
+      "path": "research/cain2027/EXPERIMENT_PROTOCOL.md",
+      "sha256": "32600f55750d54f8fb891e9b6e1e7eebfc99afc3e318fbc389743ddefbf38011"
+    },
+    {
+      "path": "research/cain2027/STATISTICAL_ANALYSIS_PLAN.md",
+      "sha256": "d800a8a96d7894db285da52237ea420e402829717d435886e0ce0ac8969c7328"
+    },
+    {
+      "path": "research/cain2027/METRIC_DEFINITIONS.md",
+      "sha256": "7ec4faafd16b891a0abe146889a36e364e773d7377b417a18953eea9df93dda7"
+    },
+    {
+      "path": "research/cain2027/CLAIM_POLICY.md",
+      "sha256": "f521e4f61aad932949990b7c6cbeaa24323ac0ac1f76cb2e611ddc96294568ae"
+    }
+  ],
+  "governing_spec": {
+    "path": "docs/cain-2027-execution-spec.md",
+    "sha256": "9d1048111b3d49c494bccad3843902f544a43d01a221a053a70df2e738df1285"
+  },
+  "groundlm_prior_work": {
+    "archival": true,
+    "decision_status": "pending",
+    "submitted_pdf_sha256": "ab8f211dc0102a12fbc6691135aecb11a8fe38dc638a4973cac1f3fbab6957ca",
+    "repository_paper_main_pdf_matches_submitted_pdf": true
+  },
+  "amendment_policy": "Any change to a locked document requires a dated amendment and replacement lock. Changes after collection starts or result access are deviations and cannot silently redefine confirmatory claims."
+}
