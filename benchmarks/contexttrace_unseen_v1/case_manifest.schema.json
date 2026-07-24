@@ -1,0 +1,533 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contexttrace.dev/schemas/contexttrace-unseen-v1/case-manifest-v1.schema.json",
+  "title": "ContextTrace-Unseen-v1 case manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "manifest_kind",
+    "created_at",
+    "collection_protocol_version",
+    "claim_policy_version",
+    "label_access",
+    "cases"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "manifest_kind": {
+      "const": "contexttrace_unseen_v1_cases"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "collection_protocol_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "claim_policy_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "label_access": {
+      "$ref": "#/$defs/label_access"
+    },
+    "cases": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/case"
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$"
+    },
+    "relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "label_access": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "labels_created",
+        "labels_accessible",
+        "first_accessed_at",
+        "custodian"
+      ],
+      "properties": {
+        "labels_created": {
+          "const": false
+        },
+        "labels_accessible": {
+          "const": false
+        },
+        "first_accessed_at": {
+          "type": "null"
+        },
+        "custodian": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "retrieval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family",
+        "implementation",
+        "revision",
+        "top_k",
+        "configuration_sha256"
+      ],
+      "properties": {
+        "family": {
+          "enum": [
+            "bm25",
+            "vector",
+            "hybrid"
+          ]
+        },
+        "implementation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "top_k": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "configuration_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "chunking": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "strategy",
+        "size",
+        "overlap",
+        "unit",
+        "configuration_sha256"
+      ],
+      "properties": {
+        "strategy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "overlap": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unit": {
+          "enum": [
+            "characters",
+            "tokens"
+          ]
+        },
+        "configuration_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "reranking": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enabled",
+        "implementation",
+        "revision",
+        "top_n",
+        "configuration_sha256"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "implementation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "revision": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "top_n": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "configuration_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider",
+        "model",
+        "model_family",
+        "revision",
+        "configuration_sha256"
+      ],
+      "properties": {
+        "provider": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model_family": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "configuration_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "license_access": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "license_ids",
+        "redistribution"
+      ],
+      "properties": {
+        "license_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "redistribution": {
+          "enum": [
+            "permitted",
+            "metadata_only",
+            "prohibited"
+          ]
+        }
+      }
+    },
+    "verifier_history_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identifier",
+        "revision",
+        "invoked_at"
+      ],
+      "properties": {
+        "identifier": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "invoked_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "source_condition_pair": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pair_id",
+        "pair_type",
+        "left_source_id",
+        "right_source_id",
+        "authority_basis"
+      ],
+      "properties": {
+        "pair_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "pair_type": {
+          "enum": [
+            "archived_policy_to_current_policy",
+            "old_api_to_replacement_api",
+            "noncanonical_to_canonical",
+            "low_authority_to_authoritative"
+          ]
+        },
+        "left_source_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "right_source_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "authority_basis": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "case_id",
+        "track",
+        "split",
+        "source_ids",
+        "primary_source_id",
+        "source_family",
+        "source_document_id",
+        "domain_group",
+        "domain_id",
+        "publication_window",
+        "source_url",
+        "canonical_identifier",
+        "source_snapshot_sha256",
+        "retrieval",
+        "chunking",
+        "reranking",
+        "generator",
+        "prompt_sha256",
+        "generation_parameters",
+        "collection_timestamp",
+        "trace_schema_version",
+        "license_access",
+        "privacy_classification",
+        "origin",
+        "untouched_eligible",
+        "labels_accessible_at_generation",
+        "verifier_history",
+        "trace_artifact_path",
+        "trace_sha256",
+        "retrieved_chunk_ids",
+        "selected_context_ids",
+        "citation_format",
+        "answer_length_chars",
+        "context_count",
+        "generation_status",
+        "configuration_sha256"
+      ],
+      "properties": {
+        "case_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "track": {
+          "enum": [
+            "natural_ood",
+            "temporal_source_condition"
+          ]
+        },
+        "split": {
+          "const": "untouched_test_candidate"
+        },
+        "source_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/identifier"
+          }
+        },
+        "primary_source_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_family": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_document_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "domain_group": {
+          "enum": [
+            "software_product_documentation",
+            "policy_regulatory",
+            "support_operational"
+          ]
+        },
+        "domain_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "publication_window": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "canonical_identifier": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_snapshot_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "retrieval": {
+          "$ref": "#/$defs/retrieval"
+        },
+        "chunking": {
+          "$ref": "#/$defs/chunking"
+        },
+        "reranking": {
+          "$ref": "#/$defs/reranking"
+        },
+        "generator": {
+          "$ref": "#/$defs/generator"
+        },
+        "prompt_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "generation_parameters": {
+          "type": "object",
+          "minProperties": 1
+        },
+        "collection_timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "trace_schema_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "license_access": {
+          "$ref": "#/$defs/license_access"
+        },
+        "privacy_classification": {
+          "enum": [
+            "public",
+            "public_pii_reviewed"
+          ]
+        },
+        "origin": {
+          "const": "natural_rag_run"
+        },
+        "untouched_eligible": {
+          "const": true
+        },
+        "labels_accessible_at_generation": {
+          "const": false
+        },
+        "verifier_history": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/verifier_history_entry"
+          }
+        },
+        "trace_artifact_path": {
+          "$ref": "#/$defs/relative_path"
+        },
+        "trace_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "retrieved_chunk_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/identifier"
+          }
+        },
+        "selected_context_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/identifier"
+          }
+        },
+        "citation_format": {
+          "enum": [
+            "none",
+            "inline_numeric",
+            "source_id",
+            "url",
+            "other"
+          ]
+        },
+        "answer_length_chars": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "context_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "generation_status": {
+          "const": "completed"
+        },
+        "configuration_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_condition_pair": {
+          "$ref": "#/$defs/source_condition_pair"
+        },
+        "metadata": {
+          "type": "object"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "track": {
+                "const": "temporal_source_condition"
+              }
+            },
+            "required": [
+              "track"
+            ]
+          },
+          "then": {
+            "required": [
+              "source_condition_pair"
+            ],
+            "properties": {
+              "source_ids": {
+                "minItems": 2
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

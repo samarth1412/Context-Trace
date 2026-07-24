@@ -1,0 +1,88 @@
+{
+  "schema_version": "1.0",
+  "phase": "phase_2_contexttrace_unseen_v1_design",
+  "status": "infrastructure_complete_acquisition_not_started",
+  "lock_date": "2026-07-24",
+  "dataset_status": {
+    "real_sources_acquired": 0,
+    "real_rag_traces_collected": 0,
+    "candidate_source_manifest_exists": false,
+    "candidate_case_manifest_exists": false,
+    "calibration_source_registry_complete": false,
+    "frozen_unlabeled_manifest_exists": false,
+    "gold_labels_exist": false,
+    "semantic_core_v2_implemented": false,
+    "untouched_evaluation_started": false
+  },
+  "artifacts": [
+    {
+      "path": "benchmarks/contexttrace_unseen_v1/README.md",
+      "sha256": "f5ccc670d54473576518a3c35238863b2b1c969108b1a95680a7bbf8abd004d8"
+    },
+    {
+      "path": "benchmarks/contexttrace_unseen_v1/DATASET_CARD.md",
+      "sha256": "250d4466a3c52d46f6a416356f894e28895f6f960ba6b8660e769676ef7d06be"
+    },
+    {
+      "path": "benchmarks/contexttrace_unseen_v1/COLLECTION_PROTOCOL.md",
+      "sha256": "45276609b53c484102247ed490f246bba118c3349f319e261e1214f677703f35"
+    },
+    {
+      "path": "benchmarks/contexttrace_unseen_v1/LEAKAGE_AUDIT.md",
+      "sha256": "560fa3072ee1b07b1a4c30ac7bef907a7c492c0bde5c988fa99a5db7045c876c"
+    },
+    {
+      "path": "benchmarks/contexttrace_unseen_v1/PRIVACY_AND_LICENSE.md",
+      "sha256": "796b399261be092eea9399085382c91029adb4f66d4c1af9400715674f02306f"
+    },
+    {
+      "path": "benchmarks/contexttrace_unseen_v1/source_manifest.schema.json",
+      "sha256": "1abe8aea5c31e1f75b3ea17abf2ad7dfecb9cb2035ef82891a9b86fe155f64a4"
+    },
+    {
+      "path": "benchmarks/contexttrace_unseen_v1/case_manifest.schema.json",
+      "sha256": "fe81221f1e63545c67f2add523cd193862f0fa2228ba9688f559739131a91a8e"
+    },
+    {
+      "path": "benchmarks/contexttrace_unseen_v1/freeze_manifest.py",
+      "sha256": "b558008c94dd2973478a6f1fd7a66101517a5c2a749f69564ed3ef5ca5284494"
+    },
+    {
+      "path": "benchmarks/contexttrace_unseen_v1/__init__.py",
+      "sha256": "432833e997d2844c5a6b22875efb4cb72127d39f0dc2b2d22d2c382c94c96d29"
+    },
+    {
+      "path": "benchmarks/tests/test_unseen_v1_freeze_manifest.py",
+      "sha256": "c0a64944a386c306668b12ab9208716544eb7a0f328a56e7e3667cd0ded6352b"
+    }
+  ],
+  "validation": {
+    "json_schemas_valid": true,
+    "focused_phase_2_tests": {
+      "passed": 50,
+      "failed": 0
+    },
+    "focused_plus_legacy_freeze_tests": {
+      "passed": 56,
+      "failed": 0
+    },
+    "repository_tests": {
+      "passed": 585,
+      "failed": 0,
+      "warnings": 1,
+      "warning_summary": "External Starlette TestClient deprecation warning."
+    },
+    "ruff_check": "passed",
+    "ruff_format_check": "passed",
+    "mypy": "passed",
+    "git_diff_check": "passed"
+  },
+  "prerequisite_locks": {
+    "phase_1_lock_path": "research/cain2027/PHASE1_LOCK.json",
+    "phase_1_lock_sha256": "918946d17d1c49e1af9ec1f9a4261d332255879ec924af793e15496ed297877e",
+    "governing_spec_path": "docs/cain-2027-execution-spec.md",
+    "governing_spec_sha256": "9d1048111b3d49c494bccad3843902f544a43d01a221a053a70df2e738df1285"
+  },
+  "next_gate": "Approve source families and licenses, generator/provider choices and budget, then populate the calibration registry before any real acquisition or freeze.",
+  "warning": "This lock covers infrastructure only. It is not a dataset manifest, a leakage-audit result, or empirical evidence."
+}

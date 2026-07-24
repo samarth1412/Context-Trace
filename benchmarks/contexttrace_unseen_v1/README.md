@@ -1,50 +1,88 @@
 # ContextTrace-Unseen-v1
 
-Status: acquisition not started; no manifest is frozen and no labels exist.
+Status date: 2026-07-24
 
-This benchmark is the next data milestone for `semantic_core_v2`. It has two
-independent tracks:
+Phase: Phase 2 infrastructure complete; acquisition not started
 
-- **Natural OOD:** 300--500 traces from software/product documentation,
-  policy/regulatory documents, and support/operational knowledge bases.
-- **Temporal/source condition:** approximately 100 traces made from versioned or
-  authority-contrasting document pairs.
+Dataset version: not assigned
 
-## Acquisition contract
+Frozen manifest: absent
 
-Every trace must be produced by a real RAG run and retain the complete retrieval
-and generation configuration. The natural track must cross BM25, vector, and
-hybrid retrieval; multiple chunking or reranking settings; at least two generator
-models; and clean as well as naturally failing outputs. Failures must not be
-manually written or injected after generation.
+Gold labels: absent
 
-Every candidate record must include:
+ContextTrace-Unseen-v1 is the planned untouched evaluation corpus for selective
+evidence-chain diagnosis. It is designed to test generalization across new
+source families, fine-grained domains, publication windows, and source
+conditions without reusing any previously inspected ContextTrace benchmark.
 
-- immutable trace ID and track;
-- source family, source document ID, domain, canonical URL, snapshot hash, and
-  publication window;
-- retriever, chunker, reranker, generator provider/model/revision, prompt hash,
-  random seed when supported, and generation timestamp;
-- retrieved chunk IDs, selected context, answer, citations, and token/latency
-  metadata;
-- no gold diagnostic labels.
+No trace in this directory is empirical evidence. The repository contains only
+collection, validation, privacy, and freezing infrastructure.
 
-No source document, source family, or publication window may overlap the declared
-calibration registry. Near-duplicate snapshots must be detected by normalized
-content hash before freezing.
+## Planned tracks
 
-## Freeze sequence
+- **Natural OOD:** target 400 real RAG traces, acceptable range 300–500, from
+  software/product documentation, policy/regulatory material, and
+  support/operational knowledge bases.
+- **Temporal/source condition:** target approximately 100 real RAG traces using
+  archived/current, old/replacement, noncanonical/canonical, or
+  low-authority/authoritative source pairs.
 
-1. Acquire candidate sources and produce natural RAG runs without invoking either
-   `semantic_v1_calibrated` or `semantic_core_v2`.
-2. Run leakage checks against every calibration source registry.
-3. Freeze the unlabeled manifest with `freeze_untouched_split.py`.
-4. Publish the sorted trace IDs, source metadata, generator/retriever configuration
-   hashes, and manifest SHA-256. Do not publish gold annotations.
-5. Independently annotate and seal labels according to `ANNOTATION_MANUAL.md`.
-6. Freeze `semantic_core_v2`, its NLI model/revision, thresholds, metrics,
-   statistical tests, and output schema.
-7. Score once. Any inspected error becomes development data for later versions.
+Every case must be the unedited output of an actual recorded RAG run. Manually
+written failures, injected errors, repurposed calibration cases, and generated
+placeholders are ineligible.
 
-The absence of `manifest.json` in this directory is intentional until real source
-acquisition is complete.
+## Phase 2 files
+
+- `DATASET_CARD.md`: intended use, composition, limitations, and current status.
+- `COLLECTION_PROTOCOL.md`: source approval, RAG generation, chain of custody,
+  and freeze sequence.
+- `LEAKAGE_AUDIT.md`: disjointness dimensions and fail-closed audit status.
+- `PRIVACY_AND_LICENSE.md`: source, redistribution, privacy, and secret-handling
+  requirements.
+- `source_manifest.schema.json`: source snapshot and calibration-registry
+  contract.
+- `case_manifest.schema.json`: candidate RAG trace and configuration contract.
+- `freeze_manifest.py`: schema validation, leakage rejection, byte-level hash
+  validation, composition checks, sealing, and post-freeze verification.
+
+`ANNOTATION_MANUAL.md` and the legacy checklist are existing Phase 3
+scaffolding. They are not activated by Phase 2.
+
+## Freeze contract
+
+The production freeze requires:
+
+1. an approved source manifest;
+2. a populated calibration registry;
+3. a candidate case manifest with no labels or predictions;
+4. locally retained source and trace artifacts matching every declared hash;
+5. at least 300 eligible Natural OOD traces and the preregistered source-family
+   diversity;
+6. no invocation of `semantic_v1_calibrated` or `semantic_core_v2`;
+7. no label creation or access before freeze.
+
+Run from the repository root:
+
+```bash
+.venv/bin/python -m benchmarks.contexttrace_unseen_v1.freeze_manifest freeze \
+  --source-manifest PATH_TO_SOURCE_MANIFEST \
+  --case-manifest PATH_TO_CASE_MANIFEST \
+  --calibration-registry PATH_TO_CALIBRATION_REGISTRY \
+  --artifact-root PATH_TO_ARTIFACT_ROOT \
+  --output PATH_TO_FROZEN_MANIFEST
+```
+
+The command writes the frozen unlabeled manifest and a `.sha256` sidecar.
+External publication of either requires explicit user authorization.
+
+Verify against the independently retained or published hash:
+
+```bash
+.venv/bin/python -m benchmarks.contexttrace_unseen_v1.freeze_manifest verify \
+  --manifest PATH_TO_FROZEN_MANIFEST \
+  --expected-sha256 PUBLISHED_SHA256 \
+  --artifact-root PATH_TO_ARTIFACT_ROOT
+```
+
+The current absence of a manifest is intentional. The tool must not be run with
+fabricated or calibration-derived cases merely to produce a hash.

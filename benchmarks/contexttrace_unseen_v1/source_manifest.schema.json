@@ -1,0 +1,329 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contexttrace.dev/schemas/contexttrace-unseen-v1/source-manifest-v1.schema.json",
+  "title": "ContextTrace-Unseen-v1 source manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "manifest_kind",
+    "created_at",
+    "domain_ontology_version",
+    "disjoint_dimensions",
+    "sources"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "manifest_kind": {
+      "enum": [
+        "contexttrace_unseen_v1_sources",
+        "contexttrace_calibration_registry"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "domain_ontology_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "disjoint_dimensions": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "source_id",
+          "source_document_id",
+          "source_family",
+          "domain_id",
+          "publication_window",
+          "snapshot_sha256",
+          "normalized_content_sha256",
+          "near_duplicate_cluster_id"
+        ]
+      },
+      "allOf": [
+        {
+          "contains": {
+            "const": "source_document_id"
+          }
+        },
+        {
+          "contains": {
+            "const": "source_family"
+          }
+        },
+        {
+          "contains": {
+            "const": "domain_id"
+          }
+        },
+        {
+          "contains": {
+            "const": "publication_window"
+          }
+        },
+        {
+          "contains": {
+            "const": "normalized_content_sha256"
+          }
+        }
+      ]
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$"
+    },
+    "relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "license": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "license_id",
+        "terms_url",
+        "redistribution",
+        "attribution_required",
+        "review_status"
+      ],
+      "properties": {
+        "license_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "terms_url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "redistribution": {
+          "enum": [
+            "permitted",
+            "metadata_only",
+            "prohibited"
+          ]
+        },
+        "attribution_required": {
+          "type": "boolean"
+        },
+        "review_status": {
+          "enum": [
+            "approved",
+            "pending",
+            "rejected"
+          ]
+        },
+        "reviewed_by": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reviewed_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "access": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "access_class",
+        "authentication_required",
+        "collection_permitted",
+        "restrictions"
+      ],
+      "properties": {
+        "access_class": {
+          "enum": [
+            "public",
+            "authorized_restricted"
+          ]
+        },
+        "authentication_required": {
+          "type": "boolean"
+        },
+        "collection_permitted": {
+          "type": "boolean"
+        },
+        "restrictions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "source_document_id",
+        "document_lineage_id",
+        "source_family",
+        "domain_group",
+        "domain_id",
+        "publication_window",
+        "source_url",
+        "canonical_identifier",
+        "snapshot_path",
+        "snapshot_sha256",
+        "normalized_text_path",
+        "normalized_content_sha256",
+        "near_duplicate_cluster_id",
+        "collected_at",
+        "published_at",
+        "language",
+        "content_type",
+        "source_conditions",
+        "license",
+        "access",
+        "privacy_classification"
+      ],
+      "properties": {
+        "source_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_document_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "document_lineage_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_family": {
+          "$ref": "#/$defs/identifier"
+        },
+        "domain_group": {
+          "enum": [
+            "software_product_documentation",
+            "policy_regulatory",
+            "support_operational"
+          ]
+        },
+        "domain_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "publication_window": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "source_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "canonical_identifier": {
+          "type": "string",
+          "minLength": 1
+        },
+        "snapshot_path": {
+          "$ref": "#/$defs/relative_path"
+        },
+        "snapshot_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "normalized_text_path": {
+          "$ref": "#/$defs/relative_path"
+        },
+        "normalized_content_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "near_duplicate_cluster_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "collected_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "published_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "language": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 35
+        },
+        "content_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_conditions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "current",
+              "archived",
+              "canonical",
+              "noncanonical",
+              "stale",
+              "superseded",
+              "low_authority",
+              "conflicting",
+              "unknown"
+            ]
+          }
+        },
+        "authority_basis": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "license": {
+          "$ref": "#/$defs/license"
+        },
+        "access": {
+          "$ref": "#/$defs/access"
+        },
+        "privacy_classification": {
+          "enum": [
+            "public",
+            "public_pii_review_required",
+            "authorized_restricted"
+          ]
+        },
+        "metadata": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}
