@@ -1,0 +1,861 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contexttrace.dev/schemas/contexttrace-unseen-v1/annotation-v1.schema.json",
+  "title": "ContextTrace-Unseen-v1 annotation artifacts",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/independent_submission"
+    },
+    {
+      "$ref": "#/$defs/adjudication_ledger"
+    },
+    {
+      "$ref": "#/$defs/sealed_gold"
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$"
+    },
+    "common": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "document_kind",
+        "dataset_id",
+        "manifest_sha256",
+        "guide_version",
+        "claim_policy_version",
+        "created_at"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0"
+        },
+        "document_kind": {
+          "enum": [
+            "independent_annotation",
+            "adjudication_ledger",
+            "sealed_gold"
+          ]
+        },
+        "dataset_id": {
+          "const": "ContextTrace-Unseen-v1"
+        },
+        "manifest_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "guide_version": {
+          "const": "1.0"
+        },
+        "claim_policy_version": {
+          "const": "1.0"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "independence_attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "worked_independently",
+        "no_system_predictions_seen",
+        "no_other_annotations_seen",
+        "all_assistance_disclosed",
+        "signed_at"
+      ],
+      "properties": {
+        "worked_independently": {
+          "const": true
+        },
+        "no_system_predictions_seen": {
+          "const": true
+        },
+        "no_other_annotations_seen": {
+          "const": true
+        },
+        "all_assistance_disclosed": {
+          "const": true
+        },
+        "signed_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "model_assistance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "used"
+      ],
+      "properties": {
+        "used": {
+          "type": "boolean"
+        },
+        "provider": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "prompt_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "affected_fields": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "human_verification": {
+          "const": true
+        },
+        "shown_before_human_decision": {
+          "type": "boolean"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "used": {
+                "const": true
+              }
+            },
+            "required": [
+              "used"
+            ]
+          },
+          "then": {
+            "required": [
+              "provider",
+              "model",
+              "revision",
+              "prompt_sha256",
+              "affected_fields",
+              "human_verification",
+              "shown_before_human_decision"
+            ]
+          }
+        }
+      ]
+    },
+    "field_confidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_boundary",
+        "claim_verdict",
+        "failure_label",
+        "primary_root_cause",
+        "citation_state",
+        "source_condition",
+        "abstention_requirement",
+        "evidence_spans",
+        "overall"
+      ],
+      "properties": {
+        "claim_boundary": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "claim_verdict": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "failure_label": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "primary_root_cause": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "citation_state": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "source_condition": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "abstention_requirement": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "evidence_spans": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "overall": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        }
+      }
+    },
+    "evidence_span": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "source_snapshot_id",
+        "chunk_id",
+        "start",
+        "end",
+        "text",
+        "role"
+      ],
+      "properties": {
+        "source_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_snapshot_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "chunk_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "enum": [
+            "supporting",
+            "contradicting"
+          ]
+        }
+      }
+    },
+    "source_condition_basis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "snapshot_ids",
+        "effective_dates",
+        "authority_rule",
+        "rationale"
+      ],
+      "properties": {
+        "snapshot_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/identifier"
+          }
+        },
+        "effective_dates": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "authority_rule": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "claim_annotation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_id",
+        "claim_text",
+        "answer_start",
+        "answer_end",
+        "propositional"
+      ],
+      "properties": {
+        "claim_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "claim_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "answer_start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "answer_end": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "propositional": {
+          "type": "boolean"
+        },
+        "exclusion_reason": {
+          "const": "non_verifiable_text"
+        },
+        "claim_verdict": {
+          "enum": [
+            "supported",
+            "partially_supported",
+            "unsupported",
+            "contradicted",
+            "unverifiable"
+          ]
+        },
+        "failure_label": {
+          "enum": [
+            "none",
+            "retrieval_miss",
+            "context_selection_error",
+            "citation_mismatch",
+            "answer_overreach",
+            "contradiction",
+            "insufficient_evidence",
+            "should_have_abstained",
+            "source_condition_failure"
+          ]
+        },
+        "secondary_failure_labels": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "retrieval_miss",
+              "context_selection_error",
+              "citation_mismatch",
+              "answer_overreach",
+              "contradiction",
+              "insufficient_evidence",
+              "should_have_abstained",
+              "source_condition_failure"
+            ]
+          }
+        },
+        "primary_root_cause": {
+          "enum": [
+            "none",
+            "retrieval_miss",
+            "reranking_failure",
+            "chunking_issue",
+            "corpus_gap",
+            "stale_or_superseded_source",
+            "noncanonical_or_low_authority_source",
+            "citation_mismatch",
+            "answer_overreach",
+            "insufficient_selected_context",
+            "conflicting_contexts",
+            "failure_to_abstain",
+            "not_observable"
+          ]
+        },
+        "secondary_root_causes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "retrieval_miss",
+              "reranking_failure",
+              "chunking_issue",
+              "corpus_gap",
+              "stale_or_superseded_source",
+              "noncanonical_or_low_authority_source",
+              "citation_mismatch",
+              "answer_overreach",
+              "insufficient_selected_context",
+              "conflicting_contexts",
+              "failure_to_abstain",
+              "not_observable"
+            ]
+          }
+        },
+        "citation_state": {
+          "enum": [
+            "not_applicable",
+            "correct",
+            "partial",
+            "wrong_source",
+            "missing",
+            "malformed"
+          ]
+        },
+        "source_condition": {
+          "enum": [
+            "current_canonical",
+            "current_noncanonical",
+            "stale",
+            "superseded",
+            "low_authority",
+            "conflicting_authorities",
+            "unknown"
+          ]
+        },
+        "source_condition_basis": {
+          "$ref": "#/$defs/source_condition_basis"
+        },
+        "abstention_requirement": {
+          "enum": [
+            "must_answer",
+            "may_answer_with_qualification",
+            "must_abstain"
+          ]
+        },
+        "evidence_spans": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence_span"
+          }
+        },
+        "ambiguity_flags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "claim_boundary_ambiguous",
+              "multi_source_claim",
+              "conflicting_sources",
+              "temporal_scope_uncertain",
+              "policy_scope_uncertain",
+              "retrieval_stage_unobservable",
+              "authority_uncertain",
+              "insufficient_trace",
+              "other"
+            ]
+          }
+        },
+        "field_confidence": {
+          "$ref": "#/$defs/field_confidence"
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "propositional": {
+                "const": true
+              }
+            },
+            "required": [
+              "propositional"
+            ]
+          },
+          "then": {
+            "required": [
+              "claim_verdict",
+              "failure_label",
+              "secondary_failure_labels",
+              "primary_root_cause",
+              "secondary_root_causes",
+              "citation_state",
+              "source_condition",
+              "source_condition_basis",
+              "abstention_requirement",
+              "evidence_spans",
+              "ambiguity_flags",
+              "field_confidence",
+              "rationale",
+              "notes"
+            ],
+            "not": {
+              "required": [
+                "exclusion_reason"
+              ]
+            }
+          },
+          "else": {
+            "required": [
+              "exclusion_reason"
+            ]
+          }
+        }
+      ]
+    },
+    "case_annotation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "case_id",
+        "answer_sha256",
+        "claims",
+        "completed_at",
+        "case_notes"
+      ],
+      "properties": {
+        "case_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "answer_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "claims": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/claim_annotation"
+          }
+        },
+        "completed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "case_notes": {
+          "type": "string"
+        }
+      }
+    },
+    "independent_submission": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_version",
+            "document_kind",
+            "dataset_id",
+            "manifest_sha256",
+            "guide_version",
+            "claim_policy_version",
+            "created_at",
+            "annotator_id",
+            "assignment_id",
+            "assignment_sha256",
+            "independence_attestation",
+            "model_assistance",
+            "cases"
+          ],
+          "properties": {
+            "schema_version": {
+              "const": "1.0"
+            },
+            "document_kind": {
+              "const": "independent_annotation"
+            },
+            "dataset_id": {
+              "const": "ContextTrace-Unseen-v1"
+            },
+            "manifest_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "guide_version": {
+              "const": "1.0"
+            },
+            "claim_policy_version": {
+              "const": "1.0"
+            },
+            "created_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "annotator_id": {
+              "$ref": "#/$defs/identifier"
+            },
+            "assignment_id": {
+              "$ref": "#/$defs/identifier"
+            },
+            "assignment_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "independence_attestation": {
+              "$ref": "#/$defs/independence_attestation"
+            },
+            "model_assistance": {
+              "$ref": "#/$defs/model_assistance"
+            },
+            "cases": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/case_annotation"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "annotator_value": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "annotator_id",
+        "value"
+      ],
+      "properties": {
+        "annotator_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "value": {}
+      }
+    },
+    "adjudication_event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "case_id",
+        "claim_id",
+        "field",
+        "annotator_values",
+        "selected_value",
+        "disagreement_type",
+        "evidence_considered",
+        "rationale",
+        "adjudicator_id",
+        "adjudicated_at",
+        "source_annotation_sha256s"
+      ],
+      "properties": {
+        "event_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "case_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "claim_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "field": {
+          "enum": [
+            "claim_boundary",
+            "claim_verdict",
+            "failure_label",
+            "secondary_failure_labels",
+            "primary_root_cause",
+            "secondary_root_causes",
+            "citation_state",
+            "source_condition",
+            "source_condition_basis",
+            "abstention_requirement",
+            "evidence_spans",
+            "annotation_confidence"
+          ]
+        },
+        "annotator_values": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/annotator_value"
+          }
+        },
+        "selected_value": {},
+        "disagreement_type": {
+          "enum": [
+            "boundary",
+            "definitional",
+            "evidentiary",
+            "scope_or_applicability",
+            "clerical",
+            "source_metadata_defect",
+            "unresolved"
+          ]
+        },
+        "evidence_considered": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        },
+        "adjudicator_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "adjudicated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source_annotation_sha256s": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/sha256"
+          }
+        }
+      }
+    },
+    "adjudication_ledger": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_version",
+            "document_kind",
+            "dataset_id",
+            "manifest_sha256",
+            "guide_version",
+            "claim_policy_version",
+            "created_at",
+            "ledger_id",
+            "events"
+          ],
+          "properties": {
+            "schema_version": {
+              "const": "1.0"
+            },
+            "document_kind": {
+              "const": "adjudication_ledger"
+            },
+            "dataset_id": {
+              "const": "ContextTrace-Unseen-v1"
+            },
+            "manifest_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "guide_version": {
+              "const": "1.0"
+            },
+            "claim_policy_version": {
+              "const": "1.0"
+            },
+            "created_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "ledger_id": {
+              "$ref": "#/$defs/identifier"
+            },
+            "events": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/adjudication_event"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "sealed_gold": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_version",
+            "document_kind",
+            "dataset_id",
+            "manifest_sha256",
+            "guide_version",
+            "claim_policy_version",
+            "created_at",
+            "gold_version",
+            "raw_annotation_sha256s",
+            "adjudication_ledger_sha256",
+            "cases"
+          ],
+          "properties": {
+            "schema_version": {
+              "const": "1.0"
+            },
+            "document_kind": {
+              "const": "sealed_gold"
+            },
+            "dataset_id": {
+              "const": "ContextTrace-Unseen-v1"
+            },
+            "manifest_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "guide_version": {
+              "const": "1.0"
+            },
+            "claim_policy_version": {
+              "const": "1.0"
+            },
+            "created_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "gold_version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "raw_annotation_sha256s": {
+              "type": "array",
+              "minItems": 2,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/sha256"
+              }
+            },
+            "adjudication_ledger_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "cases": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/case_annotation"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

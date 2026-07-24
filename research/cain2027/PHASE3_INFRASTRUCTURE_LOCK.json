@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0",
+  "phase": "phase_3_annotation_and_sealed_label_protocol",
+  "status": "infrastructure_complete_blocked_no_independent_annotator",
+  "lock_date": "2026-07-24",
+  "annotation_status": {
+    "real_untouched_cases_available": 0,
+    "pilot_started": false,
+    "pilot_annotations": 0,
+    "independent_annotators_assigned": 0,
+    "adjudicators_assigned": 0,
+    "label_custodian_assigned": false,
+    "raw_annotations_exist": false,
+    "agreement_analysis_run_on_humans": false,
+    "adjudication_events_exist": false,
+    "sealed_gold_exists": false,
+    "gold_labels_exposed_to_implementers": false
+  },
+  "artifacts": [
+    {
+      "path": "benchmarks/contexttrace_unseen_v1/ANNOTATION_MANUAL.md",
+      "sha256": "119b30f7c900cb74fff4412e9d5f52ce39da8bc46b250657433c655dab59c5d2"
+    },
+    {
+      "path": "benchmarks/contexttrace_unseen_v1/ANNOTATION_SCHEMA.json",
+      "sha256": "8de845839988ccdc3168eee5a4c45d3f18f5a634acc5d6e0c0523eee4d9edca2"
+    },
+    {
+      "path": "benchmarks/contexttrace_unseen_v1/ANNOTATOR_TRAINING.md",
+      "sha256": "b892062c940ac74e341ea74a8a5e919a0684a63ed5724ad72b55df1ceca88987"
+    },
+    {
+      "path": "benchmarks/contexttrace_unseen_v1/ADJUDICATION_PROTOCOL.md",
+      "sha256": "df87a7000528173fb624d4a152693e59d6531a34f395b1c6a744c9839f5f50c6"
+    },
+    {
+      "path": "benchmarks/contexttrace_unseen_v1/AGREEMENT_ANALYSIS.py",
+      "sha256": "4065c4ff11fd1b90a9a18768d6d18a6f1b7b8f60187c58259dace44e39ef4299"
+    },
+    {
+      "path": "benchmarks/contexttrace_unseen_v1/SEALED_EVALUATION_POLICY.md",
+      "sha256": "faa8cc25d815312913e68ab3ad5e16aabc921206a4cec3df5565cfcf31596867"
+    },
+    {
+      "path": "benchmarks/tests/test_unseen_v1_annotation.py",
+      "sha256": "978a85752ecc7e5082e1fe044e39a1a56e347f6f1002ca70020e3f1b43e2fb4b"
+    }
+  ],
+  "validation": {
+    "annotation_schema_valid": true,
+    "focused_phase_3_tests": {
+      "passed": 22,
+      "failed": 0
+    },
+    "phase_2_and_phase_3_focused_tests": {
+      "passed": 78,
+      "failed": 0
+    },
+    "repository_tests": {
+      "passed": 607,
+      "failed": 0,
+      "warnings": 1,
+      "warning_summary": "External Starlette TestClient deprecation warning."
+    },
+    "ruff_check": "passed",
+    "ruff_format_check": "passed",
+    "mypy": "passed",
+    "git_diff_check": "passed"
+  },
+  "prerequisite_locks": {
+    "phase_1_lock_path": "research/cain2027/PHASE1_LOCK.json",
+    "phase_1_lock_sha256": "918946d17d1c49e1af9ec1f9a4261d332255879ec924af793e15496ed297877e",
+    "phase_2_infrastructure_lock_path": "research/cain2027/PHASE2_INFRASTRUCTURE_LOCK.json",
+    "phase_2_infrastructure_lock_sha256": "b7751a150a6dc3118347b28d8091dd060fa58d7b21386147d0737122cfe7b3d4",
+    "governing_spec_path": "docs/cain-2027-execution-spec.md",
+    "governing_spec_sha256": "9d1048111b3d49c494bccad3843902f544a43d01a221a053a70df2e738df1285"
+  },
+  "blocking_dependency": {
+    "code": "independent_human_annotation_unavailable",
+    "description": "No qualified independent annotators, adjudicator, or separate label custodian are assigned, and no real frozen corpus exists.",
+    "required_to_resume": [
+      "Acquire and freeze real ContextTrace-Unseen-v1 candidate cases.",
+      "Name a label custodian who is not a semantic_core_v2 implementer.",
+      "Secure at least two qualified independent annotators.",
+      "Secure an adjudicator and approve compensation/conflict rules.",
+      "Run the excluded 20-30 case pilot before untouched annotation."
+    ]
+  },
+  "warning": "This lock covers annotation and sealing infrastructure only. It is not human agreement, adjudicated gold, or independent validation."
+}

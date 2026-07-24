@@ -1,0 +1,287 @@
+{
+  "schema_version": "1.0",
+  "audit_date": "2026-07-24",
+  "phase": "phase_0_repository_and_evidence_audit",
+  "governing_spec_sha256": "9d1048111b3d49c494bccad3843902f544a43d01a221a053a70df2e738df1285",
+  "repository": {
+    "public_main_commit": "1f298adf202e0fb3b70032a73e4629bda14bb0ca",
+    "public_main_verified_by": "git ls-remote origin refs/heads/main",
+    "local_branch": "agent/unseen-v1-foundation",
+    "local_head": "b3ec0b45ae3386780bd6209a4a8e7f335ece02e2",
+    "local_ahead_of_origin_main": 8,
+    "dirty_entries": {
+      "modified_or_staged": 135,
+      "deleted": 1,
+      "untracked": 95,
+      "total": 231
+    },
+    "generated_benchmark_output_bytes_observed": 1980500403,
+    "generated_output_tracking_status": "ignored_or_untracked"
+  },
+  "publication_context": {
+    "groundlm": {
+      "title": "Groundedness Is Not Truth: Evidence-Chain Forensics for Retrieval-Augmented Generation",
+      "archival": true,
+      "decision_status": "pending",
+      "status_confirmed_by_user_on": "2026-07-24",
+      "submitted_pdf_sha256": "ab8f211dc0102a12fbc6691135aecb11a8fe38dc638a4973cac1f3fbab6957ca",
+      "submitted_pdf_matches_repository_paper_main_pdf": true,
+      "publication_boundary": "prior_work_for_cain"
+    },
+    "realm": {
+      "status": "manuscript_and_receipt_not_available_for_audit"
+    }
+  },
+  "frozen_verifier": {
+    "identifier": "semantic_v1_calibrated",
+    "implementation_path": "packages/contexttrace/contexttrace/verify/facts.py",
+    "implementation_sha256": "4fa507db2126423c8d0787811e78d0d6ffecf5d7603828b6a6d9b23ca8207bc4",
+    "freeze_test": "packages/contexttrace/tests/test_frozen_verifier.py",
+    "legacy_rulepack": "packages/contexttrace/contexttrace/verify/rulepacks/legacy_ragtruth_calibrated.yaml",
+    "successor_scaffold": "packages/contexttrace/contexttrace/verify/semantic_core/__init__.py",
+    "successor_scaffold_sha256": "628a4bee227a7a6cd6d0041253b4736e4dd0ac8a8bf4e39dfbeec9fdc06bd878",
+    "successor_implemented": false
+  },
+  "classification_definitions": {
+    "training": "Data used to fit model parameters. No such ContextTrace-owned model-training corpus was found.",
+    "development": "Data explicitly used to design rules, thresholds, taxonomy, prompts, or implementation.",
+    "calibration": "Data repeatedly inspected or used for regression, calibration, threshold, taxonomy, or paper decisions.",
+    "previously_inspected_holdout": "A split once reserved as holdout but whose labels, errors, or results have now been inspected.",
+    "independent_external_evidence": "External evidence that is source/domain/time-disjoint, sealed, and has not influenced implementation.",
+    "unusable_for_independent_evaluation": "Synthetic, author-curated, duplicated, generated, license-blocked, incompletely labeled, or otherwise unsuitable for a new independent claim."
+  },
+  "datasets": [
+    {
+      "id": "demo_refund_policy",
+      "paths": ["datasets/demo/refund_policy"],
+      "cases": 10,
+      "classification": ["calibration", "unusable_for_independent_evaluation"],
+      "reason": "Repository-owned demo corpus and authored expected outputs."
+    },
+    {
+      "id": "demo_employee_handbook",
+      "paths": ["datasets/demo/employee_handbook"],
+      "cases": 10,
+      "classification": ["calibration", "unusable_for_independent_evaluation"],
+      "reason": "Repository-owned demo corpus and authored expected outputs."
+    },
+    {
+      "id": "demo_ai_paper_qa",
+      "paths": ["datasets/demo/ai_paper_qa"],
+      "cases": 10,
+      "classification": ["calibration", "unusable_for_independent_evaluation"],
+      "reason": "Repository-owned demo corpus and authored expected outputs."
+    },
+    {
+      "id": "legacy_benchmark_demo_sets",
+      "paths": [
+        "benchmarks/datasets/refund_policy",
+        "benchmarks/datasets/employee_handbook",
+        "benchmarks/datasets/ai_paper_qa"
+      ],
+      "cases": 13,
+      "classification": ["calibration", "unusable_for_independent_evaluation"],
+      "reason": "Authored repository benchmark inputs that duplicate demo-domain concepts."
+    },
+    {
+      "id": "contexttrace_real_benchmark_cases",
+      "paths": ["packages/contexttrace/contexttrace/verify/real_benchmark_cases.json"],
+      "cases": 38,
+      "classification": ["calibration", "unusable_for_independent_evaluation"],
+      "reason": "Bundled product regression cases used during verifier development."
+    },
+    {
+      "id": "contexttrace_external_benchmark_cases",
+      "paths": ["packages/contexttrace/contexttrace/verify/external_benchmark_cases.json"],
+      "cases": 13,
+      "classification": ["calibration", "unusable_for_independent_evaluation"],
+      "reason": "Curated public-document cases bundled with and repeatedly used by the verifier."
+    },
+    {
+      "id": "contexttrace_audit_benchmark_cases",
+      "paths": ["packages/contexttrace/contexttrace/verify/audit_benchmark_cases.json"],
+      "cases": 26,
+      "classification": ["calibration", "unusable_for_independent_evaluation"],
+      "reason": "Authored retrieval-audit regression cases."
+    },
+    {
+      "id": "contexttrace_bench_500",
+      "paths": [
+        "benchmarks/contexttrace_bench",
+        "packages/contexttrace/contexttrace/verify/real_benchmark_cases.json",
+        "packages/contexttrace/contexttrace/verify/external_benchmark_cases.json"
+      ],
+      "cases": 500,
+      "classification": ["calibration", "unusable_for_independent_evaluation"],
+      "reason": "Engineering regression suite containing deterministic generated variants correlated with curated source cases."
+    },
+    {
+      "id": "contexttrace_diag_150",
+      "paths": [
+        "packages/contexttrace/contexttrace/verify/public_holdout_cases.json",
+        "benchmarks/contexttrace_bench/out/public_holdout"
+      ],
+      "cases": 150,
+      "classification": ["previously_inspected_holdout", "calibration", "unusable_for_independent_evaluation"],
+      "review_status": "independent_review_pending",
+      "reason": "Author-curated cases designed around the implemented taxonomy; predictions and errors have been inspected."
+    },
+    {
+      "id": "ragtruth_stratified_200",
+      "paths": [
+        "benchmarks/contexttrace_bench/out/ragtruth_official",
+        "benchmarks/contexttrace_bench/out/ragtruth_release_bundle"
+      ],
+      "cases": 200,
+      "classification": ["calibration"],
+      "review_status": "assisted_review_pending_independent",
+      "reason": "External source data, but extensively inspected and used to calibrate semantic_v1_calibrated."
+    },
+    {
+      "id": "ragtruth_locked_120",
+      "paths": [
+        "benchmarks/contexttrace_bench/out/arr_ragtruth_test",
+        "benchmarks/contexttrace_bench/out/arr_diagnostic_safe_ragtruth_test"
+      ],
+      "cases": 120,
+      "classification": ["previously_inspected_holdout", "calibration"],
+      "reason": "Derived locked subset whose results and errors appear in the workshop manuscript and improvement logs."
+    },
+    {
+      "id": "ares_nq_200",
+      "paths": ["benchmarks/contexttrace_bench/out/ares_nq_example"],
+      "cases": 200,
+      "classification": ["calibration"],
+      "review_status": "review_pending",
+      "reason": "External upstream labels projected into ContextTrace labels; mapping and results have been inspected."
+    },
+    {
+      "id": "crag_task1_v5_200",
+      "paths": ["benchmarks/contexttrace_bench/out/crag_official"],
+      "cases": 200,
+      "classification": ["calibration"],
+      "review_status": "review_pending",
+      "reason": "External source data used through an unreviewed gold-answer grounding proxy; results and source-condition cases were inspected.",
+      "license": "CC BY-NC 4.0"
+    },
+    {
+      "id": "groundedness_truth_gap_180",
+      "paths": ["benchmarks/contexttrace_bench/groundedness_truth_gap"],
+      "cases": 180,
+      "source_sha256": "887eb8fc8046f1be2ef07f9a69155b43270fb42cd3d38fad962fdfce5e314001",
+      "tracking_status": "untracked",
+      "classification": ["development", "calibration", "unusable_for_independent_evaluation"],
+      "reason": "Author-curated, template-varied conformance benchmark used for targeted fixes and workshop claims."
+    },
+    {
+      "id": "naturalistic_audit_v1_50",
+      "paths": ["benchmarks/contexttrace_bench/naturalistic_gtg_holdout"],
+      "cases": 50,
+      "source_sha256": "d810431887f1fd1825ec62aae632e193ea4240ce38dec7771cfefa4c4fe9aaf8",
+      "tracking_status": "untracked",
+      "classification": ["previously_inspected_holdout", "calibration"],
+      "reason": "Author-created scenarios over public documents; first-run errors were retained for taxonomy and boundary analysis."
+    },
+    {
+      "id": "naturalistic_dev_40",
+      "paths": ["benchmarks/contexttrace_bench/naturalistic_gtg_dev"],
+      "cases": 40,
+      "source_sha256": "61dc688f1eba27cfd0d31196100cdd4013972ffa8085df29fb6ea07ebcbd1d18",
+      "tracking_status": "untracked",
+      "classification": ["development"],
+      "reason": "Explicit rule-development and threshold-development split."
+    },
+    {
+      "id": "naturalistic_eval_v2_84",
+      "paths": ["benchmarks/contexttrace_bench/naturalistic_gtg_eval_v2"],
+      "cases": 84,
+      "source_sha256": "dec3a0b59d16739acfb0e0d7c0be6e5216d92518b321ba9b84d335b1839920bf",
+      "tracking_status": "untracked",
+      "classification": ["previously_inspected_holdout", "calibration"],
+      "reason": "Once-frozen author-created public-document split; results, one false green, and post-hoc changes have been inspected."
+    },
+    {
+      "id": "adversarial_stress_90",
+      "paths": [
+        "benchmarks/contexttrace_bench/stress_tests/stress_case_pack.json",
+        "benchmarks/contexttrace_bench/out/stress_tests"
+      ],
+      "cases": 90,
+      "classification": ["development", "calibration", "unusable_for_independent_evaluation"],
+      "reason": "Constructed adversarial cases used for targeted regression fixes."
+    },
+    {
+      "id": "annotation_audit_50",
+      "paths": [
+        "benchmarks/contexttrace_bench/annotation_audit",
+        "benchmarks/contexttrace_bench/out/annotation_audit"
+      ],
+      "cases": 50,
+      "classification": ["calibration", "unusable_for_independent_evaluation"],
+      "review_status": "llm_simulated_only",
+      "reason": "Blinded workflow packet drawn from already inspected datasets; model simulation is not independent human annotation."
+    },
+    {
+      "id": "ood_source_condition_injected_14",
+      "paths": ["benchmarks/contexttrace_bench/ood_source_condition/out/injected_cases_frozen.json"],
+      "cases": 14,
+      "source_sha256": "383eb141cb61602c6aa5e7f0f1c292cb82e3e670acc129aba9a4c76065d4d9c1",
+      "tracking_status": "ignored",
+      "classification": ["development", "calibration", "unusable_for_independent_evaluation"],
+      "reason": "Source conditions were injected and labels were derived from the injection procedure."
+    },
+    {
+      "id": "real_world_rag_harness_outputs",
+      "paths": [
+        "benchmarks/real_world_rag",
+        "validation"
+      ],
+      "cases": null,
+      "classification": ["calibration", "unusable_for_independent_evaluation"],
+      "reason": "Public-app smoke and saved-response workflow; generated outputs are ignored, not frozen, and not independently labeled."
+    },
+    {
+      "id": "legacy_simulated_ragtruth_review",
+      "paths": ["benchmarks/contexttrace_bch/out/simulated_review/ragtruth"],
+      "cases": 200,
+      "judgments": 600,
+      "classification": ["calibration", "unusable_for_independent_evaluation"],
+      "review_status": "llm_simulated_only",
+      "reason": "Three model-role outputs over the already calibrated RAGTruth sample; the misspelled legacy output directory is untracked and does not contain human evidence."
+    },
+    {
+      "id": "diag150_author_audit_packet",
+      "paths": ["out/author_audit"],
+      "cases": 150,
+      "completed_responses": 0,
+      "classification": ["calibration", "unusable_for_independent_evaluation"],
+      "review_status": "packet_only",
+      "reason": "Author-side audit packet for the already inspected Diag-150 set; response, disagreement, and correction files are empty."
+    },
+    {
+      "id": "contexttrace_unseen_v1",
+      "paths": ["benchmarks/contexttrace_unseen_v1"],
+      "cases": 0,
+      "classification": [],
+      "status": "phase_2_infrastructure_complete_acquisition_not_started",
+      "manifest_present": false,
+      "labels_present": false,
+      "infrastructure": {
+        "source_schema_present": true,
+        "case_schema_present": true,
+        "fail_closed_freezer_present": true,
+        "phase_2_tests": 50,
+        "annotation_manual_present": true,
+        "annotation_schema_present": true,
+        "agreement_analysis_present": true,
+        "sealed_evaluation_policy_present": true,
+        "phase_3_tests": 22
+      },
+      "annotation_status": "blocked_no_independent_annotator_or_frozen_corpus",
+      "reason": "This is the planned independent corpus, not an existing dataset; no real source or trace has been collected."
+    }
+  ],
+  "training_datasets": [],
+  "independent_external_evidence": [],
+  "bottom_line": "No existing dataset qualifies as independent external evidence for the proposed CAIN successor-verifier claim."
+}
