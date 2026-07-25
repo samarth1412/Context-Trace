@@ -4,6 +4,7 @@
 [![PyPI](https://img.shields.io/pypi/v/contexttrace.svg)](https://pypi.org/project/contexttrace/)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue)](packages/contexttrace/pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![PyPI Downloads](https://static.pepy.tech/personalized-badge/contexttrace?period=total&units=INTERNATIONAL_SYSTEM&left_color=BLACK&right_color=GREEN&left_text=downloads)](https://pepy.tech/projects/contexttrace)
 
 **Local-first evidence-chain forensics for RAG and AI agents.**
 
