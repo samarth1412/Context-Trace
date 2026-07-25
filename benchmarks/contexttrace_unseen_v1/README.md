@@ -2,7 +2,8 @@
 
 Status date: 2026-07-24
 
-Phase: Phase 2 infrastructure complete; acquisition not started
+Phase: Natural OOD sources acquired and generation schedule locked; generation
+not started
 
 Dataset version: not assigned
 
@@ -15,8 +16,9 @@ evidence-chain diagnosis. It is designed to test generalization across new
 source families, fine-grained domains, publication windows, and source
 conditions without reusing any previously inspected ContextTrace benchmark.
 
-No trace in this directory is empirical evidence. The repository contains only
-collection, validation, privacy, and freezing infrastructure.
+No trace in this directory is empirical evidence. The repository contains
+acquired-source metadata, a locked pre-generation schedule, and collection,
+validation, privacy, and freezing infrastructure.
 
 ## Planned tracks
 
@@ -36,6 +38,10 @@ placeholders are ineligible.
 - `DATASET_CARD.md`: intended use, composition, limitations, and current status.
 - `COLLECTION_PROTOCOL.md`: source approval, RAG generation, chain of custody,
   and freeze sequence.
+- `GENERATION_LOCK.md`: the human-readable 396-case Natural OOD allocation,
+  privacy/cost controls, schedule hash, and unresolved temporal-source blocker.
+- `generation_schedule.json`: deterministic source-to-configuration allocation;
+  its presence does not authorize model calls.
 - `LEAKAGE_AUDIT.md`: disjointness dimensions and fail-closed audit status.
 - `PRIVACY_AND_LICENSE.md`: source, redistribution, privacy, and secret-handling
   requirements.

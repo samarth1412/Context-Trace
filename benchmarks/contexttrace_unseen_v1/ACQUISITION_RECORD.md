@@ -117,8 +117,10 @@ The 2026-07-25 result is recorded in `acquisition_validation.json`.
 
 ## Next gate
 
-Before any RAG run, freeze and hash the complete generation schedule:
-source allocation, retrievers, indexes, chunking, reranking, prompts, seeds,
-generator revisions, retries, timeouts, citation format, privacy controls, and
-the USD 10 hosted-model cost guard. A separate recorded authorization is
-required before generation starts.
+The 396-case Natural OOD schedule has been frozen and hashed at the value
+recorded in `GENERATION_LOCK.md`. A separate recorded authorization of that
+exact hash is required before generation starts.
+
+The temporal/source-condition track remains before this gate: it requires a
+separate approved acquisition of real versioned or authority-contrasting source
+pairs before its source-to-generation schedule can be created.

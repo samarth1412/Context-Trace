@@ -4,7 +4,7 @@ Decision-record version: 1.0
 
 Recorded: 2026-07-24
 
-Gate status: source acquisition complete; generation-configuration gate pending
+Gate status: Natural OOD generation configuration locked; run authorization pending
 
 ## Approval log
 
@@ -33,6 +33,18 @@ Gate status: source acquisition complete; generation-configuration gate pending
   for all 36 families. Offline reconstruction validated 9,148 documentation
   files, 40 legal/NOTICE files, balanced 12/12/12 groups, zero calibration
   normalized-hash collisions, and zero model, verifier, or trace calls.
+- 2026-07-24 — Project owner confirmed that the OpenAI API project uses the
+  default data-retention mode and approved it for this public-source study.
+  Hosted requests remain limited to eligible public source text, use the
+  Responses API with `store=false`, exclude personal data and secrets, and are
+  subject to the recorded abuse-monitoring retention of up to 30 days.
+- 2026-07-24 — The deterministic 396-case Natural OOD generation schedule was
+  created and validated at SHA-256
+  `e850d3eb6d374547cdbc70b2c0da02e0db8d9ff043633a577d9319f3d69e1695`.
+  The lock balances every factor within each domain and records prompts,
+  retrievers, chunking, reranking, model revisions, retries, timeouts, privacy,
+  and the fail-closed hosted cost guard. This records a review object; it does
+  not authorize model calls.
 
 ## User-authorized decisions
 
@@ -95,6 +107,7 @@ Terms references:
 | Published standard cached-input price | USD 0.025 per 1M tokens |
 | Published standard output price | USD 2.00 per 1M tokens |
 | Training use | API data not used for training unless the account explicitly opts in |
+| Project data-retention mode | Default |
 | Default abuse-log retention | Up to 30 days |
 | Output rights | Customer owns output as between customer and OpenAI, subject to applicable terms and law |
 
@@ -165,14 +178,22 @@ repository calibration-source inventory, 8A external-exposure attestation,
 and acquisition, normalization, hashing, and validation of the amended source
 snapshots without invoking a model or verifier.
 
+Completed for Natural OOD: exact source-to-configuration allocation, prompts,
+retrieval/chunking/reranking settings, query-authoring policy, generator
+parameters, retry rules, timeouts, privacy controls, and hosted cost guard.
+The exact lock and verification command are in
+`benchmarks/contexttrace_unseen_v1/GENERATION_LOCK.md`.
+
 Remaining:
 
-1. Freeze source-to-configuration allocation, prompts, retrieval/chunking/
-   reranking settings, retry rules, and hosted cost guard.
-2. Confirm that the OpenAI project-level data controls are compatible with the
-   approved source texts.
+1. Obtain explicit project-owner authorization to run the exact Natural OOD
+   schedule hash. No model call is authorized by preparation of the lock.
+2. Acquire and approve real versioned/authority source pairs before a temporal
+   schedule can be created. The current 36 snapshots are all current and
+   canonical and cannot support that track.
 3. Recruit and onboard the label custodian/adjudicator before annotation.
 
-Generation may start only after remaining blockers 1–2 are closed and its
-separate gate is recorded. Annotation may start only after the unlabeled
-manifest is frozen and blocker 3 is closed.
+Natural OOD generation may start only after blocker 1 is closed and its
+separate authorization is recorded. Temporal generation additionally requires
+blocker 2. Annotation may start only after the complete unlabeled manifest is
+frozen and blocker 3 is closed.

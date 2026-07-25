@@ -7,8 +7,9 @@ RAG grounding, citation, retrieval-stage, abstention, and source-condition
 failures. Its distinguishing design goal is independence from all evidence used
 to develop or calibrate ContextTrace.
 
-Current status: **protocol and validation infrastructure only**. There are zero
-collected cases, no candidate manifest, no frozen manifest, and no annotations.
+Current status: **Natural OOD sources acquired and generation schedule
+locked**. There are zero generated traces, no frozen unlabeled manifest, and no
+annotations. The temporal/source-condition sources have not been acquired.
 
 ## Motivation
 

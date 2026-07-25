@@ -134,8 +134,8 @@ The hosted route remains:
 - model snapshot: `gpt-5-mini-2025-08-07`;
 - API `store=false`;
 - no personal-data or metadata-only source text;
-- default abuse-monitoring retention recorded as up to 30 days unless the
-  project has stricter controls;
+- project-level data-retention mode confirmed as default by the project owner
+  on 2026-07-24, with abuse-monitoring retention recorded as up to 30 days;
 - USD 10 total hard ceiling;
 - no paid call before the source/configuration schedule is frozen.
 

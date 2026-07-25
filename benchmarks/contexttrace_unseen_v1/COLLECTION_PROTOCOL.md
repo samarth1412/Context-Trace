@@ -1,7 +1,7 @@
 # ContextTrace-Unseen-v1 collection protocol
 
 Protocol version: 1.0  
-Status: frozen collection design; collection not started  
+Status: Natural OOD schedule locked; collection not started
 Date: 2026-07-24
 
 ## Governing rule
@@ -111,6 +111,11 @@ domain group, multiple chunk sizes, reranking on/off, and at least two generator
 families. No source family may exceed 10% of the track.
 
 Exact generator/provider choices and paid API use require user authorization.
+
+The 396-case Natural OOD schedule is locked in `generation_schedule.json` at
+the hash recorded in `GENERATION_LOCK.md`. The temporal schedule is not yet
+eligible because no approved versioned or authority-contrasting source pairs
+have been acquired. The Natural lock does not authorize model calls.
 
 ## Step 5 — Execute actual RAG runs
 
