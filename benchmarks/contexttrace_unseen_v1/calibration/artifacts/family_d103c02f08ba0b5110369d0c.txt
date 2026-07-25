@@ -1,0 +1,8 @@
+ContextTrace legacy calibration family exposure record
+source_family: public_docs_holdout_empty_retrieval
+provenance:
+- benchmarks/contexttrace_bench/naturalistic_gtg_eval_v2/naturalistic_gtg_eval_v2.json
+- benchmarks/contexttrace_bench/out/diag150_release_bundle/diag150_audit_packet.json
+- benchmarks/contexttrace_bench/out/naturalistic_gtg_eval_v2/post_change_results.json
+- benchmarks/contexttrace_bench/out/naturalistic_gtg_eval_v2/results.json
+- benchmarks/contexttrace_bench/out/public_holdout/diag150_audit_packet.json

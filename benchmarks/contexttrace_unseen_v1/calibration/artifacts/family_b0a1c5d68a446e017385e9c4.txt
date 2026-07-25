@@ -1,0 +1,5 @@
+ContextTrace legacy calibration family exposure record
+source_family: dataset_contexttrace_diag_150
+provenance:
+- benchmarks/contexttrace_bench/out/public_holdout
+- packages/contexttrace/contexttrace/verify/public_holdout_cases.json

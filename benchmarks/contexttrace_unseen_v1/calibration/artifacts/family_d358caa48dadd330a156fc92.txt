@@ -1,0 +1,5 @@
+ContextTrace legacy calibration family exposure record
+source_family: dataset_real_world_rag_harness_outputs
+provenance:
+- benchmarks/real_world_rag
+- validation

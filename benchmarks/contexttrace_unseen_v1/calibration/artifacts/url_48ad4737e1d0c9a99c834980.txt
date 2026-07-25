@@ -1,0 +1,8 @@
+ContextTrace legacy calibration exposure record
+canonical_url: https://openai.com/api/pricing
+source_family: openai
+provenance:
+- benchmarks/contexttrace_bench/out/rq4/simulated/run_manifest.json
+- benchmarks/contexttrace_bench/out/simulated_review/diag150/run_manifest.json
+- benchmarks/contexttrace_bench/out/simulated_review/ragtruth/run_manifest.json
+- benchmarks/contexttrace_bench/out/simulated_review/ragtruth_smoke/run_manifest.json

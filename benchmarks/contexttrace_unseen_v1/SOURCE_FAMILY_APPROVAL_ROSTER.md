@@ -4,7 +4,9 @@ Roster version: 0.1
 
 Prepared: 2026-07-24
 
-Status: proposed for user and license-review approval; acquisition prohibited
+Status: family roster approved for document review; acquisition prohibited
+
+Approval: `7A`, project owner, 2026-07-24
 
 ## Purpose
 
@@ -15,10 +17,9 @@ that any particular document is eligible.
 No page, repository, archive, or API response may be downloaded for corpus use
 until:
 
-1. the project owner approves this roster;
-2. the license/privacy reviewer confirms the exact document path, license,
+1. the license/privacy reviewer confirms the exact document path, license,
    attribution, access method, and hosted-model transmission permission; and
-3. the calibration registry shows no source-family, fine-domain, document,
+2. the calibration registry shows no source-family, fine-domain, document,
    publication-window, hash, or near-duplicate overlap.
 
 The proposed sources are English-language official materials. Repository
@@ -147,16 +148,11 @@ The count is a planning target. It is not evidence that clean and naturally
 failing answer classes will be balanced; answers are retained under mechanical
 eligibility rules without label inspection.
 
-## Approval choices
+## Completed family-level approval
 
-The project owner should choose one:
+The project owner selected **7A** on 2026-07-24. This approves the roster for
+document-level review only.
 
-- **7A — Approve the proposed roster for document-level review.** This
-  authorizes license/overlap review and preparation of exact document
-  candidates, but not downloading corpus content until those reviews pass.
-- **7B — Approve except named replacements.** Supply the family IDs to replace
-  and, optionally, preferred alternatives.
-- **7C — Do not approve.** Redesign one or more domain groups before continuing.
-
-Even with 7A, any family discovered in calibration exposure is automatically
-removed and returned for replacement approval.
+Any family discovered in calibration exposure is automatically removed and
+returned for replacement approval. Passing document review produces a separate
+exact catalog and does not itself start acquisition.

@@ -1,0 +1,4 @@
+ContextTrace legacy calibration family exposure record
+source_family: dataset_ood_source_condition_injected_14
+provenance:
+- benchmarks/contexttrace_bench/ood_source_condition/out/injected_cases_frozen.json

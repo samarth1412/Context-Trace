@@ -1,0 +1,6 @@
+ContextTrace legacy calibration family exposure record
+source_family: dataset_contexttrace_bench_500
+provenance:
+- benchmarks/contexttrace_bench
+- packages/contexttrace/contexttrace/verify/external_benchmark_cases.json
+- packages/contexttrace/contexttrace/verify/real_benchmark_cases.json

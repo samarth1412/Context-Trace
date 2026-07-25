@@ -1,0 +1,6 @@
+ContextTrace legacy calibration family exposure record
+source_family: fastapi
+provenance:
+- benchmarks/contexttrace_bench/naturalistic_gtg_dev/naturalistic_gtg_dev.json
+- benchmarks/contexttrace_bench/out/naturalistic_gtg_dev/dev_after_results.json
+- benchmarks/contexttrace_bench/out/naturalistic_gtg_dev/dev_before_results.json

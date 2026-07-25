@@ -1,0 +1,32 @@
+ContextTrace legacy calibration exposure record
+canonical_url: https://docs.opensearch.org/latest/vector-search/vector-search-techniques/approximate-knn
+source_family: opensearch
+provenance:
+- benchmarks/contexttrace_bench/out/arr_annotation_diag150/annotation_packet.json
+- benchmarks/contexttrace_bench/out/arr_claim_calibrated/runs/diag150/candidate_inputs.jsonl
+- benchmarks/contexttrace_bench/out/arr_claim_calibrated/runs/diag150/contexttrace_bench_results.json
+- benchmarks/contexttrace_bench/out/arr_diagnostic_safe/runs/diag150/candidate_inputs.jsonl
+- benchmarks/contexttrace_bench/out/arr_diagnostic_safe/runs/diag150/contexttrace_bench_results.json
+- benchmarks/contexttrace_bench/out/arr_diagnostic_safe_ragtruth_test/runs/diag150/candidate_inputs.jsonl
+- benchmarks/contexttrace_bench/out/arr_diagnostic_safe_ragtruth_test/runs/diag150/contexttrace_bench_results.json
+- benchmarks/contexttrace_bench/out/arr_full/runs/diag150/candidate_inputs.jsonl
+- benchmarks/contexttrace_bench/out/arr_full/runs/diag150/contexttrace_bench_results.json
+- benchmarks/contexttrace_bench/out/arr_full_after_review/runs/diag150/candidate_inputs.jsonl
+- benchmarks/contexttrace_bench/out/arr_full_after_review/runs/diag150/contexttrace_bench_results.json
+- benchmarks/contexttrace_bench/out/arr_ragtruth_dev/runs/diag150/candidate_inputs.jsonl
+- benchmarks/contexttrace_bench/out/arr_ragtruth_dev/runs/diag150/contexttrace_bench_results.json
+- benchmarks/contexttrace_bench/out/arr_ragtruth_test/runs/diag150/candidate_inputs.jsonl
+- benchmarks/contexttrace_bench/out/arr_ragtruth_test/runs/diag150/contexttrace_bench_results.json
+- benchmarks/contexttrace_bench/out/arr_reproduction_full/runs/diag150/candidate_inputs.jsonl
+- benchmarks/contexttrace_bench/out/arr_reproduction_full/runs/diag150/contexttrace_bench_results.json
+- benchmarks/contexttrace_bench/out/arr_reproduction_quick/runs/diag150/candidate_inputs.jsonl
+- benchmarks/contexttrace_bench/out/arr_reproduction_quick/runs/diag150/contexttrace_bench_results.json
+- benchmarks/contexttrace_bench/out/diag150_release_bundle/candidate_inputs.jsonl
+- benchmarks/contexttrace_bench/out/diag150_release_bundle/contexttrace_bench_results.json
+- benchmarks/contexttrace_bench/out/diag150_release_bundle/diag150_audit_packet.json
+- benchmarks/contexttrace_bench/out/public_holdout/candidate_inputs.jsonl
+- benchmarks/contexttrace_bench/out/public_holdout/contexttrace_bench_results.json
+- benchmarks/contexttrace_bench/out/public_holdout/diag150_audit_packet.json
+- benchmarks/contexttrace_bench/out/public_holdout_fp_debug/candidate_inputs.jsonl
+- benchmarks/contexttrace_bench/out/public_holdout_fp_debug/contexttrace_bench_results.json
+- packages/contexttrace/contexttrace/verify/public_holdout_cases.json

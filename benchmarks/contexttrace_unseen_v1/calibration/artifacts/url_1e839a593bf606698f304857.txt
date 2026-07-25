@@ -1,0 +1,8 @@
+ContextTrace legacy calibration exposure record
+canonical_url: https://kubernetes.io/docs/reference/using-api/deprecation-guide
+source_family: kubernetes
+provenance:
+- benchmarks/contexttrace_bench/naturalistic_gtg_holdout/case_pack.json
+- benchmarks/contexttrace_bench/naturalistic_gtg_holdout/naturalistic_gtg_holdout.json
+- benchmarks/contexttrace_bench/out/naturalistic_gtg_holdout/raw/candidate_inputs.jsonl
+- benchmarks/contexttrace_bench/out/naturalistic_gtg_holdout/raw/contexttrace_bench_results.json

@@ -1,0 +1,4 @@
+ContextTrace legacy calibration family exposure record
+source_family: dataset_naturalistic_audit_v1_50
+provenance:
+- benchmarks/contexttrace_bench/naturalistic_gtg_holdout

@@ -6,6 +6,14 @@ Recorded: 2026-07-24
 
 Gate status: partially approved; source-family approval remains open
 
+## Approval log
+
+- 2026-07-24 — Project owner selected `7A`, approving the 36-family roster in
+  `benchmarks/contexttrace_unseen_v1/SOURCE_FAMILY_APPROVAL_ROSTER.md` for
+  document-level license, access, and calibration-overlap review. This does not
+  authorize corpus-content download or generation until that review is
+  completed and the exact document catalog is frozen.
+
 ## User-authorized decisions
 
 The following choices were made directly by the project owner:
@@ -20,9 +28,9 @@ The following choices were made directly by the project owner:
 6. Because no independent third person is currently available, prepare a
    recruitment and custody package before annotation.
 
-These decisions do not approve a particular source family. No source
-acquisition may begin until the exact family roster and its license/access
-records receive user approval.
+The 36 proposed source families are approved for review, not acquisition. No
+source acquisition may begin until exact document and license/access records
+pass review and the resulting catalog receives the final acquisition decision.
 
 ## Frozen generator identities
 

@@ -1,0 +1,5 @@
+ContextTrace legacy calibration family exposure record
+source_family: dataset_ragtruth_stratified_200
+provenance:
+- benchmarks/contexttrace_bench/out/ragtruth_official
+- benchmarks/contexttrace_bench/out/ragtruth_release_bundle

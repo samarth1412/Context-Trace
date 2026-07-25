@@ -1,0 +1,5 @@
+ContextTrace legacy calibration family exposure record
+source_family: crag_ood
+provenance:
+- benchmarks/contexttrace_bench/ood_source_condition/out/injected_cases_candidate.json
+- benchmarks/contexttrace_bench/ood_source_condition/out/injected_cases_frozen.json

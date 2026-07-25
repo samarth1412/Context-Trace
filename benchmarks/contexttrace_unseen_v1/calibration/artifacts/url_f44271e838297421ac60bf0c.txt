@@ -1,0 +1,5 @@
+ContextTrace legacy calibration exposure record
+canonical_url: https://reference.langchain.com/javascript/classes/_langchain_core.vectorstores.VectorStoreRetriever.html
+source_family: langchain
+provenance:
+- packages/contexttrace/contexttrace/verify/audit_benchmark_cases.json

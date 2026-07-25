@@ -1,0 +1,5 @@
+ContextTrace legacy calibration family exposure record
+source_family: dataset_adversarial_stress_90
+provenance:
+- benchmarks/contexttrace_bench/out/stress_tests
+- benchmarks/contexttrace_bench/stress_tests/stress_case_pack.json

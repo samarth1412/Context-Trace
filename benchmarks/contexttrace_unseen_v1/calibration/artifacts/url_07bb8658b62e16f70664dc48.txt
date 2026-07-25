@@ -1,0 +1,5 @@
+ContextTrace legacy calibration exposure record
+canonical_url: https://github.com/chroma-core/docs/blob/main/docs/docs.trychroma.com/markdoc/content/docs/querying-collections/query-and-get.md
+source_family: chroma
+provenance:
+- packages/contexttrace/contexttrace/verify/audit_benchmark_cases.json

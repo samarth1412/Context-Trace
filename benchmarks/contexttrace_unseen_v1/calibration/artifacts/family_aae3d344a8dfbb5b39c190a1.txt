@@ -1,0 +1,4 @@
+ContextTrace legacy calibration family exposure record
+source_family: dataset_groundedness_truth_gap_180
+provenance:
+- benchmarks/contexttrace_bench/groundedness_truth_gap
