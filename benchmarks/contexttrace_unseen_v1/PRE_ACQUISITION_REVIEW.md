@@ -4,7 +4,8 @@ Review version: 0.1
 
 Date: 2026-07-24
 
-Status: machine review passed; external human-exposure attestation pending
+Status: machine review and external human-exposure attestation passed; final
+acquisition decision pending
 
 ## Outcome
 
@@ -55,8 +56,12 @@ This scan cannot discover:
 - another contributor's undocumented exposure;
 - family aliases not inferable from recorded identifiers.
 
-That gap is resolved only by a human attestation or by replacing affected
-families.
+The project owner selected decision 8A on 2026-07-24, attesting that no
+additional project-relevant exposure is known beyond the repository inventory.
+This resolves the external-exposure gap to the best of the team's documented
+knowledge. Any later-discovered exposure must trigger a protocol deviation,
+move the affected family to calibration, and replace it before the unlabeled
+manifest is frozen.
 
 ## Repository documentation review
 
@@ -137,37 +142,37 @@ The hosted route remains:
 The local route remains `gemma3:4b` at the manifest and weight hashes recorded
 in `research/cain2027/GATE_B_DECISION_RECORD.md`.
 
-## Remaining blocker: external exposure
+## External-exposure attestation
 
-Before this catalog can be frozen for acquisition, every person who influenced
-ContextTrace/GroundLM verifier logic, prompts, thresholds, taxonomy, examples,
-or benchmark selection must disclose whether any proposed family or its
-documents were previously used for that work.
+The project owner selected **8A — No additional project-relevant exposure** on
+2026-07-24. The attestation covers whether any proposed family or its documents
+were previously used to influence ContextTrace/GroundLM verifier logic,
+prompts, thresholds, taxonomy, examples, or benchmark selection.
 
 General familiarity with a product does not automatically count. Reading or
 using its documentation to design, debug, calibrate, demonstrate, or assess the
 verifier does count.
 
-Decision choices:
+The repository inventory is therefore treated as complete to the best of the
+team's knowledge. This is a provenance claim, not proof of non-exposure.
+General familiarity with a product and ordinary documentation use unrelated to
+the project remain outside its scope.
 
-- **8A — No additional project-relevant exposure.** The repository inventory
-  is complete to the best of the team's knowledge.
-- **8B — Additional exposure exists.** Provide the affected family IDs; they
-  will be moved to calibration and replaced.
-- **8C — Exposure is uncertain.** Identify the uncertain people or families;
-  those families will be conservatively replaced or independently screened.
-
-Until this attestation is recorded,
-`validate_pre_acquisition --require-attestation` fails closed.
+The catalog is now eligible for a final acquisition decision. No source
+content may be downloaded or normalized, and no model may be called, until
+that decision is recorded.
 
 ## Commands run
 
 ```bash
 .venv/bin/python -m benchmarks.contexttrace_unseen_v1.build_calibration_registry
-.venv/bin/python -m benchmarks.contexttrace_unseen_v1.validate_pre_acquisition
+.venv/bin/python -m benchmarks.contexttrace_unseen_v1.validate_pre_acquisition \
+  --require-attestation
 .venv/bin/python -m pytest -q \
   benchmarks/tests/test_unseen_calibration_registry.py \
   benchmarks/tests/test_pre_acquisition_catalog.py
 ```
 
-Current focused result: 8 tests passed.
+Current focused result: 8 tests passed after the 8A record. The full
+Phase 0–3 change-set test selection also passed: 309 tests, with one upstream
+Starlette/httpx deprecation warning.

@@ -31,12 +31,18 @@ def test_reviewed_catalog_is_balanced_and_disjoint() -> None:
     assert result["entry_count"] == 36
     assert result["target_cases"] == 396
     assert result["overlaps"] == {}
-    assert result["external_human_exposure_attested"] is False
+    assert result["external_human_exposure_attested"] is True
+    assert result["ready_for_acquisition_decision"] is True
 
 
 def test_acquisition_gate_requires_external_exposure_attestation() -> None:
+    catalog = copy.deepcopy(CATALOG)
+    catalog["calibration_registry"]["external_human_exposure_attested"] = False
+    catalog["calibration_registry"].pop(
+        "external_human_exposure_attestation", None
+    )
     with pytest.raises(CatalogError, match="attestation"):
-        validate_catalog(CATALOG, CALIBRATION, require_attestation=True)
+        validate_catalog(catalog, CALIBRATION, require_attestation=True)
 
 
 def test_calibration_family_overlap_fails_closed() -> None:

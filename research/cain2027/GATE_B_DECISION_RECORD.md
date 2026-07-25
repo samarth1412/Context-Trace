@@ -4,7 +4,7 @@ Decision-record version: 1.0
 
 Recorded: 2026-07-24
 
-Gate status: partially approved; source-family approval remains open
+Gate status: exact source catalog reviewed; final acquisition decision pending
 
 ## Approval log
 
@@ -13,6 +13,12 @@ Gate status: partially approved; source-family approval remains open
   document-level license, access, and calibration-overlap review. This does not
   authorize corpus-content download or generation until that review is
   completed and the exact document catalog is frozen.
+- 2026-07-24 — Project owner selected `8A`, attesting that no additional
+  project-relevant exposure to the proposed source families or documents is
+  known beyond the repository calibration inventory. The exact catalog passed
+  document, license/access, and recorded-overlap review and is ready for a
+  separate final acquisition decision. This attestation does not itself
+  authorize content download, normalization, or model calls.
 
 ## User-authorized decisions
 
@@ -28,9 +34,9 @@ The following choices were made directly by the project owner:
 6. Because no independent third person is currently available, prepare a
    recruitment and custody package before annotation.
 
-The 36 proposed source families are approved for review, not acquisition. No
-source acquisition may begin until exact document and license/access records
-pass review and the resulting catalog receives the final acquisition decision.
+The 36 proposed source families and their exact snapshots have passed review,
+but are not yet approved for acquisition. No source acquisition may begin
+until the project owner records the final acquisition decision.
 
 ## Frozen generator identities
 
@@ -141,16 +147,19 @@ two independent raw annotation submissions or pre-adjudication agreement.
 
 ## Remaining Gate B blockers
 
-1. Approve the exact source-family roster and source terms.
-2. Complete per-family license/privacy review before downloading content.
-3. Populate the calibration-source registry from every previously inspected
-   ContextTrace source.
-4. Freeze source-to-configuration allocation, prompts, retrieval/chunking/
-   reranking settings, retry rules, and hosted cost guard.
-5. Confirm that the OpenAI project-level data controls are compatible with the
-   approved source texts.
-6. Recruit and onboard the label custodian/adjudicator before annotation.
+Completed on 2026-07-24: exact source-family approval, per-family license/access
+review, repository calibration-source inventory, and the 8A external-exposure
+attestation.
 
-Actual corpus acquisition may start only after blockers 1–5 are closed.
-Annotation may start only after the unlabeled manifest is frozen and blocker 6
-is closed.
+Remaining:
+
+1. Record the final decision authorizing acquisition of the exact catalog.
+2. Freeze source-to-configuration allocation, prompts, retrieval/chunking/
+   reranking settings, retry rules, and hosted cost guard.
+3. Confirm that the OpenAI project-level data controls are compatible with the
+   approved source texts.
+4. Recruit and onboard the label custodian/adjudicator before annotation.
+
+Source acquisition may start only after remaining blocker 1 is closed.
+Generation may start only after remaining blockers 2–3 are closed. Annotation
+may start only after the unlabeled manifest is frozen and blocker 4 is closed.

@@ -1,7 +1,7 @@
 {
   "catalog_version": "0.1",
   "created_at": "2026-07-24T00:00:00Z",
-  "status": "reviewed_pending_external_exposure_attestation",
+  "status": "reviewed_ready_for_final_acquisition_decision",
   "family_roster_approval": {
     "decision": "7A",
     "approved_at": "2026-07-24",
@@ -17,7 +17,14 @@
     "repository_files_scanned": 2433,
     "repository_source_urls": 139,
     "read_errors": 0,
-    "external_human_exposure_attested": false
+    "external_human_exposure_attested": true,
+    "external_human_exposure_attestation": {
+      "decision": "8A",
+      "attested_at": "2026-07-24",
+      "attested_by": "project owner",
+      "statement": "No additional project-relevant exposure is known beyond the repository calibration inventory.",
+      "scope": "Proposed source families and documents previously used to design, debug, calibrate, demonstrate, or assess ContextTrace/GroundLM verifier logic, prompts, thresholds, taxonomy, examples, or benchmark selection."
+    }
   },
   "license_profiles": {
     "apache_2": {
