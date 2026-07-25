@@ -1,11 +1,30 @@
 {
   "catalog_version": "0.1",
   "created_at": "2026-07-24T00:00:00Z",
-  "status": "reviewed_ready_for_final_acquisition_decision",
+  "status": "reviewed_and_authorized_for_local_acquisition",
   "family_roster_approval": {
     "decision": "7A",
     "approved_at": "2026-07-24",
     "scope": "document-level review only"
+  },
+  "acquisition_authorization": {
+    "decision": "9A",
+    "authorized_at": "2026-07-24",
+    "authorized_by": "project owner",
+    "scope": "Acquire and locally normalize only the exact 36 reviewed source snapshots.",
+    "model_calls_authorized": false,
+    "trace_generation_authorized": false,
+    "annotation_authorized": false,
+    "evaluation_authorized": false,
+    "external_publication_authorized": false
+  },
+  "content_yield_amendment": {
+    "decision": "10A",
+    "authorized_at": "2026-07-25",
+    "authorized_by": "project owner",
+    "scope": "Correct the Airflow and Hadoop documentation roots, use filtered operational documentation from the official SHA-512-pinned HBase 2.6.5 binary archive, and recognize Ruby RDoc as source documentation.",
+    "source_family_substitution_authorized": false,
+    "model_calls_authorized": false
   },
   "corpus_content_acquired": false,
   "paid_generation_started": false,
@@ -157,6 +176,13 @@
       "collection_method": "official eCFR Versioner API only",
       "rate_limit_policy": "no rendered-site scraping; honor API limits",
       "review_status": "approved"
+    },
+    "apache_release_archive": {
+      "access_class": "public",
+      "authentication_required": false,
+      "collection_method": "official Apache release archive with published SHA-512 verification",
+      "rate_limit_policy": "honor Apache archive limits; retain only reviewed documentation and legal files",
+      "review_status": "approved"
     }
   },
   "entries": [
@@ -289,8 +315,8 @@
       "repository_url": "https://github.com/apache/airflow",
       "release_ref": "3.3.0",
       "commit_sha1": "1438ea3587031417cc85d74323235cf087a058fb",
-      "content_root": "docs",
-      "canonical_url": "https://github.com/apache/airflow/tree/1438ea3587031417cc85d74323235cf087a058fb/docs",
+      "content_root": "airflow-core/docs",
+      "canonical_url": "https://github.com/apache/airflow/tree/1438ea3587031417cc85d74323235cf087a058fb/airflow-core/docs",
       "license_profile": "apache_2",
       "access_profile": "github_commit_archive",
       "target_cases": 11
@@ -547,8 +573,8 @@
       "repository_url": "https://github.com/apache/hadoop",
       "release_ref": "rel/release-3.5.0",
       "commit_sha1": "dbcc7cd797100e6b32cd84f85b53a5193a5f9af0",
-      "content_root": "hadoop-project",
-      "canonical_url": "https://github.com/apache/hadoop/tree/dbcc7cd797100e6b32cd84f85b53a5193a5f9af0/hadoop-project",
+      "content_root": "hadoop-common-project/hadoop-common/src/site/markdown",
+      "canonical_url": "https://github.com/apache/hadoop/tree/dbcc7cd797100e6b32cd84f85b53a5193a5f9af0/hadoop-common-project/hadoop-common/src/site/markdown",
       "license_profile": "apache_2",
       "access_profile": "github_commit_archive",
       "target_cases": 11
@@ -559,13 +585,26 @@
       "domain_group": "support_operational",
       "domain_id": "wide_column_database_operations_hbase",
       "publisher": "Apache Software Foundation",
-      "repository_url": "https://github.com/apache/hbase",
-      "release_ref": "rel/2.6.5",
-      "commit_sha1": "0255064e5ed1b34c55a5392cd65829fac7a7ab1f",
-      "content_root": "src/site/asciidoc",
-      "canonical_url": "https://github.com/apache/hbase/tree/0255064e5ed1b34c55a5392cd65829fac7a7ab1f/src/site/asciidoc",
+      "release_ref": "2.6.5",
+      "archive_url": "https://archive.apache.org/dist/hbase/2.6.5/hbase-2.6.5-bin.tar.gz",
+      "archive_sha512": "67c1f59b7530a6f02cce6d3df8c0ba620130862a31828331584eee892922c37fbdb32b9e5320e897e1557d352e2f54aa0ddc097780abcd841a8d494134320a1a",
+      "published_at": "2026-03-20T18:11:26Z",
+      "archive_member_paths": [
+        "hbase-2.6.5/docs/acid-semantics.html",
+        "hbase-2.6.5/docs/bulk-loads.html",
+        "hbase-2.6.5/docs/cygwin.html",
+        "hbase-2.6.5/docs/metrics.html",
+        "hbase-2.6.5/docs/pseudo-distributed.html",
+        "hbase-2.6.5/docs/replication.html",
+        "hbase-2.6.5/docs/resources.html"
+      ],
+      "archive_legal_member_paths": [
+        "hbase-2.6.5/LICENSE.txt",
+        "hbase-2.6.5/NOTICE.txt"
+      ],
+      "canonical_url": "https://archive.apache.org/dist/hbase/2.6.5/hbase-2.6.5-bin.tar.gz",
       "license_profile": "apache_2",
-      "access_profile": "github_commit_archive",
+      "access_profile": "apache_release_archive",
       "target_cases": 11
     },
     {

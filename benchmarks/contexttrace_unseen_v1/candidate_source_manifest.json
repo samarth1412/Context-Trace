@@ -1,0 +1,2289 @@
+{
+  "created_at": "2026-07-25T01:19:31.139811Z",
+  "disjoint_dimensions": [
+    "source_id",
+    "source_document_id",
+    "source_family",
+    "domain_id",
+    "publication_window",
+    "snapshot_sha256",
+    "normalized_content_sha256",
+    "near_duplicate_cluster_id"
+  ],
+  "domain_ontology_version": "cain2027-v1",
+  "manifest_kind": "contexttrace_unseen_v1_sources",
+  "schema_version": "1.0",
+  "sources": [
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain Apache-2.0 license",
+          "retain applicable NOTICE content",
+          "exclude or separately review third-party material",
+          "official repository archive at immutable commit"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "https://github.com/apache/artemis@b2f1018553017a411d55bb6e09cefc29d49eb4c2:docs",
+      "collected_at": "2026-07-25T01:06:03.240879Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "ops_artemis_lineage",
+      "domain_group": "support_operational",
+      "domain_id": "message_broker_operations_artemis",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "Apache-2.0",
+        "notes": "retain Apache-2.0 license; retain applicable NOTICE content; exclude or separately review third-party material",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "metadata": {
+        "acquisition_method": "github_commit_archive",
+        "commit_sha1": "b2f1018553017a411d55bb6e09cefc29d49eb4c2",
+        "content_root": "docs",
+        "excluded_files_by_reason": {
+          "excluded_directory:images": 44,
+          "unsupported_extension": 20
+        },
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "included_document_files": 128,
+        "publisher": "Apache Software Foundation",
+        "release_ref": "2.55.0",
+        "retained_legal_files": 2
+      },
+      "near_duplicate_cluster_id": "ops_artemis_cluster",
+      "normalized_content_sha256": "39dffd2d8026a3e95885f8a1ad234126db0a9af9981cfe39ee6e37d1c8713b2b",
+      "normalized_text_path": "artifacts/normalized/ops_artemis.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H1",
+      "published_at": "2026-06-23T17:57:33Z",
+      "snapshot_path": "artifacts/raw/ops_artemis.tar.gz",
+      "snapshot_sha256": "b815f6745dc242f7a155538f27d5635184e68fdff8f87997c230237987fdbe03",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "ops_artemis_snapshot",
+      "source_family": "ops_artemis",
+      "source_id": "ops_artemis_snapshot",
+      "source_url": "https://github.com/apache/artemis/tree/b2f1018553017a411d55bb6e09cefc29d49eb4c2/docs"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain Apache-2.0 license",
+          "retain applicable NOTICE content",
+          "exclude or separately review third-party material",
+          "official repository archive at immutable commit"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "https://github.com/apache/camel@1d22f8df5d2dab2c309243879373230f4b24487d:docs",
+      "collected_at": "2026-07-25T01:06:03.418068Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "ops_camel_lineage",
+      "domain_group": "support_operational",
+      "domain_id": "integration_runtime_operations_camel",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "Apache-2.0",
+        "notes": "retain Apache-2.0 license; retain applicable NOTICE content; exclude or separately review third-party material",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "metadata": {
+        "acquisition_method": "github_commit_archive",
+        "commit_sha1": "1d22f8df5d2dab2c309243879373230f4b24487d",
+        "content_root": "docs",
+        "excluded_files_by_reason": {
+          "excluded_directory:images": 47,
+          "excluded_directory:img": 14,
+          "symlink": 1175,
+          "unsupported_extension": 36
+        },
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "included_document_files": 373,
+        "publisher": "Apache Software Foundation",
+        "release_ref": "camel-4.21.0",
+        "retained_legal_files": 2
+      },
+      "near_duplicate_cluster_id": "ops_camel_cluster",
+      "normalized_content_sha256": "d8a097998550459d12ea7cc898b9da1bcca6d890eec23ffad45b70e4817270f7",
+      "normalized_text_path": "artifacts/normalized/ops_camel.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H1",
+      "published_at": "2026-06-26T22:37:35Z",
+      "snapshot_path": "artifacts/raw/ops_camel.tar.gz",
+      "snapshot_sha256": "e67a0ec9e894b2b906d0be29d495589464c6e068387ad83480d2d332e44560eb",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "ops_camel_snapshot",
+      "source_family": "ops_camel",
+      "source_id": "ops_camel_snapshot",
+      "source_url": "https://github.com/apache/camel/tree/1d22f8df5d2dab2c309243879373230f4b24487d/docs"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain Apache-2.0 license",
+          "retain applicable NOTICE content",
+          "exclude or separately review third-party material",
+          "official repository archive at immutable commit"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "https://github.com/apache/cassandra@172227094626d50d4bc9a3d9de2e3659a7844386:doc",
+      "collected_at": "2026-07-25T01:06:01.722197Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "ops_cassandra_lineage",
+      "domain_group": "support_operational",
+      "domain_id": "distributed_database_operations_cassandra",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "Apache-2.0",
+        "notes": "retain Apache-2.0 license; retain applicable NOTICE content; exclude or separately review third-party material",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "metadata": {
+        "acquisition_method": "github_commit_archive",
+        "commit_sha1": "172227094626d50d4bc9a3d9de2e3659a7844386",
+        "content_root": "doc",
+        "excluded_files_by_reason": {
+          "excluded_directory:assets": 56,
+          "excluded_directory:images": 14,
+          "unsupported_extension": 410
+        },
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "included_document_files": 220,
+        "publisher": "Apache Software Foundation",
+        "release_ref": "cassandra-5.0.8",
+        "retained_legal_files": 2
+      },
+      "near_duplicate_cluster_id": "ops_cassandra_cluster",
+      "normalized_content_sha256": "6dc5c0385ebdeeabc5f5c0e3daeddf16b7e258230f2c7eeddba814175a37d047",
+      "normalized_text_path": "artifacts/normalized/ops_cassandra.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H1",
+      "published_at": "2026-04-10T09:35:51Z",
+      "snapshot_path": "artifacts/raw/ops_cassandra.tar.gz",
+      "snapshot_sha256": "1e0e3e416316fb259e6e848bf9555b455875de277fd1b2db40f4b6b7fd5894d7",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "ops_cassandra_snapshot",
+      "source_family": "ops_cassandra",
+      "source_id": "ops_cassandra_snapshot",
+      "source_url": "https://github.com/apache/cassandra/tree/172227094626d50d4bc9a3d9de2e3659a7844386/doc"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain Apache-2.0 license",
+          "retain applicable NOTICE content",
+          "exclude or separately review third-party material",
+          "official repository archive at immutable commit"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "https://github.com/apache/druid@b206640c830bc2c3bdc2867cfb317c902a0e1acb:docs",
+      "collected_at": "2026-07-25T01:06:02.441922Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "ops_druid_lineage",
+      "domain_group": "support_operational",
+      "domain_id": "analytics_datastore_operations_druid",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "Apache-2.0",
+        "notes": "retain Apache-2.0 license; retain applicable NOTICE content; exclude or separately review third-party material",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "metadata": {
+        "acquisition_method": "github_commit_archive",
+        "commit_sha1": "b206640c830bc2c3bdc2867cfb317c902a0e1acb",
+        "content_root": "docs",
+        "excluded_files_by_reason": {
+          "excluded_directory:assets": 130
+        },
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "included_document_files": 263,
+        "publisher": "Apache Software Foundation",
+        "release_ref": "druid-37.0.0",
+        "retained_legal_files": 2
+      },
+      "near_duplicate_cluster_id": "ops_druid_cluster",
+      "normalized_content_sha256": "a6d9d8711e73c76a548f50cd2eccb9a7b55dc458eca702258ca18ee524038a0e",
+      "normalized_text_path": "artifacts/normalized/ops_druid.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H1",
+      "published_at": "2026-04-28T21:17:48Z",
+      "snapshot_path": "artifacts/raw/ops_druid.tar.gz",
+      "snapshot_sha256": "06507dd80de3065ef9e45647bf82f50f0b863168e8df6099e5aba96979036203",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "ops_druid_snapshot",
+      "source_family": "ops_druid",
+      "source_id": "ops_druid_snapshot",
+      "source_url": "https://github.com/apache/druid/tree/b206640c830bc2c3bdc2867cfb317c902a0e1acb/docs"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain Apache-2.0 license",
+          "retain applicable NOTICE content",
+          "exclude or separately review third-party material",
+          "official repository archive at immutable commit"
+        ]
+      },
+      "authority_basis": "Official publisher repository, official release archive, or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "https://github.com/apache/hadoop@dbcc7cd797100e6b32cd84f85b53a5193a5f9af0:hadoop-common-project/hadoop-common/src/site/markdown",
+      "collected_at": "2026-07-25T01:19:29.970193Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "ops_hadoop_lineage",
+      "domain_group": "support_operational",
+      "domain_id": "distributed_storage_operations_hadoop",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "Apache-2.0",
+        "notes": "retain Apache-2.0 license; retain applicable NOTICE content; exclude or separately review third-party material",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "metadata": {
+        "acquisition_method": "github_commit_archive",
+        "commit_sha1": "dbcc7cd797100e6b32cd84f85b53a5193a5f9af0",
+        "content_root": "hadoop-common-project/hadoop-common/src/site/markdown",
+        "excluded_files_by_reason": {
+          "unsupported_extension": 3
+        },
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "included_document_files": 381,
+        "publisher": "Apache Software Foundation",
+        "release_ref": "rel/release-3.5.0",
+        "retained_legal_files": 2
+      },
+      "near_duplicate_cluster_id": "ops_hadoop_cluster",
+      "normalized_content_sha256": "702febfaf1a4ebbf45a607b4f4f56b164fa1e205812c03b77ecd1470f168abac",
+      "normalized_text_path": "artifacts/normalized/ops_hadoop.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H1",
+      "published_at": "2026-03-24T16:34:17Z",
+      "snapshot_path": "artifacts/raw/ops_hadoop.tar.gz",
+      "snapshot_sha256": "e7cc6657145ec9bfa05a81da5d502cefd00bb26e76f438ee9f40a5043eee5003",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "ops_hadoop_snapshot",
+      "source_family": "ops_hadoop",
+      "source_id": "ops_hadoop_snapshot",
+      "source_url": "https://github.com/apache/hadoop/tree/dbcc7cd797100e6b32cd84f85b53a5193a5f9af0/hadoop-common-project/hadoop-common/src/site/markdown"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain Apache-2.0 license",
+          "retain applicable NOTICE content",
+          "exclude or separately review third-party material",
+          "official Apache release archive with published SHA-512 verification"
+        ]
+      },
+      "authority_basis": "Official publisher repository, official release archive, or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "https://archive.apache.org/dist/hbase/2.6.5/hbase-2.6.5-bin.tar.gz#sha512=67c1f59b7530a6f02cce6d3df8c0ba620130862a31828331584eee892922c37fbdb32b9e5320e897e1557d352e2f54aa0ddc097780abcd841a8d494134320a1a",
+      "collected_at": "2026-07-25T01:19:31.138378Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "ops_hbase_lineage",
+      "domain_group": "support_operational",
+      "domain_id": "wide_column_database_operations_hbase",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "Apache-2.0",
+        "notes": "retain Apache-2.0 license; retain applicable NOTICE content; exclude or separately review third-party material",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "metadata": {
+        "acquisition_method": "apache_release_archive",
+        "excluded_files_by_reason": {
+          "not_in_reviewed_archive_member_allowlist": "all other members"
+        },
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "included_document_files": 7,
+        "publisher": "Apache Software Foundation",
+        "release_ref": "2.6.5",
+        "retained_legal_files": 2,
+        "selected_archive_members": [
+          "hbase-2.6.5/docs/acid-semantics.html",
+          "hbase-2.6.5/docs/bulk-loads.html",
+          "hbase-2.6.5/docs/cygwin.html",
+          "hbase-2.6.5/docs/metrics.html",
+          "hbase-2.6.5/docs/pseudo-distributed.html",
+          "hbase-2.6.5/docs/replication.html",
+          "hbase-2.6.5/docs/resources.html"
+        ],
+        "selected_legal_members": [
+          "hbase-2.6.5/LICENSE.txt",
+          "hbase-2.6.5/NOTICE.txt"
+        ],
+        "upstream_archive_bytes": 357290498,
+        "upstream_archive_sha512": "67c1f59b7530a6f02cce6d3df8c0ba620130862a31828331584eee892922c37fbdb32b9e5320e897e1557d352e2f54aa0ddc097780abcd841a8d494134320a1a",
+        "upstream_archive_url": "https://archive.apache.org/dist/hbase/2.6.5/hbase-2.6.5-bin.tar.gz"
+      },
+      "near_duplicate_cluster_id": "ops_hbase_cluster",
+      "normalized_content_sha256": "35126d79a08023072b12a2b2cd858e6584bdba14488e8e6c74cea2da945e907e",
+      "normalized_text_path": "artifacts/normalized/ops_hbase.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H1",
+      "published_at": "2026-03-20T18:11:26Z",
+      "snapshot_path": "artifacts/raw/ops_hbase.tar.gz",
+      "snapshot_sha256": "e62d0a50ae0d6048f1e1d06300bd3436a34371f58800ead2aea72286908bb384",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "ops_hbase_snapshot",
+      "source_family": "ops_hbase",
+      "source_id": "ops_hbase_snapshot",
+      "source_url": "https://archive.apache.org/dist/hbase/2.6.5/hbase-2.6.5-bin.tar.gz"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain Apache-2.0 license",
+          "retain applicable NOTICE content",
+          "exclude or separately review third-party material",
+          "official repository archive at immutable commit"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "https://github.com/apache/httpd@736bb657405eb73fd68a64772c3a908807bdb887:docs",
+      "collected_at": "2026-07-25T01:06:03.101471Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "ops_httpd_lineage",
+      "domain_group": "support_operational",
+      "domain_id": "web_server_operations_httpd",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "Apache-2.0",
+        "notes": "retain Apache-2.0 license; retain applicable NOTICE content; exclude or separately review third-party material",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "metadata": {
+        "acquisition_method": "github_commit_archive",
+        "commit_sha1": "736bb657405eb73fd68a64772c3a908807bdb887",
+        "content_root": "docs",
+        "excluded_files_by_reason": {
+          "excluded_directory:images": 51,
+          "non_utf8": 3,
+          "unsupported_extension": 2050
+        },
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "included_document_files": 517,
+        "publisher": "Apache Software Foundation",
+        "release_ref": "2.4.68",
+        "retained_legal_files": 2
+      },
+      "near_duplicate_cluster_id": "ops_httpd_cluster",
+      "normalized_content_sha256": "100360810dafca369e8ec44dee17a7066c203ed328b1605c87ad23b1f99c6662",
+      "normalized_text_path": "artifacts/normalized/ops_httpd.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H1",
+      "published_at": "2026-06-08T12:04:29Z",
+      "snapshot_path": "artifacts/raw/ops_httpd.tar.gz",
+      "snapshot_sha256": "8fc1577eec9b603971836dee7e1013d5eb40f42bbb28416297b25536f491f67c",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "ops_httpd_snapshot",
+      "source_family": "ops_httpd",
+      "source_id": "ops_httpd_snapshot",
+      "source_url": "https://github.com/apache/httpd/tree/736bb657405eb73fd68a64772c3a908807bdb887/docs"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain Apache-2.0 license",
+          "retain applicable NOTICE content",
+          "exclude or separately review third-party material",
+          "official repository archive at immutable commit"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "https://github.com/apache/kafka@26b251a451ce941d3d7a55e6487bcb7f16b5ad48:docs",
+      "collected_at": "2026-07-25T01:06:01.578804Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "ops_kafka_lineage",
+      "domain_group": "support_operational",
+      "domain_id": "event_streaming_operations_kafka",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "Apache-2.0",
+        "notes": "retain Apache-2.0 license; retain applicable NOTICE content; exclude or separately review third-party material",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "metadata": {
+        "acquisition_method": "github_commit_archive",
+        "commit_sha1": "26b251a451ce941d3d7a55e6487bcb7f16b5ad48",
+        "content_root": "docs",
+        "excluded_files_by_reason": {
+          "excluded_directory:images": 56
+        },
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "included_document_files": 107,
+        "publisher": "Apache Software Foundation",
+        "release_ref": "4.3.1",
+        "retained_legal_files": 2
+      },
+      "near_duplicate_cluster_id": "ops_kafka_cluster",
+      "normalized_content_sha256": "c4dc8066688d70eb5e39c9c3ee966e5ea5386ea462a2d4e90b578d1f657edad4",
+      "normalized_text_path": "artifacts/normalized/ops_kafka.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H1",
+      "published_at": "2026-06-17T18:29:04Z",
+      "snapshot_path": "artifacts/raw/ops_kafka.tar.gz",
+      "snapshot_sha256": "1eced984fe5553591efb9ee966b19d0562920a335fbb0823721d9b138f8db415",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "ops_kafka_snapshot",
+      "source_family": "ops_kafka",
+      "source_id": "ops_kafka_snapshot",
+      "source_url": "https://github.com/apache/kafka/tree/26b251a451ce941d3d7a55e6487bcb7f16b5ad48/docs"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain Apache-2.0 license",
+          "retain applicable NOTICE content",
+          "exclude or separately review third-party material",
+          "official repository archive at immutable commit"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "https://github.com/apache/pulsar-site@b2890795bf36ff541f26974dcce6dc03b4315fa9:docs",
+      "collected_at": "2026-07-25T01:06:02.012930Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "ops_pulsar_lineage",
+      "domain_group": "support_operational",
+      "domain_id": "messaging_operations_pulsar",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "Apache-2.0",
+        "notes": "retain Apache-2.0 license; retain applicable NOTICE content; exclude or separately review third-party material",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "metadata": {
+        "acquisition_method": "github_commit_archive",
+        "commit_sha1": "b2890795bf36ff541f26974dcce6dc03b4315fa9",
+        "content_root": "docs",
+        "excluded_files_by_reason": {},
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "included_document_files": 254,
+        "publisher": "Apache Software Foundation",
+        "release_ref": "main-snapshot-2026-07-21",
+        "retained_legal_files": 0
+      },
+      "near_duplicate_cluster_id": "ops_pulsar_cluster",
+      "normalized_content_sha256": "2787993cecc2a602e29381e128d9a0e0a349aac98e4d29c8a0c0c001956bc363",
+      "normalized_text_path": "artifacts/normalized/ops_pulsar.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H2",
+      "published_at": "2026-07-21T14:49:52Z",
+      "snapshot_path": "artifacts/raw/ops_pulsar.tar.gz",
+      "snapshot_sha256": "a2d02b8ba1fa56649f898eed41647f414fc0a8a58e45cd9253f33b4195a6c718",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "ops_pulsar_snapshot",
+      "source_family": "ops_pulsar",
+      "source_id": "ops_pulsar_snapshot",
+      "source_url": "https://github.com/apache/pulsar-site/tree/b2890795bf36ff541f26974dcce6dc03b4315fa9/docs"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain Apache-2.0 license",
+          "retain applicable NOTICE content",
+          "exclude or separately review third-party material",
+          "official repository archive at immutable commit"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "https://github.com/apache/solr@6c6c48a6f78486130682ea9c1f7a2723af5a87be:solr/solr-ref-guide",
+      "collected_at": "2026-07-25T01:06:02.234852Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "ops_solr_lineage",
+      "domain_group": "support_operational",
+      "domain_id": "search_platform_operations_solr",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "Apache-2.0",
+        "notes": "retain Apache-2.0 license; retain applicable NOTICE content; exclude or separately review third-party material",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "metadata": {
+        "acquisition_method": "github_commit_archive",
+        "commit_sha1": "6c6c48a6f78486130682ea9c1f7a2723af5a87be",
+        "content_root": "solr/solr-ref-guide",
+        "excluded_files_by_reason": {
+          "excluded_directory:images": 365,
+          "excluded_directory:img": 3,
+          "symlink": 1,
+          "unsupported_extension": 45
+        },
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "included_document_files": 241,
+        "publisher": "Apache Software Foundation",
+        "release_ref": "releases/solr/10.0.0",
+        "retained_legal_files": 2
+      },
+      "near_duplicate_cluster_id": "ops_solr_cluster",
+      "normalized_content_sha256": "8e20e7324685f17909f583104afcecbcab420607d9d9458cc2c97d9fcffa252e",
+      "normalized_text_path": "artifacts/normalized/ops_solr.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H1",
+      "published_at": "2026-02-12T09:13:21Z",
+      "snapshot_path": "artifacts/raw/ops_solr.tar.gz",
+      "snapshot_sha256": "6a26fa577720b89577b167803e76b9103b2082e85b1c8fa8b049463d13e21239",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "ops_solr_snapshot",
+      "source_family": "ops_solr",
+      "source_id": "ops_solr_snapshot",
+      "source_url": "https://github.com/apache/solr/tree/6c6c48a6f78486130682ea9c1f7a2723af5a87be/solr/solr-ref-guide"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain Apache-2.0 license",
+          "retain applicable NOTICE content",
+          "exclude or separately review third-party material",
+          "official repository archive at immutable commit"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "https://github.com/apache/tomcat@4f33a9eca48c5cbf5963dd213b74866e629154ad:webapps/docs",
+      "collected_at": "2026-07-25T01:06:02.667975Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "ops_tomcat_lineage",
+      "domain_group": "support_operational",
+      "domain_id": "application_server_operations_tomcat",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "Apache-2.0",
+        "notes": "retain Apache-2.0 license; retain applicable NOTICE content; exclude or separately review third-party material",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "metadata": {
+        "acquisition_method": "github_commit_archive",
+        "commit_sha1": "4f33a9eca48c5cbf5963dd213b74866e629154ad",
+        "content_root": "webapps/docs",
+        "excluded_files_by_reason": {
+          "excluded_directory:images": 20,
+          "unsupported_extension": 31
+        },
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "included_document_files": 114,
+        "publisher": "Apache Software Foundation",
+        "release_ref": "11.0.24",
+        "retained_legal_files": 2
+      },
+      "near_duplicate_cluster_id": "ops_tomcat_cluster",
+      "normalized_content_sha256": "cb7242d535777b324c773a6bde4015fce27d7e213f4c53d13a7577d3365b5497",
+      "normalized_text_path": "artifacts/normalized/ops_tomcat.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H2",
+      "published_at": "2026-07-03T07:11:15Z",
+      "snapshot_path": "artifacts/raw/ops_tomcat.tar.gz",
+      "snapshot_sha256": "10d2327957fffe1f0b70ff92a40219058eb360444e6c875bd480756b6b6d8b9b",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "ops_tomcat_snapshot",
+      "source_family": "ops_tomcat",
+      "source_id": "ops_tomcat_snapshot",
+      "source_url": "https://github.com/apache/tomcat/tree/4f33a9eca48c5cbf5963dd213b74866e629154ad/webapps/docs"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain Apache-2.0 license",
+          "retain applicable NOTICE content",
+          "exclude or separately review third-party material",
+          "official repository archive at immutable commit"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "https://github.com/apache/zookeeper@293c895a8d966a3ecb92872be4a1daf87d725da2:zookeeper-docs/src/main/resources/markdown",
+      "collected_at": "2026-07-25T01:06:01.883317Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "ops_zookeeper_lineage",
+      "domain_group": "support_operational",
+      "domain_id": "coordination_service_operations_zookeeper",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "Apache-2.0",
+        "notes": "retain Apache-2.0 license; retain applicable NOTICE content; exclude or separately review third-party material",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "metadata": {
+        "acquisition_method": "github_commit_archive",
+        "commit_sha1": "293c895a8d966a3ecb92872be4a1daf87d725da2",
+        "content_root": "zookeeper-docs/src/main/resources/markdown",
+        "excluded_files_by_reason": {
+          "excluded_directory:images": 14,
+          "unsupported_extension": 16
+        },
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "included_document_files": 24,
+        "publisher": "Apache Software Foundation",
+        "release_ref": "release-3.9.5",
+        "retained_legal_files": 2
+      },
+      "near_duplicate_cluster_id": "ops_zookeeper_cluster",
+      "normalized_content_sha256": "f41216efa50c4ffd7039e18e8f722d10c409e2e6cac2a5a50c06eabf97154cb1",
+      "normalized_text_path": "artifacts/normalized/ops_zookeeper.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H1",
+      "published_at": "2026-02-11T20:15:50Z",
+      "snapshot_path": "artifacts/raw/ops_zookeeper.tar.gz",
+      "snapshot_sha256": "68b4791e319902609246f00c19aa77391935c2ee640fcb2a8ca68374610ff7ce",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "ops_zookeeper_snapshot",
+      "source_family": "ops_zookeeper",
+      "source_id": "ops_zookeeper_snapshot",
+      "source_url": "https://github.com/apache/zookeeper/tree/293c895a8d966a3ecb92872be4a1daf87d725da2/zookeeper-docs/src/main/resources/markdown"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "attribute issuing agency and eCFR/GovInfo",
+          "exclude incorporated copyrighted standards and third-party matter",
+          "retain title, part, snapshot date, authority, and amendment metadata",
+          "official eCFR Versioner API only"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "ecfr:title-12:part-1005:2026-07-22",
+      "collected_at": "2026-07-25T00:59:44.064203Z",
+      "content_type": "application/xml",
+      "document_lineage_id": "reg_cfpb_lineage",
+      "domain_group": "policy_regulatory",
+      "domain_id": "electronic_fund_transfers_cfpb",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work OR Edict-of-Government",
+        "notes": "attribute issuing agency and eCFR/GovInfo; exclude incorporated copyrighted standards and third-party matter; retain title, part, snapshot date, authority, and amendment metadata",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "ecfr_versioner_api",
+        "excluded_element_types": [
+          "FORM",
+          "GPH",
+          "GRAPHIC",
+          "IMG",
+          "MATH",
+          "SCRIPT",
+          "STYLE",
+          "SVG"
+        ],
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "part": 1005,
+        "publisher": "Consumer Financial Protection Bureau / OFR",
+        "response_content_type": "application/xml; charset=utf-8",
+        "response_last_modified": null,
+        "snapshot_date": "2026-07-22",
+        "title": 12
+      },
+      "near_duplicate_cluster_id": "reg_cfpb_cluster",
+      "normalized_content_sha256": "67b1616f4d1de24be1b4aa50c52935751f01b28443e2b5531c6170a343dafaaf",
+      "normalized_text_path": "artifacts/normalized/reg_cfpb.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H2",
+      "published_at": "2026-07-22T00:00:00Z",
+      "snapshot_path": "artifacts/raw/reg_cfpb.xml",
+      "snapshot_sha256": "0669a14f83f836f4086de21514f3bcd40041784e50c444b415f4d8e1909a10d0",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "reg_cfpb_snapshot",
+      "source_family": "reg_cfpb",
+      "source_id": "reg_cfpb_snapshot",
+      "source_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-22/title-12.xml?part=1005"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "attribute issuing agency and eCFR/GovInfo",
+          "exclude incorporated copyrighted standards and third-party matter",
+          "retain title, part, snapshot date, authority, and amendment metadata",
+          "official eCFR Versioner API only"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "ecfr:title-42:part-482:2026-07-22",
+      "collected_at": "2026-07-25T01:00:03.955354Z",
+      "content_type": "application/xml",
+      "document_lineage_id": "reg_cms_lineage",
+      "domain_group": "policy_regulatory",
+      "domain_id": "hospital_conditions_cms",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work OR Edict-of-Government",
+        "notes": "attribute issuing agency and eCFR/GovInfo; exclude incorporated copyrighted standards and third-party matter; retain title, part, snapshot date, authority, and amendment metadata",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "ecfr_versioner_api",
+        "excluded_element_types": [
+          "FORM",
+          "GPH",
+          "GRAPHIC",
+          "IMG",
+          "MATH",
+          "SCRIPT",
+          "STYLE",
+          "SVG"
+        ],
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "part": 482,
+        "publisher": "Centers for Medicare & Medicaid Services / OFR",
+        "response_content_type": "application/xml; charset=utf-8",
+        "response_last_modified": null,
+        "snapshot_date": "2026-07-22",
+        "title": 42
+      },
+      "near_duplicate_cluster_id": "reg_cms_cluster",
+      "normalized_content_sha256": "cfa1293892a00d9f82edcc3c4b60dab866db60146066a7c40b8cf9fccd9c29f7",
+      "normalized_text_path": "artifacts/normalized/reg_cms.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H2",
+      "published_at": "2026-07-22T00:00:00Z",
+      "snapshot_path": "artifacts/raw/reg_cms.xml",
+      "snapshot_sha256": "a0b3216ac7c089dd73b3d5f7403b6e14a4b2794074ff7ded439623dc276dd3bc",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "reg_cms_snapshot",
+      "source_family": "reg_cms",
+      "source_id": "reg_cms_snapshot",
+      "source_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-22/title-42.xml?part=482"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "attribute issuing agency and eCFR/GovInfo",
+          "exclude incorporated copyrighted standards and third-party matter",
+          "retain title, part, snapshot date, authority, and amendment metadata",
+          "official eCFR Versioner API only"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "ecfr:title-49:part-395:2026-07-22",
+      "collected_at": "2026-07-25T01:00:18.751574Z",
+      "content_type": "application/xml",
+      "document_lineage_id": "reg_dot_lineage",
+      "domain_group": "policy_regulatory",
+      "domain_id": "hours_of_service_fmcsa",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work OR Edict-of-Government",
+        "notes": "attribute issuing agency and eCFR/GovInfo; exclude incorporated copyrighted standards and third-party matter; retain title, part, snapshot date, authority, and amendment metadata",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "ecfr_versioner_api",
+        "excluded_element_types": [
+          "FORM",
+          "GPH",
+          "GRAPHIC",
+          "IMG",
+          "MATH",
+          "SCRIPT",
+          "STYLE",
+          "SVG"
+        ],
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "part": 395,
+        "publisher": "Federal Motor Carrier Safety Administration / OFR",
+        "response_content_type": "application/xml; charset=utf-8",
+        "response_last_modified": null,
+        "snapshot_date": "2026-07-22",
+        "title": 49
+      },
+      "near_duplicate_cluster_id": "reg_dot_cluster",
+      "normalized_content_sha256": "03811476ba5999a6877efceee98c61a47cd9a99c58551c7cb526ce34d6f34af3",
+      "normalized_text_path": "artifacts/normalized/reg_dot.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H2",
+      "published_at": "2026-07-22T00:00:00Z",
+      "snapshot_path": "artifacts/raw/reg_dot.xml",
+      "snapshot_sha256": "01e202ecb20122cbcf2203257ace885ee987d13e31daecd4ee1b488f97e2e5c0",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "reg_dot_snapshot",
+      "source_family": "reg_dot",
+      "source_id": "reg_dot_snapshot",
+      "source_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-22/title-49.xml?part=395"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "attribute issuing agency and eCFR/GovInfo",
+          "exclude incorporated copyrighted standards and third-party matter",
+          "retain title, part, snapshot date, authority, and amendment metadata",
+          "official eCFR Versioner API only"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "ecfr:title-40:part-98:2026-07-22",
+      "collected_at": "2026-07-25T01:00:00.099494Z",
+      "content_type": "application/xml",
+      "document_lineage_id": "reg_epa_lineage",
+      "domain_group": "policy_regulatory",
+      "domain_id": "greenhouse_gas_reporting_epa",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work OR Edict-of-Government",
+        "notes": "attribute issuing agency and eCFR/GovInfo; exclude incorporated copyrighted standards and third-party matter; retain title, part, snapshot date, authority, and amendment metadata",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "ecfr_versioner_api",
+        "excluded_element_types": [
+          "FORM",
+          "GPH",
+          "GRAPHIC",
+          "IMG",
+          "MATH",
+          "SCRIPT",
+          "STYLE",
+          "SVG"
+        ],
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "part": 98,
+        "publisher": "Environmental Protection Agency / OFR",
+        "response_content_type": "application/xml; charset=utf-8",
+        "response_last_modified": null,
+        "snapshot_date": "2026-07-22",
+        "title": 40
+      },
+      "near_duplicate_cluster_id": "reg_epa_cluster",
+      "normalized_content_sha256": "a767a890399e1f486c2057c53be3f45f1d159ed2392d049ff69dc54b8a75cbe6",
+      "normalized_text_path": "artifacts/normalized/reg_epa.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H2",
+      "published_at": "2026-07-22T00:00:00Z",
+      "snapshot_path": "artifacts/raw/reg_epa.xml",
+      "snapshot_sha256": "d91147ce127c0c84b847c45be0b32390a9034df75f063e600340551896c621f7",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "reg_epa_snapshot",
+      "source_family": "reg_epa",
+      "source_id": "reg_epa_snapshot",
+      "source_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-22/title-40.xml?part=98"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "attribute issuing agency and eCFR/GovInfo",
+          "exclude incorporated copyrighted standards and third-party matter",
+          "retain title, part, snapshot date, authority, and amendment metadata",
+          "official eCFR Versioner API only"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "ecfr:title-14:part-107:2026-07-22",
+      "collected_at": "2026-07-25T01:00:05.869513Z",
+      "content_type": "application/xml",
+      "document_lineage_id": "reg_faa_lineage",
+      "domain_group": "policy_regulatory",
+      "domain_id": "small_unmanned_aircraft_faa",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work OR Edict-of-Government",
+        "notes": "attribute issuing agency and eCFR/GovInfo; exclude incorporated copyrighted standards and third-party matter; retain title, part, snapshot date, authority, and amendment metadata",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "ecfr_versioner_api",
+        "excluded_element_types": [
+          "FORM",
+          "GPH",
+          "GRAPHIC",
+          "IMG",
+          "MATH",
+          "SCRIPT",
+          "STYLE",
+          "SVG"
+        ],
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "part": 107,
+        "publisher": "Federal Aviation Administration / OFR",
+        "response_content_type": "application/xml; charset=utf-8",
+        "response_last_modified": null,
+        "snapshot_date": "2026-07-22",
+        "title": 14
+      },
+      "near_duplicate_cluster_id": "reg_faa_cluster",
+      "normalized_content_sha256": "bac7cebff761b2899b744532d3cc7aeb0b265b7c70df79ccb9d8bca99a51dcb4",
+      "normalized_text_path": "artifacts/normalized/reg_faa.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H2",
+      "published_at": "2026-07-22T00:00:00Z",
+      "snapshot_path": "artifacts/raw/reg_faa.xml",
+      "snapshot_sha256": "8d448ab10578dfaf1f01e75f6d435ee1a42fde54067932c8594c3b1f2ce2951d",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "reg_faa_snapshot",
+      "source_family": "reg_faa",
+      "source_id": "reg_faa_snapshot",
+      "source_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-22/title-14.xml?part=107"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "attribute issuing agency and eCFR/GovInfo",
+          "exclude incorporated copyrighted standards and third-party matter",
+          "retain title, part, snapshot date, authority, and amendment metadata",
+          "official eCFR Versioner API only"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "ecfr:title-47:part-64:2026-07-22",
+      "collected_at": "2026-07-25T01:00:02.878545Z",
+      "content_type": "application/xml",
+      "document_lineage_id": "reg_fcc_lineage",
+      "domain_group": "policy_regulatory",
+      "domain_id": "common_carrier_rules_fcc",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work OR Edict-of-Government",
+        "notes": "attribute issuing agency and eCFR/GovInfo; exclude incorporated copyrighted standards and third-party matter; retain title, part, snapshot date, authority, and amendment metadata",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "ecfr_versioner_api",
+        "excluded_element_types": [
+          "FORM",
+          "GPH",
+          "GRAPHIC",
+          "IMG",
+          "MATH",
+          "SCRIPT",
+          "STYLE",
+          "SVG"
+        ],
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "part": 64,
+        "publisher": "Federal Communications Commission / OFR",
+        "response_content_type": "application/xml; charset=utf-8",
+        "response_last_modified": null,
+        "snapshot_date": "2026-07-22",
+        "title": 47
+      },
+      "near_duplicate_cluster_id": "reg_fcc_cluster",
+      "normalized_content_sha256": "6463aea57e85b4ed134b4c7182f3b7060417908f96203489180200a3e6781fe7",
+      "normalized_text_path": "artifacts/normalized/reg_fcc.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H2",
+      "published_at": "2026-07-22T00:00:00Z",
+      "snapshot_path": "artifacts/raw/reg_fcc.xml",
+      "snapshot_sha256": "2dc1441d3200e7e4473d1fec9f60c3c56458af4e97b4926975b1bda1dde41241",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "reg_fcc_snapshot",
+      "source_family": "reg_fcc",
+      "source_id": "reg_fcc_snapshot",
+      "source_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-22/title-47.xml?part=64"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "attribute issuing agency and eCFR/GovInfo",
+          "exclude incorporated copyrighted standards and third-party matter",
+          "retain title, part, snapshot date, authority, and amendment metadata",
+          "official eCFR Versioner API only"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "ecfr:title-21:part-11:2026-07-22",
+      "collected_at": "2026-07-25T00:59:29.547390Z",
+      "content_type": "application/xml",
+      "document_lineage_id": "reg_fda_lineage",
+      "domain_group": "policy_regulatory",
+      "domain_id": "electronic_records_fda",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work OR Edict-of-Government",
+        "notes": "attribute issuing agency and eCFR/GovInfo; exclude incorporated copyrighted standards and third-party matter; retain title, part, snapshot date, authority, and amendment metadata",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "ecfr_versioner_api",
+        "excluded_element_types": [
+          "FORM",
+          "GPH",
+          "GRAPHIC",
+          "IMG",
+          "MATH",
+          "SCRIPT",
+          "STYLE",
+          "SVG"
+        ],
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "part": 11,
+        "publisher": "Food and Drug Administration / OFR",
+        "response_content_type": "application/xml; charset=utf-8",
+        "response_last_modified": null,
+        "snapshot_date": "2026-07-22",
+        "title": 21
+      },
+      "near_duplicate_cluster_id": "reg_fda_cluster",
+      "normalized_content_sha256": "cbea54431bfc6e375ecd7887ea04e1cac1b7d05011ffe4ebc5a4f4a041310bbc",
+      "normalized_text_path": "artifacts/normalized/reg_fda.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H2",
+      "published_at": "2026-07-22T00:00:00Z",
+      "snapshot_path": "artifacts/raw/reg_fda.xml",
+      "snapshot_sha256": "7fff122daf0a667920b359ce857373b6cf503e36c5b6d96b5537bac925ae9197",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "reg_fda_snapshot",
+      "source_family": "reg_fda",
+      "source_id": "reg_fda_snapshot",
+      "source_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-22/title-21.xml?part=11"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "attribute issuing agency and eCFR/GovInfo",
+          "exclude incorporated copyrighted standards and third-party matter",
+          "retain title, part, snapshot date, authority, and amendment metadata",
+          "official eCFR Versioner API only"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "ecfr:title-16:part-314:2026-07-22",
+      "collected_at": "2026-07-25T00:59:43.169040Z",
+      "content_type": "application/xml",
+      "document_lineage_id": "reg_ftc_lineage",
+      "domain_group": "policy_regulatory",
+      "domain_id": "commercial_safeguards_ftc",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work OR Edict-of-Government",
+        "notes": "attribute issuing agency and eCFR/GovInfo; exclude incorporated copyrighted standards and third-party matter; retain title, part, snapshot date, authority, and amendment metadata",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "ecfr_versioner_api",
+        "excluded_element_types": [
+          "FORM",
+          "GPH",
+          "GRAPHIC",
+          "IMG",
+          "MATH",
+          "SCRIPT",
+          "STYLE",
+          "SVG"
+        ],
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "part": 314,
+        "publisher": "Federal Trade Commission / OFR",
+        "response_content_type": "application/xml; charset=utf-8",
+        "response_last_modified": null,
+        "snapshot_date": "2026-07-22",
+        "title": 16
+      },
+      "near_duplicate_cluster_id": "reg_ftc_cluster",
+      "normalized_content_sha256": "a97b9904f25760b8561b7314a90859cdc30dbdab8de97ecc3252d8ec26914e25",
+      "normalized_text_path": "artifacts/normalized/reg_ftc.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H2",
+      "published_at": "2026-07-22T00:00:00Z",
+      "snapshot_path": "artifacts/raw/reg_ftc.xml",
+      "snapshot_sha256": "3ba7ecc3463953a1db1ccf38f4b0ade4182e36c7e24e111eb8869910e271d41a",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "reg_ftc_snapshot",
+      "source_family": "reg_ftc",
+      "source_id": "reg_ftc_snapshot",
+      "source_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-22/title-16.xml?part=314"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "attribute issuing agency and eCFR/GovInfo",
+          "exclude incorporated copyrighted standards and third-party matter",
+          "retain title, part, snapshot date, authority, and amendment metadata",
+          "official eCFR Versioner API only"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "ecfr:title-10:part-20:2026-07-22",
+      "collected_at": "2026-07-25T01:00:09.314821Z",
+      "content_type": "application/xml",
+      "document_lineage_id": "reg_nrc_lineage",
+      "domain_group": "policy_regulatory",
+      "domain_id": "radiation_protection_nrc",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work OR Edict-of-Government",
+        "notes": "attribute issuing agency and eCFR/GovInfo; exclude incorporated copyrighted standards and third-party matter; retain title, part, snapshot date, authority, and amendment metadata",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "ecfr_versioner_api",
+        "excluded_element_types": [
+          "FORM",
+          "GPH",
+          "GRAPHIC",
+          "IMG",
+          "MATH",
+          "SCRIPT",
+          "STYLE",
+          "SVG"
+        ],
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "part": 20,
+        "publisher": "Nuclear Regulatory Commission / OFR",
+        "response_content_type": "application/xml; charset=utf-8",
+        "response_last_modified": null,
+        "snapshot_date": "2026-07-22",
+        "title": 10
+      },
+      "near_duplicate_cluster_id": "reg_nrc_cluster",
+      "normalized_content_sha256": "51c51838356278478ba7cc14ed1eedb1dc5ce19addf4587561a2f130f2e35cfe",
+      "normalized_text_path": "artifacts/normalized/reg_nrc.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H2",
+      "published_at": "2026-07-22T00:00:00Z",
+      "snapshot_path": "artifacts/raw/reg_nrc.xml",
+      "snapshot_sha256": "83ba5f57a346ad8a3e66d6a61d9b1dcb0c556c0f970be5c3669d129b512ed852",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "reg_nrc_snapshot",
+      "source_family": "reg_nrc",
+      "source_id": "reg_nrc_snapshot",
+      "source_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-22/title-10.xml?part=20"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "attribute issuing agency and eCFR/GovInfo",
+          "exclude incorporated copyrighted standards and third-party matter",
+          "retain title, part, snapshot date, authority, and amendment metadata",
+          "official eCFR Versioner API only"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "ecfr:title-29:part-1904:2026-07-22",
+      "collected_at": "2026-07-25T00:59:48.550738Z",
+      "content_type": "application/xml",
+      "document_lineage_id": "reg_osha_lineage",
+      "domain_group": "policy_regulatory",
+      "domain_id": "injury_recordkeeping_osha",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work OR Edict-of-Government",
+        "notes": "attribute issuing agency and eCFR/GovInfo; exclude incorporated copyrighted standards and third-party matter; retain title, part, snapshot date, authority, and amendment metadata",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "ecfr_versioner_api",
+        "excluded_element_types": [
+          "FORM",
+          "GPH",
+          "GRAPHIC",
+          "IMG",
+          "MATH",
+          "SCRIPT",
+          "STYLE",
+          "SVG"
+        ],
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "part": 1904,
+        "publisher": "Occupational Safety and Health Administration / OFR",
+        "response_content_type": "application/xml; charset=utf-8",
+        "response_last_modified": null,
+        "snapshot_date": "2026-07-22",
+        "title": 29
+      },
+      "near_duplicate_cluster_id": "reg_osha_cluster",
+      "normalized_content_sha256": "e5429161e199f25c65279e8fcec00fdcf087dd69117919270700828ac074ed59",
+      "normalized_text_path": "artifacts/normalized/reg_osha.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H2",
+      "published_at": "2026-07-22T00:00:00Z",
+      "snapshot_path": "artifacts/raw/reg_osha.xml",
+      "snapshot_sha256": "15b490135189edd204adbf3414141e0e2219996218c2f7663c692c693f92025e",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "reg_osha_snapshot",
+      "source_family": "reg_osha",
+      "source_id": "reg_osha_snapshot",
+      "source_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-22/title-29.xml?part=1904"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "attribute issuing agency and eCFR/GovInfo",
+          "exclude incorporated copyrighted standards and third-party matter",
+          "retain title, part, snapshot date, authority, and amendment metadata",
+          "official eCFR Versioner API only"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "ecfr:title-17:part-240:2026-07-22",
+      "collected_at": "2026-07-25T00:59:42.755973Z",
+      "content_type": "application/xml",
+      "document_lineage_id": "reg_sec_lineage",
+      "domain_group": "policy_regulatory",
+      "domain_id": "securities_exchange_sec",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work OR Edict-of-Government",
+        "notes": "attribute issuing agency and eCFR/GovInfo; exclude incorporated copyrighted standards and third-party matter; retain title, part, snapshot date, authority, and amendment metadata",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "ecfr_versioner_api",
+        "excluded_element_types": [
+          "FORM",
+          "GPH",
+          "GRAPHIC",
+          "IMG",
+          "MATH",
+          "SCRIPT",
+          "STYLE",
+          "SVG"
+        ],
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "part": 240,
+        "publisher": "Securities and Exchange Commission / OFR",
+        "response_content_type": "application/xml; charset=utf-8",
+        "response_last_modified": null,
+        "snapshot_date": "2026-07-22",
+        "title": 17
+      },
+      "near_duplicate_cluster_id": "reg_sec_cluster",
+      "normalized_content_sha256": "38e603906487f0bea990b9f2abcf57e181e5492578e647d983c5869b7349aea4",
+      "normalized_text_path": "artifacts/normalized/reg_sec.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H2",
+      "published_at": "2026-07-22T00:00:00Z",
+      "snapshot_path": "artifacts/raw/reg_sec.xml",
+      "snapshot_sha256": "674228404abd2ed55ef4b9cce98294aa97dfdc43853bffe57a86f15488326d99",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "reg_sec_snapshot",
+      "source_family": "reg_sec",
+      "source_id": "reg_sec_snapshot",
+      "source_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-22/title-17.xml?part=240"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "attribute issuing agency and eCFR/GovInfo",
+          "exclude incorporated copyrighted standards and third-party matter",
+          "retain title, part, snapshot date, authority, and amendment metadata",
+          "official eCFR Versioner API only"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "ecfr:title-7:part-205:2026-07-22",
+      "collected_at": "2026-07-25T01:00:14.176398Z",
+      "content_type": "application/xml",
+      "document_lineage_id": "reg_usda_lineage",
+      "domain_group": "policy_regulatory",
+      "domain_id": "organic_program_usda",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work OR Edict-of-Government",
+        "notes": "attribute issuing agency and eCFR/GovInfo; exclude incorporated copyrighted standards and third-party matter; retain title, part, snapshot date, authority, and amendment metadata",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "ecfr_versioner_api",
+        "excluded_element_types": [
+          "FORM",
+          "GPH",
+          "GRAPHIC",
+          "IMG",
+          "MATH",
+          "SCRIPT",
+          "STYLE",
+          "SVG"
+        ],
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "part": 205,
+        "publisher": "U.S. Department of Agriculture / OFR",
+        "response_content_type": "application/xml; charset=utf-8",
+        "response_last_modified": null,
+        "snapshot_date": "2026-07-22",
+        "title": 7
+      },
+      "near_duplicate_cluster_id": "reg_usda_cluster",
+      "normalized_content_sha256": "d8e472dd5993f0becfd534a8b97d5faa458093e01edd89c66dc69675681901fb",
+      "normalized_text_path": "artifacts/normalized/reg_usda.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H2",
+      "published_at": "2026-07-22T00:00:00Z",
+      "snapshot_path": "artifacts/raw/reg_usda.xml",
+      "snapshot_sha256": "090c5fc32216ffac5d3bc46669a96542aa802d47af374b102d2d8de744a2d3b9",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "reg_usda_snapshot",
+      "source_family": "reg_usda",
+      "source_id": "reg_usda_snapshot",
+      "source_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-22/title-7.xml?part=205"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain Apache-2.0 license",
+          "retain applicable NOTICE content",
+          "exclude or separately review third-party material",
+          "official repository archive at immutable commit"
+        ]
+      },
+      "authority_basis": "Official publisher repository, official release archive, or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "https://github.com/apache/airflow@1438ea3587031417cc85d74323235cf087a058fb:airflow-core/docs",
+      "collected_at": "2026-07-25T01:19:28.061414Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "sw_airflow_lineage",
+      "domain_group": "software_product_documentation",
+      "domain_id": "workflow_orchestration_airflow",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "Apache-2.0",
+        "notes": "retain Apache-2.0 license; retain applicable NOTICE content; exclude or separately review third-party material",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "metadata": {
+        "acquisition_method": "github_commit_archive",
+        "commit_sha1": "1438ea3587031417cc85d74323235cf087a058fb",
+        "content_root": "airflow-core/docs",
+        "excluded_files_by_reason": {
+          "excluded_directory:img": 231,
+          "excluded_directory:static": 3,
+          "unsupported_extension": 7
+        },
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "included_document_files": 156,
+        "publisher": "Apache Software Foundation",
+        "release_ref": "3.3.0",
+        "retained_legal_files": 2
+      },
+      "near_duplicate_cluster_id": "sw_airflow_cluster",
+      "normalized_content_sha256": "5e5f83cf4d8ba2a1ebea7f358f95a2c0c73ad4b314d68032eb31d72c70e6d9e5",
+      "normalized_text_path": "artifacts/normalized/sw_airflow.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H2",
+      "published_at": "2026-07-03T11:59:17Z",
+      "snapshot_path": "artifacts/raw/sw_airflow.tar.gz",
+      "snapshot_sha256": "d56ee48b5c814c9284b9fb66aced5bbb512d4c879cbd89a55de9223ee1782b5d",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "sw_airflow_snapshot",
+      "source_family": "sw_airflow",
+      "source_id": "sw_airflow_snapshot",
+      "source_url": "https://github.com/apache/airflow/tree/1438ea3587031417cc85d74323235cf087a058fb/airflow-core/docs"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain Apache-2.0 license",
+          "retain applicable NOTICE content",
+          "exclude or separately review third-party material",
+          "official repository archive at immutable commit"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "https://github.com/apache/beam@b52f04de49f2c3c001dac363da9a150bfc901370:website",
+      "collected_at": "2026-07-25T01:06:00.642179Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "sw_beam_lineage",
+      "domain_group": "software_product_documentation",
+      "domain_id": "data_processing_sdk_beam",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "Apache-2.0",
+        "notes": "retain Apache-2.0 license; retain applicable NOTICE content; exclude or separately review third-party material",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "metadata": {
+        "acquisition_method": "github_commit_archive",
+        "commit_sha1": "b52f04de49f2c3c001dac363da9a150bfc901370",
+        "content_root": "website",
+        "excluded_files_by_reason": {
+          "excluded_directory:assets": 206,
+          "excluded_directory:static": 567,
+          "unsupported_extension": 44
+        },
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "included_document_files": 648,
+        "publisher": "Apache Software Foundation",
+        "release_ref": "v2.75.0",
+        "retained_legal_files": 3
+      },
+      "near_duplicate_cluster_id": "sw_beam_cluster",
+      "normalized_content_sha256": "c49dcb035dac818556e55d3f709b7f98c4ec2f024c03fcc032e976d7013328be",
+      "normalized_text_path": "artifacts/normalized/sw_beam.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H1",
+      "published_at": "2026-06-30T19:15:19Z",
+      "snapshot_path": "artifacts/raw/sw_beam.tar.gz",
+      "snapshot_sha256": "ab0c3203adb69316de4ecd3d3e8c2261a90bdfb2f448e54e2cc7c7bc6c30987e",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "sw_beam_snapshot",
+      "source_family": "sw_beam",
+      "source_id": "sw_beam_snapshot",
+      "source_url": "https://github.com/apache/beam/tree/b52f04de49f2c3c001dac363da9a150bfc901370/website"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain Apache-2.0 license",
+          "retain applicable NOTICE content",
+          "exclude or separately review third-party material",
+          "official repository archive at immutable commit"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "https://github.com/apache/flink@c0f8d1a1e09f209885a88f9c19ceb9d9e9870283:docs",
+      "collected_at": "2026-07-25T01:06:00.190110Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "sw_flink_lineage",
+      "domain_group": "software_product_documentation",
+      "domain_id": "stream_processing_flink",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "Apache-2.0",
+        "notes": "retain Apache-2.0 license; retain applicable NOTICE content; exclude or separately review third-party material",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "metadata": {
+        "acquisition_method": "github_commit_archive",
+        "commit_sha1": "c0f8d1a1e09f209885a88f9c19ceb9d9e9870283",
+        "content_root": "docs",
+        "excluded_files_by_reason": {
+          "excluded_directory:assets": 4,
+          "excluded_directory:generated": 127,
+          "excluded_directory:static": 188,
+          "unsupported_extension": 10
+        },
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "included_document_files": 853,
+        "publisher": "Apache Software Foundation",
+        "release_ref": "release-2.3.0",
+        "retained_legal_files": 2
+      },
+      "near_duplicate_cluster_id": "sw_flink_cluster",
+      "normalized_content_sha256": "c7274b59c392eb7aab9cb9f50becd6213a5ddefbc0c81ad5074895bf4cd8482e",
+      "normalized_text_path": "artifacts/normalized/sw_flink.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H1",
+      "published_at": "2026-06-14T14:29:03Z",
+      "snapshot_path": "artifacts/raw/sw_flink.tar.gz",
+      "snapshot_sha256": "cf2fae729b5a941d3bee1aad2e1874168da2e28683cfaf699ef79cddc239dced",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "sw_flink_snapshot",
+      "source_family": "sw_flink",
+      "source_id": "sw_flink_snapshot",
+      "source_url": "https://github.com/apache/flink/tree/c0f8d1a1e09f209885a88f9c19ceb9d9e9870283/docs"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "attribute GitLab documentation",
+          "preserve CC-BY-SA-4.0 notice",
+          "mark adaptations and retain share-alike obligations",
+          "official repository archive at immutable commit"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "https://gitlab.com/gitlab-org/gitlab@68485a1eb627c9a992f266263157327649822db3:doc",
+      "collected_at": "2026-07-25T01:05:57.541345Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "sw_gitlab_lineage",
+      "domain_group": "software_product_documentation",
+      "domain_id": "devops_platform_gitlab",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "CC-BY-SA-4.0",
+        "notes": "attribute GitLab documentation; preserve CC-BY-SA-4.0 notice; mark adaptations and retain share-alike obligations",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://docs.gitlab.com/legal/developer_certificate_of_origin/"
+      },
+      "metadata": {
+        "acquisition_method": "gitlab_commit_archive",
+        "commit_sha1": "68485a1eb627c9a992f266263157327649822db3",
+        "content_root": "doc",
+        "excluded_files_by_reason": {
+          "excluded_directory:img": 831,
+          "unsupported_extension": 94
+        },
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "included_document_files": 2798,
+        "publisher": "GitLab",
+        "release_ref": "v19.2.0-ee",
+        "retained_legal_files": 1
+      },
+      "near_duplicate_cluster_id": "sw_gitlab_cluster",
+      "normalized_content_sha256": "32a9b4cd24b6d765f3ba85461e600218e4de6d2192f185277a6ccd00d6d50135",
+      "normalized_text_path": "artifacts/normalized/sw_gitlab.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H2",
+      "published_at": "2026-07-15T20:06:11Z",
+      "snapshot_path": "artifacts/raw/sw_gitlab.tar.gz",
+      "snapshot_sha256": "c1ac20460280c00368e310d70bd4e8b493293905285e600066aef383be37ee7c",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "sw_gitlab_snapshot",
+      "source_family": "sw_gitlab",
+      "source_id": "sw_gitlab_snapshot",
+      "source_url": "https://gitlab.com/gitlab-org/gitlab/-/tree/68485a1eb627c9a992f266263157327649822db3/doc"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain copyright and license notice",
+          "official repository archive at immutable commit"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "https://github.com/golang/go@c19862e5f8415b4f24b189d065ed739517c548ba:doc",
+      "collected_at": "2026-07-25T01:05:58.737335Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "sw_go_lineage",
+      "domain_group": "software_product_documentation",
+      "domain_id": "systems_language_go",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "BSD-3-Clause",
+        "notes": "retain copyright and license notice",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://github.com/golang/go/blob/master/LICENSE"
+      },
+      "metadata": {
+        "acquisition_method": "github_commit_archive",
+        "commit_sha1": "c19862e5f8415b4f24b189d065ed739517c548ba",
+        "content_root": "doc",
+        "excluded_files_by_reason": {},
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "included_document_files": 14,
+        "publisher": "Go Project",
+        "release_ref": "go1.26.5",
+        "retained_legal_files": 1
+      },
+      "near_duplicate_cluster_id": "sw_go_cluster",
+      "normalized_content_sha256": "cb2001bc895089aa2e8b212065b7cd6cea25c69a379c938db8393c59e00c55e1",
+      "normalized_text_path": "artifacts/normalized/sw_go.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H2",
+      "published_at": "2026-07-07T19:29:04Z",
+      "snapshot_path": "artifacts/raw/sw_go.tar.gz",
+      "snapshot_sha256": "3a62a0536a0cb0d09c394d16310fef4794a446d7e9062eade2481efe9b40c93e",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "sw_go_snapshot",
+      "source_family": "sw_go",
+      "source_id": "sw_go_snapshot",
+      "source_url": "https://github.com/golang/go/tree/c19862e5f8415b4f24b189d065ed739517c548ba/doc"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain copyright and license notice",
+          "official repository archive at immutable commit"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "https://github.com/jupyterlab/jupyterlab@150ba51f1c840edc399597a86a6fc3ed24ef60be:docs",
+      "collected_at": "2026-07-25T01:06:01.486322Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "sw_jupyterlab_lineage",
+      "domain_group": "software_product_documentation",
+      "domain_id": "interactive_computing_jupyterlab",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "BSD-3-Clause",
+        "notes": "retain copyright and license notice",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://github.com/jupyterlab/jupyterlab/blob/main/LICENSE"
+      },
+      "metadata": {
+        "acquisition_method": "github_commit_archive",
+        "commit_sha1": "150ba51f1c840edc399597a86a6fc3ed24ef60be",
+        "content_root": "docs",
+        "excluded_files_by_reason": {
+          "excluded_directory:images": 20,
+          "unsupported_extension": 74
+        },
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "included_document_files": 61,
+        "publisher": "Project Jupyter",
+        "release_ref": "v4.6.2",
+        "retained_legal_files": 1
+      },
+      "near_duplicate_cluster_id": "sw_jupyterlab_cluster",
+      "normalized_content_sha256": "331064971d2a32f657840a8ed482722be84fbb864f62db474d1ee34eac7bc515",
+      "normalized_text_path": "artifacts/normalized/sw_jupyterlab.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H2",
+      "published_at": "2026-07-21T12:02:26Z",
+      "snapshot_path": "artifacts/raw/sw_jupyterlab.tar.gz",
+      "snapshot_sha256": "7672a6bf4461bafb880cdc9e54f84b064f4149fb8dea225646068af2becd4cd8",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "sw_jupyterlab_snapshot",
+      "source_family": "sw_jupyterlab",
+      "source_id": "sw_jupyterlab_snapshot",
+      "source_url": "https://github.com/jupyterlab/jupyterlab/tree/150ba51f1c840edc399597a86a6fc3ed24ef60be/docs"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain Node.js license notice",
+          "exclude or separately review vendored third-party documentation",
+          "official repository archive at immutable commit"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "https://github.com/nodejs/node@bebd1b8d92bf4cc917844d6335ed1ecf9c2a75fb:doc",
+      "collected_at": "2026-07-25T01:05:59.181342Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "sw_nodejs_lineage",
+      "domain_group": "software_product_documentation",
+      "domain_id": "server_runtime_nodejs",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "MIT OR third-party-notices",
+        "notes": "retain Node.js license notice; exclude or separately review vendored third-party documentation",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://github.com/nodejs/node/blob/main/LICENSE"
+      },
+      "metadata": {
+        "acquisition_method": "github_commit_archive",
+        "commit_sha1": "bebd1b8d92bf4cc917844d6335ed1ecf9c2a75fb",
+        "content_root": "doc",
+        "excluded_files_by_reason": {
+          "unsupported_extension": 14
+        },
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "included_document_files": 155,
+        "publisher": "OpenJS Foundation / Node.js",
+        "release_ref": "v26.5.0",
+        "retained_legal_files": 1
+      },
+      "near_duplicate_cluster_id": "sw_nodejs_cluster",
+      "normalized_content_sha256": "7dbe109e327d88fa0c63cfc78cbdc5820832ab0a9da583924351cf6dfffc8946",
+      "normalized_text_path": "artifacts/normalized/sw_nodejs.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H2",
+      "published_at": "2026-07-06T19:07:58Z",
+      "snapshot_path": "artifacts/raw/sw_nodejs.tar.gz",
+      "snapshot_sha256": "e1511e844f5f0a9095282e3e8289ec46aa91c67968bd1c167648fefc253790ce",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "sw_nodejs_snapshot",
+      "source_family": "sw_nodejs",
+      "source_id": "sw_nodejs_snapshot",
+      "source_url": "https://github.com/nodejs/node/tree/bebd1b8d92bf4cc917844d6335ed1ecf9c2a75fb/doc"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain NumPy license",
+          "exclude or separately review bundled third-party material",
+          "official repository archive at immutable commit"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "https://github.com/numpy/numpy@5e1d03ffac5f2c0a9c39bfcaa9fc853b2b83151e:doc",
+      "collected_at": "2026-07-25T01:06:01.058677Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "sw_numpy_lineage",
+      "domain_group": "software_product_documentation",
+      "domain_id": "numerical_computing_numpy",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "BSD-3-Clause OR third-party-notices",
+        "notes": "retain NumPy license; exclude or separately review bundled third-party material",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://github.com/numpy/numpy/blob/main/LICENSE.txt"
+      },
+      "metadata": {
+        "acquisition_method": "github_commit_archive",
+        "commit_sha1": "5e1d03ffac5f2c0a9c39bfcaa9fc853b2b83151e",
+        "content_root": "doc",
+        "excluded_files_by_reason": {
+          "excluded_directory:images": 28,
+          "unsupported_extension": 143
+        },
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "included_document_files": 528,
+        "publisher": "NumPy Developers",
+        "release_ref": "v2.5.1",
+        "retained_legal_files": 1
+      },
+      "near_duplicate_cluster_id": "sw_numpy_cluster",
+      "normalized_content_sha256": "7db3bfe3592e9a769e9ec66dfed3f383dec562f453b436b0940306f8f5f78100",
+      "normalized_text_path": "artifacts/normalized/sw_numpy.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H2",
+      "published_at": "2026-07-04T16:17:16Z",
+      "snapshot_path": "artifacts/raw/sw_numpy.tar.gz",
+      "snapshot_sha256": "29ee1b9ef83cc3fbc376b3676a44604b92826d6f28812679e7ab60a3c64b9d15",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "sw_numpy_snapshot",
+      "source_family": "sw_numpy",
+      "source_id": "sw_numpy_snapshot",
+      "source_url": "https://github.com/numpy/numpy/tree/5e1d03ffac5f2c0a9c39bfcaa9fc853b2b83151e/doc"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain copyright and license notice",
+          "official repository archive at immutable commit"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "https://github.com/pandas-dev/pandas@e68db09ecf6427d1b62e565bacf17f2e525a3032:doc",
+      "collected_at": "2026-07-25T01:06:01.351687Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "sw_pandas_lineage",
+      "domain_group": "software_product_documentation",
+      "domain_id": "tabular_analysis_pandas",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "BSD-3-Clause",
+        "notes": "retain copyright and license notice",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://github.com/pandas-dev/pandas/blob/main/LICENSE"
+      },
+      "metadata": {
+        "acquisition_method": "github_commit_archive",
+        "commit_sha1": "e68db09ecf6427d1b62e565bacf17f2e525a3032",
+        "content_root": "doc",
+        "excluded_files_by_reason": {
+          "unsupported_extension": 119
+        },
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "included_document_files": 230,
+        "publisher": "pandas Development Team",
+        "release_ref": "v3.0.5",
+        "retained_legal_files": 1
+      },
+      "near_duplicate_cluster_id": "sw_pandas_cluster",
+      "normalized_content_sha256": "4af0976edbb36ca9d300c28e12a0447ab7a2b39649b03851dabf95000b2e5a17",
+      "normalized_text_path": "artifacts/normalized/sw_pandas.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H2",
+      "published_at": "2026-07-22T21:14:48Z",
+      "snapshot_path": "artifacts/raw/sw_pandas.tar.gz",
+      "snapshot_sha256": "9ba9fc58a9cfc4e41572b0cd072173ed0afceddcd138d256b6aea010b27abce2",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "sw_pandas_snapshot",
+      "source_family": "sw_pandas",
+      "source_id": "sw_pandas_snapshot",
+      "source_url": "https://github.com/pandas-dev/pandas/tree/e68db09ecf6427d1b62e565bacf17f2e525a3032/doc"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain Ruby/BSD terms and attribution",
+          "official repository archive at immutable commit"
+        ]
+      },
+      "authority_basis": "Official publisher repository, official release archive, or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "https://github.com/ruby/ruby@03b6d3f8898a28604fe6cb00eae3226b821168f4:doc",
+      "collected_at": "2026-07-25T01:19:19.889185Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "sw_ruby_lineage",
+      "domain_group": "software_product_documentation",
+      "domain_id": "programming_language_ruby",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "Ruby OR BSD-2-Clause",
+        "notes": "retain Ruby/BSD terms and attribution",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://github.com/ruby/ruby/blob/master/COPYING"
+      },
+      "metadata": {
+        "acquisition_method": "github_commit_archive",
+        "commit_sha1": "03b6d3f8898a28604fe6cb00eae3226b821168f4",
+        "content_root": "doc",
+        "excluded_files_by_reason": {
+          "excluded_directory:images": 1,
+          "unsupported_extension": 88
+        },
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "included_document_files": 190,
+        "publisher": "Ruby Project",
+        "release_ref": "v4.0.6",
+        "retained_legal_files": 2
+      },
+      "near_duplicate_cluster_id": "sw_ruby_cluster",
+      "normalized_content_sha256": "31dbb647135b6a8af0200d9aafe52722d63e61676a77fb912330d74fdaf8c733",
+      "normalized_text_path": "artifacts/normalized/sw_ruby.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H2",
+      "published_at": "2026-07-14T00:22:10Z",
+      "snapshot_path": "artifacts/raw/sw_ruby.tar.gz",
+      "snapshot_sha256": "71fa2c1768d5d05c7ae1df3c01a20d9e1e432f893b536928762dcf4c8adbc167",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "sw_ruby_snapshot",
+      "source_family": "sw_ruby",
+      "source_id": "sw_ruby_snapshot",
+      "source_url": "https://github.com/ruby/ruby/tree/03b6d3f8898a28604fe6cb00eae3226b821168f4/doc"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain selected license and notices",
+          "official repository archive at immutable commit"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "https://github.com/rust-lang/rust@8bab26f4f68e0e26f0bb7960be334d5b520ea452:src/doc",
+      "collected_at": "2026-07-25T01:05:58.590752Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "sw_rust_lineage",
+      "domain_group": "software_product_documentation",
+      "domain_id": "systems_language_rust",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "Apache-2.0 OR MIT",
+        "notes": "retain selected license and notices",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://github.com/rust-lang/rust#license"
+      },
+      "metadata": {
+        "acquisition_method": "github_commit_archive",
+        "commit_sha1": "8bab26f4f68e0e26f0bb7960be334d5b520ea452",
+        "content_root": "src/doc",
+        "excluded_files_by_reason": {
+          "excluded_directory:images": 6,
+          "excluded_directory:img": 10,
+          "oversized_text_file": 1,
+          "unsupported_extension": 52
+        },
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "included_document_files": 641,
+        "publisher": "Rust Project",
+        "release_ref": "1.97.1",
+        "retained_legal_files": 1
+      },
+      "near_duplicate_cluster_id": "sw_rust_cluster",
+      "normalized_content_sha256": "136e9fcd7fd2fc0719c275a3bfde7ca5c06c53a5cae4d0257568a74e6583f309",
+      "normalized_text_path": "artifacts/normalized/sw_rust.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H2",
+      "published_at": "2026-07-14T15:13:08Z",
+      "snapshot_path": "artifacts/raw/sw_rust.tar.gz",
+      "snapshot_sha256": "7f1f44902835120582b56dc6c40693be034672fa0a3100bfd89f71f8fd6afdbc",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "sw_rust_snapshot",
+      "source_family": "sw_rust",
+      "source_id": "sw_rust_snapshot",
+      "source_url": "https://github.com/rust-lang/rust/tree/8bab26f4f68e0e26f0bb7960be334d5b520ea452/src/doc"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain Apache-2.0 license",
+          "retain applicable NOTICE content",
+          "exclude or separately review third-party material",
+          "official repository archive at immutable commit"
+        ]
+      },
+      "authority_basis": "Official publisher repository or official eCFR Versioner API at the immutable cataloged snapshot.",
+      "canonical_identifier": "https://github.com/apache/spark@32f7299601108917fb01920a54e084595b7b3bf8:docs",
+      "collected_at": "2026-07-25T01:05:59.744566Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "sw_spark_lineage",
+      "domain_group": "software_product_documentation",
+      "domain_id": "distributed_data_spark",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "Apache-2.0",
+        "notes": "retain Apache-2.0 license; retain applicable NOTICE content; exclude or separately review third-party material",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-24T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted terms review",
+        "terms_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "metadata": {
+        "acquisition_method": "github_commit_archive",
+        "commit_sha1": "32f7299601108917fb01920a54e084595b7b3bf8",
+        "content_root": "docs",
+        "excluded_files_by_reason": {
+          "excluded_directory:img": 75,
+          "excluded_directory:vendor": 6,
+          "unsupported_extension": 27
+        },
+        "extraction_version": "contexttrace-unseen-text-v1",
+        "included_document_files": 245,
+        "publisher": "Apache Software Foundation",
+        "release_ref": "v4.2.0",
+        "retained_legal_files": 2
+      },
+      "near_duplicate_cluster_id": "sw_spark_cluster",
+      "normalized_content_sha256": "6942eb53068d3c6be362bf49a084e104cabb7ff9b16d2c284078015ea23b3746",
+      "normalized_text_path": "artifacts/normalized/sw_spark.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026-H2",
+      "published_at": "2026-07-11T15:18:11Z",
+      "snapshot_path": "artifacts/raw/sw_spark.tar.gz",
+      "snapshot_sha256": "6fe83da003343722f26b547112c22900c3b4f053948ccc8e5aad21b61d61497b",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "sw_spark_snapshot",
+      "source_family": "sw_spark",
+      "source_id": "sw_spark_snapshot",
+      "source_url": "https://github.com/apache/spark/tree/32f7299601108917fb01920a54e084595b7b3bf8/docs"
+    }
+  ]
+}

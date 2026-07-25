@@ -4,7 +4,7 @@ Decision-record version: 1.0
 
 Recorded: 2026-07-24
 
-Gate status: exact source catalog reviewed; final acquisition decision pending
+Gate status: source acquisition complete; generation-configuration gate pending
 
 ## Approval log
 
@@ -19,6 +19,20 @@ Gate status: exact source catalog reviewed; final acquisition decision pending
   document, license/access, and recorded-overlap review and is ready for a
   separate final acquisition decision. This attestation does not itself
   authorize content download, normalization, or model calls.
+- 2026-07-24 — Project owner selected `9A`, authorizing acquisition and local
+  normalization of only the exact 36 reviewed source snapshots. The decision
+  does not authorize source substitution, trace generation, local or hosted
+  model calls, annotation, evaluation, publication, or external changes.
+- 2026-07-25 — Project owner authorized amendment `10A` after content-yield
+  review. The Airflow and Hadoop documentation roots were corrected without
+  changing their repositories or commits; HBase 2.6.5 moved to an official
+  SHA-512-verified Apache release archive with a strict operational-page
+  allowlist; and Ruby RDoc became an eligible source format. No source family
+  was substituted and model-call authorization was not broadened.
+- 2026-07-25 — Acquisition and deterministic local normalization completed
+  for all 36 families. Offline reconstruction validated 9,148 documentation
+  files, 40 legal/NOTICE files, balanced 12/12/12 groups, zero calibration
+  normalized-hash collisions, and zero model, verifier, or trace calls.
 
 ## User-authorized decisions
 
@@ -34,9 +48,8 @@ The following choices were made directly by the project owner:
 6. Because no independent third person is currently available, prepare a
    recruitment and custody package before annotation.
 
-The 36 proposed source families and their exact snapshots have passed review,
-but are not yet approved for acquisition. No source acquisition may begin
-until the project owner records the final acquisition decision.
+The 36 proposed source families and their exact snapshots have passed review
+and are authorized for local acquisition and normalization under decision 9A.
 
 ## Frozen generator identities
 
@@ -147,19 +160,19 @@ two independent raw annotation submissions or pre-adjudication agreement.
 
 ## Remaining Gate B blockers
 
-Completed on 2026-07-24: exact source-family approval, per-family license/access
-review, repository calibration-source inventory, and the 8A external-exposure
-attestation.
+Completed: exact source-family approval, per-family license/access review,
+repository calibration-source inventory, 8A external-exposure attestation,
+and acquisition, normalization, hashing, and validation of the amended source
+snapshots without invoking a model or verifier.
 
 Remaining:
 
-1. Record the final decision authorizing acquisition of the exact catalog.
-2. Freeze source-to-configuration allocation, prompts, retrieval/chunking/
+1. Freeze source-to-configuration allocation, prompts, retrieval/chunking/
    reranking settings, retry rules, and hosted cost guard.
-3. Confirm that the OpenAI project-level data controls are compatible with the
+2. Confirm that the OpenAI project-level data controls are compatible with the
    approved source texts.
-4. Recruit and onboard the label custodian/adjudicator before annotation.
+3. Recruit and onboard the label custodian/adjudicator before annotation.
 
-Source acquisition may start only after remaining blocker 1 is closed.
-Generation may start only after remaining blockers 2–3 are closed. Annotation
-may start only after the unlabeled manifest is frozen and blocker 4 is closed.
+Generation may start only after remaining blockers 1–2 are closed and its
+separate gate is recorded. Annotation may start only after the unlabeled
+manifest is frozen and blocker 3 is closed.

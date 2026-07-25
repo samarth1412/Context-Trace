@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "record_kind": "contexttrace_unseen_v1_acquisition_validation",
+  "validated_at": "2026-07-25T01:23:13Z",
+  "status": "valid",
+  "inputs": {
+    "catalog_sha256": "a85d00004bd19672d5ede7413775e311c479a948429c2e11bd1e6168d780d1b0",
+    "candidate_source_manifest_sha256": "6508533e869ef99930a4b29bea699779438a79dd951a8dbf2d04c78804bd90cc",
+    "acquisition_ledger_sha256": "e773689a8841b0d5a25d7c78e48e0f209e80c208ec95612a1276c2c59a03763e",
+    "acquisition_implementation_sha256": "4350e3633cc061de9531e64d472648239d65651b0e92c13383f183481e525be5",
+    "offline_validator_sha256": "c6792df3a35f81f37fdf825788829b889a60673f547dd08f1f5eadae2a24b7e5"
+  },
+  "result": {
+    "source_count": 36,
+    "domain_group_counts": {
+      "policy_regulatory": 12,
+      "software_product_documentation": 12,
+      "support_operational": 12
+    },
+    "repository_document_files": 9148,
+    "retained_legal_files": 40,
+    "raw_bytes": 38541058,
+    "normalized_text_bytes": 124613611,
+    "calibration_hash_collisions": [],
+    "model_calls": 0,
+    "verifier_calls": 0,
+    "trace_count": 0
+  }
+}

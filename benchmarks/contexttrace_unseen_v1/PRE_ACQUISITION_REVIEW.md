@@ -4,8 +4,8 @@ Review version: 0.1
 
 Date: 2026-07-24
 
-Status: machine review and external human-exposure attestation passed; final
-acquisition decision pending
+Status: machine review and external human-exposure attestation passed;
+acquisition and local normalization completed under the recorded amendment
 
 ## Outcome
 
@@ -158,9 +158,24 @@ team's knowledge. This is a provenance claim, not proof of non-exposure.
 General familiarity with a product and ordinary documentation use unrelated to
 the project remain outside its scope.
 
-The catalog is now eligible for a final acquisition decision. No source
-content may be downloaded or normalized, and no model may be called, until
-that decision is recorded.
+On 2026-07-24, the project owner authorized decision **9A**: acquire and
+locally normalize only the exact 36 reviewed source snapshots. This does not
+authorize trace generation, local or hosted model calls, annotation,
+evaluation, publication, or source substitution.
+
+Content-yield validation found that the initially cataloged Airflow, Hadoop,
+and HBase paths did not retain enough relevant documentation. On 2026-07-25,
+the project owner authorized amendment **10A**. Airflow and Hadoop retained
+their exact repositories, releases, and commits while their documentation
+roots were corrected. HBase retained the same 2.6.5 release family but moved
+to a SHA-512-verified official Apache binary archive and a seven-page
+operational-document allowlist. Ruby RDoc was added as an eligible source
+format. No source family was substituted.
+
+Acquisition and deterministic local normalization then completed for all 36
+families. The authoritative result and integrity hashes are in
+`ACQUISITION_RECORD.md` and `acquisition_validation.json`. Trace generation and
+all model/verifier use remain unstarted.
 
 ## Commands run
 

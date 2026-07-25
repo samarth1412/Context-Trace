@@ -17,6 +17,7 @@ EXPECTED_GROUPS = {
     "support_operational",
 }
 SHA1_PATTERN = re.compile(r"^[a-f0-9]{40}$")
+SHA512_PATTERN = re.compile(r"^[a-f0-9]{128}$")
 
 
 class CatalogError(ValueError):
@@ -117,6 +118,25 @@ def validate_catalog(
                 or query.get("part") != [str(part)]
             ):
                 raise CatalogError(f"{family} has an invalid eCFR snapshot URL.")
+        elif entry["access_profile"] == "apache_release_archive":
+            archive_url = str(entry.get("archive_url") or "")
+            archive_sha512 = str(entry.get("archive_sha512") or "")
+            document_members = entry.get("archive_member_paths")
+            legal_members = entry.get("archive_legal_member_paths")
+            if (
+                archive_url != entry["canonical_url"]
+                or not archive_url.startswith("https://archive.apache.org/dist/")
+                or not SHA512_PATTERN.fullmatch(archive_sha512)
+                or not isinstance(document_members, list)
+                or not document_members
+                or len(document_members) != len(set(document_members))
+                or not isinstance(legal_members, list)
+                or not legal_members
+                or len(legal_members) != len(set(legal_members))
+            ):
+                raise CatalogError(
+                    f"{family} has an invalid Apache release archive record."
+                )
         else:
             raise CatalogError(f"{family} uses an unsupported access profile.")
 
@@ -132,8 +152,7 @@ def validate_catalog(
     calibration_urls = {
         str(source.get("source_url") or "") for source in calibration_sources
     } | {
-        str(source.get("canonical_identifier") or "")
-        for source in calibration_sources
+        str(source.get("canonical_identifier") or "") for source in calibration_sources
     }
     overlaps = {
         "source_family": sorted(source_families & calibration_families),
@@ -169,9 +188,7 @@ def main() -> int:
     parser.add_argument(
         "--catalog",
         type=Path,
-        default=Path(
-            "benchmarks/contexttrace_unseen_v1/pre_acquisition_catalog.json"
-        ),
+        default=Path("benchmarks/contexttrace_unseen_v1/pre_acquisition_catalog.json"),
     )
     parser.add_argument(
         "--calibration-registry",
@@ -181,9 +198,7 @@ def main() -> int:
     parser.add_argument("--require-attestation", action="store_true")
     args = parser.parse_args()
     catalog = json.loads(args.catalog.read_text(encoding="utf-8"))
-    calibration = json.loads(
-        args.calibration_registry.read_text(encoding="utf-8")
-    )
+    calibration = json.loads(args.calibration_registry.read_text(encoding="utf-8"))
     result = validate_catalog(
         catalog,
         calibration,
