@@ -1,13 +1,14 @@
 # ContextTrace-Unseen-v1
 
-Status date: 2026-07-24
+Status date: 2026-07-26
 
-Phase: Natural OOD sources acquired and generation schedule locked; generation
-not started
+Phase: Natural OOD collection completed and privately frozen; temporal
+pre-acquisition catalog locked pending owner authorization
 
 Dataset version: not assigned
 
-Frozen manifest: absent
+Frozen manifest: Natural OOD private manifest present; complete two-track
+manifest absent
 
 Gold labels: absent
 
@@ -16,9 +17,11 @@ evidence-chain diagnosis. It is designed to test generalization across new
 source families, fine-grained domains, publication windows, and source
 conditions without reusing any previously inspected ContextTrace benchmark.
 
-No trace in this directory is empirical evidence. The repository contains
-acquired-source metadata, a locked pre-generation schedule, and collection,
-validation, privacy, and freezing infrastructure.
+No candidate trace or label is published in this directory. The repository
+contains acquired-source metadata, locked schedule and pre-acquisition
+artifacts, collection records, and validation, privacy, and freezing
+infrastructure. The Natural OOD traces and frozen unlabeled manifest remain in
+the private collection root.
 
 ## Planned tracks
 
@@ -39,9 +42,15 @@ placeholders are ineligible.
 - `COLLECTION_PROTOCOL.md`: source approval, RAG generation, chain of custody,
   and freeze sequence.
 - `GENERATION_LOCK.md`: the human-readable 396-case Natural OOD allocation,
-  privacy/cost controls, schedule hash, and unresolved temporal-source blocker.
+  privacy/cost controls, schedule hash, and temporal authorization boundary.
 - `generation_schedule.json`: deterministic source-to-configuration allocation;
-  its presence does not authorize model calls.
+  its exact hash was separately authorized for the completed Natural OOD run.
+- `temporal_pre_acquisition_catalog.json`: exact 20-pair, 100-case temporal
+  review object; its presence does not authorize acquisition or model calls.
+- `TEMPORAL_PRE_ACQUISITION_REVIEW.md`: source-pair roster, authority,
+  license/access, disjointness, allocation, budget, and decision boundary.
+- `build_temporal_pre_acquisition_catalog.py`: deterministic builder and
+  fail-closed validator for the temporal review object.
 - `LEAKAGE_AUDIT.md`: disjointness dimensions and fail-closed audit status.
 - `PRIVACY_AND_LICENSE.md`: source, redistribution, privacy, and secret-handling
   requirements.

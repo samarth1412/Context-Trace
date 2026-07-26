@@ -102,23 +102,32 @@ Hosted and local generation each run at concurrency one. Every raw response,
 retry, usage record, latency, and configuration hash is retained subject to
 the privacy and redistribution policy.
 
-## Temporal/source-condition blocker
+## Temporal/source-condition pre-acquisition lock
 
-The acquired corpus contains only 36 current, canonical source snapshots. It
-contains no approved versioned or authority-contrasting pair. Therefore the
-100-case temporal/source-condition allocation is not scheduled and remains
-blocked.
+The exact temporal pre-acquisition catalog is now locked at SHA-256
+`a3781a725ad5100a610e8a6e2bec1b7458903333622ce0461d095c88c8bd6678`.
+It contains 20 versioned or authority-contrasting pairs, 37 immutable source
+identities, and a deterministic 100-case plan:
 
-The planned pair allocation is 25 cases each for:
+- 25 archived-policy to current-policy cases;
+- 25 old-API to replacement-API cases;
+- 25 noncanonical-copy to canonical-source cases;
+- 25 low-authority-summary to authoritative-source cases.
 
-- archived policy to current policy;
-- old API documentation to replacement API;
-- noncanonical copy to canonical source;
-- low-authority summary to authoritative source.
+The catalog passes exact source-family, domain-ID, and canonical-identifier
+disjointness checks against both calibration and Natural OOD records. License,
+access, privacy, immutability, authority-basis, and material-relationship
+reviews are recorded in `TEMPORAL_PRE_ACQUISITION_REVIEW.md`.
 
-No placeholder, manually authored conflict, or reuse of a Natural OOD source is
-permitted. Temporal acquisition requires its own source, license, overlap,
-privacy, and authority-basis review before a schedule amendment.
+This is not a generation-schedule amendment. Temporal source acquisition
+remains unauthorized until the project owner supplies the required exposure
+attestation and explicitly approves the exact catalog hash. Generation remains
+unauthorized until acquired normalized-source hashes and pair-yield validation
+support a final schedule, that schedule is frozen, and its exact hash receives
+a separate authorization.
+
+No placeholder, manually authored conflict, source substitution, or reuse of a
+Natural OOD source is permitted.
 
 ## Verification
 

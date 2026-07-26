@@ -2,9 +2,10 @@
 
 Decision-record version: 1.0
 
-Recorded: 2026-07-24
+Recorded: 2026-07-26
 
-Gate status: Natural OOD generation configuration locked; run authorization pending
+Gate status: Natural OOD collection frozen; temporal catalog locked pending
+acquisition authorization
 
 ## Approval log
 
@@ -51,6 +52,13 @@ Gate status: Natural OOD generation configuration locked; run authorization pend
   under the recorded USD 10 hard ceiling. The authorization scope and
   exclusions are preserved in
   `benchmarks/contexttrace_unseen_v1/NATURAL_OOD_RUN_AUTHORIZATION.md`.
+- 2026-07-26 — The project owner selected Option A, retaining the planned
+  temporal/source-condition track. An exact 20-pair, 100-case pre-acquisition
+  catalog was locked at SHA-256
+  `a3781a725ad5100a610e8a6e2bec1b7458903333622ce0461d095c88c8bd6678`.
+  This selection authorizes preparation and review only; it does not supply
+  the external-exposure attestation or authorize source acquisition, model
+  calls, annotation, evaluation, publication, or release.
 
 ## User-authorized decisions
 
@@ -192,11 +200,15 @@ The exact lock and verification command are in
 
 Remaining:
 
-1. Acquire and approve real versioned/authority source pairs before a temporal
-   schedule can be created. The current 36 snapshots are all current and
-   canonical and cannot support that track.
-2. Recruit and onboard the label custodian/adjudicator before annotation.
+1. The project owner must attest to no additional project-relevant exposure
+   and authorize zero-cost acquisition of the exact temporal catalog hash.
+2. Acquire, normalize, hash, and validate the 20 exact temporal/authority pairs
+   without source substitution or model/verifier use.
+3. Freeze the final temporal generation schedule from acquired source hashes
+   and obtain a separate exact-hash generation authorization.
+4. Recruit and onboard the label custodian/adjudicator before annotation.
 
-Natural OOD generation is authorized only for the exact recorded lock.
-Temporal generation additionally requires blocker 1. Annotation may start
-only after the complete unlabeled manifest is frozen and blocker 2 is closed.
+Natural OOD generation ran only under its exact recorded lock and its private
+unlabeled manifest is frozen. Temporal acquisition and generation remain
+unauthorized. Annotation may start only after the complete two-track unlabeled
+manifest is frozen and the custody blocker is closed.
