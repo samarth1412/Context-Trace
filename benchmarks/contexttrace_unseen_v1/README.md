@@ -2,13 +2,12 @@
 
 Status date: 2026-07-26
 
-Phase: Natural OOD collection completed and privately frozen; temporal
-generation schedule frozen pending exact-hash authorization
+Phase: complete two-track collection privately frozen at Gate C
 
 Dataset version: not assigned
 
-Frozen manifest: Natural OOD private manifest present; complete two-track
-manifest absent
+Frozen manifest: complete 493-case private two-track manifest present and
+independently retained; not published
 
 Gold labels: absent
 
@@ -67,6 +66,16 @@ placeholders are ineligible.
   presence does not authorize model calls.
 - `build_temporal_generation_schedule.py`: offline builder and fail-closed
   schedule validator.
+- `TEMPORAL_RUN_AUTHORIZATION.md` and `temporal_run_authorization.json`:
+  exact-hash authorization for the completed 100-slot temporal run.
+- `collect_temporal.py`: answer-only temporal collector with frozen-query,
+  source-pool, retry, privacy, and budget guards.
+- `TEMPORAL_COLLECTION_RECORD.md` and `temporal_collection_record.json`:
+  aggregate outcome and private temporal artifact hashes.
+- `compose_two_track_freeze.py`: deterministic offline Gate C compositor,
+  uniform cross-track leakage audit, and independent seal verifier.
+- `TWO_TRACK_FREEZE_RECORD.md` and `two_track_freeze_record.json`: aggregate
+  composition, leakage, retention, and final private seal hashes.
 - `LEAKAGE_AUDIT.md`: disjointness dimensions and fail-closed audit status.
 - `PRIVACY_AND_LICENSE.md`: source, redistribution, privacy, and secret-handling
   requirements.
@@ -115,5 +124,6 @@ Verify against the independently retained or published hash:
   --artifact-root PATH_TO_ARTIFACT_ROOT
 ```
 
-The current absence of a manifest is intentional. The tool must not be run with
-fabricated or calibration-derived cases merely to produce a hash.
+The production manifest is now privately frozen and independently retained.
+It remains absent from Git by design; only aggregate counts and integrity
+hashes are recorded here. Publication still requires explicit authorization.

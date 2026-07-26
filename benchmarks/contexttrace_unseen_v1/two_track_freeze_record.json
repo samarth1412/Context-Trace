@@ -1,0 +1,68 @@
+{
+  "artifact_chain": {
+    "combined_case_manifest_file_sha256": "25653bea25a7b845f650d9e879fd4c8d64f143967907f2eb2e144a8b4a77c13b",
+    "combined_source_manifest_file_sha256": "794603f6287445cefad2893d091f325b2c2da6acf24028fe702a75fe91712ccc",
+    "composition_lock_sha256": "20daf06711f0f76002cff0366d4b491b2e897019b5a88e252aef5e9893eb68da",
+    "frozen_manifest_file_sha256": "6b1b48ed4ed8bc9b4966b9218b77406b2d925ae1b6d8991f630726415c5c01e4",
+    "frozen_manifest_payload_sha256": "8bf65cd7e2c95ccfcc12e78b580fc47e4157b0f808ba3fcace0a24bfcdc2e5f6",
+    "private_gate_c_record_sha256": "c19f8b6f87577a0ce5f860a9dd7d65046c6f73b121fdc87f7371ef02acf594b3"
+  },
+  "case_count": 493,
+  "composition": {
+    "chunk_sizes": [
+      256,
+      512
+    ],
+    "domain_groups": [
+      "policy_regulatory",
+      "software_product_documentation",
+      "support_operational"
+    ],
+    "generator_model_families": [
+      "GPT-5 mini",
+      "Gemma 3"
+    ],
+    "natural_ood_count": 393,
+    "natural_target_met": true,
+    "reranking_states": [
+      false,
+      true
+    ],
+    "retrieval_families": [
+      "bm25",
+      "hybrid",
+      "vector"
+    ],
+    "temporal_source_condition_count": 100,
+    "temporal_target_met": true
+  },
+  "downstream_activity": {
+    "annotation": false,
+    "evaluation": false,
+    "labels_accessible": false,
+    "labels_created": false,
+    "publication_or_release": false,
+    "verifier_or_nli_calls": 0
+  },
+  "frozen_at": "2026-07-26T21:22:53.225033Z",
+  "private_retention": {
+    "artifact_count": 639,
+    "independent_manifest_copy_verified": true,
+    "primary_mode": "0700",
+    "primary_root": ".tmp-contexttrace-unseen-v1-two-track-freeze",
+    "retention_mode": "0700",
+    "retention_root": ".tmp-contexttrace-unseen-v1-two-track-retained"
+  },
+  "record_kind": "contexttrace_unseen_v1_gate_c_two_track_freeze",
+  "schema_version": "1.0",
+  "source_count": 73,
+  "status": "gate_c_complete_private_unlabeled_unscored",
+  "uniform_leakage_audit": {
+    "calibration_source_count": 173,
+    "candidate_calibration_collisions": 0,
+    "candidate_duplicate_groups": 0,
+    "candidate_source_count": 73,
+    "method": "semantic_nfkc_whitespace_casefold_v1",
+    "unique_candidate_fingerprints": 73
+  }
+}

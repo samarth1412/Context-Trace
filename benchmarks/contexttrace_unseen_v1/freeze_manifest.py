@@ -66,6 +66,11 @@ REDISTRIBUTION_ORDER = {
     "metadata_only": 1,
     "prohibited": 2,
 }
+SEMANTIC_NORMALIZED_HASH = "semantic_nfkc_whitespace_casefold_v1"
+BYTE_NORMALIZED_HASH = "file_bytes_sha256_v1"
+NORMALIZED_HASH_KINDS = frozenset(
+    {SEMANTIC_NORMALIZED_HASH, BYTE_NORMALIZED_HASH}
+)
 
 
 class FreezeError(ValueError):
@@ -256,8 +261,9 @@ def _validate_source_artifacts(
     sources: Sequence[Mapping[str, Any]],
     *,
     artifact_root: Path,
-) -> dict[str, str]:
+) -> tuple[dict[str, str], dict[str, str]]:
     artifacts: dict[str, str] = {}
+    semantic_fingerprints: dict[str, str] = {}
     for source in sources:
         source_id = str(source["source_id"])
         snapshot_path = str(source["snapshot_path"])
@@ -281,14 +287,62 @@ def _validate_source_artifacts(
             raise FreezeError(
                 f"source {source_id} has a missing or invalid normalized content hash."
             )
-        actual_normalized = normalized_text_sha256(normalized_path)
-        if actual_normalized != expected_normalized:
+        metadata = source.get("metadata")
+        hash_kind = (
+            metadata.get("normalized_content_hash_kind", SEMANTIC_NORMALIZED_HASH)
+            if isinstance(metadata, Mapping)
+            else SEMANTIC_NORMALIZED_HASH
+        )
+        if hash_kind not in NORMALIZED_HASH_KINDS:
+            raise FreezeError(
+                f"source {source_id} has an unsupported normalized hash kind: "
+                f"{hash_kind}"
+            )
+        actual_semantic = normalized_text_sha256(normalized_path)
+        actual_file = file_sha256(normalized_path)
+        actual_declared = (
+            actual_semantic
+            if hash_kind == SEMANTIC_NORMALIZED_HASH
+            else actual_file
+        )
+        if actual_declared != expected_normalized:
             raise FreezeError(
                 f"source {source_id} normalized content hash mismatch: expected "
-                f"{expected_normalized}, got {actual_normalized}"
+                f"{expected_normalized}, got {actual_declared}"
             )
-        artifacts[normalized_path_value] = file_sha256(normalized_path)
-    return artifacts
+        artifacts[normalized_path_value] = actual_file
+        semantic_fingerprints[source_id] = actual_semantic
+    return artifacts, semantic_fingerprints
+
+
+def _validate_uniform_semantic_uniqueness(
+    sources: Sequence[Mapping[str, Any]],
+    semantic_fingerprints: Mapping[str, str],
+) -> None:
+    """Reject exact normalized-text reuse across forbidden source boundaries."""
+
+    by_id = {str(source["source_id"]): source for source in sources}
+    indexed: dict[str, Mapping[str, Any]] = {}
+    for source_id in sorted(semantic_fingerprints):
+        source = by_id[source_id]
+        digest = semantic_fingerprints[source_id]
+        previous = indexed.get(digest)
+        if previous is None:
+            indexed[digest] = source
+            continue
+        compatible = all(
+            previous[key] == source[key]
+            for key in (
+                "source_family",
+                "domain_id",
+                "near_duplicate_cluster_id",
+            )
+        )
+        if not compatible:
+            raise FreezeError(
+                f"candidate source {source_id} duplicates uniformly normalized "
+                "content across forbidden source-family/domain boundaries."
+            )
 
 
 def _validate_source_policy(
@@ -786,9 +840,12 @@ def freeze_manifest(
     artifact_root = artifact_root.resolve()
     if not artifact_root.is_dir():
         raise FreezeError(f"Artifact root is not a directory: {artifact_root}")
-    source_artifacts = _validate_source_artifacts(
+    source_artifacts, semantic_fingerprints = _validate_source_artifacts(
         candidate_sources,
         artifact_root=artifact_root,
+    )
+    _validate_uniform_semantic_uniqueness(
+        candidate_sources, semantic_fingerprints
     )
     cases, case_artifacts = _validate_cases(
         case_manifest,
@@ -828,6 +885,16 @@ def freeze_manifest(
         "sources": sources,
         "cases": cases,
         "artifacts": artifacts,
+        "normalization_audit": {
+            "uniform_method": SEMANTIC_NORMALIZED_HASH,
+            "source_count": len(semantic_fingerprints),
+            "unique_semantic_fingerprints": len(
+                set(semantic_fingerprints.values())
+            ),
+            "source_fingerprint_map_sha256": canonical_sha256(
+                dict(sorted(semantic_fingerprints.items()))
+            ),
+        },
         "policy": (
             "Publish this unlabeled seal before successor implementation or label "
             "access; score the untouched set once after all locks exist."

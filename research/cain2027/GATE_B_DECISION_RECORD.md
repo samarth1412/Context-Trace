@@ -233,9 +233,7 @@ offline reconstruction without source substitution or downstream calls.
 
 Remaining:
 
-1. After completed temporal collection, compose and independently retain the complete
-   two-track unlabeled manifest before any label access.
-2. Recruit and onboard the label custodian/adjudicator before annotation.
+1. Recruit and onboard the label custodian/adjudicator before annotation.
 
 Natural OOD generation ran only under its exact recorded lock and its private
 unlabeled manifest is frozen. Temporal acquisition is complete. On 2026-07-26,
@@ -250,3 +248,11 @@ inspection. Source substitution, query editing, verifier or NLI calls,
 annotation, evaluation, publication, and release remain unauthorized.
 Annotation may start only after the complete two-track unlabeled manifest is
 frozen and the custody blocker is closed.
+
+The complete two-track manifest was privately frozen and independently
+retained on 2026-07-26. Its 493 cases comprise 393 Natural OOD and 100
+temporal/source-condition cases. The production payload seal is
+`8bf65cd7e2c95ccfcc12e78b580fc47e4157b0f808ba3fcace0a24bfcdc2e5f6`.
+All Gate C artifact, composition, label-absence, verifier-history, and uniform
+semantic leakage checks passed. The sole remaining pre-annotation blocker is
+appointment and activation of the independent label custodian/adjudicator.

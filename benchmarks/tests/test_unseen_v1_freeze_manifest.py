@@ -8,6 +8,7 @@ import pytest
 from jsonschema import Draft202012Validator
 
 from benchmarks.contexttrace_unseen_v1.freeze_manifest import (
+    BYTE_NORMALIZED_HASH,
     CASE_SCHEMA_PATH,
     SOURCE_SCHEMA_PATH,
     CompositionPolicy,
@@ -708,3 +709,37 @@ def test_write_creates_verifiable_hash_sidecar(tmp_path):
     assert output.is_file()
     assert output.with_suffix(".json.sha256").read_text().startswith(digest)
     assert verify_frozen_manifest(_load_json(output), expected_sha256=digest) == digest
+
+
+def test_freeze_supports_explicit_byte_hash_provenance_and_uniform_audit(
+    tmp_path: Path,
+) -> None:
+    source = _source(
+        tmp_path,
+        source_id="candidate-source",
+        document="candidate-document",
+        family="candidate-family",
+        domain="candidate-domain",
+        window="2026-q3",
+    )
+    normalized_path = tmp_path / source["normalized_text_path"]
+    source["normalized_content_sha256"] = file_sha256(normalized_path)
+    source["metadata"]["normalized_content_hash_kind"] = BYTE_NORMALIZED_HASH
+    calibration_source = _source(
+        tmp_path,
+        source_id="calibration-source",
+        document="calibration-document",
+        family="calibration-family",
+        domain="calibration-domain",
+        window="2025-q1",
+    )
+    manifest = _freeze(
+        tmp_path,
+        (
+            _source_manifest([source]),
+            _case_manifest([_case(tmp_path, source)]),
+            _source_manifest([calibration_source], calibration=True),
+        ),
+    )
+    assert manifest["normalization_audit"]["source_count"] == 1
+    assert manifest["normalization_audit"]["unique_semantic_fingerprints"] == 1
