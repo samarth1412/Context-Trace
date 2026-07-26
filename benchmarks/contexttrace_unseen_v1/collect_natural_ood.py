@@ -1184,7 +1184,18 @@ class CollectionRunner:
         retrieved_chunks = [chunks[index] for index in ranked_indices]
         selected = retrieved_chunks[: int(case["selected_context_count"])]
         if len(selected) != int(case["selected_context_count"]):
-            raise CollectionError(f"Insufficient retrieved contexts for {case_id}.")
+            state.update(
+                {
+                    "status": "collection_failure",
+                    "failed_stage": "retrieval_structure",
+                    "failure_type": "insufficient_locked_contexts",
+                    "available_contexts": len(selected),
+                    "required_contexts": int(case["selected_context_count"]),
+                    "failed_at": utc_now(),
+                }
+            )
+            self.save_state(state)
+            return "failed"
         prompt = self.prompts[str(case["prompt_id"])]
         answer_user = prompt["user_template"].format(
             question=query,

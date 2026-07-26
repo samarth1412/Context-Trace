@@ -187,3 +187,4 @@ def test_runner_module_does_not_import_verifier_packages() -> None:
     assert "semantic_core_v2" not in module
     assert "semantic_v1_calibrated" not in module
     assert "contexttrace.verifier" not in module
+    assert '"failure_type": "insufficient_locked_contexts"' in module
