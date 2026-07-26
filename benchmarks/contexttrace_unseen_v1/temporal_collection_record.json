@@ -1,0 +1,40 @@
+{
+  "artifact_chain": {
+    "budget_ledger_sha256": "390cf15f34971e0811f1cd58bd0411bf1d720556da3df216af531ebc22f41013",
+    "candidate_case_manifest_sha256": "e7b106530417f111148e4bda57dc55623cecc046b676b74be5f8109358525e7a",
+    "collection_validation_sha256": "fa31287d921d6ab2eb9111d24761324ffb4af9428580e032bc5c60f7c2280a11",
+    "frozen_temporal_unlabeled_manifest_sha256": "2d6fefc158c584a04fb484e16ee283faaa44926f1d9cc5968e5bd83a269cba91",
+    "preflight_sha256": "67f041bc7115906baca3fc2c900d51a379768d8bf92f21abd838470ef69986d8"
+  },
+  "authorization_sha256": "cfa2d44c4780100e1cfaa9e3b5ef762ee1dc9db5ff83bf9a5c60240f55c125bb",
+  "completed_at": "2026-07-26T20:51:52.201196Z",
+  "execution": {
+    "annotation_or_label_access": false,
+    "completed_cases": 100,
+    "evaluation_performed": false,
+    "hosted_answer_attempts": 50,
+    "hosted_charged_cost_usd": 0.03685225,
+    "local_answer_attempts": 50,
+    "non_answer_model_attempts": 0,
+    "publication_or_release_performed": false,
+    "query_authoring_calls": 0,
+    "scheduled_answer_slots": 100,
+    "structural_collection_failures": 0,
+    "transport_retries": 0,
+    "verifier_or_nli_calls": 0
+  },
+  "hard_ceiling_usd": 3.0,
+  "private_retention": {
+    "file_count_at_recording": 374,
+    "git_ignored": true,
+    "labels_created": false,
+    "mode": "0700",
+    "output_root": ".tmp-contexttrace-unseen-v1-temporal-collection",
+    "published": false,
+    "size_mib_approximate": 33
+  },
+  "record_kind": "contexttrace_unseen_v1_temporal_collection",
+  "schema_version": "1.0",
+  "schedule_sha256": "b6250401aadaaf913d7a8e9a5f095d2816cb798f9d512340d0702b8bb233340d",
+  "status": "complete_structurally_valid_private_unlabeled"
+}

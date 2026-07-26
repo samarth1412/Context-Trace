@@ -1,0 +1,19 @@
+{
+  "authorization_id": "contexttrace-unseen-v1-temporal-generation-2026-07-26",
+  "authorized_at": "2026-07-26",
+  "authorized_schedule_sha256": "b6250401aadaaf913d7a8e9a5f095d2816cb798f9d512340d0702b8bb233340d",
+  "authorized_scope": {
+    "answer_generation_slots": 100,
+    "annotation": false,
+    "evaluation": false,
+    "permitted_transport_retries": true,
+    "publication": false,
+    "query_editing": false,
+    "release": false,
+    "source_substitution": false,
+    "verifier_or_nli_calls": false
+  },
+  "hard_ceiling_usd": 3.0,
+  "project_owner_statement": "I authorize execution of temporal generation schedule SHA-256 b6250401aadaaf913d7a8e9a5f095d2816cb798f9d512340d0702b8bb233340d under the recorded USD 3 hard ceiling. This authorizes only the 100 frozen answer-generation slots and permitted transport retries. It does not authorize source substitution, query editing, verifier or NLI calls, annotation, evaluation, publication, or release.",
+  "schema_version": "1.0"
+}

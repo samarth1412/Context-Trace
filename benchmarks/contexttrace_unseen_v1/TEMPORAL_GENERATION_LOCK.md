@@ -4,7 +4,7 @@ Lock version: 1.0
 
 Recorded: 2026-07-26
 
-Status: exact schedule frozen; generation authorization pending
+Status: exact schedule frozen and executed under separate exact-hash authorization
 
 ## Frozen artifact
 
@@ -153,13 +153,19 @@ silently changed to avoid a cost, timeout, or provider failure.
 
 ## Authorization boundary
 
-This lock does not authorize generation. Its authorization fields are all
-false. It also does not authorize a pilot, query rewriting, verifier or NLI
-calls, annotation, evaluation, publication, release, or source substitution.
+This lock does not itself authorize generation. Its authorization fields
+remain false. The project owner separately authorized only execution of this
+exact schedule under the USD 3 hard ceiling on 2026-07-26. That execution
+completed all 100 slots with no structural failures or retries and charged USD
+0.03685225 for 50 hosted attempts.
 
-The next decision may authorize only execution of exact schedule SHA-256
-`b6250401aadaaf913d7a8e9a5f095d2816cb798f9d512340d0702b8bb233340d`
-under the USD 3 hard ceiling and the controls above.
+The separate authorization and aggregate chain-of-custody record are in
+`TEMPORAL_RUN_AUTHORIZATION.md`, `temporal_run_authorization.json`,
+`TEMPORAL_COLLECTION_RECORD.md`, and `temporal_collection_record.json`.
+Private unedited artifacts remain Git-ignored and unpublished.
+
+No pilot, query rewriting, verifier or NLI calls, annotation, evaluation,
+publication, release, or source substitution was authorized or performed.
 
 ## Verification
 

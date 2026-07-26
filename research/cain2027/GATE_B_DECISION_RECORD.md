@@ -233,15 +233,20 @@ offline reconstruction without source substitution or downstream calls.
 
 Remaining:
 
-1. Obtain a separate exact-hash authorization for the frozen temporal
-   generation schedule.
-2. Execute only that schedule, retaining unedited answers and structural
-   failures without semantic inspection.
-3. After temporal collection, freeze and independently retain the complete
+1. After completed temporal collection, compose and independently retain the complete
    two-track unlabeled manifest before any label access.
-4. Recruit and onboard the label custodian/adjudicator before annotation.
+2. Recruit and onboard the label custodian/adjudicator before annotation.
 
 Natural OOD generation ran only under its exact recorded lock and its private
-unlabeled manifest is frozen. Temporal acquisition is complete; temporal
-generation remains unauthorized. Annotation may start only after the complete
-two-track unlabeled manifest is frozen and the custody blocker is closed.
+unlabeled manifest is frozen. Temporal acquisition is complete. On 2026-07-26,
+the project owner authorized only the 100 frozen answer-generation slots in
+schedule SHA-256
+`b6250401aadaaf913d7a8e9a5f095d2816cb798f9d512340d0702b8bb233340d`,
+plus permitted transport retries, under the recorded USD 3 hard ceiling.
+The exact temporal execution completed all 100 slots with no structural
+failures or retries and USD 0.03685225 in hosted charges. Private unedited
+artifacts and an unlabeled temporal manifest were retained without semantic
+inspection. Source substitution, query editing, verifier or NLI calls,
+annotation, evaluation, publication, and release remain unauthorized.
+Annotation may start only after the complete two-track unlabeled manifest is
+frozen and the custody blocker is closed.
