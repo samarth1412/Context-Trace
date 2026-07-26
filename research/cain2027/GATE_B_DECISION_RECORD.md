@@ -76,6 +76,17 @@ acquisition authorization
   and zero paid, model, verifier, or trace calls. No source was substituted.
   The temporal source manifest SHA-256 is
   `6b3bbd4dff5ed7a2a80e26f87a7cf17a670be92083071526d33c2a3f60abf96e`.
+- 2026-07-26 — The deterministic 100-case temporal generation schedule was
+  reviewed and frozen at SHA-256
+  `b6250401aadaaf913d7a8e9a5f095d2816cb798f9d512340d0702b8bb233340d`.
+  Before results existed, a five-pair rotation within each pair type removed
+  the preliminary question-style/source-mode confound without changing a
+  source, pair, case ID, question style, or global allocation. The lock fixes
+  all 100 questions without query-authoring model calls, reuses the Natural
+  OOD RAG and answer components, schedules 50 local and 50 hosted answer
+  generations, and records a USD 3 hosted hard ceiling with a conservative
+  all-attempts bound of USD 1.41. This is a review object; it does not
+  authorize generation.
 
 ## User-authorized decisions
 
@@ -222,10 +233,10 @@ offline reconstruction without source substitution or downstream calls.
 
 Remaining:
 
-1. Build and review the final temporal generation schedule from the acquired
-   source hashes.
-2. Freeze that schedule and obtain a separate exact-hash generation
-   authorization.
+1. Obtain a separate exact-hash authorization for the frozen temporal
+   generation schedule.
+2. Execute only that schedule, retaining unedited answers and structural
+   failures without semantic inspection.
 3. After temporal collection, freeze and independently retain the complete
    two-track unlabeled manifest before any label access.
 4. Recruit and onboard the label custodian/adjudicator before annotation.

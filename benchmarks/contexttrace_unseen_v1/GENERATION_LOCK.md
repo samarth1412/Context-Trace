@@ -128,9 +128,14 @@ manifest is frozen at SHA-256
 the full outcome is in `TEMPORAL_ACQUISITION_RECORD.md`.
 
 This is not a generation-schedule amendment. Generation remains unauthorized
-until these acquired normalized-source hashes support a final schedule, that
-schedule is reviewed and frozen, and its exact hash receives a separate
-authorization.
+until its exact hash receives a separate authorization.
+
+The final 100-case temporal schedule is now reviewed and frozen at SHA-256
+`b6250401aadaaf913d7a8e9a5f095d2816cb798f9d512340d0702b8bb233340d`.
+Its allocation, deconfounding amendment, fixed questions, source-pool rules,
+privacy/cost guard, and verification command are recorded in
+`TEMPORAL_GENERATION_LOCK.md`. No generation call has been authorized or made
+under this lock.
 
 No placeholder, manually authored conflict, source substitution, or reuse of a
 Natural OOD source is permitted.

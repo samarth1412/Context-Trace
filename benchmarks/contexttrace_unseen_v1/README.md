@@ -2,8 +2,8 @@
 
 Status date: 2026-07-26
 
-Phase: Natural OOD collection completed and privately frozen; temporal sources
-acquired and validated pending generation-schedule freeze
+Phase: Natural OOD collection completed and privately frozen; temporal
+generation schedule frozen pending exact-hash authorization
 
 Dataset version: not assigned
 
@@ -60,6 +60,13 @@ placeholders are ineligible.
 - `acquire_temporal_sources.py`: exact-identity collector and independent
   offline reconstruction validator; it contains no generation or verifier
   integration.
+- `TEMPORAL_GENERATION_LOCK.md`: exact 100-case allocation, deconfounding
+  amendment, questions, source-pool rules, privacy/cost guard, hash, and
+  authorization boundary.
+- `temporal_generation_schedule.json`: deterministic execution lock; its
+  presence does not authorize model calls.
+- `build_temporal_generation_schedule.py`: offline builder and fail-closed
+  schedule validator.
 - `LEAKAGE_AUDIT.md`: disjointness dimensions and fail-closed audit status.
 - `PRIVACY_AND_LICENSE.md`: source, redistribution, privacy, and secret-handling
   requirements.
