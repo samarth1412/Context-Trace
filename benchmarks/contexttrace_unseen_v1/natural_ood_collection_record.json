@@ -1,0 +1,64 @@
+{
+  "artifact_count": 465,
+  "calibration_hash_collisions": 0,
+  "collection_failures": [
+    {
+      "available_contexts": 7,
+      "case_id": "ctu1_natural_reg_fda_05",
+      "failure_type": "insufficient_locked_contexts",
+      "required_contexts": 8
+    },
+    {
+      "available_contexts": 7,
+      "case_id": "ctu1_natural_reg_fda_06",
+      "failure_type": "insufficient_locked_contexts",
+      "required_contexts": 8
+    },
+    {
+      "available_contexts": 7,
+      "case_id": "ctu1_natural_reg_fda_10",
+      "failure_type": "insufficient_locked_contexts",
+      "required_contexts": 8
+    }
+  ],
+  "collection_window": {
+    "first_completed_at": "2026-07-26T15:22:25.640662Z",
+    "last_completed_at": "2026-07-26T17:25:28.466080Z"
+  },
+  "completed_cases": 393,
+  "domain_counts": {
+    "policy_regulatory": 129,
+    "software_product_documentation": 132,
+    "support_operational": 132
+  },
+  "frozen_manifest_sha256": "4ac9270ad3ac056e605bd7ec4623493293d83e7c2bf8d2b1e71fb28292e92fa2",
+  "generator_counts": {
+    "Gemma 3": 196,
+    "GPT-5 mini": 197
+  },
+  "hosted_answer_calls": 197,
+  "hosted_charge_usd": 0.1524005,
+  "hosted_hard_ceiling_usd": 10.0,
+  "labels_accessible": false,
+  "labels_created": false,
+  "local_answer_calls": 196,
+  "local_query_authoring_calls": 396,
+  "model_calls": 789,
+  "pending_hosted_reservations": 0,
+  "record_kind": "contexttrace_unseen_v1_natural_ood_collection",
+  "retrieval_counts": {
+    "bm25": 131,
+    "hybrid": 131,
+    "vector": 131
+  },
+  "retryable_transport_failures": 0,
+  "schedule_sha256": "e850d3eb6d374547cdbc70b2c0da02e0db8d9ff043633a577d9319f3d69e1695",
+  "scheduled_cases": 396,
+  "schema_version": "1.0",
+  "source_family_count": 36,
+  "source_manifest_sha256": "6508533e869ef99930a4b29bea699779438a79dd951a8dbf2d04c78804bd90cc",
+  "status": "complete",
+  "temporal_source_condition_attempted": false,
+  "untouched_natural_ood_target_met": true,
+  "verifier_calls": 0
+}
