@@ -102,7 +102,7 @@ Hosted and local generation each run at concurrency one. Every raw response,
 retry, usage record, latency, and configuration hash is retained subject to
 the privacy and redistribution policy.
 
-## Temporal/source-condition pre-acquisition lock
+## Temporal/source-condition acquisition lock
 
 The exact temporal pre-acquisition catalog is now locked at SHA-256
 `a3781a725ad5100a610e8a6e2bec1b7458903333622ce0461d095c88c8bd6678`.
@@ -119,12 +119,18 @@ disjointness checks against both calibration and Natural OOD records. License,
 access, privacy, immutability, authority-basis, and material-relationship
 reviews are recorded in `TEMPORAL_PRE_ACQUISITION_REVIEW.md`.
 
-This is not a generation-schedule amendment. Temporal source acquisition
-remains unauthorized until the project owner supplies the required exposure
-attestation and explicitly approves the exact catalog hash. Generation remains
-unauthorized until acquired normalized-source hashes and pair-yield validation
-support a final schedule, that schedule is frozen, and its exact hash receives
-a separate authorization.
+The project owner authorized exact-hash, zero-cost acquisition under decision
+`11A`. All 37 identities were acquired without substitution and all 20 pairs
+passed offline reconstruction, immutable-identity, license/exclusion,
+disjointness, and mechanical evidence-yield checks. The temporal source
+manifest is frozen at SHA-256
+`6b3bbd4dff5ed7a2a80e26f87a7cf17a670be92083071526d33c2a3f60abf96e`;
+the full outcome is in `TEMPORAL_ACQUISITION_RECORD.md`.
+
+This is not a generation-schedule amendment. Generation remains unauthorized
+until these acquired normalized-source hashes support a final schedule, that
+schedule is reviewed and frozen, and its exact hash receives a separate
+authorization.
 
 No placeholder, manually authored conflict, source substitution, or reuse of a
 Natural OOD source is permitted.

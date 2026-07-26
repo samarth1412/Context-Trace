@@ -59,6 +59,23 @@ acquisition authorization
   This selection authorizes preparation and review only; it does not supply
   the external-exposure attestation or authorize source acquisition, model
   calls, annotation, evaluation, publication, or release.
+- 2026-07-26 — The project owner supplied the exact temporal-source exposure
+  attestation and authorized decision `11A`: zero-cost acquisition and local
+  normalization of only catalog SHA-256
+  `a3781a725ad5100a610e8a6e2bec1b7458903333622ce0461d095c88c8bd6678`.
+  Source substitution, paid endpoints, query/trace generation, model or
+  verifier calls, annotation, evaluation, publication, and release remain
+  unauthorized. The verbatim authorization and machine-readable scope are in
+  `benchmarks/contexttrace_unseen_v1/TEMPORAL_ACQUISITION_AUTHORIZATION.md`
+  and `temporal_acquisition_authorization.json`.
+- 2026-07-26 — Acquisition and deterministic local normalization completed for
+  all 37 exact temporal source identities and 20 pairs. Offline reconstruction
+  validated 52,206,111 raw bytes, 17,461,866 normalized bytes, 34 retained
+  repository license files, 52 selected statutory sections, zero normalized
+  hash collisions with prior corpora, zero Wikimedia user-metadata records,
+  and zero paid, model, verifier, or trace calls. No source was substituted.
+  The temporal source manifest SHA-256 is
+  `6b3bbd4dff5ed7a2a80e26f87a7cf17a670be92083071526d33c2a3f60abf96e`.
 
 ## User-authorized decisions
 
@@ -198,17 +215,22 @@ parameters, retry rules, timeouts, privacy controls, and hosted cost guard.
 The exact lock and verification command are in
 `benchmarks/contexttrace_unseen_v1/GENERATION_LOCK.md`.
 
+Completed for the temporal track: exact pair review, owner exposure
+attestation, exact-hash acquisition authorization, acquisition, normalization,
+artifact hashing, pair-yield checks, prior-corpus disjointness validation, and
+offline reconstruction without source substitution or downstream calls.
+
 Remaining:
 
-1. The project owner must attest to no additional project-relevant exposure
-   and authorize zero-cost acquisition of the exact temporal catalog hash.
-2. Acquire, normalize, hash, and validate the 20 exact temporal/authority pairs
-   without source substitution or model/verifier use.
-3. Freeze the final temporal generation schedule from acquired source hashes
-   and obtain a separate exact-hash generation authorization.
+1. Build and review the final temporal generation schedule from the acquired
+   source hashes.
+2. Freeze that schedule and obtain a separate exact-hash generation
+   authorization.
+3. After temporal collection, freeze and independently retain the complete
+   two-track unlabeled manifest before any label access.
 4. Recruit and onboard the label custodian/adjudicator before annotation.
 
 Natural OOD generation ran only under its exact recorded lock and its private
-unlabeled manifest is frozen. Temporal acquisition and generation remain
-unauthorized. Annotation may start only after the complete two-track unlabeled
-manifest is frozen and the custody blocker is closed.
+unlabeled manifest is frozen. Temporal acquisition is complete; temporal
+generation remains unauthorized. Annotation may start only after the complete
+two-track unlabeled manifest is frozen and the custody blocker is closed.

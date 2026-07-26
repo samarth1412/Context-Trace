@@ -1,0 +1,20 @@
+{
+  "authorization_id": "11A",
+  "authorized_at": "2026-07-26T00:00:00Z",
+  "authorized_catalog_sha256": "a3781a725ad5100a610e8a6e2bec1b7458903333622ce0461d095c88c8bd6678",
+  "external_exposure_attestation": "none_of_the_20_exact_temporal_source_pairs_influenced_contexttrace_or_groundlm_development",
+  "record_kind": "contexttrace_unseen_v1_temporal_acquisition_authorization",
+  "scope": {
+    "annotation_authorized": false,
+    "evaluation_authorized": false,
+    "external_publication_authorized": false,
+    "local_normalization_authorized": true,
+    "model_calls_authorized": false,
+    "paid_endpoints_authorized": false,
+    "source_acquisition_authorized": true,
+    "source_substitution_authorized": false,
+    "trace_generation_authorized": false,
+    "verifier_calls_authorized": false
+  },
+  "schema_version": "1.0"
+}

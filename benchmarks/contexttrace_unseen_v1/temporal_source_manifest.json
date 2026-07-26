@@ -1,0 +1,2630 @@
+{
+  "created_at": "2026-07-26T19:27:49.522157Z",
+  "disjoint_dimensions": [
+    "source_id",
+    "source_document_id",
+    "source_family",
+    "domain_id",
+    "publication_window",
+    "snapshot_sha256",
+    "normalized_content_sha256",
+    "near_duplicate_cluster_id"
+  ],
+  "domain_ontology_version": "contexttrace-unseen-v1-domain-ontology-0.1",
+  "manifest_kind": "contexttrace_unseen_v1_sources",
+  "schema_version": "1.0",
+  "sources": [
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain repository license",
+          "retain only allowlisted first-party documentation and docstrings",
+          "exclude vendored, generated, binary, and third-party content"
+        ]
+      },
+      "authority_basis": "Frozen condition=deprecated_api; publisher=matplotlib; immutable identity=git_commit.",
+      "canonical_identifier": "github:matplotlib/matplotlib@66e49f9a28f29b9a3a18cd4c6bfd5fdd1836eb0e",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "temporal_api_matplotlib_hist_density",
+      "domain_group": "software_product_documentation",
+      "domain_id": "scientific_plotting_histogram_api",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "Matplotlib-1.3",
+        "notes": "retain repository license; retain only allowlisted first-party documentation and docstrings; exclude vendored, generated, binary, and third-party content",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://matplotlib.org/stable/project/license.html"
+      },
+      "metadata": {
+        "acquisition_method": "github_raw_allowlist",
+        "allowlisted_paths": [
+          "lib/matplotlib/axes/_axes.py"
+        ],
+        "catalog_condition": "deprecated_api",
+        "commit": "66e49f9a28f29b9a3a18cd4c6bfd5fdd1836eb0e",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "commit_timestamp": "2018-03-05T05:07:21Z",
+          "kind": "git_commit",
+          "release_ref": "v2.2.0",
+          "value": "66e49f9a28f29b9a3a18cd4c6bfd5fdd1836eb0e"
+        },
+        "included_document_files": 1,
+        "member_sha256": {
+          "content/lib/matplotlib/axes/_axes.py": "00c1d7f5372ac501b95e2ed21d9063b91cf8526e5b9533ba831db5b409f53684",
+          "legal/LICENSE/LICENSE": "5a1a81ea301728c8bba2933da832c0cd62229daf20893a024ab3d53244468dbc",
+          "legal/LICENSE/LICENSE.PIL": "45b0f6ed54e56d781ed7c78ac70b2de5a9263dba75b0efbc6bda7b64741928dc",
+          "legal/LICENSE/LICENSE_AMSFONTS": "155141d59877f338f6e1c0805de9b79964dce71fe5d2a56c44e38b2c0f7e35ee",
+          "legal/LICENSE/LICENSE_BAKOMA": "5887eee5a0041c99ff06b8f03f44dcd7303c0bff8dc7084e89ee32df6458e74b",
+          "legal/LICENSE/LICENSE_COLORBREWER": "ec521bc889708363c3d91d290d90829423778117ea25900193e98e29f5222408",
+          "legal/LICENSE/LICENSE_CONDA": "34a9529f2e1c4eebf0c2b425c2639bf7c345bc6cf248397d8a9fefe396be2379",
+          "legal/LICENSE/LICENSE_JQUERY": "d8f634a1f0afc029898039d443386cbd4cae4b68220339c7a198187a2090bba9",
+          "legal/LICENSE/LICENSE_QT4_EDITOR": "b2b50ca8b6172aca23095adf15db89d3727e9ef2d6ef0178e427234011bed3cd",
+          "legal/LICENSE/LICENSE_STIX": "4cc3efba3a3a604eb6f937211e46da1e2148830056a6e09bcc19df4170d252a4",
+          "legal/LICENSE/LICENSE_YORICK": "cab753d38c093651e8deb5abb684e3ed68020e0e418034f94d79e890dc7ae84d",
+          "legal/LICENSE/LICENSE_enthought.txt": "3f87a3c1b85ae71cbf66be27e7ca4c9b3dda50303cb19179ac6bc05a447735e8",
+          "legal/LICENSE/Solarized.txt": "12d5327fbc4df845a86883de99ed5fdf4198445d56dbacdf5fad8f0efdc97513",
+          "legal/LICENSE/pnpoly.license": "e82c3364983619842e7427a554e2b693c92d7fdd0716c2d07e51b0a944917168"
+        },
+        "release_ref": "v2.2.0",
+        "repository": "matplotlib/matplotlib",
+        "retained_legal_files": 13,
+        "retained_license_paths": [
+          "LICENSE/LICENSE",
+          "LICENSE/LICENSE.PIL",
+          "LICENSE/LICENSE_AMSFONTS",
+          "LICENSE/LICENSE_BAKOMA",
+          "LICENSE/LICENSE_COLORBREWER",
+          "LICENSE/LICENSE_CONDA",
+          "LICENSE/LICENSE_JQUERY",
+          "LICENSE/LICENSE_QT4_EDITOR",
+          "LICENSE/LICENSE_STIX",
+          "LICENSE/LICENSE_YORICK",
+          "LICENSE/LICENSE_enthought.txt",
+          "LICENSE/Solarized.txt",
+          "LICENSE/pnpoly.license"
+        ]
+      },
+      "near_duplicate_cluster_id": "temporal_api_matplotlib_hist_density_cluster",
+      "normalized_content_sha256": "8d784e1d23e723d159c3f9819f18610e1f2264ed5b36865180f8ea06789567ea",
+      "normalized_text_path": "artifacts/normalized/temporal_api_matplotlib_hist_density_deprecated_api.txt",
+      "privacy_classification": "public",
+      "publication_window": "2018",
+      "published_at": "2018-03-05T05:07:21Z",
+      "snapshot_path": "artifacts/raw/temporal_api_matplotlib_hist_density_deprecated_api.tar.gz",
+      "snapshot_sha256": "71a4dbed151c7a0ec2ddbb0c60153a7e828b34a26b8504322f80ab35ed95bb72",
+      "source_conditions": [
+        "archived",
+        "superseded"
+      ],
+      "source_document_id": "temporal_api_matplotlib_hist_density_deprecated_api",
+      "source_family": "temporal_api_matplotlib_hist_density",
+      "source_id": "temporal_api_matplotlib_hist_density_deprecated_api",
+      "source_url": "https://github.com/matplotlib/matplotlib/tree/66e49f9a28f29b9a3a18cd4c6bfd5fdd1836eb0e"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain repository license",
+          "retain only allowlisted first-party documentation and docstrings",
+          "exclude vendored, generated, binary, and third-party content"
+        ]
+      },
+      "authority_basis": "Frozen condition=replacement_api; publisher=matplotlib; immutable identity=git_commit.",
+      "canonical_identifier": "github:matplotlib/matplotlib@a8f4a742803b5238911b9c3f698f2417c3ac441a",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "temporal_api_matplotlib_hist_density",
+      "domain_group": "software_product_documentation",
+      "domain_id": "scientific_plotting_histogram_api",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "Matplotlib-1.3",
+        "notes": "retain repository license; retain only allowlisted first-party documentation and docstrings; exclude vendored, generated, binary, and third-party content",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://matplotlib.org/stable/project/license.html"
+      },
+      "metadata": {
+        "acquisition_method": "github_raw_allowlist",
+        "allowlisted_paths": [
+          "lib/matplotlib/axes/_axes.py"
+        ],
+        "catalog_condition": "replacement_api",
+        "commit": "a8f4a742803b5238911b9c3f698f2417c3ac441a",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "commit_timestamp": "2019-05-18T01:55:28Z",
+          "kind": "git_commit",
+          "release_ref": "v3.1.0",
+          "value": "a8f4a742803b5238911b9c3f698f2417c3ac441a"
+        },
+        "included_document_files": 1,
+        "member_sha256": {
+          "content/lib/matplotlib/axes/_axes.py": "c6d7ff9a478aef8f42f620ee9b3c758ab2de14382e539c2c539dad74d9b1d53d",
+          "legal/LICENSE/LICENSE": "5a1a81ea301728c8bba2933da832c0cd62229daf20893a024ab3d53244468dbc",
+          "legal/LICENSE/LICENSE.PIL": "45b0f6ed54e56d781ed7c78ac70b2de5a9263dba75b0efbc6bda7b64741928dc",
+          "legal/LICENSE/LICENSE_AMSFONTS": "155141d59877f338f6e1c0805de9b79964dce71fe5d2a56c44e38b2c0f7e35ee",
+          "legal/LICENSE/LICENSE_BAKOMA": "5887eee5a0041c99ff06b8f03f44dcd7303c0bff8dc7084e89ee32df6458e74b",
+          "legal/LICENSE/LICENSE_COLORBREWER": "ec521bc889708363c3d91d290d90829423778117ea25900193e98e29f5222408",
+          "legal/LICENSE/LICENSE_CONDA": "34a9529f2e1c4eebf0c2b425c2639bf7c345bc6cf248397d8a9fefe396be2379",
+          "legal/LICENSE/LICENSE_JQUERY": "d8f634a1f0afc029898039d443386cbd4cae4b68220339c7a198187a2090bba9",
+          "legal/LICENSE/LICENSE_QT4_EDITOR": "b2b50ca8b6172aca23095adf15db89d3727e9ef2d6ef0178e427234011bed3cd",
+          "legal/LICENSE/LICENSE_STIX": "4cc3efba3a3a604eb6f937211e46da1e2148830056a6e09bcc19df4170d252a4",
+          "legal/LICENSE/LICENSE_YORICK": "cab753d38c093651e8deb5abb684e3ed68020e0e418034f94d79e890dc7ae84d",
+          "legal/LICENSE/LICENSE_enthought.txt": "3f87a3c1b85ae71cbf66be27e7ca4c9b3dda50303cb19179ac6bc05a447735e8",
+          "legal/LICENSE/Solarized.txt": "12d5327fbc4df845a86883de99ed5fdf4198445d56dbacdf5fad8f0efdc97513",
+          "legal/LICENSE/pnpoly.license": "e82c3364983619842e7427a554e2b693c92d7fdd0716c2d07e51b0a944917168"
+        },
+        "release_ref": "v3.1.0",
+        "repository": "matplotlib/matplotlib",
+        "retained_legal_files": 13,
+        "retained_license_paths": [
+          "LICENSE/LICENSE",
+          "LICENSE/LICENSE.PIL",
+          "LICENSE/LICENSE_AMSFONTS",
+          "LICENSE/LICENSE_BAKOMA",
+          "LICENSE/LICENSE_COLORBREWER",
+          "LICENSE/LICENSE_CONDA",
+          "LICENSE/LICENSE_JQUERY",
+          "LICENSE/LICENSE_QT4_EDITOR",
+          "LICENSE/LICENSE_STIX",
+          "LICENSE/LICENSE_YORICK",
+          "LICENSE/LICENSE_enthought.txt",
+          "LICENSE/Solarized.txt",
+          "LICENSE/pnpoly.license"
+        ]
+      },
+      "near_duplicate_cluster_id": "temporal_api_matplotlib_hist_density_cluster",
+      "normalized_content_sha256": "24219773bc6eacbb4ea82118c8373201815c0b3dbd02fecae7f9a45639a5016f",
+      "normalized_text_path": "artifacts/normalized/temporal_api_matplotlib_hist_density_replacement_api.txt",
+      "privacy_classification": "public",
+      "publication_window": "2019",
+      "published_at": "2019-05-18T01:55:28Z",
+      "snapshot_path": "artifacts/raw/temporal_api_matplotlib_hist_density_replacement_api.tar.gz",
+      "snapshot_sha256": "ecb6f4c8200a5686071df04290b4999a8c816a4a008efe3f0cda8e4269f4eb4b",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "temporal_api_matplotlib_hist_density_replacement_api",
+      "source_family": "temporal_api_matplotlib_hist_density",
+      "source_id": "temporal_api_matplotlib_hist_density_replacement_api",
+      "source_url": "https://github.com/matplotlib/matplotlib/tree/a8f4a742803b5238911b9c3f698f2417c3ac441a"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain repository license",
+          "retain only allowlisted first-party documentation and docstrings",
+          "exclude vendored, generated, binary, and third-party content"
+        ]
+      },
+      "authority_basis": "Frozen condition=deprecated_api; publisher=python-pillow; immutable identity=git_commit.",
+      "canonical_identifier": "github:python-pillow/Pillow@5d070222d21138d2ead002fd33fdf5adcb708941",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "temporal_api_pillow_resampling_lanczos",
+      "domain_group": "software_product_documentation",
+      "domain_id": "python_imaging_resampling_api",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "HPND",
+        "notes": "retain repository license; retain only allowlisted first-party documentation and docstrings; exclude vendored, generated, binary, and third-party content",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://github.com/python-pillow/Pillow/blob/main/LICENSE"
+      },
+      "metadata": {
+        "acquisition_method": "github_raw_allowlist",
+        "allowlisted_paths": [
+          "docs/deprecations.rst",
+          "docs/releasenotes/9.1.0.rst"
+        ],
+        "catalog_condition": "deprecated_api",
+        "commit": "5d070222d21138d2ead002fd33fdf5adcb708941",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "commit_timestamp": "2022-04-01T07:48:32Z",
+          "kind": "git_commit",
+          "release_ref": "9.1.0",
+          "value": "5d070222d21138d2ead002fd33fdf5adcb708941"
+        },
+        "included_document_files": 2,
+        "member_sha256": {
+          "content/docs/deprecations.rst": "70ac209b01a38d85a1a9161eed149adf32cc0ab1178471f6a87306dbb954bdab",
+          "content/docs/releasenotes/9.1.0.rst": "ad05e46b910ab847c38bcce424f09b75fc45c5a033600700b46007098b78c4ff",
+          "legal/LICENSE": "a6554cb737ba6c9b47d3301f78de03b4ed0d3f08d6cf9400714f3d4c894f6943"
+        },
+        "release_ref": "9.1.0",
+        "repository": "python-pillow/Pillow",
+        "retained_legal_files": 1,
+        "retained_license_paths": [
+          "LICENSE"
+        ]
+      },
+      "near_duplicate_cluster_id": "temporal_api_pillow_resampling_lanczos_cluster",
+      "normalized_content_sha256": "322372658e9ce17d8cb87f478cdaf55aae9acd8345d4a9ce97d78934904cf31e",
+      "normalized_text_path": "artifacts/normalized/temporal_api_pillow_resampling_lanczos_deprecated_api.txt",
+      "privacy_classification": "public",
+      "publication_window": "2022",
+      "published_at": "2022-04-01T07:48:32Z",
+      "snapshot_path": "artifacts/raw/temporal_api_pillow_resampling_lanczos_deprecated_api.tar.gz",
+      "snapshot_sha256": "56fd75e7615fb61bc671b26037a291edec1389554fb4a1454c3b3a78db1e1844",
+      "source_conditions": [
+        "archived",
+        "superseded"
+      ],
+      "source_document_id": "temporal_api_pillow_resampling_lanczos_deprecated_api",
+      "source_family": "temporal_api_pillow_resampling_lanczos",
+      "source_id": "temporal_api_pillow_resampling_lanczos_deprecated_api",
+      "source_url": "https://github.com/python-pillow/Pillow/tree/5d070222d21138d2ead002fd33fdf5adcb708941"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain repository license",
+          "retain only allowlisted first-party documentation and docstrings",
+          "exclude vendored, generated, binary, and third-party content"
+        ]
+      },
+      "authority_basis": "Frozen condition=replacement_api; publisher=python-pillow; immutable identity=git_commit.",
+      "canonical_identifier": "github:python-pillow/Pillow@6e28ed1f36d0eb74053af54e1eddc9c29db698cd",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "temporal_api_pillow_resampling_lanczos",
+      "domain_group": "software_product_documentation",
+      "domain_id": "python_imaging_resampling_api",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "HPND",
+        "notes": "retain repository license; retain only allowlisted first-party documentation and docstrings; exclude vendored, generated, binary, and third-party content",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://github.com/python-pillow/Pillow/blob/main/LICENSE"
+      },
+      "metadata": {
+        "acquisition_method": "github_raw_allowlist",
+        "allowlisted_paths": [
+          "docs/deprecations.rst",
+          "docs/releasenotes/10.0.0.rst"
+        ],
+        "catalog_condition": "replacement_api",
+        "commit": "6e28ed1f36d0eb74053af54e1eddc9c29db698cd",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "commit_timestamp": "2023-07-01T12:08:11Z",
+          "kind": "git_commit",
+          "release_ref": "10.0.0",
+          "value": "6e28ed1f36d0eb74053af54e1eddc9c29db698cd"
+        },
+        "included_document_files": 2,
+        "member_sha256": {
+          "content/docs/deprecations.rst": "3058277a87a9802c44068364359592bc6516d1e58858722ed6162b6aec26b1a0",
+          "content/docs/releasenotes/10.0.0.rst": "fef6b764085089275f6c892a0229fc56039a4538e275d5b08019c5350b3e2bc9",
+          "legal/LICENSE": "0fdb68ffb39062553be40be4e6eaea9700b4f5e870a720ae86b8925d67613ddd"
+        },
+        "release_ref": "10.0.0",
+        "repository": "python-pillow/Pillow",
+        "retained_legal_files": 1,
+        "retained_license_paths": [
+          "LICENSE"
+        ]
+      },
+      "near_duplicate_cluster_id": "temporal_api_pillow_resampling_lanczos_cluster",
+      "normalized_content_sha256": "e05e318a42c798398c7fe1d848205c57b403181c13bd279c600bf6e30bcd4a34",
+      "normalized_text_path": "artifacts/normalized/temporal_api_pillow_resampling_lanczos_replacement_api.txt",
+      "privacy_classification": "public",
+      "publication_window": "2023",
+      "published_at": "2023-07-01T12:08:11Z",
+      "snapshot_path": "artifacts/raw/temporal_api_pillow_resampling_lanczos_replacement_api.tar.gz",
+      "snapshot_sha256": "0e0bcf19945ae32d47c2ff049391fcb5a84937f1b086e89027218ab5edeb940a",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "temporal_api_pillow_resampling_lanczos_replacement_api",
+      "source_family": "temporal_api_pillow_resampling_lanczos",
+      "source_id": "temporal_api_pillow_resampling_lanczos_replacement_api",
+      "source_url": "https://github.com/python-pillow/Pillow/tree/6e28ed1f36d0eb74053af54e1eddc9c29db698cd"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain repository license",
+          "retain only allowlisted first-party documentation and docstrings",
+          "exclude vendored, generated, binary, and third-party content"
+        ]
+      },
+      "authority_basis": "Frozen condition=deprecated_api; publisher=pytest-dev; immutable identity=git_commit.",
+      "canonical_identifier": "github:pytest-dev/pytest@c74ce371ab923edb990f40cf21f4309e1b4871ad",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "temporal_api_pytest_yield_fixture",
+      "domain_group": "software_product_documentation",
+      "domain_id": "python_testing_fixture_api",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "MIT",
+        "notes": "retain repository license; retain only allowlisted first-party documentation and docstrings; exclude vendored, generated, binary, and third-party content",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://github.com/pytest-dev/pytest/blob/main/LICENSE"
+      },
+      "metadata": {
+        "acquisition_method": "github_raw_allowlist",
+        "allowlisted_paths": [
+          "_pytest/fixtures.py",
+          "doc/en/yieldfixture.rst"
+        ],
+        "catalog_condition": "deprecated_api",
+        "commit": "c74ce371ab923edb990f40cf21f4309e1b4871ad",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "commit_timestamp": "2016-08-18T16:02:01Z",
+          "kind": "git_commit",
+          "release_ref": "3.0.0",
+          "value": "c74ce371ab923edb990f40cf21f4309e1b4871ad"
+        },
+        "included_document_files": 2,
+        "member_sha256": {
+          "content/_pytest/fixtures.py": "07661f870092c1916b63b146707ad6b3894e65c33ef20250bfd6dd9db3519cff",
+          "content/doc/en/yieldfixture.rst": "30c2c57091cfb691492058a34c3631230183ecd1f4290ea52e90bfc442b085a7",
+          "legal/LICENSE": "2e6b202b756a127ab859f117e312e631d569dd695f25d73f3860514e9d25c704"
+        },
+        "release_ref": "3.0.0",
+        "repository": "pytest-dev/pytest",
+        "retained_legal_files": 1,
+        "retained_license_paths": [
+          "LICENSE"
+        ]
+      },
+      "near_duplicate_cluster_id": "temporal_api_pytest_yield_fixture_cluster",
+      "normalized_content_sha256": "329153c8d336f1dba3b26a31179da6f82f39c9664da482c81484677fd6a8c7e6",
+      "normalized_text_path": "artifacts/normalized/temporal_api_pytest_yield_fixture_deprecated_api.txt",
+      "privacy_classification": "public",
+      "publication_window": "2016",
+      "published_at": "2016-08-18T16:02:01Z",
+      "snapshot_path": "artifacts/raw/temporal_api_pytest_yield_fixture_deprecated_api.tar.gz",
+      "snapshot_sha256": "bbe2aede663cf77bf30c12ec78d6162a23547a56096362dff1d97ad462b08275",
+      "source_conditions": [
+        "archived",
+        "superseded"
+      ],
+      "source_document_id": "temporal_api_pytest_yield_fixture_deprecated_api",
+      "source_family": "temporal_api_pytest_yield_fixture",
+      "source_id": "temporal_api_pytest_yield_fixture_deprecated_api",
+      "source_url": "https://github.com/pytest-dev/pytest/tree/c74ce371ab923edb990f40cf21f4309e1b4871ad"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain repository license",
+          "retain only allowlisted first-party documentation and docstrings",
+          "exclude vendored, generated, binary, and third-party content"
+        ]
+      },
+      "authority_basis": "Frozen condition=replacement_api; publisher=pytest-dev; immutable identity=git_commit.",
+      "canonical_identifier": "github:pytest-dev/pytest@1569fac603d9a50022e1474b494eebf970a2a3af",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "temporal_api_pytest_yield_fixture",
+      "domain_group": "software_product_documentation",
+      "domain_id": "python_testing_fixture_api",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "MIT",
+        "notes": "retain repository license; retain only allowlisted first-party documentation and docstrings; exclude vendored, generated, binary, and third-party content",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://github.com/pytest-dev/pytest/blob/main/LICENSE"
+      },
+      "metadata": {
+        "acquisition_method": "github_raw_allowlist",
+        "allowlisted_paths": [
+          "doc/en/deprecations.rst",
+          "doc/en/yieldfixture.rst"
+        ],
+        "catalog_condition": "replacement_api",
+        "commit": "1569fac603d9a50022e1474b494eebf970a2a3af",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "commit_timestamp": "2021-08-29T14:09:45Z",
+          "kind": "git_commit",
+          "release_ref": "6.2.5",
+          "value": "1569fac603d9a50022e1474b494eebf970a2a3af"
+        },
+        "included_document_files": 2,
+        "member_sha256": {
+          "content/doc/en/deprecations.rst": "85136b1082b37e644aabb69024172c842765eac4c4c5f5565b175b0f71212dd3",
+          "content/doc/en/yieldfixture.rst": "ec074ff01817ef0ab9461c9edb4c5698e5b66fd20cbb94bf7e4606e87e810b8f",
+          "legal/LICENSE": "7898b9b164d4f93fd9a562fd0f592935518b48c4745303964110eb7f7fe64faf"
+        },
+        "release_ref": "6.2.5",
+        "repository": "pytest-dev/pytest",
+        "retained_legal_files": 1,
+        "retained_license_paths": [
+          "LICENSE"
+        ]
+      },
+      "near_duplicate_cluster_id": "temporal_api_pytest_yield_fixture_cluster",
+      "normalized_content_sha256": "6e7a015045277a3086f79be6336aa4d46b604c02fe20eb4fe518abcefc8d7dd9",
+      "normalized_text_path": "artifacts/normalized/temporal_api_pytest_yield_fixture_replacement_api.txt",
+      "privacy_classification": "public",
+      "publication_window": "2021",
+      "published_at": "2021-08-29T14:09:45Z",
+      "snapshot_path": "artifacts/raw/temporal_api_pytest_yield_fixture_replacement_api.tar.gz",
+      "snapshot_sha256": "834d7ec7ece3c855a43594342aa0d7a4c39d6bc15942297a68b6f46030b9eb02",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "temporal_api_pytest_yield_fixture_replacement_api",
+      "source_family": "temporal_api_pytest_yield_fixture",
+      "source_id": "temporal_api_pytest_yield_fixture_replacement_api",
+      "source_url": "https://github.com/pytest-dev/pytest/tree/1569fac603d9a50022e1474b494eebf970a2a3af"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain repository license",
+          "retain only allowlisted first-party documentation and docstrings",
+          "exclude vendored, generated, binary, and third-party content"
+        ]
+      },
+      "authority_basis": "Frozen condition=deprecated_api; publisher=scipy; immutable identity=git_commit.",
+      "canonical_identifier": "github:scipy/scipy@722bfc3f2cb4884c7ef3eb87cefcb91ff7479208",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "temporal_api_scipy_imageio_imread",
+      "domain_group": "software_product_documentation",
+      "domain_id": "scientific_image_io_api",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "BSD-3-Clause",
+        "notes": "retain repository license; retain only allowlisted first-party documentation and docstrings; exclude vendored, generated, binary, and third-party content",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://github.com/scipy/scipy/blob/main/LICENSE.txt"
+      },
+      "metadata": {
+        "acquisition_method": "github_raw_allowlist",
+        "allowlisted_paths": [
+          "doc/release/1.2.0-notes.rst",
+          "doc/source/misc.rst",
+          "scipy/misc/pilutil.py"
+        ],
+        "catalog_condition": "deprecated_api",
+        "commit": "722bfc3f2cb4884c7ef3eb87cefcb91ff7479208",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "commit_timestamp": "2018-12-17T17:54:00Z",
+          "kind": "git_commit",
+          "release_ref": "v1.2.0",
+          "value": "722bfc3f2cb4884c7ef3eb87cefcb91ff7479208"
+        },
+        "included_document_files": 3,
+        "member_sha256": {
+          "content/doc/release/1.2.0-notes.rst": "d3b6b6b4c68e8b2a6d56c147e9b5fe3997e25be8ffd029b68743e49784d5f1a0",
+          "content/doc/source/misc.rst": "03eaf6797bb1e00b16991327f6213f18eb45db620cbe1443a34a2b3177ad72ed",
+          "content/scipy/misc/pilutil.py": "2c203e52c7cf90e02a93c3b670b4dbfa4f098d71a07b828e09a33aea6831b1c7",
+          "legal/LICENSE.txt": "a8ed7cf63c82e39b7f1d673238d34e8e0bd0fe8a64d5220a86294b0877096dd9"
+        },
+        "release_ref": "v1.2.0",
+        "repository": "scipy/scipy",
+        "retained_legal_files": 1,
+        "retained_license_paths": [
+          "LICENSE.txt"
+        ]
+      },
+      "near_duplicate_cluster_id": "temporal_api_scipy_imageio_imread_cluster",
+      "normalized_content_sha256": "185006a2dc06fb5541a7d3c09d41ecc1210421863d813af5620dd3693af84cef",
+      "normalized_text_path": "artifacts/normalized/temporal_api_scipy_imageio_imread_deprecated_api.txt",
+      "privacy_classification": "public",
+      "publication_window": "2018",
+      "published_at": "2018-12-17T17:54:00Z",
+      "snapshot_path": "artifacts/raw/temporal_api_scipy_imageio_imread_deprecated_api.tar.gz",
+      "snapshot_sha256": "42821eae64fc1de892d0b66ade225b4333bb9cbec3c43512d1237bc28f1f0508",
+      "source_conditions": [
+        "archived",
+        "superseded"
+      ],
+      "source_document_id": "temporal_api_scipy_imageio_imread_deprecated_api",
+      "source_family": "temporal_api_scipy_imageio_imread",
+      "source_id": "temporal_api_scipy_imageio_imread_deprecated_api",
+      "source_url": "https://github.com/scipy/scipy/tree/722bfc3f2cb4884c7ef3eb87cefcb91ff7479208"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain repository license",
+          "retain only allowlisted first-party documentation and docstrings",
+          "exclude vendored, generated, binary, and third-party content"
+        ]
+      },
+      "authority_basis": "Frozen condition=replacement_api; publisher=imageio; immutable identity=git_commit.",
+      "canonical_identifier": "github:imageio/imageio@671d96a5dd9bc94050cc89c4b436e2f7c874283e",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "temporal_api_scipy_imageio_imread",
+      "domain_group": "software_product_documentation",
+      "domain_id": "scientific_image_io_api",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "BSD-2-Clause",
+        "notes": "retain repository license; retain only allowlisted first-party documentation and docstrings; exclude vendored, generated, binary, and third-party content",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://github.com/imageio/imageio/blob/master/LICENSE"
+      },
+      "metadata": {
+        "acquisition_method": "github_raw_allowlist",
+        "allowlisted_paths": [
+          "docs/reference/userapi.rst"
+        ],
+        "catalog_condition": "replacement_api",
+        "commit": "671d96a5dd9bc94050cc89c4b436e2f7c874283e",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "commit_timestamp": "2026-07-20T05:25:55Z",
+          "kind": "git_commit",
+          "release_ref": "v2.37.4",
+          "value": "671d96a5dd9bc94050cc89c4b436e2f7c874283e"
+        },
+        "included_document_files": 1,
+        "member_sha256": {
+          "content/docs/reference/userapi.rst": "878b593e806590cd99efe89dec4842ff0c8f0a8aa5f109568fa05edcf5a2a564",
+          "legal/LICENSE": "c453cf1368bb9e009e4d7e5334fc78511e665316a612ef54ee4fe1245678fe2c"
+        },
+        "release_ref": "v2.37.4",
+        "repository": "imageio/imageio",
+        "retained_legal_files": 1,
+        "retained_license_paths": [
+          "LICENSE"
+        ]
+      },
+      "near_duplicate_cluster_id": "temporal_api_scipy_imageio_imread_cluster",
+      "normalized_content_sha256": "ae543a2a0a53586ab0f33ad54ed4dd7ff60013030487ec8323c62f9fe1157e3a",
+      "normalized_text_path": "artifacts/normalized/temporal_api_scipy_imageio_imread_replacement_api.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026",
+      "published_at": "2026-07-20T05:25:55Z",
+      "snapshot_path": "artifacts/raw/temporal_api_scipy_imageio_imread_replacement_api.tar.gz",
+      "snapshot_sha256": "92294e8fd38b733596c6fa33d8c14c6217ad38d3084be71d1cdb9fd260ad44a5",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "temporal_api_scipy_imageio_imread_replacement_api",
+      "source_family": "temporal_api_scipy_imageio_imread",
+      "source_id": "temporal_api_scipy_imageio_imread_replacement_api",
+      "source_url": "https://github.com/imageio/imageio/tree/671d96a5dd9bc94050cc89c4b436e2f7c874283e"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain repository license",
+          "retain only allowlisted first-party documentation and docstrings",
+          "exclude vendored, generated, binary, and third-party content"
+        ]
+      },
+      "authority_basis": "Frozen condition=deprecated_api; publisher=scikit-learn; immutable identity=git_commit.",
+      "canonical_identifier": "github:scikit-learn/scikit-learn@7e1e6d09bcc2eaeba98f7e737aac2ac782f0e5f1",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "temporal_api_sklearn_feature_names",
+      "domain_group": "software_product_documentation",
+      "domain_id": "machine_learning_preprocessing_api",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "BSD-3-Clause",
+        "notes": "retain repository license; retain only allowlisted first-party documentation and docstrings; exclude vendored, generated, binary, and third-party content",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://github.com/scikit-learn/scikit-learn/blob/main/COPYING"
+      },
+      "metadata": {
+        "acquisition_method": "github_raw_allowlist",
+        "allowlisted_paths": [
+          "doc/whats_new/v1.0.rst",
+          "sklearn/preprocessing/_encoders.py"
+        ],
+        "catalog_condition": "deprecated_api",
+        "commit": "7e1e6d09bcc2eaeba98f7e737aac2ac782f0e5f1",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "commit_timestamp": "2021-12-25T11:27:28Z",
+          "kind": "git_commit",
+          "release_ref": "1.0.2",
+          "value": "7e1e6d09bcc2eaeba98f7e737aac2ac782f0e5f1"
+        },
+        "included_document_files": 2,
+        "member_sha256": {
+          "content/doc/whats_new/v1.0.rst": "b71b96b6309d370ba1820acd36fe2c4a37dc7a75a89fd91399778b2768648967",
+          "content/sklearn/preprocessing/_encoders.py": "d6581b89ae0d4ed8bf814ce94f979c18fea6e55aa66a5ce9ba02057ceee99995",
+          "legal/COPYING": "bc2e5553b31344779335ddadac8de6f9d12da6f4ce46e22a8e2820951a1d5458"
+        },
+        "release_ref": "1.0.2",
+        "repository": "scikit-learn/scikit-learn",
+        "retained_legal_files": 1,
+        "retained_license_paths": [
+          "COPYING"
+        ]
+      },
+      "near_duplicate_cluster_id": "temporal_api_sklearn_feature_names_cluster",
+      "normalized_content_sha256": "d9dd5d6f03ed650b374caf464afaa38a0a0cb73675c348d52cdca208c8cc51b4",
+      "normalized_text_path": "artifacts/normalized/temporal_api_sklearn_feature_names_deprecated_api.txt",
+      "privacy_classification": "public",
+      "publication_window": "2021",
+      "published_at": "2021-12-25T11:27:28Z",
+      "snapshot_path": "artifacts/raw/temporal_api_sklearn_feature_names_deprecated_api.tar.gz",
+      "snapshot_sha256": "6a11ea428bc037cd4317265d3f871e242cdce65ddf241b97eab81ba4faeca475",
+      "source_conditions": [
+        "archived",
+        "superseded"
+      ],
+      "source_document_id": "temporal_api_sklearn_feature_names_deprecated_api",
+      "source_family": "temporal_api_sklearn_feature_names",
+      "source_id": "temporal_api_sklearn_feature_names_deprecated_api",
+      "source_url": "https://github.com/scikit-learn/scikit-learn/tree/7e1e6d09bcc2eaeba98f7e737aac2ac782f0e5f1"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain repository license",
+          "retain only allowlisted first-party documentation and docstrings",
+          "exclude vendored, generated, binary, and third-party content"
+        ]
+      },
+      "authority_basis": "Frozen condition=replacement_api; publisher=scikit-learn; immutable identity=git_commit.",
+      "canonical_identifier": "github:scikit-learn/scikit-learn@dc580a8ef5ee2a8aea80498388690e2213118efd",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/gzip",
+      "document_lineage_id": "temporal_api_sklearn_feature_names",
+      "domain_group": "software_product_documentation",
+      "domain_id": "machine_learning_preprocessing_api",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "BSD-3-Clause",
+        "notes": "retain repository license; retain only allowlisted first-party documentation and docstrings; exclude vendored, generated, binary, and third-party content",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://github.com/scikit-learn/scikit-learn/blob/main/COPYING"
+      },
+      "metadata": {
+        "acquisition_method": "github_raw_allowlist",
+        "allowlisted_paths": [
+          "doc/whats_new/v1.2.rst",
+          "sklearn/preprocessing/_encoders.py"
+        ],
+        "catalog_condition": "replacement_api",
+        "commit": "dc580a8ef5ee2a8aea80498388690e2213118efd",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "commit_timestamp": "2022-12-08T12:04:29Z",
+          "kind": "git_commit",
+          "release_ref": "1.2.0",
+          "value": "dc580a8ef5ee2a8aea80498388690e2213118efd"
+        },
+        "included_document_files": 2,
+        "member_sha256": {
+          "content/doc/whats_new/v1.2.rst": "108c60ebff3c3acc0208566eafcd2af1ae1a1175debd8b2b73ef240dda934938",
+          "content/sklearn/preprocessing/_encoders.py": "c213f9db2ab4e5a287b351c245b9e28ea1bbdb1a762113c8b131645dece4448b",
+          "legal/COPYING": "e39bf18719108f9e94b578020077dae2c8f0cede14cd7caa11e9a13c44b5e5ab"
+        },
+        "release_ref": "1.2.0",
+        "repository": "scikit-learn/scikit-learn",
+        "retained_legal_files": 1,
+        "retained_license_paths": [
+          "COPYING"
+        ]
+      },
+      "near_duplicate_cluster_id": "temporal_api_sklearn_feature_names_cluster",
+      "normalized_content_sha256": "900099e1ec1d1b28d59d23da8091a1f30e164246d036ba6eee645d5b9db1e5bc",
+      "normalized_text_path": "artifacts/normalized/temporal_api_sklearn_feature_names_replacement_api.txt",
+      "privacy_classification": "public",
+      "publication_window": "2022",
+      "published_at": "2022-12-08T12:04:29Z",
+      "snapshot_path": "artifacts/raw/temporal_api_sklearn_feature_names_replacement_api.tar.gz",
+      "snapshot_sha256": "d1cb1eac4d9bf056bc62ca6b9099580dd03b39e9c59f50b742b9ec8d050e4eb9",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "temporal_api_sklearn_feature_names_replacement_api",
+      "source_family": "temporal_api_sklearn_feature_names",
+      "source_id": "temporal_api_sklearn_feature_names_replacement_api",
+      "source_url": "https://github.com/scikit-learn/scikit-learn/tree/dc580a8ef5ee2a8aea80498388690e2213118efd"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain issuing-body attribution",
+          "exclude third-party copyrighted material and incorporated standards",
+          "exclude images and separately licensed media"
+        ]
+      },
+      "authority_basis": "Frozen condition=archived; publisher=Office of the Federal Register / GPO; immutable identity=effective_date.",
+      "canonical_identifier": "ecfr:2020-01-01:title-16:part-312",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/xml",
+      "document_lineage_id": "temporal_ecfr_coppa",
+      "domain_group": "policy_regulatory",
+      "domain_id": "childrens_online_privacy_coppa",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work",
+        "notes": "retain issuing-body attribution; exclude third-party copyrighted material and incorporated standards; exclude images and separately licensed media",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "ecfr_versioner_api",
+        "catalog_condition": "archived",
+        "effective_date": "2020-01-01",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "expected_bytes": 39968,
+          "expected_sha256": "0a57819898dca97d0c97303c8f61e9f166eba5da0a9fc615f11bf3d9c80de965",
+          "kind": "effective_date",
+          "value": "2020-01-01"
+        },
+        "included_document_files": 1,
+        "retained_legal_files": 0,
+        "upstream_bytes": 39968,
+        "upstream_sha256": "0a57819898dca97d0c97303c8f61e9f166eba5da0a9fc615f11bf3d9c80de965"
+      },
+      "near_duplicate_cluster_id": "temporal_ecfr_coppa_cluster",
+      "normalized_content_sha256": "b7b6c2faabeed17c3e331857751d3953fa02bc9454c89845759057feef9effe2",
+      "normalized_text_path": "artifacts/normalized/temporal_ecfr_coppa_archived_20200101.txt",
+      "privacy_classification": "public",
+      "publication_window": "2020",
+      "published_at": "2020-01-01T00:00:00Z",
+      "snapshot_path": "artifacts/raw/temporal_ecfr_coppa_archived_20200101.xml",
+      "snapshot_sha256": "0a57819898dca97d0c97303c8f61e9f166eba5da0a9fc615f11bf3d9c80de965",
+      "source_conditions": [
+        "archived",
+        "stale"
+      ],
+      "source_document_id": "temporal_ecfr_coppa_archived_20200101",
+      "source_family": "temporal_ecfr_coppa",
+      "source_id": "temporal_ecfr_coppa_archived_20200101",
+      "source_url": "https://www.ecfr.gov/api/versioner/v1/full/2020-01-01/title-16.xml?part=312"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain issuing-body attribution",
+          "exclude third-party copyrighted material and incorporated standards",
+          "exclude images and separately licensed media"
+        ]
+      },
+      "authority_basis": "Frozen condition=current; publisher=Office of the Federal Register / GPO; immutable identity=effective_date.",
+      "canonical_identifier": "ecfr:2026-07-22:title-16:part-312",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/xml",
+      "document_lineage_id": "temporal_ecfr_coppa",
+      "domain_group": "policy_regulatory",
+      "domain_id": "childrens_online_privacy_coppa",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work",
+        "notes": "retain issuing-body attribution; exclude third-party copyrighted material and incorporated standards; exclude images and separately licensed media",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "ecfr_versioner_api",
+        "catalog_condition": "current",
+        "effective_date": "2026-07-22",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "expected_bytes": 49580,
+          "expected_sha256": "e7de115eca9b7e8cd8851a2f3fb952c0fd510122fb92c41f00478034b7f38a43",
+          "kind": "effective_date",
+          "value": "2026-07-22"
+        },
+        "included_document_files": 1,
+        "retained_legal_files": 0,
+        "upstream_bytes": 49580,
+        "upstream_sha256": "e7de115eca9b7e8cd8851a2f3fb952c0fd510122fb92c41f00478034b7f38a43"
+      },
+      "near_duplicate_cluster_id": "temporal_ecfr_coppa_cluster",
+      "normalized_content_sha256": "c71980dedc4f7928ee52d1b3082a1012f1f3844a9e9968bc2ba928190405dd98",
+      "normalized_text_path": "artifacts/normalized/temporal_ecfr_coppa_current_20260722.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026",
+      "published_at": "2026-07-22T00:00:00Z",
+      "snapshot_path": "artifacts/raw/temporal_ecfr_coppa_current_20260722.xml",
+      "snapshot_sha256": "e7de115eca9b7e8cd8851a2f3fb952c0fd510122fb92c41f00478034b7f38a43",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "temporal_ecfr_coppa_current_20260722",
+      "source_family": "temporal_ecfr_coppa",
+      "source_id": "temporal_ecfr_coppa_current_20260722",
+      "source_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-22/title-16.xml?part=312"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain issuing-body attribution",
+          "exclude third-party copyrighted material and incorporated standards",
+          "exclude images and separately licensed media"
+        ]
+      },
+      "authority_basis": "Frozen condition=archived; publisher=Office of the Federal Register / GPO; immutable identity=effective_date.",
+      "canonical_identifier": "ecfr:2020-01-01:title-40:part-261",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/xml",
+      "document_lineage_id": "temporal_ecfr_hazardous_waste",
+      "domain_group": "policy_regulatory",
+      "domain_id": "hazardous_waste_identification",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work",
+        "notes": "retain issuing-body attribution; exclude third-party copyrighted material and incorporated standards; exclude images and separately licensed media",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "ecfr_versioner_api",
+        "catalog_condition": "archived",
+        "effective_date": "2020-01-01",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "expected_bytes": 2086760,
+          "expected_sha256": "c2842f835e9b3c22c3caef51ed4e91d18401d30da13aca3e641c87e95ba34195",
+          "kind": "effective_date",
+          "value": "2020-01-01"
+        },
+        "included_document_files": 1,
+        "retained_legal_files": 0,
+        "upstream_bytes": 2086760,
+        "upstream_sha256": "c2842f835e9b3c22c3caef51ed4e91d18401d30da13aca3e641c87e95ba34195"
+      },
+      "near_duplicate_cluster_id": "temporal_ecfr_hazardous_waste_cluster",
+      "normalized_content_sha256": "527b4d24187526871c100ac3c7689b17e48086394b368fb4e90aa6ea331abac9",
+      "normalized_text_path": "artifacts/normalized/temporal_ecfr_hazardous_waste_archived_20200101.txt",
+      "privacy_classification": "public",
+      "publication_window": "2020",
+      "published_at": "2020-01-01T00:00:00Z",
+      "snapshot_path": "artifacts/raw/temporal_ecfr_hazardous_waste_archived_20200101.xml",
+      "snapshot_sha256": "c2842f835e9b3c22c3caef51ed4e91d18401d30da13aca3e641c87e95ba34195",
+      "source_conditions": [
+        "archived",
+        "stale"
+      ],
+      "source_document_id": "temporal_ecfr_hazardous_waste_archived_20200101",
+      "source_family": "temporal_ecfr_hazardous_waste",
+      "source_id": "temporal_ecfr_hazardous_waste_archived_20200101",
+      "source_url": "https://www.ecfr.gov/api/versioner/v1/full/2020-01-01/title-40.xml?part=261"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain issuing-body attribution",
+          "exclude third-party copyrighted material and incorporated standards",
+          "exclude images and separately licensed media"
+        ]
+      },
+      "authority_basis": "Frozen condition=current; publisher=Office of the Federal Register / GPO; immutable identity=effective_date.",
+      "canonical_identifier": "ecfr:2026-07-22:title-40:part-261",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/xml",
+      "document_lineage_id": "temporal_ecfr_hazardous_waste",
+      "domain_group": "policy_regulatory",
+      "domain_id": "hazardous_waste_identification",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work",
+        "notes": "retain issuing-body attribution; exclude third-party copyrighted material and incorporated standards; exclude images and separately licensed media",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "ecfr_versioner_api",
+        "catalog_condition": "current",
+        "effective_date": "2026-07-22",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "expected_bytes": 2061265,
+          "expected_sha256": "930cc290d128d71122de4a81188ef2d57675d72021263b51ad05a6536cb285ad",
+          "kind": "effective_date",
+          "value": "2026-07-22"
+        },
+        "included_document_files": 1,
+        "retained_legal_files": 0,
+        "upstream_bytes": 2061265,
+        "upstream_sha256": "930cc290d128d71122de4a81188ef2d57675d72021263b51ad05a6536cb285ad"
+      },
+      "near_duplicate_cluster_id": "temporal_ecfr_hazardous_waste_cluster",
+      "normalized_content_sha256": "4633248f46aafcdd28511bc4d14e91fb1d36ef3dec08d0f7209267945a320775",
+      "normalized_text_path": "artifacts/normalized/temporal_ecfr_hazardous_waste_current_20260722.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026",
+      "published_at": "2026-07-22T00:00:00Z",
+      "snapshot_path": "artifacts/raw/temporal_ecfr_hazardous_waste_current_20260722.xml",
+      "snapshot_sha256": "930cc290d128d71122de4a81188ef2d57675d72021263b51ad05a6536cb285ad",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "temporal_ecfr_hazardous_waste_current_20260722",
+      "source_family": "temporal_ecfr_hazardous_waste",
+      "source_id": "temporal_ecfr_hazardous_waste_current_20260722",
+      "source_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-22/title-40.xml?part=261"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain issuing-body attribution",
+          "exclude third-party copyrighted material and incorporated standards",
+          "exclude images and separately licensed media"
+        ]
+      },
+      "authority_basis": "Frozen condition=archived; publisher=Office of the Federal Register / GPO; immutable identity=effective_date.",
+      "canonical_identifier": "ecfr:2021-01-01:title-45:part-171",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/xml",
+      "document_lineage_id": "temporal_ecfr_information_blocking",
+      "domain_group": "policy_regulatory",
+      "domain_id": "health_information_blocking",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work",
+        "notes": "retain issuing-body attribution; exclude third-party copyrighted material and incorporated standards; exclude images and separately licensed media",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "ecfr_versioner_api",
+        "catalog_condition": "archived",
+        "effective_date": "2021-01-01",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "expected_bytes": 45367,
+          "expected_sha256": "7ec15d69de91a06f36e4f12ccc57707f2616bc302e7ffad068265bda4a4ae28b",
+          "kind": "effective_date",
+          "value": "2021-01-01"
+        },
+        "included_document_files": 1,
+        "retained_legal_files": 0,
+        "upstream_bytes": 45367,
+        "upstream_sha256": "7ec15d69de91a06f36e4f12ccc57707f2616bc302e7ffad068265bda4a4ae28b"
+      },
+      "near_duplicate_cluster_id": "temporal_ecfr_information_blocking_cluster",
+      "normalized_content_sha256": "c8a855f97daff2d7c04d920ef3205643326f24f39f4144ac747a2f39dfb4117f",
+      "normalized_text_path": "artifacts/normalized/temporal_ecfr_information_blocking_archived_20210101.txt",
+      "privacy_classification": "public",
+      "publication_window": "2021",
+      "published_at": "2021-01-01T00:00:00Z",
+      "snapshot_path": "artifacts/raw/temporal_ecfr_information_blocking_archived_20210101.xml",
+      "snapshot_sha256": "7ec15d69de91a06f36e4f12ccc57707f2616bc302e7ffad068265bda4a4ae28b",
+      "source_conditions": [
+        "archived",
+        "stale"
+      ],
+      "source_document_id": "temporal_ecfr_information_blocking_archived_20210101",
+      "source_family": "temporal_ecfr_information_blocking",
+      "source_id": "temporal_ecfr_information_blocking_archived_20210101",
+      "source_url": "https://www.ecfr.gov/api/versioner/v1/full/2021-01-01/title-45.xml?part=171"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain issuing-body attribution",
+          "exclude third-party copyrighted material and incorporated standards",
+          "exclude images and separately licensed media"
+        ]
+      },
+      "authority_basis": "Frozen condition=current; publisher=Office of the Federal Register / GPO; immutable identity=effective_date.",
+      "canonical_identifier": "ecfr:2026-07-22:title-45:part-171",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/xml",
+      "document_lineage_id": "temporal_ecfr_information_blocking",
+      "domain_group": "policy_regulatory",
+      "domain_id": "health_information_blocking",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work",
+        "notes": "retain issuing-body attribution; exclude third-party copyrighted material and incorporated standards; exclude images and separately licensed media",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "ecfr_versioner_api",
+        "catalog_condition": "current",
+        "effective_date": "2026-07-22",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "expected_bytes": 71529,
+          "expected_sha256": "881f03c2034c1a6b4d49e9cde4adf70a84182f5890eb1be66f4026f4c601e023",
+          "kind": "effective_date",
+          "value": "2026-07-22"
+        },
+        "included_document_files": 1,
+        "retained_legal_files": 0,
+        "upstream_bytes": 71529,
+        "upstream_sha256": "881f03c2034c1a6b4d49e9cde4adf70a84182f5890eb1be66f4026f4c601e023"
+      },
+      "near_duplicate_cluster_id": "temporal_ecfr_information_blocking_cluster",
+      "normalized_content_sha256": "fcc9988a11da139f8f617cc2a348f3e7abd2f8a6b6b17222aecfd2e55fc226bc",
+      "normalized_text_path": "artifacts/normalized/temporal_ecfr_information_blocking_current_20260722.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026",
+      "published_at": "2026-07-22T00:00:00Z",
+      "snapshot_path": "artifacts/raw/temporal_ecfr_information_blocking_current_20260722.xml",
+      "snapshot_sha256": "881f03c2034c1a6b4d49e9cde4adf70a84182f5890eb1be66f4026f4c601e023",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "temporal_ecfr_information_blocking_current_20260722",
+      "source_family": "temporal_ecfr_information_blocking",
+      "source_id": "temporal_ecfr_information_blocking_current_20260722",
+      "source_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-22/title-45.xml?part=171"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain issuing-body attribution",
+          "exclude third-party copyrighted material and incorporated standards",
+          "exclude images and separately licensed media"
+        ]
+      },
+      "authority_basis": "Frozen condition=archived; publisher=Office of the Federal Register / GPO; immutable identity=effective_date.",
+      "canonical_identifier": "ecfr:2020-01-01:title-14:part-25",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/xml",
+      "document_lineage_id": "temporal_ecfr_transport_airworthiness",
+      "domain_group": "policy_regulatory",
+      "domain_id": "transport_aircraft_airworthiness",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work",
+        "notes": "retain issuing-body attribution; exclude third-party copyrighted material and incorporated standards; exclude images and separately licensed media",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "ecfr_versioner_api",
+        "catalog_condition": "archived",
+        "effective_date": "2020-01-01",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "expected_bytes": 1127205,
+          "expected_sha256": "ea8c2715ae41b9c676bbaa45d815884a89bdbe4505f42f7b32a334a2f9b7d7b4",
+          "kind": "effective_date",
+          "value": "2020-01-01"
+        },
+        "included_document_files": 1,
+        "retained_legal_files": 0,
+        "upstream_bytes": 1127205,
+        "upstream_sha256": "ea8c2715ae41b9c676bbaa45d815884a89bdbe4505f42f7b32a334a2f9b7d7b4"
+      },
+      "near_duplicate_cluster_id": "temporal_ecfr_transport_airworthiness_cluster",
+      "normalized_content_sha256": "30627ea88fd089aa71d5d354419a31d0717da75f01ace792905a2da9d8771b1c",
+      "normalized_text_path": "artifacts/normalized/temporal_ecfr_transport_airworthiness_archived_20200101.txt",
+      "privacy_classification": "public",
+      "publication_window": "2020",
+      "published_at": "2020-01-01T00:00:00Z",
+      "snapshot_path": "artifacts/raw/temporal_ecfr_transport_airworthiness_archived_20200101.xml",
+      "snapshot_sha256": "ea8c2715ae41b9c676bbaa45d815884a89bdbe4505f42f7b32a334a2f9b7d7b4",
+      "source_conditions": [
+        "archived",
+        "stale"
+      ],
+      "source_document_id": "temporal_ecfr_transport_airworthiness_archived_20200101",
+      "source_family": "temporal_ecfr_transport_airworthiness",
+      "source_id": "temporal_ecfr_transport_airworthiness_archived_20200101",
+      "source_url": "https://www.ecfr.gov/api/versioner/v1/full/2020-01-01/title-14.xml?part=25"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain issuing-body attribution",
+          "exclude third-party copyrighted material and incorporated standards",
+          "exclude images and separately licensed media"
+        ]
+      },
+      "authority_basis": "Frozen condition=current; publisher=Office of the Federal Register / GPO; immutable identity=effective_date.",
+      "canonical_identifier": "ecfr:2026-07-22:title-14:part-25",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/xml",
+      "document_lineage_id": "temporal_ecfr_transport_airworthiness",
+      "domain_group": "policy_regulatory",
+      "domain_id": "transport_aircraft_airworthiness",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work",
+        "notes": "retain issuing-body attribution; exclude third-party copyrighted material and incorporated standards; exclude images and separately licensed media",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "ecfr_versioner_api",
+        "catalog_condition": "current",
+        "effective_date": "2026-07-22",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "expected_bytes": 1147803,
+          "expected_sha256": "55e3b7d64af4cb293caaaf206963db3a58cdffb940c3b6f6c9b4ecce7294b742",
+          "kind": "effective_date",
+          "value": "2026-07-22"
+        },
+        "included_document_files": 1,
+        "retained_legal_files": 0,
+        "upstream_bytes": 1147803,
+        "upstream_sha256": "55e3b7d64af4cb293caaaf206963db3a58cdffb940c3b6f6c9b4ecce7294b742"
+      },
+      "near_duplicate_cluster_id": "temporal_ecfr_transport_airworthiness_cluster",
+      "normalized_content_sha256": "72f6aaad68a5f5d0d0c7549743049df8bbca4cd6e8dde05ff7275e03993a5690",
+      "normalized_text_path": "artifacts/normalized/temporal_ecfr_transport_airworthiness_current_20260722.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026",
+      "published_at": "2026-07-22T00:00:00Z",
+      "snapshot_path": "artifacts/raw/temporal_ecfr_transport_airworthiness_current_20260722.xml",
+      "snapshot_sha256": "55e3b7d64af4cb293caaaf206963db3a58cdffb940c3b6f6c9b4ecce7294b742",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "temporal_ecfr_transport_airworthiness_current_20260722",
+      "source_family": "temporal_ecfr_transport_airworthiness",
+      "source_id": "temporal_ecfr_transport_airworthiness_current_20260722",
+      "source_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-22/title-14.xml?part=25"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain issuing-body attribution",
+          "exclude third-party copyrighted material and incorporated standards",
+          "exclude images and separately licensed media"
+        ]
+      },
+      "authority_basis": "Frozen condition=archived; publisher=Office of the Federal Register / GPO; immutable identity=effective_date.",
+      "canonical_identifier": "ecfr:2020-01-01:title-29:part-1910",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/xml",
+      "document_lineage_id": "temporal_ecfr_workplace_safety",
+      "domain_group": "policy_regulatory",
+      "domain_id": "general_industry_workplace_safety",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work",
+        "notes": "retain issuing-body attribution; exclude third-party copyrighted material and incorporated standards; exclude images and separately licensed media",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "ecfr_versioner_api",
+        "catalog_condition": "archived",
+        "effective_date": "2020-01-01",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "expected_bytes": 7475282,
+          "expected_sha256": "23e87afb3bcd7aad37069deeb4c94e937101130a5e468dd9c55434e8d3678361",
+          "kind": "effective_date",
+          "value": "2020-01-01"
+        },
+        "included_document_files": 1,
+        "retained_legal_files": 0,
+        "upstream_bytes": 7475282,
+        "upstream_sha256": "23e87afb3bcd7aad37069deeb4c94e937101130a5e468dd9c55434e8d3678361"
+      },
+      "near_duplicate_cluster_id": "temporal_ecfr_workplace_safety_cluster",
+      "normalized_content_sha256": "feeabd232e9b8547c012615702fc22a707efbbc68d6b2b4db78d036a872b4f82",
+      "normalized_text_path": "artifacts/normalized/temporal_ecfr_workplace_safety_archived_20200101.txt",
+      "privacy_classification": "public",
+      "publication_window": "2020",
+      "published_at": "2020-01-01T00:00:00Z",
+      "snapshot_path": "artifacts/raw/temporal_ecfr_workplace_safety_archived_20200101.xml",
+      "snapshot_sha256": "23e87afb3bcd7aad37069deeb4c94e937101130a5e468dd9c55434e8d3678361",
+      "source_conditions": [
+        "archived",
+        "stale"
+      ],
+      "source_document_id": "temporal_ecfr_workplace_safety_archived_20200101",
+      "source_family": "temporal_ecfr_workplace_safety",
+      "source_id": "temporal_ecfr_workplace_safety_archived_20200101",
+      "source_url": "https://www.ecfr.gov/api/versioner/v1/full/2020-01-01/title-29.xml?part=1910"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain issuing-body attribution",
+          "exclude third-party copyrighted material and incorporated standards",
+          "exclude images and separately licensed media"
+        ]
+      },
+      "authority_basis": "Frozen condition=current; publisher=Office of the Federal Register / GPO; immutable identity=effective_date.",
+      "canonical_identifier": "ecfr:2026-07-22:title-29:part-1910",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/xml",
+      "document_lineage_id": "temporal_ecfr_workplace_safety",
+      "domain_group": "policy_regulatory",
+      "domain_id": "general_industry_workplace_safety",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work",
+        "notes": "retain issuing-body attribution; exclude third-party copyrighted material and incorporated standards; exclude images and separately licensed media",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "ecfr_versioner_api",
+        "catalog_condition": "current",
+        "effective_date": "2026-07-22",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "expected_bytes": 6716342,
+          "expected_sha256": "65c51e3f40185c53864997402c82b3da81a1867f38c04562726b82f0d5e2c6ca",
+          "kind": "effective_date",
+          "value": "2026-07-22"
+        },
+        "included_document_files": 1,
+        "retained_legal_files": 0,
+        "upstream_bytes": 6716342,
+        "upstream_sha256": "65c51e3f40185c53864997402c82b3da81a1867f38c04562726b82f0d5e2c6ca"
+      },
+      "near_duplicate_cluster_id": "temporal_ecfr_workplace_safety_cluster",
+      "normalized_content_sha256": "adcc6e53aa63b0ee6f73260f40f64f1d37f25fa4d87c044f5ba81e7257c51fa3",
+      "normalized_text_path": "artifacts/normalized/temporal_ecfr_workplace_safety_current_20260722.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026",
+      "published_at": "2026-07-22T00:00:00Z",
+      "snapshot_path": "artifacts/raw/temporal_ecfr_workplace_safety_current_20260722.xml",
+      "snapshot_sha256": "65c51e3f40185c53864997402c82b3da81a1867f38c04562726b82f0d5e2c6ca",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "temporal_ecfr_workplace_safety_current_20260722",
+      "source_family": "temporal_ecfr_workplace_safety",
+      "source_id": "temporal_ecfr_workplace_safety_current_20260722",
+      "source_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-22/title-29.xml?part=1910"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain issuing-body attribution",
+          "exclude third-party copyrighted material and incorporated standards",
+          "exclude images and separately licensed media"
+        ]
+      },
+      "authority_basis": "Frozen condition=authoritative; publisher=Office of the Law Revision Counsel, U.S. House; immutable identity=release_point.",
+      "canonical_identifier": "olrc:usc:title-5:release-point-119-102",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/zip",
+      "document_lineage_id": "temporal_olrc_title05",
+      "domain_group": "policy_regulatory",
+      "domain_id": "federal_statutory_law_title05",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work",
+        "notes": "retain issuing-body attribution; exclude third-party copyrighted material and incorporated standards; exclude images and separately licensed media",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "olrc_release_point_zip",
+        "catalog_condition": "authoritative",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "expected_bytes": 2942306,
+          "expected_sha256": "f725c011f1db669649e24154db5db5a290268a6a82588ccb68df3de94ff28dad",
+          "kind": "release_point",
+          "release_date": "2026-07-12",
+          "value": "119-102"
+        },
+        "included_document_files": 1,
+        "positive_law_title": true,
+        "release_date": "2026-07-12",
+        "release_point": "119-102",
+        "retained_legal_files": 0,
+        "selected_sections": [
+          "552"
+        ],
+        "ultimate_legal_effect_outside_scope": true,
+        "upstream_bytes": 2942306,
+        "upstream_sha256": "f725c011f1db669649e24154db5db5a290268a6a82588ccb68df3de94ff28dad"
+      },
+      "near_duplicate_cluster_id": "temporal_olrc_title05_cluster",
+      "normalized_content_sha256": "cdda14ddf4d71e16cb598ccd9a523f6f1b9a5dcc636160c876bbd964ddec1657",
+      "normalized_text_path": "artifacts/normalized/temporal_olrc_title05_119_102.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026",
+      "published_at": "2026-07-12T00:00:00Z",
+      "snapshot_path": "artifacts/raw/temporal_olrc_title05_119_102.zip",
+      "snapshot_sha256": "f725c011f1db669649e24154db5db5a290268a6a82588ccb68df3de94ff28dad",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "temporal_olrc_title05_119_102",
+      "source_family": "temporal_olrc_title05",
+      "source_id": "temporal_olrc_title05_119_102",
+      "source_url": "https://uscode.house.gov/download/releasepoints/us/pl/119/102/xml_usc05@119-102.zip"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain issuing-body attribution",
+          "exclude third-party copyrighted material and incorporated standards",
+          "exclude images and separately licensed media"
+        ]
+      },
+      "authority_basis": "Frozen condition=authoritative; publisher=Office of the Law Revision Counsel, U.S. House; immutable identity=release_point.",
+      "canonical_identifier": "olrc:usc:title-15:release-point-119-102",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/zip",
+      "document_lineage_id": "temporal_olrc_title15",
+      "domain_group": "policy_regulatory",
+      "domain_id": "federal_statutory_law_title15",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work",
+        "notes": "retain issuing-body attribution; exclude third-party copyrighted material and incorporated standards; exclude images and separately licensed media",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "olrc_release_point_zip",
+        "catalog_condition": "authoritative",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "expected_bytes": 5027552,
+          "expected_sha256": "aaf4eb0b69374ab160da244bec7f81348099016ae83ded905ded4722824e4851",
+          "kind": "release_point",
+          "release_date": "2026-07-12",
+          "value": "119-102"
+        },
+        "included_document_files": 6,
+        "positive_law_title": false,
+        "release_date": "2026-07-12",
+        "release_point": "119-102",
+        "retained_legal_files": 0,
+        "selected_sections": [
+          "6501",
+          "6502",
+          "6503",
+          "6504",
+          "6505",
+          "6506"
+        ],
+        "ultimate_legal_effect_outside_scope": true,
+        "upstream_bytes": 5027552,
+        "upstream_sha256": "aaf4eb0b69374ab160da244bec7f81348099016ae83ded905ded4722824e4851"
+      },
+      "near_duplicate_cluster_id": "temporal_olrc_title15_cluster",
+      "normalized_content_sha256": "8b4bd0a68afe2315dcbb9319c3a9a15ac5bbe6adc8c8f7c70696e7dc04c4e6b3",
+      "normalized_text_path": "artifacts/normalized/temporal_olrc_title15_119_102.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026",
+      "published_at": "2026-07-12T00:00:00Z",
+      "snapshot_path": "artifacts/raw/temporal_olrc_title15_119_102.zip",
+      "snapshot_sha256": "aaf4eb0b69374ab160da244bec7f81348099016ae83ded905ded4722824e4851",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "temporal_olrc_title15_119_102",
+      "source_family": "temporal_olrc_title15",
+      "source_id": "temporal_olrc_title15_119_102",
+      "source_url": "https://uscode.house.gov/download/releasepoints/us/pl/119/102/xml_usc15@119-102.zip"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain issuing-body attribution",
+          "exclude third-party copyrighted material and incorporated standards",
+          "exclude images and separately licensed media"
+        ]
+      },
+      "authority_basis": "Frozen condition=authoritative; publisher=Office of the Law Revision Counsel, U.S. House; immutable identity=release_point.",
+      "canonical_identifier": "olrc:usc:title-17:release-point-119-102",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/zip",
+      "document_lineage_id": "temporal_olrc_title17",
+      "domain_group": "policy_regulatory",
+      "domain_id": "federal_statutory_law_title17",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work",
+        "notes": "retain issuing-body attribution; exclude third-party copyrighted material and incorporated standards; exclude images and separately licensed media",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "olrc_release_point_zip",
+        "catalog_condition": "authoritative",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "expected_bytes": 493323,
+          "expected_sha256": "8d8e29c944e7225d5cb6a74dbc125f9e8a49f098daadb29ee9376b0cbe43bbfa",
+          "kind": "release_point",
+          "release_date": "2026-07-12",
+          "value": "119-102"
+        },
+        "included_document_files": 3,
+        "positive_law_title": true,
+        "release_date": "2026-07-12",
+        "release_point": "119-102",
+        "retained_legal_files": 0,
+        "selected_sections": [
+          "107",
+          "512",
+          "1201"
+        ],
+        "ultimate_legal_effect_outside_scope": true,
+        "upstream_bytes": 493323,
+        "upstream_sha256": "8d8e29c944e7225d5cb6a74dbc125f9e8a49f098daadb29ee9376b0cbe43bbfa"
+      },
+      "near_duplicate_cluster_id": "temporal_olrc_title17_cluster",
+      "normalized_content_sha256": "02a171e6abc71edfd7b9daaed817ad93bd7ac4764a509f3c19e75ba74deaf424",
+      "normalized_text_path": "artifacts/normalized/temporal_olrc_title17_119_102.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026",
+      "published_at": "2026-07-12T00:00:00Z",
+      "snapshot_path": "artifacts/raw/temporal_olrc_title17_119_102.zip",
+      "snapshot_sha256": "8d8e29c944e7225d5cb6a74dbc125f9e8a49f098daadb29ee9376b0cbe43bbfa",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "temporal_olrc_title17_119_102",
+      "source_family": "temporal_olrc_title17",
+      "source_id": "temporal_olrc_title17_119_102",
+      "source_url": "https://uscode.house.gov/download/releasepoints/us/pl/119/102/xml_usc17@119-102.zip"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain issuing-body attribution",
+          "exclude third-party copyrighted material and incorporated standards",
+          "exclude images and separately licensed media"
+        ]
+      },
+      "authority_basis": "Frozen condition=authoritative; publisher=Office of the Law Revision Counsel, U.S. House; immutable identity=release_point.",
+      "canonical_identifier": "olrc:usc:title-18:release-point-119-102",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/zip",
+      "document_lineage_id": "temporal_olrc_title18",
+      "domain_group": "policy_regulatory",
+      "domain_id": "federal_statutory_law_title18",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work",
+        "notes": "retain issuing-body attribution; exclude third-party copyrighted material and incorporated standards; exclude images and separately licensed media",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "olrc_release_point_zip",
+        "catalog_condition": "authoritative",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "expected_bytes": 1971101,
+          "expected_sha256": "2813d4e76e0bb148e708f6ce574246f16328ffe16f426624d357831e97bbd3d1",
+          "kind": "release_point",
+          "release_date": "2026-07-12",
+          "value": "119-102"
+        },
+        "included_document_files": 1,
+        "positive_law_title": true,
+        "release_date": "2026-07-12",
+        "release_point": "119-102",
+        "retained_legal_files": 0,
+        "selected_sections": [
+          "1030"
+        ],
+        "ultimate_legal_effect_outside_scope": true,
+        "upstream_bytes": 1971101,
+        "upstream_sha256": "2813d4e76e0bb148e708f6ce574246f16328ffe16f426624d357831e97bbd3d1"
+      },
+      "near_duplicate_cluster_id": "temporal_olrc_title18_cluster",
+      "normalized_content_sha256": "2eb1521034e2f9c91d4f0b8095c92ddd7cd0d1e16efff12a85c3efe88c269415",
+      "normalized_text_path": "artifacts/normalized/temporal_olrc_title18_119_102.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026",
+      "published_at": "2026-07-12T00:00:00Z",
+      "snapshot_path": "artifacts/raw/temporal_olrc_title18_119_102.zip",
+      "snapshot_sha256": "2813d4e76e0bb148e708f6ce574246f16328ffe16f426624d357831e97bbd3d1",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "temporal_olrc_title18_119_102",
+      "source_family": "temporal_olrc_title18",
+      "source_id": "temporal_olrc_title18_119_102",
+      "source_url": "https://uscode.house.gov/download/releasepoints/us/pl/119/102/xml_usc18@119-102.zip"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain issuing-body attribution",
+          "exclude third-party copyrighted material and incorporated standards",
+          "exclude images and separately licensed media"
+        ]
+      },
+      "authority_basis": "Frozen condition=authoritative; publisher=Office of the Law Revision Counsel, U.S. House; immutable identity=release_point.",
+      "canonical_identifier": "olrc:usc:title-29:release-point-119-102",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/zip",
+      "document_lineage_id": "temporal_olrc_title29",
+      "domain_group": "policy_regulatory",
+      "domain_id": "federal_statutory_law_title29",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work",
+        "notes": "retain issuing-body attribution; exclude third-party copyrighted material and incorporated standards; exclude images and separately licensed media",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "olrc_release_point_zip",
+        "catalog_condition": "authoritative",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "expected_bytes": 1832188,
+          "expected_sha256": "bf7cc70a4e11fc005c3d5b221cf764fb45115f5b9904445f089d4201ac5af28d",
+          "kind": "release_point",
+          "release_date": "2026-07-12",
+          "value": "119-102"
+        },
+        "included_document_files": 29,
+        "positive_law_title": false,
+        "release_date": "2026-07-12",
+        "release_point": "119-102",
+        "retained_legal_files": 0,
+        "selected_sections": [
+          "206",
+          "651",
+          "652",
+          "653",
+          "654",
+          "655",
+          "656",
+          "657",
+          "658",
+          "659",
+          "660",
+          "661",
+          "662",
+          "663",
+          "664",
+          "665",
+          "666",
+          "667",
+          "668",
+          "669",
+          "670",
+          "671",
+          "672",
+          "673",
+          "674",
+          "675",
+          "676",
+          "677",
+          "678"
+        ],
+        "ultimate_legal_effect_outside_scope": true,
+        "upstream_bytes": 1832188,
+        "upstream_sha256": "bf7cc70a4e11fc005c3d5b221cf764fb45115f5b9904445f089d4201ac5af28d"
+      },
+      "near_duplicate_cluster_id": "temporal_olrc_title29_cluster",
+      "normalized_content_sha256": "53d850d2acd775bfb5c67bd3c19f217bdefa338a28df6d93f89fe974b7cfa431",
+      "normalized_text_path": "artifacts/normalized/temporal_olrc_title29_119_102.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026",
+      "published_at": "2026-07-12T00:00:00Z",
+      "snapshot_path": "artifacts/raw/temporal_olrc_title29_119_102.zip",
+      "snapshot_sha256": "bf7cc70a4e11fc005c3d5b221cf764fb45115f5b9904445f089d4201ac5af28d",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "temporal_olrc_title29_119_102",
+      "source_family": "temporal_olrc_title29",
+      "source_id": "temporal_olrc_title29_119_102",
+      "source_url": "https://uscode.house.gov/download/releasepoints/us/pl/119/102/xml_usc29@119-102.zip"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain issuing-body attribution",
+          "exclude third-party copyrighted material and incorporated standards",
+          "exclude images and separately licensed media"
+        ]
+      },
+      "authority_basis": "Frozen condition=authoritative; publisher=Office of the Law Revision Counsel, U.S. House; immutable identity=release_point.",
+      "canonical_identifier": "olrc:usc:title-35:release-point-119-102",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/zip",
+      "document_lineage_id": "temporal_olrc_title35",
+      "domain_group": "policy_regulatory",
+      "domain_id": "federal_statutory_law_title35",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work",
+        "notes": "retain issuing-body attribution; exclude third-party copyrighted material and incorporated standards; exclude images and separately licensed media",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "olrc_release_point_zip",
+        "catalog_condition": "authoritative",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "expected_bytes": 277930,
+          "expected_sha256": "fb3a4ede2490dd5ea2a8193635d1b9dba564a596eceaf3ea3f293018a26f9b44",
+          "kind": "release_point",
+          "release_date": "2026-07-12",
+          "value": "119-102"
+        },
+        "included_document_files": 1,
+        "positive_law_title": true,
+        "release_date": "2026-07-12",
+        "release_point": "119-102",
+        "retained_legal_files": 0,
+        "selected_sections": [
+          "101"
+        ],
+        "ultimate_legal_effect_outside_scope": true,
+        "upstream_bytes": 277930,
+        "upstream_sha256": "fb3a4ede2490dd5ea2a8193635d1b9dba564a596eceaf3ea3f293018a26f9b44"
+      },
+      "near_duplicate_cluster_id": "temporal_olrc_title35_cluster",
+      "normalized_content_sha256": "02c581ac8e15ea62ab6b910333bd359d14b160b26e8770dfcecb1605a1c75167",
+      "normalized_text_path": "artifacts/normalized/temporal_olrc_title35_119_102.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026",
+      "published_at": "2026-07-12T00:00:00Z",
+      "snapshot_path": "artifacts/raw/temporal_olrc_title35_119_102.zip",
+      "snapshot_sha256": "fb3a4ede2490dd5ea2a8193635d1b9dba564a596eceaf3ea3f293018a26f9b44",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "temporal_olrc_title35_119_102",
+      "source_family": "temporal_olrc_title35",
+      "source_id": "temporal_olrc_title35_119_102",
+      "source_url": "https://uscode.house.gov/download/releasepoints/us/pl/119/102/xml_usc35@119-102.zip"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain issuing-body attribution",
+          "exclude third-party copyrighted material and incorporated standards",
+          "exclude images and separately licensed media"
+        ]
+      },
+      "authority_basis": "Frozen condition=authoritative; publisher=Office of the Law Revision Counsel, U.S. House; immutable identity=release_point.",
+      "canonical_identifier": "olrc:usc:title-42:release-point-119-102",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/zip",
+      "document_lineage_id": "temporal_olrc_title42",
+      "domain_group": "policy_regulatory",
+      "domain_id": "federal_statutory_law_title42",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "US-Government-Work",
+        "notes": "retain issuing-body attribution; exclude third-party copyrighted material and incorporated standards; exclude images and separately licensed media",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://www.govinfo.gov/about/policies"
+      },
+      "metadata": {
+        "acquisition_method": "olrc_release_point_zip",
+        "catalog_condition": "authoritative",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "expected_bytes": 18161570,
+          "expected_sha256": "31929c28f117362ac8788607242795769b05ed7726f07e4ed3b1786f39655ce7",
+          "kind": "release_point",
+          "release_date": "2026-07-12",
+          "value": "119-102"
+        },
+        "included_document_files": 11,
+        "positive_law_title": false,
+        "release_date": "2026-07-12",
+        "release_point": "119-102",
+        "retained_legal_files": 0,
+        "selected_sections": [
+          "1983",
+          "1320d",
+          "1320d-1",
+          "1320d-2",
+          "1320d-3",
+          "1320d-4",
+          "1320d-5",
+          "1320d-6",
+          "1320d-7",
+          "1320d-8",
+          "1320d-9"
+        ],
+        "ultimate_legal_effect_outside_scope": true,
+        "upstream_bytes": 18161570,
+        "upstream_sha256": "31929c28f117362ac8788607242795769b05ed7726f07e4ed3b1786f39655ce7"
+      },
+      "near_duplicate_cluster_id": "temporal_olrc_title42_cluster",
+      "normalized_content_sha256": "cb05066af8c566c3e60ef817876eb7459f1031f58fcc8e452877301cc9c148ce",
+      "normalized_text_path": "artifacts/normalized/temporal_olrc_title42_119_102.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026",
+      "published_at": "2026-07-12T00:00:00Z",
+      "snapshot_path": "artifacts/raw/temporal_olrc_title42_119_102.zip",
+      "snapshot_sha256": "31929c28f117362ac8788607242795769b05ed7726f07e4ed3b1786f39655ce7",
+      "source_conditions": [
+        "current",
+        "canonical"
+      ],
+      "source_document_id": "temporal_olrc_title42_119_102",
+      "source_family": "temporal_olrc_title42",
+      "source_id": "temporal_olrc_title42_119_102",
+      "source_url": "https://uscode.house.gov/download/releasepoints/us/pl/119/102/xml_usc42@119-102.zip"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain page URL, revision ID, and author-history attribution link",
+          "retain CC BY-SA notice for redistributed or modified text",
+          "exclude non-text media and fair-use content",
+          "exclude usernames, edit summaries, talk pages, and user metadata"
+        ]
+      },
+      "authority_basis": "Frozen condition=low_authority; publisher=Wikimedia community; immutable identity=mediawiki_revision.",
+      "canonical_identifier": "wikipedia:page-276753:revision-1362897733",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/json",
+      "document_lineage_id": "temporal_wikipedia_cfaa_summary",
+      "domain_group": "policy_regulatory",
+      "domain_id": "computer_fraud_statute",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "CC-BY-SA-4.0",
+        "notes": "retain page URL, revision ID, and author-history attribution link; retain CC BY-SA notice for redistributed or modified text; exclude non-text media and fair-use content; exclude usernames, edit summaries, talk pages, and user metadata",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use"
+      },
+      "metadata": {
+        "acquisition_method": "mediawiki_revision_api",
+        "author_history_url": "https://en.wikipedia.org/w/index.php?title=Computer_Fraud_and_Abuse_Act&action=history",
+        "catalog_condition": "low_authority",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "kind": "mediawiki_revision",
+          "page_id": 276753,
+          "reviewed_wikitext_bytes": 47643,
+          "revision_timestamp": "2026-07-06T22:03:05Z",
+          "value": 1362897733
+        },
+        "included_document_files": 1,
+        "page_id": 276753,
+        "project": "wikipedia",
+        "retained_legal_files": 0,
+        "revision_id": 1362897733,
+        "revision_timestamp": "2026-07-06T22:03:05Z",
+        "upstream_content_sha1": "0d0504b6d802317a7f251c23f02bf83b9966c0a7",
+        "upstream_wikitext_bytes": 47643,
+        "user_metadata_retained": false
+      },
+      "near_duplicate_cluster_id": "temporal_wikipedia_cfaa_summary_cluster",
+      "normalized_content_sha256": "e42b0b6d456c71758b91b7268f11a11617d74e7983681971c93a3775bb689e87",
+      "normalized_text_path": "artifacts/normalized/temporal_wikipedia_cfaa_summary_r1362897733.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026",
+      "published_at": "2026-07-06T22:03:05Z",
+      "snapshot_path": "artifacts/raw/temporal_wikipedia_cfaa_summary_r1362897733.json",
+      "snapshot_sha256": "2b8f79fdb5d40963b5702370a82e7588c09eea3701a7e99fe62f7ccfea5e54b6",
+      "source_conditions": [
+        "low_authority"
+      ],
+      "source_document_id": "temporal_wikipedia_cfaa_summary_r1362897733",
+      "source_family": "temporal_wikipedia_cfaa_summary",
+      "source_id": "temporal_wikipedia_cfaa_summary_r1362897733",
+      "source_url": "https://en.wikipedia.org/w/index.php?oldid=1362897733"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain page URL, revision ID, and author-history attribution link",
+          "retain CC BY-SA notice for redistributed or modified text",
+          "exclude non-text media and fair-use content",
+          "exclude usernames, edit summaries, talk pages, and user metadata"
+        ]
+      },
+      "authority_basis": "Frozen condition=low_authority; publisher=Wikimedia community; immutable identity=mediawiki_revision.",
+      "canonical_identifier": "wikipedia:page-53133:revision-1359675456",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/json",
+      "document_lineage_id": "temporal_wikipedia_coppa_summary",
+      "domain_group": "policy_regulatory",
+      "domain_id": "childrens_online_privacy_statute",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "CC-BY-SA-4.0",
+        "notes": "retain page URL, revision ID, and author-history attribution link; retain CC BY-SA notice for redistributed or modified text; exclude non-text media and fair-use content; exclude usernames, edit summaries, talk pages, and user metadata",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use"
+      },
+      "metadata": {
+        "acquisition_method": "mediawiki_revision_api",
+        "author_history_url": "https://en.wikipedia.org/w/index.php?title=Children%27s_Online_Privacy_Protection_Act&action=history",
+        "catalog_condition": "low_authority",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "kind": "mediawiki_revision",
+          "page_id": 53133,
+          "reviewed_wikitext_bytes": 61958,
+          "revision_timestamp": "2026-06-16T15:36:54Z",
+          "value": 1359675456
+        },
+        "included_document_files": 1,
+        "page_id": 53133,
+        "project": "wikipedia",
+        "retained_legal_files": 0,
+        "revision_id": 1359675456,
+        "revision_timestamp": "2026-06-16T15:36:54Z",
+        "upstream_content_sha1": "bcdb0d5c9b15bd16b7d30dd0eadef36cadf23301",
+        "upstream_wikitext_bytes": 61958,
+        "user_metadata_retained": false
+      },
+      "near_duplicate_cluster_id": "temporal_wikipedia_coppa_summary_cluster",
+      "normalized_content_sha256": "1fa67bb822efbb169fe457b3650021f55a69825d3f10e505facd42b5dff794b4",
+      "normalized_text_path": "artifacts/normalized/temporal_wikipedia_coppa_summary_r1359675456.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026",
+      "published_at": "2026-06-16T15:36:54Z",
+      "snapshot_path": "artifacts/raw/temporal_wikipedia_coppa_summary_r1359675456.json",
+      "snapshot_sha256": "e34946b7efecad8008d03a5a027ba2dd503b197cadd4fdd6f7ec6808ae21e41d",
+      "source_conditions": [
+        "low_authority"
+      ],
+      "source_document_id": "temporal_wikipedia_coppa_summary_r1359675456",
+      "source_family": "temporal_wikipedia_coppa_summary",
+      "source_id": "temporal_wikipedia_coppa_summary_r1359675456",
+      "source_url": "https://en.wikipedia.org/w/index.php?oldid=1359675456"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain page URL, revision ID, and author-history attribution link",
+          "retain CC BY-SA notice for redistributed or modified text",
+          "exclude non-text media and fair-use content",
+          "exclude usernames, edit summaries, talk pages, and user metadata"
+        ]
+      },
+      "authority_basis": "Frozen condition=low_authority; publisher=Wikimedia community; immutable identity=mediawiki_revision.",
+      "canonical_identifier": "wikipedia:page-20648089:revision-1358968889",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/json",
+      "document_lineage_id": "temporal_wikipedia_dmca_summary",
+      "domain_group": "policy_regulatory",
+      "domain_id": "digital_copyright_statute",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "CC-BY-SA-4.0",
+        "notes": "retain page URL, revision ID, and author-history attribution link; retain CC BY-SA notice for redistributed or modified text; exclude non-text media and fair-use content; exclude usernames, edit summaries, talk pages, and user metadata",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use"
+      },
+      "metadata": {
+        "acquisition_method": "mediawiki_revision_api",
+        "author_history_url": "https://en.wikipedia.org/w/index.php?title=Digital_Millennium_Copyright_Act&action=history",
+        "catalog_condition": "low_authority",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "kind": "mediawiki_revision",
+          "page_id": 20648089,
+          "reviewed_wikitext_bytes": 117647,
+          "revision_timestamp": "2026-06-12T04:50:30Z",
+          "value": 1358968889
+        },
+        "included_document_files": 1,
+        "page_id": 20648089,
+        "project": "wikipedia",
+        "retained_legal_files": 0,
+        "revision_id": 1358968889,
+        "revision_timestamp": "2026-06-12T04:50:30Z",
+        "upstream_content_sha1": "39979c5a77a080be6fd806167363da56535cc474",
+        "upstream_wikitext_bytes": 117647,
+        "user_metadata_retained": false
+      },
+      "near_duplicate_cluster_id": "temporal_wikipedia_dmca_summary_cluster",
+      "normalized_content_sha256": "a103c3eb5c198f46021386d75ce1e825333344e81a3b9f30e26ec043423f4756",
+      "normalized_text_path": "artifacts/normalized/temporal_wikipedia_dmca_summary_r1358968889.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026",
+      "published_at": "2026-06-12T04:50:30Z",
+      "snapshot_path": "artifacts/raw/temporal_wikipedia_dmca_summary_r1358968889.json",
+      "snapshot_sha256": "a228aca44bbd4bbfc456b22a52331b28547ba6e355d3d8d1672607ac47022d78",
+      "source_conditions": [
+        "low_authority"
+      ],
+      "source_document_id": "temporal_wikipedia_dmca_summary_r1358968889",
+      "source_family": "temporal_wikipedia_dmca_summary",
+      "source_id": "temporal_wikipedia_dmca_summary_r1358968889",
+      "source_url": "https://en.wikipedia.org/w/index.php?oldid=1358968889"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain page URL, revision ID, and author-history attribution link",
+          "retain CC BY-SA notice for redistributed or modified text",
+          "exclude non-text media and fair-use content",
+          "exclude usernames, edit summaries, talk pages, and user metadata"
+        ]
+      },
+      "authority_basis": "Frozen condition=low_authority; publisher=Wikimedia community; immutable identity=mediawiki_revision.",
+      "canonical_identifier": "wikipedia:page-384064:revision-1357830950",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/json",
+      "document_lineage_id": "temporal_wikipedia_hipaa",
+      "domain_group": "policy_regulatory",
+      "domain_id": "health_information_privacy",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "CC-BY-SA-4.0",
+        "notes": "retain page URL, revision ID, and author-history attribution link; retain CC BY-SA notice for redistributed or modified text; exclude non-text media and fair-use content; exclude usernames, edit summaries, talk pages, and user metadata",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use"
+      },
+      "metadata": {
+        "acquisition_method": "mediawiki_revision_api",
+        "author_history_url": "https://en.wikipedia.org/w/index.php?title=Health_Insurance_Portability_and_Accountability_Act&action=history",
+        "catalog_condition": "low_authority",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "kind": "mediawiki_revision",
+          "page_id": 384064,
+          "reviewed_wikitext_bytes": 74275,
+          "revision_timestamp": "2026-06-04T22:52:18Z",
+          "value": 1357830950
+        },
+        "included_document_files": 1,
+        "page_id": 384064,
+        "project": "wikipedia",
+        "retained_legal_files": 0,
+        "revision_id": 1357830950,
+        "revision_timestamp": "2026-06-04T22:52:18Z",
+        "upstream_content_sha1": "9552e2bcd539eb6c1ff6a2cedf5039cc79228b89",
+        "upstream_wikitext_bytes": 74275,
+        "user_metadata_retained": false
+      },
+      "near_duplicate_cluster_id": "temporal_wikipedia_hipaa_cluster",
+      "normalized_content_sha256": "122fd11c8abf813e7825a5b57617475672f2d3f42e639cc6a8fe65493903473d",
+      "normalized_text_path": "artifacts/normalized/temporal_wikipedia_hipaa_r1357830950.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026",
+      "published_at": "2026-06-04T22:52:18Z",
+      "snapshot_path": "artifacts/raw/temporal_wikipedia_hipaa_r1357830950.json",
+      "snapshot_sha256": "40fc15bf885aeec33c94916ba63ec129ad9f0dd1a172bd2f82de5865d4bd4a4c",
+      "source_conditions": [
+        "low_authority"
+      ],
+      "source_document_id": "temporal_wikipedia_hipaa_r1357830950",
+      "source_family": "temporal_wikipedia_hipaa",
+      "source_id": "temporal_wikipedia_hipaa_r1357830950",
+      "source_url": "https://en.wikipedia.org/w/index.php?oldid=1357830950"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain page URL, revision ID, and author-history attribution link",
+          "retain CC BY-SA notice for redistributed or modified text",
+          "exclude non-text media and fair-use content",
+          "exclude usernames, edit summaries, talk pages, and user metadata"
+        ]
+      },
+      "authority_basis": "Frozen condition=low_authority; publisher=Wikimedia community; immutable identity=mediawiki_revision.",
+      "canonical_identifier": "wikipedia:page-461036:revision-1365514586",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/json",
+      "document_lineage_id": "temporal_wikipedia_osha_act_summary",
+      "domain_group": "policy_regulatory",
+      "domain_id": "occupational_safety_statute",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "CC-BY-SA-4.0",
+        "notes": "retain page URL, revision ID, and author-history attribution link; retain CC BY-SA notice for redistributed or modified text; exclude non-text media and fair-use content; exclude usernames, edit summaries, talk pages, and user metadata",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use"
+      },
+      "metadata": {
+        "acquisition_method": "mediawiki_revision_api",
+        "author_history_url": "https://en.wikipedia.org/w/index.php?title=Occupational_Safety_and_Health_Act_%28United_States%29&action=history",
+        "catalog_condition": "low_authority",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "kind": "mediawiki_revision",
+          "page_id": 461036,
+          "reviewed_wikitext_bytes": 24471,
+          "revision_timestamp": "2026-07-22T23:15:04Z",
+          "value": 1365514586
+        },
+        "included_document_files": 1,
+        "page_id": 461036,
+        "project": "wikipedia",
+        "retained_legal_files": 0,
+        "revision_id": 1365514586,
+        "revision_timestamp": "2026-07-22T23:15:04Z",
+        "upstream_content_sha1": "0aea5a607b93d8939fab28d0463d7f1e0c0a0540",
+        "upstream_wikitext_bytes": 24471,
+        "user_metadata_retained": false
+      },
+      "near_duplicate_cluster_id": "temporal_wikipedia_osha_act_summary_cluster",
+      "normalized_content_sha256": "09f95f92cd40ad8c95e95d154989b354a7fe11643b0b334568e7a4103e610421",
+      "normalized_text_path": "artifacts/normalized/temporal_wikipedia_osha_act_summary_r1365514586.txt",
+      "privacy_classification": "public",
+      "publication_window": "2026",
+      "published_at": "2026-07-22T23:15:04Z",
+      "snapshot_path": "artifacts/raw/temporal_wikipedia_osha_act_summary_r1365514586.json",
+      "snapshot_sha256": "974e8e0dd2aec8f367ca999c1803297383b0e34fa479bd7f8566461334b4e59e",
+      "source_conditions": [
+        "low_authority"
+      ],
+      "source_document_id": "temporal_wikipedia_osha_act_summary_r1365514586",
+      "source_family": "temporal_wikipedia_osha_act_summary",
+      "source_id": "temporal_wikipedia_osha_act_summary_r1365514586",
+      "source_url": "https://en.wikipedia.org/w/index.php?oldid=1365514586"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain page URL, revision ID, and author-history attribution link",
+          "retain CC BY-SA notice for redistributed or modified text",
+          "exclude non-text media and fair-use content",
+          "exclude usernames, edit summaries, talk pages, and user metadata"
+        ]
+      },
+      "authority_basis": "Frozen condition=noncanonical; publisher=Wikimedia community; immutable identity=mediawiki_revision.",
+      "canonical_identifier": "wikisource:page-695212:revision-14227426",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/json",
+      "document_lineage_id": "temporal_wikisource_civil_rights_action",
+      "domain_group": "policy_regulatory",
+      "domain_id": "civil_rights_cause_of_action",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "CC-BY-SA-4.0",
+        "notes": "retain page URL, revision ID, and author-history attribution link; retain CC BY-SA notice for redistributed or modified text; exclude non-text media and fair-use content; exclude usernames, edit summaries, talk pages, and user metadata",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use"
+      },
+      "metadata": {
+        "acquisition_method": "mediawiki_revision_api",
+        "author_history_url": "https://en.wikisource.org/w/index.php?title=United_States_Code/Title_42/Chapter_21/Section_1983&action=history",
+        "catalog_condition": "noncanonical",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "kind": "mediawiki_revision",
+          "page_id": 695212,
+          "reviewed_wikitext_bytes": 1367,
+          "revision_timestamp": "2024-05-26T23:35:30Z",
+          "value": 14227426
+        },
+        "included_document_files": 1,
+        "page_id": 695212,
+        "project": "wikisource",
+        "retained_legal_files": 0,
+        "revision_id": 14227426,
+        "revision_timestamp": "2024-05-26T23:35:30Z",
+        "upstream_content_sha1": "931c831adfaf6d9cd007cffe25df06ab5a487b03",
+        "upstream_wikitext_bytes": 1367,
+        "user_metadata_retained": false
+      },
+      "near_duplicate_cluster_id": "temporal_wikisource_civil_rights_action_cluster",
+      "normalized_content_sha256": "2748623cb8d382370154663165eea60d08d44adb424cf8dd07949a66b9e525ea",
+      "normalized_text_path": "artifacts/normalized/temporal_wikisource_civil_rights_action_r14227426.txt",
+      "privacy_classification": "public",
+      "publication_window": "2024",
+      "published_at": "2024-05-26T23:35:30Z",
+      "snapshot_path": "artifacts/raw/temporal_wikisource_civil_rights_action_r14227426.json",
+      "snapshot_sha256": "4cebca7e011b8b2449112638eb1beaae4a7e06743e5c1fbe7e7af78490d96e1d",
+      "source_conditions": [
+        "noncanonical"
+      ],
+      "source_document_id": "temporal_wikisource_civil_rights_action_r14227426",
+      "source_family": "temporal_wikisource_civil_rights_action",
+      "source_id": "temporal_wikisource_civil_rights_action_r14227426",
+      "source_url": "https://en.wikisource.org/w/index.php?oldid=14227426"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain page URL, revision ID, and author-history attribution link",
+          "retain CC BY-SA notice for redistributed or modified text",
+          "exclude non-text media and fair-use content",
+          "exclude usernames, edit summaries, talk pages, and user metadata"
+        ]
+      },
+      "authority_basis": "Frozen condition=noncanonical; publisher=Wikimedia community; immutable identity=mediawiki_revision.",
+      "canonical_identifier": "wikisource:page-14861:revision-14231081",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/json",
+      "document_lineage_id": "temporal_wikisource_copyright_fair_use",
+      "domain_group": "policy_regulatory",
+      "domain_id": "copyright_fair_use",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "CC-BY-SA-4.0",
+        "notes": "retain page URL, revision ID, and author-history attribution link; retain CC BY-SA notice for redistributed or modified text; exclude non-text media and fair-use content; exclude usernames, edit summaries, talk pages, and user metadata",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use"
+      },
+      "metadata": {
+        "acquisition_method": "mediawiki_revision_api",
+        "author_history_url": "https://en.wikisource.org/w/index.php?title=United_States_Code/Title_17/Chapter_1/Section_107&action=history",
+        "catalog_condition": "noncanonical",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "kind": "mediawiki_revision",
+          "page_id": 14861,
+          "reviewed_wikitext_bytes": 32376,
+          "revision_timestamp": "2024-05-28T02:51:50Z",
+          "value": 14231081
+        },
+        "included_document_files": 1,
+        "page_id": 14861,
+        "project": "wikisource",
+        "retained_legal_files": 0,
+        "revision_id": 14231081,
+        "revision_timestamp": "2024-05-28T02:51:50Z",
+        "upstream_content_sha1": "2f52c0601c965ecbf96705ab9108c6c5bb0842a2",
+        "upstream_wikitext_bytes": 32376,
+        "user_metadata_retained": false
+      },
+      "near_duplicate_cluster_id": "temporal_wikisource_copyright_fair_use_cluster",
+      "normalized_content_sha256": "f80930f5625fdc48a3146b7e7ca4ca4cbf0fbe001c10e35e8aea53e0186e1890",
+      "normalized_text_path": "artifacts/normalized/temporal_wikisource_copyright_fair_use_r14231081.txt",
+      "privacy_classification": "public",
+      "publication_window": "2024",
+      "published_at": "2024-05-28T02:51:50Z",
+      "snapshot_path": "artifacts/raw/temporal_wikisource_copyright_fair_use_r14231081.json",
+      "snapshot_sha256": "7ba5302382165d500847cba9f91a12f5b13832b44234c63afc8fb6cd7a5dbcfb",
+      "source_conditions": [
+        "noncanonical"
+      ],
+      "source_document_id": "temporal_wikisource_copyright_fair_use_r14231081",
+      "source_family": "temporal_wikisource_copyright_fair_use",
+      "source_id": "temporal_wikisource_copyright_fair_use_r14231081",
+      "source_url": "https://en.wikisource.org/w/index.php?oldid=14231081"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain page URL, revision ID, and author-history attribution link",
+          "retain CC BY-SA notice for redistributed or modified text",
+          "exclude non-text media and fair-use content",
+          "exclude usernames, edit summaries, talk pages, and user metadata"
+        ]
+      },
+      "authority_basis": "Frozen condition=noncanonical; publisher=Wikimedia community; immutable identity=mediawiki_revision.",
+      "canonical_identifier": "wikisource:page-354264:revision-13890117",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/json",
+      "document_lineage_id": "temporal_wikisource_foia_section",
+      "domain_group": "policy_regulatory",
+      "domain_id": "freedom_of_information",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "CC-BY-SA-4.0",
+        "notes": "retain page URL, revision ID, and author-history attribution link; retain CC BY-SA notice for redistributed or modified text; exclude non-text media and fair-use content; exclude usernames, edit summaries, talk pages, and user metadata",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use"
+      },
+      "metadata": {
+        "acquisition_method": "mediawiki_revision_api",
+        "author_history_url": "https://en.wikisource.org/w/index.php?title=United_States_Code/Title_5/Chapter_5/Section_552&action=history",
+        "catalog_condition": "noncanonical",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "kind": "mediawiki_revision",
+          "page_id": 354264,
+          "reviewed_wikitext_bytes": 30748,
+          "revision_timestamp": "2024-02-21T12:40:28Z",
+          "value": 13890117
+        },
+        "included_document_files": 1,
+        "page_id": 354264,
+        "project": "wikisource",
+        "retained_legal_files": 0,
+        "revision_id": 13890117,
+        "revision_timestamp": "2024-02-21T12:40:28Z",
+        "upstream_content_sha1": "243d8f4b9177a96af8e2d35ad3dd28d143a79e92",
+        "upstream_wikitext_bytes": 30748,
+        "user_metadata_retained": false
+      },
+      "near_duplicate_cluster_id": "temporal_wikisource_foia_section_cluster",
+      "normalized_content_sha256": "8523f274f3de6cdd56b03df0cd250674b1a769f2ea464ec2008a7db934a4fd97",
+      "normalized_text_path": "artifacts/normalized/temporal_wikisource_foia_section_r13890117.txt",
+      "privacy_classification": "public",
+      "publication_window": "2024",
+      "published_at": "2024-02-21T12:40:28Z",
+      "snapshot_path": "artifacts/raw/temporal_wikisource_foia_section_r13890117.json",
+      "snapshot_sha256": "d9f657e3f8debb6ea089f35ee5301d04811de6294a5494fc14738880cfd17d4e",
+      "source_conditions": [
+        "noncanonical"
+      ],
+      "source_document_id": "temporal_wikisource_foia_section_r13890117",
+      "source_family": "temporal_wikisource_foia_section",
+      "source_id": "temporal_wikisource_foia_section_r13890117",
+      "source_url": "https://en.wikisource.org/w/index.php?oldid=13890117"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain page URL, revision ID, and author-history attribution link",
+          "retain CC BY-SA notice for redistributed or modified text",
+          "exclude non-text media and fair-use content",
+          "exclude usernames, edit summaries, talk pages, and user metadata"
+        ]
+      },
+      "authority_basis": "Frozen condition=noncanonical; publisher=Wikimedia community; immutable identity=mediawiki_revision.",
+      "canonical_identifier": "wikisource:page-638156:revision-14227477",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/json",
+      "document_lineage_id": "temporal_wikisource_minimum_wage",
+      "domain_group": "policy_regulatory",
+      "domain_id": "federal_minimum_wage",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "CC-BY-SA-4.0",
+        "notes": "retain page URL, revision ID, and author-history attribution link; retain CC BY-SA notice for redistributed or modified text; exclude non-text media and fair-use content; exclude usernames, edit summaries, talk pages, and user metadata",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use"
+      },
+      "metadata": {
+        "acquisition_method": "mediawiki_revision_api",
+        "author_history_url": "https://en.wikisource.org/w/index.php?title=United_States_Code/Title_29/Chapter_8/Section_206&action=history",
+        "catalog_condition": "noncanonical",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "kind": "mediawiki_revision",
+          "page_id": 638156,
+          "reviewed_wikitext_bytes": 9355,
+          "revision_timestamp": "2024-05-26T23:41:10Z",
+          "value": 14227477
+        },
+        "included_document_files": 1,
+        "page_id": 638156,
+        "project": "wikisource",
+        "retained_legal_files": 0,
+        "revision_id": 14227477,
+        "revision_timestamp": "2024-05-26T23:41:10Z",
+        "upstream_content_sha1": "5072715c59dc180e99f9ea58895de556a25b6ad4",
+        "upstream_wikitext_bytes": 9355,
+        "user_metadata_retained": false
+      },
+      "near_duplicate_cluster_id": "temporal_wikisource_minimum_wage_cluster",
+      "normalized_content_sha256": "15bbe62a4824b7411765d1544b8141ae616321c2550436e8bcf40d381c907d96",
+      "normalized_text_path": "artifacts/normalized/temporal_wikisource_minimum_wage_r14227477.txt",
+      "privacy_classification": "public",
+      "publication_window": "2024",
+      "published_at": "2024-05-26T23:41:10Z",
+      "snapshot_path": "artifacts/raw/temporal_wikisource_minimum_wage_r14227477.json",
+      "snapshot_sha256": "8ed83caa9c307efa928cb17335acaf9dd1fd5a6a64bb66b09f3360788b1ddb20",
+      "source_conditions": [
+        "noncanonical"
+      ],
+      "source_document_id": "temporal_wikisource_minimum_wage_r14227477",
+      "source_family": "temporal_wikisource_minimum_wage",
+      "source_id": "temporal_wikisource_minimum_wage_r14227477",
+      "source_url": "https://en.wikisource.org/w/index.php?oldid=14227477"
+    },
+    {
+      "access": {
+        "access_class": "public",
+        "authentication_required": false,
+        "collection_permitted": true,
+        "restrictions": [
+          "retain page URL, revision ID, and author-history attribution link",
+          "retain CC BY-SA notice for redistributed or modified text",
+          "exclude non-text media and fair-use content",
+          "exclude usernames, edit summaries, talk pages, and user metadata"
+        ]
+      },
+      "authority_basis": "Frozen condition=noncanonical; publisher=Wikimedia community; immutable identity=mediawiki_revision.",
+      "canonical_identifier": "wikisource:page-111438:revision-14305370",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "content_type": "application/json",
+      "document_lineage_id": "temporal_wikisource_patent_eligibility",
+      "domain_group": "policy_regulatory",
+      "domain_id": "patent_eligibility",
+      "language": "en",
+      "license": {
+        "attribution_required": true,
+        "license_id": "CC-BY-SA-4.0",
+        "notes": "retain page URL, revision ID, and author-history attribution link; retain CC BY-SA notice for redistributed or modified text; exclude non-text media and fair-use content; exclude usernames, edit summaries, talk pages, and user metadata",
+        "redistribution": "permitted",
+        "review_status": "approved",
+        "reviewed_at": "2026-07-26T00:00:00Z",
+        "reviewed_by": "project owner; Codex-assisted review",
+        "terms_url": "https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use"
+      },
+      "metadata": {
+        "acquisition_method": "mediawiki_revision_api",
+        "author_history_url": "https://en.wikisource.org/w/index.php?title=United_States_Code/Title_35/Chapter_10/Section_101&action=history",
+        "catalog_condition": "noncanonical",
+        "extraction_version": "contexttrace-unseen-temporal-text-v1",
+        "immutable_revision": {
+          "kind": "mediawiki_revision",
+          "page_id": 111438,
+          "reviewed_wikitext_bytes": 2402,
+          "revision_timestamp": "2024-06-30T01:31:19Z",
+          "value": 14305370
+        },
+        "included_document_files": 1,
+        "page_id": 111438,
+        "project": "wikisource",
+        "retained_legal_files": 0,
+        "revision_id": 14305370,
+        "revision_timestamp": "2024-06-30T01:31:19Z",
+        "upstream_content_sha1": "bcaf6c35fc39930bba78d3411536cefa8cdceaa9",
+        "upstream_wikitext_bytes": 2402,
+        "user_metadata_retained": false
+      },
+      "near_duplicate_cluster_id": "temporal_wikisource_patent_eligibility_cluster",
+      "normalized_content_sha256": "01da3677a47bd2d49d324bc256330cbb12e59d932fc4e2366d544bbedbb34c47",
+      "normalized_text_path": "artifacts/normalized/temporal_wikisource_patent_eligibility_r14305370.txt",
+      "privacy_classification": "public",
+      "publication_window": "2024",
+      "published_at": "2024-06-30T01:31:19Z",
+      "snapshot_path": "artifacts/raw/temporal_wikisource_patent_eligibility_r14305370.json",
+      "snapshot_sha256": "b624a76b98d23952178c65669d2098599fb1b34d57362d81badf9f8c39eaeef7",
+      "source_conditions": [
+        "noncanonical"
+      ],
+      "source_document_id": "temporal_wikisource_patent_eligibility_r14305370",
+      "source_family": "temporal_wikisource_patent_eligibility",
+      "source_id": "temporal_wikisource_patent_eligibility_r14305370",
+      "source_url": "https://en.wikisource.org/w/index.php?oldid=14305370"
+    }
+  ]
+}

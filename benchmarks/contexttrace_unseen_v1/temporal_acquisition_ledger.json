@@ -1,0 +1,1208 @@
+{
+  "authorization_id": "11A",
+  "authorization_sha256": "9c88da5c234bc5ae97d6ecf6bcf14b0c2bec0963a371ba78ac6797a104cc3733",
+  "catalog_sha256": "a3781a725ad5100a610e8a6e2bec1b7458903333622ce0461d095c88c8bd6678",
+  "extraction_version": "contexttrace-unseen-temporal-text-v1",
+  "model_calls": 0,
+  "paid_endpoint_calls": 0,
+  "pair_count": 20,
+  "pairs": [
+    {
+      "anchors": {
+        "left": [
+          "normed",
+          "density"
+        ],
+        "right": [
+          "density"
+        ]
+      },
+      "left_source_id": "temporal_api_matplotlib_hist_density_deprecated_api",
+      "metrics": {
+        "changed_left_lines": 1566,
+        "changed_right_lines": 1722,
+        "left_nonempty_lines": 6461,
+        "right_nonempty_lines": 6617,
+        "sequence_ratio": 0.74858541
+      },
+      "model_calls": 0,
+      "pair_id": "ctu1_pair_api_matplotlib_hist_density",
+      "pair_type": "old_api_to_replacement_api",
+      "right_source_id": "temporal_api_matplotlib_hist_density_replacement_api",
+      "status": "eligible",
+      "verifier_calls": 0
+    },
+    {
+      "anchors": {
+        "left": [
+          "antialias"
+        ],
+        "right": [
+          "lanczos"
+        ]
+      },
+      "left_source_id": "temporal_api_pillow_resampling_lanczos_deprecated_api",
+      "metrics": {
+        "changed_left_lines": 206,
+        "changed_right_lines": 230,
+        "left_nonempty_lines": 452,
+        "right_nonempty_lines": 476,
+        "sequence_ratio": 0.53017241
+      },
+      "model_calls": 0,
+      "pair_id": "ctu1_pair_api_pillow_resampling_lanczos",
+      "pair_type": "old_api_to_replacement_api",
+      "right_source_id": "temporal_api_pillow_resampling_lanczos_replacement_api",
+      "status": "eligible",
+      "verifier_calls": 0
+    },
+    {
+      "anchors": {
+        "left": [
+          "yield_fixture"
+        ],
+        "right": [
+          "fixture"
+        ]
+      },
+      "left_source_id": "temporal_api_pytest_yield_fixture_deprecated_api",
+      "metrics": {
+        "changed_left_lines": 961,
+        "changed_right_lines": 414,
+        "left_nonempty_lines": 972,
+        "right_nonempty_lines": 425,
+        "sequence_ratio": 0.01574803
+      },
+      "model_calls": 0,
+      "pair_id": "ctu1_pair_api_pytest_yield_fixture",
+      "pair_type": "old_api_to_replacement_api",
+      "right_source_id": "temporal_api_pytest_yield_fixture_replacement_api",
+      "status": "eligible",
+      "verifier_calls": 0
+    },
+    {
+      "anchors": {
+        "left": [
+          "imread",
+          "imageio"
+        ],
+        "right": [
+          "imread"
+        ]
+      },
+      "left_source_id": "temporal_api_scipy_imageio_imread_deprecated_api",
+      "metrics": {
+        "changed_left_lines": 1150,
+        "changed_right_lines": 170,
+        "left_nonempty_lines": 1151,
+        "right_nonempty_lines": 171,
+        "sequence_ratio": 0.00151286
+      },
+      "model_calls": 0,
+      "pair_id": "ctu1_pair_api_scipy_imageio_imread",
+      "pair_type": "old_api_to_replacement_api",
+      "right_source_id": "temporal_api_scipy_imageio_imread_replacement_api",
+      "status": "eligible",
+      "verifier_calls": 0
+    },
+    {
+      "anchors": {
+        "left": [
+          "get_feature_names"
+        ],
+        "right": [
+          "get_feature_names_out"
+        ]
+      },
+      "left_source_id": "temporal_api_sklearn_feature_names_deprecated_api",
+      "metrics": {
+        "changed_left_lines": 1094,
+        "changed_right_lines": 1030,
+        "left_nonempty_lines": 1843,
+        "right_nonempty_lines": 1779,
+        "sequence_ratio": 0.41358366
+      },
+      "model_calls": 0,
+      "pair_id": "ctu1_pair_api_sklearn_feature_names",
+      "pair_type": "old_api_to_replacement_api",
+      "right_source_id": "temporal_api_sklearn_feature_names_replacement_api",
+      "status": "eligible",
+      "verifier_calls": 0
+    },
+    {
+      "anchors": {},
+      "left_source_id": "temporal_ecfr_coppa_archived_20200101",
+      "metrics": {
+        "changed_left_lines": 101,
+        "changed_right_lines": 116,
+        "left_nonempty_lines": 260,
+        "right_nonempty_lines": 275,
+        "sequence_ratio": 0.59439252
+      },
+      "model_calls": 0,
+      "pair_id": "ctu1_pair_archived_coppa",
+      "pair_type": "archived_policy_to_current_policy",
+      "right_source_id": "temporal_ecfr_coppa_current_20260722",
+      "status": "eligible",
+      "verifier_calls": 0
+    },
+    {
+      "anchors": {},
+      "left_source_id": "temporal_ecfr_hazardous_waste_archived_20200101",
+      "metrics": {
+        "changed_left_lines": 545,
+        "changed_right_lines": 631,
+        "left_nonempty_lines": 14171,
+        "right_nonempty_lines": 14257,
+        "sequence_ratio": 0.95863233
+      },
+      "model_calls": 0,
+      "pair_id": "ctu1_pair_archived_hazardous_waste",
+      "pair_type": "archived_policy_to_current_policy",
+      "right_source_id": "temporal_ecfr_hazardous_waste_current_20260722",
+      "status": "eligible",
+      "verifier_calls": 0
+    },
+    {
+      "anchors": {},
+      "left_source_id": "temporal_ecfr_information_blocking_archived_20210101",
+      "metrics": {
+        "changed_left_lines": 54,
+        "changed_right_lines": 216,
+        "left_nonempty_lines": 348,
+        "right_nonempty_lines": 510,
+        "sequence_ratio": 0.68531469
+      },
+      "model_calls": 0,
+      "pair_id": "ctu1_pair_archived_information_blocking",
+      "pair_type": "archived_policy_to_current_policy",
+      "right_source_id": "temporal_ecfr_information_blocking_current_20260722",
+      "status": "eligible",
+      "verifier_calls": 0
+    },
+    {
+      "anchors": {},
+      "left_source_id": "temporal_ecfr_transport_airworthiness_archived_20200101",
+      "metrics": {
+        "changed_left_lines": 85,
+        "changed_right_lines": 233,
+        "left_nonempty_lines": 9179,
+        "right_nonempty_lines": 9327,
+        "sequence_ratio": 0.98281638
+      },
+      "model_calls": 0,
+      "pair_id": "ctu1_pair_archived_transport_airworthiness",
+      "pair_type": "archived_policy_to_current_policy",
+      "right_source_id": "temporal_ecfr_transport_airworthiness_current_20260722",
+      "status": "eligible",
+      "verifier_calls": 0
+    },
+    {
+      "anchors": {},
+      "left_source_id": "temporal_ecfr_workplace_safety_archived_20200101",
+      "metrics": {
+        "changed_left_lines": 11540,
+        "changed_right_lines": 2502,
+        "left_nonempty_lines": 73935,
+        "right_nonempty_lines": 64897,
+        "sequence_ratio": 0.89885617
+      },
+      "model_calls": 0,
+      "pair_id": "ctu1_pair_archived_workplace_safety",
+      "pair_type": "archived_policy_to_current_policy",
+      "right_source_id": "temporal_ecfr_workplace_safety_current_20260722",
+      "status": "eligible",
+      "verifier_calls": 0
+    },
+    {
+      "anchors": {
+        "right_sections": [
+          "1030"
+        ]
+      },
+      "left_source_id": "temporal_wikipedia_cfaa_summary_r1362897733",
+      "metrics": {
+        "changed_left_lines": 87,
+        "changed_right_lines": 243,
+        "left_nonempty_lines": 87,
+        "right_nonempty_lines": 243,
+        "sequence_ratio": 0.0
+      },
+      "model_calls": 0,
+      "pair_id": "ctu1_pair_low_authority_cfaa_summary",
+      "pair_type": "low_authority_to_authoritative",
+      "right_source_id": "temporal_olrc_title18_119_102",
+      "status": "eligible",
+      "verifier_calls": 0
+    },
+    {
+      "anchors": {
+        "right_sections": [
+          "6501",
+          "6502",
+          "6503",
+          "6504",
+          "6505",
+          "6506"
+        ]
+      },
+      "left_source_id": "temporal_wikipedia_coppa_summary_r1359675456",
+      "metrics": {
+        "changed_left_lines": 58,
+        "changed_right_lines": 360,
+        "left_nonempty_lines": 58,
+        "right_nonempty_lines": 360,
+        "sequence_ratio": 0.0
+      },
+      "model_calls": 0,
+      "pair_id": "ctu1_pair_low_authority_coppa_summary",
+      "pair_type": "low_authority_to_authoritative",
+      "right_source_id": "temporal_olrc_title15_119_102",
+      "status": "eligible",
+      "verifier_calls": 0
+    },
+    {
+      "anchors": {
+        "right_sections": [
+          "107",
+          "1201",
+          "512"
+        ]
+      },
+      "left_source_id": "temporal_wikipedia_dmca_summary_r1358968889",
+      "metrics": {
+        "changed_left_lines": 223,
+        "changed_right_lines": 589,
+        "left_nonempty_lines": 223,
+        "right_nonempty_lines": 589,
+        "sequence_ratio": 0.0
+      },
+      "model_calls": 0,
+      "pair_id": "ctu1_pair_low_authority_dmca_summary",
+      "pair_type": "low_authority_to_authoritative",
+      "right_source_id": "temporal_olrc_title17_119_102",
+      "status": "eligible",
+      "verifier_calls": 0
+    },
+    {
+      "anchors": {
+        "right_sections": [
+          "1320d",
+          "1320d-1",
+          "1320d-2",
+          "1320d-3",
+          "1320d-4",
+          "1320d-5",
+          "1320d-6",
+          "1320d-7",
+          "1320d-8",
+          "1320d-9",
+          "1983"
+        ]
+      },
+      "left_source_id": "temporal_wikipedia_hipaa_r1357830950",
+      "metrics": {
+        "changed_left_lines": 138,
+        "changed_right_lines": 905,
+        "left_nonempty_lines": 138,
+        "right_nonempty_lines": 905,
+        "sequence_ratio": 0.0
+      },
+      "model_calls": 0,
+      "pair_id": "ctu1_pair_low_authority_hipaa",
+      "pair_type": "low_authority_to_authoritative",
+      "right_source_id": "temporal_olrc_title42_119_102",
+      "status": "eligible",
+      "verifier_calls": 0
+    },
+    {
+      "anchors": {
+        "right_sections": [
+          "206",
+          "651",
+          "652",
+          "653",
+          "654",
+          "655",
+          "656",
+          "657",
+          "658",
+          "659",
+          "660",
+          "661",
+          "662",
+          "663",
+          "664",
+          "665",
+          "666",
+          "667",
+          "668",
+          "669",
+          "670",
+          "671",
+          "672",
+          "673",
+          "674",
+          "675",
+          "676",
+          "677",
+          "678"
+        ]
+      },
+      "left_source_id": "temporal_wikipedia_osha_act_summary_r1365514586",
+      "metrics": {
+        "changed_left_lines": 25,
+        "changed_right_lines": 965,
+        "left_nonempty_lines": 25,
+        "right_nonempty_lines": 965,
+        "sequence_ratio": 0.0
+      },
+      "model_calls": 0,
+      "pair_id": "ctu1_pair_low_authority_osha_act_summary",
+      "pair_type": "low_authority_to_authoritative",
+      "right_source_id": "temporal_olrc_title29_119_102",
+      "status": "eligible",
+      "verifier_calls": 0
+    },
+    {
+      "anchors": {
+        "right_sections": [
+          "1320d",
+          "1320d-1",
+          "1320d-2",
+          "1320d-3",
+          "1320d-4",
+          "1320d-5",
+          "1320d-6",
+          "1320d-7",
+          "1320d-8",
+          "1320d-9",
+          "1983"
+        ]
+      },
+      "left_source_id": "temporal_wikisource_civil_rights_action_r14227426",
+      "metrics": {
+        "changed_left_lines": 0,
+        "changed_right_lines": 904,
+        "left_nonempty_lines": 1,
+        "right_nonempty_lines": 905,
+        "sequence_ratio": 0.00220751
+      },
+      "model_calls": 0,
+      "pair_id": "ctu1_pair_noncanonical_civil_rights_action",
+      "pair_type": "noncanonical_to_canonical",
+      "right_source_id": "temporal_olrc_title42_119_102",
+      "status": "eligible",
+      "verifier_calls": 0
+    },
+    {
+      "anchors": {
+        "right_sections": [
+          "107",
+          "1201",
+          "512"
+        ]
+      },
+      "left_source_id": "temporal_wikisource_copyright_fair_use_r14231081",
+      "metrics": {
+        "changed_left_lines": 278,
+        "changed_right_lines": 586,
+        "left_nonempty_lines": 281,
+        "right_nonempty_lines": 589,
+        "sequence_ratio": 0.00689655
+      },
+      "model_calls": 0,
+      "pair_id": "ctu1_pair_noncanonical_copyright_fair_use",
+      "pair_type": "noncanonical_to_canonical",
+      "right_source_id": "temporal_olrc_title17_119_102",
+      "status": "eligible",
+      "verifier_calls": 0
+    },
+    {
+      "anchors": {
+        "right_sections": [
+          "552"
+        ]
+      },
+      "left_source_id": "temporal_wikisource_foia_section_r13890117",
+      "metrics": {
+        "changed_left_lines": 117,
+        "changed_right_lines": 522,
+        "left_nonempty_lines": 120,
+        "right_nonempty_lines": 525,
+        "sequence_ratio": 0.00930233
+      },
+      "model_calls": 0,
+      "pair_id": "ctu1_pair_noncanonical_foia_section",
+      "pair_type": "noncanonical_to_canonical",
+      "right_source_id": "temporal_olrc_title05_119_102",
+      "status": "eligible",
+      "verifier_calls": 0
+    },
+    {
+      "anchors": {
+        "right_sections": [
+          "206",
+          "651",
+          "652",
+          "653",
+          "654",
+          "655",
+          "656",
+          "657",
+          "658",
+          "659",
+          "660",
+          "661",
+          "662",
+          "663",
+          "664",
+          "665",
+          "666",
+          "667",
+          "668",
+          "669",
+          "670",
+          "671",
+          "672",
+          "673",
+          "674",
+          "675",
+          "676",
+          "677",
+          "678"
+        ]
+      },
+      "left_source_id": "temporal_wikisource_minimum_wage_r14227477",
+      "metrics": {
+        "changed_left_lines": 30,
+        "changed_right_lines": 964,
+        "left_nonempty_lines": 31,
+        "right_nonempty_lines": 965,
+        "sequence_ratio": 0.00200803
+      },
+      "model_calls": 0,
+      "pair_id": "ctu1_pair_noncanonical_minimum_wage",
+      "pair_type": "noncanonical_to_canonical",
+      "right_source_id": "temporal_olrc_title29_119_102",
+      "status": "eligible",
+      "verifier_calls": 0
+    },
+    {
+      "anchors": {
+        "right_sections": [
+          "101"
+        ]
+      },
+      "left_source_id": "temporal_wikisource_patent_eligibility_r14305370",
+      "metrics": {
+        "changed_left_lines": 7,
+        "changed_right_lines": 3,
+        "left_nonempty_lines": 8,
+        "right_nonempty_lines": 4,
+        "sequence_ratio": 0.16666667
+      },
+      "model_calls": 0,
+      "pair_id": "ctu1_pair_noncanonical_patent_eligibility",
+      "pair_type": "noncanonical_to_canonical",
+      "right_source_id": "temporal_olrc_title35_119_102",
+      "status": "eligible",
+      "verifier_calls": 0
+    }
+  ],
+  "planned_case_count": 100,
+  "record_kind": "contexttrace_unseen_v1_temporal_acquisition",
+  "recorded_at": "2026-07-26T19:27:50.846542Z",
+  "schema_version": "1.0",
+  "source_count": 37,
+  "source_manifest_sha256": "6b3bbd4dff5ed7a2a80e26f87a7cf17a670be92083071526d33c2a3f60abf96e",
+  "sources": [
+    {
+      "acquisition_method": "github_raw_allowlist",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "commit_timestamp": "2018-03-05T05:07:21Z",
+        "kind": "git_commit",
+        "release_ref": "v2.2.0",
+        "value": "66e49f9a28f29b9a3a18cd4c6bfd5fdd1836eb0e"
+      },
+      "normalized_content_sha256": "8d784e1d23e723d159c3f9819f18610e1f2264ed5b36865180f8ea06789567ea",
+      "normalized_text_bytes": 227034,
+      "normalized_text_path": "artifacts/normalized/temporal_api_matplotlib_hist_density_deprecated_api.txt",
+      "snapshot_bytes": 76087,
+      "snapshot_path": "artifacts/raw/temporal_api_matplotlib_hist_density_deprecated_api.tar.gz",
+      "snapshot_sha256": "71a4dbed151c7a0ec2ddbb0c60153a7e828b34a26b8504322f80ab35ed95bb72",
+      "source_id": "temporal_api_matplotlib_hist_density_deprecated_api",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "github_raw_allowlist",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "commit_timestamp": "2019-05-18T01:55:28Z",
+        "kind": "git_commit",
+        "release_ref": "v3.1.0",
+        "value": "a8f4a742803b5238911b9c3f698f2417c3ac441a"
+      },
+      "normalized_content_sha256": "24219773bc6eacbb4ea82118c8373201815c0b3dbd02fecae7f9a45639a5016f",
+      "normalized_text_bytes": 238261,
+      "normalized_text_path": "artifacts/normalized/temporal_api_matplotlib_hist_density_replacement_api.txt",
+      "snapshot_bytes": 80835,
+      "snapshot_path": "artifacts/raw/temporal_api_matplotlib_hist_density_replacement_api.tar.gz",
+      "snapshot_sha256": "ecb6f4c8200a5686071df04290b4999a8c816a4a008efe3f0cda8e4269f4eb4b",
+      "source_id": "temporal_api_matplotlib_hist_density_replacement_api",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "github_raw_allowlist",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "commit_timestamp": "2022-04-01T07:48:32Z",
+        "kind": "git_commit",
+        "release_ref": "9.1.0",
+        "value": "5d070222d21138d2ead002fd33fdf5adcb708941"
+      },
+      "normalized_content_sha256": "322372658e9ce17d8cb87f478cdaf55aae9acd8345d4a9ce97d78934904cf31e",
+      "normalized_text_bytes": 22907,
+      "normalized_text_path": "artifacts/normalized/temporal_api_pillow_resampling_lanczos_deprecated_api.txt",
+      "snapshot_bytes": 6632,
+      "snapshot_path": "artifacts/raw/temporal_api_pillow_resampling_lanczos_deprecated_api.tar.gz",
+      "snapshot_sha256": "56fd75e7615fb61bc671b26037a291edec1389554fb4a1454c3b3a78db1e1844",
+      "source_id": "temporal_api_pillow_resampling_lanczos_deprecated_api",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "github_raw_allowlist",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "commit_timestamp": "2023-07-01T12:08:11Z",
+        "kind": "git_commit",
+        "release_ref": "10.0.0",
+        "value": "6e28ed1f36d0eb74053af54e1eddc9c29db698cd"
+      },
+      "normalized_content_sha256": "e05e318a42c798398c7fe1d848205c57b403181c13bd279c600bf6e30bcd4a34",
+      "normalized_text_bytes": 24399,
+      "normalized_text_path": "artifacts/normalized/temporal_api_pillow_resampling_lanczos_replacement_api.txt",
+      "snapshot_bytes": 6312,
+      "snapshot_path": "artifacts/raw/temporal_api_pillow_resampling_lanczos_replacement_api.tar.gz",
+      "snapshot_sha256": "0e0bcf19945ae32d47c2ff049391fcb5a84937f1b086e89027218ab5edeb940a",
+      "source_id": "temporal_api_pillow_resampling_lanczos_replacement_api",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "github_raw_allowlist",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "commit_timestamp": "2016-08-18T16:02:01Z",
+        "kind": "git_commit",
+        "release_ref": "3.0.0",
+        "value": "c74ce371ab923edb990f40cf21f4309e1b4871ad"
+      },
+      "normalized_content_sha256": "329153c8d336f1dba3b26a31179da6f82f39c9664da482c81484677fd6a8c7e6",
+      "normalized_text_bytes": 35670,
+      "normalized_text_path": "artifacts/normalized/temporal_api_pytest_yield_fixture_deprecated_api.txt",
+      "snapshot_bytes": 12903,
+      "snapshot_path": "artifacts/raw/temporal_api_pytest_yield_fixture_deprecated_api.tar.gz",
+      "snapshot_sha256": "bbe2aede663cf77bf30c12ec78d6162a23547a56096362dff1d97ad462b08275",
+      "source_id": "temporal_api_pytest_yield_fixture_deprecated_api",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "github_raw_allowlist",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "commit_timestamp": "2021-08-29T14:09:45Z",
+        "kind": "git_commit",
+        "release_ref": "6.2.5",
+        "value": "1569fac603d9a50022e1474b494eebf970a2a3af"
+      },
+      "normalized_content_sha256": "6e7a015045277a3086f79be6336aa4d46b604c02fe20eb4fe518abcefc8d7dd9",
+      "normalized_text_bytes": 19384,
+      "normalized_text_path": "artifacts/normalized/temporal_api_pytest_yield_fixture_replacement_api.txt",
+      "snapshot_bytes": 7458,
+      "snapshot_path": "artifacts/raw/temporal_api_pytest_yield_fixture_replacement_api.tar.gz",
+      "snapshot_sha256": "834d7ec7ece3c855a43594342aa0d7a4c39d6bc15942297a68b6f46030b9eb02",
+      "source_id": "temporal_api_pytest_yield_fixture_replacement_api",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "github_raw_allowlist",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "commit_timestamp": "2018-12-17T17:54:00Z",
+        "kind": "git_commit",
+        "release_ref": "v1.2.0",
+        "value": "722bfc3f2cb4884c7ef3eb87cefcb91ff7479208"
+      },
+      "normalized_content_sha256": "185006a2dc06fb5541a7d3c09d41ecc1210421863d813af5620dd3693af84cef",
+      "normalized_text_bytes": 64177,
+      "normalized_text_path": "artifacts/normalized/temporal_api_scipy_imageio_imread_deprecated_api.txt",
+      "snapshot_bytes": 23135,
+      "snapshot_path": "artifacts/raw/temporal_api_scipy_imageio_imread_deprecated_api.tar.gz",
+      "snapshot_sha256": "42821eae64fc1de892d0b66ade225b4333bb9cbec3c43512d1237bc28f1f0508",
+      "source_id": "temporal_api_scipy_imageio_imread_deprecated_api",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "github_raw_allowlist",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "commit_timestamp": "2026-07-20T05:25:55Z",
+        "kind": "git_commit",
+        "release_ref": "v2.37.4",
+        "value": "671d96a5dd9bc94050cc89c4b436e2f7c874283e"
+      },
+      "normalized_content_sha256": "ae543a2a0a53586ab0f33ad54ed4dd7ff60013030487ec8323c62f9fe1157e3a",
+      "normalized_text_bytes": 8333,
+      "normalized_text_path": "artifacts/normalized/temporal_api_scipy_imageio_imread_replacement_api.txt",
+      "snapshot_bytes": 4160,
+      "snapshot_path": "artifacts/raw/temporal_api_scipy_imageio_imread_replacement_api.tar.gz",
+      "snapshot_sha256": "92294e8fd38b733596c6fa33d8c14c6217ad38d3084be71d1cdb9fd260ad44a5",
+      "source_id": "temporal_api_scipy_imageio_imread_replacement_api",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "github_raw_allowlist",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "commit_timestamp": "2021-12-25T11:27:28Z",
+        "kind": "git_commit",
+        "release_ref": "1.0.2",
+        "value": "7e1e6d09bcc2eaeba98f7e737aac2ac782f0e5f1"
+      },
+      "normalized_content_sha256": "d9dd5d6f03ed650b374caf464afaa38a0a0cb73675c348d52cdca208c8cc51b4",
+      "normalized_text_bytes": 86414,
+      "normalized_text_path": "artifacts/normalized/temporal_api_sklearn_feature_names_deprecated_api.txt",
+      "snapshot_bytes": 27956,
+      "snapshot_path": "artifacts/raw/temporal_api_sklearn_feature_names_deprecated_api.tar.gz",
+      "snapshot_sha256": "6a11ea428bc037cd4317265d3f871e242cdce65ddf241b97eab81ba4faeca475",
+      "source_id": "temporal_api_sklearn_feature_names_deprecated_api",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "github_raw_allowlist",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "commit_timestamp": "2022-12-08T12:04:29Z",
+        "kind": "git_commit",
+        "release_ref": "1.2.0",
+        "value": "dc580a8ef5ee2a8aea80498388690e2213118efd"
+      },
+      "normalized_content_sha256": "900099e1ec1d1b28d59d23da8091a1f30e164246d036ba6eee645d5b9db1e5bc",
+      "normalized_text_bytes": 78916,
+      "normalized_text_path": "artifacts/normalized/temporal_api_sklearn_feature_names_replacement_api.txt",
+      "snapshot_bytes": 25756,
+      "snapshot_path": "artifacts/raw/temporal_api_sklearn_feature_names_replacement_api.tar.gz",
+      "snapshot_sha256": "d1cb1eac4d9bf056bc62ca6b9099580dd03b39e9c59f50b742b9ec8d050e4eb9",
+      "source_id": "temporal_api_sklearn_feature_names_replacement_api",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "ecfr_versioner_api",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "expected_bytes": 39968,
+        "expected_sha256": "0a57819898dca97d0c97303c8f61e9f166eba5da0a9fc615f11bf3d9c80de965",
+        "kind": "effective_date",
+        "value": "2020-01-01"
+      },
+      "normalized_content_sha256": "b7b6c2faabeed17c3e331857751d3953fa02bc9454c89845759057feef9effe2",
+      "normalized_text_bytes": 35523,
+      "normalized_text_path": "artifacts/normalized/temporal_ecfr_coppa_archived_20200101.txt",
+      "snapshot_bytes": 39968,
+      "snapshot_path": "artifacts/raw/temporal_ecfr_coppa_archived_20200101.xml",
+      "snapshot_sha256": "0a57819898dca97d0c97303c8f61e9f166eba5da0a9fc615f11bf3d9c80de965",
+      "source_id": "temporal_ecfr_coppa_archived_20200101",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "ecfr_versioner_api",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "expected_bytes": 49580,
+        "expected_sha256": "e7de115eca9b7e8cd8851a2f3fb952c0fd510122fb92c41f00478034b7f38a43",
+        "kind": "effective_date",
+        "value": "2026-07-22"
+      },
+      "normalized_content_sha256": "c71980dedc4f7928ee52d1b3082a1012f1f3844a9e9968bc2ba928190405dd98",
+      "normalized_text_bytes": 45005,
+      "normalized_text_path": "artifacts/normalized/temporal_ecfr_coppa_current_20260722.txt",
+      "snapshot_bytes": 49580,
+      "snapshot_path": "artifacts/raw/temporal_ecfr_coppa_current_20260722.xml",
+      "snapshot_sha256": "e7de115eca9b7e8cd8851a2f3fb952c0fd510122fb92c41f00478034b7f38a43",
+      "source_id": "temporal_ecfr_coppa_current_20260722",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "ecfr_versioner_api",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "expected_bytes": 2086760,
+        "expected_sha256": "c2842f835e9b3c22c3caef51ed4e91d18401d30da13aca3e641c87e95ba34195",
+        "kind": "effective_date",
+        "value": "2020-01-01"
+      },
+      "normalized_content_sha256": "527b4d24187526871c100ac3c7689b17e48086394b368fb4e90aa6ea331abac9",
+      "normalized_text_bytes": 1462907,
+      "normalized_text_path": "artifacts/normalized/temporal_ecfr_hazardous_waste_archived_20200101.txt",
+      "snapshot_bytes": 2086760,
+      "snapshot_path": "artifacts/raw/temporal_ecfr_hazardous_waste_archived_20200101.xml",
+      "snapshot_sha256": "c2842f835e9b3c22c3caef51ed4e91d18401d30da13aca3e641c87e95ba34195",
+      "source_id": "temporal_ecfr_hazardous_waste_archived_20200101",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "ecfr_versioner_api",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "expected_bytes": 2061265,
+        "expected_sha256": "930cc290d128d71122de4a81188ef2d57675d72021263b51ad05a6536cb285ad",
+        "kind": "effective_date",
+        "value": "2026-07-22"
+      },
+      "normalized_content_sha256": "4633248f46aafcdd28511bc4d14e91fb1d36ef3dec08d0f7209267945a320775",
+      "normalized_text_bytes": 1480137,
+      "normalized_text_path": "artifacts/normalized/temporal_ecfr_hazardous_waste_current_20260722.txt",
+      "snapshot_bytes": 2061265,
+      "snapshot_path": "artifacts/raw/temporal_ecfr_hazardous_waste_current_20260722.xml",
+      "snapshot_sha256": "930cc290d128d71122de4a81188ef2d57675d72021263b51ad05a6536cb285ad",
+      "source_id": "temporal_ecfr_hazardous_waste_current_20260722",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "ecfr_versioner_api",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "expected_bytes": 45367,
+        "expected_sha256": "7ec15d69de91a06f36e4f12ccc57707f2616bc302e7ffad068265bda4a4ae28b",
+        "kind": "effective_date",
+        "value": "2021-01-01"
+      },
+      "normalized_content_sha256": "c8a855f97daff2d7c04d920ef3205643326f24f39f4144ac747a2f39dfb4117f",
+      "normalized_text_bytes": 39319,
+      "normalized_text_path": "artifacts/normalized/temporal_ecfr_information_blocking_archived_20210101.txt",
+      "snapshot_bytes": 45367,
+      "snapshot_path": "artifacts/raw/temporal_ecfr_information_blocking_archived_20210101.xml",
+      "snapshot_sha256": "7ec15d69de91a06f36e4f12ccc57707f2616bc302e7ffad068265bda4a4ae28b",
+      "source_id": "temporal_ecfr_information_blocking_archived_20210101",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "ecfr_versioner_api",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "expected_bytes": 71529,
+        "expected_sha256": "881f03c2034c1a6b4d49e9cde4adf70a84182f5890eb1be66f4026f4c601e023",
+        "kind": "effective_date",
+        "value": "2026-07-22"
+      },
+      "normalized_content_sha256": "fcc9988a11da139f8f617cc2a348f3e7abd2f8a6b6b17222aecfd2e55fc226bc",
+      "normalized_text_bytes": 61202,
+      "normalized_text_path": "artifacts/normalized/temporal_ecfr_information_blocking_current_20260722.txt",
+      "snapshot_bytes": 71529,
+      "snapshot_path": "artifacts/raw/temporal_ecfr_information_blocking_current_20260722.xml",
+      "snapshot_sha256": "881f03c2034c1a6b4d49e9cde4adf70a84182f5890eb1be66f4026f4c601e023",
+      "source_id": "temporal_ecfr_information_blocking_current_20260722",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "ecfr_versioner_api",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "expected_bytes": 1127205,
+        "expected_sha256": "ea8c2715ae41b9c676bbaa45d815884a89bdbe4505f42f7b32a334a2f9b7d7b4",
+        "kind": "effective_date",
+        "value": "2020-01-01"
+      },
+      "normalized_content_sha256": "30627ea88fd089aa71d5d354419a31d0717da75f01ace792905a2da9d8771b1c",
+      "normalized_text_bytes": 871449,
+      "normalized_text_path": "artifacts/normalized/temporal_ecfr_transport_airworthiness_archived_20200101.txt",
+      "snapshot_bytes": 1127205,
+      "snapshot_path": "artifacts/raw/temporal_ecfr_transport_airworthiness_archived_20200101.xml",
+      "snapshot_sha256": "ea8c2715ae41b9c676bbaa45d815884a89bdbe4505f42f7b32a334a2f9b7d7b4",
+      "source_id": "temporal_ecfr_transport_airworthiness_archived_20200101",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "ecfr_versioner_api",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "expected_bytes": 1147803,
+        "expected_sha256": "55e3b7d64af4cb293caaaf206963db3a58cdffb940c3b6f6c9b4ecce7294b742",
+        "kind": "effective_date",
+        "value": "2026-07-22"
+      },
+      "normalized_content_sha256": "72f6aaad68a5f5d0d0c7549743049df8bbca4cd6e8dde05ff7275e03993a5690",
+      "normalized_text_bytes": 889933,
+      "normalized_text_path": "artifacts/normalized/temporal_ecfr_transport_airworthiness_current_20260722.txt",
+      "snapshot_bytes": 1147803,
+      "snapshot_path": "artifacts/raw/temporal_ecfr_transport_airworthiness_current_20260722.xml",
+      "snapshot_sha256": "55e3b7d64af4cb293caaaf206963db3a58cdffb940c3b6f6c9b4ecce7294b742",
+      "source_id": "temporal_ecfr_transport_airworthiness_current_20260722",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "ecfr_versioner_api",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "expected_bytes": 7475282,
+        "expected_sha256": "23e87afb3bcd7aad37069deeb4c94e937101130a5e468dd9c55434e8d3678361",
+        "kind": "effective_date",
+        "value": "2020-01-01"
+      },
+      "normalized_content_sha256": "feeabd232e9b8547c012615702fc22a707efbbc68d6b2b4db78d036a872b4f82",
+      "normalized_text_bytes": 5649452,
+      "normalized_text_path": "artifacts/normalized/temporal_ecfr_workplace_safety_archived_20200101.txt",
+      "snapshot_bytes": 7475282,
+      "snapshot_path": "artifacts/raw/temporal_ecfr_workplace_safety_archived_20200101.xml",
+      "snapshot_sha256": "23e87afb3bcd7aad37069deeb4c94e937101130a5e468dd9c55434e8d3678361",
+      "source_id": "temporal_ecfr_workplace_safety_archived_20200101",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "ecfr_versioner_api",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "expected_bytes": 6716342,
+        "expected_sha256": "65c51e3f40185c53864997402c82b3da81a1867f38c04562726b82f0d5e2c6ca",
+        "kind": "effective_date",
+        "value": "2026-07-22"
+      },
+      "normalized_content_sha256": "adcc6e53aa63b0ee6f73260f40f64f1d37f25fa4d87c044f5ba81e7257c51fa3",
+      "normalized_text_bytes": 5570702,
+      "normalized_text_path": "artifacts/normalized/temporal_ecfr_workplace_safety_current_20260722.txt",
+      "snapshot_bytes": 6716342,
+      "snapshot_path": "artifacts/raw/temporal_ecfr_workplace_safety_current_20260722.xml",
+      "snapshot_sha256": "65c51e3f40185c53864997402c82b3da81a1867f38c04562726b82f0d5e2c6ca",
+      "source_id": "temporal_ecfr_workplace_safety_current_20260722",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "olrc_release_point_zip",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "expected_bytes": 2942306,
+        "expected_sha256": "f725c011f1db669649e24154db5db5a290268a6a82588ccb68df3de94ff28dad",
+        "kind": "release_point",
+        "release_date": "2026-07-12",
+        "value": "119-102"
+      },
+      "normalized_content_sha256": "cdda14ddf4d71e16cb598ccd9a523f6f1b9a5dcc636160c876bbd964ddec1657",
+      "normalized_text_bytes": 51232,
+      "normalized_text_path": "artifacts/normalized/temporal_olrc_title05_119_102.txt",
+      "snapshot_bytes": 2942306,
+      "snapshot_path": "artifacts/raw/temporal_olrc_title05_119_102.zip",
+      "snapshot_sha256": "f725c011f1db669649e24154db5db5a290268a6a82588ccb68df3de94ff28dad",
+      "source_id": "temporal_olrc_title05_119_102",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "olrc_release_point_zip",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "expected_bytes": 5027552,
+        "expected_sha256": "aaf4eb0b69374ab160da244bec7f81348099016ae83ded905ded4722824e4851",
+        "kind": "release_point",
+        "release_date": "2026-07-12",
+        "value": "119-102"
+      },
+      "normalized_content_sha256": "8b4bd0a68afe2315dcbb9319c3a9a15ac5bbe6adc8c8f7c70696e7dc04c4e6b3",
+      "normalized_text_bytes": 20905,
+      "normalized_text_path": "artifacts/normalized/temporal_olrc_title15_119_102.txt",
+      "snapshot_bytes": 5027552,
+      "snapshot_path": "artifacts/raw/temporal_olrc_title15_119_102.zip",
+      "snapshot_sha256": "aaf4eb0b69374ab160da244bec7f81348099016ae83ded905ded4722824e4851",
+      "source_id": "temporal_olrc_title15_119_102",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "olrc_release_point_zip",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "expected_bytes": 493323,
+        "expected_sha256": "8d8e29c944e7225d5cb6a74dbc125f9e8a49f098daadb29ee9376b0cbe43bbfa",
+        "kind": "release_point",
+        "release_date": "2026-07-12",
+        "value": "119-102"
+      },
+      "normalized_content_sha256": "02a171e6abc71edfd7b9daaed817ad93bd7ac4764a509f3c19e75ba74deaf424",
+      "normalized_text_bytes": 54163,
+      "normalized_text_path": "artifacts/normalized/temporal_olrc_title17_119_102.txt",
+      "snapshot_bytes": 493323,
+      "snapshot_path": "artifacts/raw/temporal_olrc_title17_119_102.zip",
+      "snapshot_sha256": "8d8e29c944e7225d5cb6a74dbc125f9e8a49f098daadb29ee9376b0cbe43bbfa",
+      "source_id": "temporal_olrc_title17_119_102",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "olrc_release_point_zip",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "expected_bytes": 1971101,
+        "expected_sha256": "2813d4e76e0bb148e708f6ce574246f16328ffe16f426624d357831e97bbd3d1",
+        "kind": "release_point",
+        "release_date": "2026-07-12",
+        "value": "119-102"
+      },
+      "normalized_content_sha256": "2eb1521034e2f9c91d4f0b8095c92ddd7cd0d1e16efff12a85c3efe88c269415",
+      "normalized_text_bytes": 18269,
+      "normalized_text_path": "artifacts/normalized/temporal_olrc_title18_119_102.txt",
+      "snapshot_bytes": 1971101,
+      "snapshot_path": "artifacts/raw/temporal_olrc_title18_119_102.zip",
+      "snapshot_sha256": "2813d4e76e0bb148e708f6ce574246f16328ffe16f426624d357831e97bbd3d1",
+      "source_id": "temporal_olrc_title18_119_102",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "olrc_release_point_zip",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "expected_bytes": 1832188,
+        "expected_sha256": "bf7cc70a4e11fc005c3d5b221cf764fb45115f5b9904445f089d4201ac5af28d",
+        "kind": "release_point",
+        "release_date": "2026-07-12",
+        "value": "119-102"
+      },
+      "normalized_content_sha256": "53d850d2acd775bfb5c67bd3c19f217bdefa338a28df6d93f89fe974b7cfa431",
+      "normalized_text_bytes": 116667,
+      "normalized_text_path": "artifacts/normalized/temporal_olrc_title29_119_102.txt",
+      "snapshot_bytes": 1832188,
+      "snapshot_path": "artifacts/raw/temporal_olrc_title29_119_102.zip",
+      "snapshot_sha256": "bf7cc70a4e11fc005c3d5b221cf764fb45115f5b9904445f089d4201ac5af28d",
+      "source_id": "temporal_olrc_title29_119_102",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "olrc_release_point_zip",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "expected_bytes": 277930,
+        "expected_sha256": "fb3a4ede2490dd5ea2a8193635d1b9dba564a596eceaf3ea3f293018a26f9b44",
+        "kind": "release_point",
+        "release_date": "2026-07-12",
+        "value": "119-102"
+      },
+      "normalized_content_sha256": "02c581ac8e15ea62ab6b910333bd359d14b160b26e8770dfcecb1605a1c75167",
+      "normalized_text_bytes": 292,
+      "normalized_text_path": "artifacts/normalized/temporal_olrc_title35_119_102.txt",
+      "snapshot_bytes": 277930,
+      "snapshot_path": "artifacts/raw/temporal_olrc_title35_119_102.zip",
+      "snapshot_sha256": "fb3a4ede2490dd5ea2a8193635d1b9dba564a596eceaf3ea3f293018a26f9b44",
+      "source_id": "temporal_olrc_title35_119_102",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "olrc_release_point_zip",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "expected_bytes": 18161570,
+        "expected_sha256": "31929c28f117362ac8788607242795769b05ed7726f07e4ed3b1786f39655ce7",
+        "kind": "release_point",
+        "release_date": "2026-07-12",
+        "value": "119-102"
+      },
+      "normalized_content_sha256": "cb05066af8c566c3e60ef817876eb7459f1031f58fcc8e452877301cc9c148ce",
+      "normalized_text_bytes": 55643,
+      "normalized_text_path": "artifacts/normalized/temporal_olrc_title42_119_102.txt",
+      "snapshot_bytes": 18161570,
+      "snapshot_path": "artifacts/raw/temporal_olrc_title42_119_102.zip",
+      "snapshot_sha256": "31929c28f117362ac8788607242795769b05ed7726f07e4ed3b1786f39655ce7",
+      "source_id": "temporal_olrc_title42_119_102",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "mediawiki_revision_api",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "kind": "mediawiki_revision",
+        "page_id": 276753,
+        "reviewed_wikitext_bytes": 47643,
+        "revision_timestamp": "2026-07-06T22:03:05Z",
+        "value": 1362897733
+      },
+      "normalized_content_sha256": "e42b0b6d456c71758b91b7268f11a11617d74e7983681971c93a3775bb689e87",
+      "normalized_text_bytes": 22435,
+      "normalized_text_path": "artifacts/normalized/temporal_wikipedia_cfaa_summary_r1362897733.txt",
+      "snapshot_bytes": 48204,
+      "snapshot_path": "artifacts/raw/temporal_wikipedia_cfaa_summary_r1362897733.json",
+      "snapshot_sha256": "2b8f79fdb5d40963b5702370a82e7588c09eea3701a7e99fe62f7ccfea5e54b6",
+      "source_id": "temporal_wikipedia_cfaa_summary_r1362897733",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "mediawiki_revision_api",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "kind": "mediawiki_revision",
+        "page_id": 53133,
+        "reviewed_wikitext_bytes": 61958,
+        "revision_timestamp": "2026-06-16T15:36:54Z",
+        "value": 1359675456
+      },
+      "normalized_content_sha256": "1fa67bb822efbb169fe457b3650021f55a69825d3f10e505facd42b5dff794b4",
+      "normalized_text_bytes": 26350,
+      "normalized_text_path": "artifacts/normalized/temporal_wikipedia_coppa_summary_r1359675456.txt",
+      "snapshot_bytes": 62606,
+      "snapshot_path": "artifacts/raw/temporal_wikipedia_coppa_summary_r1359675456.json",
+      "snapshot_sha256": "e34946b7efecad8008d03a5a027ba2dd503b197cadd4fdd6f7ec6808ae21e41d",
+      "source_id": "temporal_wikipedia_coppa_summary_r1359675456",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "mediawiki_revision_api",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "kind": "mediawiki_revision",
+        "page_id": 20648089,
+        "reviewed_wikitext_bytes": 117647,
+        "revision_timestamp": "2026-06-12T04:50:30Z",
+        "value": 1358968889
+      },
+      "normalized_content_sha256": "a103c3eb5c198f46021386d75ce1e825333344e81a3b9f30e26ec043423f4756",
+      "normalized_text_bytes": 61490,
+      "normalized_text_path": "artifacts/normalized/temporal_wikipedia_dmca_summary_r1358968889.txt",
+      "snapshot_bytes": 118479,
+      "snapshot_path": "artifacts/raw/temporal_wikipedia_dmca_summary_r1358968889.json",
+      "snapshot_sha256": "a228aca44bbd4bbfc456b22a52331b28547ba6e355d3d8d1672607ac47022d78",
+      "source_id": "temporal_wikipedia_dmca_summary_r1358968889",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "mediawiki_revision_api",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "kind": "mediawiki_revision",
+        "page_id": 384064,
+        "reviewed_wikitext_bytes": 74275,
+        "revision_timestamp": "2026-06-04T22:52:18Z",
+        "value": 1357830950
+      },
+      "normalized_content_sha256": "122fd11c8abf813e7825a5b57617475672f2d3f42e639cc6a8fe65493903473d",
+      "normalized_text_bytes": 39871,
+      "normalized_text_path": "artifacts/normalized/temporal_wikipedia_hipaa_r1357830950.txt",
+      "snapshot_bytes": 75116,
+      "snapshot_path": "artifacts/raw/temporal_wikipedia_hipaa_r1357830950.json",
+      "snapshot_sha256": "40fc15bf885aeec33c94916ba63ec129ad9f0dd1a172bd2f82de5865d4bd4a4c",
+      "source_id": "temporal_wikipedia_hipaa_r1357830950",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "mediawiki_revision_api",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "kind": "mediawiki_revision",
+        "page_id": 461036,
+        "reviewed_wikitext_bytes": 24471,
+        "revision_timestamp": "2026-07-22T23:15:04Z",
+        "value": 1365514586
+      },
+      "normalized_content_sha256": "09f95f92cd40ad8c95e95d154989b354a7fe11643b0b334568e7a4103e610421",
+      "normalized_text_bytes": 11811,
+      "normalized_text_path": "artifacts/normalized/temporal_wikipedia_osha_act_summary_r1365514586.txt",
+      "snapshot_bytes": 25025,
+      "snapshot_path": "artifacts/raw/temporal_wikipedia_osha_act_summary_r1365514586.json",
+      "snapshot_sha256": "974e8e0dd2aec8f367ca999c1803297383b0e34fa479bd7f8566461334b4e59e",
+      "source_id": "temporal_wikipedia_osha_act_summary_r1365514586",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "mediawiki_revision_api",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "kind": "mediawiki_revision",
+        "page_id": 695212,
+        "reviewed_wikitext_bytes": 1367,
+        "revision_timestamp": "2024-05-26T23:35:30Z",
+        "value": 14227426
+      },
+      "normalized_content_sha256": "2748623cb8d382370154663165eea60d08d44adb424cf8dd07949a66b9e525ea",
+      "normalized_text_bytes": 890,
+      "normalized_text_path": "artifacts/normalized/temporal_wikisource_civil_rights_action_r14227426.txt",
+      "snapshot_bytes": 1671,
+      "snapshot_path": "artifacts/raw/temporal_wikisource_civil_rights_action_r14227426.json",
+      "snapshot_sha256": "4cebca7e011b8b2449112638eb1beaae4a7e06743e5c1fbe7e7af78490d96e1d",
+      "source_id": "temporal_wikisource_civil_rights_action_r14227426",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "mediawiki_revision_api",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "kind": "mediawiki_revision",
+        "page_id": 14861,
+        "reviewed_wikitext_bytes": 32376,
+        "revision_timestamp": "2024-05-28T02:51:50Z",
+        "value": 14231081
+      },
+      "normalized_content_sha256": "f80930f5625fdc48a3146b7e7ca4ca4cbf0fbe001c10e35e8aea53e0186e1890",
+      "normalized_text_bytes": 29894,
+      "normalized_text_path": "artifacts/normalized/temporal_wikisource_copyright_fair_use_r14231081.txt",
+      "snapshot_bytes": 33074,
+      "snapshot_path": "artifacts/raw/temporal_wikisource_copyright_fair_use_r14231081.json",
+      "snapshot_sha256": "7ba5302382165d500847cba9f91a12f5b13832b44234c63afc8fb6cd7a5dbcfb",
+      "source_id": "temporal_wikisource_copyright_fair_use_r14231081",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "mediawiki_revision_api",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "kind": "mediawiki_revision",
+        "page_id": 354264,
+        "reviewed_wikitext_bytes": 30748,
+        "revision_timestamp": "2024-02-21T12:40:28Z",
+        "value": 13890117
+      },
+      "normalized_content_sha256": "8523f274f3de6cdd56b03df0cd250674b1a769f2ea464ec2008a7db934a4fd97",
+      "normalized_text_bytes": 30222,
+      "normalized_text_path": "artifacts/normalized/temporal_wikisource_foia_section_r13890117.txt",
+      "snapshot_bytes": 31218,
+      "snapshot_path": "artifacts/raw/temporal_wikisource_foia_section_r13890117.json",
+      "snapshot_sha256": "d9f657e3f8debb6ea089f35ee5301d04811de6294a5494fc14738880cfd17d4e",
+      "source_id": "temporal_wikisource_foia_section_r13890117",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "mediawiki_revision_api",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "kind": "mediawiki_revision",
+        "page_id": 638156,
+        "reviewed_wikitext_bytes": 9355,
+        "revision_timestamp": "2024-05-26T23:41:10Z",
+        "value": 14227477
+      },
+      "normalized_content_sha256": "15bbe62a4824b7411765d1544b8141ae616321c2550436e8bcf40d381c907d96",
+      "normalized_text_bytes": 8810,
+      "normalized_text_path": "artifacts/normalized/temporal_wikisource_minimum_wage_r14227477.txt",
+      "snapshot_bytes": 9696,
+      "snapshot_path": "artifacts/raw/temporal_wikisource_minimum_wage_r14227477.json",
+      "snapshot_sha256": "8ed83caa9c307efa928cb17335acaf9dd1fd5a6a64bb66b09f3360788b1ddb20",
+      "source_id": "temporal_wikisource_minimum_wage_r14227477",
+      "status": "acquired_and_normalized"
+    },
+    {
+      "acquisition_method": "mediawiki_revision_api",
+      "collected_at": "2026-07-26T19:26:35.357653Z",
+      "immutable_revision": {
+        "kind": "mediawiki_revision",
+        "page_id": 111438,
+        "reviewed_wikitext_bytes": 2402,
+        "revision_timestamp": "2024-06-30T01:31:19Z",
+        "value": 14305370
+      },
+      "normalized_content_sha256": "01da3677a47bd2d49d324bc256330cbb12e59d932fc4e2366d544bbedbb34c47",
+      "normalized_text_bytes": 1798,
+      "normalized_text_path": "artifacts/normalized/temporal_wikisource_patent_eligibility_r14305370.txt",
+      "snapshot_bytes": 2717,
+      "snapshot_path": "artifacts/raw/temporal_wikisource_patent_eligibility_r14305370.json",
+      "snapshot_sha256": "b624a76b98d23952178c65669d2098599fb1b34d57362d81badf9f8c39eaeef7",
+      "source_id": "temporal_wikisource_patent_eligibility_r14305370",
+      "status": "acquired_and_normalized"
+    }
+  ],
+  "status": "complete",
+  "trace_count": 0,
+  "verifier_calls": 0,
+  "workspace_artifact_root": "private working directory; not published"
+}

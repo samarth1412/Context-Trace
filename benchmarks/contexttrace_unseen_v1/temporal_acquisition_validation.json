@@ -1,0 +1,35 @@
+{
+  "inputs": {
+    "acquisition_and_validator_sha256": "7618bd746ce77a2b73a844ed1676850f9bace7389448e017ad249f6f52a682fd",
+    "acquisition_ledger_sha256": "2bb77e35b7f9fad3a080bcb2b2986cc7090e622de0444ea6f7240740a5584ca1",
+    "authorization_sha256": "9c88da5c234bc5ae97d6ecf6bcf14b0c2bec0963a371ba78ac6797a104cc3733",
+    "catalog_sha256": "a3781a725ad5100a610e8a6e2bec1b7458903333622ce0461d095c88c8bd6678",
+    "source_manifest_sha256": "6b3bbd4dff5ed7a2a80e26f87a7cf17a670be92083071526d33c2a3f60abf96e"
+  },
+  "record_kind": "contexttrace_unseen_v1_temporal_acquisition_validation",
+  "result": {
+    "method_counts": {
+      "ecfr_versioner_api": 10,
+      "github_raw_allowlist": 10,
+      "mediawiki_revision_api": 10,
+      "olrc_release_point_zip": 7
+    },
+    "model_calls": 0,
+    "normalized_text_bytes": 17461866,
+    "paid_endpoint_calls": 0,
+    "pair_count": 20,
+    "planned_case_count": 100,
+    "prior_normalized_hash_collisions": [],
+    "raw_bytes": 52206111,
+    "retained_repository_legal_files": 34,
+    "selected_statutory_sections": 52,
+    "source_count": 37,
+    "status": "valid",
+    "trace_count": 0,
+    "verifier_calls": 0,
+    "wikimedia_user_metadata_records": 0
+  },
+  "schema_version": "1.0",
+  "status": "valid",
+  "validated_at": "2026-07-26T19:29:03.832117Z"
+}

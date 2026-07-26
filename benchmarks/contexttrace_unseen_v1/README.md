@@ -2,8 +2,8 @@
 
 Status date: 2026-07-26
 
-Phase: Natural OOD collection completed and privately frozen; temporal
-pre-acquisition catalog locked pending owner authorization
+Phase: Natural OOD collection completed and privately frozen; temporal sources
+acquired and validated pending generation-schedule freeze
 
 Dataset version: not assigned
 
@@ -51,6 +51,15 @@ placeholders are ineligible.
   license/access, disjointness, allocation, budget, and decision boundary.
 - `build_temporal_pre_acquisition_catalog.py`: deterministic builder and
   fail-closed validator for the temporal review object.
+- `TEMPORAL_ACQUISITION_AUTHORIZATION.md`: verbatim exact-hash decision `11A`
+  and exclusions.
+- `TEMPORAL_ACQUISITION_RECORD.md`: completed 37-source/20-pair acquisition,
+  validation outcome, integrity hashes, and next decision boundary.
+- `temporal_source_manifest.json`, `temporal_acquisition_ledger.json`, and
+  `temporal_acquisition_validation.json`: metadata-only integrity records.
+- `acquire_temporal_sources.py`: exact-identity collector and independent
+  offline reconstruction validator; it contains no generation or verifier
+  integration.
 - `LEAKAGE_AUDIT.md`: disjointness dimensions and fail-closed audit status.
 - `PRIVACY_AND_LICENSE.md`: source, redistribution, privacy, and secret-handling
   requirements.

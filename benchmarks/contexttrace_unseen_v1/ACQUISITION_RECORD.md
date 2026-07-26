@@ -121,6 +121,7 @@ The 396-case Natural OOD schedule has been frozen and hashed at the value
 recorded in `GENERATION_LOCK.md`. A separate recorded authorization of that
 exact hash is required before generation starts.
 
-The temporal/source-condition track remains before this gate: it requires a
-separate approved acquisition of real versioned or authority-contrasting source
-pairs before its source-to-generation schedule can be created.
+The temporal/source-condition acquisition was later completed under its own
+exact-hash decision and is recorded separately in
+`TEMPORAL_ACQUISITION_RECORD.md`. Its source-to-generation schedule is not yet
+created or authorized.

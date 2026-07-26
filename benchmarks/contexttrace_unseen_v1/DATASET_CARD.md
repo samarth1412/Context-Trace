@@ -7,9 +7,11 @@ RAG grounding, citation, retrieval-stage, abstention, and source-condition
 failures. Its distinguishing design goal is independence from all evidence used
 to develop or calibrate ContextTrace.
 
-Current status: **Natural OOD sources acquired and generation schedule
-locked**. There are zero generated traces, no frozen unlabeled manifest, and no
-annotations. The temporal/source-condition sources have not been acquired.
+Current status: **Natural OOD collection privately frozen; temporal sources
+acquired and validated**. The Natural OOD track contains 393 eligible traces
+and three recorded structural failures. The complete two-track unlabeled
+manifest is not frozen, temporal generation has not started, and there are no
+annotations.
 
 ## Motivation
 
