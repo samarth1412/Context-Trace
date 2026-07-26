@@ -45,6 +45,12 @@ Gate status: Natural OOD generation configuration locked; run authorization pend
   retrievers, chunking, reranking, model revisions, retries, timeouts, privacy,
   and the fail-closed hosted cost guard. This records a review object; it does
   not authorize model calls.
+- 2026-07-26 — The project owner explicitly authorized execution of the exact
+  Natural OOD schedule SHA-256
+  `e850d3eb6d374547cdbc70b2c0da02e0db8d9ff043633a577d9319f3d69e1695`
+  under the recorded USD 10 hard ceiling. The authorization scope and
+  exclusions are preserved in
+  `benchmarks/contexttrace_unseen_v1/NATURAL_OOD_RUN_AUTHORIZATION.md`.
 
 ## User-authorized decisions
 
@@ -186,14 +192,11 @@ The exact lock and verification command are in
 
 Remaining:
 
-1. Obtain explicit project-owner authorization to run the exact Natural OOD
-   schedule hash. No model call is authorized by preparation of the lock.
-2. Acquire and approve real versioned/authority source pairs before a temporal
+1. Acquire and approve real versioned/authority source pairs before a temporal
    schedule can be created. The current 36 snapshots are all current and
    canonical and cannot support that track.
-3. Recruit and onboard the label custodian/adjudicator before annotation.
+2. Recruit and onboard the label custodian/adjudicator before annotation.
 
-Natural OOD generation may start only after blocker 1 is closed and its
-separate authorization is recorded. Temporal generation additionally requires
-blocker 2. Annotation may start only after the complete unlabeled manifest is
-frozen and blocker 3 is closed.
+Natural OOD generation is authorized only for the exact recorded lock.
+Temporal generation additionally requires blocker 1. Annotation may start
+only after the complete unlabeled manifest is frozen and blocker 2 is closed.

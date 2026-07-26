@@ -4,7 +4,7 @@ Lock version: 1.0
 
 Recorded: 2026-07-24
 
-Status: Natural OOD schedule locked; generation authorization pending
+Status: Natural OOD schedule locked; exact-hash generation authorized
 
 ## Locked artifacts
 
@@ -132,6 +132,6 @@ privacy, and authority-basis review before a schedule amendment.
   e850d3eb6d374547cdbc70b2c0da02e0db8d9ff043633a577d9319f3d69e1695
 ```
 
-Passing verification proves structural integrity and allocation balance. It
-does not authorize model calls. The project owner must explicitly approve this
-exact schedule hash before collection begins.
+Passing verification proves structural integrity and allocation balance. The
+separate project-owner authorization for this exact hash is preserved in
+`NATURAL_OOD_RUN_AUTHORIZATION.md`.
