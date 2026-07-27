@@ -1,0 +1,34 @@
+{
+  "activation": {
+    "access_log_rehearsal_passed": false,
+    "candidate_duties_attested": false,
+    "candidate_manual_training_completed": false,
+    "candidate_pilot_passed": false,
+    "frozen_manifest_verified_by_candidate": false,
+    "implementation_account_denial_tested": false,
+    "label_zone_created_outside_implementation_workspace": false,
+    "production_label_access_active": false,
+    "synthetic_seal_backup_recovery_passed": false
+  },
+  "candidate_id": "sar",
+  "frozen_unlabeled_payload_sha256": "8bf65cd7e2c95ccfcc12e78b580fc47e4157b0f808ba3fcace0a24bfcdc2e5f6",
+  "institutional_irb_review": {
+    "basis": "project owner responded 'no' when asked for the required institutional/IRB outcome",
+    "determination_source": "project_owner_attestation",
+    "outcome": "not_required"
+  },
+  "personal_information_recorded": false,
+  "record_kind": "contexttrace_cain2027_label_custodian_appointment",
+  "recorded_at": "2026-07-27",
+  "schema_version": "1.0",
+  "screening": {
+    "outcome": "eligible",
+    "reported_by": "project_owner"
+  },
+  "service_arrangement": {
+    "compensation": "none",
+    "reported_by": "project_owner",
+    "type": "voluntary"
+  },
+  "status": "provisionally_appointed_pending_human_activation"
+}

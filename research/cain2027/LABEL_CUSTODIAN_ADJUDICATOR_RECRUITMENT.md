@@ -4,7 +4,7 @@ Package version: 1.0
 
 Date: 2026-07-24
 
-Status: ready for project-owner use; no candidate appointed
+Status: candidate `sar` provisionally appointed; human activation pending
 
 ## Role to fill
 
@@ -193,4 +193,8 @@ The project owner must:
 5. return only the candidate's pseudonymous ID and screening outcome to the
    implementation workspace.
 
-No recruitment message has been sent and no person has been appointed.
+On 2026-07-27, the project owner reported candidate `sar` as eligible,
+voluntary, and not requiring institutional/IRB review. The provisional
+appointment is recorded in `LABEL_CUSTODIAN_APPOINTMENT.md` and
+`label_custodian_appointment.json`. Production access remains inactive until
+the candidate-generated activation receipts satisfy every unchecked item.

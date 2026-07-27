@@ -148,6 +148,7 @@ status.
 
 ## Current human dependency
 
-No independent annotator, adjudicator, or label custodian has been assigned.
-Training, pilot annotation, qualification, and test annotation therefore have
-not begun.
+Candidate `sar` is provisionally appointed as label custodian/adjudicator but
+is not activated. No independent annotator assignment is recorded. Candidate
+training, excluded-source pilot qualification, production annotator training,
+and test annotation have not begun.

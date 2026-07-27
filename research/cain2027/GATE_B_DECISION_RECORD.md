@@ -233,7 +233,8 @@ offline reconstruction without source substitution or downstream calls.
 
 Remaining:
 
-1. Recruit and onboard the label custodian/adjudicator before annotation.
+1. Complete human onboarding and activation for provisionally appointed label
+   custodian/adjudicator `sar` before annotation.
 
 Natural OOD generation ran only under its exact recorded lock and its private
 unlabeled manifest is frozen. Temporal acquisition is complete. On 2026-07-26,
@@ -254,5 +255,9 @@ retained on 2026-07-26. Its 493 cases comprise 393 Natural OOD and 100
 temporal/source-condition cases. The production payload seal is
 `8bf65cd7e2c95ccfcc12e78b580fc47e4157b0f808ba3fcace0a24bfcdc2e5f6`.
 All Gate C artifact, composition, label-absence, verifier-history, and uniform
-semantic leakage checks passed. The sole remaining pre-annotation blocker is
-appointment and activation of the independent label custodian/adjudicator.
+semantic leakage checks passed. On 2026-07-27, the project owner provisionally
+appointed pseudonymous candidate `sar`, reporting eligible screening,
+voluntary service, and no institutional/IRB review requirement. The remaining
+pre-annotation blocker is candidate-completed training, excluded-source pilot,
+disclosure attestation, isolated label-zone creation, access-denial testing,
+and synthetic seal/recovery rehearsal.

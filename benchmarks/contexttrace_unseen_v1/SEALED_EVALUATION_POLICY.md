@@ -2,7 +2,7 @@
 
 Policy version: 1.0
 
-Status: protocol only; no gold artifact exists
+Status: Gate C corpus frozen; provisional custodian appointed; no gold artifact exists
 
 ## Objective
 
@@ -153,6 +153,9 @@ correction.
 
 ## Current gate
 
-No frozen corpus, independent annotators, adjudicator, label custodian, raw
-annotations, agreement result, or sealed gold exists. The gold-release gate is
-closed.
+The complete 493-case corpus is privately frozen under payload SHA-256
+`8bf65cd7e2c95ccfcc12e78b580fc47e4157b0f808ba3fcace0a24bfcdc2e5f6`.
+Candidate `sar` is provisionally appointed as label custodian/adjudicator but
+has not completed human activation. No independent annotator assignment, raw
+annotation, agreement result, or sealed gold exists. The gold-release gate
+remains closed.
