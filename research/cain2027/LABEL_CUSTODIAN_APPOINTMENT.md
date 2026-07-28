@@ -37,9 +37,12 @@ predictions on the candidate corpus.
 - [x] Voluntary arrangement reported as approved.
 - [x] Project owner reports institutional/IRB review is not required.
 - [x] Candidate accepts the duties and prohibited-disclosure terms.
+- [x] Project owner reports that the candidate says the isolated label zone is
+  ready.
 - [ ] Candidate completes manual and adjudication training.
 - [ ] Candidate passes the excluded-source qualification pilot.
-- [ ] Candidate creates the label zone outside the implementation workspace.
+- [ ] Rehearsal receipt verifies that the candidate created the label zone
+  outside the implementation workspace.
 - [ ] Candidate demonstrates implementation-account denial.
 - [ ] Append-only access logging is tested.
 - [ ] Synthetic hash, seal, backup, and recovery rehearsal passes.
@@ -54,3 +57,9 @@ acceptance attestation covering independence, candidate-prediction
 non-exposure, confidentiality, record preservation, role separation, and
 prohibited disclosure. The attestation itself remains outside the repository;
 only its non-revealing receipt status is recorded here.
+
+On 2026-07-28, the project owner reported that `sar` said the isolated label
+zone was ready. This is recorded as a readiness report only. It does not
+activate production access or establish isolation, access denial, logging,
+recovery, or manifest verification; those items remain pending a
+custodian-generated rehearsal receipt.

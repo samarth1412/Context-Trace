@@ -7,6 +7,7 @@
     "frozen_manifest_verified_by_candidate": false,
     "implementation_account_denial_tested": false,
     "label_zone_created_outside_implementation_workspace": false,
+    "label_zone_readiness_reported_by_candidate": true,
     "production_label_access_active": false,
     "synthetic_seal_backup_recovery_passed": false
   },
@@ -30,5 +31,5 @@
     "reported_by": "project_owner",
     "type": "voluntary"
   },
-  "status": "duties_attested_pending_training_pilot_and_zone_activation"
+  "status": "zone_readiness_reported_pending_rehearsal_training_and_pilot"
 }
