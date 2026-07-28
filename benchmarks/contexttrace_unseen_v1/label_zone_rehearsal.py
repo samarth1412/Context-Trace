@@ -24,6 +24,7 @@ from benchmarks.contexttrace_unseen_v1.freeze_manifest import (
 
 
 TOOL_VERSION = "contexttrace-label-zone-rehearsal-v1"
+STAGED_TOOL_VERSION = "contexttrace-label-zone-rehearsal-v2"
 CANDIDATE_ID = re.compile(r"^[a-z0-9][a-z0-9_-]{1,63}$")
 LAYOUT = (
     "assignments",
@@ -57,6 +58,35 @@ RECEIPT_KEYS = frozenset(
         "excluded_source_pilot_attested",
         "duties_and_disclosure_attested",
         "overall_activation_passed",
+        "receipt_payload_sha256",
+    }
+)
+ZONE_RECEIPT_KEYS = frozenset(
+    {
+        "schema_version",
+        "record_kind",
+        "tool_version",
+        "candidate_id",
+        "rehearsed_at",
+        "directory_layout_passed",
+        "private_mode_passed",
+        "append_only_log_rehearsal_passed",
+        "synthetic_seal_backup_recovery_passed",
+        "implementation_account_denial_attested",
+        "duties_and_disclosure_attested",
+        "overall_zone_rehearsal_passed",
+        "receipt_payload_sha256",
+    }
+)
+MANIFEST_RECEIPT_KEYS = frozenset(
+    {
+        "schema_version",
+        "record_kind",
+        "tool_version",
+        "candidate_id",
+        "verified_at",
+        "frozen_manifest_payload_sha256",
+        "frozen_manifest_verified",
         "receipt_payload_sha256",
     }
 )
@@ -213,9 +243,92 @@ def _receipt_payload_hash(receipt: Mapping[str, Any]) -> str:
     return sha256_bytes(canonical_json(payload).encode("utf-8"))
 
 
-def rehearse(args: argparse.Namespace) -> dict[str, Any]:
-    if not CANDIDATE_ID.fullmatch(args.candidate_id):
+def _write_receipt(receipt_path: Path, receipt: dict[str, Any]) -> None:
+    receipt["receipt_payload_sha256"] = _receipt_payload_hash(receipt)
+    atomic_json(receipt_path, receipt, mode=0o600)
+    sidecar = receipt_path.with_suffix(receipt_path.suffix + ".sha256")
+    sidecar.write_text(
+        f"{sha256_file(receipt_path)}  {receipt_path.name}\n",
+        encoding="utf-8",
+    )
+    os.chmod(sidecar, 0o600)
+
+
+def _validate_candidate_id(candidate_id: str) -> None:
+    if not CANDIDATE_ID.fullmatch(candidate_id):
         raise RehearsalError("Candidate ID format is invalid.")
+
+
+def rehearse_zone(args: argparse.Namespace) -> dict[str, Any]:
+    """Run the synthetic zone checks before any untouched manifest is shared."""
+
+    _validate_candidate_id(args.candidate_id)
+    zone = _outside_repository(args.zone, label="Label zone")
+    receipt_path = _outside_repository(args.receipt, label="Receipt")
+    _prepare_zone(zone)
+    log_path = zone / "access-log.jsonl"
+    first = _append_chained_event(
+        log_path,
+        previous_sha256=None,
+        action="zone_created",
+        candidate_id=args.candidate_id,
+    )
+    _append_chained_event(
+        log_path,
+        previous_sha256=first,
+        action="synthetic_recovery_verified",
+        candidate_id=args.candidate_id,
+    )
+    receipt: dict[str, Any] = {
+        "schema_version": "1.0",
+        "record_kind": "contexttrace_label_zone_rehearsal_receipt",
+        "tool_version": STAGED_TOOL_VERSION,
+        "candidate_id": args.candidate_id,
+        "rehearsed_at": utc_now(),
+        "directory_layout_passed": all(
+            (zone / relative).is_dir() for relative in LAYOUT
+        ),
+        "private_mode_passed": _private_modes_pass(zone),
+        "append_only_log_rehearsal_passed": _verify_log_chain(log_path),
+        "synthetic_seal_backup_recovery_passed": _synthetic_recovery(zone),
+        "implementation_account_denial_attested": bool(
+            args.implementation_denial_attested
+        ),
+        "duties_and_disclosure_attested": bool(args.duties_attested),
+    }
+    receipt["overall_zone_rehearsal_passed"] = all(
+        value is True
+        for key, value in receipt.items()
+        if key.endswith("_passed") or key.endswith("_attested")
+    )
+    _write_receipt(receipt_path, receipt)
+    return receipt
+
+
+def verify_manifest(args: argparse.Namespace) -> dict[str, Any]:
+    """Verify the real frozen manifest only after training and pilot gates pass."""
+
+    _validate_candidate_id(args.candidate_id)
+    receipt_path = _outside_repository(args.receipt, label="Receipt")
+    manifest = load_json(args.manifest)
+    verified = verify_frozen_manifest(
+        manifest, expected_sha256=args.expected_sha256
+    )
+    receipt: dict[str, Any] = {
+        "schema_version": "1.0",
+        "record_kind": "contexttrace_frozen_manifest_verification_receipt",
+        "tool_version": STAGED_TOOL_VERSION,
+        "candidate_id": args.candidate_id,
+        "verified_at": utc_now(),
+        "frozen_manifest_payload_sha256": verified,
+        "frozen_manifest_verified": True,
+    }
+    _write_receipt(receipt_path, receipt)
+    return receipt
+
+
+def rehearse(args: argparse.Namespace) -> dict[str, Any]:
+    _validate_candidate_id(args.candidate_id)
     zone = _outside_repository(args.zone, label="Label zone")
     receipt_path = _outside_repository(args.receipt, label="Receipt")
     manifest = load_json(args.manifest)
@@ -263,36 +376,92 @@ def rehearse(args: argparse.Namespace) -> dict[str, Any]:
         for key, value in receipt.items()
         if key.endswith("_passed") or key.endswith("_attested")
     )
-    receipt["receipt_payload_sha256"] = _receipt_payload_hash(receipt)
-    atomic_json(receipt_path, receipt, mode=0o600)
-    sidecar = receipt_path.with_suffix(receipt_path.suffix + ".sha256")
-    sidecar.write_text(
-        f"{sha256_file(receipt_path)}  {receipt_path.name}\n",
-        encoding="utf-8",
-    )
-    os.chmod(sidecar, 0o600)
+    _write_receipt(receipt_path, receipt)
     return receipt
+
+
+def _verify_receipt_fields(
+    receipt: Mapping[str, Any],
+    *,
+    allowed_keys: frozenset[str],
+    record_kind: str,
+    tool_version: str,
+    candidate_id: str,
+) -> None:
+    if set(receipt) != allowed_keys:
+        raise RehearsalError("Receipt fields are missing or exceed the allowlist.")
+    if (
+        receipt["record_kind"] != record_kind
+        or receipt["tool_version"] != tool_version
+        or receipt["candidate_id"] != candidate_id
+        or receipt["receipt_payload_sha256"] != _receipt_payload_hash(receipt)
+    ):
+        raise RehearsalError("Receipt identity or hash is invalid.")
 
 
 def verify_receipt(args: argparse.Namespace) -> dict[str, Any]:
     receipt = load_json(args.receipt)
-    if set(receipt) != RECEIPT_KEYS:
-        raise RehearsalError("Receipt fields are missing or exceed the allowlist.")
+    _verify_receipt_fields(
+        receipt,
+        allowed_keys=RECEIPT_KEYS,
+        record_kind="contexttrace_label_custodian_activation_receipt",
+        tool_version=TOOL_VERSION,
+        candidate_id=args.candidate_id,
+    )
     if (
-        receipt["record_kind"]
-        != "contexttrace_label_custodian_activation_receipt"
-        or receipt["tool_version"] != TOOL_VERSION
-        or receipt["candidate_id"] != args.candidate_id
-        or receipt["frozen_manifest_payload_sha256"] != args.expected_sha256
-        or receipt["receipt_payload_sha256"] != _receipt_payload_hash(receipt)
+        receipt["frozen_manifest_payload_sha256"] != args.expected_sha256
     ):
-        raise RehearsalError("Activation receipt identity or hash is invalid.")
+        raise RehearsalError("Activation receipt manifest hash is invalid.")
     return {
         "status": (
             "activation_passed"
             if receipt["overall_activation_passed"]
             else "activation_incomplete"
         ),
+        "candidate_id": receipt["candidate_id"],
+        "frozen_manifest_payload_sha256": receipt[
+            "frozen_manifest_payload_sha256"
+        ],
+        "receipt_payload_sha256": receipt["receipt_payload_sha256"],
+    }
+
+
+def verify_zone_receipt(args: argparse.Namespace) -> dict[str, Any]:
+    receipt = load_json(args.receipt)
+    _verify_receipt_fields(
+        receipt,
+        allowed_keys=ZONE_RECEIPT_KEYS,
+        record_kind="contexttrace_label_zone_rehearsal_receipt",
+        tool_version=STAGED_TOOL_VERSION,
+        candidate_id=args.candidate_id,
+    )
+    return {
+        "status": (
+            "zone_rehearsal_passed"
+            if receipt["overall_zone_rehearsal_passed"]
+            else "zone_rehearsal_incomplete"
+        ),
+        "candidate_id": receipt["candidate_id"],
+        "receipt_payload_sha256": receipt["receipt_payload_sha256"],
+    }
+
+
+def verify_manifest_receipt(args: argparse.Namespace) -> dict[str, Any]:
+    receipt = load_json(args.receipt)
+    _verify_receipt_fields(
+        receipt,
+        allowed_keys=MANIFEST_RECEIPT_KEYS,
+        record_kind="contexttrace_frozen_manifest_verification_receipt",
+        tool_version=STAGED_TOOL_VERSION,
+        candidate_id=args.candidate_id,
+    )
+    if (
+        receipt["frozen_manifest_payload_sha256"] != args.expected_sha256
+        or receipt["frozen_manifest_verified"] is not True
+    ):
+        raise RehearsalError("Manifest receipt hash or verification state is invalid.")
+    return {
+        "status": "manifest_verified",
         "candidate_id": receipt["candidate_id"],
         "frozen_manifest_payload_sha256": receipt[
             "frozen_manifest_payload_sha256"
@@ -316,21 +485,50 @@ def build_parser() -> argparse.ArgumentParser:
     rehearsal.add_argument("--training-attested", action="store_true")
     rehearsal.add_argument("--pilot-attested", action="store_true")
     rehearsal.add_argument("--duties-attested", action="store_true")
+
+    zone_rehearsal = subparsers.add_parser("rehearse-zone")
+    zone_rehearsal.add_argument("--zone", type=Path, required=True)
+    zone_rehearsal.add_argument("--candidate-id", required=True)
+    zone_rehearsal.add_argument("--receipt", type=Path, required=True)
+    zone_rehearsal.add_argument(
+        "--implementation-denial-attested", action="store_true"
+    )
+    zone_rehearsal.add_argument("--duties-attested", action="store_true")
+
+    manifest = subparsers.add_parser("verify-manifest")
+    manifest.add_argument("--manifest", type=Path, required=True)
+    manifest.add_argument("--expected-sha256", required=True)
+    manifest.add_argument("--candidate-id", required=True)
+    manifest.add_argument("--receipt", type=Path, required=True)
+
     verify = subparsers.add_parser("verify-receipt")
     verify.add_argument("--receipt", type=Path, required=True)
     verify.add_argument("--candidate-id", required=True)
     verify.add_argument("--expected-sha256", required=True)
+
+    verify_zone = subparsers.add_parser("verify-zone-receipt")
+    verify_zone.add_argument("--receipt", type=Path, required=True)
+    verify_zone.add_argument("--candidate-id", required=True)
+
+    verify_manifest_result = subparsers.add_parser("verify-manifest-receipt")
+    verify_manifest_result.add_argument("--receipt", type=Path, required=True)
+    verify_manifest_result.add_argument("--candidate-id", required=True)
+    verify_manifest_result.add_argument("--expected-sha256", required=True)
     return parser
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
-        result = (
-            rehearse(args)
-            if args.command == "rehearse"
-            else verify_receipt(args)
-        )
+        commands = {
+            "rehearse": rehearse,
+            "rehearse-zone": rehearse_zone,
+            "verify-manifest": verify_manifest,
+            "verify-receipt": verify_receipt,
+            "verify-zone-receipt": verify_zone_receipt,
+            "verify-manifest-receipt": verify_manifest_receipt,
+        }
+        result = commands[args.command](args)
         print(json.dumps(result, indent=2, sort_keys=True))
         return 0
     except (FreezeError, RehearsalError, OSError, ValueError) as exc:

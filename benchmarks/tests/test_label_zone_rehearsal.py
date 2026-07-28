@@ -32,6 +32,62 @@ def _args(
     )
 
 
+def _zone_args(tmp_path: Path) -> argparse.Namespace:
+    return argparse.Namespace(
+        zone=tmp_path / "label-zone",
+        candidate_id="sar",
+        receipt=tmp_path / "zone-receipt.json",
+        implementation_denial_attested=True,
+        duties_attested=True,
+    )
+
+
+def test_staged_zone_rehearsal_exposes_no_manifest(
+    tmp_path: Path,
+) -> None:
+    args = _zone_args(tmp_path)
+    receipt = rehearsal.rehearse_zone(args)
+    assert receipt["overall_zone_rehearsal_passed"] is True
+    assert "frozen_manifest_payload_sha256" not in receipt
+    assert "manual_training_attested" not in receipt
+    assert "excluded_source_pilot_attested" not in receipt
+    result = rehearsal.verify_zone_receipt(
+        argparse.Namespace(receipt=args.receipt, candidate_id="sar")
+    )
+    assert result["status"] == "zone_rehearsal_passed"
+
+
+def test_staged_manifest_verification_is_separate_from_zone(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    manifest = tmp_path / "manifest.json"
+    manifest.write_text("{}\n", encoding="utf-8")
+    receipt_path = tmp_path / "manifest-receipt.json"
+    monkeypatch.setattr(
+        rehearsal,
+        "verify_frozen_manifest",
+        lambda _manifest, expected_sha256: expected_sha256,
+    )
+    receipt = rehearsal.verify_manifest(
+        argparse.Namespace(
+            manifest=manifest,
+            expected_sha256=EXPECTED,
+            candidate_id="sar",
+            receipt=receipt_path,
+        )
+    )
+    assert receipt["frozen_manifest_verified"] is True
+    assert "overall_zone_rehearsal_passed" not in receipt
+    result = rehearsal.verify_manifest_receipt(
+        argparse.Namespace(
+            receipt=receipt_path,
+            candidate_id="sar",
+            expected_sha256=EXPECTED,
+        )
+    )
+    assert result["status"] == "manifest_verified"
+
+
 def test_synthetic_rehearsal_creates_private_hashed_zone_and_receipt(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:

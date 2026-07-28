@@ -15,7 +15,8 @@ Give `sar` read-only copies of:
 5. `benchmarks/contexttrace_unseen_v1/ADJUDICATION_PROTOCOL.md`;
 6. `benchmarks/contexttrace_unseen_v1/SEALED_EVALUATION_POLICY.md`;
 7. `research/cain2027/LABEL_CUSTODIAN_ADJUDICATOR_RECRUITMENT.md`;
-8. the private frozen unlabeled manifest and its SHA-256 sidecar.
+8. after training and the excluded-source pilot pass, the private frozen
+   unlabeled manifest and its SHA-256 sidecar.
 
 The expected frozen payload SHA-256 is
 `8bf65cd7e2c95ccfcc12e78b580fc47e4157b0f808ba3fcace0a24bfcdc2e5f6`.
@@ -39,28 +40,39 @@ The expected frozen payload SHA-256 is
 Do not return raw exercises, pilot labels, class counts, disagreements,
 examples, or label-zone paths to the implementation workspace.
 
-## Synthetic rehearsal command
+## Staged synthetic rehearsal command
 
-The candidate runs:
+Before receiving the private frozen manifest, the candidate runs:
 
 ```bash
 .venv/bin/python -m \
-  benchmarks.contexttrace_unseen_v1.label_zone_rehearsal rehearse \
+  benchmarks.contexttrace_unseen_v1.label_zone_rehearsal rehearse-zone \
   --zone /CUSTODIAN-CONTROLLED/contexttrace-label-zone \
+  --candidate-id sar \
+  --receipt /CUSTODIAN-CONTROLLED/zone-rehearsal-receipt.json \
+  --implementation-denial-attested \
+  --duties-attested
+```
+
+The tool refuses to operate inside the ContextTrace repository, creates only
+synthetic records, tests hashing and recovery, and emits a receipt containing
+no labels or test-case metadata.
+
+After training and the excluded-source pilot pass, the candidate receives the
+private frozen manifest and runs:
+
+```bash
+.venv/bin/python -m \
+  benchmarks.contexttrace_unseen_v1.label_zone_rehearsal verify-manifest \
   --candidate-id sar \
   --manifest /READ-ONLY/contexttrace_unseen_v1_frozen_unlabeled.json \
   --expected-sha256 \
   8bf65cd7e2c95ccfcc12e78b580fc47e4157b0f808ba3fcace0a24bfcdc2e5f6 \
-  --receipt /CUSTODIAN-CONTROLLED/activation-receipt.json \
-  --implementation-denial-attested \
-  --training-attested \
-  --pilot-attested \
-  --duties-attested
+  --receipt /CUSTODIAN-CONTROLLED/manifest-verification-receipt.json
 ```
 
-The tool refuses to operate inside the ContextTrace repository, verifies only
-the unlabeled manifest seal, creates synthetic records, tests hashing and
-recovery, and emits a receipt containing no labels.
+Production activation requires the valid zone-rehearsal and manifest
+verification receipts plus separate training and pilot qualification records.
 
 ## Receipt fields allowed back
 
@@ -76,10 +88,10 @@ Only these fields may return to this repository:
 - synthetic seal/recovery pass/fail;
 - implementation-account denial pass/fail, separately attested by the
   candidate;
-- manual training pass/fail;
-- excluded-source pilot qualification pass/fail;
 - duties/disclosure attestation pass/fail;
-- overall activation pass/fail;
+- overall zone-rehearsal pass/fail;
+- frozen-manifest verification pass/fail, only after training and pilot;
 - receipt SHA-256.
 
-No untouched annotation begins until the overall activation result is `pass`.
+No untouched annotation begins until every activation item is recorded as
+passed.
