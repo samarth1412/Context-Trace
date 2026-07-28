@@ -1,0 +1,845 @@
+{
+  "blind_fields_removed": [
+    "category",
+    "expected_*",
+    "gold_*",
+    "label_rationale",
+    "predictions",
+    "verifier_outputs"
+  ],
+  "case_count": 22,
+  "cases": [
+    {
+      "answer": "LanceDB full-text search supports filtering with pre-filtering and post-filtering using where syntax.",
+      "citations": [
+        {
+          "claim": "LanceDB full-text search supports filtering with pre-filtering and post-filtering using where syntax.",
+          "source_id": "lancedb_vector_search"
+        }
+      ],
+      "contexts": [
+        {
+          "id": "lancedb_full_text_search",
+          "metadata": {
+            "authority": "canonical",
+            "canonical": true,
+            "date": "2026-07-03",
+            "freshness": "current",
+            "requires_abstention": false,
+            "source_authority": "official",
+            "source_status": "current",
+            "version": "public-page-snapshot"
+          },
+          "text": "LanceDB full text search supports filtering search results by a condition. Both pre-filtering and post-filtering are supported using where syntax.",
+          "url": "https://docs.lancedb.com/search/full-text-search"
+        },
+        {
+          "id": "lancedb_vector_search",
+          "metadata": {
+            "authority": "canonical",
+            "canonical": true,
+            "date": "2026-07-03",
+            "freshness": "current",
+            "requires_abstention": false,
+            "source_authority": "official",
+            "source_status": "current",
+            "version": "public-page-snapshot"
+          },
+          "text": "Use postfiltering to prioritize vector similarity by searching the full dataset first, then applying metadata filters to the top results.",
+          "url": "https://docs.lancedb.com/search/vector-search"
+        }
+      ],
+      "excluded_from_untouched_test": true,
+      "pilot_case_id": "ctu1_pilot_001",
+      "query": "Can LanceDB full-text search use filters?",
+      "source_family": "docs.lancedb.com",
+      "source_kind": "previously_exposed_development_case",
+      "split": "excluded_calibration_pilot"
+    },
+    {
+      "answer": "DSPy offers algorithms for optimizing prompts and weights. It provisions Kubernetes load balancers.",
+      "citations": [],
+      "contexts": [
+        {
+          "id": "dspy_github_overview",
+          "metadata": {
+            "authority": "canonical",
+            "canonical": true,
+            "date": "2026-07-03",
+            "freshness": "current",
+            "requires_abstention": false,
+            "source_authority": "official",
+            "source_status": "current",
+            "version": "public-page-snapshot"
+          },
+          "text": "DSPy offers algorithms for optimizing prompts and weights for modular AI systems.",
+          "url": "https://github.com/stanfordnlp/dspy"
+        }
+      ],
+      "excluded_from_untouched_test": true,
+      "pilot_case_id": "ctu1_pilot_002",
+      "query": "What can DSPy optimize?",
+      "source_family": "github.com",
+      "source_kind": "previously_exposed_development_case",
+      "split": "excluded_calibration_pilot"
+    },
+    {
+      "answer": "\"\"\n        Utility for providing the files and page numbers for the information used in RAG answers. limit(N_results))\n        return  [RagSearchResult(**r) for r in results.to_list()]\n\ndef get_sources(self, results: List[RagSearchResult]) -> List[str]:\n        \"\"\"\n        Utility for providing the files and page numbers for the information used in RAG answers. MANTIC_DB_PATH\")\nllm_model = os.getenv(\"LLM_MODEL\")\nllm_generate_url = os.getenv(\"LLM_GENERATE_URL\")\n\nsemantic_db = SemanticDb(\n    embedding_function=vecs.get_embeddings,\n    vec_dimension=vecs.dimensions,\n    semantic_db_path=semantic_db_path\n)\n\ndef run_agent(\n    messages: List[Message],\n    table_name=\"semantic-db-table\"\n    ) -> ContentStream:\n    \"\"\"\n    Answers a user query with retrieval augmented generation (RAG) over documents in a LanceDB table in S3.",
+      "citations": [],
+      "contexts": [
+        {
+          "id": "local_rag_chat:backend/app/semantic_db/semantic_db.py:12",
+          "metadata": {
+            "project": "HeskethGD/local-rag-chat",
+            "repo_url": "https://github.com/HeskethGD/local-rag-chat",
+            "retrieval_score": 0.515,
+            "retriever": "sentence-transformers lexical-prefilter cosine",
+            "source": "backend/app/semantic_db/semantic_db.py"
+          },
+          "text": "\"\"\n        Utility for providing the files and page numbers for the information used in RAG answers.\n\nArgs\n        - results (List[RagSearchResult]): The search results from the vector database query.\n\nexcept Exception as e:\n            print(\"error fetching sources\", e)\n            return []"
+        },
+        {
+          "id": "local_rag_chat:backend/app/semantic_db/semantic_db.py:9",
+          "metadata": {
+            "project": "HeskethGD/local-rag-chat",
+            "repo_url": "https://github.com/HeskethGD/local-rag-chat",
+            "retrieval_score": 0.4364,
+            "retriever": "sentence-transformers lexical-prefilter cosine",
+            "source": "backend/app/semantic_db/semantic_db.py"
+          },
+          "text": "in the vector db to query.\n        - N_results (int): The limit for the number of returned results.\n\nReturn\n        - search_results (List[RagSearchResult]): The semantic search results.\n        \"\"\"\n        results = (lancedb\n                .connect(self.semantic_db_path)\n                .open_table(table_name)\n                .search(query_vector)\n                .limit(N_results))\n        return  [RagSearchResult(**r) for r in results.to_list()]\n\ndef get_sources(self, results: List[RagSearchResult]) -> List[str]:\n        \"\"\"\n        Utility for providing the files and page numbers for the information used in RAG answers."
+        },
+        {
+          "id": "local_rag_chat:backend/app/agents/rag.py:2",
+          "metadata": {
+            "project": "HeskethGD/local-rag-chat",
+            "repo_url": "https://github.com/HeskethGD/local-rag-chat",
+            "retrieval_score": 0.3324,
+            "retriever": "sentence-transformers lexical-prefilter cosine",
+            "source": "backend/app/agents/rag.py"
+          },
+          "text": "MANTIC_DB_PATH\")\nllm_model = os.getenv(\"LLM_MODEL\")\nllm_generate_url = os.getenv(\"LLM_GENERATE_URL\")\n\nsemantic_db = SemanticDb(\n    embedding_function=vecs.get_embeddings,\n    vec_dimension=vecs.dimensions,\n    semantic_db_path=semantic_db_path\n)\n\ndef run_agent(\n    messages: List[Message],\n    table_name=\"semantic-db-table\"\n    ) -> ContentStream:\n    \"\"\"\n    Answers a user query with retrieval augmented generation (RAG) over documents in a LanceDB table in S3.\n\nArgs\n    - messages (List[Message]): The chat history as messages.\n    - table_name (str): The name of the table in the semantic database.\n\nYields\n    - (ContentStream): The stream response from the LLM.\n    \"\"\""
+        }
+      ],
+      "excluded_from_untouched_test": true,
+      "pilot_case_id": "ctu1_pilot_003",
+      "query": "How does the RAG agent use retrieved sources when drafting an answer?",
+      "source_family": "HeskethGD/local-rag-chat",
+      "source_kind": "previously_exposed_real_rag_trace",
+      "split": "excluded_calibration_pilot"
+    },
+    {
+      "answer": "A Haystack Document Store has the run method.",
+      "citations": [],
+      "contexts": [
+        {
+          "id": "haystack_document_store",
+          "metadata": {
+            "authority": "canonical",
+            "canonical": true,
+            "date": "2026-07-03",
+            "freshness": "current",
+            "requires_abstention": false,
+            "source_authority": "official",
+            "source_status": "current",
+            "version": "public-page-snapshot"
+          },
+          "text": "In Haystack, a Document Store is different from a component, as it does not have the run method.",
+          "url": "https://docs.haystack.deepset.ai/docs/document-store"
+        }
+      ],
+      "excluded_from_untouched_test": true,
+      "pilot_case_id": "ctu1_pilot_004",
+      "query": "Does a Haystack Document Store have the run method?",
+      "source_family": "docs.haystack.deepset.ai",
+      "source_kind": "previously_exposed_development_case",
+      "split": "excluded_calibration_pilot"
+    },
+    {
+      "answer": "Phoenix datasets contain examples with inputs and optional reference outputs.",
+      "citations": [
+        {
+          "claim": "Phoenix datasets contain examples with inputs and optional reference outputs.",
+          "source_id": "phoenix_tracing"
+        }
+      ],
+      "contexts": [
+        {
+          "id": "phoenix_datasets",
+          "metadata": {
+            "authority": "canonical",
+            "canonical": true,
+            "date": "2026-07-03",
+            "freshness": "current",
+            "requires_abstention": false,
+            "source_authority": "official",
+            "source_status": "current",
+            "version": "public-page-snapshot"
+          },
+          "text": "Datasets are collections of examples that provide the inputs and, optionally, expected reference outputs for assessing your application.",
+          "url": "https://arize.com/docs/phoenix/datasets-and-experiments/overview-datasets"
+        },
+        {
+          "id": "phoenix_tracing",
+          "metadata": {
+            "authority": "canonical",
+            "canonical": true,
+            "date": "2026-07-03",
+            "freshness": "current",
+            "requires_abstention": false,
+            "source_authority": "official",
+            "source_status": "current",
+            "version": "public-page-snapshot"
+          },
+          "text": "A trace captures model calls, retrieval, tool use, and custom logic so you can debug behavior and understand where time is spent.",
+          "url": "https://arize.com/docs/phoenix"
+        }
+      ],
+      "excluded_from_untouched_test": true,
+      "pilot_case_id": "ctu1_pilot_005",
+      "query": "What do Phoenix datasets contain?",
+      "source_family": "arize.com",
+      "source_kind": "previously_exposed_development_case",
+      "split": "excluded_calibration_pilot"
+    },
+    {
+      "answer": "index (VectorDatabaseDep): The vector database dependency for retrieval. When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database. Additionally, the chatbot is designed to remember previous interactions.",
+      "citations": [],
+      "contexts": [
+        {
+          "id": "rag_chatbot:backend/api/services/chat_stream.py:7",
+          "metadata": {
+            "project": "umbertogriffo/rag-chatbot",
+            "repo_url": "https://github.com/umbertogriffo/rag-chatbot",
+            "retrieval_score": 0.5318,
+            "retriever": "sentence-transformers lexical-prefilter cosine",
+            "source": "backend/api/services/chat_stream.py"
+          },
+          "text": "chat_history (ChatHistoryDep): The chat history dependency to maintain conversation context.\n        index (VectorDatabaseDep): The vector database dependency for retrieval.\n    \"\"\"\n    try:\n        start_time = time.time()\n        ctx_synthesis_strategy = get_ctx_synthesis_strategy(settings.SYNTHESIS_STRATEGY, llm=llm_client)"
+        },
+        {
+          "id": "rag_chatbot:README.md:10",
+          "metadata": {
+            "project": "umbertogriffo/rag-chatbot",
+            "repo_url": "https://github.com/umbertogriffo/rag-chatbot",
+            "retrieval_score": 0.5024,
+            "retriever": "sentence-transformers lexical-prefilter cosine",
+            "source": "README.md"
+          },
+          "text": "them in an embedding database called [Chroma](https://github.com/chroma-core/chroma) for later use.\n\nWhen a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database.\nSince the original question can't be always optimal to retrieve for the LLM, we first prompt an LLM to rewrite the\nquestion, then conduct retrieval-augmented reading.\nThe most relevant sections are then used as context to generate the final answer using a local language model (LLM).\nAdditionally, the chatbot is designed to remember previous interactions. It saves the chat history and considers the\nrelevant context from previous conversations to provide more accurate answers."
+        },
+        {
+          "id": "rag_chatbot:notes/prompts/plans/rag-ui-plan.md:6",
+          "metadata": {
+            "project": "umbertogriffo/rag-chatbot",
+            "repo_url": "https://github.com/umbertogriffo/rag-chatbot",
+            "retrieval_score": 0.4599,
+            "retriever": "sentence-transformers lexical-prefilter cosine",
+            "source": "notes/prompts/plans/rag-ui-plan.md"
+          },
+          "text": "# Prompt full\n\nImplementation of a high-fidelity, premium web UI for a modern AI chatbot as follows:\n\n- **Layout**:\n  - Collapsible minimalist sidebar on the left for chat history and a prominent, clean conversation area in the center.\n  - Floating, bottom-centered text input bar with a glowing 'send' icon.\n  - Integrate a document upload component (drag-and-drop, progress bars, document list with delete buttons) directly into the main chat interface (not in the sidebar)."
+        }
+      ],
+      "excluded_from_untouched_test": true,
+      "pilot_case_id": "ctu1_pilot_006",
+      "query": "How does this chatbot update its vector database when documents change?",
+      "source_family": "umbertogriffo/rag-chatbot",
+      "source_kind": "previously_exposed_real_rag_trace",
+      "split": "excluded_calibration_pilot"
+    },
+    {
+      "answer": "Guardrails helps generate structured data from LLMs. It replaces all model calls with deterministic code.",
+      "citations": [],
+      "contexts": [
+        {
+          "id": "guardrails_overview",
+          "metadata": {
+            "authority": "canonical",
+            "canonical": true,
+            "date": "2026-07-03",
+            "freshness": "current",
+            "requires_abstention": false,
+            "source_authority": "official",
+            "source_status": "current",
+            "version": "public-page-snapshot"
+          },
+          "text": "Guardrails helps you generate structured data from LLMs.",
+          "url": "https://github.com/guardrails-ai/guardrails"
+        }
+      ],
+      "excluded_from_untouched_test": true,
+      "pilot_case_id": "ctu1_pilot_007",
+      "query": "What else does Guardrails help generate?",
+      "source_family": "github.com",
+      "source_kind": "previously_exposed_development_case",
+      "split": "excluded_calibration_pilot"
+    },
+    {
+      "answer": "Azure AI Search hybrid queries can use filtering, faceting, sorting, scoring profiles, and semantic ranking. They store embeddings in Redis automatically.",
+      "citations": [],
+      "contexts": [
+        {
+          "id": "azure_hybrid_search",
+          "metadata": {
+            "authority": "canonical",
+            "canonical": true,
+            "date": "2026-07-03",
+            "freshness": "current",
+            "requires_abstention": false,
+            "source_authority": "official",
+            "source_status": "current",
+            "version": "public-page-snapshot"
+          },
+          "text": "Hybrid queries can take advantage of text-based functionality like filtering, faceting, sorting, scoring profiles, and semantic ranking while executing similarity search against vectors.",
+          "url": "https://learn.microsoft.com/en-us/azure/search/hybrid-search-overview"
+        }
+      ],
+      "excluded_from_untouched_test": true,
+      "pilot_case_id": "ctu1_pilot_008",
+      "query": "What capabilities can Azure AI Search hybrid queries use?",
+      "source_family": "learn.microsoft.com",
+      "source_kind": "previously_exposed_development_case",
+      "split": "excluded_calibration_pilot"
+    },
+    {
+      "answer": "# Offline Local AI Agent Chatbot with RAG\n\nThis project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling users to ask questions of their docs. The application is designed to run offline and for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B`, and uses `nomic-embed-text` for local offline vector embeddings. This application uses the Llama 3.2 3B param model (about 2GB, approx 10 minutes download) for chat and summaries, and the nomic-embed-text model (274Mb approx 2 minutes download) for vectorisation.",
+      "citations": [],
+      "contexts": [
+        {
+          "id": "local_rag_chat:README.md:1",
+          "metadata": {
+            "project": "HeskethGD/local-rag-chat",
+            "repo_url": "https://github.com/HeskethGD/local-rag-chat",
+            "retrieval_score": 0.6672,
+            "retriever": "sentence-transformers lexical-prefilter cosine",
+            "source": "README.md"
+          },
+          "text": "# Offline Local AI Agent Chatbot with RAG\n\nThis project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling users to ask questions of their docs. The backend is built with Python and uses FastAPI for the API layer. The application is designed to run offline and for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B`, and uses `nomic-embed-text` for local offline vector embeddings.\n\nThe frontend chat UI may eventually be built with Nextjs but for now there is a Python based Streamlit UI in the backend folder.\n\n## Prerequisites\n\n- Python 3.11 or higher\n- Poetry (package manager)\n- Git\n- Ollama"
+        },
+        {
+          "id": "local_rag_chat:README.md:2",
+          "metadata": {
+            "project": "HeskethGD/local-rag-chat",
+            "repo_url": "https://github.com/HeskethGD/local-rag-chat",
+            "retrieval_score": 0.4458,
+            "retriever": "sentence-transformers lexical-prefilter cosine",
+            "source": "README.md"
+          },
+          "text": "backend folder.\n\n## Prerequisites\n\n- Python 3.11 or higher\n- Poetry (package manager)\n- Git\n- Ollama\n\nTo install Ollama, follow the instructions for your operating sytem here: https://ollama.com/download\n\n## Using Llama 3.2 3B with Ollama\n\nTo view models available on Ollama see here: https://ollama.com/library.\nThis application uses the Llama 3.2 3B param model (about 2GB, approx 10 minutes download) for chat and summaries, and the nomic-embed-text model (274Mb approx 2 minutes download) for vectorisation. To pull them from Ollama run these commands:\n\n```\nollama pull llama3.2:3b\nollama pull nomic-embed-text\n```"
+        },
+        {
+          "id": "local_rag_chat:backend/app/main.py:2",
+          "metadata": {
+            "project": "HeskethGD/local-rag-chat",
+            "repo_url": "https://github.com/HeskethGD/local-rag-chat",
+            "retrieval_score": 0.4455,
+            "retriever": "sentence-transformers lexical-prefilter cosine",
+            "source": "backend/app/main.py"
+          },
+          "text": "chat history.\n\nReturns:\n    - (StreamingResponse): Streaming response of assistant message.\n    \"\"\"\n\nmessages = body.messages\n    if messages == None or messages == []:\n        return None\n    try:\n        return StreamingResponse(chat_agent(messages), media_type=\"text/html\")\n    except HTTPException as e:\n        raise HTTPException(status_code=500, detail=\"Internal server error\")\n\n@app.post(\"/rag\")\ndef rag(body: Body):\n    \"\"\"\n    Generates an LLM stream response to a user question using RAG over a vector db.\n\nParameters:\n    - body (Body): Messages from the chat history.\n\nReturns:\n    - (StreamingResponse): Streaming response of assistant message.\n    \"\"\""
+        }
+      ],
+      "excluded_from_untouched_test": true,
+      "pilot_case_id": "ctu1_pilot_009",
+      "query": "What local models does this RAG chatbot use for chat and embeddings?",
+      "source_family": "HeskethGD/local-rag-chat",
+      "source_kind": "previously_exposed_real_rag_trace",
+      "split": "excluded_calibration_pilot"
+    },
+    {
+      "answer": "# Ollama and HuggingFace RAG Engine\n\nThis repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA). = load_txts_from_directory(txt_directory)\n\n# Chunk the documents\n    chunks = chunk_documents(texts)\n\n# Create embeddings and vector store\n    embeddings = OllamaEmbeddings(model='nomic-embed-text', base_url=\"http://localhost:11434\")\n    embedding_dimensions = len(embeddings.embed_query(\"test query\"))  # Determine embedding dimensions\n    vector_store = create_vector_store(embedding_function=embeddings, dimensions=embedding_dimensions)\n\n# Convert chunks into Document objects and add to vector store\n    documents = [Document(page_content=chunk) for chunk in chunks]\n    document_ids = vector_store.add_documents(documents=documents)",
+      "citations": [],
+      "contexts": [
+        {
+          "id": "ollama_hf_rag_engine:README.md:1",
+          "metadata": {
+            "project": "taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+            "repo_url": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+            "retrieval_score": 0.2633,
+            "retriever": "sentence-transformers lexical-prefilter cosine",
+            "source": "README.md"
+          },
+          "text": "# Ollama and HuggingFace RAG Engine\n\nThis repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA). The system integrates document chunking, embedding generation, and FAISS-based vector search to create a high-performance, context-aware chatbot.\n\n## Features"
+        },
+        {
+          "id": "ollama_hf_rag_engine:main.py:6",
+          "metadata": {
+            "project": "taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+            "repo_url": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+            "retrieval_score": 0.1906,
+            "retriever": "sentence-transformers lexical-prefilter cosine",
+            "source": "main.py"
+          },
+          "text": "= load_txts_from_directory(txt_directory)\n\n# Chunk the documents\n    chunks = chunk_documents(texts)\n\n# Create embeddings and vector store\n    embeddings = OllamaEmbeddings(model='nomic-embed-text', base_url=\"http://localhost:11434\")\n    embedding_dimensions = len(embeddings.embed_query(\"test query\"))  # Determine embedding dimensions\n    vector_store = create_vector_store(embedding_function=embeddings, dimensions=embedding_dimensions)\n\n# Convert chunks into Document objects and add to vector store\n    documents = [Document(page_content=chunk) for chunk in chunks]\n    document_ids = vector_store.add_documents(documents=documents)"
+        },
+        {
+          "id": "ollama_hf_rag_engine:README.md:2",
+          "metadata": {
+            "project": "taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+            "repo_url": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+            "retrieval_score": 0.1753,
+            "retriever": "sentence-transformers lexical-prefilter cosine",
+            "source": "README.md"
+          },
+          "text": "ion, and FAISS-based vector search to create a high-performance, context-aware chatbot.\n\n## Features\n\n- **Document Ingestion**: Load and process `.txt` files for retrieval.\n- **Chunking**: Split long documents into manageable pieces using `RecursiveCharacterTextSplitter`.\n- **Embeddings**: Generate text embeddings using Ollama's embedding model.\n- **Vector Search**: Perform similarity-based search using FAISS.\n- **LLM QA**: Retrieve relevant context and answer user queries using the `ChatOllama` LLM.\n- **Retrieval Augmented Generation (RAG)**: Combine retrieved context with a question-answering template to enhance LLM outputs.\n\n## Installation\n\n### Prerequisites\n- Python 3.8+\n- Pip"
+        }
+      ],
+      "excluded_from_untouched_test": true,
+      "pilot_case_id": "ctu1_pilot_010",
+      "query": "What vector store does this RAG engine use?",
+      "source_family": "taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+      "source_kind": "previously_exposed_real_rag_trace",
+      "split": "excluded_calibration_pilot"
+    },
+    {
+      "answer": "If you don't know the answer, just say that you don't know. Answer in bullet points. Use the following pieces of retrieved context to answer the question.",
+      "citations": [],
+      "contexts": [
+        {
+          "id": "ollama_hf_rag_engine:main.py:7",
+          "metadata": {
+            "project": "taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+            "repo_url": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+            "retrieval_score": 0.3089,
+            "retriever": "sentence-transformers lexical-prefilter cosine",
+            "source": "main.py"
+          },
+          "text": "ntent=chunk) for chunk in chunks]\n    document_ids = vector_store.add_documents(documents=documents)\n\nmodel = ChatOllama(model=\"mistral\", base_url=\"http://localhost:11434\")\n\ntemplate = \"\"\"\n        You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question.\n        If you don't know the answer, just say that you don't know.\n        Answer in bullet points. Make sure your answer is relevant to the question and it is answered from the context only.\n        Question: {question}\n        Context: {context}\n        Answer:\n    \"\"\"\n\nprompt = ChatPromptTemplate.from_template(template)"
+        },
+        {
+          "id": "ollama_hf_rag_engine:main.py:8",
+          "metadata": {
+            "project": "taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+            "repo_url": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+            "retrieval_score": 0.2462,
+            "retriever": "sentence-transformers lexical-prefilter cosine",
+            "source": "main.py"
+          },
+          "text": "Context: {context}\n        Answer:\n    \"\"\"\n\nprompt = ChatPromptTemplate.from_template(template)\n\nwhile True:\n        question = input(\"You: \")\n        if question.lower() == \"exit\":\n            break;\n\n#results = vector_store.search(query=question, search_type='similarity')\n\nretriever = vector_store.as_retriever(search_type=\"mmr\", search_kwargs = {'k': 5, 'fetch_k': 50, 'lambda_mult': 0.5})\n\ndocs = retriever.invoke(question)\n\nrag_chain = (\n            {\"context\": retriever|format_docs, \"question\": RunnablePassthrough()}\n            | prompt\n            | model\n            | StrOutputParser()\n        )\n\noutput = rag_chain.invoke(question)\n        print(output)"
+        },
+        {
+          "id": "ollama_hf_rag_engine:README.md:2",
+          "metadata": {
+            "project": "taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+            "repo_url": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+            "retrieval_score": 0.2255,
+            "retriever": "sentence-transformers lexical-prefilter cosine",
+            "source": "README.md"
+          },
+          "text": "ion, and FAISS-based vector search to create a high-performance, context-aware chatbot.\n\n## Features\n\n- **Document Ingestion**: Load and process `.txt` files for retrieval.\n- **Chunking**: Split long documents into manageable pieces using `RecursiveCharacterTextSplitter`.\n- **Embeddings**: Generate text embeddings using Ollama's embedding model.\n- **Vector Search**: Perform similarity-based search using FAISS.\n- **LLM QA**: Retrieve relevant context and answer user queries using the `ChatOllama` LLM.\n- **Retrieval Augmented Generation (RAG)**: Combine retrieved context with a question-answering template to enhance LLM outputs.\n\n## Installation\n\n### Prerequisites\n- Python 3.8+\n- Pip"
+        }
+      ],
+      "excluded_from_untouched_test": true,
+      "pilot_case_id": "ctu1_pilot_011",
+      "query": "What should the assistant do if it does not know the answer?",
+      "source_family": "taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+      "source_kind": "previously_exposed_real_rag_trace",
+      "split": "excluded_calibration_pilot"
+    },
+    {
+      "answer": "DeepEval hallucination compares actual_output to the provided context. It updates the retrieval context.",
+      "citations": [],
+      "contexts": [
+        {
+          "id": "deepeval_hallucination",
+          "metadata": {
+            "authority": "canonical",
+            "canonical": true,
+            "date": "2026-07-03",
+            "freshness": "current",
+            "requires_abstention": false,
+            "source_authority": "official",
+            "source_status": "incomplete",
+            "version": "public-page-snapshot"
+          },
+          "text": "The hallucination metric uses LLM-as-a-judge to determine whether an LLM generates factually correct information by comparing the actual_output to the provided context.",
+          "url": "https://deepeval.com/docs/metrics-hallucination"
+        }
+      ],
+      "excluded_from_untouched_test": true,
+      "pilot_case_id": "ctu1_pilot_012",
+      "query": "What does DeepEval hallucination compare?",
+      "source_family": "deepeval.com",
+      "source_kind": "previously_exposed_development_case",
+      "split": "excluded_calibration_pilot"
+    },
+    {
+      "answer": "Weaviate hybrid search never uses vector search; it only runs BM25 keyword search.",
+      "citations": [],
+      "contexts": [
+        {
+          "id": "weaviate_hybrid_search",
+          "metadata": {
+            "authority": "canonical",
+            "canonical": true,
+            "date": "2026-07-03",
+            "freshness": "current",
+            "requires_abstention": false,
+            "source_authority": "official",
+            "source_status": "current",
+            "version": "public-page-snapshot"
+          },
+          "text": "Hybrid search in Weaviate combines vector search and keyword search using BM25F. The system fuses both result sets, and the fusion method and weights can be configured.",
+          "url": "https://docs.weaviate.io/weaviate/search/hybrid"
+        }
+      ],
+      "excluded_from_untouched_test": true,
+      "pilot_case_id": "ctu1_pilot_013",
+      "query": "Does Weaviate hybrid search use vector search?",
+      "source_family": "docs.weaviate.io",
+      "source_kind": "previously_exposed_development_case",
+      "split": "excluded_calibration_pilot"
+    },
+    {
+      "answer": "* [Rerank](https://txt.cohere.com/rag-chatbot/#implement-reranking)\n    * [Building Response Synthesis from Scratch](https://gpt-index.readthedocs.io/en/latest/examples/low_level/response_synthesis.html#)\n    * [Conversational awareness](https://langstream.ai/2023/10/13/rag-chatbot-with-conversation/)\n    * [RAG is Dead, Again? import asyncio\nfrom enum import Enum\nfrom typing import Any\n\nfrom entities.document import Document\nfrom helpers.log import get_logger\n\nfrom bot.client.lama_cpp_client import LamaCppClient\n\nlogger = get_logger(__name__)\n\nclass SynthesisStrategyType(Enum):\n    CREATE_AND_REFINE = \"create-and-refine\"\n    TREE_SUMMARIZATION = \"tree-summarization\"\n\nclass BaseSynthesisStrategy:\n    \"\"\"\n    Base class for synthesis strategies.",
+      "citations": [],
+      "contexts": [
+        {
+          "id": "rag_chatbot:README.md:42",
+          "metadata": {
+            "project": "umbertogriffo/rag-chatbot",
+            "repo_url": "https://github.com/umbertogriffo/rag-chatbot",
+            "retrieval_score": 0.62,
+            "retriever": "sentence-transformers lexical-prefilter cosine",
+            "source": "README.md"
+          },
+          "text": "k/rewrite.ipynb)\n        * > Because the original query can not be always optimal to retrieve for the LLM, especially in the real world,\n          we first prompt an LLM to rewrite the queries, then conduct retrieval-augmented reading.\n    * [Rerank](https://txt.cohere.com/rag-chatbot/#implement-reranking)\n    * [Building Response Synthesis from Scratch](https://gpt-index.readthedocs.io/en/latest/examples/low_level/response_synthesis.html#)\n    * [Conversational awareness](https://langstream.ai/2023/10/13/rag-chatbot-with-conversation/)\n    * [RAG is Dead, Again?](https://jina.ai/news/rag-is-dead-again/)\n* Chatbot UI:\n    * [Open WebUI](https://github.com/open-webui/open-webui)\n        * [Ru"
+        },
+        {
+          "id": "rag_chatbot:notes/prompts/plans/rag-ui-plan.md:9",
+          "metadata": {
+            "project": "umbertogriffo/rag-chatbot",
+            "repo_url": "https://github.com/umbertogriffo/rag-chatbot",
+            "retrieval_score": 0.5769,
+            "retriever": "sentence-transformers lexical-prefilter cosine",
+            "source": "notes/prompts/plans/rag-ui-plan.md"
+          },
+          "text": "mponent (or set of components) + Vite implementing the above features and styles using Tailwind CSS.\n\n### Prompt without sidebar\n\nImplementation of a high-fidelity, premium web UI for a modern AI chatbot as follows:"
+        },
+        {
+          "id": "rag_chatbot:chatbot/bot/conversation/ctx_strategy.py:1",
+          "metadata": {
+            "project": "umbertogriffo/rag-chatbot",
+            "repo_url": "https://github.com/umbertogriffo/rag-chatbot",
+            "retrieval_score": 0.4515,
+            "retriever": "sentence-transformers lexical-prefilter cosine",
+            "source": "chatbot/bot/conversation/ctx_strategy.py"
+          },
+          "text": "import asyncio\nfrom enum import Enum\nfrom typing import Any\n\nfrom entities.document import Document\nfrom helpers.log import get_logger\n\nfrom bot.client.lama_cpp_client import LamaCppClient\n\nlogger = get_logger(__name__)\n\nclass SynthesisStrategyType(Enum):\n    CREATE_AND_REFINE = \"create-and-refine\"\n    TREE_SUMMARIZATION = \"tree-summarization\"\n\nclass BaseSynthesisStrategy:\n    \"\"\"\n    Base class for synthesis strategies.\n\nAttributes:\n        llm (LlmClient): The language model client used for generating responses.\n    \"\"\"\n\ndef __init__(self, llm: LamaCppClient) -> None:\n        \"\"\"\n        Initialize the synthesis strategy with the provided LlmClient."
+        }
+      ],
+      "excluded_from_untouched_test": true,
+      "pilot_case_id": "ctu1_pilot_014",
+      "query": "What response synthesis strategies does the chatbot support?",
+      "source_family": "umbertogriffo/rag-chatbot",
+      "source_kind": "previously_exposed_real_rag_trace",
+      "split": "excluded_calibration_pilot"
+    },
+    {
+      "answer": "LangSmith datasets can be created from manually curated test cases. They automatically rewrite production prompts.",
+      "citations": [],
+      "contexts": [
+        {
+          "id": "langsmith_evaluation_workflow",
+          "metadata": {
+            "authority": "canonical",
+            "canonical": true,
+            "date": "2026-07-03",
+            "freshness": "current",
+            "requires_abstention": false,
+            "source_authority": "official",
+            "source_status": "incomplete",
+            "version": "public-page-snapshot"
+          },
+          "text": "Create a dataset with examples from manually curated test cases, historical production traces, or synthetic data generation.",
+          "url": "https://docs.langchain.com/langsmith/evaluation"
+        }
+      ],
+      "excluded_from_untouched_test": true,
+      "pilot_case_id": "ctu1_pilot_015",
+      "query": "How can LangSmith evaluation datasets be created?",
+      "source_family": "docs.langchain.com",
+      "source_kind": "previously_exposed_development_case",
+      "split": "excluded_calibration_pilot"
+    },
+    {
+      "answer": "# Ollama and HuggingFace RAG Engine\n\nThis repository contains a chatbot implementation leveraging large language models (LLMs) for retrieval-augmented question answering (QA). = load_txts_from_directory(txt_directory)\n\n# Chunk the documents\n    chunks = chunk_documents(texts)\n\n# Create embeddings and vector store\n    embeddings = OllamaEmbeddings(model='nomic-embed-text', base_url=\"http://localhost:11434\")\n    embedding_dimensions = len(embeddings.embed_query(\"test query\"))  # Determine embedding dimensions\n    vector_store = create_vector_store(embedding_function=embeddings, dimensions=embedding_dimensions)\n\n# Convert chunks into Document objects and add to vector store\n    documents = [Document(page_content=chunk) for chunk in chunks]\n    document_ids = vector_store.add_documents(documents=documents)",
+      "citations": [],
+      "contexts": [
+        {
+          "id": "ollama_hf_rag_engine:data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt:1",
+          "metadata": {
+            "project": "taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+            "repo_url": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+            "retrieval_score": 0.0,
+            "retriever": "intentional low-overlap stress control",
+            "source": "data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt"
+          },
+          "text": "PET/MRI: a novel hybrid imaging technique.\n Major clinical indications and preliminary experience in BrazilPET/RM: um novo método de imagem híbrida.\n                                           Principais indicações clínicas e experiência preliminar no Brasil\n        Taise Vitor1, Karine Minaif Martins, Tudor Mihai Ionescu, Marcelo Livorsi da Cunha1, Ronaldo Hueb Baroni,1                   1                                                                                                                1\n                                  Marcio Ricardo Taveira Garcia1  , Jairo Wagner1, Guilherme de Carvalho Campos Neto,1\n                                             Solange Amorim Nogueira1 , Ela"
+        },
+        {
+          "id": "ollama_hf_rag_engine:data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt:2",
+          "metadata": {
+            "project": "taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+            "repo_url": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+            "retrieval_score": 0.0,
+            "retriever": "intentional low-overlap stress control",
+            "source": "data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt"
+          },
+          "text": "e Carvalho Campos Neto,1\n                                             Solange Amorim Nogueira1 , Elaine Gonçalves Guerra, Edson Amaro Junior11\nABSTRACT                                                                                                                             Descritores: Tomografia por emissão de pósitrons/métodos; Imagem\nIn recent years, medical imaging with hybrid techniques has                                                                          por ressonância magnética/métodos; Tomografia computadorizada\nwidely accepted and employed in clinical routine. PET/MRI offers                                                                     por raios x/métodos; Neoplasias"
+        },
+        {
+          "id": "ollama_hf_rag_engine:data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt:3",
+          "metadata": {
+            "project": "taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+            "repo_url": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+            "retrieval_score": 0.0,
+            "retriever": "intentional low-overlap stress control",
+            "source": "data/PETMRI a novel hybrid imaging technique Major clinical indications and preliminary experience in Brazil.pdf.txt"
+          },
+          "text": "por raios x/métodos; Neoplasias pélvicas; Neoplasias da próstata;\nsignificant advantages, including excellent contrast and resolution                                                                  Neuroimagem\nand reduced ionizing radiation, as compared to well-established PET/\nCT. Therefore, PET/MRI is a promising modality for oncologic imaging\nof some regions, such as brain, head and neck, liver and pelvis. This                                                                INTRODUCTION\narticle set out to analyze clinical conditions that could benefit from                                                               Pos"
+        }
+      ],
+      "excluded_from_untouched_test": true,
+      "pilot_case_id": "ctu1_pilot_016",
+      "query": "What vector store does this RAG engine use?",
+      "source_family": "taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+      "source_kind": "previously_exposed_real_rag_trace",
+      "split": "excluded_calibration_pilot"
+    },
+    {
+      "answer": "- PET/MRI has been introduced since 2010, with approximately 70 systems installed worldwide.\n- Widely accepted clinical indications for PET/MRI are yet to be determined.\n- PET/MRI is particularly useful for assessing certain regions such as brain, head and neck, liver, and pelvis.\n- The adoption of PET/MRI has been slower compared to PET/CT.\n- However, the main advantages of PET/MRI over PET/CT are not explicitly",
+      "citations": [],
+      "contexts": [
+        {
+          "id": "data/PETMRI.txt:4",
+          "metadata": {
+            "chunk_index": 4,
+            "repo": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+            "source": "data/PETMRI.txt"
+          },
+          "text": "illustrated with examples extracted from the authors’ preliminary\nexperience.                                                                                                                          introduced. The adoption of PET/MRI has been much\n                                                                                                                                     slower compared to PET/computed tomography (PET/\nKeywords: Positron-emission tomography/methods; Magnetic resonance                                                                   CT).         Since           its     introduction                    in     2010,          approximately\nimaging/methods; Tomography, x-ray computed/methods; Pelvic neoplasms;                                                               70 systems have been installed worldwide, mostly in"
+        },
+        {
+          "id": "data/PETMRI.txt:17",
+          "metadata": {
+            "chunk_index": 17,
+            "repo": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+            "source": "data/PETMRI.txt"
+          },
+          "text": "compared to PET/CT(8) (Figure 4)."
+        },
+        {
+          "id": "data/PETMRI.txt:24",
+          "metadata": {
+            "chunk_index": 24,
+            "repo": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+            "source": "data/PETMRI.txt"
+          },
+          "text": "choice, particularly for assessment of some regions, such as\nbrain, head and neck, liver and pelvis. However, widely\naccepted clinical indications remain to be determined\n\nbefore conclusive statements regarding the advantages\nof PET/MRI, over PET/CT can be made.\n\n\n\nREFERENCES\n\n1.    Ter-Pogossian MM, Phelps ME, Hoffman EJ, Mullani NA. A positron-emission\n      transaxial tomograph for nuclear imaging (PETT). Radiology. 1975;114(1):89-98."
+        }
+      ],
+      "excluded_from_untouched_test": true,
+      "pilot_case_id": "ctu1_pilot_017",
+      "query": "What are the main advantages of PET/MRI compared with PET/CT?",
+      "source_family": "https://github.com/taha-parsayan/Ollama-and-HuggingFace-RAG-Engine",
+      "source_kind": "previously_exposed_real_rag_trace",
+      "split": "excluded_calibration_pilot"
+    },
+    {
+      "answer": "index (VectorDatabaseDep): The vector database dependency for retrieval. When a user asks a question, the RAG ChatBot retrieves the most relevant sections from the Embedding database. Additionally, the chatbot is designed to remember previous interactions.",
+      "citations": [],
+      "contexts": [
+        {
+          "id": "rag_chatbot:backend/alembic/env.py:1",
+          "metadata": {
+            "project": "umbertogriffo/rag-chatbot",
+            "repo_url": "https://github.com/umbertogriffo/rag-chatbot",
+            "retrieval_score": 0.0,
+            "retriever": "intentional low-overlap stress control",
+            "source": "backend/alembic/env.py"
+          },
+          "text": "from logging.config import fileConfig\n\nfrom alembic import context\nfrom bot.memory.document_registry import DocumentRecord  # noqa: F401 – registers the model\nfrom core.config import settings\nfrom helpers.log import get_logger\nfrom sqlalchemy import engine_from_config, pool\nfrom sqlmodel import SQLModel\n\nlogger = get_logger(__name__)\n\n# this is the Alembic Config object, which provides\n# access to the values within the .ini file in use.\nconfig = context.config\n\n# Interpret the config file for Python logging.\n# This line sets up loggers basically.\nif config.config_file_name is not None:\n    fileConfig(config.config_file_name)"
+        },
+        {
+          "id": "rag_chatbot:backend/alembic/env.py:2",
+          "metadata": {
+            "project": "umbertogriffo/rag-chatbot",
+            "repo_url": "https://github.com/umbertogriffo/rag-chatbot",
+            "retrieval_score": 0.0,
+            "retriever": "intentional low-overlap stress control",
+            "source": "backend/alembic/env.py"
+          },
+          "text": "p loggers basically.\nif config.config_file_name is not None:\n    fileConfig(config.config_file_name)\n\n# Use SQLModel's combined metadata so Alembic auto-generates\n# migrations for every table model in the registry.\ntarget_metadata = SQLModel.metadata\n\ndef run_migrations_offline() -> None:\n    \"\"\"Run migrations in 'offline' mode.\n\nThis configures the context with just a URL\n    and not an Engine, though an Engine is acceptable\n    here as well.  By skipping the Engine creation\n    we don't even need a DBAPI to be available.\n\nCalls to context.execute() here emit the given string to the\n    script output."
+        },
+        {
+          "id": "rag_chatbot:backend/alembic/env.py:3",
+          "metadata": {
+            "project": "umbertogriffo/rag-chatbot",
+            "repo_url": "https://github.com/umbertogriffo/rag-chatbot",
+            "retrieval_score": 0.0,
+            "retriever": "intentional low-overlap stress control",
+            "source": "backend/alembic/env.py"
+          },
+          "text": "PI to be available.\n\nCalls to context.execute() here emit the given string to the\n    script output.\n\n\"\"\"\n    url = config.get_main_option(\"sqlalchemy.url\")\n    logger.info(f\"DATABASE_URL {url}\")\n    context.configure(\n        url=url,\n        target_metadata=target_metadata,\n        literal_binds=True,\n        dialect_opts={\"paramstyle\": \"named\"},\n    )\n\nwith context.begin_transaction():\n        context.run_migrations()\n\ndef run_migrations_online() -> None:\n    \"\"\"Run migrations in 'online' mode.\n\nIn this scenario we need to create an Engine\n    and associate a connection with the context."
+        }
+      ],
+      "excluded_from_untouched_test": true,
+      "pilot_case_id": "ctu1_pilot_018",
+      "query": "How does this chatbot update its vector database when documents change?",
+      "source_family": "umbertogriffo/rag-chatbot",
+      "source_kind": "previously_exposed_real_rag_trace",
+      "split": "excluded_calibration_pilot"
+    },
+    {
+      "answer": "Common use cases for Elasticsearch kNN vector similarity search include semantic text search. It rewrites index mappings automatically for every query.",
+      "citations": [],
+      "contexts": [
+        {
+          "id": "elasticsearch_knn",
+          "metadata": {
+            "authority": "canonical",
+            "canonical": true,
+            "date": "2026-07-03",
+            "freshness": "current",
+            "requires_abstention": true,
+            "source_authority": "official",
+            "source_status": "incomplete",
+            "version": "public-page-snapshot"
+          },
+          "text": "Common use cases for kNN vector similarity search include semantic text search, image and video similarity, and recommendations.",
+          "url": "https://www.elastic.co/docs/solutions/search/vector/knn"
+        }
+      ],
+      "excluded_from_untouched_test": true,
+      "pilot_case_id": "ctu1_pilot_019",
+      "query": "What is a common use case for Elasticsearch kNN?",
+      "source_family": "elastic.co",
+      "source_kind": "previously_exposed_development_case",
+      "split": "excluded_calibration_pilot"
+    },
+    {
+      "answer": "Azure AI Search hybrid search merges and reorders text and vector results using Reciprocal Rank Fusion.",
+      "citations": [
+        {
+          "claim": "Azure AI Search hybrid search merges and reorders text and vector results using Reciprocal Rank Fusion.",
+          "source_id": "azure_vector_quickstart"
+        }
+      ],
+      "contexts": [
+        {
+          "id": "azure_hybrid_query",
+          "metadata": {
+            "authority": "canonical",
+            "canonical": true,
+            "date": "2026-07-03",
+            "freshness": "current",
+            "requires_abstention": false,
+            "source_authority": "official",
+            "source_status": "current",
+            "version": "public-page-snapshot"
+          },
+          "text": "Hybrid search combines text and vector queries in a single search request. The results are merged and reordered using Reciprocal Rank Fusion.",
+          "url": "https://learn.microsoft.com/en-us/azure/search/hybrid-search-how-to-query"
+        },
+        {
+          "id": "azure_vector_quickstart",
+          "metadata": {
+            "authority": "canonical",
+            "canonical": true,
+            "date": "2026-07-03",
+            "freshness": "current",
+            "requires_abstention": false,
+            "source_authority": "official",
+            "source_status": "current",
+            "version": "public-page-snapshot"
+          },
+          "text": "The vector search quickstart uses the Azure AI Search client library to create, load, and query a vector index.",
+          "url": "https://learn.microsoft.com/en-us/azure/search/search-get-started-vector"
+        }
+      ],
+      "excluded_from_untouched_test": true,
+      "pilot_case_id": "ctu1_pilot_020",
+      "query": "How does Azure AI Search combine hybrid results?",
+      "source_family": "learn.microsoft.com",
+      "source_kind": "previously_exposed_development_case",
+      "split": "excluded_calibration_pilot"
+    },
+    {
+      "answer": "Haystack DocumentWriter writes documents into a Document Store. It sends each written document to Slack.",
+      "citations": [],
+      "contexts": [
+        {
+          "id": "haystack_document_writer",
+          "metadata": {
+            "authority": "canonical",
+            "canonical": true,
+            "date": "2026-07-03",
+            "freshness": "current",
+            "requires_abstention": false,
+            "source_authority": "official",
+            "source_status": "incomplete",
+            "version": "public-page-snapshot"
+          },
+          "text": "DocumentWriter writes a list of documents into a Document Store of your choice. It is typically used in an indexing pipeline as the final step after preprocessing documents and creating embeddings.",
+          "url": "https://docs.haystack.deepset.ai/docs/documentwriter"
+        }
+      ],
+      "excluded_from_untouched_test": true,
+      "pilot_case_id": "ctu1_pilot_021",
+      "query": "What does Haystack DocumentWriter do?",
+      "source_family": "docs.haystack.deepset.ai",
+      "source_kind": "previously_exposed_development_case",
+      "split": "excluded_calibration_pilot"
+    },
+    {
+      "answer": "# Offline Local AI Agent Chatbot with RAG\n\nThis project builds a chatbot connected to an AI Agent that provides retrieval-augmented generation (RAG), enabling users to ask questions of their docs. The application is designed to run offline and for the Large Language Model (LLM) it uses Ollama to run small 3B param models such as `Llama 3.2 3B`, and uses `nomic-embed-text` for local offline vector embeddings. This application uses the Llama 3.2 3B param model (about 2GB, approx 10 minutes download) for chat and summaries, and the nomic-embed-text model (274Mb approx 2 minutes download) for vectorisation.",
+      "citations": [],
+      "contexts": [
+        {
+          "id": "local_rag_chat:backend/app/agents/rag.py:3",
+          "metadata": {
+            "project": "HeskethGD/local-rag-chat",
+            "repo_url": "https://github.com/HeskethGD/local-rag-chat",
+            "retrieval_score": 0.0,
+            "retriever": "intentional low-overlap stress control",
+            "source": "backend/app/agents/rag.py"
+          },
+          "text": "e in the semantic database.\n\nYields\n    - (ContentStream): The stream response from the LLM.\n    \"\"\"\n\n# Embedd the user query\n    query_vector = []\n    query = \"\"\n    try:\n        query = messages[-1].content\n        query_vector = vecs.get_embedding(query)\n    except Exception as e:\n        err_message = f\"There was an error processing the query: {e}\"\n        logger.error(err_message)\n        yield err_message\n        return\n    if not query_vector:\n        return"
+        },
+        {
+          "id": "local_rag_chat:backend/app/agents/rag.py:4",
+          "metadata": {
+            "project": "HeskethGD/local-rag-chat",
+            "repo_url": "https://github.com/HeskethGD/local-rag-chat",
+            "retrieval_score": 0.0,
+            "retriever": "intentional low-overlap stress control",
+            "source": "backend/app/agents/rag.py"
+          },
+          "text": ".error(err_message)\n        yield err_message\n        return\n    if not query_vector:\n        return\n\n# Retrieve relevant content from the vector db using semantic search\n    results_text_array = []\n    try:\n        results_array = semantic_db.semantic_query(query_vector, table_name)\n        sources = semantic_db.get_sources(results_array)\n        results_text_array = [r.text for r in results_array]\n        if not results_text_array:\n            raise ValueError('results_text_array cannot be empty')\n    except Exception as e:\n        err_message = f\"Error fetching sources: {e}\"\n        logger.error(err_message)\n        yield err_message\n        return"
+        },
+        {
+          "id": "local_rag_chat:backend/app/agents/rag.py:5",
+          "metadata": {
+            "project": "HeskethGD/local-rag-chat",
+            "repo_url": "https://github.com/HeskethGD/local-rag-chat",
+            "retrieval_score": 0.0,
+            "retriever": "intentional low-overlap stress control",
+            "source": "backend/app/agents/rag.py"
+          },
+          "text": "or fetching sources: {e}\"\n        logger.error(err_message)\n        yield err_message\n        return\n\n# Cal LLM to summarise answer based on retrieved content\n    try:\n        # Define prompt for document summary\n        all_text = ' '.join(results_text_array)\n        prompt =  (\n            'Answer this question:'\n            f'\\nUSER QUESTION\\n{query}\\n'\n            'Use this content in your answer:'\n            f'\\n\\nCONTENT_STARTS:\\n\"{all_text}\"\\nCONTENT_ENDS\\n\\n'\n            'IMPORTANT - The content may be truncated so do not simply continue the sentence, '\n            'always rephrase to give complete sentences when needed. '\n            'Not everything will be relevant so do not comment on anything you do not use to answer the question.'\n        )"
+        }
+      ],
+      "excluded_from_untouched_test": true,
+      "pilot_case_id": "ctu1_pilot_022",
+      "query": "What local models does this RAG chatbot use for chat and embeddings?",
+      "source_family": "HeskethGD/local-rag-chat",
+      "source_kind": "previously_exposed_real_rag_trace",
+      "split": "excluded_calibration_pilot"
+    }
+  ],
+  "created_at": "2026-07-28T00:00:00Z",
+  "package_kind": "contexttrace_excluded_calibration_pilot_inputs",
+  "schema_version": "1.0",
+  "untouched_manifest_payload_sha256": "8bf65cd7e2c95ccfcc12e78b580fc47e4157b0f808ba3fcace0a24bfcdc2e5f6"
+}

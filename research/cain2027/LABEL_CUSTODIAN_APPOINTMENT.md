@@ -36,7 +36,7 @@ predictions on the candidate corpus.
 - [x] Project owner reports conflict/prediction-exposure screening passed.
 - [x] Voluntary arrangement reported as approved.
 - [x] Project owner reports institutional/IRB review is not required.
-- [ ] Candidate accepts the duties and prohibited-disclosure terms.
+- [x] Candidate accepts the duties and prohibited-disclosure terms.
 - [ ] Candidate completes manual and adjudication training.
 - [ ] Candidate passes the excluded-source qualification pilot.
 - [ ] Candidate creates the label zone outside the implementation workspace.
@@ -48,3 +48,9 @@ predictions on the candidate corpus.
 
 Until every unchecked item has a custodian-generated receipt, `sar` has no
 production label-zone activation and untouched annotation must not begin.
+
+On 2026-07-28, the project owner reported receipt of `sar`'s written
+acceptance attestation covering independence, candidate-prediction
+non-exposure, confidentiality, record preservation, role separation, and
+prohibited disclosure. The attestation itself remains outside the repository;
+only its non-revealing receipt status is recorded here.

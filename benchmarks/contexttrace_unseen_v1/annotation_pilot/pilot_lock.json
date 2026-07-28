@@ -1,0 +1,127 @@
+{
+  "calibration_registry_file_sha256": "8d071cc9857169e86df43843bd45fc2a93e66b28a802b5040ffffb23ff43efdb",
+  "case_count": 22,
+  "created_at": "2026-07-28T00:00:00Z",
+  "development_source_file_sha256": "61dc688f1eba27cfd0d31196100cdd4013972ffa8085df29fb6ea07ebcbd1d18",
+  "model_calls": 0,
+  "pilot_packet_sha256": "82394d36dc4565ba0d16685c2be34f344e95dda4a29be5e534cfc866b71a5431",
+  "production_labels_created": false,
+  "provenance": [
+    {
+      "pilot_case_id": "ctu1_pilot_001",
+      "source_case_id": "dev_related_non_supporting_citation_04_lancedb_full_text_wrong_source_citation",
+      "source_category": "related_non_supporting_citation"
+    },
+    {
+      "pilot_case_id": "ctu1_pilot_002",
+      "source_case_id": "dev_unsupported_claim_inside_supported_answer_03_dspy_optimizers_partial_dns",
+      "source_category": "unsupported_claim_inside_supported_answer"
+    },
+    {
+      "git_blob": "64d2dfa55cc4730516862d133b54c2c7f89989c7",
+      "pilot_case_id": "ctu1_pilot_003",
+      "source_path": "benchmarks/real_world_rag/traces/local_rag_chat_2.json"
+    },
+    {
+      "pilot_case_id": "ctu1_pilot_004",
+      "source_case_id": "dev_false_premise_query_04_haystack_document_store_run_contradicted",
+      "source_category": "false_premise_query"
+    },
+    {
+      "pilot_case_id": "ctu1_pilot_005",
+      "source_case_id": "dev_related_non_supporting_citation_01_phoenix_dataset_wrong_source_citation",
+      "source_category": "related_non_supporting_citation"
+    },
+    {
+      "git_blob": "cfa30e908da0f8bf0c3150cc09e4f04c691d79e2",
+      "pilot_case_id": "ctu1_pilot_006",
+      "source_path": "benchmarks/real_world_rag/traces/rag_chatbot_1.json"
+    },
+    {
+      "pilot_case_id": "ctu1_pilot_007",
+      "source_case_id": "dev_unsupported_claim_inside_supported_answer_02_guardrails_structured_partial_runtime",
+      "source_category": "unsupported_claim_inside_supported_answer"
+    },
+    {
+      "pilot_case_id": "ctu1_pilot_008",
+      "source_case_id": "dev_unsupported_claim_inside_supported_answer_04_azure_hybrid_partial_redis",
+      "source_category": "unsupported_claim_inside_supported_answer"
+    },
+    {
+      "git_blob": "317666c1b3802720f5f3d4f863aaf1f182ae9309",
+      "pilot_case_id": "ctu1_pilot_009",
+      "source_path": "benchmarks/real_world_rag/traces/local_rag_chat_1.json"
+    },
+    {
+      "git_blob": "8f0f38c017527a57be7b1503f69732eec8b5e58f",
+      "pilot_case_id": "ctu1_pilot_010",
+      "source_path": "benchmarks/real_world_rag/traces/ollama_hf_rag_engine_1.json"
+    },
+    {
+      "git_blob": "fc475fd191c892c732832aa8b2457ec9f33bae8e",
+      "pilot_case_id": "ctu1_pilot_011",
+      "source_path": "benchmarks/real_world_rag/traces/ollama_hf_rag_engine_2.json"
+    },
+    {
+      "pilot_case_id": "ctu1_pilot_012",
+      "source_case_id": "dev_relevant_but_insufficient_source_03_deepeval_hallucination_partial",
+      "source_category": "relevant_but_insufficient_source"
+    },
+    {
+      "pilot_case_id": "ctu1_pilot_013",
+      "source_case_id": "dev_false_premise_query_01_weaviate_hybrid_contradicted",
+      "source_category": "false_premise_query"
+    },
+    {
+      "git_blob": "13f7103d8a33db0d353be60d9784bcaacad690ba",
+      "pilot_case_id": "ctu1_pilot_014",
+      "source_path": "benchmarks/real_world_rag/traces/rag_chatbot_2.json"
+    },
+    {
+      "pilot_case_id": "ctu1_pilot_015",
+      "source_case_id": "dev_relevant_but_insufficient_source_04_langsmith_dataset_partial_prompt_rewrite",
+      "source_category": "relevant_but_insufficient_source"
+    },
+    {
+      "git_blob": "12111a7324e7266a2a9ea8414ef8ffca4b07e29c",
+      "pilot_case_id": "ctu1_pilot_016",
+      "source_path": "benchmarks/real_world_rag/traces/ollama_hf_rag_engine_stress_1.json"
+    },
+    {
+      "git_blob": "be7ae2f5911ab0f6d4d0e8db1b836ae509650e9e",
+      "pilot_case_id": "ctu1_pilot_017",
+      "source_path": "benchmarks/real_world_rag/traces/ollama_hf_e2e_petmri.json"
+    },
+    {
+      "git_blob": "c8a7d72a3ba51743fb9a0b13af107e67cc634018",
+      "pilot_case_id": "ctu1_pilot_018",
+      "source_path": "benchmarks/real_world_rag/traces/rag_chatbot_stress_1.json"
+    },
+    {
+      "pilot_case_id": "ctu1_pilot_019",
+      "source_case_id": "dev_abstain_incomplete_context_01_elasticsearch_knn_partial_mapping",
+      "source_category": "abstain_incomplete_context"
+    },
+    {
+      "pilot_case_id": "ctu1_pilot_020",
+      "source_case_id": "dev_wrong_root_when_support_correct_04_azure_rrf_wrong_source_citation",
+      "source_category": "wrong_root_when_support_correct"
+    },
+    {
+      "pilot_case_id": "ctu1_pilot_021",
+      "source_case_id": "dev_relevant_but_insufficient_source_02_haystack_document_writer_partial",
+      "source_category": "relevant_but_insufficient_source"
+    },
+    {
+      "git_blob": "3364536cd762e9c505034b0ca0500496b0a44f92",
+      "pilot_case_id": "ctu1_pilot_022",
+      "source_path": "benchmarks/real_world_rag/traces/local_rag_chat_stress_1.json"
+    }
+  ],
+  "record_kind": "contexttrace_excluded_calibration_pilot_lock",
+  "schema_version": "1.0",
+  "selection_rule": "all 12 naturalistic development cases whose every source URL was already present in the frozen calibration registry, plus all 10 tracked real-world RAG traces at the exact recorded Git blobs; blind IDs ordered by SHA-256",
+  "untouched_cases_accessed": 0,
+  "untouched_manifest_payload_sha256": "8bf65cd7e2c95ccfcc12e78b580fc47e4157b0f808ba3fcace0a24bfcdc2e5f6",
+  "verifier_or_nli_calls": 0
+}

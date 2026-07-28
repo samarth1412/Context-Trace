@@ -1,7 +1,7 @@
 {
   "activation": {
     "access_log_rehearsal_passed": false,
-    "candidate_duties_attested": false,
+    "candidate_duties_attested": true,
     "candidate_manual_training_completed": false,
     "candidate_pilot_passed": false,
     "frozen_manifest_verified_by_candidate": false,
@@ -30,5 +30,5 @@
     "reported_by": "project_owner",
     "type": "voluntary"
   },
-  "status": "provisionally_appointed_pending_human_activation"
+  "status": "duties_attested_pending_training_pilot_and_zone_activation"
 }

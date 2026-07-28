@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "blind_fields_removed": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "case_count": {
+      "const": 22
+    },
+    "cases": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "citations": {
+            "items": {
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "contexts": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "metadata": {
+                  "type": "object"
+                },
+                "text": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "url": {
+                  "format": "uri",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "text",
+                "metadata"
+              ],
+              "type": "object"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "excluded_from_untouched_test": {
+            "const": true
+          },
+          "pilot_case_id": {
+            "pattern": "^ctu1_pilot_[0-9]{3}$",
+            "type": "string"
+          },
+          "query": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "source_family": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "source_kind": {
+            "enum": [
+              "previously_exposed_development_case",
+              "previously_exposed_real_rag_trace"
+            ]
+          },
+          "split": {
+            "const": "excluded_calibration_pilot"
+          }
+        },
+        "required": [
+          "pilot_case_id",
+          "split",
+          "excluded_from_untouched_test",
+          "query",
+          "answer",
+          "contexts",
+          "citations",
+          "source_family",
+          "source_kind"
+        ],
+        "type": "object"
+      },
+      "maxItems": 22,
+      "minItems": 22,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "created_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "package_kind": {
+      "const": "contexttrace_excluded_calibration_pilot_inputs"
+    },
+    "schema_version": {
+      "const": "1.0"
+    },
+    "untouched_manifest_payload_sha256": {
+      "const": "8bf65cd7e2c95ccfcc12e78b580fc47e4157b0f808ba3fcace0a24bfcdc2e5f6"
+    }
+  },
+  "required": [
+    "schema_version",
+    "package_kind",
+    "created_at",
+    "untouched_manifest_payload_sha256",
+    "case_count",
+    "blind_fields_removed",
+    "cases"
+  ],
+  "type": "object"
+}
