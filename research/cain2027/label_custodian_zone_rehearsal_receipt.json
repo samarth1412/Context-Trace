@@ -1,0 +1,15 @@
+{
+  "append_only_log_rehearsal_passed": true,
+  "candidate_id": "sar",
+  "directory_layout_passed": true,
+  "duties_and_disclosure_attested": true,
+  "implementation_account_denial_attested": false,
+  "overall_zone_rehearsal_passed": false,
+  "private_mode_passed": true,
+  "receipt_payload_sha256": "e295acb6806a495f5d557b5c90def6f93d16e628706c1880a7571be5bf670ba7",
+  "record_kind": "contexttrace_label_zone_rehearsal_receipt",
+  "rehearsed_at": "2026-07-29T22:50:36.622384Z",
+  "schema_version": "1.0",
+  "synthetic_seal_backup_recovery_passed": true,
+  "tool_version": "contexttrace-label-zone-rehearsal-v2"
+}

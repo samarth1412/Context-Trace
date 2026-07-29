@@ -41,11 +41,11 @@ predictions on the candidate corpus.
   ready.
 - [ ] Candidate completes manual and adjudication training.
 - [ ] Candidate passes the excluded-source qualification pilot.
-- [ ] Rehearsal receipt verifies that the candidate created the label zone
-  outside the implementation workspace.
+- [x] Rehearsal receipt verifies that the candidate created the label-zone
+  layout outside the ContextTrace repository.
 - [ ] Candidate demonstrates implementation-account denial.
-- [ ] Append-only access logging is tested.
-- [ ] Synthetic hash, seal, backup, and recovery rehearsal passes.
+- [x] Append-only access logging is tested.
+- [x] Synthetic hash, seal, backup, and recovery rehearsal passes.
 - [ ] Candidate verifies frozen unlabeled payload SHA-256
   `8bf65cd7e2c95ccfcc12e78b580fc47e4157b0f808ba3fcace0a24bfcdc2e5f6`.
 
@@ -63,3 +63,17 @@ zone was ready. This is recorded as a readiness report only. It does not
 activate production access or establish isolation, access denial, logging,
 recovery, or manifest verification; those items remain pending a
 custodian-generated rehearsal receipt.
+
+On 2026-07-29, the original rehearsal receipt and sidecar passed byte-level and
+internal receipt-hash verification. Receipt file SHA-256:
+`23b9e55e804b5261822e86232c2cae20db63cd306d3d7ca32243e6c7976b904f`.
+The run passed layout, private-mode, logging, synthetic recovery, and duties
+checks. It correctly recorded
+`implementation_account_denial_attested: false` and
+`overall_zone_rehearsal_passed: false`.
+
+The run occurred in the project owner's administrator-controlled account.
+Therefore it is a valid partial rehearsal, not custodian activation. The
+shared-device deviation is recorded in
+`research/cain2027/SHARED_DEVICE_CUSTODY_DEVIATION.md`; pilot and production
+annotation remain prohibited pending resolution.

@@ -1,15 +1,16 @@
 {
   "activation": {
-    "access_log_rehearsal_passed": false,
+    "access_log_rehearsal_passed": true,
     "candidate_duties_attested": true,
     "candidate_manual_training_completed": false,
     "candidate_pilot_passed": false,
     "frozen_manifest_verified_by_candidate": false,
     "implementation_account_denial_tested": false,
     "label_zone_created_outside_implementation_workspace": false,
+    "label_zone_created_outside_repository": true,
     "label_zone_readiness_reported_by_candidate": true,
     "production_label_access_active": false,
-    "synthetic_seal_backup_recovery_passed": false
+    "synthetic_seal_backup_recovery_passed": true
   },
   "candidate_id": "sar",
   "frozen_unlabeled_payload_sha256": "8bf65cd7e2c95ccfcc12e78b580fc47e4157b0f808ba3fcace0a24bfcdc2e5f6",
@@ -31,5 +32,15 @@
     "reported_by": "project_owner",
     "type": "voluntary"
   },
-  "status": "zone_readiness_reported_pending_rehearsal_training_and_pilot"
+  "status": "valid_partial_rehearsal_shared_device_access_denial_not_met",
+  "zone_rehearsal_receipt": {
+    "file_sha256": "23b9e55e804b5261822e86232c2cae20db63cd306d3d7ca32243e6c7976b904f",
+    "implementation_account_denial_attested": false,
+    "overall_zone_rehearsal_passed": false,
+    "receipt_payload_sha256": "e295acb6806a495f5d557b5c90def6f93d16e628706c1880a7571be5bf670ba7",
+    "rehearsed_at": "2026-07-29T22:50:36.622384Z",
+    "storage_context": "project_owner_administrator_controlled_account",
+    "tool_version": "contexttrace-label-zone-rehearsal-v2",
+    "validation_status": "valid_but_incomplete"
+  }
 }
