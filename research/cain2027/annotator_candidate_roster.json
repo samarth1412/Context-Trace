@@ -1,0 +1,27 @@
+{
+  "candidates": [
+    {
+      "assigned": false,
+      "candidate_id": "pul",
+      "confidentiality_attested": false,
+      "independence_attested": false,
+      "prediction_and_label_non_exposure_attested": false,
+      "role": "annotator_a_candidate",
+      "voluntary_participation_attested": false
+    },
+    {
+      "assigned": false,
+      "candidate_id": "sid",
+      "confidentiality_attested": false,
+      "independence_attested": false,
+      "prediction_and_label_non_exposure_attested": false,
+      "role": "annotator_b_candidate",
+      "voluntary_participation_attested": false
+    }
+  ],
+  "personal_information_recorded": false,
+  "record_kind": "contexttrace_cain2027_annotator_candidate_roster",
+  "recorded_at": "2026-07-29",
+  "schema_version": "1.0",
+  "status": "candidates_named_eligibility_and_assignment_pending"
+}

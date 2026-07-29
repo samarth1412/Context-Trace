@@ -149,6 +149,7 @@ status.
 ## Current human dependency
 
 Candidate `sar` is provisionally appointed as label custodian/adjudicator but
-is not activated. No independent annotator assignment is recorded. Candidate
-training, excluded-source pilot qualification, production annotator training,
-and test annotation have not begun.
+is not activated. Pseudonymous annotator candidates `pul` and `sid` were named
+on 2026-07-29, but their eligibility attestations and assignments remain
+pending. Candidate training, excluded-source pilot qualification, production
+annotator training, and test annotation have not begun.
