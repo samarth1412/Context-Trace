@@ -2,7 +2,8 @@
 
 Recorded: 2026-07-29
 
-Status: unresolved before annotation; production label access remains inactive
+Status: prospective amendment prepared; custodian acceptance and encrypted
+storage verification pending; production label access remains inactive
 
 ## Event
 
@@ -46,3 +47,9 @@ Before annotation, either:
 
 Using an ordinary folder in the project owner's account is not an acceptable
 resolution.
+
+The project owner selected the second path on 2026-07-29. The prospective
+controls and narrowed claim boundary are recorded in
+`research/cain2027/SHARED_DEVICE_CUSTODY_AMENDMENT.md`. The amendment is not
+operational until `sar` accepts it and returns the required encrypted-storage
+attestation.

@@ -2,14 +2,14 @@
 
 Recorded: 2026-07-29
 
-Status: candidates named; eligibility and assignment pending
+Status: training eligibility attested; assignment pending custody resolution
 
 ## Candidates
 
 | Role | Pseudonym | Independence | Prediction/label exposure | Voluntary | Confidentiality | Assigned |
 |---|---|---|---|---|---|---|
-| Annotator A candidate | `pul` | pending attestation | pending attestation | pending attestation | pending attestation | no |
-| Annotator B candidate | `sid` | pending attestation | pending attestation | pending attestation | pending attestation | no |
+| Annotator A candidate | `pul` | attested | none attested | attested | attested | no |
+| Annotator B candidate | `sid` | attested | none attested | attested | attested | no |
 
 No real names or contact information are stored in the repository.
 
@@ -25,6 +25,10 @@ attests that they:
 - will not use ContextTrace, an LLM, search, or unapproved assistance while
   annotating.
 
-Naming a candidate is not eligibility, qualification, or assignment. The
-shared-device custody deviation also remains unresolved, so no annotation is
-authorized.
+On 2026-07-29, the project owner reported receiving the required separate
+attestation from each candidate. The raw messages remain outside the
+repository; only their non-revealing receipt status is recorded. This makes
+`pul` and `sid` eligible to begin training, not qualified or assigned.
+
+The shared-device custody deviation remains unresolved, so no pilot or
+untouched annotation is authorized.

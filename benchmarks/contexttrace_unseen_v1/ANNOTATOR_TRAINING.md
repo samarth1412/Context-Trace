@@ -150,6 +150,8 @@ status.
 
 Candidate `sar` is provisionally appointed as label custodian/adjudicator but
 is not activated. Pseudonymous annotator candidates `pul` and `sid` were named
-on 2026-07-29, but their eligibility attestations and assignments remain
-pending. Candidate training, excluded-source pilot qualification, production
-annotator training, and test annotation have not begun.
+and their required eligibility attestations were reported received on
+2026-07-29. They are eligible for training but remain unassigned pending
+resolution of the shared-device custody controls. Candidate training,
+excluded-source pilot qualification, production annotator training, and test
+annotation have not begun.
