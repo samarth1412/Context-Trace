@@ -1,0 +1,18 @@
+{
+  "all_temporal_cases_double_annotated": true,
+  "annotator_case_counts": {
+    "pul": 309,
+    "sid": 308
+  },
+  "assignment_plan_payload_sha256": "77b23a05249e223ac886717bf9e8fe236f679ef6cfd0e9197449dc7f2a2ae52e",
+  "case_count": 493,
+  "double_annotated_case_count": 124,
+  "double_annotated_fraction": 0.2515212981744422,
+  "double_natural_case_count": 24,
+  "frozen_manifest_payload_sha256": "8bf65cd7e2c95ccfcc12e78b580fc47e4157b0f808ba3fcace0a24bfcdc2e5f6",
+  "packet_version": "contexttrace-production-annotation-packet-v1",
+  "record_kind": "contexttrace_cain2027_production_annotation_assignment",
+  "recorded_at": "2026-07-29",
+  "schema_version": "1.0",
+  "status": "label_free_packets_built_human_annotation_pending"
+}
