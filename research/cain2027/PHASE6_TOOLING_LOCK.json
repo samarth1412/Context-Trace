@@ -1,0 +1,105 @@
+{
+  "schema_version": "1.0",
+  "record_kind": "contexttrace_cain2027_phase6_tooling_lock",
+  "locked_at": "2026-07-30T01:45:29Z",
+  "status": "tooling_frozen_untouched_execution_not_authorized_not_started",
+  "tooling": {
+    "version": "contexttrace-unseen-v1-phase6-tooling-1.0",
+    "git_commit": "5e55f206eafeee5b0f7f2c757277872ea2a77544",
+    "source_manifest_sha256": "b2f5c612ca8efc00aa46b8baf8cf710c3663a95232beb41497015c7c20252ee2",
+    "source_archive": {
+      "private_path": ".tmp-contexttrace-research-locks/phase6-tooling-5e55f20.tar.gz",
+      "bytes": 26258,
+      "sha256": "11f52d46b9e74491f31295747bd9199b63b7b1c3940d300980f1457eb376dfef"
+    }
+  },
+  "source_manifest": [
+    {
+      "path": "benchmarks/contexttrace_unseen_v1/evaluation/__init__.py",
+      "bytes": 165,
+      "sha256": "5ac3ac35844f0958ad11a6a34f8952fc48a86d3f19b30e292e983670ab329f22"
+    },
+    {
+      "path": "benchmarks/contexttrace_unseen_v1/evaluation/candidate_runner.py",
+      "bytes": 15600,
+      "sha256": "29097f326f741d05ed4013375c41e4c7bf6bb8c61ae3bf58a2297cdadc846921"
+    },
+    {
+      "path": "benchmarks/contexttrace_unseen_v1/evaluation/integrity.py",
+      "bytes": 11392,
+      "sha256": "443837ee71bab54fc5aa5a449269453cf0fc09b037cd81da95053fa60311d262"
+    },
+    {
+      "path": "benchmarks/contexttrace_unseen_v1/evaluation/scoring.py",
+      "bytes": 22996,
+      "sha256": "d0e0642e02423827feb201bcd3e80d88a9be9a59dcfc5f56b635de9c24a1f5b0"
+    },
+    {
+      "path": "benchmarks/contexttrace_unseen_v1/evaluation/sealed_scorer.py",
+      "bytes": 24772,
+      "sha256": "9932ee655a37345ab4c368e7ca8813ee7818c0555ee462381b81a36c60fb9881"
+    },
+    {
+      "path": "benchmarks/contexttrace_unseen_v1/evaluation/statistics.py",
+      "bytes": 5557,
+      "sha256": "66217370792b531a124e7972b652227b41b69536c940bd761782f1bd7d51265c"
+    },
+    {
+      "path": "benchmarks/contexttrace_unseen_v1/evaluation/v1_mapping.py",
+      "bytes": 7011,
+      "sha256": "75eddd9431e35b19bcc640af9b706d0ca2484b052fdeb49711ee336007feeed5"
+    },
+    {
+      "path": "benchmarks/tests/test_unseen_v1_phase6_evaluation.py",
+      "bytes": 15706,
+      "sha256": "2bf376e67092de7c1a95501cc6c5bed2c067384939f86ea18d870c1ee253ba8f"
+    },
+    {
+      "path": "research/cain2027/PHASE6_SEALED_EVALUATION_HANDOFF.md",
+      "bytes": 5612,
+      "sha256": "7f5be0d32a8918900e7555fb1bc2ad0a5a5f7197f18302db29898cf7ac408d33"
+    },
+    {
+      "path": "research/cain2027/PHASE6_TOOLING_STATUS.md",
+      "bytes": 1293,
+      "sha256": "ee63284b258af1b607d66703ba8b2ae0e0051af9ce60ecbde4786b29cca056cd"
+    }
+  ],
+  "frozen_inputs": {
+    "evaluation_config_file_sha256": "a4ec77d3211d12903047f8095b3e88ee4a19fc77a0be910cecfd3b3ce4492895",
+    "evaluation_config_payload_sha256": "ed6be19ec12570f189c9c5999ac2e777d4b68b0f6fa9cf237281dd74ed726441",
+    "ablation_config_file_sha256": "9a4036f60446e718191e195e64e74f36ada06030e9e8f8f5cdca23a7ceca109b",
+    "ablation_config_payload_sha256": "15ddb5b471af8385b75edfa282e39c8a080dd6af6df461b43613f0c5a1e89880",
+    "implementation_lock_file_sha256": "78cec739d54ffc7c575b2cb1c0f8de890f7ca9feb318ea0cc3a1550485a5a3e8",
+    "dependency_lock_file_sha256": "118b8bc32488edec5528833185b57d67033310baaefe276e7ed7b09c116bdd29",
+    "phase3_lock_file_sha256": "7de1de53546bb4201c7bebe9e4e36d69eeabfc2f0d616a4e6950733c5a625933",
+    "annotation_schema_sha256": "8de845839988ccdc3168eee5a4c45d3f18f5a634acc5d6e0c0523eee4d9edca2",
+    "dataset_freeze_record_file_sha256": "e2d3e11b88f26baff554104bde7033a546454c0c8953377bdee4fd797fae64e9",
+    "frozen_manifest_file_sha256": "6b1b48ed4ed8bc9b4966b9218b77406b2d925ae1b6d8991f630726415c5c01e4",
+    "frozen_manifest_payload_sha256": "8bf65cd7e2c95ccfcc12e78b580fc47e4157b0f808ba3fcace0a24bfcdc2e5f6",
+    "frozen_source_manifest_file_sha256": "794603f6287445cefad2893d091f325b2c2da6acf24028fe702a75fe91712ccc",
+    "baseline_run_record_file_sha256": "660ad41e2ea8f7d4791de0ba268d1a1714f0409695bce9f483371f873b63988e",
+    "semantic_v1_raw_output_file_sha256": "c80b2f3bcd9e0806b627b480398d8d536fb6f94ed86de6c3c87eaf0abb752064",
+    "candidate_implementation_source_manifest_sha256": "0abd8c25ad417ee0ac84e04ae0989dd9066fdbe3390d323875bf483e14cb4d70",
+    "nli_artifact_manifest_sha256": "330f0fd77aad129877e1a1a90d4a77e6f093ee238b97d535202816a116b9c9f3"
+  },
+  "execution_boundary": {
+    "candidate_run_authorized": false,
+    "candidate_run_started": false,
+    "candidate_predictions_inspected": false,
+    "sealed_gold_accessed": false,
+    "sealed_scoring_started": false,
+    "untouched_metrics_computed": false,
+    "publication_or_release": false
+  },
+  "validation": {
+    "synthetic_phase6_tests_passed": 18,
+    "unseen_v1_and_v2_compatibility_tests_passed": 228,
+    "ruff": "passed",
+    "ruff_format": "passed",
+    "mypy": "passed",
+    "real_untouched_cases_used_in_tests": 0,
+    "gold_labels_used_in_tests": 0
+  },
+  "payload_sha256": "f4d1826fd09538bda845ae336af0e64f4e61c98bec5f52b78069259ae3d86704"
+}
