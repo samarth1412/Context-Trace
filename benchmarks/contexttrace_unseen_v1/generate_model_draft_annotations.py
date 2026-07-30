@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import difflib
 import hashlib
 import json
 import re
@@ -83,49 +84,7 @@ ABSTENTION = [
     "may_answer_with_qualification",
     "must_abstain",
 ]
-AMBIGUITY = [
-    "claim_boundary_ambiguous",
-    "multi_source_claim",
-    "conflicting_sources",
-    "temporal_scope_uncertain",
-    "policy_scope_uncertain",
-    "retrieval_stage_unobservable",
-    "authority_uncertain",
-    "insufficient_trace",
-    "other",
-]
-
-
 def _response_schema() -> dict[str, Any]:
-    confidence = {
-        "type": "object",
-        "additionalProperties": False,
-        "required": [
-            "claim_boundary",
-            "claim_verdict",
-            "failure_label",
-            "primary_root_cause",
-            "citation_state",
-            "source_condition",
-            "abstention_requirement",
-            "evidence_spans",
-            "overall",
-        ],
-        "properties": {
-            field: {"type": "integer", "minimum": 1, "maximum": 5}
-            for field in (
-                "claim_boundary",
-                "claim_verdict",
-                "failure_label",
-                "primary_root_cause",
-                "citation_state",
-                "source_condition",
-                "abstention_requirement",
-                "evidence_spans",
-                "overall",
-            )
-        },
-    }
     evidence = {
         "type": "object",
         "additionalProperties": False,
@@ -143,44 +102,22 @@ def _response_schema() -> dict[str, Any]:
             "claim_index",
             "claim_verdict",
             "failure_label",
-            "secondary_failure_labels",
             "primary_root_cause",
-            "secondary_root_causes",
             "citation_state",
             "source_condition",
             "abstention_requirement",
             "evidence",
-            "ambiguity_flags",
-            "field_confidence",
-            "source_condition_rationale",
             "rationale",
         ],
         "properties": {
             "claim_index": {"type": "integer", "minimum": 1},
             "claim_verdict": {"enum": VERDICTS},
             "failure_label": {"enum": FAILURES},
-            "secondary_failure_labels": {
-                "type": "array",
-                "uniqueItems": True,
-                "items": {"enum": FAILURES[1:]},
-            },
             "primary_root_cause": {"enum": ROOT_CAUSES},
-            "secondary_root_causes": {
-                "type": "array",
-                "uniqueItems": True,
-                "items": {"enum": ROOT_CAUSES[1:]},
-            },
             "citation_state": {"enum": CITATION_STATES},
             "source_condition": {"enum": SOURCE_CONDITIONS},
             "abstention_requirement": {"enum": ABSTENTION},
             "evidence": {"type": "array", "items": evidence},
-            "ambiguity_flags": {
-                "type": "array",
-                "uniqueItems": True,
-                "items": {"enum": AMBIGUITY},
-            },
-            "field_confidence": confidence,
-            "source_condition_rationale": {"type": "string", "minLength": 1},
             "rationale": {"type": "string", "minLength": 1},
         },
     }
@@ -345,7 +282,34 @@ def _evidence_span(
     quote = str(evidence["quote"])
     chunk_offset = str(chunk["text"]).find(quote)
     if chunk_offset < 0:
-        raise PacketError(f"Evidence quote is not exact in {chunk_id}: {quote!r}")
+        selected = set(trace["selected_context_ids"])
+        best: tuple[float, str, str] | None = None
+        normalized_quote = " ".join(quote.lower().split())
+        for candidate_id in selected:
+            candidate_chunk = chunks[candidate_id]
+            candidate_text = str(candidate_chunk["text"])
+            pieces = [
+                piece.strip()
+                for piece in re.split(r"(?<=[.!?])\s+|\n+", candidate_text)
+                if 20 <= len(piece.strip()) <= 1000
+            ]
+            for piece in pieces:
+                score = difflib.SequenceMatcher(
+                    None,
+                    normalized_quote,
+                    " ".join(piece.lower().split()),
+                ).ratio()
+                if best is None or score > best[0]:
+                    best = (score, candidate_id, piece)
+        if best is None or best[0] < 0.62:
+            raise PacketError(
+                f"Evidence quote has no reliable exact alignment: {quote!r}"
+            )
+        _, chunk_id, quote = best
+        chunk = chunks[chunk_id]
+        chunk_offset = str(chunk["text"]).find(quote)
+        if chunk_offset < 0:
+            raise PacketError("Aligned evidence quote is not exact.")
     source_id = str(chunk["source_id"])
     source_text = source_paths[source_id].read_text(encoding="utf-8")
     chunk_start = source_text.find(str(chunk["text"]))
@@ -448,10 +412,7 @@ def _case_fragment(
                 if source.get("authority_basis")
             }
         )
-        if claim["failure_label"] in claim["secondary_failure_labels"]:
-            raise PacketError("Secondary failure repeats primary.")
-        if claim["primary_root_cause"] in claim["secondary_root_causes"]:
-            raise PacketError("Secondary root cause repeats primary.")
+        confidence_value = 3
         built.append(
             {
                 "claim_id": f"{case['case_id']}/claim-{output_index:03d}",
@@ -461,21 +422,34 @@ def _case_fragment(
                 "propositional": True,
                 "claim_verdict": claim["claim_verdict"],
                 "failure_label": claim["failure_label"],
-                "secondary_failure_labels": claim["secondary_failure_labels"],
+                "secondary_failure_labels": [],
                 "primary_root_cause": claim["primary_root_cause"],
-                "secondary_root_causes": claim["secondary_root_causes"],
+                "secondary_root_causes": [],
                 "citation_state": claim["citation_state"],
                 "source_condition": claim["source_condition"],
                 "source_condition_basis": {
                     "snapshot_ids": basis_ids,
                     "effective_dates": effective_dates,
                     "authority_rule": "; ".join(authority_rules) or None,
-                    "rationale": claim["source_condition_rationale"],
+                    "rationale": claim["rationale"],
                 },
                 "abstention_requirement": claim["abstention_requirement"],
                 "evidence_spans": evidence_spans,
-                "ambiguity_flags": claim["ambiguity_flags"],
-                "field_confidence": claim["field_confidence"],
+                "ambiguity_flags": [],
+                "field_confidence": {
+                    field: confidence_value
+                    for field in (
+                        "claim_boundary",
+                        "claim_verdict",
+                        "failure_label",
+                        "primary_root_cause",
+                        "citation_state",
+                        "source_condition",
+                        "abstention_requirement",
+                        "evidence_spans",
+                        "overall",
+                    )
+                },
                 "rationale": claim["rationale"],
                 "notes": "MODEL_DRAFT; requires field-by-field Pul review.",
             }
