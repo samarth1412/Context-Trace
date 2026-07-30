@@ -116,7 +116,13 @@ where = ["."]
 include = ["contexttrace*"]
 
 [tool.setuptools.package-data]
-contexttrace = ["py.typed", "verify/*.json", "verify/rulepacks/*.yaml", "schemas/*.json"]
+contexttrace = [
+    "py.typed",
+    "verify/*.json",
+    "verify/rulepacks/*.yaml",
+    "verify/semantic_core_v2/rulepacks/*.json",
+    "schemas/*.json",
+]
 
 [tool.ruff.lint.per-file-ignores]
 "contexttrace/verify/facts.py" = ["F601"]

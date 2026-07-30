@@ -1,0 +1,18 @@
+{
+  "id": "generic_v2",
+  "version": "generic-v2.0.0",
+  "status": "frozen_before_untouched_result_access",
+  "scope": [
+    "exact_surface_support",
+    "material_fact_coverage",
+    "numeric_date_version_conflict",
+    "explicit_negation_and_polarity",
+    "low_overlap_rejection",
+    "selective_nli_routing"
+  ],
+  "principles": {
+    "weak_overlap_never_high_confidence_green": true,
+    "unresolved_route_disagreement_abstains": true,
+    "truth_is_not_inferred_from_grounding": true
+  }
+}
