@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0",
+  "record_kind": "contexttrace_cain2027_semantic_core_v2_dependency_lock",
+  "locked_at": "2026-07-30T01:19:38Z",
+  "status": "frozen_before_sealed_evaluation",
+  "runtime": {
+    "python": "3.14.6",
+    "implementation": "CPython",
+    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+    "contexttrace_source_project_version": "1.1.0rc1",
+    "contexttrace_pyproject_sha256": "b526faa681adc21b3231b9954c42ebc544b367da6f6d7316358cd939c05b5ed7"
+  },
+  "packages": {
+    "jsonschema": "4.26.0",
+    "numpy": "2.5.0",
+    "pytest": "9.1.1",
+    "ruff": "0.15.22",
+    "safetensors": "0.8.0",
+    "tokenizers": "0.22.2",
+    "torch": "2.13.0",
+    "transformers": "5.14.1"
+  },
+  "nli": {
+    "model_id": "cross-encoder/nli-deberta-v3-small",
+    "model_revision": "fa2804872c3b4bd748f38c0185cc85775361e735",
+    "license": "Apache-2.0",
+    "backend": "transformers",
+    "numerical_precision": "float32",
+    "max_length": 512,
+    "artifact_manifest_sha256": "330f0fd77aad129877e1a1a90d4a77e6f093ee238b97d535202816a116b9c9f3",
+    "files": [
+      {
+        "path": "README.md",
+        "bytes": 2864,
+        "sha256": "a9aa108025ad1984374c5e80365406bafe331aea5abc30239e1796ec0a7c267d"
+      },
+      {
+        "path": "added_tokens.json",
+        "bytes": 26,
+        "sha256": "a4b6bfe668f2b3cf6f0cd535e98a0663d2d0d4a4a15f13075ad3597d33985a23"
+      },
+      {
+        "path": "config.json",
+        "bytes": 1052,
+        "sha256": "885d0dceae8fa5c136da9209121ec9eb11160488e840de3bc1f29353674e5712"
+      },
+      {
+        "path": "model.safetensors",
+        "bytes": 567605820,
+        "sha256": "ebc79588dd73ccfb6a3f6078519cfbf512c5305384c5ea1845bc71cd32216e86"
+      },
+      {
+        "path": "special_tokens_map.json",
+        "bytes": 301,
+        "sha256": "ed7c099c988dbb414b18a6980d20cb57b91b7cd119f6f6941eb364b0e892e712"
+      },
+      {
+        "path": "spm.model",
+        "bytes": 2464616,
+        "sha256": "c679fbf93643d19aab7ee10c0b99e460bdbc02fedf34b92b05af343b4af586fd"
+      },
+      {
+        "path": "tokenizer.json",
+        "bytes": 8656624,
+        "sha256": "5124ef2ead1a10a717703bc436de7f353da76d6340e4587719b42b1693707964"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "bytes": 1346,
+        "sha256": "f3eecd07c370ef0bf7dd3780d3cd68cf9c8b00c267e21a208ddcd8f82bfec1a6"
+      }
+    ],
+    "automatic_download_permitted": false,
+    "remote_inference_permitted": false
+  },
+  "payload_sha256": "955aad6bf653212372d9a768fe1e0dd94c8af565ae41cea93ee20630c8a2c127"
+}

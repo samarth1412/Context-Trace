@@ -1,0 +1,133 @@
+{
+  "schema_version": "1.0",
+  "record_kind": "contexttrace_cain2027_semantic_core_v2_implementation_lock",
+  "locked_at": "2026-07-30T01:19:38Z",
+  "status": "gate_e_implementation_frozen_untouched_evaluation_not_started",
+  "implementation": {
+    "verifier_version": "semantic_core_v2",
+    "schema_version": "2.0",
+    "taxonomy_version": "contexttrace-diagnosis-v2.0",
+    "git_commit": "9d82014c6753eca2f8ed4ae0eac746b129a1c54e",
+    "source_manifest_sha256": "0abd8c25ad417ee0ac84e04ae0989dd9066fdbe3390d323875bf483e14cb4d70",
+    "source_archive": {
+      "private_path": ".tmp-contexttrace-research-locks/semantic_core_v2-9d82014.tar.gz",
+      "bytes": 22378,
+      "sha256": "27469c537f3c13ff639970aadc0317df4c583b203e3e905e161d544f64f79f3f"
+    }
+  },
+  "source_manifest": [
+    {
+      "path": "packages/contexttrace/contexttrace/schemas/claim-verification-v2.schema.json",
+      "bytes": 11003,
+      "sha256": "ea217b6fa18b2e65721d60e5691c52d74b13cea742c532a4100fed968407933a"
+    },
+    {
+      "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/__init__.py",
+      "bytes": 1286,
+      "sha256": "5e44635a8ecfeff271ba74936ebd328719a0d37068bb3f37d2dba02ca7edc6ed"
+    },
+    {
+      "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/cascade.py",
+      "bytes": 12054,
+      "sha256": "59b320f313e501df9c91802aacd22154dcf984cb48dfea1fc3ff0204a289fd7c"
+    },
+    {
+      "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/citations.py",
+      "bytes": 2652,
+      "sha256": "7d6b7adf1df8f8710b6521f39c439b1f4a6c9955b6e37e320641429f6ef5fdca"
+    },
+    {
+      "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/claims.py",
+      "bytes": 4251,
+      "sha256": "d68e7f6dd7bf84d39f8a3612c8e465ec108f8ee8b1ea11ea8dfc2269c29fd4c3"
+    },
+    {
+      "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/constants.py",
+      "bytes": 2920,
+      "sha256": "346c71a9b2f2603af23d16e3facb9424b7306485fc2f9066225db14a60c40eb6"
+    },
+    {
+      "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/diagnosis.py",
+      "bytes": 4874,
+      "sha256": "9ef58d163e80abf8c8ca3eed83475c7ffab8d32cb4a1ed39e9e6b81790cdb1a0"
+    },
+    {
+      "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/limits.py",
+      "bytes": 2915,
+      "sha256": "ca85b7b3fcd96af7dbe8a4c5bb8713aa04073015c6926edd9d559c14885e5abc"
+    },
+    {
+      "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/nli.py",
+      "bytes": 2975,
+      "sha256": "e0e589edbfafb8bccb3a4f74954e25438ec9dfff7db22a8000980e13f5d30502"
+    },
+    {
+      "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/profile.py",
+      "bytes": 3337,
+      "sha256": "c90033a24da76012d5e8c8c71f56dfe256350bf09a5824701cf20aecae402614"
+    },
+    {
+      "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/rulepacks/generic_v2.json",
+      "bytes": 496,
+      "sha256": "2436e24eca69cf38fb3ff9e27efae18b2ba2fb684913121895d7b55f12e7c2cb"
+    },
+    {
+      "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/rulepacks/source_condition_v2.json",
+      "bytes": 504,
+      "sha256": "763435a84d1e241f3da6651651b34f0c78a3d5a7743b2d677a84ee88e1a36f4a"
+    },
+    {
+      "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/rulepacks.py",
+      "bytes": 881,
+      "sha256": "a5070350b76f54e0cecc01dbfb5f31628f0708b2669d73b0688088c6a439c704"
+    },
+    {
+      "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/runner.py",
+      "bytes": 11279,
+      "sha256": "ea284fc627e0d87b048b348376ebe1c4b309af205f7eccebccfc4b59b179e45f"
+    },
+    {
+      "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/schema.py",
+      "bytes": 438,
+      "sha256": "443aa683e1343c61401f467189fe55f8e54af35e9f6a5da2fdd27591a6b558a0"
+    },
+    {
+      "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/source.py",
+      "bytes": 6555,
+      "sha256": "063be4047437fad5b56966de9ba5fa7d4705f2eada056db67371e6292c870b66"
+    }
+  ],
+  "frozen_boundaries": {
+    "semantic_v1_calibrated_facts_sha256": "4fa507db2126423c8d0787811e78d0d6ffecf5d7603828b6a6d9b23ca8207bc4",
+    "candidate_output_schema_sha256": "ea217b6fa18b2e65721d60e5691c52d74b13cea742c532a4100fed968407933a",
+    "selective_profile_sha256": "036b8d1c02c101aceb00ee3fee67dda60d58c9dfece09ab524832ae164057511",
+    "generic_rulepack_sha256": "2436e24eca69cf38fb3ff9e27efae18b2ba2fb684913121895d7b55f12e7c2cb",
+    "source_condition_rulepack_sha256": "763435a84d1e241f3da6651651b34f0c78a3d5a7743b2d677a84ee88e1a36f4a",
+    "nli_artifact_manifest_sha256": "330f0fd77aad129877e1a1a90d4a77e6f093ee238b97d535202816a116b9c9f3",
+    "frozen_unlabeled_manifest_payload_sha256": "8bf65cd7e2c95ccfcc12e78b580fc47e4157b0f808ba3fcace0a24bfcdc2e5f6",
+    "phase4_baseline_version_lock_file_sha256": "01671f2962b2ce28a0f9e6e5cea6c83d1b815cc53d5976f0bc18351a8a7f66b5"
+  },
+  "development_boundary": {
+    "permitted": [
+      "general_linguistic_principles",
+      "public_documentation",
+      "existing_calibration_data",
+      "excluded_pilot_data",
+      "synthetic_unit_and_adversarial_fixtures"
+    ],
+    "untouched_labels_accessed": false,
+    "untouched_results_inspected": false,
+    "sealed_evaluation_started": false
+  },
+  "validation": {
+    "focused_v2_tests_passed": 29,
+    "focused_v2_plus_lock_tests_passed": 39,
+    "focused_v1_v2_compatibility_tests_passed": 46,
+    "full_contexttrace_plus_unseen_v1_tests_passed": 533,
+    "ruff": "passed",
+    "package_build": "passed",
+    "wheel_contains_v2_schema_and_rulepacks": true,
+    "real_pinned_nli_smoke_test": "passed_on_synthetic_development_fixture"
+  },
+  "payload_sha256": "2d854e5c4caddef1a3fe7122428f45fe35e8803fb6dd1864cc44a19573e5dcb2"
+}

@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "record_kind": "contexttrace_cain2027_semantic_core_v2_ablation_config",
+  "locked_at": "2026-07-30T01:19:38Z",
+  "status": "frozen_not_executed",
+  "implementation_commit": "9d82014c6753eca2f8ed4ae0eac746b129a1c54e",
+  "implementation_source_manifest_sha256": "0abd8c25ad417ee0ac84e04ae0989dd9066fdbe3390d323875bf483e14cb4d70",
+  "candidate_profile": {
+    "id": "selective_v2",
+    "sha256": "036b8d1c02c101aceb00ee3fee67dda60d58c9dfece09ab524832ae164057511"
+  },
+  "ablations": [
+    {
+      "id": "deterministic_only",
+      "profile_id": "deterministic_only_v2",
+      "profile_sha256": "1fd80d46a0c37b9167e68f6f0c349e9addae79d92ead50f024d49bbc45dc00b2",
+      "single_change": "disable_nli_unresolved_cases_abstain"
+    },
+    {
+      "id": "forced_classification",
+      "profile_id": "forced_classification_v2",
+      "profile_sha256": "45dee080c92c118a18ccd19c0cf379bcc57f69c13ce0db7c11a8e75ac82f2010",
+      "single_change": "disable_final_diagnostic_abstention"
+    },
+    {
+      "id": "no_source_condition",
+      "profile_id": "no_source_condition_v2",
+      "profile_sha256": "85afab361d781339ffbe5b8eb02b8d87ad09c89bbea4d4c2b49799ac216c6ea9",
+      "single_change": "mask_source_freshness_authority_and_canonicality"
+    },
+    {
+      "id": "no_citation_features",
+      "profile_id": "no_citation_features_v2",
+      "profile_sha256": "3cf75107e945dc1a0873df5591f074777f95ad1bed91b8f821024c86a22b8b9d",
+      "single_change": "mask_citation_target_features"
+    },
+    {
+      "id": "no_route_disagreement",
+      "profile_id": "no_route_disagreement_v2",
+      "profile_sha256": "d7296adebb3206a40ed590deeb96fd37662e0e78716869c557b3eda7c07fabd2",
+      "single_change": "use_deterministic_result_on_nli_disagreement"
+    }
+  ],
+  "rules": {
+    "same_case_ids_required": true,
+    "same_candidate_inputs_required": true,
+    "same_code_revision_required": true,
+    "manual_output_edits_permitted": false,
+    "gold_labels_permitted_as_input": false
+  },
+  "payload_sha256": "15ddb5b471af8385b75edfa282e39c8a080dd6af6df461b43613f0c5a1e89880"
+}

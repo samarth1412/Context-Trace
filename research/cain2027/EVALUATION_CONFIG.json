@@ -1,0 +1,102 @@
+{
+  "schema_version": "1.0",
+  "record_kind": "contexttrace_cain2027_locked_evaluation_config",
+  "locked_at": "2026-07-30T01:19:38Z",
+  "status": "configured_not_authorized_not_executed",
+  "dataset": {
+    "id": "ContextTrace-Unseen-v1",
+    "case_count": 493,
+    "natural_ood_count": 393,
+    "temporal_source_condition_count": 100,
+    "frozen_manifest_payload_sha256": "8bf65cd7e2c95ccfcc12e78b580fc47e4157b0f808ba3fcace0a24bfcdc2e5f6",
+    "frozen_manifest_file_sha256": "6b1b48ed4ed8bc9b4966b9218b77406b2d925ae1b6d8991f630726415c5c01e4"
+  },
+  "candidate_system": {
+    "verifier_version": "semantic_core_v2",
+    "implementation_commit": "9d82014c6753eca2f8ed4ae0eac746b129a1c54e",
+    "implementation_source_manifest_sha256": "0abd8c25ad417ee0ac84e04ae0989dd9066fdbe3390d323875bf483e14cb4d70",
+    "profile_id": "selective_v2",
+    "profile_sha256": "036b8d1c02c101aceb00ee3fee67dda60d58c9dfece09ab524832ae164057511",
+    "output_schema": "claim-verification-v2.schema.json",
+    "output_schema_sha256": "ea217b6fa18b2e65721d60e5691c52d74b13cea742c532a4100fed968407933a",
+    "taxonomy_version": "contexttrace-diagnosis-v2.0",
+    "claim_unitizer_version": "claim-unitizer-v2.0.0",
+    "confidence_semantics": "estimated_probability_that_the_emitted_diagnosis_is_correct"
+  },
+  "predecessor": {
+    "verifier_version": "semantic_v1_calibrated",
+    "facts_source_sha256": "4fa507db2126423c8d0787811e78d0d6ffecf5d7603828b6a6d9b23ca8207bc4",
+    "paired_identical_case_ids_required": true
+  },
+  "thresholds": {
+    "deterministic_accept_confidence": 0.86,
+    "deterministic_strong_support_score": 0.68,
+    "deterministic_exact_support_score": 0.62,
+    "deterministic_conflict_score": 0.30,
+    "deterministic_unsupported_score": 0.18,
+    "nli_entailment_confidence": 0.80,
+    "nli_contradiction_confidence": 0.80,
+    "nli_neutral_confidence": 0.70,
+    "green_confidence": 0.90,
+    "low_authority_score": 0.40,
+    "high_authority_score": 0.85
+  },
+  "limits": {
+    "max_query_chars": 4096,
+    "max_answer_chars": 16384,
+    "max_contexts": 20,
+    "max_context_chars": 16384,
+    "max_total_context_chars": 65536,
+    "max_claims": 64,
+    "max_nli_spans": 3,
+    "max_nli_span_chars": 1600,
+    "max_nli_length": 512,
+    "max_workers": 4
+  },
+  "execution": {
+    "one_time_sealed_run": true,
+    "fail_closed_on_hash_mismatch": true,
+    "transport_retries": 0,
+    "remote_model_calls_permitted": false,
+    "gold_labels_permitted_as_system_input": false,
+    "implementation_team_gold_access_permitted": false,
+    "raw_predictions_preserved_before_scoring": true,
+    "manual_prediction_edits_permitted": false
+  },
+  "primary_metrics": [
+    "failure_label_macro_f1",
+    "root_cause_accuracy",
+    "unverifiable_f1",
+    "dangerous_false_green_rate",
+    "evidence_span_token_f1",
+    "evidence_span_character_iou",
+    "expected_calibration_error",
+    "risk_coverage_aurc",
+    "latency_p50_ms",
+    "latency_p95_ms",
+    "nli_invocation_rate"
+  ],
+  "statistical_analysis": {
+    "seed": 20271030,
+    "bootstrap_replicates": 10000,
+    "bootstrap_cluster": "source_family",
+    "bootstrap_strata": [
+      "track",
+      "domain"
+    ],
+    "confidence_interval": "percentile_2.5_97.5",
+    "paired_randomization_replicates": 100000,
+    "holm_familywise_alpha": 0.05,
+    "ece_bins": 15,
+    "statistical_plan_sha256": "d800a8a96d7894db285da52237ea420e402829717d435886e0ce0ac8969c7328",
+    "claim_policy_sha256": "f521e4f61aad932949990b7c6cbeaa24323ac0ac1f76cb2e611ddc96294568ae"
+  },
+  "success_gates": {
+    "root_cause_accuracy_minimum": 0.75,
+    "unverifiable_f1_minimum": 0.60,
+    "failure_label_macro_f1_delta_over_v1_minimum": 0.15,
+    "dangerous_false_green_rate_maximum": 0.02,
+    "nli_invocation_rate_maximum": 0.40
+  },
+  "payload_sha256": "ed6be19ec12570f189c9c5999ac2e777d4b68b0f6fa9cf237281dd74ed726441"
+}
