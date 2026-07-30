@@ -1,0 +1,11 @@
+CONTEXTTRACE MODEL-FIRST REVIEW ATTESTATION
+
+You attest that you reviewed every claim and field in all 60 production files.
+You changed any model-drafted value you disagreed with and accept the remaining
+values as your reviewed judgments.
+
+You did not inspect ContextTrace predictions, Phase 6 case-level results, or
+Sid's submission during review.
+
+Name/signature:
+Date:
