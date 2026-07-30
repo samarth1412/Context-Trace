@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
@@ -139,7 +140,7 @@ def _response_schema() -> dict[str, Any]:
         "type": "object",
         "additionalProperties": False,
         "required": [
-            "claim_text",
+            "claim_index",
             "claim_verdict",
             "failure_label",
             "secondary_failure_labels",
@@ -155,7 +156,7 @@ def _response_schema() -> dict[str, Any]:
             "rationale",
         ],
         "properties": {
-            "claim_text": {"type": "string", "minLength": 1},
+            "claim_index": {"type": "integer", "minimum": 1},
             "claim_verdict": {"enum": VERDICTS},
             "failure_label": {"enum": FAILURES},
             "secondary_failure_labels": {
@@ -193,6 +194,39 @@ def _response_schema() -> dict[str, Any]:
     }
 
 
+def _candidate_claims(answer: str) -> list[dict[str, Any]]:
+    candidates: list[dict[str, Any]] = []
+    boundary = re.compile(r"(?<=[.!?])\s+(?=[A-Z0-9`\"“\[])")
+    for line_match in re.finditer(r"[^\n]+", answer):
+        raw_line = line_match.group(0)
+        left_trimmed = raw_line.lstrip()
+        leading = len(raw_line) - len(left_trimmed)
+        text = left_trimmed.rstrip()
+        if not text:
+            continue
+        line_start = line_match.start() + leading
+        cursor = 0
+        for match in boundary.finditer(text):
+            segment = text[cursor : match.start()].strip()
+            if segment:
+                start = line_start + cursor
+                while answer[start].isspace():
+                    start += 1
+                end = start + len(segment)
+                candidates.append({"text": answer[start:end], "start": start, "end": end})
+            cursor = match.end()
+        segment = text[cursor:].strip()
+        if segment:
+            start = line_start + cursor
+            while answer[start].isspace():
+                start += 1
+            end = start + len(segment)
+            candidates.append({"text": answer[start:end], "start": start, "end": end})
+    for index, candidate in enumerate(candidates, start=1):
+        candidate["claim_index"] = index
+    return candidates
+
+
 def _prompt(case: Mapping[str, Any], trace: Mapping[str, Any]) -> str:
     selected = set(trace["selected_context_ids"])
     chunks = [
@@ -213,6 +247,10 @@ def _prompt(case: Mapping[str, Any], trace: Mapping[str, Any]) -> str:
     materials = {
         "query": trace["query"],
         "answer": trace["answer"],
+        "candidate_claims": [
+            {"claim_index": item["claim_index"], "text": item["text"]}
+            for item in _candidate_claims(str(trace["answer"]))
+        ],
         "resolved_citations": trace["citations"],
         "selected_chunks": chunks,
         "unselected_retrieved_chunk_ids": unselected_ids,
@@ -224,9 +262,11 @@ review. Use only the supplied materials. Do not assume that inline bracket text
 is a resolved citation; only `resolved_citations` establishes resolution.
 
 Rules:
-- Split every factual answer assertion into atomic claims. `claim_text` must be
-  copied exactly and contiguously from `answer`; never paraphrase it.
-- Claims must be in answer order, must not overlap, and must not be duplicated.
+- Label every factual assertion represented in `candidate_claims`. Return its
+  integer `claim_index`; do not rewrite claim text. Omit only headings,
+  greetings, and pure transitions. Pul may split a candidate more finely during
+  review.
+- Claims must be in candidate order and must not be duplicated.
 - Ignore headings, greetings, and pure transitions rather than inventing claims.
 - `supported` requires complete entailment by selected evidence.
 - Use `partially_supported` when a material qualifier or component is missing.
@@ -289,40 +329,6 @@ def _ollama(prompt: str, *, endpoint: str) -> dict[str, Any]:
         )
     }
     return parsed
-
-
-def _answer_offsets(answer: str, claims: Sequence[Mapping[str, Any]]) -> list[tuple[int, int]]:
-    offsets: list[tuple[int, int]] = []
-    occupied: list[tuple[int, int]] = []
-    for claim in claims:
-        text = str(claim["claim_text"])
-        matches: list[int] = []
-        start = 0
-        while True:
-            position = answer.find(text, start)
-            if position < 0:
-                break
-            matches.append(position)
-            start = position + 1
-        available = [
-            position
-            for position in matches
-            if not any(
-                position < prior_end and position + len(text) > prior_start
-                for prior_start, prior_end in occupied
-            )
-        ]
-        if len(available) != 1:
-            raise PacketError(
-                f"Claim text must have one unused exact answer match: {text!r}"
-            )
-        position = available[0]
-        value = (position, position + len(text))
-        occupied.append(value)
-        offsets.append(value)
-    if sorted(offsets) != offsets:
-        raise PacketError("Model claims are not in answer order.")
-    return offsets
 
 
 def _evidence_span(
@@ -390,19 +396,28 @@ def _case_fragment(
     if not isinstance(raw_claims, list) or not raw_claims:
         raise PacketError("Model draft contains no claims.")
     claims: list[Mapping[str, Any]] = []
-    seen_claim_text: set[str] = set()
+    seen_claim_indices: set[int] = set()
     for claim in raw_claims:
-        claim_text = str(claim["claim_text"])
-        if claim_text in seen_claim_text:
+        claim_index = int(claim["claim_index"])
+        if claim_index in seen_claim_indices:
             continue
-        seen_claim_text.add(claim_text)
+        seen_claim_indices.add(claim_index)
         claims.append(claim)
-    offsets = _answer_offsets(str(trace["answer"]), claims)
-    built: list[dict[str, Any]] = []
-    for index, (claim, (answer_start, answer_end)) in enumerate(
-        zip(claims, offsets, strict=True),
-        start=1,
+    candidates = {
+        int(item["claim_index"]): item
+        for item in _candidate_claims(str(trace["answer"]))
+    }
+    if any(int(claim["claim_index"]) not in candidates for claim in claims):
+        raise PacketError("Model returned an unknown candidate claim index.")
+    if [int(claim["claim_index"]) for claim in claims] != sorted(
+        int(claim["claim_index"]) for claim in claims
     ):
+        raise PacketError("Model claims are not in candidate order.")
+    built: list[dict[str, Any]] = []
+    for output_index, claim in enumerate(claims, start=1):
+        candidate = candidates[int(claim["claim_index"])]
+        answer_start = int(candidate["start"])
+        answer_end = int(candidate["end"])
         evidence_spans = [
             _evidence_span(
                 evidence,
@@ -439,8 +454,8 @@ def _case_fragment(
             raise PacketError("Secondary root cause repeats primary.")
         built.append(
             {
-                "claim_id": f"{case['case_id']}/claim-{index:03d}",
-                "claim_text": claim["claim_text"],
+                "claim_id": f"{case['case_id']}/claim-{output_index:03d}",
+                "claim_text": candidate["text"],
                 "answer_start": answer_start,
                 "answer_end": answer_end,
                 "propositional": True,
