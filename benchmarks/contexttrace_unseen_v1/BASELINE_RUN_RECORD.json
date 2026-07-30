@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0",
+  "record_kind": "contexttrace_unseen_v1_baseline_run_record",
+  "dataset_id": "ContextTrace-Unseen-v1",
+  "completed_at": "2026-07-30T00:55:00Z",
+  "status": "phase4_local_baseline_runs_complete_private_unscored",
+  "frozen_manifest_payload_sha256": "8bf65cd7e2c95ccfcc12e78b580fc47e4157b0f808ba3fcace0a24bfcdc2e5f6",
+  "case_count": 493,
+  "gold_labels_accessed": false,
+  "annotation_files_accessed": false,
+  "evaluation_metrics_computed": false,
+  "manual_output_edits": false,
+  "total_remote_calls": 0,
+  "total_remote_cost_usd": 0.0,
+  "private_output_root": ".tmp-contexttrace-unseen-v1-baselines",
+  "runs": [
+    {
+      "baseline_id": "semantic_v1_calibrated",
+      "execution_class": "local_deterministic",
+      "case_count": 493,
+      "model_calls": 0,
+      "cost_usd": 0.0,
+      "raw_output_path": "runs/semantic_v1_calibrated/raw-output.json",
+      "raw_output_file_sha256": "c80b2f3bcd9e0806b627b480398d8d536fb6f94ed86de6c3c87eaf0abb752064",
+      "raw_output_bytes": 49319045,
+      "run_payload_sha256": "f8fbbfeba47168d58be78f2019678f3169250586502e4bcd745b7882ebf1e941"
+    },
+    {
+      "baseline_id": "lexical_evidence_overlap_v1",
+      "execution_class": "local_deterministic",
+      "case_count": 493,
+      "model_calls": 0,
+      "cost_usd": 0.0,
+      "raw_output_path": "runs/lexical_evidence_overlap_v1/raw-output.json",
+      "raw_output_file_sha256": "1adfb1fae0ef87458d1300012faf59fec0c52b5b432c0ee23b04c0ab1518380d",
+      "raw_output_bytes": 1752266,
+      "run_payload_sha256": "d2e37336f45cc8b0d67f15aac37ed4f3761be3ca5d58623c805cb2fb3e5e21c9"
+    },
+    {
+      "baseline_id": "minilm_cosine_support_v1",
+      "execution_class": "local_model",
+      "case_count": 493,
+      "model_calls": 493,
+      "cost_usd": 0.0,
+      "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+      "model_revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+      "raw_output_path": "runs/minilm_cosine_support_v1/raw-output.json",
+      "raw_output_file_sha256": "3e2747cc5dde6d00f28ed9c4b4622c22a5c2ff02e223e675b08c6b3addbd710c",
+      "raw_output_bytes": 997831,
+      "run_payload_sha256": "7398d14f26c1650d7f86946cc6a827fb97fd9b1f06b9ae87e42d7fdc3bbf0805"
+    }
+  ],
+  "not_run": [
+    {
+      "baseline_id": "ragas_0_4_3",
+      "reason": "judge model, dated API revision, and cost authorization are absent"
+    },
+    {
+      "baseline_id": "deepeval_4_1_4",
+      "reason": "judge model, dated API revision, and cost authorization are absent"
+    },
+    {
+      "baseline_id": "ragchecker_0_1_9",
+      "reason": "ground-truth answer is unavailable outside the sealed scoring zone"
+    },
+    {
+      "baseline_id": "ragxplain_paper_2505_13538",
+      "reason": "no reproducible package or source artifact identity is frozen"
+    },
+    {
+      "baseline_id": "trail_paper_2505_08638",
+      "reason": "deferred secondary agent-trace transfer study"
+    },
+    {
+      "baseline_id": "generic_llm_judge_v1",
+      "reason": "judge model, dated API revision, and cost authorization are absent"
+    }
+  ],
+  "record_payload_sha256": "7bd323e15c8c7428b3f6dd6780345a824431c0c7d7be67d3675fd3357154dbbe"
+}
