@@ -97,6 +97,34 @@ def verify_implementation_sources(
         raise EvaluationIntegrityError("Implementation source-manifest hash mismatch.")
 
 
+def verify_tooling_sources(
+    repository_root: Path,
+    tooling_lock: Mapping[str, Any],
+) -> None:
+    manifest = tooling_lock.get("source_manifest")
+    if not isinstance(manifest, list) or not manifest:
+        raise EvaluationIntegrityError("Phase 6 tooling source manifest is absent.")
+    rows: list[dict[str, Any]] = []
+    root = repository_root.resolve()
+    for raw in manifest:
+        if not isinstance(raw, Mapping):
+            raise EvaluationIntegrityError("Phase 6 tooling source row is invalid.")
+        relative = Path(str(raw.get("path") or ""))
+        target = (root / relative).resolve()
+        if root != target and root not in target.parents:
+            raise EvaluationIntegrityError("Phase 6 tooling path escapes repository.")
+        digest = file_sha256(target)
+        size = target.stat().st_size
+        if digest != raw.get("sha256") or size != raw.get("bytes"):
+            raise EvaluationIntegrityError(
+                f"Frozen Phase 6 source changed: {relative}."
+            )
+        rows.append({"path": relative.as_posix(), "bytes": size, "sha256": digest})
+    expected = tooling_lock.get("tooling", {}).get("source_manifest_sha256")
+    if canonical_sha256(rows) != expected:
+        raise EvaluationIntegrityError("Phase 6 source-manifest hash mismatch.")
+
+
 def verify_phase6_locks(repository_root: Path) -> dict[str, dict[str, Any]]:
     research_root = repository_root / "research" / "cain2027"
     names = {
@@ -112,6 +140,9 @@ def verify_phase6_locks(repository_root: Path) -> dict[str, dict[str, Any]]:
     for record in records.values():
         verify_payload_hash(record)
     verify_implementation_sources(repository_root, records["implementation"])
+    tooling_lock = load_json_object(research_root / "PHASE6_TOOLING_LOCK.json")
+    verify_payload_hash(tooling_lock)
+    verify_tooling_sources(repository_root, tooling_lock)
     baseline_record = load_json_object(
         repository_root / "benchmarks/contexttrace_unseen_v1/BASELINE_RUN_RECORD.json"
     )
@@ -173,6 +204,7 @@ def verify_phase6_locks(repository_root: Path) -> dict[str, dict[str, Any]]:
         "baseline_run": baseline_record,
         "dataset_freeze": dataset_freeze,
         "phase3": phase3_lock,
+        "phase6_tooling": tooling_lock,
     }
 
 
