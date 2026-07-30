@@ -1,6 +1,6 @@
-# ContextTrace 60-case human-audit decision rule
+# ContextTrace 60-case annotation-audit decision rule
 
-Frozen before human annotations exist: 2026-07-30
+Frozen before independent annotations exist: 2026-07-30
 
 This is a recovery decision after the invalid LLM-first gold was disclosed. It
 is not a preregistered confirmatory hypothesis and cannot restore untouched
@@ -11,7 +11,7 @@ status.
 The audit is usable only if:
 
 - Pul and Sid both complete all 60 production cases;
-- both sign the human-only attestation;
+- both sign the annotation attestation;
 - neither uses an LLM, system predictions, Phase 6 results, web search, or the
   other submission before both originals are hashed;
 - both original submissions are preserved;
@@ -22,7 +22,7 @@ The audit is usable only if:
 ## Go/no-go rule
 
 Collect a new untouched corpus only if the frozen `semantic_core_v2` reaches
-all four feasibility points against the human consensus labels:
+all four feasibility points against the consensus labels:
 
 | Endpoint | Feasibility point |
 | --- | ---: |
@@ -42,7 +42,7 @@ frozen gates.
 ## Outcomes
 
 - If every feasibility point is met: acquire a genuinely new untouched corpus,
-  freeze it before candidate execution, and use independent human annotation
+  freeze it before candidate execution, and use independent annotation
   from the start.
 - If any point is missed: do not collect another test corpus yet. Diagnose and
   improve only on a separate development corpus, then freeze a new verifier

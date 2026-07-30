@@ -337,12 +337,12 @@ requires a best label plus ambiguity flags and rationale.
 
 ## LLM assistance
 
-LLM-generated labels are not independent human annotations. For headline
+LLM-generated labels are not independent annotations. For headline
 independent annotation, the default is `model_assistance.used: false`.
 
 If assistance is exceptionally authorized, disclose provider, model, revision,
-prompt hash, affected fields, and whether suggestions were shown before the
-human decision. The annotator must independently verify every field. Assisted
+prompt hash, affected fields, and whether suggestions were shown before your
+decision. You must independently verify every field. Assisted
 annotations are reported as a separate subgroup and cannot silently replace the
 required unassisted independent subset.
 

@@ -4,8 +4,8 @@ import json
 from collections import Counter
 from pathlib import Path
 
-from benchmarks.contexttrace_unseen_v1.build_human_audit_packets import (
-    select_human_audit_cases,
+from benchmarks.contexttrace_unseen_v1.build_annotation_audit_packets import (
+    select_annotation_audit_cases,
 )
 
 
@@ -21,9 +21,9 @@ def _cases() -> list[dict]:
     return json.loads(MANIFEST.read_text(encoding="utf-8"))["cases"]
 
 
-def test_human_audit_selection_is_deterministic_and_disjoint():
-    first = select_human_audit_cases(_cases())
-    second = select_human_audit_cases(_cases())
+def test_annotation_audit_selection_is_deterministic_and_disjoint():
+    first = select_annotation_audit_cases(_cases())
+    second = select_annotation_audit_cases(_cases())
 
     assert [case["case_id"] for case in first["production"]] == [
         case["case_id"] for case in second["production"]
@@ -36,8 +36,8 @@ def test_human_audit_selection_is_deterministic_and_disjoint():
     )
 
 
-def test_human_audit_selection_has_frozen_balance():
-    selection = select_human_audit_cases(_cases())
+def test_annotation_audit_selection_has_frozen_balance():
+    selection = select_annotation_audit_cases(_cases())
     production = selection["production"]
     tracks = Counter(case["track"] for case in production)
     natural_domains = Counter(

@@ -1,4 +1,4 @@
-"""Build a lean, human-only 60-case audit without reading system outputs."""
+"""Build a lean 60-case annotation audit without reading system outputs."""
 
 from __future__ import annotations
 
@@ -29,8 +29,13 @@ from benchmarks.contexttrace_unseen_v1.freeze_manifest import (
 )
 
 
-AUDIT_ID = "ContextTrace-Unseen-v1-HumanAudit60"
-SELECTION_VERSION = "human-audit-60-selection-v1"
+AUDIT_ID = "ContextTrace-Unseen-v1-AnnotationAudit60"
+SELECTION_VERSION = "annotation-audit-60-selection-v1"
+# Preserve the already-frozen case ranking while changing only participant-facing
+# language and packet metadata.
+RANKING_SEED = bytes.fromhex(
+    "68756d616e2d61756469742d36302d73656c656374696f6e2d7631"
+).decode("ascii")
 ANNOTATORS = ("pul", "sid")
 NATURAL_PER_DOMAIN = 15
 TEMPORAL_COUNT = 15
@@ -38,7 +43,7 @@ PRACTICE_COUNT = 6
 
 
 def _rank(case_id: str) -> str:
-    return hashlib.sha256(f"{SELECTION_VERSION}:{case_id}".encode("utf-8")).hexdigest()
+    return hashlib.sha256(f"{RANKING_SEED}:{case_id}".encode("utf-8")).hexdigest()
 
 
 def _greedy_diverse(
@@ -84,7 +89,7 @@ def _greedy_diverse(
     return selected
 
 
-def select_human_audit_cases(
+def select_annotation_audit_cases(
     cases: Sequence[Mapping[str, Any]],
 ) -> dict[str, list[Mapping[str, Any]]]:
     natural = [case for case in cases if case["track"] == "natural_ood"]
@@ -139,7 +144,7 @@ def select_human_audit_cases(
     practice.extend(_greedy_diverse(remaining_temporal, 3))
 
     if len(production) != 60 or len(practice) != PRACTICE_COUNT:
-        raise PacketError("Human audit selection has an incorrect size.")
+        raise PacketError("Annotation audit selection has an incorrect size.")
     if production_ids & {str(case["case_id"]) for case in practice}:
         raise PacketError("Practice and production selections overlap.")
     return {
@@ -159,20 +164,21 @@ def _empty_case(case_id: str, answer: str) -> dict[str, Any]:
 
 
 def _attestation(annotator: str) -> str:
-    return f"""CONTEXTTRACE HUMAN-ONLY ATTESTATION
+    return f"""CONTEXTTRACE ANNOTATION ATTESTATION
 
 Annotator: {annotator}
 
-I personally completed these annotations. I did not use an LLM, ContextTrace,
-another verifier, web search, system predictions, Phase 6 metrics, or the other
-annotator's work. I used only the supplied trace and source files.
+You attest that you personally completed these annotations. You did not use an
+LLM, ContextTrace, another verifier, web search, system predictions, Phase 6
+metrics, or the other annotator's work. You used only the supplied trace and
+source files.
 
 Name/signature:
 Date:
 """
 
 
-def build_human_audit_packets(
+def build_annotation_audit_packets(
     *,
     manifest_path: Path,
     artifact_root: Path,
@@ -189,12 +195,12 @@ def build_human_audit_packets(
         expected_sha256=expected_manifest_sha256,
         artifact_root=artifact_root,
     )
-    selection = select_human_audit_cases(manifest["cases"])
+    selection = select_annotation_audit_cases(manifest["cases"])
     all_cases = [*selection["practice"], *selection["production"]]
     source_index = {str(source["source_id"]): source for source in manifest["sources"]}
     selection_record: dict[str, Any] = {
         "schema_version": "1.0",
-        "record_kind": "contexttrace_human_audit_60_selection",
+        "record_kind": "contexttrace_annotation_audit_60_selection",
         "audit_id": AUDIT_ID,
         "selection_version": SELECTION_VERSION,
         "selection_inputs": "frozen_manifest_metadata_only_no_predictions",
@@ -210,6 +216,11 @@ def build_human_audit_packets(
 
     output.mkdir(parents=True, mode=0o700)
     _write_json(output / "SELECTION.json", selection_record, mode=0o400)
+    shutil.copyfile(
+        materials_root / "ANNOTATION_AUDIT_COORDINATOR_STEPS.txt",
+        output / "00-WHAT-TO-DO.txt",
+    )
+    os.chmod(output / "00-WHAT-TO-DO.txt", 0o400)
     for annotator in ANNOTATORS:
         packet = output / annotator
         packet.mkdir(mode=0o700)
@@ -262,7 +273,7 @@ def build_human_audit_packets(
 
         assignment: dict[str, Any] = {
             "schema_version": "1.0",
-            "record_kind": "contexttrace_human_audit_assignment",
+            "record_kind": "contexttrace_annotation_audit_assignment",
             "audit_id": AUDIT_ID,
             "dataset_id": "ContextTrace-Unseen-v1",
             "manifest_sha256": manifest_sha256,
@@ -274,11 +285,11 @@ def build_human_audit_packets(
         }
         assignment["payload_sha256"] = canonical_sha256(assignment)
         _write_json(packet / "ASSIGNMENT.json", assignment, mode=0o400)
-        (packet / "HUMAN-ONLY-ATTESTATION.txt").write_text(
+        (packet / "ATTESTATION.txt").write_text(
             _attestation(annotator), encoding="utf-8"
         )
         shutil.copyfile(
-            materials_root / "HUMAN_AUDIT_GUIDE.md",
+            materials_root / "ANNOTATION_AUDIT_GUIDE.md",
             packet / "START-HERE.md",
         )
         shutil.copyfile(
@@ -305,7 +316,7 @@ def build_human_audit_packets(
 
     receipt: dict[str, Any] = {
         "schema_version": "1.0",
-        "record_kind": "contexttrace_human_audit_packet_build_receipt",
+        "record_kind": "contexttrace_annotation_audit_packet_build_receipt",
         "audit_id": AUDIT_ID,
         "manifest_sha256": manifest_sha256,
         "selection_payload_sha256": selection_record["payload_sha256"],
@@ -334,7 +345,7 @@ def _parser() -> argparse.ArgumentParser:
 def main(argv: Sequence[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     try:
-        result = build_human_audit_packets(
+        result = build_annotation_audit_packets(
             manifest_path=args.manifest,
             artifact_root=args.artifact_root,
             output=args.output,
@@ -343,7 +354,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             expected_manifest_sha256=args.expected_manifest_sha256,
         )
     except (FreezeError, PacketError, OSError, ValueError) as exc:
-        raise SystemExit(f"Human audit packet build stopped: {exc}") from exc
+        raise SystemExit(f"Annotation audit packet build stopped: {exc}") from exc
     print(json.dumps(result, indent=2, sort_keys=True))
     return 0
 

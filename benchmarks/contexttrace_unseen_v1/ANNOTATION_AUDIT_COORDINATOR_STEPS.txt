@@ -1,0 +1,14 @@
+CONTEXTTRACE 60-CASE ANNOTATION — SIMPLE PROCESS
+
+1. Give the complete pul folder only to Pul.
+2. Give the complete sid folder only to Sid.
+3. Tell each annotator: open START-HERE.md and follow it.
+4. Wait until both complete packets are returned.
+5. Give both returned packets to SAR.
+6. SAR hashes and preserves both submissions before comparing them.
+7. SAR computes field-level agreement but does not choose labels.
+8. Pul and Sid then receive only the disagreement items.
+9. Pul and Sid resolve those items together. Any item without agreement remains
+   unresolved.
+
+You do not need to run anything or inspect any annotation.
