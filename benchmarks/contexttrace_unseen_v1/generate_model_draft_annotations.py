@@ -273,7 +273,7 @@ def _evidence_span(
     *,
     trace: Mapping[str, Any],
     source_paths: Mapping[str, Path],
-) -> dict[str, Any]:
+) -> dict[str, Any] | None:
     chunks = {str(chunk["id"]): chunk for chunk in trace["retrieved_chunks"]}
     chunk_id = str(evidence["chunk_id"])
     if chunk_id not in chunks:
@@ -302,9 +302,7 @@ def _evidence_span(
                 if best is None or score > best[0]:
                     best = (score, candidate_id, piece)
         if best is None or best[0] < 0.62:
-            raise PacketError(
-                f"Evidence quote has no reliable exact alignment: {quote!r}"
-            )
+            return None
         _, chunk_id, quote = best
         chunk = chunks[chunk_id]
         chunk_offset = str(chunk["text"]).find(quote)
@@ -382,7 +380,7 @@ def _case_fragment(
         candidate = candidates[int(claim["claim_index"])]
         answer_start = int(candidate["start"])
         answer_end = int(candidate["end"])
-        evidence_spans = [
+        proposed_spans = [
             _evidence_span(
                 evidence,
                 trace=trace,
@@ -390,6 +388,8 @@ def _case_fragment(
             )
             for evidence in claim["evidence"]
         ]
+        evidence_spans = [span for span in proposed_spans if span is not None]
+        dropped_span_count = len(proposed_spans) - len(evidence_spans)
         basis_ids = sorted(
             {span["source_id"] for span in evidence_spans}
             or {
@@ -451,7 +451,10 @@ def _case_fragment(
                     )
                 },
                 "rationale": claim["rationale"],
-                "notes": "MODEL_DRAFT; requires field-by-field Pul review.",
+                "notes": (
+                    "MODEL_DRAFT; requires field-by-field Pul review. "
+                    f"Unaligned evidence suggestions omitted: {dropped_span_count}."
+                ),
             }
         )
     return {
