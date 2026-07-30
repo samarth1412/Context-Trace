@@ -6,6 +6,7 @@ import argparse
 import difflib
 import hashlib
 import json
+import os
 import re
 import urllib.error
 import urllib.request
@@ -549,8 +550,13 @@ def generate(
         "pul_review_complete": False,
     }
     provenance["payload_sha256"] = canonical_sha256(provenance)
-    _write_json(packet / "MODEL_DRAFT_PROVENANCE.json", provenance, mode=0o400)
-    _write_json(packet / "PACKET_MANIFEST.json", _packet_manifest(packet), mode=0o400)
+    provenance_path = packet / "MODEL_DRAFT_PROVENANCE.json"
+    manifest_path = packet / "PACKET_MANIFEST.json"
+    for sealed_path in (provenance_path, manifest_path):
+        if sealed_path.exists():
+            os.chmod(sealed_path, 0o600)
+    _write_json(provenance_path, provenance, mode=0o400)
+    _write_json(manifest_path, _packet_manifest(packet), mode=0o400)
     return provenance
 
 
