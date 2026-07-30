@@ -203,12 +203,19 @@ def _prompt(case: Mapping[str, Any], trace: Mapping[str, Any]) -> str:
             "text": chunk["text"],
         }
         for chunk in trace["retrieved_chunks"]
+        if chunk["id"] in selected
+    ]
+    unselected_ids = [
+        str(chunk["id"])
+        for chunk in trace["retrieved_chunks"]
+        if chunk["id"] not in selected
     ]
     materials = {
         "query": trace["query"],
         "answer": trace["answer"],
         "resolved_citations": trace["citations"],
-        "chunks": chunks,
+        "selected_chunks": chunks,
+        "unselected_retrieved_chunk_ids": unselected_ids,
         "sources": case["sources"],
         "source_condition_pair": case["source_condition_pair"],
     }
@@ -219,6 +226,7 @@ is a resolved citation; only `resolved_citations` establishes resolution.
 Rules:
 - Split every factual answer assertion into atomic claims. `claim_text` must be
   copied exactly and contiguously from `answer`; never paraphrase it.
+- Claims must be in answer order, must not overlap, and must not be duplicated.
 - Ignore headings, greetings, and pure transitions rather than inventing claims.
 - `supported` requires complete entailment by selected evidence.
 - Use `partially_supported` when a material qualifier or component is missing.
@@ -378,9 +386,17 @@ def _case_fragment(
         source_id: packet / str(source["text_path"])
         for source_id, source in source_by_id.items()
     }
-    claims = draft.get("claims")
-    if not isinstance(claims, list) or not claims:
+    raw_claims = draft.get("claims")
+    if not isinstance(raw_claims, list) or not raw_claims:
         raise PacketError("Model draft contains no claims.")
+    claims: list[Mapping[str, Any]] = []
+    seen_claim_text: set[str] = set()
+    for claim in raw_claims:
+        claim_text = str(claim["claim_text"])
+        if claim_text in seen_claim_text:
+            continue
+        seen_claim_text.add(claim_text)
+        claims.append(claim)
     offsets = _answer_offsets(str(trace["answer"]), claims)
     built: list[dict[str, Any]] = []
     for index, (claim, (answer_start, answer_end)) in enumerate(
@@ -491,7 +507,7 @@ def generate(
         prompt_hashes[case_id] = hashlib.sha256(prompt.encode("utf-8")).hexdigest()
         print(f"[{position}/{len(cases)}] {case_id}", flush=True)
         last_error: Exception | None = None
-        for attempt in range(1, 4):
+        for attempt in range(1, 6):
             try:
                 raw = _ollama(prompt, endpoint=endpoint)
                 timestamp = datetime.now(timezone.utc).isoformat()
