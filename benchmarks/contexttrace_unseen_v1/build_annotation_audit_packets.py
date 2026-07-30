@@ -22,6 +22,9 @@ from benchmarks.contexttrace_unseen_v1.build_production_annotation_packets impor
     _source_view,
     _write_json,
 )
+from benchmarks.contexttrace_unseen_v1.build_annotation_workbook import (
+    build_workbook,
+)
 from benchmarks.contexttrace_unseen_v1.freeze_manifest import (
     FreezeError,
     canonical_sha256,
@@ -308,6 +311,10 @@ def build_annotation_audit_packets(
             packet / "CLAIM_POLICY.md",
         ):
             os.chmod(path, 0o400)
+        build_workbook(
+            packet,
+            packet / f"ANNOTATE-{annotator.upper()}.xlsx",
+        )
         _write_json(
             packet / "PACKET_MANIFEST.json",
             _packet_manifest(packet),
