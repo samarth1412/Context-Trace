@@ -7,6 +7,9 @@ from pathlib import Path
 from benchmarks.contexttrace_unseen_v1.build_annotation_audit_packets import (
     select_annotation_audit_cases,
 )
+from benchmarks.contexttrace_unseen_v1.build_simple_rating_workbook import (
+    select_cases as select_simple_rating_cases,
+)
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -57,3 +60,25 @@ def test_annotation_audit_selection_has_frozen_balance():
     }
     assert sorted(pair_types.values()) == [3, 4, 4, 4]
     assert len({case["source_family"] for case in production}) >= 12
+
+
+def test_simple_rating_selection_has_five_cases_per_group():
+    audit_cases = select_annotation_audit_cases(_cases())["production"]
+    first = select_simple_rating_cases(audit_cases)
+    second = select_simple_rating_cases(audit_cases)
+
+    assert [case["case_id"] for case in first] == [
+        case["case_id"] for case in second
+    ]
+    groups = Counter(
+        "temporal_source_condition"
+        if case["track"] == "temporal_source_condition"
+        else case["domain_group"]
+        for case in first
+    )
+    assert groups == {
+        "software_product_documentation": 5,
+        "policy_regulatory": 5,
+        "support_operational": 5,
+        "temporal_source_condition": 5,
+    }
