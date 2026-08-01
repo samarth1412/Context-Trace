@@ -48,6 +48,7 @@ def verify_trace_v2(
     bounded, truncation = apply_limits(trace, limits)
     claims, claim_limit_hit = _claim_unitizer(
         bounded.answer,
+        query=bounded.query,
         max_claims=limits.max_claims,
     )
     insufficient_input = {
@@ -234,6 +235,7 @@ def _verify_claim(
         "nli": cascade.nli,
         "nli_error_code": cascade.nli_error_code,
         "flags": {
+            "query_conditioned_answer_fragment": claim.answer_fragment,
             "weak_lexical_overlap_only": bool(
                 deterministic.verdict == "unverifiable"
                 and deterministic.match.score > 0

@@ -11,6 +11,7 @@ import json
 import math
 import statistics
 import time
+from collections import Counter
 from collections.abc import Callable
 from importlib.metadata import version
 from pathlib import Path
@@ -285,6 +286,11 @@ def _run_contexttrace_candidate(
     nli_invocations = 0
     unresolved_claims = 0
     truncated_cases = 0
+    answer_fragments = 0
+    routes: Counter[str] = Counter()
+    route_reasons: Counter[str] = Counter()
+    deterministic_verdicts: Counter[str] = Counter()
+    nli_verdicts: Counter[str] = Counter()
     for row in candidate_inputs:
         case_id = _row_id(row)
         started = time.perf_counter()
@@ -303,6 +309,23 @@ def _run_contexttrace_candidate(
         nli_invocations += int(summary.get("nli_invocations") or 0)
         unresolved_claims += sum(claim.get("route") == "unresolved" for claim in claims)
         truncated_cases += bool((result.get("truncation") or {}).get("applied"))
+        answer_fragments += sum(
+            bool((claim.get("flags") or {}).get("query_conditioned_answer_fragment"))
+            for claim in claims
+        )
+        routes.update(str(claim.get("route") or "unknown") for claim in claims)
+        route_reasons.update(
+            str(claim.get("route_reason_code") or "unknown") for claim in claims
+        )
+        deterministic_verdicts.update(
+            str((claim.get("deterministic") or {}).get("verdict") or "unknown")
+            for claim in claims
+        )
+        nli_verdicts.update(
+            str((claim.get("nli") or {}).get("verdict") or "unknown")
+            for claim in claims
+            if claim.get("nli")
+        )
         raw_labels = {
             str(claim.get("failure_label"))
             for claim in claims
@@ -346,6 +369,11 @@ def _run_contexttrace_candidate(
         "nli_invocation_rate": _ratio(nli_invocations, total_claims),
         "unresolved_claims": unresolved_claims,
         "unresolved_rate": _ratio(unresolved_claims, total_claims),
+        "query_conditioned_answer_fragments": answer_fragments,
+        "routes": dict(sorted(routes.items())),
+        "route_reasons": dict(sorted(route_reasons.items())),
+        "deterministic_verdicts": dict(sorted(deterministic_verdicts.items())),
+        "nli_verdicts": dict(sorted(nli_verdicts.items())),
         "truncated_cases": truncated_cases,
         "latency_ms": {
             "p50": _percentile(latencies, 0.50),

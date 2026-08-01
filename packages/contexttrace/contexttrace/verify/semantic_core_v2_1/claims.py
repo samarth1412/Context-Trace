@@ -6,7 +6,7 @@ import re
 
 from contexttrace.verify.semantic_core_v2.claims import ClaimUnit
 
-ATOMIC_CLAIM_UNITIZER_VERSION = "claim-unitizer-v2.1.0"
+ATOMIC_CLAIM_UNITIZER_VERSION = "claim-unitizer-v2.1.1"
 
 _CITATION_RE = re.compile(r"\[[^\]\r\n]{1,256}\]")
 _LIST_PREFIX_RE = re.compile(r"^(?:[-*•]|\d+[.)])\s+")
@@ -106,7 +106,7 @@ _ABBREVIATIONS = {
 
 
 def unitize_atomic_claims(
-    answer: str, *, max_claims: int = 64
+    answer: str, *, query: str = "", max_claims: int = 64
 ) -> tuple[list[ClaimUnit], bool]:
     """Return bounded atomic claims with offsets into the unmodified answer.
 
@@ -137,7 +137,11 @@ def unitize_atomic_claims(
         verification = _normalize_verification_text(surface)
         if carried_subject:
             verification = f"{carried_subject} {verification}"
-        if not _is_propositional(verification):
+        answer_fragment = _is_query_conditioned_fragment(
+            verification,
+            query=query,
+        )
+        if not _is_propositional(verification) and not answer_fragment:
             continue
         units.append(
             ClaimUnit(
@@ -147,6 +151,8 @@ def unitize_atomic_claims(
                 start_char=exact_start,
                 end_char=exact_end,
                 unitizer_version=ATOMIC_CLAIM_UNITIZER_VERSION,
+                query_context=str(query or "") if answer_fragment else "",
+                answer_fragment=answer_fragment,
             )
         )
         if len(units) == max_claims:
@@ -353,3 +359,13 @@ def _is_propositional(text: str) -> bool:
     if not words:
         return False
     return len(words) > 1 or any(char.isdigit() for char in normalized)
+
+
+def _is_query_conditioned_fragment(text: str, *, query: str) -> bool:
+    normalized = text.strip().strip(".!?").casefold()
+    if not str(query or "").strip() or not normalized or normalized in _FILLERS:
+        return False
+    words = _WORD_RE.findall(normalized)
+    if not 1 <= len(words) <= 4:
+        return False
+    return not _contains_finite_predicate(normalized)

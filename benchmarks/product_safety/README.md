@@ -140,3 +140,8 @@ The Stage 6 fail-closed runner, artifact lock, reproducibility commands, and
 current visible-development findings are documented in
 `benchmarks/external_baselines/README.md`. Those results are not untouched
 evaluation evidence and do not replace the locked Stage 7 protocol.
+
+The v2.1 unitizer also treats short names, dates, numbers, and terms as exact-
+offset query-conditioned answer-fragment claims. This prevents an otherwise
+insufficient-input trace from being projected as green while preserving fillers
+such as acknowledgements as non-claims.

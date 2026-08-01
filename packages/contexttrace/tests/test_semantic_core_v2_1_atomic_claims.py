@@ -118,6 +118,73 @@ def test_claim_bound_is_reported_after_atomic_expansion() -> None:
     assert len(claims) == 1
 
 
+def test_query_conditions_short_answer_fragment_with_exact_offsets() -> None:
+    answer = "Buddhism"
+
+    claims, limited = unitize_atomic_claims(
+        answer,
+        query="Which religion entered China along the Silk Route?",
+    )
+
+    assert not limited
+    assert len(claims) == 1
+    assert claims[0].text == answer
+    assert claims[0].verification_text == answer
+    assert claims[0].query_context == (
+        "Which religion entered China along the Silk Route?"
+    )
+    assert claims[0].answer_fragment is True
+    assert answer[claims[0].start_char : claims[0].end_char] == answer
+
+
+def test_query_conditioned_fragment_rejects_unsupported_short_answer() -> None:
+    trace = RAGTrace(
+        query="What languages are spoken in India the most?",
+        answer="Superman",
+        contexts=[
+            TraceContext(
+                id="languages",
+                text="Hindi and English are widely used in India.",
+            )
+        ],
+    )
+
+    result = verify_trace_v2_1(trace)
+
+    assert len(result["claims"]) == 1
+    assert result["claims"][0]["claim_verdict"] == "unsupported"
+    assert result["claims"][0]["failure_label"] == "should_have_abstained"
+    assert result["claims"][0]["flags"]["query_conditioned_answer_fragment"] is True
+    assert result["summary"]["overall_status"] != "green"
+
+
+def test_query_conditioned_fragment_preserves_exact_supported_answer() -> None:
+    trace = RAGTrace(
+        query="Which religion entered China along the Silk Route?",
+        answer="Buddhism",
+        contexts=[
+            TraceContext(
+                id="religion",
+                text="Buddhism entered China along the Silk Route.",
+                metadata={"canonical": True, "current": True},
+            )
+        ],
+    )
+
+    result = verify_trace_v2_1(trace)
+
+    assert len(result["claims"]) == 1
+    assert result["claims"][0]["claim_verdict"] == "supported"
+    assert result["claims"][0]["failure_label"] == "none"
+    assert result["claims"][0]["flags"]["query_conditioned_answer_fragment"] is True
+
+
+def test_query_conditioning_does_not_promote_fillers_to_claims() -> None:
+    claims, _ = unitize_atomic_claims("Sure", query="Is access enabled?")
+
+    assert claims == []
+
+
 def test_v2_1_uses_atomic_claims_but_frozen_v2_remains_unchanged() -> None:
     trace = RAGTrace(
         query="What formats are accepted?",

@@ -7,7 +7,6 @@ from dataclasses import dataclass
 
 from .constants import CLAIM_UNITIZER_VERSION
 
-
 _CITATION_RE = re.compile(r"\[[^\]\r\n]{1,256}\]")
 _LIST_PREFIX_RE = re.compile(r"^(?:[-*•]|\d+[.)])\s+")
 _WORD_RE = re.compile(r"[^\W_]+", flags=re.UNICODE)
@@ -29,6 +28,8 @@ class ClaimUnit:
     start_char: int
     end_char: int
     unitizer_version: str = CLAIM_UNITIZER_VERSION
+    query_context: str = ""
+    answer_fragment: bool = False
 
     def to_dict(self) -> dict[str, object]:
         return {
@@ -42,9 +43,11 @@ class ClaimUnit:
 
 
 def unitize_claims(
-    answer: str, *, max_claims: int = 64
+    answer: str, *, query: str = "", max_claims: int = 64
 ) -> tuple[list[ClaimUnit], bool]:
     """Split answer prose while preserving exact UTF-8 character offsets."""
+
+    del query
 
     units: list[ClaimUnit] = []
     for start, end in _sentence_spans(str(answer or "")):
@@ -132,6 +135,4 @@ def _is_propositional(text: str) -> bool:
     words = _WORD_RE.findall(normalized)
     if not words:
         return False
-    if len(words) == 1 and not any(char.isdigit() for char in normalized):
-        return False
-    return True
+    return len(words) != 1 or any(char.isdigit() for char in normalized)

@@ -6,6 +6,20 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+### Added
+
+- Query-conditioned exact-offset verification for short answer fragments such
+  as names, dates, numbers, and single terms in the unreleased v2.1 profile.
+- Hash-locked same-ID development comparisons against cached RAGAS and
+  RAGChecker outputs, with fail-closed coverage, error, adapter, and input-
+  binding checks.
+
+### Changed
+
+- Reduced the visible ARES development false-green rate from `0.085` to `0.000`
+  and raised failure-label macro-F1 from `0.912` to `0.995`; these are visible
+  development results, not untouched or SOTA evidence.
+
 ## [1.1.0] - 2026-07-22
 
 ### Added
