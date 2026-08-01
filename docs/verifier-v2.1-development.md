@@ -6,7 +6,7 @@ and the stable ContextTrace verifier remains `semantic_v1_calibrated`.
 ## What changed
 
 The opt-in `semantic_core_v2_1` profile keeps the v2 output schema while adding
-five safety and accuracy policies:
+six safety and accuracy policies:
 
 1. A claim supported only by NLI after ambiguous deterministic evidence cannot
    become green. It remains supported-with-qualification.
@@ -26,9 +26,14 @@ five safety and accuracy policies:
    abstain only when a contradiction or omission signal is present; otherwise it
    records risk without changing the base verdict. The deterministic conflict
    checker remains the final safety fallback.
+6. A relational source-condition reasoner gives hazardous observables precedence
+   over inconsistent safe labels, parses typed boolean metadata, follows
+   replacement links, compares versions and publication times only within a
+   declared source lineage, and detects conflicts between authoritative sources.
+   It emits bounded related-source provenance without copying source text.
 
-The profile hash includes all safety guards, composition switches,
-atomic-unitization switch, and character bounds. NLI continues to receive at
+The profile hash includes all safety guards, composition switches, the
+source-condition reasoner switch, atomic-unitization switch, and character bounds. NLI continues to receive at
 most three selected spans, and the local model artifact must match the existing
 model, revision, file hashes, and manifest hash.
 
@@ -66,6 +71,15 @@ that small synthetic split. An earlier lexical-feature design was rejected
 because it reduced clean-support performance; the packaged model uses only NLI
 probabilities and observable signals. These are synthetic development metrics,
 not external or untouched evidence.
+
+A separate 54-case source-condition pack covers current canonical, current
+noncanonical, stale, superseded, low-authority, conflicting-authority, and
+unknown cases. Its 18-case held-out-development split uses disjoint source
+families. On that templated split, frozen v2 has 0.1048 macro-F1 and a 42.86%
+dangerous false-green rate; v2.1 has 1.0 macro-F1 and 0% dangerous false greens.
+The perfect candidate score reflects direct coverage of the declared metadata
+and relation rules. It is a regression result, not evidence of external
+generalization.
 
 ## Opt-in CLI
 

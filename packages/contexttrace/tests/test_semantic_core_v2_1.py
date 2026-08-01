@@ -147,6 +147,9 @@ def test_guarded_profile_is_hash_identified_and_v2_schema_compatible() -> None:
     assert result["verification_profile"]["prevent_nli_only_green_promotion"] is True
     assert result["verification_profile"]["compose_same_source_nli_spans"] is True
     assert result["verification_profile"]["learned_support_risk_gate"] is True
+    assert (
+        result["verification_profile"]["relational_source_condition_reasoning"] is True
+    )
     jsonschema.Draft202012Validator(schema).validate(result)
 
 

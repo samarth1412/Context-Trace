@@ -4,16 +4,21 @@ from __future__ import annotations
 
 import hashlib
 import json
+from collections import Counter
 from pathlib import Path
 from typing import Any
 
 from contexttrace.verify.judges import ClaimJudge
-from contexttrace.verify.schema import RAGTrace, TraceContext
+from contexttrace.verify.schema import RAGTrace, TraceContext, load_trace_file
 from contexttrace.verify.semantic_core_v2.claims import unitize_claims
-from contexttrace.verify.semantic_core_v2.limits import DEFAULT_V2_LIMITS, V2Limits
+from contexttrace.verify.semantic_core_v2.diagnosis import diagnose
+from contexttrace.verify.semantic_core_v2.limits import (
+    DEFAULT_V2_LIMITS,
+    V2Limits,
+    apply_limits,
+)
 from contexttrace.verify.semantic_core_v2.runner import (
     ClaimUnitizer,
-    verify_trace_file_v2,
     verify_trace_v2,
     verify_traces_v2,
 )
@@ -22,6 +27,7 @@ from .checker import ObservableConflictGuard
 from .claims import unitize_atomic_claims
 from .profile import SELECTIVE_V2_1_PROFILE, V21Profile
 from .risk_model import LearnedSupportRiskGate
+from .source import assess_source_condition_v2_1
 
 
 def verify_trace_v2_1(
@@ -40,7 +46,8 @@ def verify_trace_v2_1(
         limits=limits,
         _claim_unitizer=_claim_unitizer(profile),
     )
-    return _apply_safety_policy(result, profile)
+    bounded, _ = apply_limits(trace, limits)
+    return _apply_safety_policy(result, profile, trace=bounded)
 
 
 def verify_trace_file_v2_1(
@@ -50,14 +57,12 @@ def verify_trace_file_v2_1(
     nli: ClaimJudge | None = None,
     limits: V2Limits = DEFAULT_V2_LIMITS,
 ) -> dict[str, Any]:
-    result = verify_trace_file_v2(
-        path,
+    return verify_trace_v2_1(
+        load_trace_file(path),
         profile=profile,
-        nli=_composing_nli(nli, profile),
+        nli=nli,
         limits=limits,
-        _claim_unitizer=_claim_unitizer(profile),
     )
-    return _apply_safety_policy(result, profile)
 
 
 def verify_traces_v2_1(
@@ -76,7 +81,11 @@ def verify_traces_v2_1(
         max_workers=max_workers,
         _claim_unitizer=_claim_unitizer(profile),
     )
-    return [_apply_safety_policy(result, profile) for result in results]
+    bounded = [apply_limits(trace, limits)[0] for trace in traces]
+    return [
+        _apply_safety_policy(result, profile, trace=trace)
+        for result, trace in zip(results, bounded, strict=True)
+    ]
 
 
 class _ComposingNLI:
@@ -171,7 +180,11 @@ def _span_start(context: TraceContext) -> tuple[int, str]:
 def _apply_safety_policy(
     result: dict[str, Any],
     profile: V21Profile,
+    *,
+    trace: RAGTrace,
 ) -> dict[str, Any]:
+    if profile.relational_source_condition_reasoning:
+        _apply_source_condition_policy(result, profile, trace)
     if profile.prevent_nli_only_green_promotion:
         for claim in result["claims"]:
             if not _is_ambiguous_nli_only_support(claim):
@@ -181,11 +194,54 @@ def _apply_safety_policy(
             claim["flags"]["nli_only_green_promotion_blocked"] = True
 
     claims = list(result["claims"])
+    failures = Counter(str(claim["failure_label"]) for claim in claims)
+    roots = Counter(str(claim["primary_root_cause"]) for claim in claims)
+    result["summary"]["failure_labels"] = {
+        key: failures[key] for key in sorted(failures)
+    }
+    result["summary"]["root_causes"] = {key: roots[key] for key in sorted(roots)}
     result["summary"]["green_claims"] = sum(bool(claim["green"]) for claim in claims)
     result["summary"]["overall_status"] = _overall_status(claims)
     result.pop("prediction_payload_sha256", None)
     result["prediction_payload_sha256"] = _canonical_sha256(result)
     return result
+
+
+def _apply_source_condition_policy(
+    result: dict[str, Any],
+    profile: V21Profile,
+    trace: RAGTrace,
+) -> None:
+    for claim in result["claims"]:
+        signals = dict((claim.get("deterministic") or {}).get("signals") or {})
+        source = assess_source_condition_v2_1(
+            best_context_id=signals.get("best_context_id"),
+            claim=str(claim.get("verification_text") or claim.get("text") or ""),
+            trace=trace,
+            profile=profile,
+        )
+        diagnosis = diagnose(
+            verdict=str(claim["claim_verdict"]),
+            confidence=float(claim["diagnostic_confidence"]),
+            route=str(claim["route"]),
+            abstained=bool(claim["diagnostic_abstention"]),
+            citation_state=str(claim["citation_state"]),
+            source_condition=str(source["condition"]),
+            trace=trace,
+            profile=profile,
+        )
+        claim["source_condition"] = source["condition"]
+        claim["source_assessment"] = source
+        for key in (
+            "failure_label",
+            "primary_root_cause",
+            "abstention_requirement",
+            "diagnostic_confidence",
+            "confidence_semantics",
+            "green",
+            "qualification_required",
+        ):
+            claim[key] = diagnosis[key]
 
 
 def _is_ambiguous_nli_only_support(claim: dict[str, Any]) -> bool:

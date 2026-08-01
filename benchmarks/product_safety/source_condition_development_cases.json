@@ -1,0 +1,1212 @@
+{
+  "builder_version": "contexttrace-source-condition-builder-v1.0.0",
+  "cases": [
+    {
+      "answer": "The API timeout is 60 seconds.",
+      "category": "current_canonical",
+      "contexts": [
+        {
+          "id": "timeout-old",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "The API timeout is 60 seconds."
+        }
+      ],
+      "expected_source_condition": "current_canonical",
+      "id": "current_canonical__timeout",
+      "query": "What is the current API timeout?",
+      "source_family": "current_canonical:timeout",
+      "split": "development"
+    },
+    {
+      "answer": "The API timeout is 60 seconds.",
+      "category": "current_noncanonical",
+      "contexts": [
+        {
+          "id": "timeout-old",
+          "metadata": {
+            "canonical": "false",
+            "current": "true"
+          },
+          "text": "The API timeout is 60 seconds."
+        }
+      ],
+      "expected_source_condition": "current_noncanonical",
+      "id": "current_noncanonical__timeout",
+      "query": "What is the current API timeout?",
+      "source_family": "current_noncanonical:timeout",
+      "split": "development"
+    },
+    {
+      "answer": "The API timeout is 60 seconds.",
+      "category": "stale_explicit",
+      "contexts": [
+        {
+          "id": "timeout-old",
+          "metadata": {
+            "source_condition": "current_canonical",
+            "stale": true
+          },
+          "text": "The API timeout is 60 seconds."
+        }
+      ],
+      "expected_source_condition": "stale",
+      "id": "stale_explicit__timeout",
+      "query": "What is the current API timeout?",
+      "source_family": "stale_explicit:timeout",
+      "split": "development"
+    },
+    {
+      "answer": "The API timeout is 60 seconds.",
+      "category": "superseded_relation",
+      "contexts": [
+        {
+          "id": "timeout-old",
+          "metadata": {
+            "source_version": "1.0"
+          },
+          "text": "The API timeout is 60 seconds."
+        },
+        {
+          "id": "timeout-current",
+          "metadata": {
+            "replaces": "timeout-old",
+            "source_version": "2.0"
+          },
+          "text": "The API timeout is 30 seconds."
+        }
+      ],
+      "expected_source_condition": "superseded",
+      "id": "superseded_relation__timeout",
+      "query": "What is the current API timeout?",
+      "source_family": "superseded_relation:timeout",
+      "split": "development"
+    },
+    {
+      "answer": "The API timeout is 60 seconds.",
+      "category": "superseded_version_conflict",
+      "contexts": [
+        {
+          "id": "timeout-old",
+          "metadata": {
+            "canonical": true,
+            "source_family": "timeout",
+            "source_version": "1.0"
+          },
+          "text": "The API timeout is 60 seconds."
+        },
+        {
+          "id": "timeout-current",
+          "metadata": {
+            "canonical": true,
+            "source_family": "timeout",
+            "source_version": "2.0"
+          },
+          "text": "The API timeout is 30 seconds."
+        }
+      ],
+      "expected_source_condition": "superseded",
+      "id": "superseded_version_conflict__timeout",
+      "query": "What is the current API timeout?",
+      "source_family": "superseded_version_conflict:timeout",
+      "split": "development"
+    },
+    {
+      "answer": "The API timeout is 60 seconds.",
+      "category": "stale_newer_same_fact",
+      "contexts": [
+        {
+          "id": "timeout-old",
+          "metadata": {
+            "published_at": "2025-01-01",
+            "source_group": "timeout"
+          },
+          "text": "The API timeout is 60 seconds."
+        },
+        {
+          "id": "timeout-current",
+          "metadata": {
+            "published_at": "2026-01-01",
+            "source_group": "timeout"
+          },
+          "text": "The API timeout is 60 seconds."
+        }
+      ],
+      "expected_source_condition": "stale",
+      "id": "stale_newer_same_fact__timeout",
+      "query": "What is the current API timeout?",
+      "source_family": "stale_newer_same_fact:timeout",
+      "split": "development"
+    },
+    {
+      "answer": "The API timeout is 60 seconds.",
+      "category": "low_authority",
+      "contexts": [
+        {
+          "id": "timeout-old",
+          "metadata": {
+            "source_authority": "summary"
+          },
+          "text": "The API timeout is 60 seconds."
+        }
+      ],
+      "expected_source_condition": "low_authority",
+      "id": "low_authority__timeout",
+      "query": "What is the current API timeout?",
+      "source_family": "low_authority:timeout",
+      "split": "development"
+    },
+    {
+      "answer": "The API timeout is 60 seconds.",
+      "category": "conflicting_authorities",
+      "contexts": [
+        {
+          "id": "timeout-old",
+          "metadata": {
+            "current": true,
+            "source_authority": "official"
+          },
+          "text": "The API timeout is 60 seconds."
+        },
+        {
+          "id": "timeout-current",
+          "metadata": {
+            "current": true,
+            "source_authority": "regulator"
+          },
+          "text": "The API timeout is 30 seconds."
+        }
+      ],
+      "expected_source_condition": "conflicting_authorities",
+      "id": "conflicting_authorities__timeout",
+      "query": "What is the current API timeout?",
+      "source_family": "conflicting_authorities:timeout",
+      "split": "development"
+    },
+    {
+      "answer": "The API timeout is 60 seconds.",
+      "category": "unknown",
+      "contexts": [
+        {
+          "id": "timeout-old",
+          "metadata": {},
+          "text": "The API timeout is 60 seconds."
+        }
+      ],
+      "expected_source_condition": "unknown",
+      "id": "unknown__timeout",
+      "query": "What is the current API timeout?",
+      "source_family": "unknown:timeout",
+      "split": "development"
+    },
+    {
+      "answer": "The filing deadline is September 1.",
+      "category": "current_canonical",
+      "contexts": [
+        {
+          "id": "deadline-old",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "The filing deadline is September 1."
+        }
+      ],
+      "expected_source_condition": "current_canonical",
+      "id": "current_canonical__deadline",
+      "query": "What is the current filing deadline?",
+      "source_family": "current_canonical:deadline",
+      "split": "development"
+    },
+    {
+      "answer": "The filing deadline is September 1.",
+      "category": "current_noncanonical",
+      "contexts": [
+        {
+          "id": "deadline-old",
+          "metadata": {
+            "canonical": "false",
+            "current": "true"
+          },
+          "text": "The filing deadline is September 1."
+        }
+      ],
+      "expected_source_condition": "current_noncanonical",
+      "id": "current_noncanonical__deadline",
+      "query": "What is the current filing deadline?",
+      "source_family": "current_noncanonical:deadline",
+      "split": "development"
+    },
+    {
+      "answer": "The filing deadline is September 1.",
+      "category": "stale_explicit",
+      "contexts": [
+        {
+          "id": "deadline-old",
+          "metadata": {
+            "source_condition": "current_canonical",
+            "stale": true
+          },
+          "text": "The filing deadline is September 1."
+        }
+      ],
+      "expected_source_condition": "stale",
+      "id": "stale_explicit__deadline",
+      "query": "What is the current filing deadline?",
+      "source_family": "stale_explicit:deadline",
+      "split": "development"
+    },
+    {
+      "answer": "The filing deadline is September 1.",
+      "category": "superseded_relation",
+      "contexts": [
+        {
+          "id": "deadline-old",
+          "metadata": {
+            "source_version": "1.0"
+          },
+          "text": "The filing deadline is September 1."
+        },
+        {
+          "id": "deadline-current",
+          "metadata": {
+            "replaces": "deadline-old",
+            "source_version": "2.0"
+          },
+          "text": "The filing deadline is October 1."
+        }
+      ],
+      "expected_source_condition": "superseded",
+      "id": "superseded_relation__deadline",
+      "query": "What is the current filing deadline?",
+      "source_family": "superseded_relation:deadline",
+      "split": "development"
+    },
+    {
+      "answer": "The filing deadline is September 1.",
+      "category": "superseded_version_conflict",
+      "contexts": [
+        {
+          "id": "deadline-old",
+          "metadata": {
+            "canonical": true,
+            "source_family": "deadline",
+            "source_version": "1.0"
+          },
+          "text": "The filing deadline is September 1."
+        },
+        {
+          "id": "deadline-current",
+          "metadata": {
+            "canonical": true,
+            "source_family": "deadline",
+            "source_version": "2.0"
+          },
+          "text": "The filing deadline is October 1."
+        }
+      ],
+      "expected_source_condition": "superseded",
+      "id": "superseded_version_conflict__deadline",
+      "query": "What is the current filing deadline?",
+      "source_family": "superseded_version_conflict:deadline",
+      "split": "development"
+    },
+    {
+      "answer": "The filing deadline is September 1.",
+      "category": "stale_newer_same_fact",
+      "contexts": [
+        {
+          "id": "deadline-old",
+          "metadata": {
+            "published_at": "2025-01-01",
+            "source_group": "deadline"
+          },
+          "text": "The filing deadline is September 1."
+        },
+        {
+          "id": "deadline-current",
+          "metadata": {
+            "published_at": "2026-01-01",
+            "source_group": "deadline"
+          },
+          "text": "The filing deadline is September 1."
+        }
+      ],
+      "expected_source_condition": "stale",
+      "id": "stale_newer_same_fact__deadline",
+      "query": "What is the current filing deadline?",
+      "source_family": "stale_newer_same_fact:deadline",
+      "split": "development"
+    },
+    {
+      "answer": "The filing deadline is September 1.",
+      "category": "low_authority",
+      "contexts": [
+        {
+          "id": "deadline-old",
+          "metadata": {
+            "source_authority": "summary"
+          },
+          "text": "The filing deadline is September 1."
+        }
+      ],
+      "expected_source_condition": "low_authority",
+      "id": "low_authority__deadline",
+      "query": "What is the current filing deadline?",
+      "source_family": "low_authority:deadline",
+      "split": "development"
+    },
+    {
+      "answer": "The filing deadline is September 1.",
+      "category": "conflicting_authorities",
+      "contexts": [
+        {
+          "id": "deadline-old",
+          "metadata": {
+            "current": true,
+            "source_authority": "official"
+          },
+          "text": "The filing deadline is September 1."
+        },
+        {
+          "id": "deadline-current",
+          "metadata": {
+            "current": true,
+            "source_authority": "regulator"
+          },
+          "text": "The filing deadline is October 1."
+        }
+      ],
+      "expected_source_condition": "conflicting_authorities",
+      "id": "conflicting_authorities__deadline",
+      "query": "What is the current filing deadline?",
+      "source_family": "conflicting_authorities:deadline",
+      "split": "development"
+    },
+    {
+      "answer": "The filing deadline is September 1.",
+      "category": "unknown",
+      "contexts": [
+        {
+          "id": "deadline-old",
+          "metadata": {},
+          "text": "The filing deadline is September 1."
+        }
+      ],
+      "expected_source_condition": "unknown",
+      "id": "unknown__deadline",
+      "query": "What is the current filing deadline?",
+      "source_family": "unknown:deadline",
+      "split": "development"
+    },
+    {
+      "answer": "The retention period is 90 days.",
+      "category": "current_canonical",
+      "contexts": [
+        {
+          "id": "retention-old",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "The retention period is 90 days."
+        }
+      ],
+      "expected_source_condition": "current_canonical",
+      "id": "current_canonical__retention",
+      "query": "What is the current retention period?",
+      "source_family": "current_canonical:retention",
+      "split": "development"
+    },
+    {
+      "answer": "The retention period is 90 days.",
+      "category": "current_noncanonical",
+      "contexts": [
+        {
+          "id": "retention-old",
+          "metadata": {
+            "canonical": "false",
+            "current": "true"
+          },
+          "text": "The retention period is 90 days."
+        }
+      ],
+      "expected_source_condition": "current_noncanonical",
+      "id": "current_noncanonical__retention",
+      "query": "What is the current retention period?",
+      "source_family": "current_noncanonical:retention",
+      "split": "development"
+    },
+    {
+      "answer": "The retention period is 90 days.",
+      "category": "stale_explicit",
+      "contexts": [
+        {
+          "id": "retention-old",
+          "metadata": {
+            "source_condition": "current_canonical",
+            "stale": true
+          },
+          "text": "The retention period is 90 days."
+        }
+      ],
+      "expected_source_condition": "stale",
+      "id": "stale_explicit__retention",
+      "query": "What is the current retention period?",
+      "source_family": "stale_explicit:retention",
+      "split": "development"
+    },
+    {
+      "answer": "The retention period is 90 days.",
+      "category": "superseded_relation",
+      "contexts": [
+        {
+          "id": "retention-old",
+          "metadata": {
+            "source_version": "1.0"
+          },
+          "text": "The retention period is 90 days."
+        },
+        {
+          "id": "retention-current",
+          "metadata": {
+            "replaces": "retention-old",
+            "source_version": "2.0"
+          },
+          "text": "The retention period is 30 days."
+        }
+      ],
+      "expected_source_condition": "superseded",
+      "id": "superseded_relation__retention",
+      "query": "What is the current retention period?",
+      "source_family": "superseded_relation:retention",
+      "split": "development"
+    },
+    {
+      "answer": "The retention period is 90 days.",
+      "category": "superseded_version_conflict",
+      "contexts": [
+        {
+          "id": "retention-old",
+          "metadata": {
+            "canonical": true,
+            "source_family": "retention",
+            "source_version": "1.0"
+          },
+          "text": "The retention period is 90 days."
+        },
+        {
+          "id": "retention-current",
+          "metadata": {
+            "canonical": true,
+            "source_family": "retention",
+            "source_version": "2.0"
+          },
+          "text": "The retention period is 30 days."
+        }
+      ],
+      "expected_source_condition": "superseded",
+      "id": "superseded_version_conflict__retention",
+      "query": "What is the current retention period?",
+      "source_family": "superseded_version_conflict:retention",
+      "split": "development"
+    },
+    {
+      "answer": "The retention period is 90 days.",
+      "category": "stale_newer_same_fact",
+      "contexts": [
+        {
+          "id": "retention-old",
+          "metadata": {
+            "published_at": "2025-01-01",
+            "source_group": "retention"
+          },
+          "text": "The retention period is 90 days."
+        },
+        {
+          "id": "retention-current",
+          "metadata": {
+            "published_at": "2026-01-01",
+            "source_group": "retention"
+          },
+          "text": "The retention period is 90 days."
+        }
+      ],
+      "expected_source_condition": "stale",
+      "id": "stale_newer_same_fact__retention",
+      "query": "What is the current retention period?",
+      "source_family": "stale_newer_same_fact:retention",
+      "split": "development"
+    },
+    {
+      "answer": "The retention period is 90 days.",
+      "category": "low_authority",
+      "contexts": [
+        {
+          "id": "retention-old",
+          "metadata": {
+            "source_authority": "summary"
+          },
+          "text": "The retention period is 90 days."
+        }
+      ],
+      "expected_source_condition": "low_authority",
+      "id": "low_authority__retention",
+      "query": "What is the current retention period?",
+      "source_family": "low_authority:retention",
+      "split": "development"
+    },
+    {
+      "answer": "The retention period is 90 days.",
+      "category": "conflicting_authorities",
+      "contexts": [
+        {
+          "id": "retention-old",
+          "metadata": {
+            "current": true,
+            "source_authority": "official"
+          },
+          "text": "The retention period is 90 days."
+        },
+        {
+          "id": "retention-current",
+          "metadata": {
+            "current": true,
+            "source_authority": "regulator"
+          },
+          "text": "The retention period is 30 days."
+        }
+      ],
+      "expected_source_condition": "conflicting_authorities",
+      "id": "conflicting_authorities__retention",
+      "query": "What is the current retention period?",
+      "source_family": "conflicting_authorities:retention",
+      "split": "development"
+    },
+    {
+      "answer": "The retention period is 90 days.",
+      "category": "unknown",
+      "contexts": [
+        {
+          "id": "retention-old",
+          "metadata": {},
+          "text": "The retention period is 90 days."
+        }
+      ],
+      "expected_source_condition": "unknown",
+      "id": "unknown__retention",
+      "query": "What is the current retention period?",
+      "source_family": "unknown:retention",
+      "split": "development"
+    },
+    {
+      "answer": "The search endpoint is /v1/search.",
+      "category": "current_canonical",
+      "contexts": [
+        {
+          "id": "endpoint-old",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "The search endpoint is /v1/search."
+        }
+      ],
+      "expected_source_condition": "current_canonical",
+      "id": "current_canonical__endpoint",
+      "query": "Which endpoint is current?",
+      "source_family": "current_canonical:endpoint",
+      "split": "development"
+    },
+    {
+      "answer": "The search endpoint is /v1/search.",
+      "category": "current_noncanonical",
+      "contexts": [
+        {
+          "id": "endpoint-old",
+          "metadata": {
+            "canonical": "false",
+            "current": "true"
+          },
+          "text": "The search endpoint is /v1/search."
+        }
+      ],
+      "expected_source_condition": "current_noncanonical",
+      "id": "current_noncanonical__endpoint",
+      "query": "Which endpoint is current?",
+      "source_family": "current_noncanonical:endpoint",
+      "split": "development"
+    },
+    {
+      "answer": "The search endpoint is /v1/search.",
+      "category": "stale_explicit",
+      "contexts": [
+        {
+          "id": "endpoint-old",
+          "metadata": {
+            "source_condition": "current_canonical",
+            "stale": true
+          },
+          "text": "The search endpoint is /v1/search."
+        }
+      ],
+      "expected_source_condition": "stale",
+      "id": "stale_explicit__endpoint",
+      "query": "Which endpoint is current?",
+      "source_family": "stale_explicit:endpoint",
+      "split": "development"
+    },
+    {
+      "answer": "The search endpoint is /v1/search.",
+      "category": "superseded_relation",
+      "contexts": [
+        {
+          "id": "endpoint-old",
+          "metadata": {
+            "source_version": "1.0"
+          },
+          "text": "The search endpoint is /v1/search."
+        },
+        {
+          "id": "endpoint-current",
+          "metadata": {
+            "replaces": "endpoint-old",
+            "source_version": "2.0"
+          },
+          "text": "The search endpoint is /v2/search."
+        }
+      ],
+      "expected_source_condition": "superseded",
+      "id": "superseded_relation__endpoint",
+      "query": "Which endpoint is current?",
+      "source_family": "superseded_relation:endpoint",
+      "split": "development"
+    },
+    {
+      "answer": "The search endpoint is /v1/search.",
+      "category": "superseded_version_conflict",
+      "contexts": [
+        {
+          "id": "endpoint-old",
+          "metadata": {
+            "canonical": true,
+            "source_family": "endpoint",
+            "source_version": "1.0"
+          },
+          "text": "The search endpoint is /v1/search."
+        },
+        {
+          "id": "endpoint-current",
+          "metadata": {
+            "canonical": true,
+            "source_family": "endpoint",
+            "source_version": "2.0"
+          },
+          "text": "The search endpoint is /v2/search."
+        }
+      ],
+      "expected_source_condition": "superseded",
+      "id": "superseded_version_conflict__endpoint",
+      "query": "Which endpoint is current?",
+      "source_family": "superseded_version_conflict:endpoint",
+      "split": "development"
+    },
+    {
+      "answer": "The search endpoint is /v1/search.",
+      "category": "stale_newer_same_fact",
+      "contexts": [
+        {
+          "id": "endpoint-old",
+          "metadata": {
+            "published_at": "2025-01-01",
+            "source_group": "endpoint"
+          },
+          "text": "The search endpoint is /v1/search."
+        },
+        {
+          "id": "endpoint-current",
+          "metadata": {
+            "published_at": "2026-01-01",
+            "source_group": "endpoint"
+          },
+          "text": "The search endpoint is /v1/search."
+        }
+      ],
+      "expected_source_condition": "stale",
+      "id": "stale_newer_same_fact__endpoint",
+      "query": "Which endpoint is current?",
+      "source_family": "stale_newer_same_fact:endpoint",
+      "split": "development"
+    },
+    {
+      "answer": "The search endpoint is /v1/search.",
+      "category": "low_authority",
+      "contexts": [
+        {
+          "id": "endpoint-old",
+          "metadata": {
+            "source_authority": "summary"
+          },
+          "text": "The search endpoint is /v1/search."
+        }
+      ],
+      "expected_source_condition": "low_authority",
+      "id": "low_authority__endpoint",
+      "query": "Which endpoint is current?",
+      "source_family": "low_authority:endpoint",
+      "split": "development"
+    },
+    {
+      "answer": "The search endpoint is /v1/search.",
+      "category": "conflicting_authorities",
+      "contexts": [
+        {
+          "id": "endpoint-old",
+          "metadata": {
+            "current": true,
+            "source_authority": "official"
+          },
+          "text": "The search endpoint is /v1/search."
+        },
+        {
+          "id": "endpoint-current",
+          "metadata": {
+            "current": true,
+            "source_authority": "regulator"
+          },
+          "text": "The search endpoint is /v2/search."
+        }
+      ],
+      "expected_source_condition": "conflicting_authorities",
+      "id": "conflicting_authorities__endpoint",
+      "query": "Which endpoint is current?",
+      "source_family": "conflicting_authorities:endpoint",
+      "split": "development"
+    },
+    {
+      "answer": "The search endpoint is /v1/search.",
+      "category": "unknown",
+      "contexts": [
+        {
+          "id": "endpoint-old",
+          "metadata": {},
+          "text": "The search endpoint is /v1/search."
+        }
+      ],
+      "expected_source_condition": "unknown",
+      "id": "unknown__endpoint",
+      "query": "Which endpoint is current?",
+      "source_family": "unknown:endpoint",
+      "split": "development"
+    },
+    {
+      "answer": "Clients must use API v1.0.",
+      "category": "current_canonical",
+      "contexts": [
+        {
+          "id": "client-old",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Clients must use API v1.0."
+        }
+      ],
+      "expected_source_condition": "current_canonical",
+      "id": "current_canonical__client",
+      "query": "Which client version is current?",
+      "source_family": "current_canonical:client",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Clients must use API v1.0.",
+      "category": "current_noncanonical",
+      "contexts": [
+        {
+          "id": "client-old",
+          "metadata": {
+            "canonical": "false",
+            "current": "true"
+          },
+          "text": "Clients must use API v1.0."
+        }
+      ],
+      "expected_source_condition": "current_noncanonical",
+      "id": "current_noncanonical__client",
+      "query": "Which client version is current?",
+      "source_family": "current_noncanonical:client",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Clients must use API v1.0.",
+      "category": "stale_explicit",
+      "contexts": [
+        {
+          "id": "client-old",
+          "metadata": {
+            "source_condition": "current_canonical",
+            "stale": true
+          },
+          "text": "Clients must use API v1.0."
+        }
+      ],
+      "expected_source_condition": "stale",
+      "id": "stale_explicit__client",
+      "query": "Which client version is current?",
+      "source_family": "stale_explicit:client",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Clients must use API v1.0.",
+      "category": "superseded_relation",
+      "contexts": [
+        {
+          "id": "client-old",
+          "metadata": {
+            "source_version": "1.0"
+          },
+          "text": "Clients must use API v1.0."
+        },
+        {
+          "id": "client-current",
+          "metadata": {
+            "replaces": "client-old",
+            "source_version": "2.0"
+          },
+          "text": "Clients must use API v2.0."
+        }
+      ],
+      "expected_source_condition": "superseded",
+      "id": "superseded_relation__client",
+      "query": "Which client version is current?",
+      "source_family": "superseded_relation:client",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Clients must use API v1.0.",
+      "category": "superseded_version_conflict",
+      "contexts": [
+        {
+          "id": "client-old",
+          "metadata": {
+            "canonical": true,
+            "source_family": "client",
+            "source_version": "1.0"
+          },
+          "text": "Clients must use API v1.0."
+        },
+        {
+          "id": "client-current",
+          "metadata": {
+            "canonical": true,
+            "source_family": "client",
+            "source_version": "2.0"
+          },
+          "text": "Clients must use API v2.0."
+        }
+      ],
+      "expected_source_condition": "superseded",
+      "id": "superseded_version_conflict__client",
+      "query": "Which client version is current?",
+      "source_family": "superseded_version_conflict:client",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Clients must use API v1.0.",
+      "category": "stale_newer_same_fact",
+      "contexts": [
+        {
+          "id": "client-old",
+          "metadata": {
+            "published_at": "2025-01-01",
+            "source_group": "client"
+          },
+          "text": "Clients must use API v1.0."
+        },
+        {
+          "id": "client-current",
+          "metadata": {
+            "published_at": "2026-01-01",
+            "source_group": "client"
+          },
+          "text": "Clients must use API v1.0."
+        }
+      ],
+      "expected_source_condition": "stale",
+      "id": "stale_newer_same_fact__client",
+      "query": "Which client version is current?",
+      "source_family": "stale_newer_same_fact:client",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Clients must use API v1.0.",
+      "category": "low_authority",
+      "contexts": [
+        {
+          "id": "client-old",
+          "metadata": {
+            "source_authority": "summary"
+          },
+          "text": "Clients must use API v1.0."
+        }
+      ],
+      "expected_source_condition": "low_authority",
+      "id": "low_authority__client",
+      "query": "Which client version is current?",
+      "source_family": "low_authority:client",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Clients must use API v1.0.",
+      "category": "conflicting_authorities",
+      "contexts": [
+        {
+          "id": "client-old",
+          "metadata": {
+            "current": true,
+            "source_authority": "official"
+          },
+          "text": "Clients must use API v1.0."
+        },
+        {
+          "id": "client-current",
+          "metadata": {
+            "current": true,
+            "source_authority": "regulator"
+          },
+          "text": "Clients must use API v2.0."
+        }
+      ],
+      "expected_source_condition": "conflicting_authorities",
+      "id": "conflicting_authorities__client",
+      "query": "Which client version is current?",
+      "source_family": "conflicting_authorities:client",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Clients must use API v1.0.",
+      "category": "unknown",
+      "contexts": [
+        {
+          "id": "client-old",
+          "metadata": {},
+          "text": "Clients must use API v1.0."
+        }
+      ],
+      "expected_source_condition": "unknown",
+      "id": "unknown__client",
+      "query": "Which client version is current?",
+      "source_family": "unknown:client",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Audit logging is enabled by default.",
+      "category": "current_canonical",
+      "contexts": [
+        {
+          "id": "logging-old",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Audit logging is enabled by default."
+        }
+      ],
+      "expected_source_condition": "current_canonical",
+      "id": "current_canonical__logging",
+      "query": "Is audit logging currently enabled?",
+      "source_family": "current_canonical:logging",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Audit logging is enabled by default.",
+      "category": "current_noncanonical",
+      "contexts": [
+        {
+          "id": "logging-old",
+          "metadata": {
+            "canonical": "false",
+            "current": "true"
+          },
+          "text": "Audit logging is enabled by default."
+        }
+      ],
+      "expected_source_condition": "current_noncanonical",
+      "id": "current_noncanonical__logging",
+      "query": "Is audit logging currently enabled?",
+      "source_family": "current_noncanonical:logging",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Audit logging is enabled by default.",
+      "category": "stale_explicit",
+      "contexts": [
+        {
+          "id": "logging-old",
+          "metadata": {
+            "source_condition": "current_canonical",
+            "stale": true
+          },
+          "text": "Audit logging is enabled by default."
+        }
+      ],
+      "expected_source_condition": "stale",
+      "id": "stale_explicit__logging",
+      "query": "Is audit logging currently enabled?",
+      "source_family": "stale_explicit:logging",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Audit logging is enabled by default.",
+      "category": "superseded_relation",
+      "contexts": [
+        {
+          "id": "logging-old",
+          "metadata": {
+            "source_version": "1.0"
+          },
+          "text": "Audit logging is enabled by default."
+        },
+        {
+          "id": "logging-current",
+          "metadata": {
+            "replaces": "logging-old",
+            "source_version": "2.0"
+          },
+          "text": "Audit logging is disabled by default."
+        }
+      ],
+      "expected_source_condition": "superseded",
+      "id": "superseded_relation__logging",
+      "query": "Is audit logging currently enabled?",
+      "source_family": "superseded_relation:logging",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Audit logging is enabled by default.",
+      "category": "superseded_version_conflict",
+      "contexts": [
+        {
+          "id": "logging-old",
+          "metadata": {
+            "canonical": true,
+            "source_family": "logging",
+            "source_version": "1.0"
+          },
+          "text": "Audit logging is enabled by default."
+        },
+        {
+          "id": "logging-current",
+          "metadata": {
+            "canonical": true,
+            "source_family": "logging",
+            "source_version": "2.0"
+          },
+          "text": "Audit logging is disabled by default."
+        }
+      ],
+      "expected_source_condition": "superseded",
+      "id": "superseded_version_conflict__logging",
+      "query": "Is audit logging currently enabled?",
+      "source_family": "superseded_version_conflict:logging",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Audit logging is enabled by default.",
+      "category": "stale_newer_same_fact",
+      "contexts": [
+        {
+          "id": "logging-old",
+          "metadata": {
+            "published_at": "2025-01-01",
+            "source_group": "logging"
+          },
+          "text": "Audit logging is enabled by default."
+        },
+        {
+          "id": "logging-current",
+          "metadata": {
+            "published_at": "2026-01-01",
+            "source_group": "logging"
+          },
+          "text": "Audit logging is enabled by default."
+        }
+      ],
+      "expected_source_condition": "stale",
+      "id": "stale_newer_same_fact__logging",
+      "query": "Is audit logging currently enabled?",
+      "source_family": "stale_newer_same_fact:logging",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Audit logging is enabled by default.",
+      "category": "low_authority",
+      "contexts": [
+        {
+          "id": "logging-old",
+          "metadata": {
+            "source_authority": "summary"
+          },
+          "text": "Audit logging is enabled by default."
+        }
+      ],
+      "expected_source_condition": "low_authority",
+      "id": "low_authority__logging",
+      "query": "Is audit logging currently enabled?",
+      "source_family": "low_authority:logging",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Audit logging is enabled by default.",
+      "category": "conflicting_authorities",
+      "contexts": [
+        {
+          "id": "logging-old",
+          "metadata": {
+            "current": true,
+            "source_authority": "official"
+          },
+          "text": "Audit logging is enabled by default."
+        },
+        {
+          "id": "logging-current",
+          "metadata": {
+            "current": true,
+            "source_authority": "regulator"
+          },
+          "text": "Audit logging is disabled by default."
+        }
+      ],
+      "expected_source_condition": "conflicting_authorities",
+      "id": "conflicting_authorities__logging",
+      "query": "Is audit logging currently enabled?",
+      "source_family": "conflicting_authorities:logging",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Audit logging is enabled by default.",
+      "category": "unknown",
+      "contexts": [
+        {
+          "id": "logging-old",
+          "metadata": {},
+          "text": "Audit logging is enabled by default."
+        }
+      ],
+      "expected_source_condition": "unknown",
+      "id": "unknown__logging",
+      "query": "Is audit logging currently enabled?",
+      "source_family": "unknown:logging",
+      "split": "heldout_development"
+    }
+  ],
+  "counts": {
+    "development": 36,
+    "heldout_development": 18
+  },
+  "evidence_class": "synthetic_development_only_not_research_evidence",
+  "payload_sha256": "7b60b1f445416afc81b54c3913b5422084182ccbc7bfd6f5d4a768c4446f673c",
+  "schema_version": "1.0"
+}

@@ -97,3 +97,21 @@ risk. The gate is deliberately narrow: it can intervene only when observable
 contradiction or omission signals exist, while the deterministic checker remains
 a fallback. The corpus and every resulting metric are development-only and must
 not be described as external, untouched, or SOTA evidence.
+
+## Source-condition reasoning
+
+The source-condition pack exercises explicit status, typed booleans,
+replacement relations, within-lineage version and timestamp comparisons,
+authority labels, and observable conflicts between authoritative sources. Its
+development and held-out-development source families are disjoint.
+
+```bash
+.venv/bin/python benchmarks/product_safety/build_source_condition_corpus.py
+.venv/bin/python benchmarks/product_safety/build_source_condition_corpus.py --check
+.venv/bin/python benchmarks/product_safety/run_source_condition_benchmark.py
+```
+
+The report compares frozen v2 with the opt-in v2.1 reasoner using
+source-condition accuracy, macro-F1, and dangerous false-green rate. These are
+templated mechanism tests. Their held-out-development split is not an untouched
+test and cannot support an external-generalization or SOTA claim.

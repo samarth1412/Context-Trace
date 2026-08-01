@@ -24,6 +24,10 @@ from .runner import (
     verify_trace_v2_1,
     verify_traces_v2_1,
 )
+from .source import (
+    SOURCE_CONDITION_REASONER_VERSION,
+    assess_source_condition_v2_1,
+)
 
 __all__ = [
     "ATOMIC_CLAIM_UNITIZER_VERSION",
@@ -31,11 +35,13 @@ __all__ = [
     "OBSERVABLE_CONFLICT_GUARD_VERSION",
     "RISK_FEATURE_VERSION",
     "SELECTIVE_V2_1_PROFILE",
+    "SOURCE_CONDITION_REASONER_VERSION",
     "LearnedSupportRiskGate",
     "ObservableConflict",
     "ObservableConflictGuard",
     "SupportRiskModel",
     "V21Profile",
+    "assess_source_condition_v2_1",
     "extract_risk_features",
     "load_support_risk_model",
     "observable_conflicts",

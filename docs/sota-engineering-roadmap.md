@@ -79,4 +79,9 @@ required to establish the core verifier result.
   selective coverage, and selective risk recorded on separate synthetic
   validation and held-out-development families. Calibration on broader public
   and external development data remains pending.
-- Stages 4--7 remain pending.
+- Stage 4 has an initial relational source-condition reasoner and a 54-case
+  source-family-disjoint synthetic development pack. Replacement links,
+  within-lineage version/time comparisons, authority labels, inconsistent
+  metadata precedence, and authoritative conflicts are covered. External
+  temporal/source-condition transfer remains pending.
+- Stages 5--7 remain pending.

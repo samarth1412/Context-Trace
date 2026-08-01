@@ -18,6 +18,7 @@ class V21Profile(V2Profile):
     atomic_claim_unitization: bool = True
     observable_conflict_guard: bool = True
     learned_support_risk_gate: bool = True
+    relational_source_condition_reasoning: bool = True
     max_composed_nli_chars: int = 2400
     max_nli_query_chars: int = 512
 
