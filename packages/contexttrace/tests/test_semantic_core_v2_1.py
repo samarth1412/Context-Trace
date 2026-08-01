@@ -16,8 +16,12 @@ from contexttrace.verify.semantic_core_v2_1 import (
 
 
 class EntailingNLI:
+    def __init__(self) -> None:
+        self.contexts = []
+
     def verify_claim(self, *, query, claim, contexts):
         del query, claim
+        self.contexts.append(contexts)
         return JudgeVerdict(
             verdict="supported",
             confidence=0.95,
@@ -81,6 +85,10 @@ def test_strong_deterministic_support_remains_green() -> None:
     assert result["claims"][0]["route"] == "deterministic"
     assert result["claims"][0]["green"] is True
     assert result["summary"]["overall_status"] == "green"
+    span = result["claims"][0]["evidence_spans"][0]
+    context = _strong_trace().contexts[0]
+    assert span["role"] == "supporting"
+    assert context.text[span["start_char"] : span["end_char"]] == span["text"]
 
 
 def test_guarded_profile_is_hash_identified_and_v2_schema_compatible() -> None:
@@ -94,7 +102,40 @@ def test_guarded_profile_is_hash_identified_and_v2_schema_compatible() -> None:
     assert result["profile_id"] == "selective_v2_1_safety"
     assert result["profile_sha256"] == SELECTIVE_V2_1_PROFILE.sha256
     assert result["verification_profile"]["prevent_nli_only_green_promotion"] is True
+    assert result["verification_profile"]["compose_same_source_nli_spans"] is True
     jsonschema.Draft202012Validator(schema).validate(result)
+
+
+def test_nli_receives_query_cue_and_composed_same_source_spans() -> None:
+    nli = EntailingNLI()
+    trace = RAGTrace(
+        query="What can Qdrant filters target?",
+        answer=(
+            "Qdrant filters can impose conditions on payload and point IDs during "
+            "search or retrieval."
+        ),
+        contexts=[
+            TraceContext(
+                id="qdrant",
+                text=(
+                    "With Qdrant, you can set conditions when searching or retrieving "
+                    "points. For example, you can impose conditions on both the payload "
+                    "and the id of the point."
+                ),
+                metadata={"canonical": True, "current": True},
+            )
+        ],
+    )
+
+    result = verify_trace_v2_1(trace, nli=nli)
+
+    assert result["claims"][0]["route"] == "nli"
+    assert len(nli.contexts) == 1
+    assert len(nli.contexts[0]) == 1
+    premise = nli.contexts[0][0].text
+    assert premise.startswith("Question: What can Qdrant filters target?\nEvidence: ")
+    assert "searching or retrieving points" in premise
+    assert "payload and the id of the point" in premise
 
 
 def test_guarded_batch_preserves_input_order() -> None:

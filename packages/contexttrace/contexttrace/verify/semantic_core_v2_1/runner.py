@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from contexttrace.verify.judges import ClaimJudge
-from contexttrace.verify.schema import RAGTrace
+from contexttrace.verify.schema import RAGTrace, TraceContext
 from contexttrace.verify.semantic_core_v2.limits import DEFAULT_V2_LIMITS, V2Limits
 from contexttrace.verify.semantic_core_v2.runner import (
     verify_trace_file_v2,
@@ -28,7 +28,12 @@ def verify_trace_v2_1(
 ) -> dict[str, Any]:
     """Verify one trace and prevent ambiguous NLI-only support from going green."""
 
-    result = verify_trace_v2(trace, profile=profile, nli=nli, limits=limits)
+    result = verify_trace_v2(
+        trace,
+        profile=profile,
+        nli=_composing_nli(nli, profile),
+        limits=limits,
+    )
     return _apply_safety_policy(result, profile)
 
 
@@ -39,7 +44,12 @@ def verify_trace_file_v2_1(
     nli: ClaimJudge | None = None,
     limits: V2Limits = DEFAULT_V2_LIMITS,
 ) -> dict[str, Any]:
-    result = verify_trace_file_v2(path, profile=profile, nli=nli, limits=limits)
+    result = verify_trace_file_v2(
+        path,
+        profile=profile,
+        nli=_composing_nli(nli, profile),
+        limits=limits,
+    )
     return _apply_safety_policy(result, profile)
 
 
@@ -54,11 +64,89 @@ def verify_traces_v2_1(
     results = verify_traces_v2(
         traces,
         profile=profile,
-        nli=nli,
+        nli=_composing_nli(nli, profile),
         limits=limits,
         max_workers=max_workers,
     )
     return [_apply_safety_policy(result, profile) for result in results]
+
+
+class _ComposingNLI:
+    def __init__(self, judge: ClaimJudge, profile: V21Profile) -> None:
+        self._judge = judge
+        self._profile = profile
+
+    def verify_claim(
+        self,
+        *,
+        query: str,
+        claim: str,
+        contexts: list[TraceContext],
+    ) -> Any:
+        composed = _compose_contexts(query, contexts, self._profile)
+        return self._judge.verify_claim(
+            query=query,
+            claim=claim,
+            contexts=composed,
+        )
+
+
+def _composing_nli(
+    nli: ClaimJudge | None,
+    profile: V21Profile,
+) -> ClaimJudge | None:
+    if nli is None:
+        return None
+    if (
+        not profile.compose_same_source_nli_spans
+        and not profile.include_query_cue_for_nli
+    ):
+        return nli
+    return _ComposingNLI(nli, profile)
+
+
+def _compose_contexts(
+    query: str,
+    contexts: list[TraceContext],
+    profile: V21Profile,
+) -> list[TraceContext]:
+    groups: dict[str, list[TraceContext]] = {}
+    order: list[str] = []
+    for context in contexts:
+        if context.id not in groups:
+            groups[context.id] = []
+            order.append(context.id)
+        groups[context.id].append(context)
+
+    composed: list[TraceContext] = []
+    for context_id in order:
+        spans = groups[context_id]
+        if profile.compose_same_source_nli_spans:
+            spans = sorted(spans, key=_span_start)
+        texts = list(dict.fromkeys(context.text.strip() for context in spans))
+        evidence = " ".join(text for text in texts if text)
+        evidence = evidence[: profile.max_composed_nli_chars].strip()
+        query_cue = str(query or "")[: profile.max_nli_query_chars].strip()
+        if profile.include_query_cue_for_nli and query_cue:
+            premise = f"Question: {query_cue}\nEvidence: {evidence}"
+        else:
+            premise = evidence
+        composed.append(
+            TraceContext(
+                id=context_id,
+                text=premise,
+                metadata={
+                    "evidence_scope": "bounded_composed_selected_spans",
+                    "composed_span_count": len(spans),
+                },
+            )
+        )
+    return composed
+
+
+def _span_start(context: TraceContext) -> tuple[int, str]:
+    value = context.metadata.get("start_char")
+    return (value if isinstance(value, int) else 0, context.text)
 
 
 def _apply_safety_policy(
