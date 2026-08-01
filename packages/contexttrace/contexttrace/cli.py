@@ -70,6 +70,12 @@ from contexttrace.verify.suite import (
     write_suite_result,
 )
 from contexttrace.verify.suite_report import SuiteReportGenerator
+from contexttrace.verify.semantic_core_v2 import build_pinned_nli
+from contexttrace.verify.semantic_core_v2_1 import (
+    DETERMINISTIC_ONLY_V2_1_PROFILE,
+    SELECTIVE_V2_1_PROFILE,
+    verify_trace_v2_1,
+)
 from contexttrace.verify.trace_inspect import inspect_trace
 from contexttrace.viewer import serve_viewer
 
@@ -309,6 +315,87 @@ def verify_command(
         written_report=written_report,
         fail_on=fail_on,
     )
+
+
+@cli.command("verify-v2")
+@click.argument("trace_json")
+@click.option(
+    "--profile",
+    "profile_name",
+    default="deterministic",
+    show_default=True,
+    type=click.Choice(["deterministic", "selective"]),
+    help="Use deterministic-only verification or the pinned selective NLI cascade.",
+)
+@click.option(
+    "--model-path",
+    default=None,
+    envvar="CONTEXTTRACE_NLI_MODEL_PATH",
+    help="Local pinned NLI directory; required for --profile selective.",
+)
+@click.option("--json", "json_output", is_flag=True, help="Print the full v2 result as JSON.")
+@click.option("--output", default=None, help="Optional path for the v2 result JSON.")
+@click.option(
+    "--fail-on",
+    multiple=True,
+    type=click.Choice(["warning", "abstained", "non_green", "any_failure"]),
+    help="Return non-zero for selected result states.",
+)
+def verify_v2_command(
+    trace_json: str,
+    profile_name: str,
+    model_path: Optional[str],
+    json_output: bool,
+    output: Optional[str],
+    fail_on: tuple[str, ...],
+) -> int:
+    """Run the opt-in safety verifier without changing stable v1 behavior."""
+
+    try:
+        trace = load_trace_file(trace_json)
+        if profile_name == "selective":
+            if not model_path:
+                raise click.ClickException(
+                    "--model-path or CONTEXTTRACE_NLI_MODEL_PATH is required for the selective profile."
+                )
+            nli = build_pinned_nli(model_path)
+            profile = SELECTIVE_V2_1_PROFILE
+        else:
+            nli = None
+            profile = DETERMINISTIC_ONLY_V2_1_PROFILE
+        result = verify_trace_v2_1(trace, profile=profile, nli=nli)
+    except VerificationInputError as exc:
+        raise click.ClickException(str(exc)) from exc
+    except (OSError, RuntimeError, ValueError) as exc:
+        raise click.ClickException(str(exc)) from exc
+
+    rendered = json.dumps(result, indent=2, sort_keys=True) + "\n"
+    if output:
+        output_path = Path(output)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(rendered, encoding="utf-8")
+
+    if json_output:
+        click.echo(rendered, nl=False)
+    else:
+        summary = result["summary"]
+        click.echo("Profile: %s" % result["profile_id"])
+        click.echo("Claims: %s" % summary["total_claims"])
+        click.echo("Status: %s" % summary["overall_status"])
+        click.echo("Green claims: %s" % summary["green_claims"])
+        click.echo("Diagnostic abstentions: %s" % summary["diagnostic_abstentions"])
+        click.echo("NLI invocations: %s" % summary["nli_invocations"])
+        if output:
+            click.echo("Result: %s" % output)
+
+    status = str(result["summary"]["overall_status"])
+    should_fail = bool(
+        "any_failure" in fail_on and status != "green"
+        or "non_green" in fail_on and status != "green"
+        or "warning" in fail_on and status == "warning"
+        or "abstained" in fail_on and status == "abstained"
+    )
+    return 1 if should_fail else 0
 
 
 @cli.command("inspect")

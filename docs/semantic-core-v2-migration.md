@@ -1,5 +1,8 @@
 # Migrating to `semantic_core_v2`
 
+> The safety-guarded product profile is being developed separately as
+> `semantic_core_v2_1`. See [verifier-v2.1-development.md](verifier-v2.1-development.md).
+
 `semantic_core_v2` is an opt-in research verifier. The default ContextTrace
 verifier remains `semantic_v1_calibrated`; existing v1 traces, schemas, CLI
 behavior, and provenance fields are unchanged.

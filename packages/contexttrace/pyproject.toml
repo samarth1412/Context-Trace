@@ -62,12 +62,12 @@ local-ml = [
     "sentence-transformers>=2.7",
 ]
 nli = [
-    "torch>=2.0",
-    "transformers>=4.41",
+    "torch>=2.0,<3",
+    "transformers>=4.41,<6",
 ]
 nli-onnx = [
     "onnxruntime>=1.17",
-    "transformers>=4.41",
+    "transformers>=4.41,<6",
 ]
 fastapi = [
     "fastapi>=0.110",
@@ -95,8 +95,8 @@ all = [
     "llama-index-core>=0.10",
     "opentelemetry-api>=1.24",
     "sentence-transformers>=2.7",
-    "torch>=2.0",
-    "transformers>=4.41",
+    "torch>=2.0,<3",
+    "transformers>=4.41,<6",
     "onnxruntime>=1.17",
 ]
 test = [
