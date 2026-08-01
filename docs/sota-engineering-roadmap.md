@@ -70,7 +70,13 @@ required to establish the core verifier result.
 
 - Stage 1 is implemented as exact-offset atomic unitization in the unreleased
   v2.1 profile.
-- Stage 2 has its first safety layer: a provenance-recorded observable-conflict
-  checker and a reproducible 24-pair synthetic regression pack. A learned or
-  distilled checker trained on broader public development data remains pending.
-- Stages 3--7 remain pending.
+- Stage 2 now includes a provenance-recorded observable-conflict checker, a
+  reproducible 24-pair synthetic regression pack, and a hash-locked learned
+  support-risk gate trained on 96 source-family-disjoint development examples.
+  Broader public and external development data remain necessary before this
+  stage can be considered mature.
+- Stage 3 has an initial calibrated support/reject mechanism with ECE, AURC,
+  selective coverage, and selective risk recorded on separate synthetic
+  validation and held-out-development families. Calibration on broader public
+  and external development data remains pending.
+- Stages 4--7 remain pending.

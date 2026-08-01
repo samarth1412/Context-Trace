@@ -121,6 +121,7 @@ contexttrace = [
     "verify/*.json",
     "verify/rulepacks/*.yaml",
     "verify/semantic_core_v2/rulepacks/*.json",
+    "verify/semantic_core_v2_1/artifacts/*.json",
     "schemas/*.json",
 ]
 

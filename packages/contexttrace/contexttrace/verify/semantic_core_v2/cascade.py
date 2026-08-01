@@ -322,7 +322,7 @@ def _agreement(deterministic: str, nli: str) -> bool:
 
 
 def _nli_record(verdict: JudgeVerdict) -> dict[str, Any]:
-    return {
+    record = {
         "provider": str(verdict.provider),
         "model": str(verdict.model) if verdict.model else None,
         "verdict": verdict.verdict,
@@ -333,6 +333,11 @@ def _nli_record(verdict: JudgeVerdict) -> dict[str, Any]:
         "evidence_scope": "bounded_selected_spans_only",
         "context_id": verdict.raw.get("context_id"),
     }
+    for key in ("learned_support_risk", "observable_conflict_guard"):
+        value = verdict.raw.get(key)
+        if isinstance(value, dict):
+            record[key] = dict(value)
+    return record
 
 
 def _unresolved(

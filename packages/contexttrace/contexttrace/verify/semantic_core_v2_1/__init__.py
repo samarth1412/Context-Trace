@@ -12,6 +12,13 @@ from .profile import (
     SELECTIVE_V2_1_PROFILE,
     V21Profile,
 )
+from .risk_model import (
+    RISK_FEATURE_VERSION,
+    LearnedSupportRiskGate,
+    SupportRiskModel,
+    extract_risk_features,
+    load_support_risk_model,
+)
 from .runner import (
     verify_trace_file_v2_1,
     verify_trace_v2_1,
@@ -22,10 +29,15 @@ __all__ = [
     "ATOMIC_CLAIM_UNITIZER_VERSION",
     "DETERMINISTIC_ONLY_V2_1_PROFILE",
     "OBSERVABLE_CONFLICT_GUARD_VERSION",
+    "RISK_FEATURE_VERSION",
     "SELECTIVE_V2_1_PROFILE",
+    "LearnedSupportRiskGate",
     "ObservableConflict",
     "ObservableConflictGuard",
+    "SupportRiskModel",
     "V21Profile",
+    "extract_risk_features",
+    "load_support_risk_model",
     "observable_conflicts",
     "unitize_atomic_claims",
     "verify_trace_file_v2_1",

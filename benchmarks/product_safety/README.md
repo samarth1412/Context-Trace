@@ -71,3 +71,29 @@ Compare the exact pinned generic NLI artifact with the dedicated checker:
 
 This pack is a mechanism and regression test, not independent research evidence.
 It must never be reported as an external benchmark or untouched result.
+
+## Learned support-risk gate
+
+The generated checker-development corpus contains 144 synthetic paired cases
+across the same 12 conflict categories. Its train, validation, and
+held-out-development source families are disjoint. Rebuild it or verify that the
+checked-in artifact is current:
+
+```bash
+.venv/bin/python benchmarks/product_safety/build_checker_development_corpus.py
+.venv/bin/python benchmarks/product_safety/build_checker_development_corpus.py --check
+```
+
+Train the tiny logistic support-risk gate with the exact pinned local NLI model:
+
+```bash
+.venv/bin/python benchmarks/product_safety/train_support_risk_model.py \
+  --model-path /private/models/nli-deberta-v3-small
+```
+
+The command writes a hash-locked package artifact and a training report with
+accuracy, false-entailment rate, ECE, AURC, selective coverage, and selective
+risk. The gate is deliberately narrow: it can intervene only when observable
+contradiction or omission signals exist, while the deterministic checker remains
+a fallback. The corpus and every resulting metric are development-only and must
+not be described as external, untouched, or SOTA evidence.

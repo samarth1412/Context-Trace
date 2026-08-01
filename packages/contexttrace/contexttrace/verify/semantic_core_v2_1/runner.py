@@ -21,6 +21,7 @@ from contexttrace.verify.semantic_core_v2.runner import (
 from .checker import ObservableConflictGuard
 from .claims import unitize_atomic_claims
 from .profile import SELECTIVE_V2_1_PROFILE, V21Profile
+from .risk_model import LearnedSupportRiskGate
 
 
 def verify_trace_v2_1(
@@ -104,9 +105,11 @@ def _composing_nli(
 ) -> ClaimJudge | None:
     if nli is None:
         return None
-    guarded_nli: ClaimJudge = (
-        ObservableConflictGuard(nli) if profile.observable_conflict_guard else nli
-    )
+    guarded_nli: ClaimJudge = nli
+    if profile.learned_support_risk_gate:
+        guarded_nli = LearnedSupportRiskGate(guarded_nli)
+    if profile.observable_conflict_guard:
+        guarded_nli = ObservableConflictGuard(guarded_nli)
     if (
         not profile.compose_same_source_nli_spans
         and not profile.include_query_cue_for_nli

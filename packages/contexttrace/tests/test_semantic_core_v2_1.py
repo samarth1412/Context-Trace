@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from dataclasses import replace
 from importlib import resources
 
 import jsonschema
@@ -64,7 +65,21 @@ def _strong_trace() -> RAGTrace:
     )
 
 
-def test_nli_only_support_cannot_be_promoted_to_green() -> None:
+def _version_conflict_trace() -> RAGTrace:
+    return RAGTrace(
+        query="Which schema version is current?",
+        answer="The schema version is v2.1.",
+        contexts=[
+            TraceContext(
+                id="schema",
+                text="The schema version is v1.8.",
+                metadata={"canonical": True, "current": True},
+            )
+        ],
+    )
+
+
+def test_ambiguous_nli_only_support_still_cannot_become_green() -> None:
     legacy = verify_trace_v2(_ambiguous_trace(), nli=EntailingNLI())
     guarded = verify_trace_v2_1(_ambiguous_trace(), nli=EntailingNLI())
 
@@ -75,6 +90,8 @@ def test_nli_only_support_cannot_be_promoted_to_green() -> None:
     assert claim["green"] is False
     assert claim["qualification_required"] is True
     assert claim["flags"]["nli_only_green_promotion_blocked"] is True
+    assert claim["nli"]["nli_label"] == "entailment"
+    assert claim["nli"]["learned_support_risk"]["eligible_for_intervention"] is False
     assert guarded["summary"]["green_claims"] == 0
     assert guarded["summary"]["overall_status"] == "warning"
 
@@ -91,6 +108,32 @@ def test_strong_deterministic_support_remains_green() -> None:
     assert context.text[span["start_char"] : span["end_char"]] == span["text"]
 
 
+def test_learned_intervention_is_preserved_in_output_provenance() -> None:
+    result = verify_trace_v2_1(_version_conflict_trace(), nli=EntailingNLI())
+
+    nli = result["claims"][0]["nli"]
+    assert result["claims"][0]["claim_verdict"] == "unsupported"
+    assert nli["provider"] == "contexttrace_learned_support_risk_gate"
+    assert nli["learned_support_risk"]["intervened"] is True
+
+
+def test_conflict_fallback_intervention_is_preserved_in_output_provenance() -> None:
+    fallback_only = replace(
+        SELECTIVE_V2_1_PROFILE,
+        learned_support_risk_gate=False,
+    )
+    result = verify_trace_v2_1(
+        _version_conflict_trace(),
+        profile=fallback_only,
+        nli=EntailingNLI(),
+    )
+
+    nli = result["claims"][0]["nli"]
+    assert result["claims"][0]["claim_verdict"] == "contradicted"
+    assert nli["provider"] == "contexttrace_observable_conflict_guard"
+    assert nli["observable_conflict_guard"]["version"]
+
+
 def test_guarded_profile_is_hash_identified_and_v2_schema_compatible() -> None:
     result = verify_trace_v2_1(_strong_trace())
     schema = json.loads(
@@ -103,6 +146,7 @@ def test_guarded_profile_is_hash_identified_and_v2_schema_compatible() -> None:
     assert result["profile_sha256"] == SELECTIVE_V2_1_PROFILE.sha256
     assert result["verification_profile"]["prevent_nli_only_green_promotion"] is True
     assert result["verification_profile"]["compose_same_source_nli_spans"] is True
+    assert result["verification_profile"]["learned_support_risk_gate"] is True
     jsonschema.Draft202012Validator(schema).validate(result)
 
 

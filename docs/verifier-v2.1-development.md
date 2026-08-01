@@ -6,7 +6,7 @@ and the stable ContextTrace verifier remains `semantic_v1_calibrated`.
 ## What changed
 
 The opt-in `semantic_core_v2_1` profile keeps the v2 output schema while adding
-four safety and accuracy policies:
+five safety and accuracy policies:
 
 1. A claim supported only by NLI after ambiguous deterministic evidence cannot
    become green. It remains supported-with-qualification.
@@ -21,8 +21,13 @@ four safety and accuracy policies:
    overriding explicit number, date, version, negation, identifier, path, status,
    relation, condition, scope, and boundary conflicts. It changes only accepted
    support decisions and records every intervention in the NLI provenance.
+5. A hash-locked logistic support-risk gate calibrates accepted NLI decisions
+   from NLI probabilities and observable conflict signals. It can reject or
+   abstain only when a contradiction or omission signal is present; otherwise it
+   records risk without changing the base verdict. The deterministic conflict
+   checker remains the final safety fallback.
 
-The profile hash includes both safety guards, composition switches,
+The profile hash includes all safety guards, composition switches,
 atomic-unitization switch, and character bounds. NLI continues to receive at
 most three selected spans, and the local model artifact must match the existing
 model, revision, file hashes, and manifest hash.
@@ -50,6 +55,17 @@ temporal boundary error. The dedicated conflict checker reduces accepted false
 entailment from 25% to 0% on the 12 negative controls while retaining 100%
 positive recall. This small synthetic result validates the mechanism only; it
 is not evidence of generalization or SOTA performance.
+
+The learned risk gate uses a generated 144-case development corpus with 96
+training, 24 validation, and 24 held-out-development cases. Source families are
+disjoint across the three splits, and all 12 mutation categories occur in each
+split. On the held-out-development split, the pinned generic NLI baseline has
+91.67% accuracy, 16.67% false entailment, 0.0796 ECE, and 0.0359 AURC. The
+learned gate has 100% accuracy, 0% false entailment, 0.0176 ECE, and 0 AURC on
+that small synthetic split. An earlier lexical-feature design was rejected
+because it reduced clean-support performance; the packaged model uses only NLI
+probabilities and observable signals. These are synthetic development metrics,
+not external or untouched evidence.
 
 ## Opt-in CLI
 

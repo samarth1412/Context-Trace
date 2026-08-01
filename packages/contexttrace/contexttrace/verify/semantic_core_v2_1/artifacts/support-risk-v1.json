@@ -1,0 +1,54 @@
+{
+  "feature_names": [
+    "base_confidence",
+    "nli_entailment",
+    "nli_contradiction",
+    "nli_neutral",
+    "contradiction_signal",
+    "omission_signal",
+    "conflict_count_scaled"
+  ],
+  "feature_version": "support-risk-features-v1.1.0",
+  "intercept": -0.32802254,
+  "means": [
+    0.980739583,
+    0.631510417,
+    0.358697917,
+    0.00971875,
+    0.416666667,
+    0.083333333,
+    0.184027778
+  ],
+  "model_version": "contexttrace-support-risk-v1.1.0",
+  "payload_sha256": "33128d68b238e8726951ccf7b237ca17b2685019181b25fb4a504fe9a6c72076",
+  "reject_threshold": 0.45,
+  "scales": [
+    0.053763999,
+    0.467058994,
+    0.470285776,
+    0.014691766,
+    0.493006649,
+    0.276385399,
+    0.203384509
+  ],
+  "schema_version": "1.0",
+  "support_threshold": 0.5,
+  "training": {
+    "corpus_payload_sha256": "038710d8615d1a9ec0416979efc36e6685c7c57abcb8fec10f5c895ebfccd6df",
+    "epochs": 3000,
+    "l2": 0.01,
+    "learning_rate": 0.08,
+    "optimizer": "deterministic_full_batch_logistic_gradient_descent",
+    "train_cases": 96,
+    "validation_cases": 24
+  },
+  "weights": [
+    0.335245302,
+    0.724991804,
+    -0.7110736,
+    -0.292050759,
+    -1.401280762,
+    -1.14746753,
+    -1.655642394
+  ]
+}

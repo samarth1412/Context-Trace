@@ -1,0 +1,1453 @@
+{
+  "builder_version": "contexttrace-checker-development-builder-v1.0.0",
+  "cases": [
+    {
+      "category": "numeric",
+      "claim": "The retention period is 30 days.",
+      "id": "numeric__retention__positive",
+      "label": 1,
+      "premise": "The retention period is 30 days.",
+      "query": "Verify the retention claim.",
+      "source_family": "numeric:retention",
+      "split": "train"
+    },
+    {
+      "category": "numeric",
+      "claim": "The retention period is 90 days.",
+      "id": "numeric__retention__negative",
+      "label": 0,
+      "premise": "The retention period is 30 days.",
+      "query": "Verify the retention claim.",
+      "source_family": "numeric:retention",
+      "split": "train"
+    },
+    {
+      "category": "numeric",
+      "claim": "The request timeout is 15 seconds.",
+      "id": "numeric__timeout__positive",
+      "label": 1,
+      "premise": "The request timeout is 15 seconds.",
+      "query": "Verify the timeout claim.",
+      "source_family": "numeric:timeout",
+      "split": "train"
+    },
+    {
+      "category": "numeric",
+      "claim": "The request timeout is 45 seconds.",
+      "id": "numeric__timeout__negative",
+      "label": 0,
+      "premise": "The request timeout is 15 seconds.",
+      "query": "Verify the timeout claim.",
+      "source_family": "numeric:timeout",
+      "split": "train"
+    },
+    {
+      "category": "numeric",
+      "claim": "Backups are retained for 14 days.",
+      "id": "numeric__backup__positive",
+      "label": 1,
+      "premise": "Backups are retained for 14 days.",
+      "query": "Verify the backup claim.",
+      "source_family": "numeric:backup",
+      "split": "train"
+    },
+    {
+      "category": "numeric",
+      "claim": "Backups are retained for 60 days.",
+      "id": "numeric__backup__negative",
+      "label": 0,
+      "premise": "Backups are retained for 14 days.",
+      "query": "Verify the backup claim.",
+      "source_family": "numeric:backup",
+      "split": "train"
+    },
+    {
+      "category": "numeric",
+      "claim": "The account quota is 100 requests.",
+      "id": "numeric__quota__positive",
+      "label": 1,
+      "premise": "The account quota is 100 requests.",
+      "query": "Verify the quota claim.",
+      "source_family": "numeric:quota",
+      "split": "train"
+    },
+    {
+      "category": "numeric",
+      "claim": "The account quota is 500 requests.",
+      "id": "numeric__quota__negative",
+      "label": 0,
+      "premise": "The account quota is 100 requests.",
+      "query": "Verify the quota claim.",
+      "source_family": "numeric:quota",
+      "split": "train"
+    },
+    {
+      "category": "numeric",
+      "claim": "The cache lifetime is 20 minutes.",
+      "id": "numeric__cache__positive",
+      "label": 1,
+      "premise": "The cache lifetime is 20 minutes.",
+      "query": "Verify the cache claim.",
+      "source_family": "numeric:cache",
+      "split": "validation"
+    },
+    {
+      "category": "numeric",
+      "claim": "The cache lifetime is 50 minutes.",
+      "id": "numeric__cache__negative",
+      "label": 0,
+      "premise": "The cache lifetime is 20 minutes.",
+      "query": "Verify the cache claim.",
+      "source_family": "numeric:cache",
+      "split": "validation"
+    },
+    {
+      "category": "numeric",
+      "claim": "Archives remain available for 7 years.",
+      "id": "numeric__archive__positive",
+      "label": 1,
+      "premise": "Archives remain available for 7 years.",
+      "query": "Verify the archive claim.",
+      "source_family": "numeric:archive",
+      "split": "test"
+    },
+    {
+      "category": "numeric",
+      "claim": "Archives remain available for 9 years.",
+      "id": "numeric__archive__negative",
+      "label": 0,
+      "premise": "Archives remain available for 7 years.",
+      "query": "Verify the archive claim.",
+      "source_family": "numeric:archive",
+      "split": "test"
+    },
+    {
+      "category": "date",
+      "claim": "The policy takes effect on July 1, 2026.",
+      "id": "date__policy__positive",
+      "label": 1,
+      "premise": "The policy takes effect on July 1, 2026.",
+      "query": "Verify the policy claim.",
+      "source_family": "date:policy",
+      "split": "train"
+    },
+    {
+      "category": "date",
+      "claim": "The policy takes effect on October 1, 2026.",
+      "id": "date__policy__negative",
+      "label": 0,
+      "premise": "The policy takes effect on July 1, 2026.",
+      "query": "Verify the policy claim.",
+      "source_family": "date:policy",
+      "split": "train"
+    },
+    {
+      "category": "date",
+      "claim": "The filing deadline is March 15, 2027.",
+      "id": "date__filing__positive",
+      "label": 1,
+      "premise": "The filing deadline is March 15, 2027.",
+      "query": "Verify the filing claim.",
+      "source_family": "date:filing",
+      "split": "train"
+    },
+    {
+      "category": "date",
+      "claim": "The filing deadline is April 15, 2027.",
+      "id": "date__filing__negative",
+      "label": 0,
+      "premise": "The filing deadline is March 15, 2027.",
+      "query": "Verify the filing claim.",
+      "source_family": "date:filing",
+      "split": "train"
+    },
+    {
+      "category": "date",
+      "claim": "Migration begins on August 10, 2026.",
+      "id": "date__migration__positive",
+      "label": 1,
+      "premise": "Migration begins on August 10, 2026.",
+      "query": "Verify the migration claim.",
+      "source_family": "date:migration",
+      "split": "train"
+    },
+    {
+      "category": "date",
+      "claim": "Migration begins on September 10, 2026.",
+      "id": "date__migration__negative",
+      "label": 0,
+      "premise": "Migration begins on August 10, 2026.",
+      "query": "Verify the migration claim.",
+      "source_family": "date:migration",
+      "split": "train"
+    },
+    {
+      "category": "date",
+      "claim": "Renewal opens on January 5, 2027.",
+      "id": "date__renewal__positive",
+      "label": 1,
+      "premise": "Renewal opens on January 5, 2027.",
+      "query": "Verify the renewal claim.",
+      "source_family": "date:renewal",
+      "split": "train"
+    },
+    {
+      "category": "date",
+      "claim": "Renewal opens on February 5, 2027.",
+      "id": "date__renewal__negative",
+      "label": 0,
+      "premise": "Renewal opens on January 5, 2027.",
+      "query": "Verify the renewal claim.",
+      "source_family": "date:renewal",
+      "split": "train"
+    },
+    {
+      "category": "date",
+      "claim": "The audit starts on May 20, 2026.",
+      "id": "date__audit__positive",
+      "label": 1,
+      "premise": "The audit starts on May 20, 2026.",
+      "query": "Verify the audit claim.",
+      "source_family": "date:audit",
+      "split": "validation"
+    },
+    {
+      "category": "date",
+      "claim": "The audit starts on June 20, 2026.",
+      "id": "date__audit__negative",
+      "label": 0,
+      "premise": "The audit starts on May 20, 2026.",
+      "query": "Verify the audit claim.",
+      "source_family": "date:audit",
+      "split": "validation"
+    },
+    {
+      "category": "date",
+      "claim": "The release ships on November 2, 2026.",
+      "id": "date__release__positive",
+      "label": 1,
+      "premise": "The release ships on November 2, 2026.",
+      "query": "Verify the release claim.",
+      "source_family": "date:release",
+      "split": "test"
+    },
+    {
+      "category": "date",
+      "claim": "The release ships on December 2, 2026.",
+      "id": "date__release__negative",
+      "label": 0,
+      "premise": "The release ships on November 2, 2026.",
+      "query": "Verify the release claim.",
+      "source_family": "date:release",
+      "split": "test"
+    },
+    {
+      "category": "version",
+      "claim": "Clients must use API v2.4.",
+      "id": "version__client__positive",
+      "label": 1,
+      "premise": "Clients must use API v2.4.",
+      "query": "Verify the client claim.",
+      "source_family": "version:client",
+      "split": "train"
+    },
+    {
+      "category": "version",
+      "claim": "Clients must use API v3.0.",
+      "id": "version__client__negative",
+      "label": 0,
+      "premise": "Clients must use API v2.4.",
+      "query": "Verify the client claim.",
+      "source_family": "version:client",
+      "split": "train"
+    },
+    {
+      "category": "version",
+      "claim": "The schema version is v1.8.",
+      "id": "version__schema__positive",
+      "label": 1,
+      "premise": "The schema version is v1.8.",
+      "query": "Verify the schema claim.",
+      "source_family": "version:schema",
+      "split": "train"
+    },
+    {
+      "category": "version",
+      "claim": "The schema version is v2.1.",
+      "id": "version__schema__negative",
+      "label": 0,
+      "premise": "The schema version is v1.8.",
+      "query": "Verify the schema claim.",
+      "source_family": "version:schema",
+      "split": "train"
+    },
+    {
+      "category": "version",
+      "claim": "The runtime requires v4.2.",
+      "id": "version__runtime__positive",
+      "label": 1,
+      "premise": "The runtime requires v4.2.",
+      "query": "Verify the runtime claim.",
+      "source_family": "version:runtime",
+      "split": "train"
+    },
+    {
+      "category": "version",
+      "claim": "The runtime requires v5.0.",
+      "id": "version__runtime__negative",
+      "label": 0,
+      "premise": "The runtime requires v4.2.",
+      "query": "Verify the runtime claim.",
+      "source_family": "version:runtime",
+      "split": "train"
+    },
+    {
+      "category": "version",
+      "claim": "The protocol uses v3.7.",
+      "id": "version__protocol__positive",
+      "label": 1,
+      "premise": "The protocol uses v3.7.",
+      "query": "Verify the protocol claim.",
+      "source_family": "version:protocol",
+      "split": "train"
+    },
+    {
+      "category": "version",
+      "claim": "The protocol uses v4.0.",
+      "id": "version__protocol__negative",
+      "label": 0,
+      "premise": "The protocol uses v3.7.",
+      "query": "Verify the protocol claim.",
+      "source_family": "version:protocol",
+      "split": "train"
+    },
+    {
+      "category": "version",
+      "claim": "The export format is v2.2.",
+      "id": "version__format__positive",
+      "label": 1,
+      "premise": "The export format is v2.2.",
+      "query": "Verify the format claim.",
+      "source_family": "version:format",
+      "split": "validation"
+    },
+    {
+      "category": "version",
+      "claim": "The export format is v2.9.",
+      "id": "version__format__negative",
+      "label": 0,
+      "premise": "The export format is v2.2.",
+      "query": "Verify the format claim.",
+      "source_family": "version:format",
+      "split": "validation"
+    },
+    {
+      "category": "version",
+      "claim": "The agent targets API v6.1.",
+      "id": "version__agent__positive",
+      "label": 1,
+      "premise": "The agent targets API v6.1.",
+      "query": "Verify the agent claim.",
+      "source_family": "version:agent",
+      "split": "test"
+    },
+    {
+      "category": "version",
+      "claim": "The agent targets API v7.0.",
+      "id": "version__agent__negative",
+      "label": 0,
+      "premise": "The agent targets API v6.1.",
+      "query": "Verify the agent claim.",
+      "source_family": "version:agent",
+      "split": "test"
+    },
+    {
+      "category": "negation",
+      "claim": "Audit logging is enabled by default.",
+      "id": "negation__logging__positive",
+      "label": 1,
+      "premise": "Audit logging is enabled by default.",
+      "query": "Verify the logging claim.",
+      "source_family": "negation:logging",
+      "split": "train"
+    },
+    {
+      "category": "negation",
+      "claim": "Audit logging is not enabled by default.",
+      "id": "negation__logging__negative",
+      "label": 0,
+      "premise": "Audit logging is enabled by default.",
+      "query": "Verify the logging claim.",
+      "source_family": "negation:logging",
+      "split": "train"
+    },
+    {
+      "category": "negation",
+      "claim": "Transport encryption is required.",
+      "id": "negation__encryption__positive",
+      "label": 1,
+      "premise": "Transport encryption is required.",
+      "query": "Verify the encryption claim.",
+      "source_family": "negation:encryption",
+      "split": "train"
+    },
+    {
+      "category": "negation",
+      "claim": "Transport encryption is not required.",
+      "id": "negation__encryption__negative",
+      "label": 0,
+      "premise": "Transport encryption is required.",
+      "query": "Verify the encryption claim.",
+      "source_family": "negation:encryption",
+      "split": "train"
+    },
+    {
+      "category": "negation",
+      "claim": "Record deletion is allowed.",
+      "id": "negation__deletion__positive",
+      "label": 1,
+      "premise": "Record deletion is allowed.",
+      "query": "Verify the deletion claim.",
+      "source_family": "negation:deletion",
+      "split": "train"
+    },
+    {
+      "category": "negation",
+      "claim": "Record deletion is not allowed.",
+      "id": "negation__deletion__negative",
+      "label": 0,
+      "premise": "Record deletion is allowed.",
+      "query": "Verify the deletion claim.",
+      "source_family": "negation:deletion",
+      "split": "train"
+    },
+    {
+      "category": "negation",
+      "claim": "Data export is permitted.",
+      "id": "negation__export__positive",
+      "label": 1,
+      "premise": "Data export is permitted.",
+      "query": "Verify the export claim.",
+      "source_family": "negation:export",
+      "split": "train"
+    },
+    {
+      "category": "negation",
+      "claim": "Data export is not permitted.",
+      "id": "negation__export__negative",
+      "label": 0,
+      "premise": "Data export is permitted.",
+      "query": "Verify the export claim.",
+      "source_family": "negation:export",
+      "split": "train"
+    },
+    {
+      "category": "negation",
+      "claim": "Response caching is active.",
+      "id": "negation__caching__positive",
+      "label": 1,
+      "premise": "Response caching is active.",
+      "query": "Verify the caching claim.",
+      "source_family": "negation:caching",
+      "split": "validation"
+    },
+    {
+      "category": "negation",
+      "claim": "Response caching is not active.",
+      "id": "negation__caching__negative",
+      "label": 0,
+      "premise": "Response caching is active.",
+      "query": "Verify the caching claim.",
+      "source_family": "negation:caching",
+      "split": "validation"
+    },
+    {
+      "category": "negation",
+      "claim": "Guest access is disabled.",
+      "id": "negation__access__positive",
+      "label": 1,
+      "premise": "Guest access is disabled.",
+      "query": "Verify the access claim.",
+      "source_family": "negation:access",
+      "split": "test"
+    },
+    {
+      "category": "negation",
+      "claim": "Guest access is not disabled.",
+      "id": "negation__access__negative",
+      "label": 0,
+      "premise": "Guest access is disabled.",
+      "query": "Verify the access claim.",
+      "source_family": "negation:access",
+      "split": "test"
+    },
+    {
+      "category": "reversed_relation",
+      "claim": "Service A calls Service B.",
+      "id": "reversed_relation__services__positive",
+      "label": 1,
+      "premise": "Service A calls Service B.",
+      "query": "Verify the services claim.",
+      "source_family": "reversed_relation:services",
+      "split": "train"
+    },
+    {
+      "category": "reversed_relation",
+      "claim": "Service B calls Service A.",
+      "id": "reversed_relation__services__negative",
+      "label": 0,
+      "premise": "Service A calls Service B.",
+      "query": "Verify the services claim.",
+      "source_family": "reversed_relation:services",
+      "split": "train"
+    },
+    {
+      "category": "reversed_relation",
+      "claim": "Worker X invokes Worker Y.",
+      "id": "reversed_relation__workers__positive",
+      "label": 1,
+      "premise": "Worker X invokes Worker Y.",
+      "query": "Verify the workers claim.",
+      "source_family": "reversed_relation:workers",
+      "split": "train"
+    },
+    {
+      "category": "reversed_relation",
+      "claim": "Worker Y invokes Worker X.",
+      "id": "reversed_relation__workers__negative",
+      "label": 0,
+      "premise": "Worker X invokes Worker Y.",
+      "query": "Verify the workers claim.",
+      "source_family": "reversed_relation:workers",
+      "split": "train"
+    },
+    {
+      "category": "reversed_relation",
+      "claim": "Queue A sends Queue B.",
+      "id": "reversed_relation__queues__positive",
+      "label": 1,
+      "premise": "Queue A sends Queue B.",
+      "query": "Verify the queues claim.",
+      "source_family": "reversed_relation:queues",
+      "split": "train"
+    },
+    {
+      "category": "reversed_relation",
+      "claim": "Queue B sends Queue A.",
+      "id": "reversed_relation__queues__negative",
+      "label": 0,
+      "premise": "Queue A sends Queue B.",
+      "query": "Verify the queues claim.",
+      "source_family": "reversed_relation:queues",
+      "split": "train"
+    },
+    {
+      "category": "reversed_relation",
+      "claim": "Store A writes Store B.",
+      "id": "reversed_relation__stores__positive",
+      "label": 1,
+      "premise": "Store A writes Store B.",
+      "query": "Verify the stores claim.",
+      "source_family": "reversed_relation:stores",
+      "split": "train"
+    },
+    {
+      "category": "reversed_relation",
+      "claim": "Store B writes Store A.",
+      "id": "reversed_relation__stores__negative",
+      "label": 0,
+      "premise": "Store A writes Store B.",
+      "query": "Verify the stores claim.",
+      "source_family": "reversed_relation:stores",
+      "split": "train"
+    },
+    {
+      "category": "reversed_relation",
+      "claim": "Agent A calls Agent B.",
+      "id": "reversed_relation__agents__positive",
+      "label": 1,
+      "premise": "Agent A calls Agent B.",
+      "query": "Verify the agents claim.",
+      "source_family": "reversed_relation:agents",
+      "split": "validation"
+    },
+    {
+      "category": "reversed_relation",
+      "claim": "Agent B calls Agent A.",
+      "id": "reversed_relation__agents__negative",
+      "label": 0,
+      "premise": "Agent A calls Agent B.",
+      "query": "Verify the agents claim.",
+      "source_family": "reversed_relation:agents",
+      "split": "validation"
+    },
+    {
+      "category": "reversed_relation",
+      "claim": "Job A creates Job B.",
+      "id": "reversed_relation__jobs__positive",
+      "label": 1,
+      "premise": "Job A creates Job B.",
+      "query": "Verify the jobs claim.",
+      "source_family": "reversed_relation:jobs",
+      "split": "test"
+    },
+    {
+      "category": "reversed_relation",
+      "claim": "Job B creates Job A.",
+      "id": "reversed_relation__jobs__negative",
+      "label": 0,
+      "premise": "Job A creates Job B.",
+      "query": "Verify the jobs claim.",
+      "source_family": "reversed_relation:jobs",
+      "split": "test"
+    },
+    {
+      "category": "identifier_substitution",
+      "claim": "The SDK supports JSON.",
+      "id": "identifier_substitution__sdk__positive",
+      "label": 1,
+      "premise": "The SDK supports JSON.",
+      "query": "Verify the sdk claim.",
+      "source_family": "identifier_substitution:sdk",
+      "split": "train"
+    },
+    {
+      "category": "identifier_substitution",
+      "claim": "The SDK supports YAML.",
+      "id": "identifier_substitution__sdk__negative",
+      "label": 0,
+      "premise": "The SDK supports JSON.",
+      "query": "Verify the sdk claim.",
+      "source_family": "identifier_substitution:sdk",
+      "split": "train"
+    },
+    {
+      "category": "identifier_substitution",
+      "claim": "The API accepts XML.",
+      "id": "identifier_substitution__api__positive",
+      "label": 1,
+      "premise": "The API accepts XML.",
+      "query": "Verify the api claim.",
+      "source_family": "identifier_substitution:api",
+      "split": "train"
+    },
+    {
+      "category": "identifier_substitution",
+      "claim": "The API accepts CSV.",
+      "id": "identifier_substitution__api__negative",
+      "label": 0,
+      "premise": "The API accepts XML.",
+      "query": "Verify the api claim.",
+      "source_family": "identifier_substitution:api",
+      "split": "train"
+    },
+    {
+      "category": "identifier_substitution",
+      "claim": "The CLI emits TOML.",
+      "id": "identifier_substitution__cli__positive",
+      "label": 1,
+      "premise": "The CLI emits TOML.",
+      "query": "Verify the cli claim.",
+      "source_family": "identifier_substitution:cli",
+      "split": "train"
+    },
+    {
+      "category": "identifier_substitution",
+      "claim": "The CLI emits JSON.",
+      "id": "identifier_substitution__cli__negative",
+      "label": 0,
+      "premise": "The CLI emits TOML.",
+      "query": "Verify the cli claim.",
+      "source_family": "identifier_substitution:cli",
+      "split": "train"
+    },
+    {
+      "category": "identifier_substitution",
+      "claim": "The ETL job reads CSV.",
+      "id": "identifier_substitution__etl__positive",
+      "label": 1,
+      "premise": "The ETL job reads CSV.",
+      "query": "Verify the etl claim.",
+      "source_family": "identifier_substitution:etl",
+      "split": "train"
+    },
+    {
+      "category": "identifier_substitution",
+      "claim": "The ETL job reads XML.",
+      "id": "identifier_substitution__etl__negative",
+      "label": 0,
+      "premise": "The ETL job reads CSV.",
+      "query": "Verify the etl claim.",
+      "source_family": "identifier_substitution:etl",
+      "split": "train"
+    },
+    {
+      "category": "identifier_substitution",
+      "claim": "The IDE imports YAML.",
+      "id": "identifier_substitution__ide__positive",
+      "label": 1,
+      "premise": "The IDE imports YAML.",
+      "query": "Verify the ide claim.",
+      "source_family": "identifier_substitution:ide",
+      "split": "validation"
+    },
+    {
+      "category": "identifier_substitution",
+      "claim": "The IDE imports TOML.",
+      "id": "identifier_substitution__ide__negative",
+      "label": 0,
+      "premise": "The IDE imports YAML.",
+      "query": "Verify the ide claim.",
+      "source_family": "identifier_substitution:ide",
+      "split": "validation"
+    },
+    {
+      "category": "identifier_substitution",
+      "claim": "The CDN serves AVIF.",
+      "id": "identifier_substitution__cdn__positive",
+      "label": 1,
+      "premise": "The CDN serves AVIF.",
+      "query": "Verify the cdn claim.",
+      "source_family": "identifier_substitution:cdn",
+      "split": "test"
+    },
+    {
+      "category": "identifier_substitution",
+      "claim": "The CDN serves PNG.",
+      "id": "identifier_substitution__cdn__negative",
+      "label": 0,
+      "premise": "The CDN serves AVIF.",
+      "query": "Verify the cdn claim.",
+      "source_family": "identifier_substitution:cdn",
+      "split": "test"
+    },
+    {
+      "category": "path_substitution",
+      "claim": "The replacement endpoint is /v2/search.",
+      "id": "path_substitution__search__positive",
+      "label": 1,
+      "premise": "The replacement endpoint is /v2/search.",
+      "query": "Verify the search claim.",
+      "source_family": "path_substitution:search",
+      "split": "train"
+    },
+    {
+      "category": "path_substitution",
+      "claim": "The replacement endpoint is /v1/search.",
+      "id": "path_substitution__search__negative",
+      "label": 0,
+      "premise": "The replacement endpoint is /v2/search.",
+      "query": "Verify the search claim.",
+      "source_family": "path_substitution:search",
+      "split": "train"
+    },
+    {
+      "category": "path_substitution",
+      "claim": "User creation uses /v3/users.",
+      "id": "path_substitution__users__positive",
+      "label": 1,
+      "premise": "User creation uses /v3/users.",
+      "query": "Verify the users claim.",
+      "source_family": "path_substitution:users",
+      "split": "train"
+    },
+    {
+      "category": "path_substitution",
+      "claim": "User creation uses /v2/users.",
+      "id": "path_substitution__users__negative",
+      "label": 0,
+      "premise": "User creation uses /v3/users.",
+      "query": "Verify the users claim.",
+      "source_family": "path_substitution:users",
+      "split": "train"
+    },
+    {
+      "category": "path_substitution",
+      "claim": "Events are posted to /api/events.",
+      "id": "path_substitution__events__positive",
+      "label": 1,
+      "premise": "Events are posted to /api/events.",
+      "query": "Verify the events claim.",
+      "source_family": "path_substitution:events",
+      "split": "train"
+    },
+    {
+      "category": "path_substitution",
+      "claim": "Events are posted to /api/logs.",
+      "id": "path_substitution__events__negative",
+      "label": 0,
+      "premise": "Events are posted to /api/events.",
+      "query": "Verify the events claim.",
+      "source_family": "path_substitution:events",
+      "split": "train"
+    },
+    {
+      "category": "path_substitution",
+      "claim": "Health checks use /status/health.",
+      "id": "path_substitution__health__positive",
+      "label": 1,
+      "premise": "Health checks use /status/health.",
+      "query": "Verify the health claim.",
+      "source_family": "path_substitution:health",
+      "split": "train"
+    },
+    {
+      "category": "path_substitution",
+      "claim": "Health checks use /status/live.",
+      "id": "path_substitution__health__negative",
+      "label": 0,
+      "premise": "Health checks use /status/health.",
+      "query": "Verify the health claim.",
+      "source_family": "path_substitution:health",
+      "split": "train"
+    },
+    {
+      "category": "path_substitution",
+      "claim": "Exports use /v4/export.",
+      "id": "path_substitution__export__positive",
+      "label": 1,
+      "premise": "Exports use /v4/export.",
+      "query": "Verify the export claim.",
+      "source_family": "path_substitution:export",
+      "split": "validation"
+    },
+    {
+      "category": "path_substitution",
+      "claim": "Exports use /v4/import.",
+      "id": "path_substitution__export__negative",
+      "label": 0,
+      "premise": "Exports use /v4/export.",
+      "query": "Verify the export claim.",
+      "source_family": "path_substitution:export",
+      "split": "validation"
+    },
+    {
+      "category": "path_substitution",
+      "claim": "Tokens are issued at /oauth/token.",
+      "id": "path_substitution__tokens__positive",
+      "label": 1,
+      "premise": "Tokens are issued at /oauth/token.",
+      "query": "Verify the tokens claim.",
+      "source_family": "path_substitution:tokens",
+      "split": "test"
+    },
+    {
+      "category": "path_substitution",
+      "claim": "Tokens are issued at /oauth/revoke.",
+      "id": "path_substitution__tokens__negative",
+      "label": 0,
+      "premise": "Tokens are issued at /oauth/token.",
+      "query": "Verify the tokens claim.",
+      "source_family": "path_substitution:tokens",
+      "split": "test"
+    },
+    {
+      "category": "status",
+      "claim": "The endpoint is active.",
+      "id": "status__endpoint__positive",
+      "label": 1,
+      "premise": "The endpoint is active.",
+      "query": "Verify the endpoint claim.",
+      "source_family": "status:endpoint",
+      "split": "train"
+    },
+    {
+      "category": "status",
+      "claim": "The endpoint is deprecated.",
+      "id": "status__endpoint__negative",
+      "label": 0,
+      "premise": "The endpoint is active.",
+      "query": "Verify the endpoint claim.",
+      "source_family": "status:endpoint",
+      "split": "train"
+    },
+    {
+      "category": "status",
+      "claim": "The schema is current.",
+      "id": "status__schema__positive",
+      "label": 1,
+      "premise": "The schema is current.",
+      "query": "Verify the schema claim.",
+      "source_family": "status:schema",
+      "split": "train"
+    },
+    {
+      "category": "status",
+      "claim": "The schema is superseded.",
+      "id": "status__schema__negative",
+      "label": 0,
+      "premise": "The schema is current.",
+      "query": "Verify the schema claim.",
+      "source_family": "status:schema",
+      "split": "train"
+    },
+    {
+      "category": "status",
+      "claim": "The feature is enabled.",
+      "id": "status__feature__positive",
+      "label": 1,
+      "premise": "The feature is enabled.",
+      "query": "Verify the feature claim.",
+      "source_family": "status:feature",
+      "split": "train"
+    },
+    {
+      "category": "status",
+      "claim": "The feature is disabled.",
+      "id": "status__feature__negative",
+      "label": 0,
+      "premise": "The feature is enabled.",
+      "query": "Verify the feature claim.",
+      "source_family": "status:feature",
+      "split": "train"
+    },
+    {
+      "category": "status",
+      "claim": "The connector is deprecated.",
+      "id": "status__connector__positive",
+      "label": 1,
+      "premise": "The connector is deprecated.",
+      "query": "Verify the connector claim.",
+      "source_family": "status:connector",
+      "split": "train"
+    },
+    {
+      "category": "status",
+      "claim": "The connector is active.",
+      "id": "status__connector__negative",
+      "label": 0,
+      "premise": "The connector is deprecated.",
+      "query": "Verify the connector claim.",
+      "source_family": "status:connector",
+      "split": "train"
+    },
+    {
+      "category": "status",
+      "claim": "The policy is superseded.",
+      "id": "status__policy__positive",
+      "label": 1,
+      "premise": "The policy is superseded.",
+      "query": "Verify the policy claim.",
+      "source_family": "status:policy",
+      "split": "validation"
+    },
+    {
+      "category": "status",
+      "claim": "The policy is current.",
+      "id": "status__policy__negative",
+      "label": 0,
+      "premise": "The policy is superseded.",
+      "query": "Verify the policy claim.",
+      "source_family": "status:policy",
+      "split": "validation"
+    },
+    {
+      "category": "status",
+      "claim": "The integration is disabled.",
+      "id": "status__integration__positive",
+      "label": 1,
+      "premise": "The integration is disabled.",
+      "query": "Verify the integration claim.",
+      "source_family": "status:integration",
+      "split": "test"
+    },
+    {
+      "category": "status",
+      "claim": "The integration is enabled.",
+      "id": "status__integration__negative",
+      "label": 0,
+      "premise": "The integration is disabled.",
+      "query": "Verify the integration claim.",
+      "source_family": "status:integration",
+      "split": "test"
+    },
+    {
+      "category": "condition_omission",
+      "claim": "Refunds are available if the item is unopened.",
+      "id": "condition_omission__refund__positive",
+      "label": 1,
+      "premise": "Refunds are available if the item is unopened.",
+      "query": "Verify the refund claim.",
+      "source_family": "condition_omission:refund",
+      "split": "train"
+    },
+    {
+      "category": "condition_omission",
+      "claim": "Refunds are available.",
+      "id": "condition_omission__refund__negative",
+      "label": 0,
+      "premise": "Refunds are available if the item is unopened.",
+      "query": "Verify the refund claim.",
+      "source_family": "condition_omission:refund",
+      "split": "train"
+    },
+    {
+      "category": "condition_omission",
+      "claim": "Retries occur if the request times out.",
+      "id": "condition_omission__retry__positive",
+      "label": 1,
+      "premise": "Retries occur if the request times out.",
+      "query": "Verify the retry claim.",
+      "source_family": "condition_omission:retry",
+      "split": "train"
+    },
+    {
+      "category": "condition_omission",
+      "claim": "Retries occur.",
+      "id": "condition_omission__retry__negative",
+      "label": 0,
+      "premise": "Retries occur if the request times out.",
+      "query": "Verify the retry claim.",
+      "source_family": "condition_omission:retry",
+      "split": "train"
+    },
+    {
+      "category": "condition_omission",
+      "claim": "Access is granted if MFA succeeds.",
+      "id": "condition_omission__access__positive",
+      "label": 1,
+      "premise": "Access is granted if MFA succeeds.",
+      "query": "Verify the access claim.",
+      "source_family": "condition_omission:access",
+      "split": "train"
+    },
+    {
+      "category": "condition_omission",
+      "claim": "Access is granted.",
+      "id": "condition_omission__access__negative",
+      "label": 0,
+      "premise": "Access is granted if MFA succeeds.",
+      "query": "Verify the access claim.",
+      "source_family": "condition_omission:access",
+      "split": "train"
+    },
+    {
+      "category": "condition_omission",
+      "claim": "A backup runs if replication fails.",
+      "id": "condition_omission__backup__positive",
+      "label": 1,
+      "premise": "A backup runs if replication fails.",
+      "query": "Verify the backup claim.",
+      "source_family": "condition_omission:backup",
+      "split": "train"
+    },
+    {
+      "category": "condition_omission",
+      "claim": "A backup runs.",
+      "id": "condition_omission__backup__negative",
+      "label": 0,
+      "premise": "A backup runs if replication fails.",
+      "query": "Verify the backup claim.",
+      "source_family": "condition_omission:backup",
+      "split": "train"
+    },
+    {
+      "category": "condition_omission",
+      "claim": "An alert fires if latency exceeds the limit.",
+      "id": "condition_omission__alert__positive",
+      "label": 1,
+      "premise": "An alert fires if latency exceeds the limit.",
+      "query": "Verify the alert claim.",
+      "source_family": "condition_omission:alert",
+      "split": "validation"
+    },
+    {
+      "category": "condition_omission",
+      "claim": "An alert fires.",
+      "id": "condition_omission__alert__negative",
+      "label": 0,
+      "premise": "An alert fires if latency exceeds the limit.",
+      "query": "Verify the alert claim.",
+      "source_family": "condition_omission:alert",
+      "split": "validation"
+    },
+    {
+      "category": "condition_omission",
+      "claim": "Renewal is allowed if payment clears.",
+      "id": "condition_omission__renewal__positive",
+      "label": 1,
+      "premise": "Renewal is allowed if payment clears.",
+      "query": "Verify the renewal claim.",
+      "source_family": "condition_omission:renewal",
+      "split": "test"
+    },
+    {
+      "category": "condition_omission",
+      "claim": "Renewal is allowed.",
+      "id": "condition_omission__renewal__negative",
+      "label": 0,
+      "premise": "Renewal is allowed if payment clears.",
+      "query": "Verify the renewal claim.",
+      "source_family": "condition_omission:renewal",
+      "split": "test"
+    },
+    {
+      "category": "scope_omission",
+      "claim": "Encryption is optional for local development.",
+      "id": "scope_omission__encryption__positive",
+      "label": 1,
+      "premise": "Encryption is optional for local development.",
+      "query": "Verify the encryption claim.",
+      "source_family": "scope_omission:encryption",
+      "split": "train"
+    },
+    {
+      "category": "scope_omission",
+      "claim": "Encryption is optional.",
+      "id": "scope_omission__encryption__negative",
+      "label": 0,
+      "premise": "Encryption is optional for local development.",
+      "query": "Verify the encryption claim.",
+      "source_family": "scope_omission:encryption",
+      "split": "train"
+    },
+    {
+      "category": "scope_omission",
+      "claim": "The feature is enabled for beta users.",
+      "id": "scope_omission__feature__positive",
+      "label": 1,
+      "premise": "The feature is enabled for beta users.",
+      "query": "Verify the feature claim.",
+      "source_family": "scope_omission:feature",
+      "split": "train"
+    },
+    {
+      "category": "scope_omission",
+      "claim": "The feature is enabled.",
+      "id": "scope_omission__feature__negative",
+      "label": 0,
+      "premise": "The feature is enabled for beta users.",
+      "query": "Verify the feature claim.",
+      "source_family": "scope_omission:feature",
+      "split": "train"
+    },
+    {
+      "category": "scope_omission",
+      "claim": "Priority support is available for enterprise accounts.",
+      "id": "scope_omission__support__positive",
+      "label": 1,
+      "premise": "Priority support is available for enterprise accounts.",
+      "query": "Verify the support claim.",
+      "source_family": "scope_omission:support",
+      "split": "train"
+    },
+    {
+      "category": "scope_omission",
+      "claim": "Priority support is available.",
+      "id": "scope_omission__support__negative",
+      "label": 0,
+      "premise": "Priority support is available for enterprise accounts.",
+      "query": "Verify the support claim.",
+      "source_family": "scope_omission:support",
+      "split": "train"
+    },
+    {
+      "category": "scope_omission",
+      "claim": "Deletion is available for administrators.",
+      "id": "scope_omission__delete__positive",
+      "label": 1,
+      "premise": "Deletion is available for administrators.",
+      "query": "Verify the delete claim.",
+      "source_family": "scope_omission:delete",
+      "split": "train"
+    },
+    {
+      "category": "scope_omission",
+      "claim": "Deletion is available.",
+      "id": "scope_omission__delete__negative",
+      "label": 0,
+      "premise": "Deletion is available for administrators.",
+      "query": "Verify the delete claim.",
+      "source_family": "scope_omission:delete",
+      "split": "train"
+    },
+    {
+      "category": "scope_omission",
+      "claim": "Caching is optional for local development.",
+      "id": "scope_omission__cache__positive",
+      "label": 1,
+      "premise": "Caching is optional for local development.",
+      "query": "Verify the cache claim.",
+      "source_family": "scope_omission:cache",
+      "split": "validation"
+    },
+    {
+      "category": "scope_omission",
+      "claim": "Caching is optional.",
+      "id": "scope_omission__cache__negative",
+      "label": 0,
+      "premise": "Caching is optional for local development.",
+      "query": "Verify the cache claim.",
+      "source_family": "scope_omission:cache",
+      "split": "validation"
+    },
+    {
+      "category": "scope_omission",
+      "claim": "Preview access is enabled for beta users.",
+      "id": "scope_omission__preview__positive",
+      "label": 1,
+      "premise": "Preview access is enabled for beta users.",
+      "query": "Verify the preview claim.",
+      "source_family": "scope_omission:preview",
+      "split": "test"
+    },
+    {
+      "category": "scope_omission",
+      "claim": "Preview access is enabled.",
+      "id": "scope_omission__preview__negative",
+      "label": 0,
+      "premise": "Preview access is enabled for beta users.",
+      "query": "Verify the preview claim.",
+      "source_family": "scope_omission:preview",
+      "split": "test"
+    },
+    {
+      "category": "numeric_boundary",
+      "claim": "Requests under 10 MB are accepted.",
+      "id": "numeric_boundary__request__positive",
+      "label": 1,
+      "premise": "Requests under 10 MB are accepted.",
+      "query": "Verify the request claim.",
+      "source_family": "numeric_boundary:request",
+      "split": "train"
+    },
+    {
+      "category": "numeric_boundary",
+      "claim": "Requests of 10 MB are accepted.",
+      "id": "numeric_boundary__request__negative",
+      "label": 0,
+      "premise": "Requests under 10 MB are accepted.",
+      "query": "Verify the request claim.",
+      "source_family": "numeric_boundary:request",
+      "split": "train"
+    },
+    {
+      "category": "numeric_boundary",
+      "claim": "Latency below 50 ms is healthy.",
+      "id": "numeric_boundary__latency__positive",
+      "label": 1,
+      "premise": "Latency below 50 ms is healthy.",
+      "query": "Verify the latency claim.",
+      "source_family": "numeric_boundary:latency",
+      "split": "train"
+    },
+    {
+      "category": "numeric_boundary",
+      "claim": "Latency of 50 ms is healthy.",
+      "id": "numeric_boundary__latency__negative",
+      "label": 0,
+      "premise": "Latency below 50 ms is healthy.",
+      "query": "Verify the latency claim.",
+      "source_family": "numeric_boundary:latency",
+      "split": "train"
+    },
+    {
+      "category": "numeric_boundary",
+      "claim": "Usage up to 100 GB is included.",
+      "id": "numeric_boundary__quota__positive",
+      "label": 1,
+      "premise": "Usage up to 100 GB is included.",
+      "query": "Verify the quota claim.",
+      "source_family": "numeric_boundary:quota",
+      "split": "train"
+    },
+    {
+      "category": "numeric_boundary",
+      "claim": "Usage of 100 GB is included.",
+      "id": "numeric_boundary__quota__negative",
+      "label": 0,
+      "premise": "Usage up to 100 GB is included.",
+      "query": "Verify the quota claim.",
+      "source_family": "numeric_boundary:quota",
+      "split": "train"
+    },
+    {
+      "category": "numeric_boundary",
+      "claim": "Accounts under 30 days old are restricted.",
+      "id": "numeric_boundary__age__positive",
+      "label": 1,
+      "premise": "Accounts under 30 days old are restricted.",
+      "query": "Verify the age claim.",
+      "source_family": "numeric_boundary:age",
+      "split": "train"
+    },
+    {
+      "category": "numeric_boundary",
+      "claim": "Accounts of 30 days old are restricted.",
+      "id": "numeric_boundary__age__negative",
+      "label": 0,
+      "premise": "Accounts under 30 days old are restricted.",
+      "query": "Verify the age claim.",
+      "source_family": "numeric_boundary:age",
+      "split": "train"
+    },
+    {
+      "category": "numeric_boundary",
+      "claim": "Batches below 500 items are processed.",
+      "id": "numeric_boundary__batch__positive",
+      "label": 1,
+      "premise": "Batches below 500 items are processed.",
+      "query": "Verify the batch claim.",
+      "source_family": "numeric_boundary:batch",
+      "split": "validation"
+    },
+    {
+      "category": "numeric_boundary",
+      "claim": "Batches of 500 items are processed.",
+      "id": "numeric_boundary__batch__negative",
+      "label": 0,
+      "premise": "Batches below 500 items are processed.",
+      "query": "Verify the batch claim.",
+      "source_family": "numeric_boundary:batch",
+      "split": "validation"
+    },
+    {
+      "category": "numeric_boundary",
+      "claim": "Plans under 20 dollars qualify.",
+      "id": "numeric_boundary__price__positive",
+      "label": 1,
+      "premise": "Plans under 20 dollars qualify.",
+      "query": "Verify the price claim.",
+      "source_family": "numeric_boundary:price",
+      "split": "test"
+    },
+    {
+      "category": "numeric_boundary",
+      "claim": "Plans of 20 dollars qualify.",
+      "id": "numeric_boundary__price__negative",
+      "label": 0,
+      "premise": "Plans under 20 dollars qualify.",
+      "query": "Verify the price claim.",
+      "source_family": "numeric_boundary:price",
+      "split": "test"
+    },
+    {
+      "category": "temporal_boundary",
+      "claim": "The endpoint was deprecated after v2.",
+      "id": "temporal_boundary__endpoint__positive",
+      "label": 1,
+      "premise": "The endpoint was deprecated after v2.",
+      "query": "Verify the endpoint claim.",
+      "source_family": "temporal_boundary:endpoint",
+      "split": "train"
+    },
+    {
+      "category": "temporal_boundary",
+      "claim": "The endpoint was deprecated in v2.",
+      "id": "temporal_boundary__endpoint__negative",
+      "label": 0,
+      "premise": "The endpoint was deprecated after v2.",
+      "query": "Verify the endpoint claim.",
+      "source_family": "temporal_boundary:endpoint",
+      "split": "train"
+    },
+    {
+      "category": "temporal_boundary",
+      "claim": "The client was removed after v4.",
+      "id": "temporal_boundary__client__positive",
+      "label": 1,
+      "premise": "The client was removed after v4.",
+      "query": "Verify the client claim.",
+      "source_family": "temporal_boundary:client",
+      "split": "train"
+    },
+    {
+      "category": "temporal_boundary",
+      "claim": "The client was removed in v4.",
+      "id": "temporal_boundary__client__negative",
+      "label": 0,
+      "premise": "The client was removed after v4.",
+      "query": "Verify the client claim.",
+      "source_family": "temporal_boundary:client",
+      "split": "train"
+    },
+    {
+      "category": "temporal_boundary",
+      "claim": "The format was introduced after v3.",
+      "id": "temporal_boundary__format__positive",
+      "label": 1,
+      "premise": "The format was introduced after v3.",
+      "query": "Verify the format claim.",
+      "source_family": "temporal_boundary:format",
+      "split": "train"
+    },
+    {
+      "category": "temporal_boundary",
+      "claim": "The format was introduced in v3.",
+      "id": "temporal_boundary__format__negative",
+      "label": 0,
+      "premise": "The format was introduced after v3.",
+      "query": "Verify the format claim.",
+      "source_family": "temporal_boundary:format",
+      "split": "train"
+    },
+    {
+      "category": "temporal_boundary",
+      "claim": "The flag is unavailable before v5.",
+      "id": "temporal_boundary__flag__positive",
+      "label": 1,
+      "premise": "The flag is unavailable before v5.",
+      "query": "Verify the flag claim.",
+      "source_family": "temporal_boundary:flag",
+      "split": "train"
+    },
+    {
+      "category": "temporal_boundary",
+      "claim": "The flag is unavailable in v5.",
+      "id": "temporal_boundary__flag__negative",
+      "label": 0,
+      "premise": "The flag is unavailable before v5.",
+      "query": "Verify the flag claim.",
+      "source_family": "temporal_boundary:flag",
+      "split": "train"
+    },
+    {
+      "category": "temporal_boundary",
+      "claim": "The method changed after v7.",
+      "id": "temporal_boundary__method__positive",
+      "label": 1,
+      "premise": "The method changed after v7.",
+      "query": "Verify the method claim.",
+      "source_family": "temporal_boundary:method",
+      "split": "validation"
+    },
+    {
+      "category": "temporal_boundary",
+      "claim": "The method changed in v7.",
+      "id": "temporal_boundary__method__negative",
+      "label": 0,
+      "premise": "The method changed after v7.",
+      "query": "Verify the method claim.",
+      "source_family": "temporal_boundary:method",
+      "split": "validation"
+    },
+    {
+      "category": "temporal_boundary",
+      "claim": "The schema is invalid before v6.",
+      "id": "temporal_boundary__schema__positive",
+      "label": 1,
+      "premise": "The schema is invalid before v6.",
+      "query": "Verify the schema claim.",
+      "source_family": "temporal_boundary:schema",
+      "split": "test"
+    },
+    {
+      "category": "temporal_boundary",
+      "claim": "The schema is invalid in v6.",
+      "id": "temporal_boundary__schema__negative",
+      "label": 0,
+      "premise": "The schema is invalid before v6.",
+      "query": "Verify the schema claim.",
+      "source_family": "temporal_boundary:schema",
+      "split": "test"
+    }
+  ],
+  "counts": {
+    "test": 24,
+    "train": 96,
+    "validation": 24
+  },
+  "evidence_class": "synthetic_development_only_not_research_evidence",
+  "payload_sha256": "038710d8615d1a9ec0416979efc36e6685c7c57abcb8fec10f5c895ebfccd6df",
+  "schema_version": "1.0"
+}
