@@ -145,3 +145,10 @@ The v2.1 unitizer also treats short names, dates, numbers, and terms as exact-
 offset query-conditioned answer-fragment claims. This prevents an otherwise
 insufficient-input trace from being projected as green while preserving fillers
 such as acknowledgements as non-claims.
+
+The selective v2.1 profile can also group ordered ambiguous claims that select
+the same source. Grouping is allowed only when deterministic checking found all
+material facts and no conflict for every member. One high-confidence grouped
+entailment supports the members; neutral, contradictory, low-confidence, or
+failed group checks remain unverifiable. Long source-bearing query fields are
+never prefix-truncated into the NLI premise ahead of selected evidence.

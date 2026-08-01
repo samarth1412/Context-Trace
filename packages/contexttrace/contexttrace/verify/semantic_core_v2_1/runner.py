@@ -19,6 +19,7 @@ from contexttrace.verify.semantic_core_v2.limits import (
 )
 from contexttrace.verify.semantic_core_v2.runner import (
     ClaimUnitizer,
+    NLIRouter,
     verify_trace_v2,
     verify_traces_v2,
 )
@@ -26,6 +27,7 @@ from contexttrace.verify.semantic_core_v2.runner import (
 from .attribution import attribute_evidence_v2_1
 from .checker import ObservableConflictGuard
 from .claims import unitize_atomic_claims
+from .grouping import prepare_grouped_nli
 from .profile import SELECTIVE_V2_1_PROFILE, V21Profile
 from .risk_model import LearnedSupportRiskGate
 from .source import assess_source_condition_v2_1
@@ -46,6 +48,7 @@ def verify_trace_v2_1(
         nli=_composing_nli(nli, profile),
         limits=limits,
         _claim_unitizer=_claim_unitizer(profile),
+        _nli_router=_grouped_nli_router(profile),
     )
     bounded, _ = apply_limits(trace, limits)
     return _apply_safety_policy(result, profile, trace=bounded)
@@ -81,6 +84,7 @@ def verify_traces_v2_1(
         limits=limits,
         max_workers=max_workers,
         _claim_unitizer=_claim_unitizer(profile),
+        _nli_router=_grouped_nli_router(profile),
     )
     bounded = [apply_limits(trace, limits)[0] for trace in traces]
     return [
@@ -134,6 +138,14 @@ def _claim_unitizer(profile: V21Profile) -> ClaimUnitizer:
     return unitize_claims
 
 
+def _grouped_nli_router(profile: V21Profile) -> NLIRouter:
+    def route(trace, claims, runtime_profile, nli):
+        del runtime_profile
+        return prepare_grouped_nli(trace, claims, profile, nli)
+
+    return route
+
+
 def _compose_contexts(
     query: str,
     contexts: list[TraceContext],
@@ -155,7 +167,7 @@ def _compose_contexts(
         texts = list(dict.fromkeys(context.text.strip() for context in spans))
         evidence = " ".join(text for text in texts if text)
         evidence = evidence[: profile.max_composed_nli_chars].strip()
-        query_cue = str(query or "")[: profile.max_nli_query_chars].strip()
+        query_cue = _bounded_query_cue(query, profile)
         if profile.include_query_cue_for_nli and query_cue:
             premise = f"Question: {query_cue}\nEvidence: {evidence}"
         else:
@@ -171,6 +183,24 @@ def _compose_contexts(
             )
         )
     return composed
+
+
+def _bounded_query_cue(query: str, profile: V21Profile) -> str:
+    """Return a complete short query cue, never a truncated source document.
+
+    Some summarization traces place the entire source document in ``query``.
+    Prefix-truncating that value can consume the NLI token budget before the
+    selected evidence and can turn an otherwise entailed claim into a spurious
+    contradiction. A cue is therefore optional: admit it only when it fits the
+    configured bound in full.
+    """
+
+    if not profile.include_query_cue_for_nli:
+        return ""
+    value = str(query or "").strip()
+    if not value or len(value) > profile.max_nli_query_chars:
+        return ""
+    return value
 
 
 def _span_start(context: TraceContext) -> tuple[int, str]:
@@ -204,10 +234,35 @@ def _apply_safety_policy(
     }
     result["summary"]["root_causes"] = {key: roots[key] for key in sorted(roots)}
     result["summary"]["green_claims"] = sum(bool(claim["green"]) for claim in claims)
+    nli_invocations = _physical_nli_invocations(claims)
+    result["summary"]["nli_invocations"] = nli_invocations
+    result["summary"]["nli_invocation_rate"] = (
+        round(nli_invocations / len(claims), 6) if claims else 0.0
+    )
     result["summary"]["overall_status"] = _overall_status(claims)
     result.pop("prediction_payload_sha256", None)
     result["prediction_payload_sha256"] = _canonical_sha256(result)
     return result
+
+
+def _physical_nli_invocations(claims: list[dict[str, Any]]) -> int:
+    grouped_ids: set[str] = set()
+    individual = 0
+    for claim in claims:
+        nli = claim.get("nli")
+        if not isinstance(nli, dict):
+            continue
+        grouped = nli.get("grouped_claim_nli")
+        group_id = (
+            str(grouped.get("group_id") or "")
+            if isinstance(grouped, dict)
+            else ""
+        )
+        if group_id:
+            grouped_ids.add(group_id)
+        else:
+            individual += 1
+    return individual + len(grouped_ids)
 
 
 def _apply_source_condition_policy(

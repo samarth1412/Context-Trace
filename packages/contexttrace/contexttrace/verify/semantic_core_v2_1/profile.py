@@ -20,10 +20,14 @@ class V21Profile(V2Profile):
     learned_support_risk_gate: bool = True
     relational_source_condition_reasoning: bool = True
     hierarchical_evidence_attribution: bool = True
+    grouped_claim_nli: bool = True
     evidence_span_min_score: float = 0.18
     max_attribution_spans: int = 3
     max_composed_nli_chars: int = 2400
     max_nli_query_chars: int = 512
+    max_grouped_nli_claims: int = 3
+    max_grouped_nli_spans_per_claim: int = 2
+    grouped_nli_entailment_confidence: float = 0.95
 
     def __post_init__(self) -> None:
         super().__post_init__()
@@ -35,6 +39,16 @@ class V21Profile(V2Profile):
             raise ValueError("evidence_span_min_score must be between zero and one.")
         if not 1 <= self.max_attribution_spans <= 3:
             raise ValueError("max_attribution_spans must be between 1 and 3.")
+        if not 2 <= self.max_grouped_nli_claims <= 4:
+            raise ValueError("max_grouped_nli_claims must be between 2 and 4.")
+        if not 1 <= self.max_grouped_nli_spans_per_claim <= 3:
+            raise ValueError(
+                "max_grouped_nli_spans_per_claim must be between 1 and 3."
+            )
+        if not 0.0 <= self.grouped_nli_entailment_confidence <= 1.0:
+            raise ValueError(
+                "grouped_nli_entailment_confidence must be between zero and one."
+            )
 
 
 SELECTIVE_V2_1_PROFILE = V21Profile()

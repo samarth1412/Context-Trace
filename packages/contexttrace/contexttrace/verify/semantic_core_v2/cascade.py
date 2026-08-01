@@ -183,7 +183,7 @@ def resolve_cascade(
             claim=claim.verification_text,
             contexts=contexts,
         )
-    except Exception:
+    except Exception:  # noqa: BLE001 - provider failures must fail closed
         return _unresolved(
             deterministic,
             reason_code="local_nli_execution_failed",
@@ -200,6 +200,22 @@ def resolve_cascade(
             error_code=None,
             forced=profile.forced_classification,
             nli_record=nli_record,
+        )
+
+    grouped = nli_record.get("grouped_claim_nli")
+    if (
+        nli_verdict == "supported"
+        and isinstance(grouped, dict)
+        and grouped.get("resolution") == "entailed"
+    ):
+        return CascadeDecision(
+            verdict="supported",
+            confidence=round(float(verdict.confidence), 6),
+            route="nli",
+            abstained=False,
+            reason_code="grouped_nli_entailed_all_claims",
+            deterministic=deterministic,
+            nli=nli_record,
         )
 
     if deterministic.verdict == "unverifiable":
@@ -337,6 +353,9 @@ def _nli_record(verdict: JudgeVerdict) -> dict[str, Any]:
         value = verdict.raw.get(key)
         if isinstance(value, dict):
             record[key] = dict(value)
+    grouped = verdict.raw.get("grouped_claim_nli")
+    if isinstance(grouped, dict):
+        record["grouped_claim_nli"] = dict(grouped)
     return record
 
 

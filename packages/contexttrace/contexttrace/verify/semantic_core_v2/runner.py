@@ -31,6 +31,10 @@ from .rulepacks import load_rulepacks
 from .source import assess_source_condition
 
 ClaimUnitizer = Callable[..., tuple[list[ClaimUnit], bool]]
+NLIRouter = Callable[
+    [RAGTrace, list[ClaimUnit], V2Profile, ClaimJudge | None],
+    ClaimJudge | None,
+]
 
 
 def verify_trace_v2(
@@ -40,6 +44,7 @@ def verify_trace_v2(
     nli: ClaimJudge | None = None,
     limits: V2Limits = DEFAULT_V2_LIMITS,
     _claim_unitizer: ClaimUnitizer = unitize_claims,
+    _nli_router: NLIRouter | None = None,
 ) -> dict[str, Any]:
     """Verify one trace without changing semantic_v1_calibrated behavior."""
 
@@ -57,12 +62,17 @@ def verify_trace_v2(
         "claim_limit_hit": claim_limit_hit,
         "input_truncated": bool(truncation["applied"]),
     }
+    routed_nli = (
+        _nli_router(bounded, claims, profile, nli)
+        if _nli_router is not None
+        else nli
+    )
     claim_results = [
         _verify_claim(
             claim=claim,
             trace=bounded,
             profile=profile,
-            nli=nli,
+            nli=routed_nli,
             truncation=truncation,
         )
         for claim in claims
@@ -112,6 +122,7 @@ def verify_trace_file_v2(
     nli: ClaimJudge | None = None,
     limits: V2Limits = DEFAULT_V2_LIMITS,
     _claim_unitizer: ClaimUnitizer = unitize_claims,
+    _nli_router: NLIRouter | None = None,
 ) -> dict[str, Any]:
     return verify_trace_v2(
         load_trace_file(path),
@@ -119,6 +130,7 @@ def verify_trace_file_v2(
         nli=nli,
         limits=limits,
         _claim_unitizer=_claim_unitizer,
+        _nli_router=_nli_router,
     )
 
 
@@ -130,6 +142,7 @@ def verify_traces_v2(
     limits: V2Limits = DEFAULT_V2_LIMITS,
     max_workers: int = 4,
     _claim_unitizer: ClaimUnitizer = unitize_claims,
+    _nli_router: NLIRouter | None = None,
 ) -> list[dict[str, Any]]:
     """Verify a batch with bounded workers and stable input ordering."""
 
@@ -144,6 +157,7 @@ def verify_traces_v2(
             nli=safe_nli,
             limits=limits,
             _claim_unitizer=_claim_unitizer,
+            _nli_router=_nli_router,
         )
 
     with ThreadPoolExecutor(

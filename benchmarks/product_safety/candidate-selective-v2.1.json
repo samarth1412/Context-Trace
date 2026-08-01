@@ -33,7 +33,7 @@
     }
   },
   "profile_id": "selective_v2_1_safety",
-  "profile_sha256": "43aa400cd8a13d622ca7ddddd7ee1ba410c5f6d93c4ec26a07f0938dfc00b3ea",
+  "profile_sha256": "2b2cdff6cb73e924653f9ec87ef064b289f2e3774976d98385995532736674de",
   "public_holdout": {
     "abstention_requirement_recall": 1.0,
     "cases": 150,
@@ -43,8 +43,8 @@
     "dangerous_safe_classification_ids": [],
     "dangerous_safe_classification_rate": 0.0,
     "latency_ms": {
-      "p50": 6.697,
-      "p95": 47.388
+      "p50": 9.195,
+      "p95": 52.28
     },
     "nli_invocation_rate": 0.238889,
     "route_counts": {
@@ -116,7 +116,7 @@
         "target": 0.4
       },
       "public_p95_latency_ms": {
-        "actual": 47.388,
+        "actual": 52.28,
         "operator": "<=",
         "passed": true,
         "target": 250.0

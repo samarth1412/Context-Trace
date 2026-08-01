@@ -291,6 +291,9 @@ def _run_contexttrace_candidate(
     route_reasons: Counter[str] = Counter()
     deterministic_verdicts: Counter[str] = Counter()
     nli_verdicts: Counter[str] = Counter()
+    grouped_nli_ids: set[tuple[str, str]] = set()
+    grouped_nli_claims = 0
+    grouped_nli_resolutions: Counter[str] = Counter()
     for row in candidate_inputs:
         case_id = _row_id(row)
         started = time.perf_counter()
@@ -326,6 +329,15 @@ def _run_contexttrace_candidate(
             for claim in claims
             if claim.get("nli")
         )
+        for claim in claims:
+            grouped = ((claim.get("nli") or {}).get("grouped_claim_nli") or {})
+            if not isinstance(grouped, dict) or not grouped.get("group_id"):
+                continue
+            grouped_nli_claims += 1
+            grouped_nli_ids.add((case_id, str(grouped["group_id"])))
+            grouped_nli_resolutions.update(
+                [str(grouped.get("resolution") or "unknown")]
+            )
         raw_labels = {
             str(claim.get("failure_label"))
             for claim in claims
@@ -374,6 +386,9 @@ def _run_contexttrace_candidate(
         "route_reasons": dict(sorted(route_reasons.items())),
         "deterministic_verdicts": dict(sorted(deterministic_verdicts.items())),
         "nli_verdicts": dict(sorted(nli_verdicts.items())),
+        "grouped_nli_groups": len(grouped_nli_ids),
+        "grouped_nli_claims": grouped_nli_claims,
+        "grouped_nli_resolutions": dict(sorted(grouped_nli_resolutions.items())),
         "truncated_cases": truncated_cases,
         "latency_ms": {
             "p50": _percentile(latencies, 0.50),

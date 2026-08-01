@@ -186,6 +186,29 @@ def test_nli_receives_query_cue_and_composed_same_source_spans() -> None:
     assert "payload and the id of the point" in premise
 
 
+def test_nli_omits_oversized_query_instead_of_prefix_truncating_it() -> None:
+    nli = EntailingNLI()
+    oversized_query = "Summarize this source: " + ("source material " * 80)
+    trace = RAGTrace(
+        query=oversized_query,
+        answer="Defective items qualify for a replacement.",
+        contexts=[
+            TraceContext(
+                id="returns",
+                text="The returns policy covers defective products and available remedies.",
+            )
+        ],
+    )
+
+    result = verify_trace_v2_1(trace, nli=nli)
+
+    assert result["claims"][0]["route"] == "nli"
+    premise = nli.contexts[0][0].text
+    assert premise.startswith("The returns policy covers defective products")
+    assert "Question:" not in premise
+    assert oversized_query[: SELECTIVE_V2_1_PROFILE.max_nli_query_chars] not in premise
+
+
 def test_guarded_batch_preserves_input_order() -> None:
     results = verify_traces_v2_1(
         [_strong_trace(), _ambiguous_trace()],

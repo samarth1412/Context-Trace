@@ -11,6 +11,7 @@ from .checker import (
     observable_conflicts,
 )
 from .claims import ATOMIC_CLAIM_UNITIZER_VERSION, unitize_atomic_claims
+from .grouping import GROUPED_CLAIM_NLI_VERSION
 from .profile import (
     DETERMINISTIC_ONLY_V2_1_PROFILE,
     SELECTIVE_V2_1_PROFILE,
@@ -37,6 +38,7 @@ __all__ = [
     "ATOMIC_CLAIM_UNITIZER_VERSION",
     "DETERMINISTIC_ONLY_V2_1_PROFILE",
     "EVIDENCE_ATTRIBUTION_VERSION",
+    "GROUPED_CLAIM_NLI_VERSION",
     "OBSERVABLE_CONFLICT_GUARD_VERSION",
     "RISK_FEATURE_VERSION",
     "SELECTIVE_V2_1_PROFILE",

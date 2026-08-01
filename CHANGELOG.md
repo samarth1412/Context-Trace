@@ -13,12 +13,21 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Hash-locked same-ID development comparisons against cached RAGAS and
   RAGChecker outputs, with fail-closed coverage, error, adapter, and input-
   binding checks.
+- Conservative same-source grouped-claim NLI routing for the unreleased v2.1
+  profile. Only claims with complete deterministic material-fact coverage may
+  share a model call; non-entailing groups fail closed as unverifiable.
 
 ### Changed
 
 - Reduced the visible ARES development false-green rate from `0.085` to `0.000`
   and raised failure-label macro-F1 from `0.912` to `0.995`; these are visible
   development results, not untouched or SOTA evidence.
+- Omit oversized query cues from NLI premises instead of prefix-truncating
+  source-bearing prompts ahead of selected evidence.
+- Reduced the visible RAGTruth development NLI-call rate from `0.638` to
+  `0.372`, while retaining zero dangerous false greens and raising macro-F1
+  from `0.106` to `0.130`. ContextTrace still trails the locked RAGAS macro-F1
+  of `0.152`, so this is not SOTA evidence.
 
 ## [1.1.0] - 2026-07-22
 
