@@ -133,3 +133,10 @@ The report records exact-span precision/recall/F1, character IoU, complete-case
 rate, over-attribution, role accuracy, and answer/source offset integrity. The
 pack is templated development data and cannot support an external span-quality
 or SOTA claim.
+
+## External baseline development comparisons
+
+The Stage 6 fail-closed runner, artifact lock, reproducibility commands, and
+current visible-development findings are documented in
+`benchmarks/external_baselines/README.md`. Those results are not untouched
+evaluation evidence and do not replace the locked Stage 7 protocol.

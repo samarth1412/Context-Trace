@@ -88,4 +88,11 @@ required to establish the core verifier result.
   source-family-disjoint synthetic pack. It links answer offsets to atomic
   claims and exact supporting or refuting source spans, including complementary
   spans across documents. External span-labeled evaluation remains pending.
-- Stages 6--7 remain pending.
+- Stage 6 now has a fail-closed artifact lock and 600-case same-ID development
+  comparison across RAGTruth/RAGAS, ARES/RAGAS, and CRAG/RAGChecker. ContextTrace
+  beats RAGAS on ARES but loses on RAGTruth; the ARES dangerous-false-green rate
+  and RAGTruth NLI invocation rate both miss the candidate gates. CRAG is reported
+  only as proxy agreement. RefChecker and MiniCheck remain unavailable rather
+  than receiving unverified scores, so Stage 6 is not complete and no SOTA claim
+  is supported.
+- Stage 7 remains pending. No untouched labels were accessed by Stage 6.

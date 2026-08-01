@@ -1,0 +1,122 @@
+{
+  "schema_version": "1.0",
+  "evidence_class": "visible_external_calibration_only_not_untouched_research_evidence",
+  "artifact_root_hint": "benchmarks/contexttrace_bench/out",
+  "systems": [
+    {
+      "name": "RefChecker",
+      "version": "0.2.17",
+      "status": "not_run",
+      "reason": "No hash-locked same-ID output is available locally.",
+      "source": "https://github.com/amazon-science/RefChecker"
+    },
+    {
+      "name": "MiniCheck",
+      "version": "unversioned_source_revision_required",
+      "status": "not_run",
+      "reason": "No pinned source revision, model artifact, or same-ID output is available locally.",
+      "source": "https://github.com/Liyan06/MiniCheck"
+    },
+    {
+      "name": "RAGChecker",
+      "version": "0.1.9",
+      "status": "cached_reproducible_output",
+      "source": "https://github.com/amazon-science/RAGChecker"
+    },
+    {
+      "name": "RAGAS",
+      "version": "0.4.2",
+      "status": "cached_reproducible_output",
+      "source": "https://github.com/vibrantlabsai/ragas"
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "ragtruth-ragas-200",
+      "dataset": "RAGTruth",
+      "evaluation_kind": "visible_label_accuracy",
+      "expected_cases": 200,
+      "baseline_system": "RAGAS",
+      "baseline_version": "0.4.2 / gpt-4.1-mini max_output_tokens=32768",
+      "adapter_preset": "ragas",
+      "case_pack": {
+        "path": "ragtruth_release/ragtruth_reviewed_case_pack.json",
+        "sha256": "19294b50661931ae2f0d4e3c95d18c3220e52a021f5f0289fe459c760986ceaa"
+      },
+      "candidate_inputs": {
+        "path": "ragtruth_release/scored/candidate_inputs.jsonl",
+        "sha256": "f682aae7b20962d776738dc7a03391c208fcf91130dc55c85b054041a7736d12"
+      },
+      "baseline_raw": {
+        "path": "ragtruth_release/ragas_raw_results.json",
+        "sha256": "9923d929355d7a59a85f01d04aea4968dbc9f951e7ae2117671dd8900440d8de"
+      },
+      "baseline_candidate": {
+        "path": "ragtruth_release/ragas_predictions.json",
+        "sha256": "85c39ffaed7d8be59a19af8e446692706963e37832a4e30021286029356404de"
+      },
+      "limitations": [
+        "RAGTruth labels and this reviewed sampled case pack were visible during earlier development.",
+        "RAGAS reports faithfulness rather than ContextTrace's full diagnosis taxonomy."
+      ]
+    },
+    {
+      "id": "ares-nq-ragas-200",
+      "dataset": "ARES-NQ-example",
+      "evaluation_kind": "visible_label_accuracy",
+      "expected_cases": 200,
+      "baseline_system": "RAGAS",
+      "baseline_version": "0.4.2 / gpt-4.1-mini",
+      "adapter_preset": "ragas",
+      "case_pack": {
+        "path": "ares_nq_example/smoke200_compared/external_case_pack.json",
+        "sha256": "07c7455d0d7afca376ab792fa7062f1cfed20645bb70d23f61bcf7d4a839b114"
+      },
+      "candidate_inputs": {
+        "path": "ares_nq_example/smoke200_compared/scored/candidate_inputs.jsonl",
+        "sha256": "d7cc7b44edab7d28d8eea9a6d44a90e7dac172f78cd7e17be71ceb1ea4b603ce"
+      },
+      "baseline_raw": {
+        "path": "ares_nq_example/baselines_unique/ragas_raw_results.json",
+        "sha256": "41333d1b9d826c9f439d10df282959a08621ed703e8faa3ad0d4b041d236fe47"
+      },
+      "baseline_candidate": {
+        "path": "ares_nq_example/baselines_unique/ragas_predictions.json",
+        "sha256": "abba8e822d6ed761e2e07b071cd9924395b6cf991faed97f731bfd1397f56c90"
+      },
+      "limitations": [
+        "The official ARES NQ example and adapted labels were visible during earlier development.",
+        "The comparison uses the 200 unique same-ID rows; the older duplicate-ID artifact is excluded."
+      ]
+    },
+    {
+      "id": "crag-ragchecker-200",
+      "dataset": "CRAG-Task1-v5",
+      "evaluation_kind": "gold_answer_grounding_proxy_agreement",
+      "expected_cases": 200,
+      "baseline_system": "RAGChecker",
+      "baseline_version": "0.1.9 / extractor=openai/gpt-4.1-mini checker=openai/gpt-4.1-mini",
+      "adapter_preset": "ragchecker",
+      "case_pack": {
+        "path": "crag_official/review200_ragchecker/external_case_pack.json",
+        "sha256": "ecc03f8486bfb63c69ec55f3523eee7c44e1178d656a1cb3156a642e7d2437f7"
+      },
+      "candidate_inputs": {
+        "path": "crag_official/review200_ragchecker/scored/candidate_inputs.jsonl",
+        "sha256": "341c72011339e4072984987ac171d5448b302e6e262b191f454309be6ae34096"
+      },
+      "baseline_raw": {
+        "path": "crag_official/ragchecker/crag_full200_raw_results.json",
+        "sha256": "b6c99585cf7bac14b43b131c973267e9b0bf3e578eaab9b66b3e89791b17985c"
+      },
+      "baseline_candidate": {
+        "path": "crag_official/ragchecker/crag_full200_predictions.json",
+        "sha256": "940d24819964f5b460b638ad24a9df60933511221fd984f999aa0d4d2fc98678"
+      },
+      "limitations": [
+        "CRAG gold answers are not labels that retrieved evidence supports each answer.",
+        "This row measures evaluator agreement and proxy acceptance only, not accuracy or SOTA."
+      ]
+    }
+  ]
+}
