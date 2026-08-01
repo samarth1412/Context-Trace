@@ -1,0 +1,257 @@
+{
+  "schema_version": "1.0",
+  "description": "Controlled development fixtures for ContextTrace safety behavior. These cases are not independent research evidence.",
+  "cases": [
+    {
+      "id": "canonical_supported_with_citation",
+      "query": "What is the API timeout?",
+      "answer": "The API timeout is 30 seconds.",
+      "contexts": [
+        {
+          "id": "current_api",
+          "text": "The API timeout is 30 seconds.",
+          "metadata": {
+            "source_condition": "current_canonical"
+          }
+        }
+      ],
+      "citations": [
+        {
+          "claim": "The API timeout is 30 seconds.",
+          "source_id": "current_api"
+        }
+      ],
+      "metadata": {
+        "citation_required": true
+      },
+      "expected": {
+        "claim_verdicts": {"supported": 1},
+        "green_claims": 1,
+        "diagnostic_abstentions": 0,
+        "source_conditions": ["current_canonical"],
+        "citation_states": ["correct"],
+        "failure_labels": ["none"],
+        "root_causes": ["none"]
+      }
+    },
+    {
+      "id": "stale_grounded_answer",
+      "query": "What is the API timeout?",
+      "answer": "The API timeout is 60 seconds.",
+      "contexts": [
+        {
+          "id": "old_api",
+          "text": "The API timeout is 60 seconds.",
+          "metadata": {
+            "source_condition": "stale",
+            "source_version": "1.0"
+          }
+        }
+      ],
+      "expected": {
+        "claim_verdicts": {"supported": 1},
+        "green_claims": 0,
+        "diagnostic_abstentions": 0,
+        "source_conditions": ["stale"],
+        "failure_labels": ["source_condition_failure"],
+        "root_causes": ["stale_or_superseded_source"]
+      }
+    },
+    {
+      "id": "noncanonical_grounded_answer",
+      "query": "Which endpoint replaces /v1/search?",
+      "answer": "The replacement endpoint is /v2/search.",
+      "contexts": [
+        {
+          "id": "community_copy",
+          "text": "The replacement endpoint is /v2/search.",
+          "metadata": {
+            "source_condition": "current_noncanonical"
+          }
+        }
+      ],
+      "expected": {
+        "claim_verdicts": {"supported": 1},
+        "green_claims": 0,
+        "diagnostic_abstentions": 0,
+        "source_conditions": ["current_noncanonical"],
+        "failure_labels": ["source_condition_failure"],
+        "root_causes": ["noncanonical_or_low_authority_source"]
+      }
+    },
+    {
+      "id": "low_authority_grounded_answer",
+      "query": "When does the policy take effect?",
+      "answer": "The policy takes effect on July 1.",
+      "contexts": [
+        {
+          "id": "unverified_summary",
+          "text": "The policy takes effect on July 1.",
+          "metadata": {
+            "authority_score": 0.2
+          }
+        }
+      ],
+      "expected": {
+        "claim_verdicts": {"supported": 1},
+        "green_claims": 0,
+        "diagnostic_abstentions": 0,
+        "source_conditions": ["low_authority"],
+        "failure_labels": ["source_condition_failure"],
+        "root_causes": ["noncanonical_or_low_authority_source"]
+      }
+    },
+    {
+      "id": "conflicting_authorities",
+      "query": "What is the filing deadline?",
+      "answer": "The filing deadline is September 1.",
+      "contexts": [
+        {
+          "id": "policy_a",
+          "text": "The filing deadline is September 1.",
+          "metadata": {
+            "source_condition": "conflicting_authorities"
+          }
+        },
+        {
+          "id": "policy_b",
+          "text": "The filing deadline is October 1.",
+          "metadata": {
+            "source_condition": "current_canonical"
+          }
+        }
+      ],
+      "expected": {
+        "claim_verdicts": {"supported": 1},
+        "green_claims": 0,
+        "diagnostic_abstentions": 0,
+        "source_conditions": ["conflicting_authorities"],
+        "failure_labels": ["should_have_abstained"],
+        "root_causes": ["conflicting_contexts"]
+      }
+    },
+    {
+      "id": "observable_contradiction",
+      "query": "Is audit logging enabled?",
+      "answer": "Audit logging is disabled by default.",
+      "contexts": [
+        {
+          "id": "security_guide",
+          "text": "Audit logging is enabled by default.",
+          "metadata": {
+            "source_condition": "current_canonical"
+          }
+        }
+      ],
+      "expected": {
+        "claim_verdicts": {"contradicted": 1},
+        "green_claims": 0,
+        "diagnostic_abstentions": 0,
+        "source_conditions": ["current_canonical"],
+        "failure_labels": ["should_have_abstained"],
+        "root_causes": ["answer_overreach"]
+      }
+    },
+    {
+      "id": "unsupported_requires_abstention",
+      "query": "What is the enterprise retention period?",
+      "answer": "The enterprise retention period is seven years.",
+      "contexts": [
+        {
+          "id": "pricing_guide",
+          "text": "The enterprise plan includes priority support and regional backups.",
+          "metadata": {
+            "source_condition": "current_canonical"
+          }
+        }
+      ],
+      "metadata": {
+        "eligible_evidence_in_corpus": false
+      },
+      "expected": {
+        "claim_verdicts": {"unsupported": 1},
+        "green_claims": 0,
+        "diagnostic_abstentions": 0,
+        "failure_labels": ["should_have_abstained"],
+        "root_causes": ["corpus_gap"]
+      }
+    },
+    {
+      "id": "supported_but_missing_required_citation",
+      "query": "What is the refund window?",
+      "answer": "The refund window is 14 days.",
+      "contexts": [
+        {
+          "id": "refund_policy",
+          "text": "The refund window is 14 days.",
+          "metadata": {
+            "source_condition": "current_canonical"
+          }
+        }
+      ],
+      "metadata": {
+        "citation_required": true
+      },
+      "expected": {
+        "claim_verdicts": {"supported": 1},
+        "green_claims": 0,
+        "diagnostic_abstentions": 0,
+        "citation_states": ["missing"],
+        "failure_labels": ["citation_mismatch"],
+        "root_causes": ["citation_mismatch"]
+      }
+    },
+    {
+      "id": "supported_but_wrong_citation",
+      "query": "What is the refund window?",
+      "answer": "The refund window is 14 days.",
+      "contexts": [
+        {
+          "id": "refund_policy",
+          "text": "The refund window is 14 days.",
+          "metadata": {
+            "source_condition": "current_canonical"
+          }
+        },
+        {
+          "id": "shipping_policy",
+          "text": "Standard shipping takes five business days.",
+          "metadata": {
+            "source_condition": "current_canonical"
+          }
+        }
+      ],
+      "citations": [
+        {
+          "claim": "The refund window is 14 days.",
+          "source_id": "shipping_policy"
+        }
+      ],
+      "metadata": {
+        "citation_required": true
+      },
+      "expected": {
+        "claim_verdicts": {"supported": 1},
+        "green_claims": 0,
+        "diagnostic_abstentions": 0,
+        "citation_states": ["wrong_source"],
+        "failure_labels": ["citation_mismatch"],
+        "root_causes": ["citation_mismatch"]
+      }
+    },
+    {
+      "id": "no_retrieved_context",
+      "query": "What is the production rate limit?",
+      "answer": "The production rate limit is 500 requests per minute.",
+      "contexts": [],
+      "expected": {
+        "claim_verdicts": {"unverifiable": 1},
+        "green_claims": 0,
+        "diagnostic_abstentions": 1,
+        "source_conditions": ["unknown"],
+        "failure_labels": ["should_have_abstained"],
+        "root_causes": ["failure_to_abstain"]
+      }
+    }
+  ]
+}
