@@ -42,12 +42,12 @@ The model path must contain the hash-locked artifact expected by
 ## Current result
 
 The checked-in report has SHA-256
-`ca02cdc50682f9a62b3bb00c5bb57506c23d12ea517513b4b0b276299a385097`.
+`a5e96c9bb186e8cb5dc4f59ba72c2594399c66b3e0e2c49441b67f983f342913`.
 All three comparisons contain 200 unique same-ID cases and zero runtime failures.
 
 | Development comparison | ContextTrace macro-F1 | Baseline macro-F1 | Difference | Dangerous false green | NLI claim rate | Interpretation |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| RAGTruth / RAGAS | 0.130 | 0.152 | -0.022 | 0.000 | 0.372 | ContextTrace meets the call-rate gate but still loses this visible comparison. |
+| RAGTruth / RAGAS | 0.561 | 0.152 | +0.409 | 0.000 | 0.372 | ContextTrace leads this locked visible comparison; this is not untouched evidence. |
 | ARES NQ / RAGAS | 0.995 | 0.471 | +0.524 | 0.000 | 0.005 | Query-conditioned fragments remove all 17 false greens. |
 | CRAG / RAGChecker | N/A | N/A | N/A | N/A | 0.381 | Proxy agreement only: 0.740; this is not labeled accuracy. |
 
@@ -70,14 +70,24 @@ Stage 6 exposes two immediate development targets:
    is accepted only as high-confidence entailment, while every other outcome is
    unresolved rather than force-attributed. Oversized source-bearing queries are
    omitted from the NLI premise instead of being prefix-truncated ahead of the
-   evidence. Macro-F1 rises from `0.106` to `0.130` and exact match from `0.290`
-   to `0.340`, with zero dangerous false greens, but RAGAS remains ahead at
-   `0.152` macro-F1.
+   evidence. The RAGTruth adapter projects the verifier's native claim verdicts
+   transparently: any contradiction maps to `contradicted_answer`, all-supported
+   maps to `no_failure_detected`, all-unsupported maps to `unsupported`, and
+   every other mixture maps to `partial_support`. Each candidate row retains
+   `native_claim_verdicts` for audit. This corrects the earlier lossy projection
+   that mapped all `should_have_abstained` diagnoses to partial support.
+   Macro-F1 is `0.561` versus RAGAS at `0.152`, exact match is `0.480`, and the
+   dangerous false-green rate remains zero.
 
 RefChecker and MiniCheck remain required for a complete Stage 6 matrix. They
 must be pinned by package/source revision and model artifact, then run over the
 exact locked IDs. Adding them may require compute or provider authorization; it
 must not silently reuse unmatched published scores.
+
+The RAGTruth lead is visible development evidence from a label-inspected corpus.
+It does not establish external generalization or SOTA. That requires the sealed
+Stage 7 evaluation, the preregistered metrics, and complete same-ID competitor
+coverage.
 
 Official implementations:
 

@@ -25,9 +25,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Omit oversized query cues from NLI premises instead of prefix-truncating
   source-bearing prompts ahead of selected evidence.
 - Reduced the visible RAGTruth development NLI-call rate from `0.638` to
-  `0.372`, while retaining zero dangerous false greens and raising macro-F1
-  from `0.106` to `0.130`. ContextTrace still trails the locked RAGAS macro-F1
-  of `0.152`, so this is not SOTA evidence.
+  `0.372`, while retaining zero dangerous false greens.
+- Corrected the RAGTruth development adapter to preserve native contradictory,
+  supported, unsupported, and mixed claim-verdict structure instead of
+  collapsing every non-green answer into partial support. On the locked visible
+  200-case comparison, macro-F1 is `0.561` versus RAGAS at `0.152`. This is
+  visible development evidence, not an untouched or SOTA result.
 
 ## [1.1.0] - 2026-07-22
 

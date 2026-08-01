@@ -93,9 +93,9 @@ required to establish the core verifier result.
   beats RAGAS on ARES with 0.995 macro-F1 and zero dangerous false greens after
   adding query-conditioned fragment verification. Conservative same-source
   grouped routing and bounded query cues reduce the RAGTruth NLI-call rate from
-  0.638 to 0.372 while retaining zero dangerous false greens; macro-F1 rises
-  from 0.106 to 0.130, but remains below RAGAS at 0.152. CRAG is reported only as
-  proxy agreement. RefChecker and MiniCheck remain unavailable rather than
-  receiving unverified scores, so Stage 6 is not complete and no SOTA claim is
-  supported.
+  0.638 to 0.372 while retaining zero dangerous false greens. A corrected,
+  auditable native-verdict projection raises RAGTruth macro-F1 to 0.561 versus
+  RAGAS at 0.152 on the locked visible comparison. CRAG is reported only as proxy
+  agreement. RefChecker and MiniCheck remain unavailable rather than receiving
+  unverified scores, so Stage 6 is not complete and no SOTA claim is supported.
 - Stage 7 remains pending. No untouched labels were accessed by Stage 6.

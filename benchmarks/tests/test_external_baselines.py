@@ -67,6 +67,26 @@ def test_dataset_projection_is_explicit_and_narrow() -> None:
     assert _project_labels({"unsupported_answer"}, dataset="CRAG-Task1-v5") == {
         "unsupported_answer"
     }
+    assert _project_labels(
+        {"should_have_abstained"},
+        dataset="RAGTruth",
+        claim_verdicts={"supported", "contradicted"},
+    ) == {"contradicted_answer"}
+    assert _project_labels(
+        {"should_have_abstained"},
+        dataset="RAGTruth",
+        claim_verdicts={"supported", "unverifiable"},
+    ) == {"partial_support"}
+    assert _project_labels(
+        {"no_failure_detected"},
+        dataset="RAGTruth",
+        claim_verdicts={"supported"},
+    ) == {"no_failure_detected"}
+    assert _project_labels(
+        {"should_have_abstained"},
+        dataset="RAGTruth",
+        claim_verdicts={"unsupported"},
+    ) == {"unsupported"}
     assert (
         _project_root({"should_have_abstained", "unsupported_answer"})
         == "should_have_abstained"

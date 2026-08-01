@@ -344,9 +344,15 @@ def _run_contexttrace_candidate(
             if claim.get("failure_label") not in {None, "", "none"}
         }
         raw_labels = raw_labels or {"no_failure_detected"}
+        claim_verdicts = {
+            str(claim.get("claim_verdict"))
+            for claim in claims
+            if claim.get("claim_verdict")
+        }
         labels = _project_labels(
             raw_labels,
             dataset=str(item["dataset"]),
+            claim_verdicts=claim_verdicts,
         )
         prediction = {
             "id": case_id,
@@ -354,6 +360,7 @@ def _run_contexttrace_candidate(
             "predicted_primary_root_cause": _project_root(labels),
             "latency_ms": latency_ms,
             "native_failure_labels": sorted(raw_labels),
+            "native_claim_verdicts": sorted(claim_verdicts),
             "native_root_causes": sorted(
                 {
                     str(claim.get("primary_root_cause"))
@@ -477,7 +484,12 @@ def _metric_delta(left: dict[str, Any], right: dict[str, Any], key: str) -> floa
     return round(left_value - right_value, 6)
 
 
-def _project_labels(raw_labels: set[str], *, dataset: str) -> set[str]:
+def _project_labels(
+    raw_labels: set[str],
+    *,
+    dataset: str,
+    claim_verdicts: set[str] | None = None,
+) -> set[str]:
     labels = set(raw_labels)
     if not labels or labels == {"no_failure_detected"}:
         return {"no_failure_detected"}
@@ -487,6 +499,15 @@ def _project_labels(raw_labels: set[str], *, dataset: str) -> set[str]:
     if dataset_key == "ragtruth":
         if "citation_mismatch" in labels:
             return {"citation_mismatch"}
+        if claim_verdicts:
+            verdicts = set(claim_verdicts)
+            if "contradicted" in verdicts:
+                return {"contradicted_answer"}
+            if verdicts == {"supported"}:
+                return {"no_failure_detected"}
+            if verdicts == {"unsupported"}:
+                return {"unsupported"}
+            return {"partial_support"}
         if "contradicted_answer" in labels:
             return {"contradicted_answer"}
         if labels.intersection(
