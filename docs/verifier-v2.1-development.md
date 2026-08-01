@@ -6,18 +6,22 @@ and the stable ContextTrace verifier remains `semantic_v1_calibrated`.
 ## What changed
 
 The opt-in `semantic_core_v2_1` profile keeps the v2 output schema while adding
-two safety and accuracy policies:
+three safety and accuracy policies:
 
 1. A claim supported only by NLI after ambiguous deterministic evidence cannot
    become green. It remains supported-with-qualification.
 2. Bounded evidence spans from the same source are recomposed in source order
    for NLI, with a bounded query cue. This preserves cross-sentence evidence and
    product/entity context without exposing the full trace.
+3. Conservative atomic claim unitization separates coordinated facts only when
+   both sides are independently verifiable, preserves exact answer offsets, and
+   reconstructs shared subjects only from observable answer text. Frozen v2
+   unitization remains unchanged.
 
-The profile hash includes the guard, composition switches, and character
-bounds. NLI continues to receive at most three selected spans, and the local
-model artifact must match the existing model, revision, file hashes, and
-manifest hash.
+The profile hash includes the guard, composition switches, atomic-unitization
+switch, and character bounds. NLI continues to receive at most three selected
+spans, and the local model artifact must match the existing model, revision,
+file hashes, and manifest hash.
 
 ## Development-only results
 
@@ -27,7 +31,7 @@ fixtures:
 - controlled safety fixtures: 14/14;
 - clean supported-answer detection: 97.26%;
 - exact verdict-count match: 90.00%;
-- selective NLI invocation rate: 24.57%;
+- selective NLI invocation rate: 23.89%;
 - unresolved route rate: approximately 2%;
 - p95 latency on the development machine: below 50 ms;
 - dangerous false-green and dangerous safe-classification rates: 0%.

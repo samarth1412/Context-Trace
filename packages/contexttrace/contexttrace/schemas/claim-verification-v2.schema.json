@@ -401,7 +401,10 @@
           "minimum": 1
         },
         "unitizer_version": {
-          "const": "claim-unitizer-v2.0.0"
+          "enum": [
+            "claim-unitizer-v2.0.0",
+            "claim-unitizer-v2.1.0"
+          ]
         },
         "claim_verdict": {
           "$ref": "#/$defs/claimVerdict"

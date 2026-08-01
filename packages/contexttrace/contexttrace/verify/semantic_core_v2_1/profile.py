@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, replace
+from dataclasses import dataclass
 
 from contexttrace.verify.semantic_core_v2.profile import V2Profile
 
@@ -15,6 +15,7 @@ class V21Profile(V2Profile):
     prevent_nli_only_green_promotion: bool = True
     compose_same_source_nli_spans: bool = True
     include_query_cue_for_nli: bool = True
+    atomic_claim_unitization: bool = True
     max_composed_nli_chars: int = 2400
     max_nli_query_chars: int = 512
 
@@ -27,8 +28,7 @@ class V21Profile(V2Profile):
 
 
 SELECTIVE_V2_1_PROFILE = V21Profile()
-DETERMINISTIC_ONLY_V2_1_PROFILE = replace(
-    SELECTIVE_V2_1_PROFILE,
+DETERMINISTIC_ONLY_V2_1_PROFILE = V21Profile(
     id="deterministic_only_v2_1_safety",
     enable_nli=False,
 )

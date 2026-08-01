@@ -9,13 +9,16 @@ from typing import Any
 
 from contexttrace.verify.judges import ClaimJudge
 from contexttrace.verify.schema import RAGTrace, TraceContext
+from contexttrace.verify.semantic_core_v2.claims import unitize_claims
 from contexttrace.verify.semantic_core_v2.limits import DEFAULT_V2_LIMITS, V2Limits
 from contexttrace.verify.semantic_core_v2.runner import (
+    ClaimUnitizer,
     verify_trace_file_v2,
     verify_trace_v2,
     verify_traces_v2,
 )
 
+from .claims import unitize_atomic_claims
 from .profile import SELECTIVE_V2_1_PROFILE, V21Profile
 
 
@@ -33,6 +36,7 @@ def verify_trace_v2_1(
         profile=profile,
         nli=_composing_nli(nli, profile),
         limits=limits,
+        _claim_unitizer=_claim_unitizer(profile),
     )
     return _apply_safety_policy(result, profile)
 
@@ -49,6 +53,7 @@ def verify_trace_file_v2_1(
         profile=profile,
         nli=_composing_nli(nli, profile),
         limits=limits,
+        _claim_unitizer=_claim_unitizer(profile),
     )
     return _apply_safety_policy(result, profile)
 
@@ -67,6 +72,7 @@ def verify_traces_v2_1(
         nli=_composing_nli(nli, profile),
         limits=limits,
         max_workers=max_workers,
+        _claim_unitizer=_claim_unitizer(profile),
     )
     return [_apply_safety_policy(result, profile) for result in results]
 
@@ -103,6 +109,12 @@ def _composing_nli(
     ):
         return nli
     return _ComposingNLI(nli, profile)
+
+
+def _claim_unitizer(profile: V21Profile) -> ClaimUnitizer:
+    if profile.atomic_claim_unitization:
+        return unitize_atomic_claims
+    return unitize_claims
 
 
 def _compose_contexts(

@@ -6,6 +6,7 @@ import hashlib
 import json
 import threading
 from collections import Counter
+from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Any
@@ -29,6 +30,8 @@ from .profile import SELECTIVE_V2_PROFILE, V2Profile
 from .rulepacks import load_rulepacks
 from .source import assess_source_condition
 
+ClaimUnitizer = Callable[..., tuple[list[ClaimUnit], bool]]
+
 
 def verify_trace_v2(
     trace: RAGTrace,
@@ -36,13 +39,14 @@ def verify_trace_v2(
     profile: V2Profile = SELECTIVE_V2_PROFILE,
     nli: ClaimJudge | None = None,
     limits: V2Limits = DEFAULT_V2_LIMITS,
+    _claim_unitizer: ClaimUnitizer = unitize_claims,
 ) -> dict[str, Any]:
     """Verify one trace without changing semantic_v1_calibrated behavior."""
 
     if not isinstance(trace, RAGTrace):
         raise TypeError("verify_trace_v2 requires a RAGTrace.")
     bounded, truncation = apply_limits(trace, limits)
-    claims, claim_limit_hit = unitize_claims(
+    claims, claim_limit_hit = _claim_unitizer(
         bounded.answer,
         max_claims=limits.max_claims,
     )
@@ -106,12 +110,14 @@ def verify_trace_file_v2(
     profile: V2Profile = SELECTIVE_V2_PROFILE,
     nli: ClaimJudge | None = None,
     limits: V2Limits = DEFAULT_V2_LIMITS,
+    _claim_unitizer: ClaimUnitizer = unitize_claims,
 ) -> dict[str, Any]:
     return verify_trace_v2(
         load_trace_file(path),
         profile=profile,
         nli=nli,
         limits=limits,
+        _claim_unitizer=_claim_unitizer,
     )
 
 
@@ -122,6 +128,7 @@ def verify_traces_v2(
     nli: ClaimJudge | None = None,
     limits: V2Limits = DEFAULT_V2_LIMITS,
     max_workers: int = 4,
+    _claim_unitizer: ClaimUnitizer = unitize_claims,
 ) -> list[dict[str, Any]]:
     """Verify a batch with bounded workers and stable input ordering."""
 
@@ -135,6 +142,7 @@ def verify_traces_v2(
             profile=profile,
             nli=safe_nli,
             limits=limits,
+            _claim_unitizer=_claim_unitizer,
         )
 
     with ThreadPoolExecutor(

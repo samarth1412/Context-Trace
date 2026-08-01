@@ -33,7 +33,7 @@
     }
   },
   "profile_id": "selective_v2_1_safety",
-  "profile_sha256": "b2a59c155a4ff25073c3737c7580e821d795a65ad6c1d518b42d8b345c15015d",
+  "profile_sha256": "6003e4f7805b6fda552aee8496e8e3103c22a2e2f52d1aa208955354356e1208",
   "public_holdout": {
     "abstention_requirement_recall": 1.0,
     "cases": 150,
@@ -43,18 +43,18 @@
     "dangerous_safe_classification_ids": [],
     "dangerous_safe_classification_rate": 0.0,
     "latency_ms": {
-      "p50": 3.686,
-      "p95": 40.048
+      "p50": 3.86,
+      "p95": 40.04
     },
-    "nli_invocation_rate": 0.245714,
+    "nli_invocation_rate": 0.238889,
     "route_counts": {
-      "deterministic": 132,
+      "deterministic": 137,
       "deterministic_nli_disagreement": 1,
       "nli": 38,
       "unresolved": 4
     },
     "runtime_failures": 0,
-    "unresolved_route_rate": 0.022857,
+    "unresolved_route_rate": 0.022222,
     "verdict_match_rate": 0.9,
     "verdict_miss_ids": [
       "holdout_otel_exporter_partial_support",
@@ -63,14 +63,14 @@
       "holdout_haystack_document_writer_partial",
       "holdout_pinecone_metadata_filter_partial",
       "holdout_deepeval_hallucination_partial",
+      "holdout_langchain_chat_model_supported",
       "holdout_haystack_generator_partial_vectorstore",
       "holdout_qdrant_snapshots_supported",
       "holdout_qdrant_snapshot_wrong_source_citation",
-      "holdout_chroma_embedding_partial_delete",
       "holdout_weaviate_multitenancy_supported",
       "holdout_langsmith_dataset_partial_prompt_rewrite",
       "holdout_mongodb_vector_partial_external_service",
-      "holdout_azure_rrf_supported",
+      "holdout_vespa_hybrid_contradicted",
       "holdout_no_context_should_abstain"
     ]
   },
@@ -110,19 +110,19 @@
         "target": 0.02
       },
       "public_nli_invocation_rate": {
-        "actual": 0.245714,
+        "actual": 0.238889,
         "operator": "<=",
         "passed": true,
         "target": 0.4
       },
       "public_p95_latency_ms": {
-        "actual": 40.048,
+        "actual": 40.04,
         "operator": "<=",
         "passed": true,
         "target": 250.0
       },
       "public_unresolved_route_rate": {
-        "actual": 0.022857,
+        "actual": 0.022222,
         "operator": "<=",
         "passed": true,
         "target": 0.4
