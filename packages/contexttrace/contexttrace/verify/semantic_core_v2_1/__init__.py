@@ -1,5 +1,9 @@
 """Safety-guarded, schema-compatible product profile for semantic_core_v2."""
 
+from .attribution import (
+    EVIDENCE_ATTRIBUTION_VERSION,
+    attribute_evidence_v2_1,
+)
 from .checker import (
     OBSERVABLE_CONFLICT_GUARD_VERSION,
     ObservableConflict,
@@ -32,6 +36,7 @@ from .source import (
 __all__ = [
     "ATOMIC_CLAIM_UNITIZER_VERSION",
     "DETERMINISTIC_ONLY_V2_1_PROFILE",
+    "EVIDENCE_ATTRIBUTION_VERSION",
     "OBSERVABLE_CONFLICT_GUARD_VERSION",
     "RISK_FEATURE_VERSION",
     "SELECTIVE_V2_1_PROFILE",
@@ -42,6 +47,7 @@ __all__ = [
     "SupportRiskModel",
     "V21Profile",
     "assess_source_condition_v2_1",
+    "attribute_evidence_v2_1",
     "extract_risk_features",
     "load_support_risk_model",
     "observable_conflicts",

@@ -1,0 +1,1300 @@
+{
+  "builder_version": "contexttrace-evidence-attribution-builder-v1.0.0",
+  "cases": [
+    {
+      "answer": "A production release requires security approval within 24 hours.",
+      "category": "minimal_exact",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Overview. A production release requires security approval within 24 hours. Contact support for unrelated questions."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 74,
+          "role": "supporting",
+          "start_char": 10,
+          "text": "A production release requires security approval within 24 hours."
+        }
+      ],
+      "id": "minimal_exact__release",
+      "query": "What is required for a production release?",
+      "source_family": "minimal_exact:release",
+      "split": "development"
+    },
+    {
+      "answer": "A production release requires security approval within 24 hours.",
+      "category": "multi_span_one_document",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "A production release requires security approval. Approval must occur within 24 hours. Contact support for unrelated questions."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 48,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "A production release requires security approval."
+        },
+        {
+          "context_id": "primary",
+          "end_char": 85,
+          "role": "supporting",
+          "start_char": 49,
+          "text": "Approval must occur within 24 hours."
+        }
+      ],
+      "id": "multi_span_one_document__release",
+      "query": "What is required for a production release?",
+      "source_family": "multi_span_one_document:release",
+      "split": "development"
+    },
+    {
+      "answer": "A production release requires security approval within 24 hours.",
+      "category": "multi_span_two_documents",
+      "contexts": [
+        {
+          "id": "policy",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "A production release requires security approval."
+        },
+        {
+          "id": "schedule",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Approval must occur within 24 hours."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "policy",
+          "end_char": 48,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "A production release requires security approval."
+        },
+        {
+          "context_id": "schedule",
+          "end_char": 36,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "Approval must occur within 24 hours."
+        }
+      ],
+      "id": "multi_span_two_documents__release",
+      "query": "What is required for a production release?",
+      "source_family": "multi_span_two_documents:release",
+      "split": "development"
+    },
+    {
+      "answer": "A production release requires security approval within 48 hours.",
+      "category": "minimal_refuting",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Overview. A production release requires security approval within 24 hours. Contact support for unrelated questions."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 74,
+          "role": "contradicting",
+          "start_char": 10,
+          "text": "A production release requires security approval within 24 hours."
+        }
+      ],
+      "id": "minimal_refuting__release",
+      "query": "What is required for a production release?",
+      "source_family": "minimal_refuting:release",
+      "split": "development"
+    },
+    {
+      "answer": "A production release requires security approval within 24 hours.",
+      "category": "duplicate_support",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "A production release requires security approval within 24 hours."
+        },
+        {
+          "id": "duplicate",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "A production release requires security approval within 24 hours."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 64,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "A production release requires security approval within 24 hours."
+        }
+      ],
+      "id": "duplicate_support__release",
+      "query": "What is required for a production release?",
+      "source_family": "duplicate_support:release",
+      "split": "development"
+    },
+    {
+      "answer": "A production release uses quantum signing.",
+      "category": "unsupported_empty",
+      "contexts": [
+        {
+          "id": "unrelated",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Account owners can update their billing address."
+        }
+      ],
+      "expected_spans": [],
+      "id": "unsupported_empty__release",
+      "query": "What is required for a production release?",
+      "source_family": "unsupported_empty:release",
+      "split": "development"
+    },
+    {
+      "answer": "Refund requests require unopened items within 30 days.",
+      "category": "minimal_exact",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Overview. Refund requests require unopened items within 30 days. Contact support for unrelated questions."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 64,
+          "role": "supporting",
+          "start_char": 10,
+          "text": "Refund requests require unopened items within 30 days."
+        }
+      ],
+      "id": "minimal_exact__refund",
+      "query": "What qualifies for a refund?",
+      "source_family": "minimal_exact:refund",
+      "split": "development"
+    },
+    {
+      "answer": "Refund requests require unopened items within 30 days.",
+      "category": "multi_span_one_document",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Refund requests require unopened items. Requests must be submitted within 30 days. Contact support for unrelated questions."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 39,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "Refund requests require unopened items."
+        },
+        {
+          "context_id": "primary",
+          "end_char": 82,
+          "role": "supporting",
+          "start_char": 40,
+          "text": "Requests must be submitted within 30 days."
+        }
+      ],
+      "id": "multi_span_one_document__refund",
+      "query": "What qualifies for a refund?",
+      "source_family": "multi_span_one_document:refund",
+      "split": "development"
+    },
+    {
+      "answer": "Refund requests require unopened items within 30 days.",
+      "category": "multi_span_two_documents",
+      "contexts": [
+        {
+          "id": "policy",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Refund requests require unopened items."
+        },
+        {
+          "id": "schedule",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Requests must be submitted within 30 days."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "policy",
+          "end_char": 39,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "Refund requests require unopened items."
+        },
+        {
+          "context_id": "schedule",
+          "end_char": 42,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "Requests must be submitted within 30 days."
+        }
+      ],
+      "id": "multi_span_two_documents__refund",
+      "query": "What qualifies for a refund?",
+      "source_family": "multi_span_two_documents:refund",
+      "split": "development"
+    },
+    {
+      "answer": "Refund requests require unopened items within 90 days.",
+      "category": "minimal_refuting",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Overview. Refund requests require unopened items within 30 days. Contact support for unrelated questions."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 64,
+          "role": "contradicting",
+          "start_char": 10,
+          "text": "Refund requests require unopened items within 30 days."
+        }
+      ],
+      "id": "minimal_refuting__refund",
+      "query": "What qualifies for a refund?",
+      "source_family": "minimal_refuting:refund",
+      "split": "development"
+    },
+    {
+      "answer": "Refund requests require unopened items within 30 days.",
+      "category": "duplicate_support",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Refund requests require unopened items within 30 days."
+        },
+        {
+          "id": "duplicate",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Refund requests require unopened items within 30 days."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 54,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "Refund requests require unopened items within 30 days."
+        }
+      ],
+      "id": "duplicate_support__refund",
+      "query": "What qualifies for a refund?",
+      "source_family": "duplicate_support:refund",
+      "split": "development"
+    },
+    {
+      "answer": "Refund requests include international concierge service.",
+      "category": "unsupported_empty",
+      "contexts": [
+        {
+          "id": "unrelated",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Account owners can update their billing address."
+        }
+      ],
+      "expected_spans": [],
+      "id": "unsupported_empty__refund",
+      "query": "What qualifies for a refund?",
+      "source_family": "unsupported_empty:refund",
+      "split": "development"
+    },
+    {
+      "answer": "Enterprise backups retain encrypted snapshots for 90 days.",
+      "category": "minimal_exact",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Overview. Enterprise backups retain encrypted snapshots for 90 days. Contact support for unrelated questions."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 68,
+          "role": "supporting",
+          "start_char": 10,
+          "text": "Enterprise backups retain encrypted snapshots for 90 days."
+        }
+      ],
+      "id": "minimal_exact__backup",
+      "query": "How are enterprise snapshots retained?",
+      "source_family": "minimal_exact:backup",
+      "split": "development"
+    },
+    {
+      "answer": "Enterprise backups retain encrypted snapshots for 90 days.",
+      "category": "multi_span_one_document",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Enterprise backups retain encrypted snapshots. Encrypted snapshots remain available for 90 days. Contact support for unrelated questions."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 46,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "Enterprise backups retain encrypted snapshots."
+        },
+        {
+          "context_id": "primary",
+          "end_char": 96,
+          "role": "supporting",
+          "start_char": 47,
+          "text": "Encrypted snapshots remain available for 90 days."
+        }
+      ],
+      "id": "multi_span_one_document__backup",
+      "query": "How are enterprise snapshots retained?",
+      "source_family": "multi_span_one_document:backup",
+      "split": "development"
+    },
+    {
+      "answer": "Enterprise backups retain encrypted snapshots for 90 days.",
+      "category": "multi_span_two_documents",
+      "contexts": [
+        {
+          "id": "policy",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Enterprise backups retain encrypted snapshots."
+        },
+        {
+          "id": "schedule",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Encrypted snapshots remain available for 90 days."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "policy",
+          "end_char": 46,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "Enterprise backups retain encrypted snapshots."
+        },
+        {
+          "context_id": "schedule",
+          "end_char": 49,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "Encrypted snapshots remain available for 90 days."
+        }
+      ],
+      "id": "multi_span_two_documents__backup",
+      "query": "How are enterprise snapshots retained?",
+      "source_family": "multi_span_two_documents:backup",
+      "split": "development"
+    },
+    {
+      "answer": "Enterprise backups retain encrypted snapshots for 30 days.",
+      "category": "minimal_refuting",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Overview. Enterprise backups retain encrypted snapshots for 90 days. Contact support for unrelated questions."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 68,
+          "role": "contradicting",
+          "start_char": 10,
+          "text": "Enterprise backups retain encrypted snapshots for 90 days."
+        }
+      ],
+      "id": "minimal_refuting__backup",
+      "query": "How are enterprise snapshots retained?",
+      "source_family": "minimal_refuting:backup",
+      "split": "development"
+    },
+    {
+      "answer": "Enterprise backups retain encrypted snapshots for 90 days.",
+      "category": "duplicate_support",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Enterprise backups retain encrypted snapshots for 90 days."
+        },
+        {
+          "id": "duplicate",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Enterprise backups retain encrypted snapshots for 90 days."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 58,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "Enterprise backups retain encrypted snapshots for 90 days."
+        }
+      ],
+      "id": "duplicate_support__backup",
+      "query": "How are enterprise snapshots retained?",
+      "source_family": "duplicate_support:backup",
+      "split": "development"
+    },
+    {
+      "answer": "Enterprise backups use lunar storage.",
+      "category": "unsupported_empty",
+      "contexts": [
+        {
+          "id": "unrelated",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Account owners can update their billing address."
+        }
+      ],
+      "expected_spans": [],
+      "id": "unsupported_empty__backup",
+      "query": "How are enterprise snapshots retained?",
+      "source_family": "unsupported_empty:backup",
+      "split": "development"
+    },
+    {
+      "answer": "Search requests require OAuth at /v2/search.",
+      "category": "minimal_exact",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Overview. Search requests require OAuth at /v2/search. Contact support for unrelated questions."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 54,
+          "role": "supporting",
+          "start_char": 10,
+          "text": "Search requests require OAuth at /v2/search."
+        }
+      ],
+      "id": "minimal_exact__search",
+      "query": "How must search requests be made?",
+      "source_family": "minimal_exact:search",
+      "split": "development"
+    },
+    {
+      "answer": "Search requests require OAuth at /v2/search.",
+      "category": "multi_span_one_document",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "The search endpoint is /v2/search. Search requests require OAuth. Contact support for unrelated questions."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 34,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "The search endpoint is /v2/search."
+        },
+        {
+          "context_id": "primary",
+          "end_char": 65,
+          "role": "supporting",
+          "start_char": 35,
+          "text": "Search requests require OAuth."
+        }
+      ],
+      "id": "multi_span_one_document__search",
+      "query": "How must search requests be made?",
+      "source_family": "multi_span_one_document:search",
+      "split": "development"
+    },
+    {
+      "answer": "Search requests require OAuth at /v2/search.",
+      "category": "multi_span_two_documents",
+      "contexts": [
+        {
+          "id": "policy",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "The search endpoint is /v2/search."
+        },
+        {
+          "id": "schedule",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Search requests require OAuth."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "policy",
+          "end_char": 34,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "The search endpoint is /v2/search."
+        },
+        {
+          "context_id": "schedule",
+          "end_char": 30,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "Search requests require OAuth."
+        }
+      ],
+      "id": "multi_span_two_documents__search",
+      "query": "How must search requests be made?",
+      "source_family": "multi_span_two_documents:search",
+      "split": "development"
+    },
+    {
+      "answer": "Search requests require OAuth at /v1/search.",
+      "category": "minimal_refuting",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Overview. Search requests require OAuth at /v2/search. Contact support for unrelated questions."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 54,
+          "role": "contradicting",
+          "start_char": 10,
+          "text": "Search requests require OAuth at /v2/search."
+        }
+      ],
+      "id": "minimal_refuting__search",
+      "query": "How must search requests be made?",
+      "source_family": "minimal_refuting:search",
+      "split": "development"
+    },
+    {
+      "answer": "Search requests require OAuth at /v2/search.",
+      "category": "duplicate_support",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Search requests require OAuth at /v2/search."
+        },
+        {
+          "id": "duplicate",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Search requests require OAuth at /v2/search."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 44,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "Search requests require OAuth at /v2/search."
+        }
+      ],
+      "id": "duplicate_support__search",
+      "query": "How must search requests be made?",
+      "source_family": "duplicate_support:search",
+      "split": "development"
+    },
+    {
+      "answer": "Search requests include unlimited translation.",
+      "category": "unsupported_empty",
+      "contexts": [
+        {
+          "id": "unrelated",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Account owners can update their billing address."
+        }
+      ],
+      "expected_spans": [],
+      "id": "unsupported_empty__search",
+      "query": "How must search requests be made?",
+      "source_family": "unsupported_empty:search",
+      "split": "development"
+    },
+    {
+      "answer": "Audit records require encrypted storage for 30 days.",
+      "category": "minimal_exact",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Overview. Audit records require encrypted storage for 30 days. Contact support for unrelated questions."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 62,
+          "role": "supporting",
+          "start_char": 10,
+          "text": "Audit records require encrypted storage for 30 days."
+        }
+      ],
+      "id": "minimal_exact__audit",
+      "query": "How are audit records stored?",
+      "source_family": "minimal_exact:audit",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Audit records require encrypted storage for 30 days.",
+      "category": "multi_span_one_document",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Audit records require encrypted storage. Audit records are retained for 30 days. Contact support for unrelated questions."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 40,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "Audit records require encrypted storage."
+        },
+        {
+          "context_id": "primary",
+          "end_char": 80,
+          "role": "supporting",
+          "start_char": 41,
+          "text": "Audit records are retained for 30 days."
+        }
+      ],
+      "id": "multi_span_one_document__audit",
+      "query": "How are audit records stored?",
+      "source_family": "multi_span_one_document:audit",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Audit records require encrypted storage for 30 days.",
+      "category": "multi_span_two_documents",
+      "contexts": [
+        {
+          "id": "policy",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Audit records require encrypted storage."
+        },
+        {
+          "id": "schedule",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Audit records are retained for 30 days."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "policy",
+          "end_char": 40,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "Audit records require encrypted storage."
+        },
+        {
+          "context_id": "schedule",
+          "end_char": 39,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "Audit records are retained for 30 days."
+        }
+      ],
+      "id": "multi_span_two_documents__audit",
+      "query": "How are audit records stored?",
+      "source_family": "multi_span_two_documents:audit",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Audit records require encrypted storage for 60 days.",
+      "category": "minimal_refuting",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Overview. Audit records require encrypted storage for 30 days. Contact support for unrelated questions."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 62,
+          "role": "contradicting",
+          "start_char": 10,
+          "text": "Audit records require encrypted storage for 30 days."
+        }
+      ],
+      "id": "minimal_refuting__audit",
+      "query": "How are audit records stored?",
+      "source_family": "minimal_refuting:audit",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Audit records require encrypted storage for 30 days.",
+      "category": "duplicate_support",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Audit records require encrypted storage for 30 days."
+        },
+        {
+          "id": "duplicate",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Audit records require encrypted storage for 30 days."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 52,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "Audit records require encrypted storage for 30 days."
+        }
+      ],
+      "id": "duplicate_support__audit",
+      "query": "How are audit records stored?",
+      "source_family": "duplicate_support:audit",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Audit records are delivered by drone.",
+      "category": "unsupported_empty",
+      "contexts": [
+        {
+          "id": "unrelated",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Account owners can update their billing address."
+        }
+      ],
+      "expected_spans": [],
+      "id": "unsupported_empty__audit",
+      "query": "How are audit records stored?",
+      "source_family": "unsupported_empty:audit",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Migration jobs require administrator approval before July 1.",
+      "category": "minimal_exact",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Overview. Migration jobs require administrator approval before July 1. Contact support for unrelated questions."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 70,
+          "role": "supporting",
+          "start_char": 10,
+          "text": "Migration jobs require administrator approval before July 1."
+        }
+      ],
+      "id": "minimal_exact__migration",
+      "query": "What is required for migration jobs?",
+      "source_family": "minimal_exact:migration",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Migration jobs require administrator approval before July 1.",
+      "category": "multi_span_one_document",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Migration jobs require administrator approval. Approval must occur before July 1. Contact support for unrelated questions."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 46,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "Migration jobs require administrator approval."
+        },
+        {
+          "context_id": "primary",
+          "end_char": 81,
+          "role": "supporting",
+          "start_char": 47,
+          "text": "Approval must occur before July 1."
+        }
+      ],
+      "id": "multi_span_one_document__migration",
+      "query": "What is required for migration jobs?",
+      "source_family": "multi_span_one_document:migration",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Migration jobs require administrator approval before July 1.",
+      "category": "multi_span_two_documents",
+      "contexts": [
+        {
+          "id": "policy",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Migration jobs require administrator approval."
+        },
+        {
+          "id": "schedule",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Approval must occur before July 1."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "policy",
+          "end_char": 46,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "Migration jobs require administrator approval."
+        },
+        {
+          "context_id": "schedule",
+          "end_char": 34,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "Approval must occur before July 1."
+        }
+      ],
+      "id": "multi_span_two_documents__migration",
+      "query": "What is required for migration jobs?",
+      "source_family": "multi_span_two_documents:migration",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Migration jobs require administrator approval before July 10.",
+      "category": "minimal_refuting",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Overview. Migration jobs require administrator approval before July 1. Contact support for unrelated questions."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 70,
+          "role": "contradicting",
+          "start_char": 10,
+          "text": "Migration jobs require administrator approval before July 1."
+        }
+      ],
+      "id": "minimal_refuting__migration",
+      "query": "What is required for migration jobs?",
+      "source_family": "minimal_refuting:migration",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Migration jobs require administrator approval before July 1.",
+      "category": "duplicate_support",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Migration jobs require administrator approval before July 1."
+        },
+        {
+          "id": "duplicate",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Migration jobs require administrator approval before July 1."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 60,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "Migration jobs require administrator approval before July 1."
+        }
+      ],
+      "id": "duplicate_support__migration",
+      "query": "What is required for migration jobs?",
+      "source_family": "duplicate_support:migration",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Migration jobs guarantee zero downtime worldwide.",
+      "category": "unsupported_empty",
+      "contexts": [
+        {
+          "id": "unrelated",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Account owners can update their billing address."
+        }
+      ],
+      "expected_spans": [],
+      "id": "unsupported_empty__migration",
+      "query": "What is required for migration jobs?",
+      "source_family": "unsupported_empty:migration",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Caf\u00e9 access requires r\u00e9sum\u00e9 approval within 14 days.",
+      "category": "minimal_exact",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Overview. Caf\u00e9 access requires r\u00e9sum\u00e9 approval within 14 days. Contact support for unrelated questions."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 62,
+          "role": "supporting",
+          "start_char": 10,
+          "text": "Caf\u00e9 access requires r\u00e9sum\u00e9 approval within 14 days."
+        }
+      ],
+      "id": "minimal_exact__cafe",
+      "query": "What is required for caf\u00e9 access?",
+      "source_family": "minimal_exact:cafe",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Caf\u00e9 access requires r\u00e9sum\u00e9 approval within 14 days.",
+      "category": "multi_span_one_document",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Caf\u00e9 access requires r\u00e9sum\u00e9 approval. Approval must occur within 14 days. Contact support for unrelated questions."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 37,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "Caf\u00e9 access requires r\u00e9sum\u00e9 approval."
+        },
+        {
+          "context_id": "primary",
+          "end_char": 73,
+          "role": "supporting",
+          "start_char": 38,
+          "text": "Approval must occur within 14 days."
+        }
+      ],
+      "id": "multi_span_one_document__cafe",
+      "query": "What is required for caf\u00e9 access?",
+      "source_family": "multi_span_one_document:cafe",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Caf\u00e9 access requires r\u00e9sum\u00e9 approval within 14 days.",
+      "category": "multi_span_two_documents",
+      "contexts": [
+        {
+          "id": "policy",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Caf\u00e9 access requires r\u00e9sum\u00e9 approval."
+        },
+        {
+          "id": "schedule",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Approval must occur within 14 days."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "policy",
+          "end_char": 37,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "Caf\u00e9 access requires r\u00e9sum\u00e9 approval."
+        },
+        {
+          "context_id": "schedule",
+          "end_char": 35,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "Approval must occur within 14 days."
+        }
+      ],
+      "id": "multi_span_two_documents__cafe",
+      "query": "What is required for caf\u00e9 access?",
+      "source_family": "multi_span_two_documents:cafe",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Caf\u00e9 access requires r\u00e9sum\u00e9 approval within 40 days.",
+      "category": "minimal_refuting",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Overview. Caf\u00e9 access requires r\u00e9sum\u00e9 approval within 14 days. Contact support for unrelated questions."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 62,
+          "role": "contradicting",
+          "start_char": 10,
+          "text": "Caf\u00e9 access requires r\u00e9sum\u00e9 approval within 14 days."
+        }
+      ],
+      "id": "minimal_refuting__cafe",
+      "query": "What is required for caf\u00e9 access?",
+      "source_family": "minimal_refuting:cafe",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Caf\u00e9 access requires r\u00e9sum\u00e9 approval within 14 days.",
+      "category": "duplicate_support",
+      "contexts": [
+        {
+          "id": "primary",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Caf\u00e9 access requires r\u00e9sum\u00e9 approval within 14 days."
+        },
+        {
+          "id": "duplicate",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Caf\u00e9 access requires r\u00e9sum\u00e9 approval within 14 days."
+        }
+      ],
+      "expected_spans": [
+        {
+          "context_id": "primary",
+          "end_char": 52,
+          "role": "supporting",
+          "start_char": 0,
+          "text": "Caf\u00e9 access requires r\u00e9sum\u00e9 approval within 14 days."
+        }
+      ],
+      "id": "duplicate_support__cafe",
+      "query": "What is required for caf\u00e9 access?",
+      "source_family": "duplicate_support:cafe",
+      "split": "heldout_development"
+    },
+    {
+      "answer": "Caf\u00e9 access includes orbital delivery.",
+      "category": "unsupported_empty",
+      "contexts": [
+        {
+          "id": "unrelated",
+          "metadata": {
+            "canonical": true,
+            "current": true
+          },
+          "text": "Account owners can update their billing address."
+        }
+      ],
+      "expected_spans": [],
+      "id": "unsupported_empty__cafe",
+      "query": "What is required for caf\u00e9 access?",
+      "source_family": "unsupported_empty:cafe",
+      "split": "heldout_development"
+    }
+  ],
+  "counts": {
+    "development": 24,
+    "heldout_development": 18
+  },
+  "evidence_class": "synthetic_development_only_not_research_evidence",
+  "payload_sha256": "a7c56bf6b16c8b3509ff5014424833b65598c84d32dc71a52e6105b14ea03eef",
+  "schema_version": "1.0"
+}

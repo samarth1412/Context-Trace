@@ -23,6 +23,7 @@ from contexttrace.verify.semantic_core_v2.runner import (
     verify_traces_v2,
 )
 
+from .attribution import attribute_evidence_v2_1
 from .checker import ObservableConflictGuard
 from .claims import unitize_atomic_claims
 from .profile import SELECTIVE_V2_1_PROFILE, V21Profile
@@ -185,6 +186,8 @@ def _apply_safety_policy(
 ) -> dict[str, Any]:
     if profile.relational_source_condition_reasoning:
         _apply_source_condition_policy(result, profile, trace)
+    if profile.hierarchical_evidence_attribution:
+        _apply_evidence_attribution(result, profile, trace)
     if profile.prevent_nli_only_green_promotion:
         for claim in result["claims"]:
             if not _is_ambiguous_nli_only_support(claim):
@@ -242,6 +245,32 @@ def _apply_source_condition_policy(
             "qualification_required",
         ):
             claim[key] = diagnosis[key]
+
+
+def _apply_evidence_attribution(
+    result: dict[str, Any],
+    profile: V21Profile,
+    trace: RAGTrace,
+) -> None:
+    for claim in result["claims"]:
+        spans, record = attribute_evidence_v2_1(
+            claim_id=str(claim["claim_id"]),
+            claim=str(claim.get("verification_text") or claim.get("text") or ""),
+            answer_start=int(claim["start_char"]),
+            answer_end=int(claim["end_char"]),
+            verdict=str(claim["claim_verdict"]),
+            trace=trace,
+            profile=profile,
+        )
+        claim["evidence_spans"] = spans
+        claim["evidence_context_ids"] = sorted(
+            {str(span["context_id"]) for span in spans}
+        )
+        deterministic = dict(claim.get("deterministic") or {})
+        signals = dict(deterministic.get("signals") or {})
+        signals["evidence_attribution"] = record
+        deterministic["signals"] = signals
+        claim["deterministic"] = deterministic
 
 
 def _is_ambiguous_nli_only_support(claim: dict[str, Any]) -> bool:

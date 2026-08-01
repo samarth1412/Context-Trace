@@ -115,3 +115,21 @@ The report compares frozen v2 with the opt-in v2.1 reasoner using
 source-condition accuracy, macro-F1, and dangerous false-green rate. These are
 templated mechanism tests. Their held-out-development split is not an untouched
 test and cannot support an external-generalization or SOTA claim.
+
+## Hierarchical evidence attribution
+
+The attribution pack contains exact labels for minimal support, complementary
+spans within and across documents, refuting spans, duplicate evidence,
+unsupported cases, and Unicode offsets. Rebuild it, verify it, and compare
+frozen v2 with v2.1:
+
+```bash
+.venv/bin/python benchmarks/product_safety/build_evidence_attribution_corpus.py
+.venv/bin/python benchmarks/product_safety/build_evidence_attribution_corpus.py --check
+.venv/bin/python benchmarks/product_safety/run_evidence_attribution_benchmark.py
+```
+
+The report records exact-span precision/recall/F1, character IoU, complete-case
+rate, over-attribution, role accuracy, and answer/source offset integrity. The
+pack is templated development data and cannot support an external span-quality
+or SOTA claim.

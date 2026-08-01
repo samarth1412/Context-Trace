@@ -150,6 +150,7 @@ def test_guarded_profile_is_hash_identified_and_v2_schema_compatible() -> None:
     assert (
         result["verification_profile"]["relational_source_condition_reasoning"] is True
     )
+    assert result["verification_profile"]["hierarchical_evidence_attribution"] is True
     jsonschema.Draft202012Validator(schema).validate(result)
 
 

@@ -84,4 +84,8 @@ required to establish the core verifier result.
   within-lineage version/time comparisons, authority labels, inconsistent
   metadata precedence, and authoritative conflicts are covered. External
   temporal/source-condition transfer remains pending.
-- Stages 5--7 remain pending.
+- Stage 5 has an initial hierarchical attribution engine and a 42-case
+  source-family-disjoint synthetic pack. It links answer offsets to atomic
+  claims and exact supporting or refuting source spans, including complementary
+  spans across documents. External span-labeled evaluation remains pending.
+- Stages 6--7 remain pending.

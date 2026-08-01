@@ -19,6 +19,9 @@ class V21Profile(V2Profile):
     observable_conflict_guard: bool = True
     learned_support_risk_gate: bool = True
     relational_source_condition_reasoning: bool = True
+    hierarchical_evidence_attribution: bool = True
+    evidence_span_min_score: float = 0.18
+    max_attribution_spans: int = 3
     max_composed_nli_chars: int = 2400
     max_nli_query_chars: int = 512
 
@@ -28,6 +31,10 @@ class V21Profile(V2Profile):
             raise ValueError("max_composed_nli_chars must be between 256 and 8192.")
         if not 0 <= self.max_nli_query_chars <= 1024:
             raise ValueError("max_nli_query_chars must be between 0 and 1024.")
+        if not 0.0 <= self.evidence_span_min_score <= 1.0:
+            raise ValueError("evidence_span_min_score must be between zero and one.")
+        if not 1 <= self.max_attribution_spans <= 3:
+            raise ValueError("max_attribution_spans must be between 1 and 3.")
 
 
 SELECTIVE_V2_1_PROFILE = V21Profile()

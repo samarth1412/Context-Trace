@@ -6,7 +6,7 @@ and the stable ContextTrace verifier remains `semantic_v1_calibrated`.
 ## What changed
 
 The opt-in `semantic_core_v2_1` profile keeps the v2 output schema while adding
-six safety and accuracy policies:
+seven safety and accuracy policies:
 
 1. A claim supported only by NLI after ambiguous deterministic evidence cannot
    become green. It remains supported-with-qualification.
@@ -31,11 +31,18 @@ six safety and accuracy policies:
    replacement links, compares versions and publication times only within a
    declared source lineage, and detects conflicts between authoritative sources.
    It emits bounded related-source provenance without copying source text.
+7. Hierarchical evidence attribution links answer offsets to atomic claims,
+   source documents, and at most three exact source spans. A greedy coverage
+   policy selects complementary multi-span support, explicit conflicts produce
+   refuting spans, and redundant or unrelated spans are removed. The audit
+   record contains coverage and offset-integrity metadata without duplicating
+   source text.
 
-The profile hash includes all safety guards, composition switches, the
-source-condition reasoner switch, atomic-unitization switch, and character bounds. NLI continues to receive at
-most three selected spans, and the local model artifact must match the existing
-model, revision, file hashes, and manifest hash.
+The profile hash includes all safety guards, composition switches, source and
+evidence-attribution switches, atomic-unitization switch, thresholds, and
+character bounds. NLI continues to receive at most three selected spans, and the
+local model artifact must match the existing model, revision, file hashes, and
+manifest hash.
 
 ## Development-only results
 
@@ -47,7 +54,7 @@ fixtures:
 - exact verdict-count match: 90.00%;
 - selective NLI invocation rate: 23.89%;
 - unresolved route rate: approximately 2%;
-- p95 latency on the development machine: below 50 ms;
+- p95 latency on the development machine: below 60 ms;
 - dangerous false-green and dangerous safe-classification rates: 0%.
 
 These numbers are for iterative engineering only. The cases and labels are
@@ -80,6 +87,15 @@ dangerous false-green rate; v2.1 has 1.0 macro-F1 and 0% dangerous false greens.
 The perfect candidate score reflects direct coverage of the declared metadata
 and relation rules. It is a regression result, not evidence of external
 generalization.
+
+The 42-case evidence-attribution pack covers exact support, complementary spans
+within one document, complementary spans across documents, minimal refuting
+evidence, duplicate evidence, unsupported cases, and Unicode offsets. On its 18
+held-out-development source families, frozen v2 has 0.875 exact-span F1, 0.7559
+character IoU, and 22.22% over-attribution. V2.1 has 1.0 exact-span F1, 1.0
+character IoU, and 0% over-attribution, with exact answer and source offsets in
+all cases. These templates directly exercise the implemented selection rules;
+the result is a regression measurement, not external evidence.
 
 ## Opt-in CLI
 
