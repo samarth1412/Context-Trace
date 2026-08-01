@@ -31,7 +31,8 @@
         "source_conditions": ["current_canonical"],
         "citation_states": ["correct"],
         "failure_labels": ["none"],
-        "root_causes": ["none"]
+        "root_causes": ["none"],
+        "evidence_span_roles": ["supporting"]
       }
     },
     {
@@ -149,7 +150,8 @@
         "diagnostic_abstentions": 0,
         "source_conditions": ["current_canonical"],
         "failure_labels": ["should_have_abstained"],
-        "root_causes": ["answer_overreach"]
+        "root_causes": ["answer_overreach"],
+        "evidence_span_roles": ["contradicting"]
       }
     },
     {
@@ -251,6 +253,97 @@
         "source_conditions": ["unknown"],
         "failure_labels": ["should_have_abstained"],
         "root_causes": ["failure_to_abstain"]
+      }
+    },
+    {
+      "id": "grounded_but_superseded_source",
+      "query": "What is the API timeout?",
+      "answer": "The API timeout is 60 seconds.",
+      "contexts": [
+        {
+          "id": "old_api",
+          "text": "The API timeout is 60 seconds.",
+          "metadata": {"source_version": "1.0"}
+        },
+        {
+          "id": "current_api",
+          "text": "The API timeout is 30 seconds.",
+          "metadata": {
+            "source_condition": "current_canonical",
+            "source_version": "2.0",
+            "supersedes": "old_api"
+          }
+        }
+      ],
+      "expected": {
+        "claim_verdicts": {"supported": 1},
+        "green_claims": 0,
+        "source_conditions": ["superseded"],
+        "failure_labels": ["source_condition_failure"],
+        "root_causes": ["stale_or_superseded_source"]
+      }
+    },
+    {
+      "id": "supported_but_malformed_citation",
+      "query": "What is the refund window?",
+      "answer": "The refund window is 14 days.",
+      "contexts": [
+        {
+          "id": "refund_policy",
+          "text": "The refund window is 14 days.",
+          "metadata": {"source_condition": "current_canonical"}
+        }
+      ],
+      "citations": [
+        {
+          "claim": "The refund window is 14 days.",
+          "source_id": "missing_source"
+        }
+      ],
+      "metadata": {"citation_required": true},
+      "expected": {
+        "claim_verdicts": {"supported": 1},
+        "green_claims": 0,
+        "citation_states": ["malformed"],
+        "failure_labels": ["citation_mismatch"],
+        "root_causes": ["citation_mismatch"]
+      }
+    },
+    {
+      "id": "observable_retrieval_miss",
+      "query": "What is the enterprise retention period?",
+      "answer": "The enterprise retention period is seven years.",
+      "contexts": [
+        {
+          "id": "pricing_guide",
+          "text": "The enterprise plan includes priority support and regional backups.",
+          "metadata": {"source_condition": "current_canonical"}
+        }
+      ],
+      "metadata": {"eligible_evidence_in_corpus": true},
+      "expected": {
+        "claim_verdicts": {"unsupported": 1},
+        "green_claims": 0,
+        "failure_labels": ["should_have_abstained"],
+        "root_causes": ["retrieval_miss"]
+      }
+    },
+    {
+      "id": "unobservable_pipeline_cause",
+      "query": "What is the enterprise retention period?",
+      "answer": "I cannot determine the retention period from the supplied evidence.",
+      "contexts": [
+        {
+          "id": "pricing_guide",
+          "text": "The enterprise plan includes priority support and regional backups.",
+          "metadata": {"source_condition": "current_canonical"}
+        }
+      ],
+      "expected": {
+        "claim_verdicts": {"unsupported": 1},
+        "green_claims": 0,
+        "failure_labels": ["insufficient_evidence"],
+        "root_causes": ["not_observable"]
       }
     }
   ]

@@ -21,81 +21,63 @@
   "interpretation": [
     "These labels are visible during development and cannot support untouched-evaluation claims.",
     "A missed target identifies product work; it is not a confirmatory research result.",
-    "The deterministic-only profile measures which claims require a later selective model route without making model calls."
+    "The selective profile uses only the hash-verified local NLI artifact on bounded selected evidence."
   ],
-  "model_lock": null,
-  "profile_id": "deterministic_only_v2",
-  "profile_sha256": "1fd80d46a0c37b9167e68f6f0c349e9addae79d92ead50f024d49bbc45dc00b2",
+  "model_lock": {
+    "artifact_manifest_sha256": "330f0fd77aad129877e1a1a90d4a77e6f093ee238b97d535202816a116b9c9f3",
+    "model_id": "cross-encoder/nli-deberta-v3-small",
+    "model_revision": "fa2804872c3b4bd748f38c0185cc85775361e735",
+    "runtime_versions": {
+      "torch": "2.13.0",
+      "transformers": "5.14.1"
+    }
+  },
+  "profile_id": "selective_v2_1_safety",
+  "profile_sha256": "b2a59c155a4ff25073c3737c7580e821d795a65ad6c1d518b42d8b345c15015d",
   "public_holdout": {
     "abstention_requirement_recall": 1.0,
     "cases": 150,
-    "clean_supported_rate": 0.753425,
+    "clean_supported_rate": 0.972603,
     "dangerous_false_green_ids": [],
     "dangerous_false_green_rate": 0.0,
     "dangerous_safe_classification_ids": [],
     "dangerous_safe_classification_rate": 0.0,
     "latency_ms": {
-      "p50": 3.449,
-      "p95": 6.843
+      "p50": 3.686,
+      "p95": 40.048
     },
-    "nli_invocation_rate": 0.0,
+    "nli_invocation_rate": 0.245714,
     "route_counts": {
       "deterministic": 132,
-      "unresolved": 43
+      "deterministic_nli_disagreement": 1,
+      "nli": 38,
+      "unresolved": 4
     },
     "runtime_failures": 0,
-    "unresolved_route_rate": 0.245714,
-    "verdict_match_rate": 0.713333,
+    "unresolved_route_rate": 0.022857,
+    "verdict_match_rate": 0.9,
     "verdict_miss_ids": [
-      "holdout_otel_span_supported",
       "holdout_otel_exporter_partial_support",
       "holdout_weaviate_hybrid_contradicted",
-      "holdout_llamaindex_retriever_supported",
       "holdout_llamaindex_retriever_overclaim",
-      "holdout_langchain_retriever_supported",
-      "holdout_langchain_retriever_partial_rerank",
       "holdout_haystack_document_writer_partial",
-      "holdout_qdrant_payload_filter_supported",
-      "holdout_ragas_context_precision_supported",
+      "holdout_pinecone_metadata_filter_partial",
       "holdout_deepeval_hallucination_partial",
-      "holdout_otel_baggage_supported",
-      "holdout_otel_resource_partial_encryption",
-      "holdout_otel_baggage_wrong_source_citation",
-      "holdout_langchain_structured_output_partial_xml",
-      "holdout_haystack_rankers_supported",
-      "holdout_qdrant_filtering_supported",
+      "holdout_haystack_generator_partial_vectorstore",
       "holdout_qdrant_snapshots_supported",
-      "holdout_qdrant_filtering_partial_encryption",
       "holdout_qdrant_snapshot_wrong_source_citation",
-      "holdout_pinecone_hybrid_search_supported",
-      "holdout_chroma_delete_supported",
       "holdout_chroma_embedding_partial_delete",
       "holdout_weaviate_multitenancy_supported",
-      "holdout_langsmith_evaluators_supported",
       "holdout_langsmith_dataset_partial_prompt_rewrite",
-      "holdout_langsmith_evaluator_wrong_source_citation",
-      "holdout_phoenix_dataset_partial_delete",
-      "holdout_phoenix_dataset_wrong_source_citation",
-      "holdout_lancedb_full_text_filter_supported",
-      "holdout_lancedb_vector_partial_encryption",
-      "holdout_lancedb_full_text_wrong_source_citation",
-      "holdout_pgvector_hnsw_supported",
-      "holdout_opensearch_filtering_supported",
-      "holdout_opensearch_filter_wrong_source_citation",
-      "holdout_mongodb_vector_filter_supported",
       "holdout_mongodb_vector_partial_external_service",
-      "holdout_mongodb_filter_wrong_source_citation",
       "holdout_azure_rrf_supported",
-      "holdout_azure_rrf_wrong_source_citation",
-      "holdout_openai_evals_partial_deploy",
-      "holdout_llamaindex_observability_supported",
       "holdout_no_context_should_abstain"
     ]
   },
-  "runtime_id": "semantic_core_v2_deterministic",
+  "runtime_id": "semantic_core_v2_1_selective_pinned_nli",
   "schema_version": "1.0",
   "targets": {
-    "all_passed": false,
+    "all_passed": true,
     "rows": {
       "controlled_exact_match_rate": {
         "actual": 1.0,
@@ -110,9 +92,9 @@
         "target": 0.9
       },
       "public_clean_supported_rate": {
-        "actual": 0.753425,
+        "actual": 0.972603,
         "operator": ">=",
-        "passed": false,
+        "passed": true,
         "target": 0.9
       },
       "public_dangerous_false_green_rate": {
@@ -128,27 +110,27 @@
         "target": 0.02
       },
       "public_nli_invocation_rate": {
-        "actual": 0.0,
-        "operator": "<=",
-        "passed": true,
-        "target": 0.4
-      },
-      "public_p95_latency_ms": {
-        "actual": 6.843,
-        "operator": "<=",
-        "passed": true,
-        "target": 250.0
-      },
-      "public_unresolved_route_rate": {
         "actual": 0.245714,
         "operator": "<=",
         "passed": true,
         "target": 0.4
       },
+      "public_p95_latency_ms": {
+        "actual": 40.048,
+        "operator": "<=",
+        "passed": true,
+        "target": 250.0
+      },
+      "public_unresolved_route_rate": {
+        "actual": 0.022857,
+        "operator": "<=",
+        "passed": true,
+        "target": 0.4
+      },
       "public_verdict_match_rate": {
-        "actual": 0.713333,
+        "actual": 0.9,
         "operator": ">=",
-        "passed": false,
+        "passed": true,
         "target": 0.75
       },
       "runtime_failures": {

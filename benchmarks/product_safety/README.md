@@ -5,7 +5,7 @@ does not replace CAIN, the sealed gold labels, or a future untouched evaluation.
 
 It combines:
 
-- ten controlled fixtures for expected support, source-condition, citation,
+- fourteen controlled fixtures for expected support, source-condition, citation,
   abstention, failure-label, and root-cause behavior; and
 - the existing 150-case public holdout, which is now treated as visible
   development data.
@@ -25,8 +25,23 @@ Add `--enforce` only after the v1.2 targets have been reached. Before then, a
 missed target is expected to produce a useful baseline rather than block the
 measurement command.
 
+To measure the opt-in v2.1 selective cascade, first place the exact pinned model
+revision in a local directory, then run:
+
+```bash
+.venv/bin/python benchmarks/product_safety/run_baseline.py \
+  --model-path /private/models/nli-deberta-v3-small \
+  --output benchmarks/product_safety/candidate-selective-v2.1.json
+```
+
+The command verifies every locked artifact hash before loading the model and
+records only its public identity, revision, and manifest hash. It never records
+the local model path.
+
 The dangerous-false-green metric is case-level: an unsafe case is one whose
 visible development label expects abstention, contradiction, unsupported, or
-unverifiable; it is a false green if any claim in that case is green. The
-abstention metric checks whether the verifier emits `must_abstain`, independently
-of whether the answer itself abstained.
+unverifiable; it is a false green only when the entire result is green. Because
+unknown source metadata can conservatively suppress green, the benchmark also
+reports dangerous safe classifications: unsafe cases whose claims were all
+classified as supported. The abstention metric checks whether the verifier emits
+`must_abstain`, independently of whether the answer itself abstained.

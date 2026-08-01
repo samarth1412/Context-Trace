@@ -10,12 +10,21 @@ import statistics
 import sys
 import time
 from collections import Counter
+from collections.abc import Callable
+from dataclasses import dataclass
+from importlib.metadata import version
 from pathlib import Path
 from typing import Any
 
+from contexttrace.verify.judges import ClaimJudge
 from contexttrace.verify.schema import RAGTrace, load_trace
+from contexttrace.verify.semantic_core_v2 import build_pinned_nli, verify_nli_artifact
 from contexttrace.verify.semantic_core_v2.profile import DETERMINISTIC_ONLY_V2_PROFILE
 from contexttrace.verify.semantic_core_v2.runner import verify_trace_v2
+from contexttrace.verify.semantic_core_v2_1 import (
+    SELECTIVE_V2_1_PROFILE,
+    verify_trace_v2_1,
+)
 
 HERE = Path(__file__).resolve().parent
 REPO_ROOT = HERE.parents[1]
@@ -34,11 +43,22 @@ TARGETS = {
     "public_verdict_match_rate": {"operator": ">=", "value": 0.75},
     "public_clean_supported_rate": {"operator": ">=", "value": 0.9},
     "public_dangerous_false_green_rate": {"operator": "<=", "value": 0.02},
+    "public_dangerous_safe_classification_rate": {"operator": "<=", "value": 0.02},
     "public_abstention_requirement_recall": {"operator": ">=", "value": 0.9},
     "public_unresolved_route_rate": {"operator": "<=", "value": 0.4},
+    "public_nli_invocation_rate": {"operator": "<=", "value": 0.4},
     "public_p95_latency_ms": {"operator": "<=", "value": 250.0},
     "runtime_failures": {"operator": "==", "value": 0},
 }
+
+
+@dataclass(frozen=True)
+class BenchmarkRuntime:
+    id: str
+    profile: Any
+    verify: Callable[..., dict[str, Any]]
+    nli: ClaimJudge | None = None
+    model_lock: dict[str, Any] | None = None
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -51,9 +71,14 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="Exit non-zero when a target is missed.",
     )
+    parser.add_argument(
+        "--model-path",
+        type=Path,
+        help="Run the v2.1 selective profile with the locally pinned NLI artifact.",
+    )
     args = parser.parse_args(argv)
 
-    result = run_baseline()
+    result = run_baseline(model_path=args.model_path)
     rendered = json.dumps(result, indent=2, sort_keys=True) + "\n"
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -65,18 +90,23 @@ def main(argv: list[str] | None = None) -> int:
     return 0
 
 
-def run_baseline() -> dict[str, Any]:
+def run_baseline(*, model_path: Path | None = None) -> dict[str, Any]:
     controlled_payload = _read_json(CONTROLLED_CASES)
     public_payload = _read_json(PUBLIC_HOLDOUT)
-    controlled = _run_controlled(list(controlled_payload["cases"]))
-    public = _run_public(list(public_payload["cases"]))
+    runtime = _runtime(model_path)
+    controlled = _run_controlled(list(controlled_payload["cases"]), runtime)
+    public = _run_public(list(public_payload["cases"]), runtime)
     measured = {
         "controlled_exact_match_rate": controlled["exact_match_rate"],
         "public_verdict_match_rate": public["verdict_match_rate"],
         "public_clean_supported_rate": public["clean_supported_rate"],
         "public_dangerous_false_green_rate": public["dangerous_false_green_rate"],
+        "public_dangerous_safe_classification_rate": public[
+            "dangerous_safe_classification_rate"
+        ],
         "public_abstention_requirement_recall": public["abstention_requirement_recall"],
         "public_unresolved_route_rate": public["unresolved_route_rate"],
+        "public_nli_invocation_rate": public["nli_invocation_rate"],
         "public_p95_latency_ms": public["latency_ms"]["p95"],
         "runtime_failures": controlled["runtime_failures"] + public["runtime_failures"],
     }
@@ -84,8 +114,10 @@ def run_baseline() -> dict[str, Any]:
         "schema_version": "1.0",
         "benchmark_id": "contexttrace-product-safety-dev-v1",
         "evidence_class": "development_only_not_independent_research_evidence",
-        "profile_id": DETERMINISTIC_ONLY_V2_PROFILE.id,
-        "profile_sha256": DETERMINISTIC_ONLY_V2_PROFILE.sha256,
+        "runtime_id": runtime.id,
+        "profile_id": runtime.profile.id,
+        "profile_sha256": runtime.profile.sha256,
+        "model_lock": runtime.model_lock,
         "inputs": {
             "controlled_cases": {
                 "count": len(controlled_payload["cases"]),
@@ -102,17 +134,28 @@ def run_baseline() -> dict[str, Any]:
         "interpretation": [
             "These labels are visible during development and cannot support untouched-evaluation claims.",
             "A missed target identifies product work; it is not a confirmatory research result.",
-            "The deterministic-only profile measures which claims require a later selective model route without making model calls.",
+            (
+                "The deterministic-only profile measures which claims require a later selective model route without making model calls."
+                if runtime.nli is None
+                else "The selective profile uses only the hash-verified local NLI artifact on bounded selected evidence."
+            ),
         ],
     }
 
 
-def _run_controlled(items: list[dict[str, Any]]) -> dict[str, Any]:
+def _run_controlled(
+    items: list[dict[str, Any]],
+    runtime: BenchmarkRuntime,
+) -> dict[str, Any]:
     rows: list[dict[str, Any]] = []
     runtime_failures = 0
     for item in items:
         try:
-            result, latency_ms = _verify(item, source="controlled safety fixture")
+            result, latency_ms = _verify(
+                item,
+                source="controlled safety fixture",
+                runtime=runtime,
+            )
             actual = _projection(result)
             expected = dict(item["expected"])
             mismatches = {
@@ -147,14 +190,21 @@ def _run_controlled(items: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
-def _run_public(items: list[dict[str, Any]]) -> dict[str, Any]:
+def _run_public(
+    items: list[dict[str, Any]], runtime: BenchmarkRuntime
+) -> dict[str, Any]:
     rows: list[dict[str, Any]] = []
     runtime_failures = 0
     claim_routes: Counter[str] = Counter()
+    nli_invocations = 0
     latencies: list[float] = []
     for item in items:
         try:
-            result, latency_ms = _verify(item, source="public development holdout")
+            result, latency_ms = _verify(
+                item,
+                source="public development holdout",
+                runtime=runtime,
+            )
             latencies.append(latency_ms)
             summary = dict(result["summary"])
             predicted_counts = dict(summary["claim_verdicts"])
@@ -167,13 +217,19 @@ def _run_public(items: list[dict[str, Any]]) -> dict[str, Any]:
                 and set(predicted_counts) == {"supported"}
             )
             unsafe = _expected_unsafe(item)
-            false_green = bool(unsafe and summary["green_claims"] > 0)
+            false_green = bool(unsafe and summary["overall_status"] == "green")
+            safe_classification = bool(
+                unsafe
+                and summary["total_claims"] > 0
+                and set(predicted_counts) == {"supported"}
+            )
             requires_abstention = any(
                 claim["abstention_requirement"] == "must_abstain"
                 for claim in result["claims"]
             )
             for claim in result["claims"]:
                 claim_routes[str(claim["route"])] += 1
+                nli_invocations += claim["nli"] is not None
             rows.append(
                 {
                     "id": item["id"],
@@ -182,6 +238,7 @@ def _run_public(items: list[dict[str, Any]]) -> dict[str, Any]:
                     "clean_supported": clean_supported,
                     "expected_unsafe": unsafe,
                     "dangerous_false_green": false_green,
+                    "dangerous_safe_classification": safe_classification,
                     "expected_should_abstain": bool(
                         item.get("expected_should_abstain")
                     ),
@@ -218,11 +275,16 @@ def _run_public(items: list[dict[str, Any]]) -> dict[str, Any]:
             sum(bool(row["dangerous_false_green"]) for row in unsafe_rows),
             len(unsafe_rows),
         ),
+        "dangerous_safe_classification_rate": _ratio(
+            sum(bool(row["dangerous_safe_classification"]) for row in unsafe_rows),
+            len(unsafe_rows),
+        ),
         "abstention_requirement_recall": _ratio(
             sum(bool(row["requires_abstention"]) for row in abstain_rows),
             len(abstain_rows),
         ),
         "unresolved_route_rate": _ratio(claim_routes["unresolved"], total_claims),
+        "nli_invocation_rate": _ratio(nli_invocations, total_claims),
         "route_counts": dict(sorted(claim_routes.items())),
         "latency_ms": {
             "p50": round(statistics.median(latencies), 3) if latencies else 0.0,
@@ -232,10 +294,19 @@ def _run_public(items: list[dict[str, Any]]) -> dict[str, Any]:
         "dangerous_false_green_ids": [
             row["id"] for row in unsafe_rows if row["dangerous_false_green"]
         ],
+        "dangerous_safe_classification_ids": [
+            row["id"] for row in unsafe_rows if row["dangerous_safe_classification"]
+        ],
     }
 
 
-def _verify(item: dict[str, Any], *, source: str) -> tuple[dict[str, Any], float]:
+def _verify(
+    item: dict[str, Any],
+    *,
+    source: str,
+    runtime: BenchmarkRuntime | None = None,
+) -> tuple[dict[str, Any], float]:
+    runtime = runtime or _runtime(None)
     contexts = [
         {
             "id": context["id"],
@@ -264,7 +335,11 @@ def _verify(item: dict[str, Any], *, source: str) -> tuple[dict[str, Any], float
         source=f"{source} {item['id']}",
     )
     started = time.perf_counter()
-    result = verify_trace_v2(trace, profile=DETERMINISTIC_ONLY_V2_PROFILE)
+    result = runtime.verify(
+        trace,
+        profile=runtime.profile,
+        nli=runtime.nli,
+    )
     latency_ms = round((time.perf_counter() - started) * 1000, 3)
     return result, latency_ms
 
@@ -279,6 +354,9 @@ def _projection(result: dict[str, Any]) -> dict[str, Any]:
         "citation_states": [claim["citation_state"] for claim in claims],
         "failure_labels": [claim["failure_label"] for claim in claims],
         "root_causes": [claim["primary_root_cause"] for claim in claims],
+        "evidence_span_roles": [
+            span["role"] for claim in claims for span in claim["evidence_spans"]
+        ],
         "truncation_applied": bool(result["truncation"]["applied"]),
     }
 
@@ -326,6 +404,31 @@ def _read_json(path: Path) -> dict[str, Any]:
 
 def _file_sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _runtime(model_path: Path | None) -> BenchmarkRuntime:
+    if model_path is None:
+        return BenchmarkRuntime(
+            id="semantic_core_v2_deterministic",
+            profile=DETERMINISTIC_ONLY_V2_PROFILE,
+            verify=verify_trace_v2,
+        )
+    lock = verify_nli_artifact(model_path)
+    return BenchmarkRuntime(
+        id="semantic_core_v2_1_selective_pinned_nli",
+        profile=SELECTIVE_V2_1_PROFILE,
+        verify=verify_trace_v2_1,
+        nli=build_pinned_nli(model_path),
+        model_lock={
+            "model_id": lock["model_id"],
+            "model_revision": lock["model_revision"],
+            "artifact_manifest_sha256": lock["artifact_manifest_sha256"],
+            "runtime_versions": {
+                "torch": version("torch"),
+                "transformers": version("transformers"),
+            },
+        },
+    )
 
 
 def _ratio(numerator: int, denominator: int) -> float:
