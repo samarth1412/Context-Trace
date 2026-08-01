@@ -1,0 +1,103 @@
+{
+  "schema_version": "1.0",
+  "evidence_class": "synthetic_development_only",
+  "description": "Seed entailments and deterministic mutations for checker development. Not independent research evidence.",
+  "seeds": [
+    {
+      "id": "retention_days",
+      "category": "numeric",
+      "query": "How long is the retention period?",
+      "premise": "The retention period is 30 days.",
+      "supported_claim": "The retention period is 30 days.",
+      "replace": {"old": "30", "new": "90"}
+    },
+    {
+      "id": "policy_effective_date",
+      "category": "date",
+      "query": "When does the policy take effect?",
+      "premise": "The policy takes effect on July 1, 2026.",
+      "supported_claim": "The policy takes effect on July 1, 2026.",
+      "replace": {"old": "July 1", "new": "October 1"}
+    },
+    {
+      "id": "api_version",
+      "category": "version",
+      "query": "Which API version must clients use?",
+      "premise": "Clients must use API v2.4.",
+      "supported_claim": "Clients must use API v2.4.",
+      "replace": {"old": "v2.4", "new": "v3.0"}
+    },
+    {
+      "id": "audit_logging",
+      "category": "negation",
+      "query": "Is audit logging enabled by default?",
+      "premise": "Audit logging is enabled by default.",
+      "supported_claim": "Audit logging is enabled by default.",
+      "replace": {"old": "is enabled", "new": "is not enabled"}
+    },
+    {
+      "id": "service_call_direction",
+      "category": "reversed_relation",
+      "query": "Which service calls the other service?",
+      "premise": "Service A calls Service B.",
+      "supported_claim": "Service A calls Service B.",
+      "replace": {"old": "Service A calls Service B", "new": "Service B calls Service A"}
+    },
+    {
+      "id": "sdk_format",
+      "category": "identifier_substitution",
+      "query": "Which format does the SDK support?",
+      "premise": "The SDK supports JSON.",
+      "supported_claim": "The SDK supports JSON.",
+      "replace": {"old": "JSON", "new": "YAML"}
+    },
+    {
+      "id": "replacement_endpoint",
+      "category": "path_substitution",
+      "query": "Which endpoint replaces the old search endpoint?",
+      "premise": "The replacement endpoint is /v2/search.",
+      "supported_claim": "The replacement endpoint is /v2/search.",
+      "replace": {"old": "/v2/search", "new": "/v1/search"}
+    },
+    {
+      "id": "endpoint_status",
+      "category": "status",
+      "query": "What is the endpoint status?",
+      "premise": "The endpoint is active.",
+      "supported_claim": "The endpoint is active.",
+      "replace": {"old": "active", "new": "deprecated"}
+    },
+    {
+      "id": "refund_condition",
+      "category": "condition_omission",
+      "query": "When are refunds available?",
+      "premise": "Refunds are available within 30 days if the item is unopened.",
+      "supported_claim": "Refunds are available within 30 days if the item is unopened.",
+      "replace": {"old": " if the item is unopened", "new": ""}
+    },
+    {
+      "id": "encryption_scope",
+      "category": "scope_omission",
+      "query": "When is encryption optional?",
+      "premise": "Encryption is optional for local development.",
+      "supported_claim": "Encryption is optional for local development.",
+      "replace": {"old": " for local development", "new": ""}
+    },
+    {
+      "id": "request_size_boundary",
+      "category": "numeric_boundary",
+      "query": "Which request sizes are accepted?",
+      "premise": "Requests under 10 MB are accepted.",
+      "supported_claim": "Requests under 10 MB are accepted.",
+      "replace": {"old": "under 10", "new": "of 10"}
+    },
+    {
+      "id": "deprecation_boundary",
+      "category": "temporal_boundary",
+      "query": "When was the endpoint deprecated?",
+      "premise": "The endpoint was deprecated after v2.",
+      "supported_claim": "The endpoint was deprecated after v2.",
+      "replace": {"old": "after v2", "new": "in v2"}
+    }
+  ]
+}

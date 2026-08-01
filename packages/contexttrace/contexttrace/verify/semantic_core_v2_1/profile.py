@@ -16,6 +16,7 @@ class V21Profile(V2Profile):
     compose_same_source_nli_spans: bool = True
     include_query_cue_for_nli: bool = True
     atomic_claim_unitization: bool = True
+    observable_conflict_guard: bool = True
     max_composed_nli_chars: int = 2400
     max_nli_query_chars: int = 512
 

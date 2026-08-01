@@ -6,7 +6,7 @@ and the stable ContextTrace verifier remains `semantic_v1_calibrated`.
 ## What changed
 
 The opt-in `semantic_core_v2_1` profile keeps the v2 output schema while adding
-three safety and accuracy policies:
+four safety and accuracy policies:
 
 1. A claim supported only by NLI after ambiguous deterministic evidence cannot
    become green. It remains supported-with-qualification.
@@ -17,11 +17,15 @@ three safety and accuracy policies:
    both sides are independently verifiable, preserves exact answer offsets, and
    reconstructs shared subjects only from observable answer text. Frozen v2
    unitization remains unchanged.
+4. A dedicated observable-conflict checker prevents generic NLI entailment from
+   overriding explicit number, date, version, negation, identifier, path, status,
+   relation, condition, scope, and boundary conflicts. It changes only accepted
+   support decisions and records every intervention in the NLI provenance.
 
-The profile hash includes the guard, composition switches, atomic-unitization
-switch, and character bounds. NLI continues to receive at most three selected
-spans, and the local model artifact must match the existing model, revision,
-file hashes, and manifest hash.
+The profile hash includes both safety guards, composition switches,
+atomic-unitization switch, and character bounds. NLI continues to receive at
+most three selected spans, and the local model artifact must match the existing
+model, revision, file hashes, and manifest hash.
 
 ## Development-only results
 
@@ -39,6 +43,13 @@ fixtures:
 These numbers are for iterative engineering only. The cases and labels are
 visible during development, so they are not untouched or confirmatory research
 evidence.
+
+The separate 24-pair synthetic hard-negative pack exposes three accepted false
+entailments from generic NLI: scope omission, a numeric boundary error, and a
+temporal boundary error. The dedicated conflict checker reduces accepted false
+entailment from 25% to 0% on the 12 negative controls while retaining 100%
+positive recall. This small synthetic result validates the mechanism only; it
+is not evidence of generalization or SOTA performance.
 
 ## Opt-in CLI
 

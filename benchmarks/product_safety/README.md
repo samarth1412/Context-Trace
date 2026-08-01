@@ -45,3 +45,29 @@ unknown source metadata can conservatively suppress green, the benchmark also
 reports dangerous safe classifications: unsafe cases whose claims were all
 classified as supported. The abstention metric checks whether the verifier emits
 `must_abstain`, independently of whether the answer itself abstained.
+
+## Dedicated-checker hard negatives
+
+The deterministic hard-negative pack is development-only. It contains paired
+positive controls and mutations for numbers, dates, versions, negation, reversed
+relations, identifiers, paths, status, condition omission, scope omission,
+numeric boundaries, and temporal boundaries.
+
+Rebuild and verify the generated corpus:
+
+```bash
+.venv/bin/python benchmarks/product_safety/build_hard_negatives.py
+.venv/bin/python benchmarks/product_safety/build_hard_negatives.py --check
+```
+
+Compare the exact pinned generic NLI artifact with the dedicated checker:
+
+```bash
+.venv/bin/python benchmarks/product_safety/run_hard_negative_benchmark.py \
+  --model-path /private/models/nli-deberta-v3-small \
+  --output benchmarks/product_safety/hard-negative-benchmark-v1.json \
+  --enforce
+```
+
+This pack is a mechanism and regression test, not independent research evidence.
+It must never be reported as an external benchmark or untouched result.

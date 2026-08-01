@@ -65,3 +65,12 @@ development data are used. Human input becomes mandatory before stage 7 for:
 If a developer-actionability study is later resumed, institutional or ethics
 requirements must be checked before recruiting participants. That study is not
 required to establish the core verifier result.
+
+## Development status
+
+- Stage 1 is implemented as exact-offset atomic unitization in the unreleased
+  v2.1 profile.
+- Stage 2 has its first safety layer: a provenance-recorded observable-conflict
+  checker and a reproducible 24-pair synthetic regression pack. A learned or
+  distilled checker trained on broader public development data remains pending.
+- Stages 3--7 remain pending.

@@ -18,6 +18,7 @@ from contexttrace.verify.semantic_core_v2.runner import (
     verify_traces_v2,
 )
 
+from .checker import ObservableConflictGuard
 from .claims import unitize_atomic_claims
 from .profile import SELECTIVE_V2_1_PROFILE, V21Profile
 
@@ -103,12 +104,15 @@ def _composing_nli(
 ) -> ClaimJudge | None:
     if nli is None:
         return None
+    guarded_nli: ClaimJudge = (
+        ObservableConflictGuard(nli) if profile.observable_conflict_guard else nli
+    )
     if (
         not profile.compose_same_source_nli_spans
         and not profile.include_query_cue_for_nli
     ):
-        return nli
-    return _ComposingNLI(nli, profile)
+        return guarded_nli
+    return _ComposingNLI(guarded_nli, profile)
 
 
 def _claim_unitizer(profile: V21Profile) -> ClaimUnitizer:
