@@ -13,6 +13,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Hash-locked same-ID development comparisons against cached RAGAS and
   RAGChecker outputs, with fail-closed coverage, error, adapter, and input-
   binding checks.
+- Pinned, offline same-ID MiniCheck and RefChecker runners with exact source,
+  model, dependency, inference-setting, and resume-state audits. RefChecker
+  uses a local Gemma extractor through Ollama and its official NLI checker;
+  neither runner calls a paid provider.
+- Fail-closed checkpoint overwrite protection and an official-wheel fallback
+  that verifies RefChecker's PyPI artifact hash and every installed package file.
 - Conservative same-source grouped-claim NLI routing for the unreleased v2.1
   profile. Only claims with complete deterministic material-fact coverage may
   share a model call; non-entailing groups fail closed as unverifiable.
@@ -31,6 +37,11 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
   collapsing every non-green answer into partial support. On the locked visible
   200-case comparison, macro-F1 is `0.561` versus RAGAS at `0.152`. This is
   visible development evidence, not an untouched or SOTA result.
+- Completed the nine-row same-ID development matrix. ContextTrace macro-F1 is
+  `0.561` on RAGTruth versus RAGAS `0.152`, MiniCheck `0.248`, and RefChecker
+  `0.328`; on ARES it is `0.995` versus `0.471`, `0.897`, and `0.724`. CRAG is
+  reported only as proxy agreement. These are visible development results, not
+  untouched or SOTA evidence.
 
 ## [1.1.0] - 2026-07-22
 

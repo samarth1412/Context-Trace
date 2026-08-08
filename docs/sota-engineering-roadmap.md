@@ -88,14 +88,12 @@ required to establish the core verifier result.
   source-family-disjoint synthetic pack. It links answer offsets to atomic
   claims and exact supporting or refuting source spans, including complementary
   spans across documents. External span-labeled evaluation remains pending.
-- Stage 6 now has a fail-closed artifact lock and 600-case same-ID development
-  comparison across RAGTruth/RAGAS, ARES/RAGAS, and CRAG/RAGChecker. ContextTrace
-  beats RAGAS on ARES with 0.995 macro-F1 and zero dangerous false greens after
-  adding query-conditioned fragment verification. Conservative same-source
-  grouped routing and bounded query cues reduce the RAGTruth NLI-call rate from
-  0.638 to 0.372 while retaining zero dangerous false greens. A corrected,
-  auditable native-verdict projection raises RAGTruth macro-F1 to 0.561 versus
-  RAGAS at 0.152 on the locked visible comparison. CRAG is reported only as proxy
-  agreement. RefChecker and MiniCheck remain unavailable rather than receiving
-  unverified scores, so Stage 6 is not complete and no SOTA claim is supported.
+- Stage 6 now has a complete fail-closed nine-row, 600-unique-case same-ID
+  development matrix across RAGTruth, ARES, and CRAG against RAGAS, MiniCheck,
+  RefChecker, and RAGChecker where applicable. On visible labeled data,
+  ContextTrace reaches 0.561 macro-F1 on RAGTruth versus 0.152/0.248/0.328 and
+  0.995 on ARES versus 0.471/0.897/0.724, with zero dangerous false greens.
+  Conservative grouping keeps the RAGTruth NLI-call rate at 0.372. CRAG remains
+  proxy agreement only (0.740/0.825/0.575), not labeled accuracy. Stage 6 is
+  complete as development engineering evidence but supports no SOTA claim.
 - Stage 7 remains pending. No untouched labels were accessed by Stage 6.

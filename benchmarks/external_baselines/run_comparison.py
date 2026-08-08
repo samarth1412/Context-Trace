@@ -68,6 +68,10 @@ def run_matrix(
     model_lock = verify_nli_artifact(model_path)
     nli = build_pinned_nli(model_path)
     comparisons = []
+    contexttrace_cache: dict[
+        tuple[str, str],
+        tuple[dict[str, Any], dict[str, Any], dict[str, Any]],
+    ] = {}
     for audited in audit["comparisons"]:
         item = audited["lock_entry"]
         if progress:
@@ -78,14 +82,29 @@ def run_matrix(
             artifact_root / item["baseline_candidate"]["path"]
         )
         reference = _reference_result(item, case_pack, candidate_inputs)
-        contexttrace_candidate, runtime = _run_contexttrace_candidate(
-            item,
-            candidate_inputs,
-            nli=nli,
+        cache_key = (
+            str(item["case_pack"]["sha256"]),
+            str(item["candidate_inputs"]["sha256"]),
         )
-        contexttrace_score = score_candidate_predictions(
-            reference, contexttrace_candidate
-        )
+        cached = contexttrace_cache.get(cache_key)
+        if cached is None:
+            contexttrace_candidate, runtime = _run_contexttrace_candidate(
+                item,
+                candidate_inputs,
+                nli=nli,
+            )
+            contexttrace_score = score_candidate_predictions(
+                reference, contexttrace_candidate
+            )
+            contexttrace_cache[cache_key] = (
+                contexttrace_candidate,
+                runtime,
+                contexttrace_score,
+            )
+        else:
+            contexttrace_candidate, runtime, contexttrace_score = cached
+            if progress:
+                progress(f"Reusing ContextTrace results for {item['id']}.")
         baseline_score = score_candidate_predictions(reference, baseline_candidate)
         comparison = {
             "id": item["id"],
@@ -136,7 +155,8 @@ def run_matrix(
         "interpretation": [
             "All datasets and labels in this report are visible development evidence.",
             "Cached baseline outputs are accepted only after exact hash, ID, coverage, error, and adapter checks.",
-            "RefChecker and MiniCheck have no local same-ID run and therefore receive no score.",
+            "MiniCheck and RefChecker results use pinned local runtimes over the exact locked candidate inputs.",
+            "The local RefChecker configuration is reproducible but is not a reproduction of its strongest published provider-backed configuration.",
             "CRAG is evaluator agreement on a gold-answer grounding proxy, not labeled accuracy.",
             "No result in this report establishes an untouched or state-of-the-art claim.",
         ],
@@ -174,6 +194,10 @@ def _audit_comparison(item: dict[str, Any], artifact_root: Path) -> dict[str, An
     candidate_inputs = _read_jsonl(paths["candidate_inputs"])
     baseline_raw = _read_object(paths["baseline_raw"])
     baseline_candidate = _read_object(paths["baseline_candidate"])
+    if "complete" in baseline_raw and baseline_raw["complete"] is not True:
+        raise BaselineAuditError(
+            f"{comparison_id}: baseline raw output is marked incomplete."
+        )
     id_groups = {
         "case_pack": _unique_ids(_object_list(case_pack, "cases"), comparison_id),
         "candidate_inputs": _unique_ids(candidate_inputs, comparison_id),
@@ -330,7 +354,7 @@ def _run_contexttrace_candidate(
             if claim.get("nli")
         )
         for claim in claims:
-            grouped = ((claim.get("nli") or {}).get("grouped_claim_nli") or {})
+            grouped = (claim.get("nli") or {}).get("grouped_claim_nli") or {}
             if not isinstance(grouped, dict) or not grouped.get("group_id"):
                 continue
             grouped_nli_claims += 1
@@ -566,7 +590,7 @@ def _validate_raw_input_binding(
                     f"{_row_id(candidate)}."
                 )
         return "exact_ids_and_retrieved_context_counts"
-    if system == "RAGChecker":
+    if system in {"RAGChecker", "MiniCheck", "RefChecker"}:
         for candidate in candidate_inputs:
             case_id = _row_id(candidate)
             trace = candidate["trace"]
@@ -581,7 +605,7 @@ def _validate_raw_input_binding(
                 or raw.get("retrieved_context") != expected_contexts
             ):
                 raise BaselineAuditError(
-                    f"{comparison_id}: RAGChecker raw input changed for {case_id}."
+                    f"{comparison_id}: {system} raw input changed for {case_id}."
                 )
         return "exact_query_response_and_retrieved_contexts"
     raise BaselineAuditError(

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import zipfile
 from pathlib import Path
 
 import pytest
@@ -13,6 +14,23 @@ from benchmarks.external_baselines.run_comparison import (
     _project_root,
     _resolve_artifact,
     audit_matrix,
+)
+from benchmarks.external_baselines.run_minicheck import (
+    MiniCheckAuditError,
+    _audit_files,
+    project_minicheck_labels,
+)
+from benchmarks.external_baselines.run_minicheck import (
+    _existing_rows_for_run as minicheck_existing_rows_for_run,
+)
+from benchmarks.external_baselines.run_refchecker import (
+    RefCheckerAuditError,
+    _audit_installed_wheel,
+    project_refchecker_labels,
+    reference_passages,
+)
+from benchmarks.external_baselines.run_refchecker import (
+    _existing_rows_for_run as refchecker_existing_rows_for_run,
 )
 
 
@@ -49,6 +67,20 @@ def test_audit_rejects_partial_or_duplicate_coverage(tmp_path: Path) -> None:
     _write_json(lock_path, lock)
 
     with pytest.raises(BaselineAuditError, match="duplicate IDs"):
+        audit_matrix(lock_path, artifact_root)
+
+
+def test_audit_rejects_output_marked_incomplete(tmp_path: Path) -> None:
+    lock_path, artifact_root = _write_ragas_fixture(tmp_path)
+    raw_path = artifact_root / "raw.json"
+    raw = json.loads(raw_path.read_text(encoding="utf-8"))
+    raw["complete"] = False
+    _write_json(raw_path, raw)
+    lock = json.loads(lock_path.read_text(encoding="utf-8"))
+    lock["comparisons"][0]["baseline_raw"]["sha256"] = _sha256(raw_path)
+    _write_json(lock_path, lock)
+
+    with pytest.raises(BaselineAuditError, match="marked incomplete"):
         audit_matrix(lock_path, artifact_root)
 
 
@@ -96,6 +128,152 @@ def test_dataset_projection_is_explicit_and_narrow() -> None:
 def test_artifact_path_cannot_escape_root(tmp_path: Path) -> None:
     with pytest.raises(BaselineAuditError, match="escapes"):
         _resolve_artifact(tmp_path, "../outside.json")
+
+
+def test_minicheck_projection_preserves_binary_scope() -> None:
+    assert project_minicheck_labels([1, 1], dataset="RAGTruth") == (
+        ["no_failure_detected"],
+        "no_failure_detected",
+    )
+    assert project_minicheck_labels([0, 0], dataset="RAGTruth") == (
+        ["unsupported"],
+        "answer_overreach",
+    )
+    assert project_minicheck_labels([1, 0], dataset="RAGTruth") == (
+        ["partial_support"],
+        "answer_overreach",
+    )
+    assert project_minicheck_labels([0], dataset="ARES-NQ-example") == (
+        ["should_have_abstained", "unsupported_answer"],
+        "should_have_abstained",
+    )
+    assert project_minicheck_labels([0], dataset="CRAG-Task1-v5") == (
+        ["unsupported_answer"],
+        "answer_overreach",
+    )
+
+
+def test_minicheck_artifact_audit_fails_closed(tmp_path: Path) -> None:
+    model_file = tmp_path / "config.json"
+    model_file.write_text("locked", encoding="utf-8")
+    expected = {"config.json": hashlib.sha256(b"locked").hexdigest()}
+
+    assert _audit_files(tmp_path, expected, artifact_name="fixture") == expected
+    model_file.write_text("changed", encoding="utf-8")
+    with pytest.raises(MiniCheckAuditError, match="SHA-256 mismatch"):
+        _audit_files(tmp_path, expected, artifact_name="fixture")
+
+
+@pytest.mark.parametrize(
+    ("resolver", "error_type"),
+    [
+        (minicheck_existing_rows_for_run, MiniCheckAuditError),
+        (refchecker_existing_rows_for_run, RefCheckerAuditError),
+    ],
+)
+def test_competitor_runner_refuses_silent_checkpoint_overwrite(
+    tmp_path: Path,
+    resolver: object,
+    error_type: type[Exception],
+) -> None:
+    output = tmp_path / "checkpoint.json"
+    output.write_text("{}\n", encoding="utf-8")
+
+    with pytest.raises(error_type, match="Refusing to overwrite"):
+        resolver(  # type: ignore[operator]
+            output,
+            resume=False,
+            expected_runtime={},
+            dataset="fixture",
+        )
+
+
+def test_refchecker_wheel_audit_binds_installed_package(tmp_path: Path) -> None:
+    wheel = tmp_path / "refchecker-0.2.17-py3-none-any.whl"
+    package_file = tmp_path / "installed" / "refchecker" / "module.py"
+    package_file.parent.mkdir(parents=True)
+    package_file.write_text("PINNED = True\n", encoding="utf-8")
+    with zipfile.ZipFile(wheel, "w") as archive:
+        archive.writestr("refchecker/module.py", "PINNED = True\n")
+    lock = {"package_wheel_sha256": hashlib.sha256(wheel.read_bytes()).hexdigest()}
+
+    audited = _audit_installed_wheel(
+        lock,
+        wheel,
+        install_root=package_file.parents[1],
+    )
+    assert audited == {
+        "refchecker/module.py": hashlib.sha256(b"PINNED = True\n").hexdigest()
+    }
+
+    package_file.write_text("PINNED = False\n", encoding="utf-8")
+    with pytest.raises(RefCheckerAuditError, match="file changed"):
+        _audit_installed_wheel(
+            lock,
+            wheel,
+            install_root=package_file.parents[1],
+        )
+
+
+def test_refchecker_projection_preserves_three_way_scope() -> None:
+    assert project_refchecker_labels(["Entailment"], dataset="RAGTruth") == (
+        ["no_failure_detected"],
+        "no_failure_detected",
+    )
+    assert project_refchecker_labels(
+        ["Entailment", "Contradiction"], dataset="RAGTruth"
+    ) == (["contradicted_answer"], "conflicting_contexts")
+    assert project_refchecker_labels(["Neutral"], dataset="RAGTruth") == (
+        ["unsupported"],
+        "answer_overreach",
+    )
+    assert project_refchecker_labels(["Entailment", "Neutral"], dataset="RAGTruth") == (
+        ["partial_support"],
+        "answer_overreach",
+    )
+    assert project_refchecker_labels(["Neutral"], dataset="ARES-NQ-example") == (
+        ["should_have_abstained", "unsupported_answer"],
+        "should_have_abstained",
+    )
+
+
+def test_refchecker_preserves_retrieved_passage_boundaries() -> None:
+    trace = {
+        "contexts": [
+            {"id": "first", "text": "First passage."},
+            {"id": "second", "text": "Second passage."},
+        ]
+    }
+
+    assert reference_passages(trace) == ["First passage.", "Second passage."]
+
+
+def test_minicheck_adapter_preserves_native_verdict_counts() -> None:
+    candidate = adapt_candidate_rows(
+        [
+            {
+                "id": "case-1",
+                "predicted_labels": ["partial_support"],
+                "claim_verdicts": ["supported", "unsupported"],
+                "verdict_counts": {
+                    "supported": 1,
+                    "partially_supported": 0,
+                    "unsupported": 1,
+                    "contradicted": 0,
+                    "unverifiable": 0,
+                },
+                "predicted_primary_root_cause": "answer_overreach",
+            }
+        ],
+        system="MiniCheck",
+        version="fixture",
+        preset="minicheck",
+    )
+
+    prediction = candidate["predictions"][0]
+    assert prediction["predicted"] == ["partial_support"]
+    assert prediction["predicted_verdict_counts"]["unsupported"] == 1
+    assert prediction["predicted_primary_root_cause"] == "answer_overreach"
 
 
 def _write_ragas_fixture(tmp_path: Path) -> tuple[Path, Path]:
