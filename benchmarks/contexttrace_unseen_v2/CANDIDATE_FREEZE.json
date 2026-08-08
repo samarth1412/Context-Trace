@@ -1,0 +1,406 @@
+{
+  "boundaries": {
+    "annotation_authorized": false,
+    "candidate_executed_on_unseen_v2": false,
+    "corpus_acquired": false,
+    "evaluation_authorized": false,
+    "labels_accessed": false,
+    "labels_created": false,
+    "release_authorized": false
+  },
+  "candidate": {
+    "complex_fact_guard": {
+      "max_identifier_scope_terms": 8,
+      "max_scope_separators": 12,
+      "version": "complex-fact-guard-v1.0.0"
+    },
+    "component_versions": {
+      "atomic_claim_unitizer": "claim-unitizer-v2.1.1",
+      "complex_fact_guard": "complex-fact-guard-v1.0.0",
+      "evidence_attribution": "hierarchical-evidence-attribution-v2.1.0",
+      "grouped_claim_nli": "grouped-claim-nli-v1.0.0",
+      "observable_conflict_guard": "observable-conflict-guard-v1.0.0",
+      "risk_features": "support-risk-features-v1.1.0",
+      "source_condition_reasoner": "source-condition-reasoner-v2.1.0"
+    },
+    "git_commit": "0b3fdfdaf352c23e3b47c3bddd38702c89aac6db",
+    "git_tree": "c8e58b88bcdb6d62a83e0ca90fda16940d5ea15a",
+    "id": "semantic_core_v2_1_stage7_candidate",
+    "output_schema_sha256": "dee886418d5b58e2ca544fc5e1bf3be02294073f4f19a526b2c8f48a8b5b4dad",
+    "profile": {
+      "atomic_claim_unitization": true,
+      "citation_features": true,
+      "compose_same_source_nli_spans": true,
+      "enable_nli": true,
+      "evidence_span_min_score": 0.18,
+      "forced_classification": false,
+      "grouped_claim_nli": true,
+      "grouped_nli_entailment_confidence": 0.95,
+      "hierarchical_evidence_attribution": true,
+      "id": "selective_v2_1_safety",
+      "include_query_cue_for_nli": true,
+      "learned_support_risk_gate": true,
+      "max_attribution_spans": 3,
+      "max_composed_nli_chars": 2400,
+      "max_grouped_nli_claims": 3,
+      "max_grouped_nli_spans_per_claim": 2,
+      "max_nli_query_chars": 512,
+      "max_nli_span_chars": 1600,
+      "max_nli_spans": 3,
+      "observable_conflict_guard": true,
+      "prevent_nli_only_green_promotion": true,
+      "relational_source_condition_reasoning": true,
+      "source_condition_features": true,
+      "thresholds": {
+        "deterministic_accept_confidence": 0.86,
+        "deterministic_conflict_score": 0.3,
+        "deterministic_exact_support_score": 0.62,
+        "deterministic_strong_support_score": 0.68,
+        "deterministic_unsupported_score": 0.18,
+        "green_confidence": 0.9,
+        "high_authority_score": 0.85,
+        "low_authority_score": 0.4,
+        "nli_contradiction_confidence": 0.8,
+        "nli_entailment_confidence": 0.8,
+        "nli_neutral_confidence": 0.7
+      },
+      "use_deterministic_on_nli_disagreement": false,
+      "version": "selective-v2.0.0"
+    },
+    "profile_id": "selective_v2_1_safety",
+    "profile_sha256": "2b2cdff6cb73e924653f9ec87ef064b289f2e3774976d98385995532736674de",
+    "source_files": [
+      {
+        "bytes": 2103,
+        "path": "benchmarks/contexttrace_unseen_v2/METRICS.json",
+        "sha256": "0fb0cc6c505a7f89e80ab8d52cf392cef2ef8bde207f9c618e50a2a014fa8e77"
+      },
+      {
+        "bytes": 3095,
+        "path": "benchmarks/contexttrace_unseen_v2/PREREGISTRATION.md",
+        "sha256": "62f98c6221e10184f32451094a65ed28be73701c928c644db27b459c21b7dbec"
+      },
+      {
+        "bytes": 2557,
+        "path": "packages/contexttrace/contexttrace/contracts.py",
+        "sha256": "37381c2072fb745af508631a26c8591d67ef3ef772be250c7ed277d184c8de43"
+      },
+      {
+        "bytes": 11102,
+        "path": "packages/contexttrace/contexttrace/schemas/claim-verification-v2.schema.json",
+        "sha256": "dee886418d5b58e2ca544fc5e1bf3be02294073f4f19a526b2c8f48a8b5b4dad"
+      },
+      {
+        "bytes": 5161,
+        "path": "packages/contexttrace/contexttrace/verify/citations.py",
+        "sha256": "4dc9d945f4004746a40e366b767ed1add1195d0fbb882f5723336b75396464c1"
+      },
+      {
+        "bytes": 12960,
+        "path": "packages/contexttrace/contexttrace/verify/claims.py",
+        "sha256": "acbf97aa7b723cd319e45e899da2fe37b2b12a9283acc504efff30114a9dd851"
+      },
+      {
+        "bytes": 30573,
+        "path": "packages/contexttrace/contexttrace/verify/evidence.py",
+        "sha256": "90442b689e9d095a0be03921df872806743bb6600f96d2e90a3fe8acedc7f87a"
+      },
+      {
+        "bytes": 147885,
+        "path": "packages/contexttrace/contexttrace/verify/facts.py",
+        "sha256": "4fa507db2126423c8d0787811e78d0d6ffecf5d7603828b6a6d9b23ca8207bc4"
+      },
+      {
+        "bytes": 20851,
+        "path": "packages/contexttrace/contexttrace/verify/judges.py",
+        "sha256": "c876663abd93305c7f1eb5cf356010852b46a5ee41d801d179dcf54262c1e871"
+      },
+      {
+        "bytes": 3765,
+        "path": "packages/contexttrace/contexttrace/verify/local_ml.py",
+        "sha256": "5732b10e10d4048a88282e686ae964f67a35a8e681214285038bd9710563caa6"
+      },
+      {
+        "bytes": 14025,
+        "path": "packages/contexttrace/contexttrace/verify/local_nli.py",
+        "sha256": "f2aed4b66bdfd453cb61270edf677395985448f62a2f8d287019fd6c93360107"
+      },
+      {
+        "bytes": 6024,
+        "path": "packages/contexttrace/contexttrace/verify/schema.py",
+        "sha256": "566a899759a27a58ccc3a38e24b574a0a68d134a22d7cfc5d6a92a4b12793842"
+      },
+      {
+        "bytes": 1286,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/__init__.py",
+        "sha256": "5e44635a8ecfeff271ba74936ebd328719a0d37068bb3f37d2dba02ca7edc6ed"
+      },
+      {
+        "bytes": 12954,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/cascade.py",
+        "sha256": "7ef2f18ab90c77d2759d67dde4d35b2b724cd8335c9a54c533e2220038371174"
+      },
+      {
+        "bytes": 2652,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/citations.py",
+        "sha256": "7d6b7adf1df8f8710b6521f39c439b1f4a6c9955b6e37e320641429f6ef5fdca"
+      },
+      {
+        "bytes": 4305,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/claims.py",
+        "sha256": "9c10147264b2f0412434683236c2c5f26d6491d402d6bf74fdccb699e9957e90"
+      },
+      {
+        "bytes": 2920,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/constants.py",
+        "sha256": "346c71a9b2f2603af23d16e3facb9424b7306485fc2f9066225db14a60c40eb6"
+      },
+      {
+        "bytes": 4874,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/diagnosis.py",
+        "sha256": "9ef58d163e80abf8c8ca3eed83475c7ffab8d32cb4a1ed39e9e6b81790cdb1a0"
+      },
+      {
+        "bytes": 2915,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/limits.py",
+        "sha256": "ca85b7b3fcd96af7dbe8a4c5bb8713aa04073015c6926edd9d559c14885e5abc"
+      },
+      {
+        "bytes": 2975,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/nli.py",
+        "sha256": "e0e589edbfafb8bccb3a4f74954e25438ec9dfff7db22a8000980e13f5d30502"
+      },
+      {
+        "bytes": 3337,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/profile.py",
+        "sha256": "c90033a24da76012d5e8c8c71f56dfe256350bf09a5824701cf20aecae402614"
+      },
+      {
+        "bytes": 881,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/rulepacks.py",
+        "sha256": "a5070350b76f54e0cecc01dbfb5f31628f0708b2669d73b0688088c6a439c704"
+      },
+      {
+        "bytes": 496,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/rulepacks/generic_v2.json",
+        "sha256": "2436e24eca69cf38fb3ff9e27efae18b2ba2fb684913121895d7b55f12e7c2cb"
+      },
+      {
+        "bytes": 504,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/rulepacks/source_condition_v2.json",
+        "sha256": "763435a84d1e241f3da6651651b34f0c78a3d5a7743b2d677a84ee88e1a36f4a"
+      },
+      {
+        "bytes": 12706,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/runner.py",
+        "sha256": "5aa677c5d0906ccb0e168d559d104fa2aeb280e21974d6a53ca6ed8088ac2341"
+      },
+      {
+        "bytes": 438,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/schema.py",
+        "sha256": "443aa683e1343c61401f467189fe55f8e54af35e9f6a5da2fdd27591a6b558a0"
+      },
+      {
+        "bytes": 6555,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2/source.py",
+        "sha256": "063be4047437fad5b56966de9ba5fa7d4705f2eada056db67371e6292c870b66"
+      },
+      {
+        "bytes": 1932,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2_1/__init__.py",
+        "sha256": "7c6cbff6d48f78656f577036d083f968a330e49267202d5e94414098b787b2d3"
+      },
+      {
+        "bytes": 55,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2_1/artifacts/__init__.py",
+        "sha256": "cb273a26bbfb5ad1fc1bf17ebc693e2321cb8498695ac3619b1ed80aa3ba12f7"
+      },
+      {
+        "bytes": 1218,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2_1/artifacts/support-risk-v1.json",
+        "sha256": "4ab94cc4d7e508889d107ca9eadf3fe0e8288d18919ea80146cc9750a3e1eccc"
+      },
+      {
+        "bytes": 8400,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2_1/attribution.py",
+        "sha256": "805010eaa9c71024e1cd9ac92a87c09765ae174966d966911156e3f2faff8e11"
+      },
+      {
+        "bytes": 2984,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2_1/bounded.py",
+        "sha256": "503bf529f00d1a81bfcb723817ae6e7514969f87f18d3cdda544638d1d6862ef"
+      },
+      {
+        "bytes": 14156,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2_1/checker.py",
+        "sha256": "4a6d43bb0b32d9572266d9e46589e1bd1131d637d9f9971176b31bc146934b4a"
+      },
+      {
+        "bytes": 11371,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2_1/claims.py",
+        "sha256": "94e51a287a2d20851811ac2769867f544881a5d3125a6bf6c3cf84f7a29f441a"
+      },
+      {
+        "bytes": 8358,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2_1/grouping.py",
+        "sha256": "6414f8dede01744083aa8595c43a706fd623d575c448c8fce636837e04355f91"
+      },
+      {
+        "bytes": 2375,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2_1/profile.py",
+        "sha256": "0bc374e0c33e05b6e83e3635abd238d1244789f52d828d4b62ee11eaf3d8782c"
+      },
+      {
+        "bytes": 7667,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2_1/risk_model.py",
+        "sha256": "1617877d3291c8de853ff1c5ea328c021aed6dd0383d3c68fd4796cef7b0fd4d"
+      },
+      {
+        "bytes": 11859,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2_1/runner.py",
+        "sha256": "8b10e404bbe15989a0dd1735778e6d3a3100d65fe4319767052f923f4770b0b4"
+      },
+      {
+        "bytes": 14643,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_core_v2_1/source.py",
+        "sha256": "ad0a0efd65219f902ca6f0b81cf301bef479d32bf997caa98b1baabff0489418"
+      },
+      {
+        "bytes": 2967,
+        "path": "packages/contexttrace/contexttrace/verify/semantic_normalization.py",
+        "sha256": "87cc1f204bb821fbeea3905af7058c4586cb95e36262dcd83ff73c0aed416ad1"
+      },
+      {
+        "bytes": 8833,
+        "path": "packages/contexttrace/contexttrace/verify/spans.py",
+        "sha256": "883851a5a33e3bcb3ae98f7d0f32fec2f139ec22c08b391dc87ae5fec9906e2a"
+      },
+      {
+        "bytes": 29667,
+        "path": "packages/contexttrace/contexttrace/verify/verdicts.py",
+        "sha256": "7959fb91f368b5f261b0590d6e12c590c2a9dee4eb54db7da632dfba5a50d2a8"
+      }
+    ],
+    "source_manifest_sha256": "0b28ea8845d255fe9ddd4d1b4a75f5b0b83211cbf5bc11ad5ea5218ec47fddb6",
+    "support_risk_artifact_sha256": "4ab94cc4d7e508889d107ca9eadf3fe0e8288d18919ea80146cc9750a3e1eccc",
+    "taxonomy_version": "contexttrace-diagnosis-v2.0"
+  },
+  "freeze_payload_sha256": "5753bb8444680471026ee0f7d511b2716d65a65ede9bca1f75c49ec76032a298",
+  "nli": {
+    "artifact_manifest_sha256": "330f0fd77aad129877e1a1a90d4a77e6f093ee238b97d535202816a116b9c9f3",
+    "files": [
+      {
+        "bytes": 2864,
+        "path": "README.md",
+        "sha256": "a9aa108025ad1984374c5e80365406bafe331aea5abc30239e1796ec0a7c267d"
+      },
+      {
+        "bytes": 26,
+        "path": "added_tokens.json",
+        "sha256": "a4b6bfe668f2b3cf6f0cd535e98a0663d2d0d4a4a15f13075ad3597d33985a23"
+      },
+      {
+        "bytes": 1052,
+        "path": "config.json",
+        "sha256": "885d0dceae8fa5c136da9209121ec9eb11160488e840de3bc1f29353674e5712"
+      },
+      {
+        "bytes": 567605820,
+        "path": "model.safetensors",
+        "sha256": "ebc79588dd73ccfb6a3f6078519cfbf512c5305384c5ea1845bc71cd32216e86"
+      },
+      {
+        "bytes": 301,
+        "path": "special_tokens_map.json",
+        "sha256": "ed7c099c988dbb414b18a6980d20cb57b91b7cd119f6f6941eb364b0e892e712"
+      },
+      {
+        "bytes": 2464616,
+        "path": "spm.model",
+        "sha256": "c679fbf93643d19aab7ee10c0b99e460bdbc02fedf34b92b05af343b4af586fd"
+      },
+      {
+        "bytes": 8656624,
+        "path": "tokenizer.json",
+        "sha256": "5124ef2ead1a10a717703bc436de7f353da76d6340e4587719b42b1693707964"
+      },
+      {
+        "bytes": 1346,
+        "path": "tokenizer_config.json",
+        "sha256": "f3eecd07c370ef0bf7dd3780d3cd68cf9c8b00c267e21a208ddcd8f82bfec1a6"
+      }
+    ],
+    "model_id": "cross-encoder/nli-deberta-v3-small",
+    "model_revision": "fa2804872c3b4bd748f38c0185cc85775361e735"
+  },
+  "preregistration": {
+    "document_sha256": "62f98c6221e10184f32451094a65ed28be73701c928c644db27b459c21b7dbec",
+    "metrics_file_sha256": "0fb0cc6c505a7f89e80ab8d52cf392cef2ef8bde207f9c618e50a2a014fa8e77",
+    "metrics_payload_sha256": "9cd9feff8b2956769e3679bdb3a706c829bf77624a91e3efb5b64554bc696b8d",
+    "sota_candidate_gates": {
+      "dangerous_false_green_rate": {
+        "operator": "<=",
+        "track": "natural_ood",
+        "value": 0.01
+      },
+      "evidence_span_token_f1_margin": {
+        "comparison": "strongest_reproducible_baseline",
+        "operator": ">=",
+        "value": 0.05
+      },
+      "expected_calibration_error": {
+        "operator": "<=",
+        "value": 0.05
+      },
+      "failure_label_macro_f1_margin": {
+        "comparison": "strongest_reproducible_baseline",
+        "minimum_external_benchmarks": 2,
+        "operator": ">=",
+        "value": 0.03
+      },
+      "observable_root_cause_accuracy": {
+        "operator": ">=",
+        "value": 0.8
+      },
+      "physical_nli_invocation_rate": {
+        "operator": "<",
+        "value": 0.4
+      },
+      "source_condition_macro_f1": {
+        "operator": ">=",
+        "track": "temporal_source_condition",
+        "value": 0.8
+      },
+      "unverifiable_f1": {
+        "operator": ">=",
+        "value": 0.6
+      }
+    },
+    "statistics": {
+      "bootstrap": {
+        "cluster_key": "source_family",
+        "interval": "percentile",
+        "replicates": 10000,
+        "seed": 271828
+      },
+      "missing_baseline_field_policy": "unavailable_never_imputed",
+      "multiple_testing": "holm",
+      "paired_randomization": {
+        "cluster_key": "source_family",
+        "method": "source_family_sign_flip",
+        "replicates": 100000,
+        "seed": 314159
+      }
+    }
+  },
+  "record_kind": "contexttrace_unseen_v2_candidate_freeze",
+  "runtime": {
+    "platform": "darwin",
+    "python": "3.14.6",
+    "python_implementation": "CPython",
+    "torch": "2.13.0",
+    "transformers": "5.14.1"
+  },
+  "schema_version": "1.0",
+  "status": "candidate_frozen_before_unseen_v2_acquisition"
+}
