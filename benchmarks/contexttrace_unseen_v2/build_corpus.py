@@ -789,7 +789,7 @@ def _load_or_generate_questions(
         raise CorpusBuildError(f"Existing question artifact is invalid: {key}.")
     excerpts = _select_excerpts(documents, count=count, seed=seed)
     excerpt_text = "\n\n".join(
-        f"Excerpt {index + 1}:\n{excerpt[:1800]}"
+        f"Excerpt {index + 1}:\n{excerpt[:900]}"
         for index, excerpt in enumerate(excerpts)
     )
     instruction = (
@@ -798,15 +798,46 @@ def _load_or_generate_questions(
         if temporal
         else f"Write exactly {count} diverse factual questions answerable from the documentation excerpts. Include configuration, numeric, procedural, and direct-fact questions."
     )
-    prompt = f"{instruction}\nReturn only a JSON array of question strings. Do not answer them.\n\n{excerpt_text}"
+    output_contract = (
+        f"Return exactly {count} questions as a JSON array of strings. "
+        "Every string must end with a question mark. Do not answer, summarize, "
+        "explain, number, or wrap the JSON in Markdown."
+    )
+    prompt = (
+        f"TASK: {instruction}\n{output_contract}\n\n"
+        f"SOURCE EXCERPTS:\n{excerpt_text}\n\nOUTPUT CONTRACT: {output_contract}"
+    )
+    response_schema = _question_response_schema(count)
+    attempt_root = output_root / "question-attempts"
+    attempt_root.mkdir(exist_ok=True)
     for attempt in range(3):
         result = _ollama_chat(
             model=model,
             prompt=prompt,
             seed=seed + attempt,
             max_tokens=700,
+            format_schema=response_schema,
         )
         questions = _parse_questions(result["text"], count=count)
+        attempt_record = {
+            "schema_version": "1.0",
+            "key": key,
+            "attempt": attempt + 1,
+            "model": model,
+            "seed": seed + attempt,
+            "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest(),
+            "response_format_sha256": _canonical_sha256(response_schema),
+            "raw_response": result["text"],
+            "raw_response_sha256": hashlib.sha256(result["text"].encode()).hexdigest(),
+            "parsed_question_count": len(questions),
+            "generation": result["metadata"],
+        }
+        attempt_path = attempt_root / f"{key}-{attempt + 1:02d}.json"
+        attempt_path.write_text(
+            json.dumps(attempt_record, indent=2, ensure_ascii=False, sort_keys=True)
+            + "\n",
+            encoding="utf-8",
+        )
         if len(questions) == count:
             record = {
                 "schema_version": "1.0",
@@ -814,16 +845,32 @@ def _load_or_generate_questions(
                 "model": model,
                 "seed": seed + attempt,
                 "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest(),
+                "response_format_sha256": _canonical_sha256(response_schema),
                 "questions": questions,
                 "raw_response_sha256": hashlib.sha256(
                     result["text"].encode()
                 ).hexdigest(),
+                "successful_attempt_path": f"question-attempts/{attempt_path.name}",
             }
             path.write_text(
                 json.dumps(record, indent=2, sort_keys=True) + "\n", encoding="utf-8"
             )
             return questions
     raise CorpusBuildError(f"Question generation failed after three attempts: {key}.")
+
+
+def _question_response_schema(count: int) -> dict[str, Any]:
+    return {
+        "type": "array",
+        "minItems": count,
+        "maxItems": count,
+        "items": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 300,
+            "pattern": r"^.*\?$",
+        },
+    }
 
 
 def _generate_case(
@@ -1098,22 +1145,30 @@ def _select_excerpts(
 
 
 def _ollama_chat(
-    *, model: str, prompt: str, seed: int, max_tokens: int
+    *,
+    model: str,
+    prompt: str,
+    seed: int,
+    max_tokens: int,
+    format_schema: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     started = time.perf_counter()
+    request: dict[str, Any] = {
+        "model": model,
+        "messages": [{"role": "user", "content": prompt}],
+        "stream": False,
+        "think": False,
+        "options": {
+            "temperature": 0.2,
+            "seed": seed,
+            "num_predict": max_tokens,
+        },
+    }
+    if format_schema is not None:
+        request["format"] = dict(format_schema)
     response = httpx.post(
         OLLAMA_URL,
-        json={
-            "model": model,
-            "messages": [{"role": "user", "content": prompt}],
-            "stream": False,
-            "think": False,
-            "options": {
-                "temperature": 0.2,
-                "seed": seed,
-                "num_predict": max_tokens,
-            },
-        },
+        json=request,
         timeout=300.0,
     )
     response.raise_for_status()

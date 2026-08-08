@@ -11,6 +11,7 @@ from benchmarks.contexttrace_unseen_v2.build_corpus import (
     _contains_label_key,
     _directory_manifest_sha256,
     _parse_questions,
+    _question_response_schema,
     _validate_boundaries,
     _validate_completed_case,
 )
@@ -62,6 +63,14 @@ def test_question_parser_requires_exact_distinct_questions() -> None:
 
     assert len(_parse_questions(payload, count=5)) == 5
     assert _parse_questions('["Too short?"]', count=5) == []
+
+
+def test_question_response_schema_freezes_exact_count() -> None:
+    schema = _question_response_schema(10)
+
+    assert schema["minItems"] == 10
+    assert schema["maxItems"] == 10
+    assert schema["items"]["pattern"] == r"^.*\?$"
 
 
 def test_label_scan_is_recursive_but_allows_null_transport_slot() -> None:
