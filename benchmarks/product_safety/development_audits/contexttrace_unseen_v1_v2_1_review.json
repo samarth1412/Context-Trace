@@ -1,0 +1,14 @@
+{
+  "schema_version": "contexttrace-development-audit-review-1.0",
+  "audit_report_payload_sha256": "e3efa950b653ffde995d621af0d65ac4ae3e274fcf777fd9e540fca3f88ea07b",
+  "review_scope": "all_green_claims_flagged_for_low_evidence_term_coverage",
+  "reviewed_claim_count": 20,
+  "review_method": "claim text compared with exact selected-context text from hash-verified frozen traces",
+  "disposition_counts": {"directly_supported_no_change": 20, "unsafe_green_defect": 0},
+  "result": "no_additional_high_risk_verifier_defect_found",
+  "limitations": [
+    "This is a development audit, not independent annotation or gold-label evaluation.",
+    "The review does not convert ContextTrace-Unseen-v1 into untouched evidence.",
+    "No private label or scoring artifact was accessed."
+  ]
+}
