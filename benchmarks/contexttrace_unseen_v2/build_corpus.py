@@ -49,6 +49,7 @@ SUPPORTED_SUFFIXES = {
 TOKEN_RE = re.compile(r"\w+|[^\w\s]", re.UNICODE)
 LEXICAL_RE = re.compile(r"[A-Za-z0-9_./:+#-]+", re.UNICODE)
 QUESTION_LINE_RE = re.compile(r"^\s*(?:Q\s*)?\d+[.):]\s*(.+?)\s*$", re.MULTILINE)
+QUOTED_QUESTION_RE = re.compile(r'"([^"\n]{20,300}\?)"')
 LABEL_KEYS = {
     "abstention_requirement",
     "adjudication",
@@ -348,6 +349,7 @@ def _build_locked(
         "collection_implementation": {
             "module": "benchmarks.contexttrace_unseen_v2.build_corpus",
             "file_sha256": _file_sha256(Path(__file__)),
+            "question_author_models": [QUESTION_AUTHOR_MODEL],
         },
         "embedding_model": encoder.lock,
         "generators": ollama_lock,
@@ -1258,6 +1260,8 @@ def _parse_questions(text: str, *, count: int) -> list[str]:
                 pass
     if not candidates:
         candidates = QUESTION_LINE_RE.findall(cleaned)
+    if not candidates:
+        candidates = QUOTED_QUESTION_RE.findall(cleaned)
     questions: list[str] = []
     for candidate in candidates:
         question = " ".join(str(candidate).split()).strip(' "')

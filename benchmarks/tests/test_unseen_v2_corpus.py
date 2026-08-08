@@ -66,6 +66,12 @@ def test_question_parser_requires_exact_distinct_questions() -> None:
     assert len(_parse_questions(payload, count=5)) == 5
     assert _parse_questions('["Too short?"]', count=5) == []
 
+    malformed = "[\n" + ",\n".join(
+        f'"What does documented setting {index} control?" ?"'
+        for index in range(5)
+    )
+    assert len(_parse_questions(malformed, count=5)) == 5
+
 
 def test_question_response_schema_freezes_exact_count() -> None:
     schema = _question_response_schema(10)
