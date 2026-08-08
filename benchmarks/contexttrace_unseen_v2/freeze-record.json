@@ -1,0 +1,13 @@
+{
+  "candidate_executed": false,
+  "case_count": 400,
+  "evaluation_authorized": false,
+  "labels_created": false,
+  "manifest_file_sha256": "739cd8a8e47ef9dbae2407242d164f460c06f9a67887f0952331b66b87b61282",
+  "manifest_payload_sha256": "e07d58d25c901694ba4870e01de44192ce51768a9593cc545bff7a3e6831a42e",
+  "payload_sha256": "a4f38c0af6b3bee4650e5da02a590a237a9508218017c08225ba0ad754fd9e96",
+  "record_kind": "contexttrace_unseen_v2_unlabeled_freeze",
+  "schema_version": "1.0",
+  "source_count": 70,
+  "status": "complete_pending_independent_annotation"
+}
