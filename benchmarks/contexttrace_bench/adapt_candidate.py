@@ -6,15 +6,29 @@ import json
 from pathlib import Path
 from typing import Any
 
-
-DEFAULT_LABEL_FIELDS = ("predicted", "predicted_labels", "failure_labels", "failure_label")
+DEFAULT_LABEL_FIELDS = (
+    "predicted",
+    "predicted_labels",
+    "failure_labels",
+    "failure_label",
+)
 DEFAULT_VERDICT_FIELDS = ("predicted_verdicts", "verdicts", "claim_verdicts")
 DEFAULT_VERDICT_COUNT_FIELDS = ("predicted_verdict_counts", "verdict_counts")
-DEFAULT_ROOT_FIELDS = ("predicted_primary_root_cause", "primary_root_cause", "root_cause")
+DEFAULT_ROOT_FIELDS = (
+    "predicted_primary_root_cause",
+    "primary_root_cause",
+    "root_cause",
+)
 DEFAULT_CITATION_FIELDS = ("predicted_citation_statuses", "citation_statuses")
 DEFAULT_SPAN_FIELDS = ("predicted_evidence_spans", "evidence_spans", "supporting_spans")
 PRESETS = {
     "generic": {},
+    "minicheck": {
+        "labels_field": "predicted_labels",
+        "verdicts_field": "claim_verdicts",
+        "verdict_counts_field": "verdict_counts",
+        "root_cause_field": "predicted_primary_root_cause",
+    },
     "ragas": {
         "faithfulness_field": "faithfulness",
         "context_recall_field": "context_recall",
@@ -61,9 +75,17 @@ def adapt_candidate_rows(
 ) -> dict[str, Any]:
     preset_values = PRESETS.get(preset)
     if preset_values is None:
-        raise ValueError("Unknown adapter preset %s." % preset)
+        raise ValueError(f"Unknown adapter preset {preset}.")
     faithfulness_field = faithfulness_field or preset_values.get("faithfulness_field")
-    context_recall_field = context_recall_field or preset_values.get("context_recall_field")
+    context_recall_field = context_recall_field or preset_values.get(
+        "context_recall_field"
+    )
+    labels_field = labels_field or preset_values.get("labels_field")
+    verdicts_field = verdicts_field or preset_values.get("verdicts_field")
+    verdict_counts_field = verdict_counts_field or preset_values.get(
+        "verdict_counts_field"
+    )
+    root_cause_field = root_cause_field or preset_values.get("root_cause_field")
 
     predictions = []
     for row in rows:
@@ -80,7 +102,9 @@ def adapt_candidate_rows(
             faithfulness_threshold=faithfulness_threshold,
             context_recall_threshold=context_recall_threshold,
         )
-        verdict_counts = _dict_from_first(row, [verdict_counts_field, *DEFAULT_VERDICT_COUNT_FIELDS])
+        verdict_counts = _dict_from_first(
+            row, [verdict_counts_field, *DEFAULT_VERDICT_COUNT_FIELDS]
+        )
         verdicts = _list_from_first(row, [verdicts_field, *DEFAULT_VERDICT_FIELDS])
         if not verdict_counts:
             verdict_counts = _verdict_counts_from_labels(labels, verdicts)
@@ -93,10 +117,14 @@ def adapt_candidate_rows(
         root_cause = _first_value(row, [root_cause_field, *DEFAULT_ROOT_FIELDS])
         if root_cause is not None:
             prediction["predicted_primary_root_cause"] = str(root_cause)
-        citation_statuses = _list_from_first(row, [citation_statuses_field, *DEFAULT_CITATION_FIELDS])
+        citation_statuses = _list_from_first(
+            row, [citation_statuses_field, *DEFAULT_CITATION_FIELDS]
+        )
         if citation_statuses:
             prediction["predicted_citation_statuses"] = citation_statuses
-        evidence_spans = _list_from_first(row, [evidence_spans_field, *DEFAULT_SPAN_FIELDS])
+        evidence_spans = _list_from_first(
+            row, [evidence_spans_field, *DEFAULT_SPAN_FIELDS]
+        )
         if evidence_spans:
             prediction["predicted_evidence_spans"] = evidence_spans
         latency = _number_or_none(_get(row, latency_field) if latency_field else None)
@@ -140,13 +168,15 @@ def load_rows(path: str | Path) -> list[dict[str, Any]]:
             value = payload.get(key)
             if isinstance(value, list):
                 return [item for item in value if isinstance(item, dict)]
-    raise ValueError("Could not find rows in %s." % input_path)
+    raise ValueError(f"Could not find rows in {input_path}.")
 
 
 def write_candidate(candidate: dict[str, Any], path: str | Path) -> str:
     output_path = Path(path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(json.dumps(candidate, indent=2, sort_keys=True), encoding="utf-8")
+    output_path.write_text(
+        json.dumps(candidate, indent=2, sort_keys=True), encoding="utf-8"
+    )
     return str(output_path)
 
 
@@ -163,8 +193,12 @@ def _labels_from_row(
     if labels:
         return labels
 
-    faithfulness = _number_or_none(_get(row, faithfulness_field) if faithfulness_field else None)
-    context_recall = _number_or_none(_get(row, context_recall_field) if context_recall_field else None)
+    faithfulness = _number_or_none(
+        _get(row, faithfulness_field) if faithfulness_field else None
+    )
+    context_recall = _number_or_none(
+        _get(row, context_recall_field) if context_recall_field else None
+    )
     inferred: list[str] = []
     if faithfulness is not None and faithfulness < faithfulness_threshold:
         inferred.append("unsupported_answer")
@@ -173,7 +207,9 @@ def _labels_from_row(
     return sorted(set(inferred)) or ["no_failure_detected"]
 
 
-def _verdict_counts_from_labels(labels: list[str], verdicts: list[str]) -> dict[str, int]:
+def _verdict_counts_from_labels(
+    labels: list[str], verdicts: list[str]
+) -> dict[str, int]:
     counts = {
         "supported": 0,
         "partially_supported": 0,
@@ -222,7 +258,11 @@ def _list_from_first(row: dict[str, Any], fields: list[str | None]) -> list[str]
             return []
         if stripped.startswith("["):
             parsed = json.loads(stripped)
-            return [str(item) for item in parsed if str(item).strip()] if isinstance(parsed, list) else []
+            return (
+                [str(item) for item in parsed if str(item).strip()]
+                if isinstance(parsed, list)
+                else []
+            )
         return [item.strip() for item in stripped.split(",") if item.strip()]
     return [str(value)]
 
@@ -258,12 +298,25 @@ def _number_or_none(value: Any) -> float | None:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Adapt evaluator output into ContextTrace-Bench candidate JSON.")
-    parser.add_argument("--input", required=True, help="Input JSON, JSONL, or CSV evaluator output.")
+    parser = argparse.ArgumentParser(
+        description="Adapt evaluator output into ContextTrace-Bench candidate JSON."
+    )
+    parser.add_argument(
+        "--input", required=True, help="Input JSON, JSONL, or CSV evaluator output."
+    )
     parser.add_argument("--output", required=True, help="Candidate JSON file to write.")
-    parser.add_argument("--system", required=True, help="System name for the leaderboard row.")
-    parser.add_argument("--version", default="", help="System or adapter version label.")
-    parser.add_argument("--preset", default="generic", choices=sorted(PRESETS), help="Common field-name preset.")
+    parser.add_argument(
+        "--system", required=True, help="System name for the leaderboard row."
+    )
+    parser.add_argument(
+        "--version", default="", help="System or adapter version label."
+    )
+    parser.add_argument(
+        "--preset",
+        default="generic",
+        choices=sorted(PRESETS),
+        help="Common field-name preset.",
+    )
     parser.add_argument("--id-field", default="id")
     parser.add_argument("--labels-field", default=None)
     parser.add_argument("--verdicts-field", default=None)
@@ -299,8 +352,8 @@ def main(argv: list[str] | None = None) -> int:
         context_recall_threshold=args.context_recall_threshold,
     )
     written = write_candidate(candidate, args.output)
-    print("Wrote %s" % written)
-    print("Predictions: %s" % len(candidate["predictions"]))
+    print(f"Wrote {written}")
+    print(f"Predictions: {len(candidate['predictions'])}")
     return 0
 
 

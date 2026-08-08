@@ -6,6 +6,43 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+### Added
+
+- Query-conditioned exact-offset verification for short answer fragments such
+  as names, dates, numbers, and single terms in the unreleased v2.1 profile.
+- Hash-locked same-ID development comparisons against cached RAGAS and
+  RAGChecker outputs, with fail-closed coverage, error, adapter, and input-
+  binding checks.
+- Pinned, offline same-ID MiniCheck and RefChecker runners with exact source,
+  model, dependency, inference-setting, and resume-state audits. RefChecker
+  uses a local Gemma extractor through Ollama and its official NLI checker;
+  neither runner calls a paid provider.
+- Fail-closed checkpoint overwrite protection and an official-wheel fallback
+  that verifies RefChecker's PyPI artifact hash and every installed package file.
+- Conservative same-source grouped-claim NLI routing for the unreleased v2.1
+  profile. Only claims with complete deterministic material-fact coverage may
+  share a model call; non-entailing groups fail closed as unverifiable.
+
+### Changed
+
+- Reduced the visible ARES development false-green rate from `0.085` to `0.000`
+  and raised failure-label macro-F1 from `0.912` to `0.995`; these are visible
+  development results, not untouched or SOTA evidence.
+- Omit oversized query cues from NLI premises instead of prefix-truncating
+  source-bearing prompts ahead of selected evidence.
+- Reduced the visible RAGTruth development NLI-call rate from `0.638` to
+  `0.372`, while retaining zero dangerous false greens.
+- Corrected the RAGTruth development adapter to preserve native contradictory,
+  supported, unsupported, and mixed claim-verdict structure instead of
+  collapsing every non-green answer into partial support. On the locked visible
+  200-case comparison, macro-F1 is `0.561` versus RAGAS at `0.152`. This is
+  visible development evidence, not an untouched or SOTA result.
+- Completed the nine-row same-ID development matrix. ContextTrace macro-F1 is
+  `0.561` on RAGTruth versus RAGAS `0.152`, MiniCheck `0.248`, and RefChecker
+  `0.328`; on ARES it is `0.995` versus `0.471`, `0.897`, and `0.724`. CRAG is
+  reported only as proxy agreement. These are visible development results, not
+  untouched or SOTA evidence.
+
 ## [1.1.0] - 2026-07-22
 
 ### Added

@@ -1,0 +1,63 @@
+{
+  "artifact_sha256": "33128d68b238e8726951ccf7b237ca17b2685019181b25fb4a504fe9a6c72076",
+  "corpus_payload_sha256": "038710d8615d1a9ec0416979efc36e6685c7c57abcb8fec10f5c895ebfccd6df",
+  "evidence_class": "synthetic_development_only_not_research_evidence",
+  "limitations": [
+    "All cases are synthetic development examples.",
+    "Test means held-out development families, not an untouched research test.",
+    "External evaluation is required before any SOTA claim."
+  ],
+  "model_lock": {
+    "artifact_manifest_sha256": "330f0fd77aad129877e1a1a90d4a77e6f093ee238b97d535202816a116b9c9f3",
+    "model_id": "cross-encoder/nli-deberta-v3-small",
+    "model_revision": "fa2804872c3b4bd748f38c0185cc85775361e735"
+  },
+  "model_version": "contexttrace-support-risk-v1.1.0",
+  "reject_threshold": 0.45,
+  "schema_version": "1.0",
+  "support_threshold": 0.5,
+  "test": {
+    "base": {
+      "accuracy": 0.916667,
+      "aurc": 0.035867,
+      "cases": 24,
+      "ece_10_bin": 0.079625,
+      "false_entailment_rate": 0.166667,
+      "positive_recall": 1.0,
+      "selective_coverage": 1.0,
+      "selective_risk": 0.083333
+    },
+    "learned": {
+      "accuracy": 1.0,
+      "aurc": 0.0,
+      "cases": 24,
+      "ece_10_bin": 0.017593,
+      "false_entailment_rate": 0.0,
+      "positive_recall": 1.0,
+      "selective_coverage": 1.0,
+      "selective_risk": 0.0
+    }
+  },
+  "validation": {
+    "base": {
+      "accuracy": 0.875,
+      "aurc": 0.059474,
+      "cases": 24,
+      "ece_10_bin": 0.147625,
+      "false_entailment_rate": 0.25,
+      "positive_recall": 1.0,
+      "selective_coverage": 1.0,
+      "selective_risk": 0.125
+    },
+    "learned": {
+      "accuracy": 1.0,
+      "aurc": 0.0,
+      "cases": 24,
+      "ece_10_bin": 0.021373,
+      "false_entailment_rate": 0.0,
+      "positive_recall": 1.0,
+      "selective_coverage": 1.0,
+      "selective_risk": 0.0
+    }
+  }
+}

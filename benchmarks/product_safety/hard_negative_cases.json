@@ -1,0 +1,310 @@
+{
+  "builder_version": "contexttrace-hard-negative-builder-v1.0.0",
+  "case_count": 24,
+  "cases": [
+    {
+      "category": "numeric",
+      "claim": "The retention period is 30 days.",
+      "expected": "supported",
+      "id": "retention_days__positive",
+      "mutation": null,
+      "premise": "The retention period is 30 days.",
+      "query": "How long is the retention period?",
+      "seed_id": "retention_days",
+      "source_kind": "deterministic_seed_mutation"
+    },
+    {
+      "category": "numeric",
+      "claim": "The retention period is 90 days.",
+      "expected": "not_supported",
+      "id": "retention_days__hard_negative",
+      "mutation": {
+        "new": "90",
+        "old": "30"
+      },
+      "premise": "The retention period is 30 days.",
+      "query": "How long is the retention period?",
+      "seed_id": "retention_days",
+      "source_kind": "deterministic_seed_mutation"
+    },
+    {
+      "category": "date",
+      "claim": "The policy takes effect on July 1, 2026.",
+      "expected": "supported",
+      "id": "policy_effective_date__positive",
+      "mutation": null,
+      "premise": "The policy takes effect on July 1, 2026.",
+      "query": "When does the policy take effect?",
+      "seed_id": "policy_effective_date",
+      "source_kind": "deterministic_seed_mutation"
+    },
+    {
+      "category": "date",
+      "claim": "The policy takes effect on October 1, 2026.",
+      "expected": "not_supported",
+      "id": "policy_effective_date__hard_negative",
+      "mutation": {
+        "new": "October 1",
+        "old": "July 1"
+      },
+      "premise": "The policy takes effect on July 1, 2026.",
+      "query": "When does the policy take effect?",
+      "seed_id": "policy_effective_date",
+      "source_kind": "deterministic_seed_mutation"
+    },
+    {
+      "category": "version",
+      "claim": "Clients must use API v2.4.",
+      "expected": "supported",
+      "id": "api_version__positive",
+      "mutation": null,
+      "premise": "Clients must use API v2.4.",
+      "query": "Which API version must clients use?",
+      "seed_id": "api_version",
+      "source_kind": "deterministic_seed_mutation"
+    },
+    {
+      "category": "version",
+      "claim": "Clients must use API v3.0.",
+      "expected": "not_supported",
+      "id": "api_version__hard_negative",
+      "mutation": {
+        "new": "v3.0",
+        "old": "v2.4"
+      },
+      "premise": "Clients must use API v2.4.",
+      "query": "Which API version must clients use?",
+      "seed_id": "api_version",
+      "source_kind": "deterministic_seed_mutation"
+    },
+    {
+      "category": "negation",
+      "claim": "Audit logging is enabled by default.",
+      "expected": "supported",
+      "id": "audit_logging__positive",
+      "mutation": null,
+      "premise": "Audit logging is enabled by default.",
+      "query": "Is audit logging enabled by default?",
+      "seed_id": "audit_logging",
+      "source_kind": "deterministic_seed_mutation"
+    },
+    {
+      "category": "negation",
+      "claim": "Audit logging is not enabled by default.",
+      "expected": "not_supported",
+      "id": "audit_logging__hard_negative",
+      "mutation": {
+        "new": "is not enabled",
+        "old": "is enabled"
+      },
+      "premise": "Audit logging is enabled by default.",
+      "query": "Is audit logging enabled by default?",
+      "seed_id": "audit_logging",
+      "source_kind": "deterministic_seed_mutation"
+    },
+    {
+      "category": "reversed_relation",
+      "claim": "Service A calls Service B.",
+      "expected": "supported",
+      "id": "service_call_direction__positive",
+      "mutation": null,
+      "premise": "Service A calls Service B.",
+      "query": "Which service calls the other service?",
+      "seed_id": "service_call_direction",
+      "source_kind": "deterministic_seed_mutation"
+    },
+    {
+      "category": "reversed_relation",
+      "claim": "Service B calls Service A.",
+      "expected": "not_supported",
+      "id": "service_call_direction__hard_negative",
+      "mutation": {
+        "new": "Service B calls Service A",
+        "old": "Service A calls Service B"
+      },
+      "premise": "Service A calls Service B.",
+      "query": "Which service calls the other service?",
+      "seed_id": "service_call_direction",
+      "source_kind": "deterministic_seed_mutation"
+    },
+    {
+      "category": "identifier_substitution",
+      "claim": "The SDK supports JSON.",
+      "expected": "supported",
+      "id": "sdk_format__positive",
+      "mutation": null,
+      "premise": "The SDK supports JSON.",
+      "query": "Which format does the SDK support?",
+      "seed_id": "sdk_format",
+      "source_kind": "deterministic_seed_mutation"
+    },
+    {
+      "category": "identifier_substitution",
+      "claim": "The SDK supports YAML.",
+      "expected": "not_supported",
+      "id": "sdk_format__hard_negative",
+      "mutation": {
+        "new": "YAML",
+        "old": "JSON"
+      },
+      "premise": "The SDK supports JSON.",
+      "query": "Which format does the SDK support?",
+      "seed_id": "sdk_format",
+      "source_kind": "deterministic_seed_mutation"
+    },
+    {
+      "category": "path_substitution",
+      "claim": "The replacement endpoint is /v2/search.",
+      "expected": "supported",
+      "id": "replacement_endpoint__positive",
+      "mutation": null,
+      "premise": "The replacement endpoint is /v2/search.",
+      "query": "Which endpoint replaces the old search endpoint?",
+      "seed_id": "replacement_endpoint",
+      "source_kind": "deterministic_seed_mutation"
+    },
+    {
+      "category": "path_substitution",
+      "claim": "The replacement endpoint is /v1/search.",
+      "expected": "not_supported",
+      "id": "replacement_endpoint__hard_negative",
+      "mutation": {
+        "new": "/v1/search",
+        "old": "/v2/search"
+      },
+      "premise": "The replacement endpoint is /v2/search.",
+      "query": "Which endpoint replaces the old search endpoint?",
+      "seed_id": "replacement_endpoint",
+      "source_kind": "deterministic_seed_mutation"
+    },
+    {
+      "category": "status",
+      "claim": "The endpoint is active.",
+      "expected": "supported",
+      "id": "endpoint_status__positive",
+      "mutation": null,
+      "premise": "The endpoint is active.",
+      "query": "What is the endpoint status?",
+      "seed_id": "endpoint_status",
+      "source_kind": "deterministic_seed_mutation"
+    },
+    {
+      "category": "status",
+      "claim": "The endpoint is deprecated.",
+      "expected": "not_supported",
+      "id": "endpoint_status__hard_negative",
+      "mutation": {
+        "new": "deprecated",
+        "old": "active"
+      },
+      "premise": "The endpoint is active.",
+      "query": "What is the endpoint status?",
+      "seed_id": "endpoint_status",
+      "source_kind": "deterministic_seed_mutation"
+    },
+    {
+      "category": "condition_omission",
+      "claim": "Refunds are available within 30 days if the item is unopened.",
+      "expected": "supported",
+      "id": "refund_condition__positive",
+      "mutation": null,
+      "premise": "Refunds are available within 30 days if the item is unopened.",
+      "query": "When are refunds available?",
+      "seed_id": "refund_condition",
+      "source_kind": "deterministic_seed_mutation"
+    },
+    {
+      "category": "condition_omission",
+      "claim": "Refunds are available within 30 days .",
+      "expected": "not_supported",
+      "id": "refund_condition__hard_negative",
+      "mutation": {
+        "new": "",
+        "old": "if the item is unopened"
+      },
+      "premise": "Refunds are available within 30 days if the item is unopened.",
+      "query": "When are refunds available?",
+      "seed_id": "refund_condition",
+      "source_kind": "deterministic_seed_mutation"
+    },
+    {
+      "category": "scope_omission",
+      "claim": "Encryption is optional for local development.",
+      "expected": "supported",
+      "id": "encryption_scope__positive",
+      "mutation": null,
+      "premise": "Encryption is optional for local development.",
+      "query": "When is encryption optional?",
+      "seed_id": "encryption_scope",
+      "source_kind": "deterministic_seed_mutation"
+    },
+    {
+      "category": "scope_omission",
+      "claim": "Encryption is optional .",
+      "expected": "not_supported",
+      "id": "encryption_scope__hard_negative",
+      "mutation": {
+        "new": "",
+        "old": "for local development"
+      },
+      "premise": "Encryption is optional for local development.",
+      "query": "When is encryption optional?",
+      "seed_id": "encryption_scope",
+      "source_kind": "deterministic_seed_mutation"
+    },
+    {
+      "category": "numeric_boundary",
+      "claim": "Requests under 10 MB are accepted.",
+      "expected": "supported",
+      "id": "request_size_boundary__positive",
+      "mutation": null,
+      "premise": "Requests under 10 MB are accepted.",
+      "query": "Which request sizes are accepted?",
+      "seed_id": "request_size_boundary",
+      "source_kind": "deterministic_seed_mutation"
+    },
+    {
+      "category": "numeric_boundary",
+      "claim": "Requests of 10 MB are accepted.",
+      "expected": "not_supported",
+      "id": "request_size_boundary__hard_negative",
+      "mutation": {
+        "new": "of 10",
+        "old": "under 10"
+      },
+      "premise": "Requests under 10 MB are accepted.",
+      "query": "Which request sizes are accepted?",
+      "seed_id": "request_size_boundary",
+      "source_kind": "deterministic_seed_mutation"
+    },
+    {
+      "category": "temporal_boundary",
+      "claim": "The endpoint was deprecated after v2.",
+      "expected": "supported",
+      "id": "deprecation_boundary__positive",
+      "mutation": null,
+      "premise": "The endpoint was deprecated after v2.",
+      "query": "When was the endpoint deprecated?",
+      "seed_id": "deprecation_boundary",
+      "source_kind": "deterministic_seed_mutation"
+    },
+    {
+      "category": "temporal_boundary",
+      "claim": "The endpoint was deprecated in v2.",
+      "expected": "not_supported",
+      "id": "deprecation_boundary__hard_negative",
+      "mutation": {
+        "new": "in v2",
+        "old": "after v2"
+      },
+      "premise": "The endpoint was deprecated after v2.",
+      "query": "When was the endpoint deprecated?",
+      "seed_id": "deprecation_boundary",
+      "source_kind": "deterministic_seed_mutation"
+    }
+  ],
+  "evidence_class": "synthetic_development_only_not_research_evidence",
+  "payload_sha256": "5ea161582242cb7e787018c8aae98ae9d34319ecfb6f79adc36fc71aaaf39ead",
+  "schema_version": "1.0",
+  "seed_sha256": "e4b0be36843d51a06f6aa276c1b92b58c52ba5b12f89380d20bd8a7cff0f8189"
+}

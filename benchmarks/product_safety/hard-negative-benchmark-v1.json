@@ -1,0 +1,75 @@
+{
+  "accepted_entailment_threshold": 0.8,
+  "benchmark_id": "contexttrace-observable-conflict-hard-negatives-v1",
+  "corpus": {
+    "case_count": 24,
+    "payload_sha256": "5ea161582242cb7e787018c8aae98ae9d34319ecfb6f79adc36fc71aaaf39ead",
+    "seed_sha256": "e4b0be36843d51a06f6aa276c1b92b58c52ba5b12f89380d20bd8a7cff0f8189"
+  },
+  "dedicated_checker": {
+    "accepted_false_entailment_ids": [],
+    "accepted_false_entailment_rate": 0.0,
+    "accuracy": 1.0,
+    "cases": 24,
+    "guard_intervention_categories": [
+      "condition_omission",
+      "numeric_boundary",
+      "scope_omission",
+      "temporal_boundary"
+    ],
+    "guard_intervention_ids": [
+      "refund_condition__hard_negative",
+      "encryption_scope__hard_negative",
+      "request_size_boundary__hard_negative",
+      "deprecation_boundary__hard_negative"
+    ],
+    "guard_version": "observable-conflict-guard-v1.0.0",
+    "latency_ms": {
+      "p50": 15.158,
+      "p95": 16.733
+    },
+    "positive_recall": 1.0
+  },
+  "evidence_class": "synthetic_development_only_not_research_evidence",
+  "gates": {
+    "all_passed": true,
+    "rows": {
+      "dedicated_accuracy_at_least_0_95": true,
+      "dedicated_false_entailment_rate_zero": true,
+      "dedicated_positive_recall_at_least_0_95": true,
+      "no_positive_regression": true
+    }
+  },
+  "generic_nli": {
+    "accepted_false_entailment_ids": [
+      "encryption_scope__hard_negative",
+      "request_size_boundary__hard_negative",
+      "deprecation_boundary__hard_negative"
+    ],
+    "accepted_false_entailment_rate": 0.25,
+    "accuracy": 0.875,
+    "cases": 24,
+    "guard_intervention_categories": [],
+    "guard_intervention_ids": [],
+    "latency_ms": {
+      "p50": 15.026,
+      "p95": 15.87
+    },
+    "positive_recall": 1.0
+  },
+  "limitations": [
+    "This is synthetic development evidence and cannot establish SOTA.",
+    "The guard handles only explicit observable conflicts and is not a general truth model.",
+    "External and untouched evaluation remain required after the checker is frozen."
+  ],
+  "model_lock": {
+    "artifact_manifest_sha256": "330f0fd77aad129877e1a1a90d4a77e6f093ee238b97d535202816a116b9c9f3",
+    "model_id": "cross-encoder/nli-deberta-v3-small",
+    "model_revision": "fa2804872c3b4bd748f38c0185cc85775361e735",
+    "runtime_versions": {
+      "torch": "2.13.0",
+      "transformers": "5.14.1"
+    }
+  },
+  "schema_version": "1.0"
+}

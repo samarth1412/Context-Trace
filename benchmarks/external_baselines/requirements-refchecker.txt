@@ -1,0 +1,9 @@
+# Install in an isolated environment. The package's source is still imported
+# from the exact Git revision in competitor-runtime-lock.json.
+accelerate==0.31.0
+en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl#sha256=1932429db727d4bff3deed6b34cfc05df17794f4a52eeb26cf8928f7c1a0fb85
+nltk==3.10.1
+refchecker @ https://files.pythonhosted.org/packages/98/f0/20429ca82945c0a589393354845a1f256d8677c6ec580cb0e37dc40fccbe/refchecker-0.2.17-py3-none-any.whl#sha256=0f6086903aafbc59fbdee94c2baa4160a4b21054f8b4e2b4d849776ab38c64dc
+spacy==3.8.13
+torch==2.13.0
+transformers==4.57.6

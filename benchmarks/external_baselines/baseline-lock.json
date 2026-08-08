@@ -1,0 +1,298 @@
+{
+  "schema_version": "1.0",
+  "evidence_class": "visible_external_calibration_only_not_untouched_research_evidence",
+  "artifact_root_hint": "benchmarks/contexttrace_bench/out",
+  "systems": [
+    {
+      "name": "RefChecker",
+      "version": "0.2.17",
+      "status": "cached_reproducible_output",
+      "configuration": "Gemma3-4B-Q4_K_M local extractor / official NLI checker",
+      "runtime_lock": "competitor-runtime-lock.json",
+      "source": "https://github.com/amazon-science/RefChecker"
+    },
+    {
+      "name": "MiniCheck",
+      "version": "0.1.0 / MiniCheck-Flan-T5-Large",
+      "status": "cached_reproducible_output",
+      "runtime_lock": "competitor-runtime-lock.json",
+      "source": "https://github.com/Liyan06/MiniCheck"
+    },
+    {
+      "name": "RAGChecker",
+      "version": "0.1.9",
+      "status": "cached_reproducible_output",
+      "source": "https://github.com/amazon-science/RAGChecker"
+    },
+    {
+      "name": "RAGAS",
+      "version": "0.4.2",
+      "status": "cached_reproducible_output",
+      "source": "https://github.com/vibrantlabsai/ragas"
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "ragtruth-ragas-200",
+      "dataset": "RAGTruth",
+      "evaluation_kind": "visible_label_accuracy",
+      "expected_cases": 200,
+      "baseline_system": "RAGAS",
+      "baseline_version": "0.4.2 / gpt-4.1-mini max_output_tokens=32768",
+      "adapter_preset": "ragas",
+      "case_pack": {
+        "path": "ragtruth_release/ragtruth_reviewed_case_pack.json",
+        "sha256": "19294b50661931ae2f0d4e3c95d18c3220e52a021f5f0289fe459c760986ceaa"
+      },
+      "candidate_inputs": {
+        "path": "ragtruth_release/scored/candidate_inputs.jsonl",
+        "sha256": "f682aae7b20962d776738dc7a03391c208fcf91130dc55c85b054041a7736d12"
+      },
+      "baseline_raw": {
+        "path": "ragtruth_release/ragas_raw_results.json",
+        "sha256": "9923d929355d7a59a85f01d04aea4968dbc9f951e7ae2117671dd8900440d8de"
+      },
+      "baseline_candidate": {
+        "path": "ragtruth_release/ragas_predictions.json",
+        "sha256": "85c39ffaed7d8be59a19af8e446692706963e37832a4e30021286029356404de"
+      },
+      "limitations": [
+        "RAGTruth labels and this reviewed sampled case pack were visible during earlier development.",
+        "RAGAS reports faithfulness rather than ContextTrace's full diagnosis taxonomy."
+      ]
+    },
+    {
+      "id": "ragtruth-minicheck-200",
+      "dataset": "RAGTruth",
+      "evaluation_kind": "visible_label_accuracy",
+      "expected_cases": 200,
+      "baseline_system": "MiniCheck",
+      "baseline_version": "0.1.0 / MiniCheck-Flan-T5-Large",
+      "adapter_preset": "minicheck",
+      "case_pack": {
+        "path": "ragtruth_release/ragtruth_reviewed_case_pack.json",
+        "sha256": "19294b50661931ae2f0d4e3c95d18c3220e52a021f5f0289fe459c760986ceaa"
+      },
+      "candidate_inputs": {
+        "path": "ragtruth_release/scored/candidate_inputs.jsonl",
+        "sha256": "f682aae7b20962d776738dc7a03391c208fcf91130dc55c85b054041a7736d12"
+      },
+      "baseline_raw": {
+        "path": "ragtruth_release/minicheck_flant5_raw_results.json",
+        "sha256": "b052461ae0008a042085dc80698c6ee036f552843413806f775af6467d5d3aa8"
+      },
+      "baseline_candidate": {
+        "path": "ragtruth_release/minicheck_flant5_predictions.json",
+        "sha256": "cfb835a9724a29fb38adb47866b1504f7edaa3130a2c2c5d7ef4e1e805fbb01e"
+      },
+      "limitations": [
+        "RAGTruth labels and this reviewed sampled case pack were visible during earlier development.",
+        "MiniCheck's sentence-support verdicts are explicitly projected into the narrower shared answer taxonomy."
+      ]
+    },
+    {
+      "id": "ragtruth-refchecker-200",
+      "dataset": "RAGTruth",
+      "evaluation_kind": "visible_label_accuracy",
+      "expected_cases": 200,
+      "baseline_system": "RefChecker",
+      "baseline_version": "0.2.17 / Gemma3-4B-Q4_K_M extractor / official NLI checker",
+      "adapter_preset": "minicheck",
+      "case_pack": {
+        "path": "ragtruth_release/ragtruth_reviewed_case_pack.json",
+        "sha256": "19294b50661931ae2f0d4e3c95d18c3220e52a021f5f0289fe459c760986ceaa"
+      },
+      "candidate_inputs": {
+        "path": "ragtruth_release/scored/candidate_inputs.jsonl",
+        "sha256": "f682aae7b20962d776738dc7a03391c208fcf91130dc55c85b054041a7736d12"
+      },
+      "baseline_raw": {
+        "path": "ragtruth_release/refchecker_local_raw_results.json",
+        "sha256": "64374fe3638141c3c7f18d7dfa7694a0cd453fa91a8fe392d216631650307fd6"
+      },
+      "baseline_candidate": {
+        "path": "ragtruth_release/refchecker_local_predictions.json",
+        "sha256": "6f561f34f367faefe1fce6a492aec9575d0c3091d257dd06b927e75660768651"
+      },
+      "limitations": [
+        "RAGTruth labels and this reviewed sampled case pack were visible during earlier development.",
+        "This reproducible local extractor configuration is not RefChecker's strongest published provider-backed setting."
+      ]
+    },
+    {
+      "id": "ares-nq-ragas-200",
+      "dataset": "ARES-NQ-example",
+      "evaluation_kind": "visible_label_accuracy",
+      "expected_cases": 200,
+      "baseline_system": "RAGAS",
+      "baseline_version": "0.4.2 / gpt-4.1-mini",
+      "adapter_preset": "ragas",
+      "case_pack": {
+        "path": "ares_nq_example/smoke200_compared/external_case_pack.json",
+        "sha256": "07c7455d0d7afca376ab792fa7062f1cfed20645bb70d23f61bcf7d4a839b114"
+      },
+      "candidate_inputs": {
+        "path": "ares_nq_example/smoke200_compared/scored/candidate_inputs.jsonl",
+        "sha256": "d7cc7b44edab7d28d8eea9a6d44a90e7dac172f78cd7e17be71ceb1ea4b603ce"
+      },
+      "baseline_raw": {
+        "path": "ares_nq_example/baselines_unique/ragas_raw_results.json",
+        "sha256": "41333d1b9d826c9f439d10df282959a08621ed703e8faa3ad0d4b041d236fe47"
+      },
+      "baseline_candidate": {
+        "path": "ares_nq_example/baselines_unique/ragas_predictions.json",
+        "sha256": "abba8e822d6ed761e2e07b071cd9924395b6cf991faed97f731bfd1397f56c90"
+      },
+      "limitations": [
+        "The official ARES NQ example and adapted labels were visible during earlier development.",
+        "The comparison uses the 200 unique same-ID rows; the older duplicate-ID artifact is excluded."
+      ]
+    },
+    {
+      "id": "ares-nq-minicheck-200",
+      "dataset": "ARES-NQ-example",
+      "evaluation_kind": "visible_label_accuracy",
+      "expected_cases": 200,
+      "baseline_system": "MiniCheck",
+      "baseline_version": "0.1.0 / MiniCheck-Flan-T5-Large",
+      "adapter_preset": "minicheck",
+      "case_pack": {
+        "path": "ares_nq_example/smoke200_compared/external_case_pack.json",
+        "sha256": "07c7455d0d7afca376ab792fa7062f1cfed20645bb70d23f61bcf7d4a839b114"
+      },
+      "candidate_inputs": {
+        "path": "ares_nq_example/smoke200_compared/scored/candidate_inputs.jsonl",
+        "sha256": "d7cc7b44edab7d28d8eea9a6d44a90e7dac172f78cd7e17be71ceb1ea4b603ce"
+      },
+      "baseline_raw": {
+        "path": "ares_nq_example/baselines_unique/minicheck_flant5_raw_results.json",
+        "sha256": "be3a30d45660d298d703be0b9d261d235135567be0aea71862aa4215778d9830"
+      },
+      "baseline_candidate": {
+        "path": "ares_nq_example/baselines_unique/minicheck_flant5_predictions.json",
+        "sha256": "f554322c6b4d3c9a403dd4c837f374c6df99f51a34607086ce72857b2ce4435a"
+      },
+      "limitations": [
+        "The official ARES NQ example and adapted labels were visible during earlier development.",
+        "MiniCheck supplies binary sentence support, which is projected to the shared abstention labels."
+      ]
+    },
+    {
+      "id": "ares-nq-refchecker-200",
+      "dataset": "ARES-NQ-example",
+      "evaluation_kind": "visible_label_accuracy",
+      "expected_cases": 200,
+      "baseline_system": "RefChecker",
+      "baseline_version": "0.2.17 / Gemma3-4B-Q4_K_M extractor / official NLI checker",
+      "adapter_preset": "minicheck",
+      "case_pack": {
+        "path": "ares_nq_example/smoke200_compared/external_case_pack.json",
+        "sha256": "07c7455d0d7afca376ab792fa7062f1cfed20645bb70d23f61bcf7d4a839b114"
+      },
+      "candidate_inputs": {
+        "path": "ares_nq_example/smoke200_compared/scored/candidate_inputs.jsonl",
+        "sha256": "d7cc7b44edab7d28d8eea9a6d44a90e7dac172f78cd7e17be71ceb1ea4b603ce"
+      },
+      "baseline_raw": {
+        "path": "ares_nq_example/baselines_unique/refchecker_local_raw_results.json",
+        "sha256": "9fdcd0f840e7e1639dc76940211be860688942abe29117b711d12e2037b2b9f3"
+      },
+      "baseline_candidate": {
+        "path": "ares_nq_example/baselines_unique/refchecker_local_predictions.json",
+        "sha256": "d29d10ca2ba61d3b60b0a065d613cc5ec91b2abb7aa4179787a6daac7a465659"
+      },
+      "limitations": [
+        "The official ARES NQ example and adapted labels were visible during earlier development.",
+        "This reproducible local extractor configuration is not RefChecker's strongest published provider-backed setting."
+      ]
+    },
+    {
+      "id": "crag-ragchecker-200",
+      "dataset": "CRAG-Task1-v5",
+      "evaluation_kind": "gold_answer_grounding_proxy_agreement",
+      "expected_cases": 200,
+      "baseline_system": "RAGChecker",
+      "baseline_version": "0.1.9 / extractor=openai/gpt-4.1-mini checker=openai/gpt-4.1-mini",
+      "adapter_preset": "ragchecker",
+      "case_pack": {
+        "path": "crag_official/review200_ragchecker/external_case_pack.json",
+        "sha256": "ecc03f8486bfb63c69ec55f3523eee7c44e1178d656a1cb3156a642e7d2437f7"
+      },
+      "candidate_inputs": {
+        "path": "crag_official/review200_ragchecker/scored/candidate_inputs.jsonl",
+        "sha256": "341c72011339e4072984987ac171d5448b302e6e262b191f454309be6ae34096"
+      },
+      "baseline_raw": {
+        "path": "crag_official/ragchecker/crag_full200_raw_results.json",
+        "sha256": "b6c99585cf7bac14b43b131c973267e9b0bf3e578eaab9b66b3e89791b17985c"
+      },
+      "baseline_candidate": {
+        "path": "crag_official/ragchecker/crag_full200_predictions.json",
+        "sha256": "940d24819964f5b460b638ad24a9df60933511221fd984f999aa0d4d2fc98678"
+      },
+      "limitations": [
+        "CRAG gold answers are not labels that retrieved evidence supports each answer.",
+        "This row measures evaluator agreement and proxy acceptance only, not accuracy or SOTA."
+      ]
+    },
+    {
+      "id": "crag-minicheck-200",
+      "dataset": "CRAG-Task1-v5",
+      "evaluation_kind": "gold_answer_grounding_proxy_agreement",
+      "expected_cases": 200,
+      "baseline_system": "MiniCheck",
+      "baseline_version": "0.1.0 / MiniCheck-Flan-T5-Large",
+      "adapter_preset": "minicheck",
+      "case_pack": {
+        "path": "crag_official/review200_ragchecker/external_case_pack.json",
+        "sha256": "ecc03f8486bfb63c69ec55f3523eee7c44e1178d656a1cb3156a642e7d2437f7"
+      },
+      "candidate_inputs": {
+        "path": "crag_official/review200_ragchecker/scored/candidate_inputs.jsonl",
+        "sha256": "341c72011339e4072984987ac171d5448b302e6e262b191f454309be6ae34096"
+      },
+      "baseline_raw": {
+        "path": "crag_official/minicheck_flant5_raw_results.json",
+        "sha256": "6221af9c3717a7f2bdded7a0fe26a3910a5d1bf23ca72d78a73d86773e51d8a4"
+      },
+      "baseline_candidate": {
+        "path": "crag_official/minicheck_flant5_predictions.json",
+        "sha256": "1d203145e8d138c6899db8af5eb64d2763b72e98f234e2432b1ac7120d5fcec2"
+      },
+      "limitations": [
+        "CRAG gold answers are not labels that retrieved evidence supports each answer.",
+        "This row measures evaluator agreement and proxy acceptance only, not accuracy or SOTA."
+      ]
+    },
+    {
+      "id": "crag-refchecker-200",
+      "dataset": "CRAG-Task1-v5",
+      "evaluation_kind": "gold_answer_grounding_proxy_agreement",
+      "expected_cases": 200,
+      "baseline_system": "RefChecker",
+      "baseline_version": "0.2.17 / Gemma3-4B-Q4_K_M extractor / official NLI checker",
+      "adapter_preset": "minicheck",
+      "case_pack": {
+        "path": "crag_official/review200_ragchecker/external_case_pack.json",
+        "sha256": "ecc03f8486bfb63c69ec55f3523eee7c44e1178d656a1cb3156a642e7d2437f7"
+      },
+      "candidate_inputs": {
+        "path": "crag_official/review200_ragchecker/scored/candidate_inputs.jsonl",
+        "sha256": "341c72011339e4072984987ac171d5448b302e6e262b191f454309be6ae34096"
+      },
+      "baseline_raw": {
+        "path": "crag_official/refchecker_local_raw_results.json",
+        "sha256": "d8dac614867556ff0d142272a2a8230c4a58db194b6fc369b3e509c2299f5583"
+      },
+      "baseline_candidate": {
+        "path": "crag_official/refchecker_local_predictions.json",
+        "sha256": "205718474960710faa63bfee2dfc0bbf007923cb30709201b04f6eb92e13bc5c"
+      },
+      "limitations": [
+        "CRAG gold answers are not labels that retrieved evidence supports each answer.",
+        "This row measures evaluator agreement and proxy acceptance only, not accuracy or SOTA.",
+        "This reproducible local extractor configuration is not RefChecker's strongest published provider-backed setting."
+      ]
+    }
+  ]
+}

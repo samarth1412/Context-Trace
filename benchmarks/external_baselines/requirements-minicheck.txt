@@ -1,0 +1,7 @@
+# The official MiniCheck source is imported from the Git revision recorded in
+# competitor-runtime-lock.json; it is not installed from a moving branch.
+accelerate==1.10.1
+nltk==3.9.2
+sentencepiece==0.2.1
+torch==2.13.0
+transformers==5.14.1

@@ -1,0 +1,76 @@
+{
+  "MiniCheck": {
+    "claim_unit": "nltk_english_sentence",
+    "document_chunk_size": 500,
+    "dependency_versions": {
+      "accelerate": "1.10.1",
+      "nltk": "3.9.2",
+      "sentencepiece": "0.2.1",
+      "torch": "2.13.0",
+      "transformers": "5.14.1"
+    },
+    "model_files": {
+      "added_tokens.json": "4b1c1345a66fdd00264819c5adfc3142debfbd3b03767a04f95a39ac2277ca21",
+      "config.json": "d8e91aa8739d845d2572fa8db9cb6523d06208c14fedb8f7623f49283a305653",
+      "generation_config.json": "3c4ec6a75c47200afbecd413ee6719007f701821d07b6c11a6c30237d3f9c854",
+      "pytorch_model.bin": "41291881e13c6235ed47149cec903bee9493e45d9d7325587a9fa2e266c526c0",
+      "special_tokens_map.json": "47389dd56434a0d7d32f736ba34e895b331461980af760e955b62d5c39912626",
+      "spiece.model": "d60acb128cf7b7f2536e8f38a5b18a05535c9e14c7a355904270e15b0945ea86",
+      "tokenizer.json": "ece24e1e7d9b5a26f4e68a9519b6ea1451474811b52a9da419c9145f1f458fc0",
+      "tokenizer_config.json": "284a01dc7b81f159449b96cd0d8814f6da64bbdb59833fe3b8398ea36a860550"
+    },
+    "model_id": "lytang/MiniCheck-Flan-T5-Large",
+    "model_revision": "96eafd01cee2d16cf81aaa2fb226b14f422a37b3",
+    "nltk_data_revision": "550b6625bcef1f2abff2ff770a5a0d272c9c6b2a",
+    "nltk_files": {
+      "tokenizers/punkt_tab/english/abbrev_types.txt": "92a3e070f43d9b4c5534758ca40ad7343b04e7e29bfe0c2eb658a39445a4f779",
+      "tokenizers/punkt_tab/english/collocations.tab": "8e2da1225e4dd2cc9dba261ee231ccb134859e21b46006e7f472c5ee269af0cf",
+      "tokenizers/punkt_tab/english/ortho_context.tab": "4bbcca25ed3d3f06c02402abf8419b9f033b8adc06e7b482eca4e45f81a5dc4c",
+      "tokenizers/punkt_tab/english/sent_starters.txt": "f3f8535483e1dba487241b764945168123bca3209a9645e59acd1225dc76edac"
+    },
+    "package_version": "0.1.0",
+    "support_threshold": 0.5,
+    "source_revision": "b58b9fa69acbd1015ec970fa65dd752413a053d2",
+    "source_url": "https://github.com/Liyan06/MiniCheck"
+  },
+  "RefChecker": {
+    "checker_model_files": {
+      "config.json": "9d074204b668902ea51bd8ecb323f01cd37040cb54e8601d872c8fdb0687131e",
+      "merges.txt": "1ce1664773c50f3e0cc8842619a93edc4624525b728b188a9e0be33b7726adc5",
+      "pytorch_model.bin": "a51c55cb7dc41c4c862f06a3d9c413a8aa0619222bc56f06cb6f2f5b2d3ee14a",
+      "special_tokens_map.json": "c611b1f7d416eb001ee4f293d903ea8c88e703463f1d403f1866a0352743fd00",
+      "tokenizer_config.json": "0f6d13e6f4da6f9e24f22ada6bc3be571123d858d7c0c05a8a7cd55a9c23c2e8",
+      "vocab.json": "06b4d46c8e752d410213d9548eb27a54db70fda0319b6271fb8d59dead5e1cab"
+    },
+    "checker_model_id": "ynie/roberta-large-snli_mnli_fever_anli_R1_R2_R3-nli",
+    "checker_model_revision": "5b605abab9b75bc87ab66cfc049ef58d9d64b8ed",
+    "checker_reference_segment_length": 200,
+    "checker_reference_unit": "retrieved_context",
+    "dependency_versions": {
+      "accelerate": "0.31.0",
+      "en-core-web-sm": "3.8.0",
+      "nltk": "3.10.1",
+      "spacy": "3.8.13",
+      "torch": "2.13.0",
+      "transformers": "4.57.6"
+    },
+    "extractor_context_length": 4096,
+    "extractor_max_new_tokens": 500,
+    "extractor_model": "gemma3:4b",
+    "extractor_model_digest": "a2af6cc3eb7fa8be8504abaf9b04e88f17a119ec3f04a3addf55f92841195f5a",
+    "extractor_quantization": "Q4_K_M",
+    "extractor_request_concurrency": 2,
+    "ollama_version": "0.32.1",
+    "package_version": "0.2.17",
+    "package_wheel_sha256": "0f6086903aafbc59fbdee94c2baa4160a4b21054f8b4e2b4d849776ab38c64dc",
+    "package_wheel_url": "https://files.pythonhosted.org/packages/98/f0/20429ca82945c0a589393354845a1f256d8677c6ec580cb0e37dc40fccbe/refchecker-0.2.17-py3-none-any.whl",
+    "segmenter_model_wheel_sha256": "1932429db727d4bff3deed6b34cfc05df17794f4a52eeb26cf8928f7c1a0fb85",
+    "segmenter_model_wheel_url": "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl",
+    "source_revision": "1df1b25cee792ba2b171302e31ca4f768bd67703",
+    "source_tag": "v0.2.17",
+    "source_tag_object": "79347b3ff8c05963e26adc0fc141ec4c31b86791",
+    "source_url": "https://github.com/amazon-science/RefChecker",
+    "status": "pinned_local_zero_cost_configuration"
+  },
+  "schema_version": "1.0"
+}

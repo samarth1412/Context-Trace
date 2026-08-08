@@ -1,0 +1,154 @@
+{
+  "all_cases": {
+    "candidate_v2_1": {
+      "accuracy": 1.0,
+      "dangerous_false_green_ids": [],
+      "dangerous_false_green_rate": 0.0,
+      "macro_f1": 1.0,
+      "mismatch_ids": [],
+      "prediction_counts": {
+        "conflicting_authorities": 6,
+        "current_canonical": 6,
+        "current_noncanonical": 6,
+        "low_authority": 6,
+        "stale": 12,
+        "superseded": 12,
+        "unknown": 6
+      }
+    },
+    "cases": 54,
+    "frozen_v2": {
+      "accuracy": 0.222222,
+      "dangerous_false_green_ids": [
+        "current_noncanonical__timeout",
+        "stale_explicit__timeout",
+        "superseded_version_conflict__timeout",
+        "current_noncanonical__deadline",
+        "stale_explicit__deadline",
+        "superseded_version_conflict__deadline",
+        "current_noncanonical__retention",
+        "stale_explicit__retention",
+        "superseded_version_conflict__retention",
+        "current_noncanonical__endpoint",
+        "stale_explicit__endpoint",
+        "superseded_version_conflict__endpoint",
+        "current_noncanonical__client",
+        "stale_explicit__client",
+        "superseded_version_conflict__client",
+        "current_noncanonical__logging",
+        "stale_explicit__logging",
+        "superseded_version_conflict__logging"
+      ],
+      "dangerous_false_green_rate": 0.428571,
+      "macro_f1": 0.104762,
+      "mismatch_ids": [
+        "current_noncanonical__timeout",
+        "stale_explicit__timeout",
+        "superseded_relation__timeout",
+        "superseded_version_conflict__timeout",
+        "stale_newer_same_fact__timeout",
+        "low_authority__timeout",
+        "conflicting_authorities__timeout",
+        "current_noncanonical__deadline",
+        "stale_explicit__deadline",
+        "superseded_relation__deadline",
+        "superseded_version_conflict__deadline",
+        "stale_newer_same_fact__deadline",
+        "low_authority__deadline",
+        "conflicting_authorities__deadline",
+        "current_noncanonical__retention",
+        "stale_explicit__retention",
+        "superseded_relation__retention",
+        "superseded_version_conflict__retention",
+        "stale_newer_same_fact__retention",
+        "low_authority__retention",
+        "conflicting_authorities__retention",
+        "current_noncanonical__endpoint",
+        "stale_explicit__endpoint",
+        "superseded_relation__endpoint",
+        "superseded_version_conflict__endpoint",
+        "stale_newer_same_fact__endpoint",
+        "low_authority__endpoint",
+        "conflicting_authorities__endpoint",
+        "current_noncanonical__client",
+        "stale_explicit__client",
+        "superseded_relation__client",
+        "superseded_version_conflict__client",
+        "stale_newer_same_fact__client",
+        "low_authority__client",
+        "conflicting_authorities__client",
+        "current_noncanonical__logging",
+        "stale_explicit__logging",
+        "superseded_relation__logging",
+        "superseded_version_conflict__logging",
+        "stale_newer_same_fact__logging",
+        "low_authority__logging",
+        "conflicting_authorities__logging"
+      ],
+      "prediction_counts": {
+        "current_canonical": 24,
+        "unknown": 30
+      }
+    }
+  },
+  "corpus_payload_sha256": "7b60b1f445416afc81b54c3913b5422084182ccbc7bfd6f5d4a768c4446f673c",
+  "evidence_class": "synthetic_development_only_not_research_evidence",
+  "heldout_development": {
+    "candidate_v2_1": {
+      "accuracy": 1.0,
+      "dangerous_false_green_ids": [],
+      "dangerous_false_green_rate": 0.0,
+      "macro_f1": 1.0,
+      "mismatch_ids": [],
+      "prediction_counts": {
+        "conflicting_authorities": 2,
+        "current_canonical": 2,
+        "current_noncanonical": 2,
+        "low_authority": 2,
+        "stale": 4,
+        "superseded": 4,
+        "unknown": 2
+      }
+    },
+    "cases": 18,
+    "frozen_v2": {
+      "accuracy": 0.222222,
+      "dangerous_false_green_ids": [
+        "current_noncanonical__client",
+        "stale_explicit__client",
+        "superseded_version_conflict__client",
+        "current_noncanonical__logging",
+        "stale_explicit__logging",
+        "superseded_version_conflict__logging"
+      ],
+      "dangerous_false_green_rate": 0.428571,
+      "macro_f1": 0.104762,
+      "mismatch_ids": [
+        "current_noncanonical__client",
+        "stale_explicit__client",
+        "superseded_relation__client",
+        "superseded_version_conflict__client",
+        "stale_newer_same_fact__client",
+        "low_authority__client",
+        "conflicting_authorities__client",
+        "current_noncanonical__logging",
+        "stale_explicit__logging",
+        "superseded_relation__logging",
+        "superseded_version_conflict__logging",
+        "stale_newer_same_fact__logging",
+        "low_authority__logging",
+        "conflicting_authorities__logging"
+      ],
+      "prediction_counts": {
+        "current_canonical": 8,
+        "unknown": 10
+      }
+    }
+  },
+  "limitations": [
+    "All cases are synthetic development fixtures.",
+    "Held-out development families are not an untouched research test.",
+    "The corpus measures metadata and relation handling, not independent truth."
+  ],
+  "schema_version": "1.0"
+}

@@ -1,0 +1,162 @@
+{
+  "benchmark_id": "contexttrace-product-safety-dev-v1",
+  "controlled": {
+    "cases": 14,
+    "exact_match_rate": 1.0,
+    "failures": [],
+    "passed": 14,
+    "runtime_failures": 0
+  },
+  "evidence_class": "development_only_not_independent_research_evidence",
+  "inputs": {
+    "controlled_cases": {
+      "count": 14,
+      "sha256": "9b52247ea68425aa7d63223605bd1d744da446ec46bfc036145cd6f2f24a1d40"
+    },
+    "public_holdout": {
+      "count": 150,
+      "sha256": "82f8e214786761b0970b5625737a9912b7410ed1c9660ca78ab616fa410434dd"
+    }
+  },
+  "interpretation": [
+    "These labels are visible during development and cannot support untouched-evaluation claims.",
+    "A missed target identifies product work; it is not a confirmatory research result.",
+    "The deterministic-only profile measures which claims require a later selective model route without making model calls."
+  ],
+  "model_lock": null,
+  "profile_id": "deterministic_only_v2",
+  "profile_sha256": "1fd80d46a0c37b9167e68f6f0c349e9addae79d92ead50f024d49bbc45dc00b2",
+  "public_holdout": {
+    "abstention_requirement_recall": 1.0,
+    "cases": 150,
+    "clean_supported_rate": 0.753425,
+    "dangerous_false_green_ids": [],
+    "dangerous_false_green_rate": 0.0,
+    "dangerous_safe_classification_ids": [],
+    "dangerous_safe_classification_rate": 0.0,
+    "latency_ms": {
+      "p50": 3.449,
+      "p95": 6.843
+    },
+    "nli_invocation_rate": 0.0,
+    "route_counts": {
+      "deterministic": 132,
+      "unresolved": 43
+    },
+    "runtime_failures": 0,
+    "unresolved_route_rate": 0.245714,
+    "verdict_match_rate": 0.713333,
+    "verdict_miss_ids": [
+      "holdout_otel_span_supported",
+      "holdout_otel_exporter_partial_support",
+      "holdout_weaviate_hybrid_contradicted",
+      "holdout_llamaindex_retriever_supported",
+      "holdout_llamaindex_retriever_overclaim",
+      "holdout_langchain_retriever_supported",
+      "holdout_langchain_retriever_partial_rerank",
+      "holdout_haystack_document_writer_partial",
+      "holdout_qdrant_payload_filter_supported",
+      "holdout_ragas_context_precision_supported",
+      "holdout_deepeval_hallucination_partial",
+      "holdout_otel_baggage_supported",
+      "holdout_otel_resource_partial_encryption",
+      "holdout_otel_baggage_wrong_source_citation",
+      "holdout_langchain_structured_output_partial_xml",
+      "holdout_haystack_rankers_supported",
+      "holdout_qdrant_filtering_supported",
+      "holdout_qdrant_snapshots_supported",
+      "holdout_qdrant_filtering_partial_encryption",
+      "holdout_qdrant_snapshot_wrong_source_citation",
+      "holdout_pinecone_hybrid_search_supported",
+      "holdout_chroma_delete_supported",
+      "holdout_chroma_embedding_partial_delete",
+      "holdout_weaviate_multitenancy_supported",
+      "holdout_langsmith_evaluators_supported",
+      "holdout_langsmith_dataset_partial_prompt_rewrite",
+      "holdout_langsmith_evaluator_wrong_source_citation",
+      "holdout_phoenix_dataset_partial_delete",
+      "holdout_phoenix_dataset_wrong_source_citation",
+      "holdout_lancedb_full_text_filter_supported",
+      "holdout_lancedb_vector_partial_encryption",
+      "holdout_lancedb_full_text_wrong_source_citation",
+      "holdout_pgvector_hnsw_supported",
+      "holdout_opensearch_filtering_supported",
+      "holdout_opensearch_filter_wrong_source_citation",
+      "holdout_mongodb_vector_filter_supported",
+      "holdout_mongodb_vector_partial_external_service",
+      "holdout_mongodb_filter_wrong_source_citation",
+      "holdout_azure_rrf_supported",
+      "holdout_azure_rrf_wrong_source_citation",
+      "holdout_openai_evals_partial_deploy",
+      "holdout_llamaindex_observability_supported",
+      "holdout_no_context_should_abstain"
+    ]
+  },
+  "runtime_id": "semantic_core_v2_deterministic",
+  "schema_version": "1.0",
+  "targets": {
+    "all_passed": false,
+    "rows": {
+      "controlled_exact_match_rate": {
+        "actual": 1.0,
+        "operator": ">=",
+        "passed": true,
+        "target": 0.9
+      },
+      "public_abstention_requirement_recall": {
+        "actual": 1.0,
+        "operator": ">=",
+        "passed": true,
+        "target": 0.9
+      },
+      "public_clean_supported_rate": {
+        "actual": 0.753425,
+        "operator": ">=",
+        "passed": false,
+        "target": 0.9
+      },
+      "public_dangerous_false_green_rate": {
+        "actual": 0.0,
+        "operator": "<=",
+        "passed": true,
+        "target": 0.02
+      },
+      "public_dangerous_safe_classification_rate": {
+        "actual": 0.0,
+        "operator": "<=",
+        "passed": true,
+        "target": 0.02
+      },
+      "public_nli_invocation_rate": {
+        "actual": 0.0,
+        "operator": "<=",
+        "passed": true,
+        "target": 0.4
+      },
+      "public_p95_latency_ms": {
+        "actual": 6.843,
+        "operator": "<=",
+        "passed": true,
+        "target": 250.0
+      },
+      "public_unresolved_route_rate": {
+        "actual": 0.245714,
+        "operator": "<=",
+        "passed": true,
+        "target": 0.4
+      },
+      "public_verdict_match_rate": {
+        "actual": 0.713333,
+        "operator": ">=",
+        "passed": false,
+        "target": 0.75
+      },
+      "runtime_failures": {
+        "actual": 0,
+        "operator": "==",
+        "passed": true,
+        "target": 0
+      }
+    }
+  }
+}

@@ -49,3 +49,9 @@ mask unresolved RAG attribution errors.
 Every result artifact must state its schema, taxonomy, verifier, and profile
 versions. Any inspection of untouched-test errors retires that split to
 calibration status for future verifier development.
+
+## Interface boundary
+
+The successor work targets SDK, CLI, and versioned JSON output. New HTML reports
+and dashboards are outside the research and engineering plan. Existing report
+renderers are compatibility-only and are not part of the proposed contribution.

@@ -1,0 +1,497 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contexttrace.dev/schemas/claim-verification-v2.schema.json",
+  "title": "ContextTrace semantic_core_v2 prediction",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "taxonomy_version",
+    "verifier_version",
+    "profile_id",
+    "profile_version",
+    "profile_sha256",
+    "input_identity",
+    "claims",
+    "summary",
+    "truncation",
+    "insufficient_input",
+    "capabilities",
+    "limitations",
+    "verification_profile",
+    "rulepacks",
+    "prediction_payload_sha256"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "2.0"
+    },
+    "taxonomy_version": {
+      "const": "contexttrace-diagnosis-v2.0"
+    },
+    "verifier_version": {
+      "const": "semantic_core_v2"
+    },
+    "profile_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "profile_version": {
+      "const": "selective-v2.0.0"
+    },
+    "profile_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "input_identity": {
+      "type": "object",
+      "required": [
+        "query_sha256",
+        "answer_sha256",
+        "context_ids_sha256",
+        "metadata"
+      ],
+      "properties": {
+        "query_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "answer_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "context_ids_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "claims": {
+      "type": "array",
+      "maxItems": 64,
+      "items": {
+        "$ref": "#/$defs/claim"
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "total_claims",
+        "claim_verdicts",
+        "failure_labels",
+        "root_causes",
+        "diagnostic_abstentions",
+        "diagnostic_coverage",
+        "nli_invocations",
+        "nli_invocation_rate",
+        "green_claims",
+        "truth_status",
+        "overall_status"
+      ],
+      "properties": {
+        "total_claims": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 64
+        },
+        "claim_verdicts": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "failure_labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "root_causes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "diagnostic_abstentions": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "diagnostic_coverage": {
+          "$ref": "#/$defs/probability"
+        },
+        "nli_invocations": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "nli_invocation_rate": {
+          "$ref": "#/$defs/probability"
+        },
+        "green_claims": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "truth_status": {
+          "const": "not_assessed"
+        },
+        "overall_status": {
+          "enum": [
+            "green",
+            "warning",
+            "abstained",
+            "insufficient_input"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "truncation": {
+      "type": "object"
+    },
+    "insufficient_input": {
+      "type": "object",
+      "required": [
+        "no_contexts",
+        "no_verifiable_claims",
+        "claim_limit_hit",
+        "input_truncated"
+      ],
+      "properties": {
+        "no_contexts": {
+          "type": "boolean"
+        },
+        "no_verifiable_claims": {
+          "type": "boolean"
+        },
+        "claim_limit_hit": {
+          "type": "boolean"
+        },
+        "input_truncated": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "capabilities": {
+      "type": "object"
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "verification_profile": {
+      "type": "object"
+    },
+    "rulepacks": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "version"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "prediction_payload_sha256": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "probability": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "claimVerdict": {
+      "enum": [
+        "supported",
+        "partially_supported",
+        "contradicted",
+        "unsupported",
+        "unverifiable"
+      ]
+    },
+    "failureLabel": {
+      "enum": [
+        "none",
+        "retrieval_miss",
+        "context_selection_error",
+        "citation_mismatch",
+        "answer_overreach",
+        "contradiction",
+        "insufficient_evidence",
+        "should_have_abstained",
+        "source_condition_failure"
+      ]
+    },
+    "rootCause": {
+      "enum": [
+        "none",
+        "retrieval_miss",
+        "reranking_failure",
+        "chunking_issue",
+        "corpus_gap",
+        "stale_or_superseded_source",
+        "noncanonical_or_low_authority_source",
+        "citation_mismatch",
+        "answer_overreach",
+        "insufficient_selected_context",
+        "conflicting_contexts",
+        "failure_to_abstain",
+        "not_observable"
+      ]
+    },
+    "citationState": {
+      "enum": [
+        "not_applicable",
+        "correct",
+        "partial",
+        "wrong_source",
+        "missing",
+        "malformed"
+      ]
+    },
+    "sourceCondition": {
+      "enum": [
+        "current_canonical",
+        "current_noncanonical",
+        "stale",
+        "superseded",
+        "low_authority",
+        "conflicting_authorities",
+        "unknown"
+      ]
+    },
+    "abstentionRequirement": {
+      "enum": [
+        "must_answer",
+        "may_answer_with_qualification",
+        "must_abstain"
+      ]
+    },
+    "route": {
+      "enum": [
+        "deterministic",
+        "nli",
+        "deterministic_nli_agreement",
+        "deterministic_nli_disagreement",
+        "unresolved"
+      ]
+    },
+    "evidenceSpan": {
+      "type": "object",
+      "required": [
+        "context_id",
+        "start_char",
+        "end_char",
+        "text",
+        "role",
+        "span_hash"
+      ],
+      "properties": {
+        "context_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "start_char": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end_char": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "enum": [
+            "supporting",
+            "contradicting"
+          ]
+        },
+        "span_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "claim": {
+      "type": "object",
+      "required": [
+        "claim_id",
+        "text",
+        "verification_text",
+        "start_char",
+        "end_char",
+        "unitizer_version",
+        "claim_verdict",
+        "support_status",
+        "truth_status",
+        "source_condition",
+        "source_assessment",
+        "citation_state",
+        "citation_assessment",
+        "failure_label",
+        "primary_root_cause",
+        "abstention_requirement",
+        "diagnostic_abstention",
+        "diagnostic_confidence",
+        "confidence_semantics",
+        "route",
+        "route_reason_code",
+        "green",
+        "qualification_required",
+        "evidence_spans",
+        "evidence_context_ids",
+        "deterministic",
+        "nli",
+        "nli_error_code",
+        "flags"
+      ],
+      "properties": {
+        "claim_id": {
+          "type": "string",
+          "pattern": "^claim_[1-9][0-9]*$"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verification_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "start_char": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end_char": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "unitizer_version": {
+          "enum": [
+            "claim-unitizer-v2.0.0",
+            "claim-unitizer-v2.1.0",
+            "claim-unitizer-v2.1.1"
+          ]
+        },
+        "claim_verdict": {
+          "$ref": "#/$defs/claimVerdict"
+        },
+        "support_status": {
+          "type": "string"
+        },
+        "truth_status": {
+          "const": "not_assessed"
+        },
+        "source_condition": {
+          "$ref": "#/$defs/sourceCondition"
+        },
+        "source_assessment": {
+          "type": "object"
+        },
+        "citation_state": {
+          "$ref": "#/$defs/citationState"
+        },
+        "citation_assessment": {
+          "type": "object"
+        },
+        "failure_label": {
+          "$ref": "#/$defs/failureLabel"
+        },
+        "primary_root_cause": {
+          "$ref": "#/$defs/rootCause"
+        },
+        "abstention_requirement": {
+          "$ref": "#/$defs/abstentionRequirement"
+        },
+        "diagnostic_abstention": {
+          "type": "boolean"
+        },
+        "diagnostic_confidence": {
+          "$ref": "#/$defs/probability"
+        },
+        "confidence_semantics": {
+          "const": "estimated_probability_that_the_emitted_diagnosis_is_correct"
+        },
+        "route": {
+          "$ref": "#/$defs/route"
+        },
+        "route_reason_code": {
+          "type": "string"
+        },
+        "green": {
+          "type": "boolean"
+        },
+        "qualification_required": {
+          "type": "boolean"
+        },
+        "evidence_spans": {
+          "type": "array",
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/evidenceSpan"
+          }
+        },
+        "evidence_context_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "deterministic": {
+          "type": "object"
+        },
+        "nli": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "nli_error_code": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "flags": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

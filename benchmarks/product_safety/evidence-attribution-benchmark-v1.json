@@ -1,0 +1,91 @@
+{
+  "all_cases": {
+    "candidate_v2_1": {
+      "answer_offset_integrity": 1.0,
+      "character_iou": 1.0,
+      "complete_case_rate": 1.0,
+      "mismatch_ids": [],
+      "over_attribution_rate": 0.0,
+      "role_accuracy": 1.0,
+      "runtime_failure_ids": [],
+      "source_offset_integrity": 1.0,
+      "span_exact_f1": 1.0,
+      "span_exact_precision": 1.0,
+      "span_exact_recall": 1.0
+    },
+    "cases": 42,
+    "frozen_v2": {
+      "answer_offset_integrity": 1.0,
+      "character_iou": 0.732981,
+      "complete_case_rate": 0.642857,
+      "mismatch_ids": [
+        "duplicate_support__release",
+        "unsupported_empty__release",
+        "duplicate_support__refund",
+        "unsupported_empty__refund",
+        "duplicate_support__backup",
+        "unsupported_empty__backup",
+        "minimal_refuting__search",
+        "duplicate_support__search",
+        "unsupported_empty__search",
+        "duplicate_support__audit",
+        "unsupported_empty__audit",
+        "duplicate_support__migration",
+        "unsupported_empty__migration",
+        "duplicate_support__cafe",
+        "unsupported_empty__cafe"
+      ],
+      "over_attribution_rate": 0.238095,
+      "role_accuracy": 0.979592,
+      "runtime_failure_ids": [],
+      "source_offset_integrity": 1.0,
+      "span_exact_f1": 0.857143,
+      "span_exact_precision": 0.761905,
+      "span_exact_recall": 0.979592
+    }
+  },
+  "corpus_payload_sha256": "a7c56bf6b16c8b3509ff5014424833b65598c84d32dc71a52e6105b14ea03eef",
+  "evidence_class": "synthetic_development_only_not_research_evidence",
+  "heldout_development": {
+    "candidate_v2_1": {
+      "answer_offset_integrity": 1.0,
+      "character_iou": 1.0,
+      "complete_case_rate": 1.0,
+      "mismatch_ids": [],
+      "over_attribution_rate": 0.0,
+      "role_accuracy": 1.0,
+      "runtime_failure_ids": [],
+      "source_offset_integrity": 1.0,
+      "span_exact_f1": 1.0,
+      "span_exact_precision": 1.0,
+      "span_exact_recall": 1.0
+    },
+    "cases": 18,
+    "frozen_v2": {
+      "answer_offset_integrity": 1.0,
+      "character_iou": 0.755943,
+      "complete_case_rate": 0.666667,
+      "mismatch_ids": [
+        "duplicate_support__audit",
+        "unsupported_empty__audit",
+        "duplicate_support__migration",
+        "unsupported_empty__migration",
+        "duplicate_support__cafe",
+        "unsupported_empty__cafe"
+      ],
+      "over_attribution_rate": 0.222222,
+      "role_accuracy": 1.0,
+      "runtime_failure_ids": [],
+      "source_offset_integrity": 1.0,
+      "span_exact_f1": 0.875,
+      "span_exact_precision": 0.777778,
+      "span_exact_recall": 1.0
+    }
+  },
+  "limitations": [
+    "All spans come from synthetic development fixtures.",
+    "Held-out development families are not an untouched research test.",
+    "Exact span metrics do not establish semantic correctness outside the templates."
+  ],
+  "schema_version": "1.0"
+}

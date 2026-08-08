@@ -1,0 +1,144 @@
+{
+  "benchmark_id": "contexttrace-product-safety-dev-v1",
+  "controlled": {
+    "cases": 14,
+    "exact_match_rate": 1.0,
+    "failures": [],
+    "passed": 14,
+    "runtime_failures": 0
+  },
+  "evidence_class": "development_only_not_independent_research_evidence",
+  "inputs": {
+    "controlled_cases": {
+      "count": 14,
+      "sha256": "9b52247ea68425aa7d63223605bd1d744da446ec46bfc036145cd6f2f24a1d40"
+    },
+    "public_holdout": {
+      "count": 150,
+      "sha256": "82f8e214786761b0970b5625737a9912b7410ed1c9660ca78ab616fa410434dd"
+    }
+  },
+  "interpretation": [
+    "These labels are visible during development and cannot support untouched-evaluation claims.",
+    "A missed target identifies product work; it is not a confirmatory research result.",
+    "The selective profile uses only the hash-verified local NLI artifact on bounded selected evidence."
+  ],
+  "model_lock": {
+    "artifact_manifest_sha256": "330f0fd77aad129877e1a1a90d4a77e6f093ee238b97d535202816a116b9c9f3",
+    "model_id": "cross-encoder/nli-deberta-v3-small",
+    "model_revision": "fa2804872c3b4bd748f38c0185cc85775361e735",
+    "runtime_versions": {
+      "torch": "2.13.0",
+      "transformers": "5.14.1"
+    }
+  },
+  "profile_id": "selective_v2_1_safety",
+  "profile_sha256": "2b2cdff6cb73e924653f9ec87ef064b289f2e3774976d98385995532736674de",
+  "public_holdout": {
+    "abstention_requirement_recall": 1.0,
+    "cases": 150,
+    "clean_supported_rate": 0.972603,
+    "dangerous_false_green_ids": [],
+    "dangerous_false_green_rate": 0.0,
+    "dangerous_safe_classification_ids": [],
+    "dangerous_safe_classification_rate": 0.0,
+    "latency_ms": {
+      "p50": 9.195,
+      "p95": 52.28
+    },
+    "nli_invocation_rate": 0.238889,
+    "route_counts": {
+      "deterministic": 137,
+      "deterministic_nli_disagreement": 1,
+      "nli": 38,
+      "unresolved": 4
+    },
+    "runtime_failures": 0,
+    "unresolved_route_rate": 0.022222,
+    "verdict_match_rate": 0.9,
+    "verdict_miss_ids": [
+      "holdout_otel_exporter_partial_support",
+      "holdout_weaviate_hybrid_contradicted",
+      "holdout_llamaindex_retriever_overclaim",
+      "holdout_haystack_document_writer_partial",
+      "holdout_pinecone_metadata_filter_partial",
+      "holdout_deepeval_hallucination_partial",
+      "holdout_langchain_chat_model_supported",
+      "holdout_haystack_generator_partial_vectorstore",
+      "holdout_qdrant_snapshots_supported",
+      "holdout_qdrant_snapshot_wrong_source_citation",
+      "holdout_weaviate_multitenancy_supported",
+      "holdout_langsmith_dataset_partial_prompt_rewrite",
+      "holdout_mongodb_vector_partial_external_service",
+      "holdout_vespa_hybrid_contradicted",
+      "holdout_no_context_should_abstain"
+    ]
+  },
+  "runtime_id": "semantic_core_v2_1_selective_pinned_nli",
+  "schema_version": "1.0",
+  "targets": {
+    "all_passed": true,
+    "rows": {
+      "controlled_exact_match_rate": {
+        "actual": 1.0,
+        "operator": ">=",
+        "passed": true,
+        "target": 0.9
+      },
+      "public_abstention_requirement_recall": {
+        "actual": 1.0,
+        "operator": ">=",
+        "passed": true,
+        "target": 0.9
+      },
+      "public_clean_supported_rate": {
+        "actual": 0.972603,
+        "operator": ">=",
+        "passed": true,
+        "target": 0.9
+      },
+      "public_dangerous_false_green_rate": {
+        "actual": 0.0,
+        "operator": "<=",
+        "passed": true,
+        "target": 0.02
+      },
+      "public_dangerous_safe_classification_rate": {
+        "actual": 0.0,
+        "operator": "<=",
+        "passed": true,
+        "target": 0.02
+      },
+      "public_nli_invocation_rate": {
+        "actual": 0.238889,
+        "operator": "<=",
+        "passed": true,
+        "target": 0.4
+      },
+      "public_p95_latency_ms": {
+        "actual": 52.28,
+        "operator": "<=",
+        "passed": true,
+        "target": 250.0
+      },
+      "public_unresolved_route_rate": {
+        "actual": 0.022222,
+        "operator": "<=",
+        "passed": true,
+        "target": 0.4
+      },
+      "public_verdict_match_rate": {
+        "actual": 0.9,
+        "operator": ">=",
+        "passed": true,
+        "target": 0.75
+      },
+      "runtime_failures": {
+        "actual": 0,
+        "operator": "==",
+        "passed": true,
+        "target": 0
+      }
+    }
+  }
+}
