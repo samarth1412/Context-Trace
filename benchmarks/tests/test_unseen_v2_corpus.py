@@ -10,6 +10,7 @@ from benchmarks.contexttrace_unseen_v2.build_corpus import (
     _canonical_sha256,
     _contains_label_key,
     _directory_manifest_sha256,
+    _load_or_generate_questions,
     _ollama_chat,
     _parse_questions,
     _question_batch_sizes,
@@ -87,6 +88,95 @@ def test_question_authoring_is_bounded_to_five_item_batches() -> None:
 
     with pytest.raises(CorpusBuildError, match="positive"):
         _question_batch_sizes(0)
+
+
+def test_question_authoring_falls_back_after_duplicate_batch(
+    tmp_path, monkeypatch
+) -> None:
+    first = [f"What does first documented setting {index} control?" for index in range(5)]
+    second = [
+        f"What does second documented setting {index} control?" for index in range(5)
+    ]
+
+    monkeypatch.setattr(
+        "benchmarks.contexttrace_unseen_v2.build_corpus._select_excerpts",
+        lambda documents, *, count, seed: [f"excerpt {index}" for index in range(10)],
+    )
+
+    def fake_chat(*, model, prompt, seed, max_tokens, format_schema):
+        del prompt, seed, max_tokens, format_schema
+        return {
+            "text": json.dumps(first if model == "qwen" else second),
+            "metadata": {},
+        }
+
+    monkeypatch.setattr(
+        "benchmarks.contexttrace_unseen_v2.build_corpus._ollama_chat", fake_chat
+    )
+
+    questions = _load_or_generate_questions(
+        output_root=tmp_path,
+        key="fallback-fixture",
+        documents=[],
+        count=10,
+        models=("qwen", "gemma"),
+        seed=10,
+        temporal=False,
+    )
+    record = json.loads(
+        (tmp_path / "questions" / "fallback-fixture.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    assert len(questions) == 10
+    assert record["models"] == ["qwen", "gemma"]
+    assert len(list((tmp_path / "question-attempts").iterdir())) == 5
+
+
+def test_question_authoring_isolates_excerpts_after_all_batch_models_fail(
+    tmp_path, monkeypatch
+) -> None:
+    first = [f"What does first documented setting {index} control?" for index in range(5)]
+    single_call = 0
+
+    monkeypatch.setattr(
+        "benchmarks.contexttrace_unseen_v2.build_corpus._select_excerpts",
+        lambda documents, *, count, seed: [f"excerpt {index}" for index in range(10)],
+    )
+
+    def fake_chat(*, model, prompt, seed, max_tokens, format_schema):
+        nonlocal single_call
+        del model, seed, max_tokens, format_schema
+        if "SINGLE SOURCE EXCERPT" in prompt:
+            question = f"What does isolated excerpt {single_call} specifically document?"
+            single_call += 1
+            return {"text": json.dumps([question]), "metadata": {}}
+        return {"text": json.dumps(first), "metadata": {}}
+
+    monkeypatch.setattr(
+        "benchmarks.contexttrace_unseen_v2.build_corpus._ollama_chat", fake_chat
+    )
+
+    questions = _load_or_generate_questions(
+        output_root=tmp_path,
+        key="single-fallback-fixture",
+        documents=[],
+        count=10,
+        models=("qwen", "gemma"),
+        seed=10,
+        temporal=False,
+    )
+    record = json.loads(
+        (tmp_path / "questions" / "single-fallback-fixture.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    assert len(questions) == 10
+    assert len(set(questions)) == 10
+    assert len(record["successful_attempt_paths"]) == 6
+    assert len(list((tmp_path / "question-attempts").iterdir())) == 12
 
 
 def test_ollama_request_pins_authoring_context_window(monkeypatch) -> None:
