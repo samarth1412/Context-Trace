@@ -10,6 +10,7 @@ from benchmarks.contexttrace_unseen_v2.build_corpus import (
     _canonical_sha256,
     _contains_label_key,
     _directory_manifest_sha256,
+    _ollama_chat,
     _parse_questions,
     _question_response_schema,
     _validate_boundaries,
@@ -71,6 +72,37 @@ def test_question_response_schema_freezes_exact_count() -> None:
     assert schema["minItems"] == 10
     assert schema["maxItems"] == 10
     assert schema["items"]["pattern"] == r"^.*\?$"
+
+
+def test_ollama_request_pins_authoring_context_window(monkeypatch) -> None:
+    captured = {}
+
+    class Response:
+        def raise_for_status(self) -> None:
+            return None
+
+        def json(self) -> dict:
+            return {"message": {"content": '["A sufficiently long question?"]'}}
+
+    def fake_post(url, *, json, timeout):
+        captured.update({"url": url, "request": json, "timeout": timeout})
+        return Response()
+
+    monkeypatch.setattr(
+        "benchmarks.contexttrace_unseen_v2.build_corpus.httpx.post", fake_post
+    )
+
+    result = _ollama_chat(
+        model="local-test-model",
+        prompt="Write a question.",
+        seed=7,
+        max_tokens=700,
+        format_schema=_question_response_schema(1),
+    )
+
+    assert result["text"] == '["A sufficiently long question?"]'
+    assert captured["request"]["options"]["num_ctx"] == 8_192
+    assert captured["request"]["options"]["num_predict"] == 700
 
 
 def test_label_scan_is_recursive_but_allows_null_transport_slot() -> None:

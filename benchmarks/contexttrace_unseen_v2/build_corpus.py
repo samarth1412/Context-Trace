@@ -65,6 +65,7 @@ MAX_SOURCE_CHARS = 1_500_000
 NATURAL_CASES_PER_SOURCE = 10
 TEMPORAL_CASES_PER_PAIR = 5
 OLLAMA_URL = "http://127.0.0.1:11434/api/chat"
+OLLAMA_CONTEXT_TOKENS = 8_192
 GENERATOR_MODELS = ("gemma3:4b", "qwen3:1.7b")
 
 
@@ -1161,6 +1162,7 @@ def _ollama_chat(
         "options": {
             "temperature": 0.2,
             "seed": seed,
+            "num_ctx": OLLAMA_CONTEXT_TOKENS,
             "num_predict": max_tokens,
         },
     }
