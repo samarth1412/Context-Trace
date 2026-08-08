@@ -12,6 +12,7 @@ from benchmarks.contexttrace_unseen_v2.build_corpus import (
     _directory_manifest_sha256,
     _ollama_chat,
     _parse_questions,
+    _question_batch_sizes,
     _question_response_schema,
     _validate_boundaries,
     _validate_completed_case,
@@ -72,6 +73,14 @@ def test_question_response_schema_freezes_exact_count() -> None:
     assert schema["minItems"] == 10
     assert schema["maxItems"] == 10
     assert schema["items"]["pattern"] == r"^.*\?$"
+
+
+def test_question_authoring_is_bounded_to_five_item_batches() -> None:
+    assert _question_batch_sizes(10) == (5, 5)
+    assert _question_batch_sizes(5) == (5,)
+
+    with pytest.raises(CorpusBuildError, match="positive"):
+        _question_batch_sizes(0)
 
 
 def test_ollama_request_pins_authoring_context_window(monkeypatch) -> None:

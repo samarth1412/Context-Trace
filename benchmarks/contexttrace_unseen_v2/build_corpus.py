@@ -67,6 +67,7 @@ TEMPORAL_CASES_PER_PAIR = 5
 OLLAMA_URL = "http://127.0.0.1:11434/api/chat"
 OLLAMA_CONTEXT_TOKENS = 8_192
 GENERATOR_MODELS = ("gemma3:4b", "qwen3:1.7b")
+QUESTION_AUTHOR_MODEL = "qwen3:1.7b"
 
 
 class CorpusBuildError(RuntimeError):
@@ -248,7 +249,7 @@ def _build_locked(
                 key=str(source["source_id"]),
                 documents=_documents_from_record(source),
                 count=NATURAL_CASES_PER_SOURCE,
-                model="gemma3:4b",
+                model=QUESTION_AUTHOR_MODEL,
                 seed=_seed(str(source["source_id"])),
                 temporal=False,
             )
@@ -291,7 +292,7 @@ def _build_locked(
                     for document in _documents_from_record(source)
                 ],
                 count=TEMPORAL_CASES_PER_PAIR,
-                model="gemma3:4b",
+                model=QUESTION_AUTHOR_MODEL,
                 seed=_seed(str(pair["pair_id"])),
                 temporal=True,
             )
@@ -789,75 +790,124 @@ def _load_or_generate_questions(
             return [str(question) for question in questions]
         raise CorpusBuildError(f"Existing question artifact is invalid: {key}.")
     excerpts = _select_excerpts(documents, count=count, seed=seed)
-    excerpt_text = "\n\n".join(
-        f"Excerpt {index + 1}:\n{excerpt[:900]}"
-        for index, excerpt in enumerate(excerpts)
-    )
     instruction = (
-        "Write exactly five questions that require deciding which source is current or authoritative. "
+        "Write questions that require deciding which source is current or authoritative. "
         "Questions must be answerable from the excerpts and should test changed rules, replacements, or source authority."
         if temporal
-        else f"Write exactly {count} diverse factual questions answerable from the documentation excerpts. Include configuration, numeric, procedural, and direct-fact questions."
+        else "Write diverse factual questions answerable from the documentation excerpts. Include configuration, numeric, procedural, and direct-fact questions."
     )
-    output_contract = (
-        f"Return exactly {count} questions as a JSON array of strings. "
-        "Every string must end with a question mark. Do not answer, summarize, "
-        "explain, number, or wrap the JSON in Markdown."
-    )
-    prompt = (
-        f"TASK: {instruction}\n{output_contract}\n\n"
-        f"SOURCE EXCERPTS:\n{excerpt_text}\n\nOUTPUT CONTRACT: {output_contract}"
-    )
-    response_schema = _question_response_schema(count)
     attempt_root = output_root / "question-attempts"
     attempt_root.mkdir(exist_ok=True)
-    for attempt in range(3):
-        result = _ollama_chat(
-            model=model,
-            prompt=prompt,
-            seed=seed + attempt,
-            max_tokens=700,
-            format_schema=response_schema,
+    questions: list[str] = []
+    successful_attempt_paths: list[str] = []
+    prompt_hashes: list[str] = []
+    response_hashes: list[str] = []
+    successful_seeds: list[int] = []
+    excerpt_offset = 0
+    for batch_index, batch_count in enumerate(_question_batch_sizes(count), start=1):
+        batch_excerpts = excerpts[excerpt_offset : excerpt_offset + batch_count]
+        excerpt_offset += batch_count
+        excerpt_text = "\n\n".join(
+            f"Excerpt {index + 1}:\n{excerpt[:900]}"
+            for index, excerpt in enumerate(batch_excerpts)
         )
-        questions = _parse_questions(result["text"], count=count)
-        attempt_record = {
-            "schema_version": "1.0",
-            "key": key,
-            "attempt": attempt + 1,
-            "model": model,
-            "seed": seed + attempt,
-            "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest(),
-            "response_format_sha256": _canonical_sha256(response_schema),
-            "raw_response": result["text"],
-            "raw_response_sha256": hashlib.sha256(result["text"].encode()).hexdigest(),
-            "parsed_question_count": len(questions),
-            "generation": result["metadata"],
-        }
-        attempt_path = attempt_root / f"{key}-{attempt + 1:02d}.json"
-        attempt_path.write_text(
-            json.dumps(attempt_record, indent=2, ensure_ascii=False, sort_keys=True)
-            + "\n",
-            encoding="utf-8",
+        output_contract = (
+            f"Return exactly {batch_count} questions as a JSON array of strings. "
+            "Every string must end with a question mark. Do not answer, summarize, "
+            "explain, number, or wrap the JSON in Markdown."
         )
-        if len(questions) == count:
-            record = {
+        prior_questions = ""
+        if questions:
+            prior_questions = (
+                "\n\nALREADY WRITTEN; DO NOT REPEAT OR PARAPHRASE THESE:\n"
+                + "\n".join(f"- {question}" for question in questions)
+            )
+        prompt = (
+            f"TASK: {instruction}\n{output_contract}\n\n"
+            f"SOURCE EXCERPTS:\n{excerpt_text}{prior_questions}\n\n"
+            f"OUTPUT CONTRACT: {output_contract}"
+        )
+        response_schema = _question_response_schema(batch_count)
+        batch_complete = False
+        for attempt in range(3):
+            attempt_seed = seed + (batch_index - 1) * 10 + attempt
+            result = _ollama_chat(
+                model=model,
+                prompt=prompt,
+                seed=attempt_seed,
+                max_tokens=700,
+                format_schema=response_schema,
+            )
+            batch_questions = _parse_questions(result["text"], count=batch_count)
+            existing = {question.casefold() for question in questions}
+            if any(question.casefold() in existing for question in batch_questions):
+                batch_questions = []
+            attempt_record = {
                 "schema_version": "1.0",
                 "key": key,
+                "batch": batch_index,
+                "attempt": attempt + 1,
                 "model": model,
-                "seed": seed + attempt,
+                "seed": attempt_seed,
                 "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest(),
                 "response_format_sha256": _canonical_sha256(response_schema),
-                "questions": questions,
+                "raw_response": result["text"],
                 "raw_response_sha256": hashlib.sha256(
                     result["text"].encode()
                 ).hexdigest(),
-                "successful_attempt_path": f"question-attempts/{attempt_path.name}",
+                "parsed_question_count": len(batch_questions),
+                "generation": result["metadata"],
             }
-            path.write_text(
-                json.dumps(record, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+            attempt_path = (
+                attempt_root
+                / f"{key}-batch{batch_index:02d}-attempt{attempt + 1:02d}.json"
             )
-            return questions
-    raise CorpusBuildError(f"Question generation failed after three attempts: {key}.")
+            attempt_path.write_text(
+                json.dumps(
+                    attempt_record, indent=2, ensure_ascii=False, sort_keys=True
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            if len(batch_questions) == batch_count:
+                questions.extend(batch_questions)
+                successful_attempt_paths.append(
+                    f"question-attempts/{attempt_path.name}"
+                )
+                prompt_hashes.append(hashlib.sha256(prompt.encode()).hexdigest())
+                response_hashes.append(
+                    hashlib.sha256(result["text"].encode()).hexdigest()
+                )
+                successful_seeds.append(attempt_seed)
+                batch_complete = True
+                break
+        if not batch_complete:
+            raise CorpusBuildError(
+                "Question generation failed after three attempts: "
+                f"{key} batch {batch_index}."
+            )
+    record = {
+        "schema_version": "1.1",
+        "key": key,
+        "model": model,
+        "seeds": successful_seeds,
+        "prompt_sha256s": prompt_hashes,
+        "response_format_sha256": _canonical_sha256(_question_response_schema(5)),
+        "questions": questions,
+        "raw_response_sha256s": response_hashes,
+        "successful_attempt_paths": successful_attempt_paths,
+    }
+    path.write_text(
+        json.dumps(record, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    return questions
+
+
+def _question_batch_sizes(count: int) -> tuple[int, ...]:
+    if count <= 0:
+        raise CorpusBuildError("Question count must be positive.")
+    full_batches, remainder = divmod(count, 5)
+    return (5,) * full_batches + ((remainder,) if remainder else ())
 
 
 def _question_response_schema(count: int) -> dict[str, Any]:
