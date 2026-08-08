@@ -9,8 +9,10 @@ from benchmarks.contexttrace_unseen_v2.build_corpus import (
     CorpusBuildError,
     _canonical_sha256,
     _contains_label_key,
+    _directory_manifest_sha256,
     _parse_questions,
     _validate_boundaries,
+    _validate_completed_case,
 )
 
 
@@ -77,3 +79,43 @@ def test_chunk_type_accepts_dense_ranking_fixture() -> None:
     scores = np.asarray([0.1, 0.9])
 
     assert chunks[int(scores.argmax())].id == "c2"
+
+
+def test_model_manifest_hashes_files_below_a_cache_named_parent(tmp_path) -> None:
+    model = tmp_path / ".cache" / "model"
+    model.mkdir(parents=True)
+    (model / "config.json").write_text("{}\n", encoding="utf-8")
+
+    assert _directory_manifest_sha256(model) != _canonical_sha256([])
+
+
+def test_resume_rejects_trace_hash_drift(tmp_path) -> None:
+    trace_root = tmp_path / "traces"
+    trace_root.mkdir()
+    trace = trace_root / "case-1.json"
+    trace.write_text(
+        json.dumps(
+            {
+                "case_id": "case-1",
+                "track": "natural_ood",
+                "verifier_history": [],
+            }
+        ),
+        encoding="utf-8",
+    )
+    row = {
+        "case_id": "case-1",
+        "track": "natural_ood",
+        "source_ids": ["source-1"],
+        "trace_artifact_path": "traces/case-1.json",
+        "trace_sha256": "wrong",
+    }
+
+    with pytest.raises(CorpusBuildError, match="trace hash mismatch"):
+        _validate_completed_case(
+            row,
+            case_id="case-1",
+            track="natural_ood",
+            source_ids=["source-1"],
+            trace_root=trace_root,
+        )

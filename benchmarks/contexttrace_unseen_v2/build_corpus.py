@@ -269,6 +269,14 @@ def _build_locked(
                     )
                     journal.flush()
                     completed_by_id[case_id] = row
+                else:
+                    _validate_completed_case(
+                        row,
+                        case_id=case_id,
+                        track="natural_ood",
+                        source_ids=[str(source["source_id"])],
+                        trace_root=trace_root,
+                    )
                 natural_records.append(row)
 
         temporal_records: list[dict[str, Any]] = []
@@ -305,6 +313,16 @@ def _build_locked(
                     )
                     journal.flush()
                     completed_by_id[case_id] = row
+                else:
+                    _validate_completed_case(
+                        row,
+                        case_id=case_id,
+                        track="temporal_source_condition",
+                        source_ids=[
+                            str(source["source_id"]) for source in pair["sources"]
+                        ],
+                        trace_root=trace_root,
+                    )
                 temporal_records.append(row)
 
     rows = [*natural_records, *temporal_records]
@@ -325,6 +343,10 @@ def _build_locked(
         },
         "source_catalog_sha256": _file_sha256(catalog_path),
         "development_manifest_payload_sha256": development["seal"]["payload_sha256"],
+        "collection_implementation": {
+            "module": "benchmarks.contexttrace_unseen_v2.build_corpus",
+            "file_sha256": _file_sha256(Path(__file__)),
+        },
         "embedding_model": encoder.lock,
         "generators": ollama_lock,
         "case_count": len(rows),
@@ -930,7 +952,7 @@ class _DenseEncoder:
             "id": "sentence-transformers/all-MiniLM-L6-v2",
             "local_path_name": model_path.name,
             "artifact_manifest_sha256": _directory_manifest_sha256(model_path),
-            "dimensions": int(self.model.get_sentence_embedding_dimension()),
+            "dimensions": int(self.model.get_embedding_dimension()),
         }
 
     def encode(self, texts: Sequence[str]) -> np.ndarray:
@@ -1148,7 +1170,10 @@ def _validate_boundaries(
 ) -> None:
     candidate_identity = dict(candidate_freeze)
     candidate_expected = str(candidate_identity.pop("freeze_payload_sha256", ""))
-    if not candidate_expected or _canonical_sha256(candidate_identity) != candidate_expected:
+    if (
+        not candidate_expected
+        or _canonical_sha256(candidate_identity) != candidate_expected
+    ):
         raise CorpusBuildError("Candidate freeze payload hash is absent or invalid.")
     development_identity = dict(development)
     development_seal = development_identity.pop("seal", None)
@@ -1161,7 +1186,9 @@ def _validate_boundaries(
         not development_expected
         or _canonical_sha256(development_identity) != development_expected
     ):
-        raise CorpusBuildError("Development manifest payload hash is absent or invalid.")
+        raise CorpusBuildError(
+            "Development manifest payload hash is absent or invalid."
+        )
     if (
         candidate_freeze.get("status")
         != "candidate_frozen_before_unseen_v2_acquisition"
@@ -1338,8 +1365,10 @@ def _directory_manifest_sha256(root: Path) -> str:
             "sha256": _file_sha256(path),
         }
         for path in sorted(root.rglob("*"))
-        if path.is_file() and ".cache" not in path.parts
+        if path.is_file() and ".cache" not in path.relative_to(root).parts
     ]
+    if not rows:
+        raise CorpusBuildError(f"Artifact directory contains no files: {root}.")
     return _canonical_sha256(rows)
 
 
@@ -1358,6 +1387,35 @@ def _read_journal(path: Path) -> list[dict[str, Any]]:
             raise CorpusBuildError(f"Invalid journal row {line_number}.")
         rows.append(value)
     return rows
+
+
+def _validate_completed_case(
+    row: Mapping[str, Any],
+    *,
+    case_id: str,
+    track: str,
+    source_ids: list[str],
+    trace_root: Path,
+) -> None:
+    expected_relative = f"traces/{case_id}.json"
+    if (
+        row.get("case_id") != case_id
+        or row.get("track") != track
+        or row.get("trace_artifact_path") != expected_relative
+        or row.get("source_ids") != source_ids
+    ):
+        raise CorpusBuildError(f"Resumed journal metadata mismatch: {case_id}.")
+    trace_path = trace_root / f"{case_id}.json"
+    if not trace_path.is_file() or _file_sha256(trace_path) != row.get("trace_sha256"):
+        raise CorpusBuildError(f"Resumed trace hash mismatch: {case_id}.")
+    trace = _read_object(trace_path)
+    if (
+        trace.get("case_id") != case_id
+        or trace.get("track") != track
+        or trace.get("verifier_history") != []
+        or _contains_label_key(trace)
+    ):
+        raise CorpusBuildError(f"Resumed trace boundary mismatch: {case_id}.")
 
 
 def _contains_label_key(value: Any, *, allow_null_labels: bool = False) -> bool:
