@@ -10,6 +10,8 @@ from contexttrace.verify.facts import compare_facts
 from contexttrace.verify.judges import ClaimJudge, JudgeVerdict
 from contexttrace.verify.schema import TraceContext
 
+from .bounded import fact_scope_complexity
+
 OBSERVABLE_CONFLICT_GUARD_VERSION = "observable-conflict-guard-v1.0.0"
 
 _ACRONYM_RE = re.compile(r"\b[A-Z][A-Z0-9_-]{1,}\b")
@@ -153,11 +155,14 @@ def observable_conflicts(claim: str, evidence: str) -> list[ObservableConflict]:
     """Return stable, deduplicated conflicts supported by surface observables."""
 
     conflicts: list[ObservableConflict] = []
-    fact_match = compare_facts(claim, evidence, mode="semantic")
-    for fact in fact_match.conflicting_fact_details:
-        if fact.type not in _GUARDED_FACT_TYPES:
-            continue
-        conflicts.append(ObservableConflict(category=fact.type, claim_value=fact.text))
+    if not fact_scope_complexity(claim)["guarded"]:
+        fact_match = compare_facts(claim, evidence, mode="semantic")
+        for fact in fact_match.conflicting_fact_details:
+            if fact.type not in _GUARDED_FACT_TYPES:
+                continue
+            conflicts.append(
+                ObservableConflict(category=fact.type, claim_value=fact.text)
+            )
 
     relation = _reversed_relation(claim, evidence)
     if relation is not None:

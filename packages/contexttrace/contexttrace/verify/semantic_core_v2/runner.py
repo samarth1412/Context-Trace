@@ -14,7 +14,7 @@ from typing import Any
 from contexttrace.verify.judges import ClaimJudge
 from contexttrace.verify.schema import RAGTrace, load_trace_file
 
-from .cascade import deterministic_decision, resolve_cascade
+from .cascade import DeterministicDecision, deterministic_decision, resolve_cascade
 from .citations import assess_citation
 from .claims import ClaimUnit, unitize_claims
 from .constants import (
@@ -31,6 +31,7 @@ from .rulepacks import load_rulepacks
 from .source import assess_source_condition
 
 ClaimUnitizer = Callable[..., tuple[list[ClaimUnit], bool]]
+DeterministicDecider = Callable[[ClaimUnit, RAGTrace, V2Profile], DeterministicDecision]
 NLIRouter = Callable[
     [RAGTrace, list[ClaimUnit], V2Profile, ClaimJudge | None],
     ClaimJudge | None,
@@ -44,6 +45,7 @@ def verify_trace_v2(
     nli: ClaimJudge | None = None,
     limits: V2Limits = DEFAULT_V2_LIMITS,
     _claim_unitizer: ClaimUnitizer = unitize_claims,
+    _deterministic_decider: DeterministicDecider = deterministic_decision,
     _nli_router: NLIRouter | None = None,
 ) -> dict[str, Any]:
     """Verify one trace without changing semantic_v1_calibrated behavior."""
@@ -63,9 +65,7 @@ def verify_trace_v2(
         "input_truncated": bool(truncation["applied"]),
     }
     routed_nli = (
-        _nli_router(bounded, claims, profile, nli)
-        if _nli_router is not None
-        else nli
+        _nli_router(bounded, claims, profile, nli) if _nli_router is not None else nli
     )
     claim_results = [
         _verify_claim(
@@ -74,6 +74,7 @@ def verify_trace_v2(
             profile=profile,
             nli=routed_nli,
             truncation=truncation,
+            deterministic_decider=_deterministic_decider,
         )
         for claim in claims
     ]
@@ -122,6 +123,7 @@ def verify_trace_file_v2(
     nli: ClaimJudge | None = None,
     limits: V2Limits = DEFAULT_V2_LIMITS,
     _claim_unitizer: ClaimUnitizer = unitize_claims,
+    _deterministic_decider: DeterministicDecider = deterministic_decision,
     _nli_router: NLIRouter | None = None,
 ) -> dict[str, Any]:
     return verify_trace_v2(
@@ -130,6 +132,7 @@ def verify_trace_file_v2(
         nli=nli,
         limits=limits,
         _claim_unitizer=_claim_unitizer,
+        _deterministic_decider=_deterministic_decider,
         _nli_router=_nli_router,
     )
 
@@ -142,6 +145,7 @@ def verify_traces_v2(
     limits: V2Limits = DEFAULT_V2_LIMITS,
     max_workers: int = 4,
     _claim_unitizer: ClaimUnitizer = unitize_claims,
+    _deterministic_decider: DeterministicDecider = deterministic_decision,
     _nli_router: NLIRouter | None = None,
 ) -> list[dict[str, Any]]:
     """Verify a batch with bounded workers and stable input ordering."""
@@ -157,6 +161,7 @@ def verify_traces_v2(
             nli=safe_nli,
             limits=limits,
             _claim_unitizer=_claim_unitizer,
+            _deterministic_decider=_deterministic_decider,
             _nli_router=_nli_router,
         )
 
@@ -174,8 +179,9 @@ def _verify_claim(
     profile: V2Profile,
     nli: ClaimJudge | None,
     truncation: dict[str, Any],
+    deterministic_decider: DeterministicDecider,
 ) -> dict[str, Any]:
-    deterministic = deterministic_decision(claim, trace, profile)
+    deterministic = deterministic_decider(claim, trace, profile)
     cascade = resolve_cascade(
         claim=claim,
         trace=trace,

@@ -4,6 +4,13 @@ from .attribution import (
     EVIDENCE_ATTRIBUTION_VERSION,
     attribute_evidence_v2_1,
 )
+from .bounded import (
+    COMPLEX_FACT_GUARD_VERSION,
+    MAX_IDENTIFIER_SCOPE_TERMS,
+    MAX_SCOPE_SEPARATORS,
+    bounded_deterministic_decision,
+    fact_scope_complexity,
+)
 from .checker import (
     OBSERVABLE_CONFLICT_GUARD_VERSION,
     ObservableConflict,
@@ -36,9 +43,12 @@ from .source import (
 
 __all__ = [
     "ATOMIC_CLAIM_UNITIZER_VERSION",
+    "COMPLEX_FACT_GUARD_VERSION",
     "DETERMINISTIC_ONLY_V2_1_PROFILE",
     "EVIDENCE_ATTRIBUTION_VERSION",
     "GROUPED_CLAIM_NLI_VERSION",
+    "MAX_IDENTIFIER_SCOPE_TERMS",
+    "MAX_SCOPE_SEPARATORS",
     "OBSERVABLE_CONFLICT_GUARD_VERSION",
     "RISK_FEATURE_VERSION",
     "SELECTIVE_V2_1_PROFILE",
@@ -50,7 +60,9 @@ __all__ = [
     "V21Profile",
     "assess_source_condition_v2_1",
     "attribute_evidence_v2_1",
+    "bounded_deterministic_decision",
     "extract_risk_features",
+    "fact_scope_complexity",
     "load_support_risk_model",
     "observable_conflicts",
     "unitize_atomic_claims",

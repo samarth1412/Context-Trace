@@ -25,6 +25,7 @@ from contexttrace.verify.semantic_core_v2.runner import (
 )
 
 from .attribution import attribute_evidence_v2_1
+from .bounded import bounded_deterministic_decision
 from .checker import ObservableConflictGuard
 from .claims import unitize_atomic_claims
 from .grouping import prepare_grouped_nli
@@ -48,6 +49,7 @@ def verify_trace_v2_1(
         nli=_composing_nli(nli, profile),
         limits=limits,
         _claim_unitizer=_claim_unitizer(profile),
+        _deterministic_decider=bounded_deterministic_decision,
         _nli_router=_grouped_nli_router(profile),
     )
     bounded, _ = apply_limits(trace, limits)
@@ -84,6 +86,7 @@ def verify_traces_v2_1(
         limits=limits,
         max_workers=max_workers,
         _claim_unitizer=_claim_unitizer(profile),
+        _deterministic_decider=bounded_deterministic_decision,
         _nli_router=_grouped_nli_router(profile),
     )
     bounded = [apply_limits(trace, limits)[0] for trace in traces]
@@ -254,9 +257,7 @@ def _physical_nli_invocations(claims: list[dict[str, Any]]) -> int:
             continue
         grouped = nli.get("grouped_claim_nli")
         group_id = (
-            str(grouped.get("group_id") or "")
-            if isinstance(grouped, dict)
-            else ""
+            str(grouped.get("group_id") or "") if isinstance(grouped, dict) else ""
         )
         if group_id:
             grouped_ids.add(group_id)
