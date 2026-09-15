@@ -1,0 +1,15 @@
+{
+  "schema_version": "contexttrace-growth-regression-v1",
+  "case_id": "evidence-gap",
+  "construction_status": "constructed_fictional_product_demo",
+  "broken_trace": "broken.json",
+  "fixed_trace": "fixed.json",
+  "broken_assertions": {
+    "summary.partially_supported": 1,
+    "summary.failure_type": "partial_support"
+  },
+  "fixed_assertions": {
+    "summary.supported": 1,
+    "summary.should_abstain": false
+  }
+}

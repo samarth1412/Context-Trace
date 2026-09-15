@@ -1,0 +1,31 @@
+{
+  "query": "How long is the Northstar device warranty?",
+  "answer": "Northstar devices include a two-year warranty.",
+  "contexts": [
+    {
+      "id": "shipping_faq",
+      "text": "Northstar devices ship within two business days.",
+      "metadata": {
+        "source": "shipping.md"
+      }
+    },
+    {
+      "id": "warranty_terms",
+      "text": "Northstar devices include a two-year warranty.",
+      "metadata": {
+        "source": "warranty.md",
+        "canonical": true
+      }
+    }
+  ],
+  "citations": [
+    {
+      "claim": "Northstar devices include a two-year warranty.",
+      "source_id": "shipping_faq"
+    }
+  ],
+  "metadata": {
+    "case": "constructed-growth-demo",
+    "scenario": "wrong-citation"
+  }
+}

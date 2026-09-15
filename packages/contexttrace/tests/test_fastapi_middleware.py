@@ -22,7 +22,7 @@ class FakeTransport:
 
 async def rag_app(scope, receive, send):
     request = await receive()
-    body = json.loads(request["body"].decode("utf-8"))
+    json.loads(request["body"].decode("utf-8"))
     response = {
         "answer": "Refunds are available within 30 days.",
         "retrieved_chunks": [

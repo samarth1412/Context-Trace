@@ -1,0 +1,28 @@
+{
+  "manifest_version": "1.0",
+  "status": "experimental_unfrozen",
+  "verifier_version": "hybrid_v2",
+  "taxonomy_version": "contexttrace-hybrid-v2.0",
+  "schema_version": "2.0",
+  "diagnostic_reasoner_version": "evidence_chain_v2",
+  "created_at": "2026-09-03",
+  "purpose": "Record the Phase 1 development boundary without claiming a research freeze.",
+  "development_policy": {
+    "allowed": [
+      "declared development data",
+      "known regression and calibration sets"
+    ],
+    "forbidden": [
+      "future sealed test labels",
+      "test-error-driven rule or threshold changes"
+    ]
+  },
+  "freeze_required_before_test_scoring": [
+    "implementation files and hashes",
+    "thresholds and taxonomy",
+    "verification profiles",
+    "dependency versions",
+    "local model files and revisions",
+    "baseline adapters and scoring configuration"
+  ]
+}

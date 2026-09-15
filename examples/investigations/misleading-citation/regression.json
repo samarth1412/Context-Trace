@@ -1,0 +1,15 @@
+{
+  "schema_version": "contexttrace-growth-regression-v1",
+  "case_id": "misleading-citation",
+  "construction_status": "constructed_fictional_product_demo",
+  "broken_trace": "broken.json",
+  "fixed_trace": "fixed.json",
+  "broken_assertions": {
+    "summary.failure_type": "citation_mismatch",
+    "summary.citation_mismatches": 1
+  },
+  "fixed_assertions": {
+    "summary.failure_type": "no_failure_detected",
+    "summary.citation_mismatches": 0
+  }
+}

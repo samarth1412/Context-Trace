@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contexttrace.dev/schemas/claim-verification-hybrid-v2.schema.json",
+  "title": "ClaimVerificationHybridV2",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "taxonomy_version",
+    "verifier_version",
+    "profile_id",
+    "diagnostic_reasoner_version",
+    "experimental",
+    "query",
+    "answer",
+    "summary",
+    "claims",
+    "abstention",
+    "diagnostics",
+    "capabilities",
+    "limitations",
+    "truncation"
+  ],
+  "properties": {
+    "schema_version": {"const": "2.0"},
+    "taxonomy_version": {"const": "contexttrace-hybrid-v2.0"},
+    "verifier_version": {"const": "hybrid_v2"},
+    "profile_id": {"type": "string", "pattern": "^hybrid_v2"},
+    "diagnostic_reasoner_version": {"const": "evidence_chain_v2"},
+    "experimental": {"const": true},
+    "query": {"type": "string"},
+    "answer": {"type": "string"},
+    "summary": {"type": "object"},
+    "claims": {"type": "array", "items": {"type": "object"}},
+    "abstention": {"type": "object"},
+    "diagnostics": {"type": "object"},
+    "metadata": {"type": "object"},
+    "verification_profile": {"type": "object"},
+    "capabilities": {"type": "object"},
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "truncation": {"type": "object"}
+  },
+  "additionalProperties": false
+}

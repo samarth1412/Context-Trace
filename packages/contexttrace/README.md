@@ -31,6 +31,12 @@ contexttrace demo --dataset refund_policy
 contexttrace report --last --open
 ```
 
+Learn the workflow through
+[six reproducible failure investigations](https://github.com/samarth1412/Context-Trace/tree/main/examples/investigations),
+then run the
+[LangChain and LlamaIndex regression gates](https://github.com/samarth1412/Context-Trace/tree/main/examples/integrations).
+The public examples use fictional data and need no model API.
+
 Default local storage:
 
 ```text
@@ -189,6 +195,26 @@ Common root causes include `retrieval_miss`, `reranking_failure`, `chunking_issu
 `support_status`, `truth_status`, and `source_status` stay separate so a claim can be grounded by a source while the source itself remains stale, wrong, or unassessed.
 
 Source metadata can include `source_authority`, `source_timestamp`, `source_version`, `canonical`, or `canonical_source`. ContextTrace uses those local fields to flag `grounded_but_stale`, `grounded_but_conflicted`, `grounded_by_low_authority_source`, or `supported_by_canonical_source`.
+
+The experimental, opt-in `hybrid_v2` verifier can also infer dated/versioned
+source relationships from observable document text when those metadata fields
+are absent. It reports the inference basis, distinguishes historical questions
+from current operational guidance, preserves unresolved source disagreement,
+and marks relevant evidence that lacks the requested fact as `unverifiable`
+instead of treating absence as proof. The default `verify_trace` path remains
+the frozen `semantic_v1_calibrated` verifier.
+
+```python
+from contexttrace.verify import verify_trace_hybrid_v2
+
+result = verify_trace_hybrid_v2(trace, mode="semantic")
+```
+
+`hybrid_v2` is an experimental API. In a frozen controlled study it caught more
+faults but produced substantially more false alarms and underperformed the stable
+default on the balanced release-gate measure. Calibrate it on your target system
+before using it as a blocking gate. Its diagnostics do not certify real-world
+truth.
 
 ## Capture Existing Systems
 

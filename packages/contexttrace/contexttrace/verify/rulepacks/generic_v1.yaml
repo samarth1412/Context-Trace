@@ -8,5 +8,6 @@ scope:
   - explicit_negation
 notes: >-
   New generic rules belong here after validation on development data. The frozen
-  semantic_v1_calibrated implementation remains the compatibility path until a
-  rule-pack loader is released.
+  semantic_v1_calibrated fact table remains the compatibility component until a
+  rule-pack loader is released. Experimental successor behavior is opt-in under
+  the hybrid_v2 verifier identity; it does not alter the default v1 path.

@@ -1,0 +1,15 @@
+{
+  "schema_version": "contexttrace-growth-regression-v1",
+  "case_id": "conflicting-sources",
+  "construction_status": "constructed_fictional_product_demo",
+  "broken_trace": "broken.json",
+  "fixed_trace": "fixed.json",
+  "broken_assertions": {
+    "summary.source_status": "grounded_but_conflicted",
+    "summary.supported": 1
+  },
+  "fixed_assertions": {
+    "summary.source_status": "supported_by_canonical_source",
+    "summary.supported": 1
+  }
+}

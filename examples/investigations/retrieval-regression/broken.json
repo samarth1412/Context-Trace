@@ -1,0 +1,17 @@
+{
+  "query": "What is the Vega rollback target?",
+  "answer": "Vega services should roll back within 20 minutes.",
+  "contexts": [
+    {
+      "id": "vega_retention",
+      "text": "Vega deployment records are retained for 90 days.",
+      "metadata": {
+        "source": "vega-records.md"
+      }
+    }
+  ],
+  "metadata": {
+    "case": "constructed-growth-demo",
+    "retriever": "dense-v2"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "query": "At what error rate does Nimbus page the on-call engineer?",
+  "answer": "Nimbus pages the on-call engineer when errors exceed 2 percent.",
+  "contexts": [
+    {
+      "id": "nimbus_alerts",
+      "text": "Nimbus pages the on-call engineer when errors exceed 2 percent.",
+      "metadata": {
+        "source": "nimbus-alerts.md",
+        "canonical": true,
+        "status": "current"
+      }
+    }
+  ],
+  "citations": [
+    {
+      "claim": "Nimbus pages the on-call engineer when errors exceed 2 percent.",
+      "source_id": "nimbus_alerts"
+    }
+  ],
+  "metadata": {
+    "case": "constructed-growth-demo",
+    "scenario": "ci-repaired"
+  }
+}

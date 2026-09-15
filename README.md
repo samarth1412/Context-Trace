@@ -22,22 +22,21 @@ the failure likely happened, and how to keep it from coming back. It is not a
 hosted dashboard. Traces, reports, judge cache, and SQLite state stay local by
 default.
 
-Latest stable release: **[ContextTrace 1.1.0](https://github.com/samarth1412/Context-Trace/releases/tag/v1.1.0)**,
+Latest release: **[ContextTrace 1.2.0](https://github.com/samarth1412/Context-Trace/releases/tag/v1.2.0)**,
 tested on Python 3.10 through 3.13.
 
-## What's New In 1.1.0
+## What's New In 1.2.0
 
-- Versioned public JSON schemas with golden compatibility tests for v1.0 traces.
-- Recursive privacy redaction plus streaming-safe, concurrency-isolated framework
-  integrations.
-- Bounded single-trace and batch verification with explicit payload, queue, and
-  worker limits.
-- A frozen `semantic_v1_calibrated` verifier boundary with separate generic,
-  policy, temporal, and legacy calibration rule packs.
-- Expanded cross-platform packaging, dependency-audit, and 80% coverage gates.
+- Keeps `semantic_v1_calibrated` as the stable default verifier.
+- Adds the opt-in bounded v2.1 CLI and the separate experimental `hybrid_v2`
+  SDK for source-version, lifecycle, conflict, and evidence-gap diagnostics.
+- Adds developer triage output and verifier-aware regression suites.
+- Adds six reproducible investigations, LangChain and LlamaIndex gates, and two
+  captioned demos that run without a model API.
 
-See the [1.1.0 release notes](release/v1.1.0.md) and
-[public artifact schemas](docs/artifact-schemas.md) for details.
+See the [1.2.0 release notes](release/v1.2.0.md),
+[hybrid-v2 guide](docs/hybrid-v2.md), and
+[v2.1 development status](docs/verifier-v2.1-development.md).
 
 ## Install
 
@@ -61,6 +60,13 @@ contexttrace verify-demo unsupported_claim --report
 contexttrace demo --dataset refund_policy
 contexttrace report --last --open
 ```
+
+Learn the workflow through [six reproducible failure investigations](examples/investigations/README.md),
+including stale sources, misleading citations, conflicting runbooks, evidence
+gaps, retrieval regressions, and a complete CI debugging walkthrough. Two
+[captioned animated demos](docs/assets/demos/README.md) and runnable
+[LangChain and LlamaIndex gates](examples/integrations/README.md) use the same
+fictional cases and run without a model API.
 
 Default local storage:
 
@@ -221,6 +227,26 @@ Common root causes include `retrieval_miss`, `reranking_failure`, `chunking_issu
 
 Source metadata can include `source_authority`, `source_timestamp`, `source_version`, `canonical`, or `canonical_source`. ContextTrace uses those local fields to flag `grounded_but_stale`, `grounded_but_conflicted`, `grounded_by_low_authority_source`, or `supported_by_canonical_source`.
 
+The experimental, opt-in `hybrid_v2` verifier can also infer dated/versioned
+source relationships from observable document text when those metadata fields
+are absent. It reports the inference basis, distinguishes historical questions
+from current operational guidance, preserves unresolved source disagreement,
+and marks relevant evidence that lacks the requested fact as `unverifiable`
+instead of treating absence as proof. The default `verify_trace` path remains
+the frozen `semantic_v1_calibrated` verifier.
+
+```python
+from contexttrace.verify import verify_trace_hybrid_v2
+
+result = verify_trace_hybrid_v2(trace, mode="semantic")
+```
+
+`hybrid_v2` is an experimental API. In a frozen controlled study it caught more
+faults but produced substantially more false alarms and underperformed the stable
+default on the balanced release-gate measure. Calibrate it on your target system
+before using it as a blocking gate. Its diagnostics do not certify real-world
+truth.
+
 ## ContextTrace-Bench
 
 ContextTrace-Bench is the repo-level benchmark for claim-level failure attribution,
@@ -284,7 +310,7 @@ machine-readable broad-claim gate; the current result is in
 [`benchmarks/contexttrace_bench/SOTA_STATUS.md`](benchmarks/contexttrace_bench/SOTA_STATUS.md).
 Treat the default 500-case run as verifier-readiness evidence; publish full
 competitor rows and independent external dataset results before making broad
-state-of-the-art claims.
+broad superiority claims.
 
 ## Capture Existing Systems
 
@@ -369,7 +395,7 @@ ContextTrace is a diagnostic tool, not a correctness proof. It verifies groundin
 ## Links
 
 - PyPI: https://pypi.org/project/contexttrace/
-- Latest release: https://github.com/samarth1412/Context-Trace/releases/tag/v1.1.0
+- Latest release: https://github.com/samarth1412/Context-Trace/releases/tag/v1.2.0
 - Docs: [docs](docs)
 - Artifact schemas: [docs/artifact-schemas.md](docs/artifact-schemas.md)
 - Issues: https://github.com/samarth1412/Context-Trace/issues

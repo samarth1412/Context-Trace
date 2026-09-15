@@ -59,6 +59,11 @@ from contexttrace.verify.source_trust import (
     source_assessment,
     source_status_from_assessment,
 )
+from contexttrace.verify.hybrid_v2 import (
+    verify_trace_file_hybrid_v2,
+    verify_trace_hybrid_v2,
+    verify_traces_hybrid_v2,
+)
 
 __all__ = [
     "CachedJudge",
@@ -117,7 +122,10 @@ __all__ = [
     "truth_status",
     "verify_trace",
     "verify_trace_file",
+    "verify_trace_file_hybrid_v2",
+    "verify_trace_hybrid_v2",
     "verify_traces",
+    "verify_traces_hybrid_v2",
     "write_judge_calibration_report",
     "write_nli_calibration_report",
 ]

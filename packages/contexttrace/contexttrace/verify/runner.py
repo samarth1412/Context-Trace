@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+import re
 from dataclasses import asdict, dataclass, replace
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 from contexttrace.contracts import (
     CLAIM_VERIFICATION_SCHEMA_VERSION,
@@ -21,7 +22,13 @@ from contexttrace.verify.citations import (
     find_citation_for_claim,
 )
 from contexttrace.verify.claims import extract_claims
-from contexttrace.verify.evidence import find_best_evidence, score_claim_against_context
+from contexttrace.verify.evidence import (
+    extract_numbers,
+    find_best_evidence,
+    lexical_score,
+    score_claim_against_context,
+    unique_important_tokens,
+)
 from contexttrace.verify.judges import ClaimJudge, JudgeVerdict, build_judge_provider
 from contexttrace.verify.local_nli import LocalNLIError, build_nli_provider
 from contexttrace.verify.root_cause import (
@@ -189,7 +196,10 @@ def _verify_trace_with_profile(
     judge: ClaimJudge | None,
     nli: ClaimJudge | None,
     profile: VerificationProfile,
+    reasoning_mode: str = "legacy",
+    verification_refiner: Callable[[list[Any], RAGTrace, str], list[Any]] | None = None,
 ) -> dict[str, Any]:
+    hybrid_reasoning = reasoning_mode == "hybrid_v2"
     evidence_mode = _evidence_mode(mode)
     judge = _resolve_judge(mode=mode, judge=judge)
     nli = _resolve_nli(mode=mode, nli=nli)
@@ -223,7 +233,12 @@ def _verify_trace_with_profile(
             verifications = _apply_judge_citation_statuses(trace, claims, verifications, judge, mode=evidence_mode)
         elif nli is not None:
             verifications = _apply_judge_citation_statuses(trace, claims, verifications, nli, mode=evidence_mode)
-    verifications = _refine_authoritative_corpus_gaps(verifications, trace)
+    if verification_refiner is not None:
+        verifications = verification_refiner(verifications, trace, evidence_mode)
+    if hybrid_reasoning:
+        verifications = _refine_context_gaps(verifications, trace, mode=evidence_mode)
+    else:
+        verifications = _refine_authoritative_corpus_gaps(verifications, trace)
     abstention = (
         judge_abstention(
             query=trace.query,
@@ -240,11 +255,18 @@ def _verify_trace_with_profile(
         }
     )
     base_claim_results = [verification.to_dict() for verification in verifications]
+    if hybrid_reasoning:
+        base_claim_results = _attach_evidence_relevance(
+            base_claim_results,
+            trace,
+            mode=evidence_mode,
+        )
     if profile.source_assessment:
         claim_results = attach_source_assessments(
             base_claim_results,
             trace,
             mode=evidence_mode,
+            metadata_free_reasoning=hybrid_reasoning,
         )
     else:
         claim_results = [
@@ -255,7 +277,11 @@ def _verify_trace_with_profile(
             }
             for claim in base_claim_results
         ]
-    abstention = _augment_abstention_with_source_status(abstention, claim_results)
+    abstention = _augment_abstention_with_source_status(
+        abstention,
+        claim_results,
+        metadata_free_reasoning=hybrid_reasoning,
+    )
     if profile.root_cause_inference:
         claim_results = attach_root_causes(claim_results, abstention)
     claim_results = attach_grounding_statuses(claim_results, trace)
@@ -573,8 +599,12 @@ def _augment_diagnostics_with_source_status(
     }
 
 
-def _refine_authoritative_corpus_gaps(verifications: list[Any], trace: RAGTrace) -> list[Any]:
-    """Separate absent facts in an authoritative topical source from unrelated misses."""
+def _refine_authoritative_corpus_gaps(
+    verifications: list[Any],
+    trace: RAGTrace,
+) -> list[Any]:
+    """Preserve the frozen v1 metadata-backed evidence-gap behavior."""
+
     contexts = {context.id: context for context in trace.contexts}
     refined = []
     for verification in verifications:
@@ -613,9 +643,179 @@ def _refine_authoritative_corpus_gaps(verifications: list[Any], trace: RAGTrace)
     return refined
 
 
+def _refine_context_gaps(
+    verifications: list[Any],
+    trace: RAGTrace,
+    *,
+    mode: str,
+) -> list[Any]:
+    """Separate relevant-but-insufficient evidence from unrelated retrieval misses."""
+    contexts = {context.id: context for context in trace.contexts}
+    query_match = find_best_evidence(trace.query, trace.contexts, mode=mode)
+    query_relevant = bool(
+        query_match.context_id
+        and query_match.score >= 0.30
+        and len(query_match.matched_terms) >= 2
+    )
+    has_grounded_claim = any(
+        verification.verdict in {"supported", "partially_supported"}
+        for verification in verifications
+    )
+    refined = []
+    for verification in verifications:
+        _claim_query_score, claim_query_terms = lexical_score(
+            verification.claim,
+            trace.query,
+            mode=mode,
+        )
+        context = contexts.get(verification.best_context_id)
+        metadata = dict(getattr(context, "metadata", {}) or {})
+        freshness = str(
+            metadata.get("freshness")
+            or metadata.get("freshness_status")
+            or metadata.get("source_status")
+            or ""
+        ).strip().lower()
+        explicitly_incomplete = freshness == "incomplete" or metadata.get("source_status") == "incomplete"
+        citation = find_citation_for_claim(verification.claim, trace.citations, mode=mode)
+        citation_relevant = bool(
+            citation
+            and query_match.context_id
+            and citation.source_id == query_match.context_id
+        )
+        authoritative_gap = bool(
+            verification.verdict == "unsupported"
+            and float(verification.best_score or 0.0) >= 0.15
+            and verification.matched_terms
+            and metadata.get("canonical") is True
+            and not metadata.get("stale")
+            and (freshness in {"current", "fresh", "active", "latest"} or explicitly_incomplete)
+            and verification.missing_facts
+        )
+        relevant_context_gap = bool(
+            verification.verdict == "unsupported"
+            and verification.missing_facts
+            and query_relevant
+            and (
+                citation_relevant
+                or (
+                    bool(claim_query_terms)
+                    and (
+                        not has_grounded_claim
+                        or _claim_addresses_query_focus(verification.claim, trace.query, mode=mode)
+                    )
+                )
+            )
+            and not _has_competing_numeric_value(verification.claim, query_match.context_text)
+        )
+        if authoritative_gap or relevant_context_gap:
+            relevance_reason = (
+                "A current canonical context is topically relevant"
+                if authoritative_gap
+                else "A retrieved context is relevant to the user's question"
+            )
+            refined.append(
+                replace(
+                    verification,
+                    verdict="unverifiable",
+                    confidence=round(
+                        max(0.55, float(verification.best_score or 0.0), float(query_match.score or 0.0)),
+                        3,
+                    ),
+                    reason=(
+                        "%s, but it does not contain the claimed fact; absence is not evidence "
+                        "that the claim is false." % relevance_reason
+                    ),
+                )
+            )
+        else:
+            refined.append(verification)
+    return refined
+
+
+def _has_competing_numeric_value(claim_text: str, context_text: str) -> bool:
+    claim_numbers = set(extract_numbers(claim_text))
+    context_numbers = set(extract_numbers(context_text))
+    return bool(claim_numbers and context_numbers and not claim_numbers.issubset(context_numbers))
+
+
+def _claim_addresses_query_focus(claim_text: str, query: str, *, mode: str) -> bool:
+    """Require an insufficient-evidence claim to answer the question, not add a new topic."""
+    text = str(query or "").strip()
+    focus_text = ""
+    fronted = re.search(
+        r"^\s*(?:what|which)\s+(?!(?:does|do|did|can|is|are|was|were)\b)"
+        r"(.+?)\s+(?:does|do|did|can|is|are|was|were)\b",
+        text,
+        flags=re.IGNORECASE,
+    )
+    if fronted:
+        focus_text = fronted.group(1)
+    else:
+        remainder = re.search(
+            r"^\s*(?:what|which)\s+(?:does|do|did|can|is|are|was|were)\s+(.+?)[?.!]*$",
+            text,
+            flags=re.IGNORECASE,
+        )
+        if remainder:
+            tokens = unique_important_tokens(remainder.group(1), mode=mode)
+            focus_text = tokens[-1] if tokens else ""
+    focus_terms = set(unique_important_tokens(focus_text, mode=mode))
+    if not focus_terms:
+        return True
+    claim_terms = set(unique_important_tokens(claim_text, mode=mode))
+    return bool(focus_terms.intersection(claim_terms))
+
+
+def _attach_evidence_relevance(
+    claims: list[dict[str, Any]],
+    trace: RAGTrace,
+    *,
+    mode: str,
+) -> list[dict[str, Any]]:
+    query_match = find_best_evidence(trace.query, trace.contexts, mode=mode)
+    query_relevant = bool(
+        query_match.context_id
+        and query_match.score >= 0.30
+        and len(query_match.matched_terms) >= 2
+    )
+    contexts = {context.id: context for context in trace.contexts}
+    annotated = []
+    for claim in claims:
+        best_context = contexts.get(str(claim.get("best_context_id") or ""))
+        best_metadata = dict(getattr(best_context, "metadata", {}) or {})
+        authoritative = bool(
+            best_metadata.get("canonical")
+            or str(best_metadata.get("source_authority") or "").lower()
+            in {"canonical", "official", "primary", "high", "trusted", "source_of_truth"}
+        )
+        if str(claim.get("verdict") or "") == "unverifiable" and query_relevant:
+            basis = "query_context_overlap"
+        elif str(claim.get("verdict") or "") == "unverifiable" and authoritative:
+            basis = "authoritative_source_metadata"
+        elif claim.get("matched_terms"):
+            basis = "claim_context_overlap"
+        else:
+            basis = "none"
+        annotated.append(
+            {
+                **claim,
+                "evidence_relevance": {
+                    "basis": basis,
+                    "context_id": query_match.context_id if query_relevant else None,
+                    "score": query_match.score if query_relevant else 0.0,
+                    "matched_terms": list(query_match.matched_terms) if query_relevant else [],
+                },
+            }
+        )
+    return annotated
+
+
 def _augment_abstention_with_source_status(
     abstention: dict[str, object],
     claims: list[dict[str, Any]],
+    *,
+    metadata_free_reasoning: bool = False,
 ) -> dict[str, object]:
     unsafe = set()
     for claim in claims:
@@ -623,7 +823,11 @@ def _augment_abstention_with_source_status(
         assessment = claim.get("source_assessment") if isinstance(claim.get("source_assessment"), dict) else {}
         if status == "grounded_but_conflicted":
             unsafe.add(status)
-        elif status == "grounded_but_stale" and assessment.get("query_requests_current"):
+        elif status == "grounded_but_stale" and assessment.get(
+            "query_requires_current_source"
+            if metadata_free_reasoning
+            else "query_requests_current"
+        ):
             unsafe.add(status)
         best_metadata = ((assessment.get("best_source") or {}).get("metadata") or {})
         if status == "incomplete" and bool(best_metadata.get("requires_abstention")):
