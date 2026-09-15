@@ -4,11 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "contexttrace"
-version = "1.1.0"
+version = "1.2.0"
 description = "Local-first evidence-chain debugger for RAG and AI agent claim grounding, citation checks, root-cause diagnosis, and regression tests."
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
+license-files = ["LICENSE"]
 authors = [
     { name = "ContextTrace contributors" },
 ]
@@ -122,8 +123,11 @@ contexttrace = [
     "verify/rulepacks/*.yaml",
     "verify/semantic_core_v2/rulepacks/*.json",
     "verify/semantic_core_v2_1/artifacts/*.json",
+    "verify/hybrid_v2/*.json",
     "schemas/*.json",
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"contexttrace/verify/facts.py" = ["F601"]
+"contexttrace/evaluator.py" = ["F401"]
+"contexttrace/verify/facts.py" = ["F401", "F601"]
+"contexttrace/verify/verdicts.py" = ["F401"]

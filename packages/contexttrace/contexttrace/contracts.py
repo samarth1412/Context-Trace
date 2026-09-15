@@ -19,6 +19,7 @@ DEFAULT_PROFILE_ID = "full_v1"
 SCHEMA_FILES = {
     "TraceV1": "trace-v1.schema.json",
     "ClaimVerificationV1": "claim-verification-v1.schema.json",
+    "ClaimVerificationHybridV2": "claim-verification-hybrid-v2.schema.json",
     "DiagnosisV1": "diagnosis-v1.schema.json",
     "RepairPlanV1": "repair-plan-v1.schema.json",
     "RegressionCaseV1": "regression-case-v1.schema.json",

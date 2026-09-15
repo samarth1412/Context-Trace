@@ -6,10 +6,19 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-09-15
+
 ### Added
 
+- An experimental, opt-in `hybrid_v2` verifier for metadata-free date, version,
+  lifecycle, temporal-query, unresolved-conflict, and evidence-gap reasoning.
+- A separate `ClaimVerificationHybridV2` schema and provenance identity so
+  successor research cannot silently change `ClaimVerificationV1` artifacts.
+- Six reproducible failure investigations, two runnable framework CI gates,
+  and two captioned animated demos for the public debugging workflow.
+
 - Query-conditioned exact-offset verification for short answer fragments such
-  as names, dates, numbers, and single terms in the unreleased v2.1 profile.
+  as names, dates, numbers, and single terms in the opt-in v2.1 profile.
 - Hash-locked same-ID development comparisons against cached RAGAS and
   RAGChecker outputs, with fail-closed coverage, error, adapter, and input-
   binding checks.
@@ -19,12 +28,17 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
   neither runner calls a paid provider.
 - Fail-closed checkpoint overwrite protection and an official-wheel fallback
   that verifies RefChecker's PyPI artifact hash and every installed package file.
-- Conservative same-source grouped-claim NLI routing for the unreleased v2.1
+- Conservative same-source grouped-claim NLI routing for the opt-in v2.1
   profile. Only claims with complete deterministic material-fact coverage may
   share a model call; non-entailing groups fail closed as unverifiable.
 
 ### Changed
 
+- Kept `verify_trace` on the frozen `semantic_v1_calibrated` verifier and
+  taxonomy `1.0`; experimental behavior requires an explicit opt-in entry point.
+- Documented the controlled negative result: `hybrid_v2` caught more faults but
+  produced substantially more false alarms and underperformed the stable default
+  on the balanced release-gate measure.
 - Reduced the visible ARES development false-green rate from `0.085` to `0.000`
   and raised failure-label macro-F1 from `0.912` to `0.995`; these are visible
   development results, not untouched or SOTA evidence.

@@ -1,5 +1,35 @@
 # Regression Testing
 
+## Experimental source-aware suites
+
+The development build supports an opt-in `hybrid_v2` suite for observable source
+supersession and conflict. Create a new suite with the verifier selected:
+
+```bash
+contexttrace suite create traces/clean.json \
+  --verifier hybrid_v2 --mode semantic \
+  --out .contexttrace/suites/source-aware.json
+
+contexttrace suite run .contexttrace/suites/source-aware.json \
+  --endpoint http://localhost:8000/query --report
+```
+
+The saved suite retains this choice for `suite add` and `suite run`. Hybrid suites
+use suite schema `0.2`; their verification results retain the separate hybrid
+schema, taxonomy, and identity. Reports identify the experimental verifier.
+Use a build that supports schema 0.2 when replaying these suites; older versions
+may not understand the saved verifier selection.
+
+Default and existing schema `0.1` suites continue to use
+`semantic_v1_calibrated`. Create a new suite to change verifier; changing the
+saved identifier alone is rejected when it would mix baseline identities.
+Hybrid QA currently accepts supplied trace evidence and does not support the
+optional `--corpus` audit. Use the stable suite for corpus audits.
+
+See the [local walkthrough](../examples/rag_regression_lab/README.md) for a
+constructed clean/broken/repaired example. This feature is implemented locally
+and has not been published as a new PyPI release.
+
 Use ContextTrace as a local RAG regression test before merging retrieval, prompt, chunking, or reranking changes.
 
 ## Replay Saved RAG Failures

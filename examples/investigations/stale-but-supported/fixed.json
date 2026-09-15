@@ -1,0 +1,27 @@
+{
+  "query": "What is the current Acme Transit cancellation window?",
+  "answer": "Acme Transit passes may be cancelled within 14 days of purchase.",
+  "contexts": [
+    {
+      "id": "transit_policy_2026",
+      "text": "Acme Transit passes may be cancelled within 14 days of purchase.",
+      "metadata": {
+        "source": "transit-cancellations.md",
+        "version": "2026",
+        "source_status": "current",
+        "canonical": true,
+        "authority_score": 1.0
+      }
+    }
+  ],
+  "citations": [
+    {
+      "claim": "Acme Transit passes may be cancelled within 14 days of purchase.",
+      "source_id": "transit_policy_2026"
+    }
+  ],
+  "metadata": {
+    "case": "constructed-growth-demo",
+    "scenario": "current-policy"
+  }
+}

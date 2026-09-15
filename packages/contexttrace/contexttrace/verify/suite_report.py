@@ -19,6 +19,8 @@ class SuiteReportGenerator:
         return HTML_TEMPLATE.format(
             suite_name=escape(_string(result.get("suite_name"))),
             mode=escape(_string(result.get("mode") or "lexical")),
+            verifier=escape(_string(result.get("verifier") or "semantic_v1_calibrated")),
+            experimental=" (experimental)" if result.get("experimental") else "",
             status_class="bad" if summary.get("status") == "failed" else "ok",
             status=escape(_string(summary.get("status"))),
             summary_cards=_summary_cards(summary),
@@ -140,6 +142,8 @@ def _raw_summary(result: dict[str, Any]) -> dict[str, Any]:
     return {
         "suite_name": result.get("suite_name"),
         "mode": result.get("mode"),
+        "verifier": result.get("verifier") or "semantic_v1_calibrated",
+        "experimental": bool(result.get("experimental")),
         "summary": result.get("summary"),
         "cases": [
             {
@@ -268,7 +272,7 @@ HTML_TEMPLATE = """<!doctype html>
       <p class="muted">Replay saved RAG failures and guardrails against a live endpoint.</p>
       <div class="banner {status_class}">
         <strong>{suite_name}: {status}</strong>
-        <span class="muted"> | mode {mode}</span>
+        <span class="muted"> | mode {mode} | verifier {verifier}{experimental}</span>
       </div>
     </header>
 

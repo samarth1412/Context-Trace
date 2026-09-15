@@ -1,0 +1,27 @@
+{
+  "query": "How many reviewers must approve a current Atlas production deploy?",
+  "answer": "An Atlas production deploy requires three reviewers.",
+  "contexts": [
+    {
+      "id": "deploy_runbook_v2",
+      "text": "An Atlas production deploy requires three reviewers.",
+      "metadata": {
+        "source": "atlas-deploy.md",
+        "version": "2",
+        "canonical": true,
+        "status": "current",
+        "authority_score": 1.0
+      }
+    }
+  ],
+  "citations": [
+    {
+      "claim": "An Atlas production deploy requires three reviewers.",
+      "source_id": "deploy_runbook_v2"
+    }
+  ],
+  "metadata": {
+    "case": "constructed-growth-demo",
+    "scenario": "resolved-runbook"
+  }
+}

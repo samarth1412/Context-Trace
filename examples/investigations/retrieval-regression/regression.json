@@ -1,0 +1,15 @@
+{
+  "schema_version": "contexttrace-growth-regression-v1",
+  "case_id": "retrieval-regression",
+  "construction_status": "constructed_fictional_product_demo",
+  "broken_trace": "broken.json",
+  "fixed_trace": "fixed.json",
+  "broken_assertions": {
+    "summary.unsupported": 1,
+    "summary.failure_type": "should_have_abstained"
+  },
+  "fixed_assertions": {
+    "summary.supported": 1,
+    "summary.failure_type": "no_failure_detected"
+  }
+}

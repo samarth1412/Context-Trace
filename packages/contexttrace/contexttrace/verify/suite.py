@@ -10,11 +10,12 @@ from typing import Any
 from contexttrace.capture_endpoint import capture_endpoint_trace
 from contexttrace.endpoint_eval import EndpointCaller
 from contexttrace.verify.compare import compare_verifications
-from contexttrace.verify.qa import qa_trace
+from contexttrace.verify.qa import qa_trace, validate_qa_verifier
 from contexttrace.verify.schema import RAGTrace, VerificationInputError, load_trace, load_trace_file
 
 
 SUITE_SCHEMA_VERSION = "0.1"
+HYBRID_SUITE_SCHEMA_VERSION = "0.2"
 RISK_ORDER = {"pass": 0, "low": 1, "medium": 2, "high": 3}
 
 
@@ -24,9 +25,11 @@ def create_suite_from_trace_files(
     name: str | None = None,
     mode: str = "lexical",
     corpus_path: str | Path | None = None,
+    verifier: str = "semantic_v1_calibrated",
 ) -> dict[str, Any]:
     """Create a portable regression suite from existing RAG trace JSON files."""
 
+    validate_qa_verifier(verifier, corpus_path=corpus_path)
     resolved_paths = _resolve_trace_paths(trace_paths)
     if not resolved_paths:
         raise VerificationInputError("No trace files matched the provided suite inputs.")
@@ -36,7 +39,9 @@ def create_suite_from_trace_files(
     for path in resolved_paths:
         trace = load_trace_file(path)
         case_id = _unique_case_id(_case_id_from_trace(path, trace), used_ids)
-        baseline_qa = qa_trace(trace, trace_path=str(path), corpus_path=corpus_path, mode=mode)
+        baseline_qa = qa_trace(
+            trace, trace_path=str(path), corpus_path=corpus_path, mode=mode, verifier=verifier
+        )
         cases.append(
             {
                 "id": case_id,
@@ -60,7 +65,7 @@ def create_suite_from_trace_files(
             }
         )
 
-    return {
+    result = {
         "schema_version": SUITE_SCHEMA_VERSION,
         "name": name or "contexttrace-regression-suite",
         "description": "Replay saved RAG traces against a live endpoint and fail when evidence quality regresses or a saved failure still reproduces.",
@@ -72,6 +77,9 @@ def create_suite_from_trace_files(
             "corpus_path": str(corpus_path) if corpus_path else None,
         },
     }
+    if verifier == "hybrid_v2":
+        result.update(schema_version=HYBRID_SUITE_SCHEMA_VERSION, verifier=verifier, experimental=True)
+    return result
 
 
 def run_suite(
@@ -94,6 +102,8 @@ def run_suite(
     """Replay every suite case against a RAG endpoint and evaluate the current output."""
 
     _validate_suite(suite)
+    verifier = _suite_verifier(suite)
+    validate_qa_verifier(verifier, corpus_path=corpus_path)
     resolved_mode = mode or str(suite.get("mode") or "lexical")
     cases = []
     for index, case in enumerate(suite.get("cases") or []):
@@ -114,11 +124,12 @@ def run_suite(
                 corpus_path=corpus_path,
                 mode=resolved_mode,
                 caller=caller,
+                verifier=verifier,
             )
         )
 
     summary = _suite_summary(cases)
-    return {
+    result = {
         "schema_version": SUITE_SCHEMA_VERSION,
         "suite_name": suite.get("name") or "contexttrace-regression-suite",
         "mode": resolved_mode,
@@ -130,6 +141,9 @@ def run_suite(
             "corpus_path": str(corpus_path) if corpus_path else None,
         },
     }
+    if verifier == "hybrid_v2":
+        result.update(schema_version=HYBRID_SUITE_SCHEMA_VERSION, verifier=verifier, experimental=True)
+    return result
 
 
 def add_trace_files_to_suite(
@@ -149,6 +163,7 @@ def add_trace_files_to_suite(
         name=str(suite.get("name") or "contexttrace-regression-suite"),
         mode=resolved_mode,
         corpus_path=corpus_path,
+        verifier=_suite_verifier(suite),
     )
     existing_cases = [dict(case) for case in suite.get("cases") or []]
     new_cases = [dict(case) for case in created.get("cases") or []]
@@ -347,13 +362,14 @@ def _run_case(
     corpus_path: str | Path | None,
     mode: str,
     caller: EndpointCaller | None,
+    verifier: str,
 ) -> dict[str, Any]:
     started = time.perf_counter()
     case_id = str(case.get("id") or "case_%s" % (case_index + 1))
     query = str(case.get("query") or "")
     try:
         baseline_trace = _case_baseline_trace(case, case_id=case_id)
-        baseline_qa = _case_baseline_qa(case, baseline_trace, mode=mode)
+        baseline_qa = _case_baseline_qa(case, baseline_trace, mode=mode, verifier=verifier)
         captured = capture_endpoint_trace(
             endpoint=endpoint,
             query=query or baseline_trace.query,
@@ -373,6 +389,7 @@ def _run_case(
             trace_path=None,
             corpus_path=corpus_path,
             mode=mode,
+            verifier=verifier,
         )
         comparison = compare_verifications(
             baseline_qa["verification"],
@@ -421,11 +438,15 @@ def _case_baseline_trace(case: dict[str, Any], *, case_id: str) -> RAGTrace:
     raise VerificationInputError("suite case %s must include baseline_trace or source_trace." % case_id)
 
 
-def _case_baseline_qa(case: dict[str, Any], trace: RAGTrace, *, mode: str) -> dict[str, Any]:
+def _case_baseline_qa(
+    case: dict[str, Any], trace: RAGTrace, *, mode: str, verifier: str
+) -> dict[str, Any]:
     baseline_qa = case.get("baseline_qa")
     if isinstance(baseline_qa, dict) and isinstance(baseline_qa.get("verification"), dict):
-        return baseline_qa
-    return _qa_snapshot(qa_trace(trace, mode=mode))
+        cached_mode = (baseline_qa.get("summary") or {}).get("mode")
+        if cached_mode == mode:
+            return baseline_qa
+    return _qa_snapshot(qa_trace(trace, mode=mode, verifier=verifier))
 
 
 def _case_failures(
@@ -563,15 +584,43 @@ def _qa_snapshot(qa_result: dict[str, Any]) -> dict[str, Any]:
     return _case_run_snapshot(qa_result)
 
 
+def _suite_verifier(suite: dict[str, Any]) -> str:
+    verifier = suite.get("verifier", "semantic_v1_calibrated")
+    validate_qa_verifier(verifier)
+    return verifier
+
+
 def _validate_suite(payload: Any) -> None:
     if not isinstance(payload, dict):
         raise VerificationInputError("suite must be a JSON object.")
+    verifier = _suite_verifier(payload)
+    if payload.get("schema_version") == HYBRID_SUITE_SCHEMA_VERSION and verifier != "hybrid_v2":
+        raise VerificationInputError("Suite schema 0.2 requires an explicit hybrid_v2 verifier.")
+    if verifier == "hybrid_v2" and payload.get("schema_version") != HYBRID_SUITE_SCHEMA_VERSION:
+        raise VerificationInputError("hybrid_v2 suites require schema version 0.2; recreate the suite.")
     cases = payload.get("cases")
     if not isinstance(cases, list) or not cases:
         raise VerificationInputError("suite must include a non-empty cases list.")
     for index, case in enumerate(cases):
         if not isinstance(case, dict):
             raise VerificationInputError("suite cases[%s] must be an object." % index)
+        baseline_qa = case.get("baseline_qa") or {}
+        if not isinstance(baseline_qa, dict):
+            raise VerificationInputError("suite cases[%s] baseline_qa must be an object." % index)
+        baseline_verification = baseline_qa.get("verification")
+        if isinstance(baseline_verification, dict):
+            baseline_verifier = baseline_verification.get("verifier_version", "semantic_v1_calibrated")
+            if baseline_verifier != verifier:
+                raise VerificationInputError(
+                    "suite cases[%s] baseline verifier %s does not match suite verifier %s; "
+                    "recreate the suite from its traces." % (index, baseline_verifier, verifier)
+                )
+            if verifier == "hybrid_v2":
+                from contexttrace.verify.hybrid_v2.constants import SCHEMA_VERSION, TAXONOMY_VERSION
+
+                if (baseline_verification.get("schema_version") != SCHEMA_VERSION
+                        or baseline_verification.get("taxonomy_version") != TAXONOMY_VERSION):
+                    raise VerificationInputError("Hybrid baseline schema/taxonomy mismatch; recreate the suite.")
         if not str(case.get("query") or "").strip() and not isinstance(case.get("baseline_trace"), dict):
             raise VerificationInputError("suite cases[%s] must include query or baseline_trace." % index)
 

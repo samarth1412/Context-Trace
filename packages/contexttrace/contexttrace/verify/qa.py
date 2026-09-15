@@ -5,8 +5,21 @@ from typing import Any
 
 from contexttrace.verify.audit import audit_trace
 from contexttrace.verify.runner import verify_trace
-from contexttrace.verify.schema import RAGTrace
+from contexttrace.verify.schema import RAGTrace, VerificationInputError
 from contexttrace.verify.trace_inspect import inspect_trace
+
+
+QA_VERIFIERS = ("semantic_v1_calibrated", "hybrid_v2")
+
+
+def validate_qa_verifier(verifier: str, *, corpus_path: str | Path | None = None) -> None:
+    if verifier not in QA_VERIFIERS:
+        raise VerificationInputError("Unknown QA verifier: %s" % verifier)
+    if verifier == "hybrid_v2" and corpus_path is not None:
+        raise VerificationInputError(
+            "hybrid_v2 QA does not yet support --corpus audits. "
+            "Use supplied trace evidence or a semantic_v1_calibrated suite for corpus audits."
+        )
 
 
 HIGH_RISK_LABELS = {"contradicted", "should_abstain", "corpus_gap", "stale_source"}
@@ -27,11 +40,18 @@ def qa_trace(
     trace_path: str | None = None,
     corpus_path: str | Path | None = None,
     mode: str = "lexical",
+    verifier: str = "semantic_v1_calibrated",
 ) -> dict[str, Any]:
     """Run the complete local evidence QA workflow for a portable RAG trace."""
 
+    validate_qa_verifier(verifier, corpus_path=corpus_path)
     inspection = inspect_trace(trace, trace_path=trace_path)
-    verification = verify_trace(trace, mode=mode)
+    if verifier == "hybrid_v2":
+        from contexttrace.verify.hybrid_v2 import verify_trace_hybrid_v2
+
+        verification = verify_trace_hybrid_v2(trace, mode=mode)
+    else:
+        verification = verify_trace(trace, mode=mode)
     audit = audit_trace(trace, corpus_path=corpus_path, mode=mode) if corpus_path else None
     summary = _summary(
         inspection=inspection,

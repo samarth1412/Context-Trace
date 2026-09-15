@@ -76,6 +76,23 @@ def test_cli_demo_creates_trace_and_report(monkeypatch, tmp_path, capsys):
     assert list((tmp_path / ".contexttrace" / "reports").glob("*.html"))
 
 
+def test_cli_groundedness_gap_demo_writes_trace_and_regression_test(monkeypatch, tmp_path, capsys):
+    monkeypatch.chdir(tmp_path)
+
+    assert main(["demo", "groundedness-gap"]) == 0
+    output = capsys.readouterr().out
+
+    assert "Support verdict: supported" in output
+    assert "Retrieved source [atlas_policy_2024, stale]" in output
+    assert "Retrieved source [atlas_policy_2026, current]" in output
+    assert "Citation status: citation_ok" in output
+    assert "Source condition: grounded_but_stale" in output
+    assert "Abstain: true" in output
+    assert "Root cause: stale_context" in output
+    assert (tmp_path / ".contexttrace" / "demo" / "groundedness-gap" / "groundedness_gap_trace.json").is_file()
+    assert (tmp_path / ".contexttrace" / "demo" / "groundedness-gap" / "test_groundedness_gap_diagnosis.py").is_file()
+
+
 def test_cli_benchmark_fails_on_threshold(monkeypatch, tmp_path, capsys):
     monkeypatch.chdir(tmp_path)
 

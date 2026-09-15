@@ -1,0 +1,25 @@
+{
+  "query": "How long are Bluebird support logs retained?",
+  "answer": "Bluebird support logs are retained for 90 days.",
+  "contexts": [
+    {
+      "id": "retention_policy",
+      "text": "Bluebird support logs are retained for 90 days.",
+      "metadata": {
+        "source": "retention.md",
+        "canonical": true,
+        "status": "current"
+      }
+    }
+  ],
+  "citations": [
+    {
+      "claim": "Bluebird support logs are retained for 90 days.",
+      "source_id": "retention_policy"
+    }
+  ],
+  "metadata": {
+    "case": "constructed-growth-demo",
+    "scenario": "retrieved-retention-fact"
+  }
+}

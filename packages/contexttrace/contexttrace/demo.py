@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -8,6 +9,7 @@ from typing import Any, Iterable
 from contexttrace.client import ContextTrace
 from contexttrace.demo_data import load_demo_dataset
 from contexttrace.report import ReportGenerator
+from contexttrace.diagnose import diagnose_payload, write_diagnosis_regression_test
 
 
 STRATEGY_TOP_K = {
@@ -30,6 +32,71 @@ class DemoRun:
     trace_ids: list[str]
     report_path: str
     summary: dict[str, Any]
+
+
+@dataclass(frozen=True)
+class GroundednessGapDemo:
+    trace_path: str
+    regression_test_path: str
+    result: dict[str, Any]
+
+
+def run_groundedness_gap_demo(
+    *, output_dir: str | Path = ".contexttrace/demo/groundedness-gap"
+) -> GroundednessGapDemo:
+    """Run the paper's grounded-but-stale example without network access."""
+    output = Path(output_dir)
+    output.mkdir(parents=True, exist_ok=True)
+    trace = {
+        "query": "What is Atlas's current cancellation window?",
+        "answer": "Atlas allows cancellation within 43 days.",
+        "contexts": [
+            {
+                "id": "atlas_policy_2024",
+                "text": "Atlas allows cancellation within 43 days.",
+                "metadata": {
+                    "canonical": False,
+                    "freshness": "stale",
+                    "source_group": "atlas_cancellation_policy",
+                    "source_version": "2024.1",
+                },
+            },
+            {
+                "id": "atlas_policy_2026",
+                "text": "The current Atlas policy allows cancellation within 42 days.",
+                "metadata": {
+                    "canonical": True,
+                    "freshness": "current",
+                    "source_authority": "official",
+                    "source_group": "atlas_cancellation_policy",
+                    "source_version": "2026.1",
+                },
+            },
+        ],
+        "citations": [
+            {
+                "claim": "Atlas allows cancellation within 43 days.",
+                "source_id": "atlas_policy_2024",
+            }
+        ],
+        "metadata": {"demo": "groundedness-gap", "synthetic": True},
+    }
+    trace_path = output / "groundedness_gap_trace.json"
+    trace_path.write_text(json.dumps(trace, indent=2) + "\n", encoding="utf-8")
+    result = diagnose_payload(trace, mode="semantic", trace_path=str(trace_path))
+    test_path = output / "test_groundedness_gap_diagnosis.py"
+    write_diagnosis_regression_test(
+        trace_path,
+        result,
+        output_path=test_path,
+        mode="semantic",
+        overwrite=True,
+    )
+    return GroundednessGapDemo(
+        trace_path=str(trace_path),
+        regression_test_path=str(test_path),
+        result=result,
+    )
 
 
 def run_demo_dataset(

@@ -17,7 +17,7 @@ from contexttrace.capture import write_rag_trace
 from contexttrace.capture_endpoint import capture_endpoint_trace, capture_response_trace
 from contexttrace.client import ContextTrace
 from contexttrace.config import ContextTraceConfig, load_config, write_default_config
-from contexttrace.demo import run_demo_dataset
+from contexttrace.demo import run_demo_dataset, run_groundedness_gap_demo
 from contexttrace.demo_data import list_demo_datasets
 from contexttrace.diagnose import (
     DiagnoseInputError,
@@ -53,7 +53,7 @@ from contexttrace.verify.benchmark import run_verify_benchmark, write_verify_ben
 from contexttrace.verify.audit_benchmark import run_audit_benchmark, write_audit_benchmark_report
 from contexttrace.verify.audit_report import AuditReportGenerator
 from contexttrace.verify.compare_report import CompareReportGenerator
-from contexttrace.verify.qa import qa_failures, qa_trace
+from contexttrace.verify.qa import QA_VERIFIERS, qa_failures, qa_trace
 from contexttrace.verify.qa_report import QAReportGenerator
 from contexttrace.verify.report import VerifyReportGenerator
 from contexttrace.verify.suite import (
@@ -77,6 +77,7 @@ from contexttrace.verify.semantic_core_v2_1 import (
     verify_trace_v2_1,
 )
 from contexttrace.verify.trace_inspect import inspect_trace
+from contexttrace.verify.triage import render_triage_summary
 from contexttrace.viewer import serve_viewer
 
 
@@ -261,6 +262,7 @@ def report(
 @cli.command("verify")
 @click.argument("trace_json")
 @click.option("--json", "json_output", is_flag=True, help="Print the full verification result as JSON.")
+@click.option("--format", "output_format", default="text", show_default=True, type=click.Choice(["text", "json", "triage"]), help="Console output format.")
 @click.option("--report", is_flag=True, help="Generate a local HTML verification report.")
 @click.option("--out", default=None, help="HTML report path. Implies --report when provided.")
 @click.option("--mode", default="lexical", show_default=True, type=click.Choice(JUDGE_VERIFY_MODES), help="Evidence scoring mode.")
@@ -274,6 +276,7 @@ def verify_command(
     ctx: click.Context,
     trace_json: str,
     json_output: bool,
+    output_format: str,
     report: bool,
     out: Optional[str],
     mode: str,
@@ -311,7 +314,8 @@ def verify_command(
     )
     return _print_verify_result(
         result,
-        json_output=json_output,
+        json_output=json_output or output_format == "json",
+        triage_output=output_format == "triage",
         written_report=written_report,
         fail_on=fail_on,
     )
@@ -650,12 +654,14 @@ def suite_group() -> None:
 @click.argument("trace_json", nargs=-1, required=True)
 @click.option("--out", default="contexttrace-suite.json", show_default=True, help="Suite JSON file to write.")
 @click.option("--name", default=None, help="Suite name.")
+@click.option("--verifier", default="semantic_v1_calibrated", show_default=True, type=click.Choice(QA_VERIFIERS), help="Verifier saved in the suite. hybrid_v2 is experimental and opt-in.")
 @click.option("--mode", default="lexical", show_default=True, type=click.Choice(BASIC_VERIFY_MODES), help="Evidence scoring mode for baseline QA.")
 @click.option("--corpus", "corpus_path", default=None, help="Optional local corpus directory or file for baseline retrieval/corpus audit.")
 def suite_create_command(
     trace_json: tuple[str, ...],
     out: str,
     name: Optional[str],
+    verifier: str,
     mode: str,
     corpus_path: Optional[str],
 ) -> int:
@@ -665,6 +671,7 @@ def suite_create_command(
         suite = create_suite_from_trace_files(
             trace_json,
             name=name,
+            verifier=verifier,
             mode=mode,
             corpus_path=corpus_path,
         )
@@ -674,6 +681,8 @@ def suite_create_command(
 
     click.echo("Suite: %s" % written)
     click.echo("Cases: %s" % len(suite.get("cases") or []))
+    if suite.get("verifier") == "hybrid_v2":
+        click.echo("Verifier: hybrid_v2 (experimental; retained for add and run)")
     click.echo("Policy: saved cases must pass on replay")
     return 0
 
@@ -1669,10 +1678,18 @@ def _print_verify_result(
     result: dict,
     *,
     json_output: bool,
+    triage_output: bool = False,
     written_report: Optional[str],
     fail_on: tuple[str, ...] = (),
 ) -> int:
     fail_messages = _verify_failures(result, fail_on)
+    if triage_output:
+        click.echo(render_triage_summary(result))
+        if written_report:
+            click.echo("Report: %s" % written_report)
+        for message in fail_messages:
+            click.echo("Verification failed: %s" % message, err=True)
+        return 1 if fail_messages else 0
     if json_output:
         if written_report:
             click.echo("Report: %s" % written_report, err=True)
@@ -1842,10 +1859,41 @@ def eval_command(
 
 
 @cli.command()
+@click.argument("scenario", required=False)
 @click.option("--dataset", default="refund_policy", show_default=True, help="Demo dataset name or path.")
 @click.option("--strategy", default="adaptive", show_default=True, help="Demo retrieval strategy.")
 @click.pass_context
-def demo(ctx: click.Context, dataset: str, strategy: str) -> None:
+def demo(ctx: click.Context, scenario: Optional[str], dataset: str, strategy: str) -> None:
+    if scenario:
+        normalized = scenario.strip().lower().replace("_", "-")
+        if normalized != "groundedness-gap":
+            raise click.UsageError("Unknown demo scenario %r. Use 'groundedness-gap'." % scenario)
+        groundedness_demo = run_groundedness_gap_demo()
+        rag = groundedness_demo.result.get("rag") or {}
+        claim = ((rag.get("claims") or [{}])[0])
+        summary = rag.get("summary") or {}
+        abstention = rag.get("abstention") or {}
+        root = claim.get("root_cause") or {}
+        trace_payload = json.loads(Path(groundedness_demo.trace_path).read_text(encoding="utf-8"))
+        click.echo("Query: %s" % rag.get("query"))
+        click.echo("Answer: %s" % rag.get("answer"))
+        for context in trace_payload.get("contexts") or []:
+            metadata = context.get("metadata") or {}
+            condition = metadata.get("freshness") or "unknown"
+            click.echo(
+                "Retrieved source [%s, %s]: %s"
+                % (context.get("id"), condition, context.get("text"))
+            )
+        click.echo("Citation: atlas_policy_2024")
+        click.echo("Support verdict: %s" % claim.get("verdict"))
+        click.echo("Citation status: %s" % claim.get("citation_status"))
+        click.echo("Source condition: %s" % claim.get("source_status"))
+        click.echo("Abstain: %s" % str(bool(abstention.get("should_abstain"))).lower())
+        click.echo("Root cause: %s" % root.get("label"))
+        click.echo("Repair: %s" % (root.get("suggested_fix") or summary.get("suggested_fix")))
+        click.echo("Trace: %s" % groundedness_demo.trace_path)
+        click.echo("Regression test: %s" % groundedness_demo.regression_test_path)
+        return
     client = _client(ctx)
     config = _load(ctx)
     report_path = Path(config.local_store_dir) / "reports" / ("%s_demo.html" % Path(dataset).name)
@@ -1965,6 +2013,8 @@ def _print_suite_result(
 ) -> None:
     summary = result.get("summary") or {}
     click.echo("Suite: %s" % result.get("suite_name"))
+    if result.get("verifier") == "hybrid_v2":
+        click.echo("Verifier: hybrid_v2 (experimental)")
     click.echo("Status: %s" % summary.get("status"))
     click.echo("Cases: %s" % summary.get("total_cases"))
     click.echo("Passed: %s" % summary.get("passed"))
