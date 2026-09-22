@@ -1,0 +1,537 @@
+{
+  "heldout_created": false,
+  "heldout_queried": false,
+  "meets_prespecified_success_requirements": false,
+  "policy": {
+    "calibration_metrics": {
+      "accuracy": 0.6167,
+      "cases": 120,
+      "confusion": {
+        "partially_supported": {
+          "partially_supported": 57,
+          "supported": 3
+        },
+        "supported": {
+          "partially_supported": 43,
+          "supported": 17
+        }
+      },
+      "macro_f1": 0.5687,
+      "partial_incorrectly_supported_count": 3,
+      "partial_incorrectly_supported_rate": 0.05,
+      "per_label_recall": {
+        "partially_supported": 0.95,
+        "supported": 0.2833
+      }
+    },
+    "candidates": [
+      {
+        "meets_safety_constraint": false,
+        "metrics": {
+          "accuracy": 0.6083,
+          "cases": 120,
+          "confusion": {
+            "partially_supported": {
+              "partially_supported": 55,
+              "supported": 5
+            },
+            "supported": {
+              "partially_supported": 42,
+              "supported": 18
+            }
+          },
+          "macro_f1": 0.5672,
+          "partial_incorrectly_supported_count": 5,
+          "partial_incorrectly_supported_rate": 0.0833,
+          "per_label_recall": {
+            "partially_supported": 0.9167,
+            "supported": 0.3
+          }
+        },
+        "threshold": 0.05
+      },
+      {
+        "meets_safety_constraint": false,
+        "metrics": {
+          "accuracy": 0.6083,
+          "cases": 120,
+          "confusion": {
+            "partially_supported": {
+              "partially_supported": 56,
+              "supported": 4
+            },
+            "supported": {
+              "partially_supported": 43,
+              "supported": 17
+            }
+          },
+          "macro_f1": 0.5621,
+          "partial_incorrectly_supported_count": 4,
+          "partial_incorrectly_supported_rate": 0.0667,
+          "per_label_recall": {
+            "partially_supported": 0.9333,
+            "supported": 0.2833
+          }
+        },
+        "threshold": 0.1
+      },
+      {
+        "meets_safety_constraint": true,
+        "metrics": {
+          "accuracy": 0.6167,
+          "cases": 120,
+          "confusion": {
+            "partially_supported": {
+              "partially_supported": 57,
+              "supported": 3
+            },
+            "supported": {
+              "partially_supported": 43,
+              "supported": 17
+            }
+          },
+          "macro_f1": 0.5687,
+          "partial_incorrectly_supported_count": 3,
+          "partial_incorrectly_supported_rate": 0.05,
+          "per_label_recall": {
+            "partially_supported": 0.95,
+            "supported": 0.2833
+          }
+        },
+        "threshold": 0.15
+      },
+      {
+        "meets_safety_constraint": true,
+        "metrics": {
+          "accuracy": 0.6083,
+          "cases": 120,
+          "confusion": {
+            "partially_supported": {
+              "partially_supported": 58,
+              "supported": 2
+            },
+            "supported": {
+              "partially_supported": 45,
+              "supported": 15
+            }
+          },
+          "macro_f1": 0.5506,
+          "partial_incorrectly_supported_count": 2,
+          "partial_incorrectly_supported_rate": 0.0333,
+          "per_label_recall": {
+            "partially_supported": 0.9667,
+            "supported": 0.25
+          }
+        },
+        "threshold": 0.2
+      },
+      {
+        "meets_safety_constraint": true,
+        "metrics": {
+          "accuracy": 0.6,
+          "cases": 120,
+          "confusion": {
+            "partially_supported": {
+              "partially_supported": 58,
+              "supported": 2
+            },
+            "supported": {
+              "partially_supported": 46,
+              "supported": 14
+            }
+          },
+          "macro_f1": 0.5379,
+          "partial_incorrectly_supported_count": 2,
+          "partial_incorrectly_supported_rate": 0.0333,
+          "per_label_recall": {
+            "partially_supported": 0.9667,
+            "supported": 0.2333
+          }
+        },
+        "threshold": 0.25
+      },
+      {
+        "meets_safety_constraint": true,
+        "metrics": {
+          "accuracy": 0.6,
+          "cases": 120,
+          "confusion": {
+            "partially_supported": {
+              "partially_supported": 58,
+              "supported": 2
+            },
+            "supported": {
+              "partially_supported": 46,
+              "supported": 14
+            }
+          },
+          "macro_f1": 0.5379,
+          "partial_incorrectly_supported_count": 2,
+          "partial_incorrectly_supported_rate": 0.0333,
+          "per_label_recall": {
+            "partially_supported": 0.9667,
+            "supported": 0.2333
+          }
+        },
+        "threshold": 0.3
+      },
+      {
+        "meets_safety_constraint": true,
+        "metrics": {
+          "accuracy": 0.6,
+          "cases": 120,
+          "confusion": {
+            "partially_supported": {
+              "partially_supported": 58,
+              "supported": 2
+            },
+            "supported": {
+              "partially_supported": 46,
+              "supported": 14
+            }
+          },
+          "macro_f1": 0.5379,
+          "partial_incorrectly_supported_count": 2,
+          "partial_incorrectly_supported_rate": 0.0333,
+          "per_label_recall": {
+            "partially_supported": 0.9667,
+            "supported": 0.2333
+          }
+        },
+        "threshold": 0.35
+      },
+      {
+        "meets_safety_constraint": true,
+        "metrics": {
+          "accuracy": 0.6,
+          "cases": 120,
+          "confusion": {
+            "partially_supported": {
+              "partially_supported": 58,
+              "supported": 2
+            },
+            "supported": {
+              "partially_supported": 46,
+              "supported": 14
+            }
+          },
+          "macro_f1": 0.5379,
+          "partial_incorrectly_supported_count": 2,
+          "partial_incorrectly_supported_rate": 0.0333,
+          "per_label_recall": {
+            "partially_supported": 0.9667,
+            "supported": 0.2333
+          }
+        },
+        "threshold": 0.4
+      },
+      {
+        "meets_safety_constraint": true,
+        "metrics": {
+          "accuracy": 0.5917,
+          "cases": 120,
+          "confusion": {
+            "partially_supported": {
+              "partially_supported": 58,
+              "supported": 2
+            },
+            "supported": {
+              "partially_supported": 47,
+              "supported": 13
+            }
+          },
+          "macro_f1": 0.5248,
+          "partial_incorrectly_supported_count": 2,
+          "partial_incorrectly_supported_rate": 0.0333,
+          "per_label_recall": {
+            "partially_supported": 0.9667,
+            "supported": 0.2167
+          }
+        },
+        "threshold": 0.45
+      },
+      {
+        "meets_safety_constraint": true,
+        "metrics": {
+          "accuracy": 0.5917,
+          "cases": 120,
+          "confusion": {
+            "partially_supported": {
+              "partially_supported": 58,
+              "supported": 2
+            },
+            "supported": {
+              "partially_supported": 47,
+              "supported": 13
+            }
+          },
+          "macro_f1": 0.5248,
+          "partial_incorrectly_supported_count": 2,
+          "partial_incorrectly_supported_rate": 0.0333,
+          "per_label_recall": {
+            "partially_supported": 0.9667,
+            "supported": 0.2167
+          }
+        },
+        "threshold": 0.5
+      },
+      {
+        "meets_safety_constraint": true,
+        "metrics": {
+          "accuracy": 0.5917,
+          "cases": 120,
+          "confusion": {
+            "partially_supported": {
+              "partially_supported": 58,
+              "supported": 2
+            },
+            "supported": {
+              "partially_supported": 47,
+              "supported": 13
+            }
+          },
+          "macro_f1": 0.5248,
+          "partial_incorrectly_supported_count": 2,
+          "partial_incorrectly_supported_rate": 0.0333,
+          "per_label_recall": {
+            "partially_supported": 0.9667,
+            "supported": 0.2167
+          }
+        },
+        "threshold": 0.55
+      },
+      {
+        "meets_safety_constraint": true,
+        "metrics": {
+          "accuracy": 0.5917,
+          "cases": 120,
+          "confusion": {
+            "partially_supported": {
+              "partially_supported": 58,
+              "supported": 2
+            },
+            "supported": {
+              "partially_supported": 47,
+              "supported": 13
+            }
+          },
+          "macro_f1": 0.5248,
+          "partial_incorrectly_supported_count": 2,
+          "partial_incorrectly_supported_rate": 0.0333,
+          "per_label_recall": {
+            "partially_supported": 0.9667,
+            "supported": 0.2167
+          }
+        },
+        "threshold": 0.6
+      },
+      {
+        "meets_safety_constraint": true,
+        "metrics": {
+          "accuracy": 0.5833,
+          "cases": 120,
+          "confusion": {
+            "partially_supported": {
+              "partially_supported": 58,
+              "supported": 2
+            },
+            "supported": {
+              "partially_supported": 48,
+              "supported": 12
+            }
+          },
+          "macro_f1": 0.5116,
+          "partial_incorrectly_supported_count": 2,
+          "partial_incorrectly_supported_rate": 0.0333,
+          "per_label_recall": {
+            "partially_supported": 0.9667,
+            "supported": 0.2
+          }
+        },
+        "threshold": 0.65
+      },
+      {
+        "meets_safety_constraint": true,
+        "metrics": {
+          "accuracy": 0.5833,
+          "cases": 120,
+          "confusion": {
+            "partially_supported": {
+              "partially_supported": 58,
+              "supported": 2
+            },
+            "supported": {
+              "partially_supported": 48,
+              "supported": 12
+            }
+          },
+          "macro_f1": 0.5116,
+          "partial_incorrectly_supported_count": 2,
+          "partial_incorrectly_supported_rate": 0.0333,
+          "per_label_recall": {
+            "partially_supported": 0.9667,
+            "supported": 0.2
+          }
+        },
+        "threshold": 0.7
+      },
+      {
+        "meets_safety_constraint": true,
+        "metrics": {
+          "accuracy": 0.575,
+          "cases": 120,
+          "confusion": {
+            "partially_supported": {
+              "partially_supported": 58,
+              "supported": 2
+            },
+            "supported": {
+              "partially_supported": 49,
+              "supported": 11
+            }
+          },
+          "macro_f1": 0.498,
+          "partial_incorrectly_supported_count": 2,
+          "partial_incorrectly_supported_rate": 0.0333,
+          "per_label_recall": {
+            "partially_supported": 0.9667,
+            "supported": 0.1833
+          }
+        },
+        "threshold": 0.75
+      },
+      {
+        "meets_safety_constraint": true,
+        "metrics": {
+          "accuracy": 0.575,
+          "cases": 120,
+          "confusion": {
+            "partially_supported": {
+              "partially_supported": 58,
+              "supported": 2
+            },
+            "supported": {
+              "partially_supported": 49,
+              "supported": 11
+            }
+          },
+          "macro_f1": 0.498,
+          "partial_incorrectly_supported_count": 2,
+          "partial_incorrectly_supported_rate": 0.0333,
+          "per_label_recall": {
+            "partially_supported": 0.9667,
+            "supported": 0.1833
+          }
+        },
+        "threshold": 0.8
+      },
+      {
+        "meets_safety_constraint": true,
+        "metrics": {
+          "accuracy": 0.575,
+          "cases": 120,
+          "confusion": {
+            "partially_supported": {
+              "partially_supported": 58,
+              "supported": 2
+            },
+            "supported": {
+              "partially_supported": 49,
+              "supported": 11
+            }
+          },
+          "macro_f1": 0.498,
+          "partial_incorrectly_supported_count": 2,
+          "partial_incorrectly_supported_rate": 0.0333,
+          "per_label_recall": {
+            "partially_supported": 0.9667,
+            "supported": 0.1833
+          }
+        },
+        "threshold": 0.85
+      },
+      {
+        "meets_safety_constraint": true,
+        "metrics": {
+          "accuracy": 0.5667,
+          "cases": 120,
+          "confusion": {
+            "partially_supported": {
+              "partially_supported": 58,
+              "supported": 2
+            },
+            "supported": {
+              "partially_supported": 50,
+              "supported": 10
+            }
+          },
+          "macro_f1": 0.4841,
+          "partial_incorrectly_supported_count": 2,
+          "partial_incorrectly_supported_rate": 0.0333,
+          "per_label_recall": {
+            "partially_supported": 0.9667,
+            "supported": 0.1667
+          }
+        },
+        "threshold": 0.9
+      },
+      {
+        "meets_safety_constraint": true,
+        "metrics": {
+          "accuracy": 0.5417,
+          "cases": 120,
+          "confusion": {
+            "partially_supported": {
+              "partially_supported": 58,
+              "supported": 2
+            },
+            "supported": {
+              "partially_supported": 53,
+              "supported": 7
+            }
+          },
+          "macro_f1": 0.4406,
+          "partial_incorrectly_supported_count": 2,
+          "partial_incorrectly_supported_rate": 0.0333,
+          "per_label_recall": {
+            "partially_supported": 0.9667,
+            "supported": 0.1167
+          }
+        },
+        "threshold": 0.95
+      }
+    ],
+    "selection_cohort": "calibration",
+    "selection_rule": "maximize macro_f1, accuracy, supported recall, then threshold among thresholds with partial-to-supported rate <= 0.05",
+    "threshold": 0.15
+  },
+  "prespecified_success_requirements": {
+    "maximum_partial_incorrectly_supported_rate": 0.05,
+    "minimum_partial_recall": 0.7,
+    "minimum_supported_recall": 0.5
+  },
+  "promotion_recommendation": "continue_research",
+  "run_sha256": "8835b6db784108bf55a7dc5cfaf82d9fe383c51185c101e44807bdc575a50848",
+  "schema_version": "atomic-coverage-analysis-1.0",
+  "validation_metrics": {
+    "accuracy": 0.5,
+    "cases": 60,
+    "confusion": {
+      "partially_supported": {
+        "partially_supported": 28,
+        "supported": 2
+      },
+      "supported": {
+        "partially_supported": 28,
+        "supported": 2
+      }
+    },
+    "macro_f1": 0.3844,
+    "partial_incorrectly_supported_count": 2,
+    "partial_incorrectly_supported_rate": 0.0667,
+    "per_label_recall": {
+      "partially_supported": 0.9333,
+      "supported": 0.0667
+    }
+  }
+}

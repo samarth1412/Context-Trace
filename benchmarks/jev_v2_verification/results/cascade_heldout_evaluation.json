@@ -1,0 +1,1030 @@
+{
+  "experiment": "contexttrace_local_first_jev_cascade",
+  "heldout_used_for_selection": false,
+  "metrics": {
+    "automatic_accuracy": 0.7917,
+    "automatic_coverage": 0.3333,
+    "automatic_false_support_case_ids": [],
+    "automatic_false_support_count": 0,
+    "binary_accuracy": 0.9167,
+    "cases": 72,
+    "false_support_case_ids": [
+      "ragtruth_9840_s003"
+    ],
+    "false_support_count": 1,
+    "false_support_rate": 0.0208,
+    "five_way_accuracy": 0.7639,
+    "observed_label_macro_f1": 0.7905,
+    "review_count": 48,
+    "supported_recall": 0.7917
+  },
+  "operations": {
+    "remote_call_rate": 0.9583,
+    "remote_call_reduction": 0.0417,
+    "remote_calls": 69,
+    "remote_calls_saved": 3,
+    "sequential_latency_ms": {
+      "mean": 241.621,
+      "p50": 216.125,
+      "p95": 372.563
+    },
+    "tokens": {
+      "always_jev_total": 149499,
+      "input": 141729,
+      "output": 4413,
+      "saved": 3357,
+      "total": 146142
+    }
+  },
+  "paired_vs_always_jev": {
+    "binary": {
+      "baseline_only_correct": 1,
+      "candidate_only_correct": 3,
+      "discordant_pairs": 4,
+      "exact_two_sided_p": 0.625
+    },
+    "five_way": {
+      "baseline_only_correct": 1,
+      "candidate_only_correct": 2,
+      "discordant_pairs": 3,
+      "exact_two_sided_p": 1.0
+    }
+  },
+  "policy": {
+    "always_review_supported": true,
+    "jev_supported_probability": 0.75,
+    "local_supported_confidence": 0.9,
+    "review_confidence": 0.8
+  },
+  "policy_id": "e6e5126dc1810c275be902496783b620f32df280ad4180214b62b8c842ef9025",
+  "policy_selection_split": "development",
+  "remote_provider_default_enabled": false,
+  "rows": [
+    {
+      "case_id": "ragtruth_10006_s004",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "ragtruth_10006_s005",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "ragtruth_10006_s006",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "ragtruth_10006_s009",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "ragtruth_10072_s006",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "ragtruth_10111_s009",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "ragtruth_10111_s012",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "ragtruth_10366_s012",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "ragtruth_10819_s011",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "ragtruth_11522_s003",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "ragtruth_11522_s005",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "ragtruth_11908_s002",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "ragtruth_12218_s002",
+      "decision": {
+        "decision_source": "stable_semantic",
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "ragtruth_123_s002",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "ragtruth_12917_s002",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "ragtruth_13070_s001",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "ragtruth_13070_s004",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "ragtruth_13160_s006",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "ragtruth_13160_s009",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "ragtruth_13430_s008",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "ragtruth_13442_s002",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "ragtruth_13563_s005",
+      "decision": {
+        "decision_source": "stable_semantic",
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "ragtruth_14007_s002",
+      "decision": {
+        "decision_source": "stable_semantic",
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "ragtruth_14007_s006",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "ragtruth_14098_s007",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "ragtruth_14098_s011",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "ragtruth_14323_s004",
+      "decision": {
+        "decision_source": "stable_fallback_after_jev_support_gate",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": true,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "ragtruth_15467_s002",
+      "decision": {
+        "decision_source": "stable_fallback_after_jev_support_gate",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold",
+          "unverifiable_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": true,
+        "verdict": "unverifiable"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "ragtruth_15467_s004",
+      "decision": {
+        "decision_source": "stable_fallback_after_jev_support_gate",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict",
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": true,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "ragtruth_15718_s003",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "ragtruth_1967_s003",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "ragtruth_1990_s003",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "ragtruth_2894_s004",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "ragtruth_4052_s005",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "ragtruth_4064_s001",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "ragtruth_4064_s002",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "ragtruth_4065_s002",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "ragtruth_4211_s003",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "ragtruth_4226_s003",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "ragtruth_4263_s004",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "ragtruth_5417_s003",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "ragtruth_5691_s001",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "ragtruth_5691_s004",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "ragtruth_5691_s005",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "ragtruth_5850_s004",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "ragtruth_58_s005",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "ragtruth_6051_s004",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "ragtruth_6052_s007",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "ragtruth_6250_s007",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "ragtruth_656_s002",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "ragtruth_7011_s005",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "ragtruth_7153_s003",
+      "decision": {
+        "decision_source": "stable_fallback_after_jev_support_gate",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": true,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "ragtruth_7292_s002",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "ragtruth_8153_s005",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "ragtruth_8153_s011",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "ragtruth_8153_s012",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "ragtruth_8474_s002",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "ragtruth_8474_s003",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "ragtruth_8627_s005",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "ragtruth_8672_s002",
+      "decision": {
+        "decision_source": "stable_fallback_after_jev_support_gate",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": true,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "ragtruth_885_s007",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "ragtruth_9069_s005",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "ragtruth_906_s005",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "ragtruth_906_s009",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "ragtruth_9071_s003",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "ragtruth_9542_s003",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "ragtruth_9552_s003",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "ragtruth_9552_s005",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "ragtruth_9775_s015",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "ragtruth_9775_s016",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "ragtruth_9840_s003",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "ragtruth_9937_s013",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    }
+  ],
+  "schema_version": "1.0",
+  "source_sha256": "f15cd0af55cc075890e18c6c33f8b5fd0d2a7ccb6932edc1387e83cd09607b69",
+  "split": "heldout",
+  "stable_defaults_changed": false
+}

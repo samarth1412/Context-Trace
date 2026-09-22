@@ -1,0 +1,147 @@
+{
+  "schema_version": "1.0",
+  "split": "development",
+  "provenance": "synthetic_author_labeled",
+  "scenario_families": ["library", "clinic", "cloud", "warehouse", "conference"],
+  "cases": [
+    {
+      "id": "dev_library_supported_renewals",
+      "tags": ["supported", "paraphrase"],
+      "query": "How many times may a standard book be renewed?",
+      "claim": "A member can renew a standard book twice.",
+      "contexts": [{"id": "library_policy", "text": "Standard loans permit two renewals for each member."}],
+      "expected_verdict": "supported",
+      "expected_evidence_context_ids": ["library_policy"]
+    },
+    {
+      "id": "dev_clinic_supported_cancellation",
+      "tags": ["supported", "number"],
+      "query": "When can an appointment be cancelled without a fee?",
+      "claim": "Patients can cancel at least 24 hours before an appointment without a fee.",
+      "contexts": [{"id": "clinic_terms", "text": "There is no cancellation fee when a patient cancels 24 hours or more before the scheduled appointment."}],
+      "expected_verdict": "supported",
+      "expected_evidence_context_ids": ["clinic_terms"]
+    },
+    {
+      "id": "dev_cloud_supported_region",
+      "tags": ["supported", "entity"],
+      "query": "Where is the metrics cluster hosted?",
+      "claim": "The metrics cluster is hosted in eu-central-1.",
+      "contexts": [{"id": "cloud_inventory", "text": "Deployment inventory: the metrics cluster runs in the eu-central-1 region."}],
+      "expected_verdict": "supported",
+      "expected_evidence_context_ids": ["cloud_inventory"]
+    },
+    {
+      "id": "dev_cloud_unsupported_log_deletion",
+      "tags": ["unsupported", "lexical_overlap_trap"],
+      "query": "Are audit logs deleted every day?",
+      "claim": "The platform deletes audit logs every day.",
+      "contexts": [{"id": "audit_help", "text": "The audit page lets administrators view daily logs and export log entries."}],
+      "expected_verdict": "unsupported",
+      "expected_evidence_context_ids": ["audit_help"]
+    },
+    {
+      "id": "dev_clinic_unsupported_backup_schedule",
+      "tags": ["unsupported", "explicit_absence"],
+      "query": "How often are patient records backed up?",
+      "claim": "Patient records are backed up every four hours.",
+      "contexts": [{"id": "clinic_security", "text": "Patient records are encrypted. The security overview does not specify a backup schedule."}],
+      "expected_verdict": "unsupported",
+      "expected_evidence_context_ids": ["clinic_security"]
+    },
+    {
+      "id": "dev_library_unsupported_phone_support",
+      "tags": ["unsupported", "unsupported_addition"],
+      "query": "What help is included with a digital membership?",
+      "claim": "Digital membership includes telephone research support.",
+      "contexts": [{"id": "membership_page", "text": "Digital membership includes catalogue access and email notifications. Support channels are not listed."}],
+      "expected_verdict": "unsupported",
+      "expected_evidence_context_ids": ["membership_page"]
+    },
+    {
+      "id": "dev_conference_partial_benefits",
+      "tags": ["partially_supported", "compound_claim"],
+      "query": "What is included with registration?",
+      "claim": "Conference registration includes breakfast and free parking.",
+      "contexts": [{"id": "conference_faq", "text": "Conference registration includes breakfast. The FAQ gives no information about parking charges."}],
+      "expected_verdict": "partially_supported",
+      "expected_evidence_context_ids": ["conference_faq"]
+    },
+    {
+      "id": "dev_warehouse_partial_inspection",
+      "tags": ["partially_supported", "compound_claim"],
+      "query": "What is required after a pallet inspection?",
+      "claim": "A completed inspection requires a photograph and a supervisor signature.",
+      "contexts": [{"id": "warehouse_manual", "text": "A completed inspection requires a photograph. The manual does not mention a supervisor signature."}],
+      "expected_verdict": "partially_supported",
+      "expected_evidence_context_ids": ["warehouse_manual"]
+    },
+    {
+      "id": "dev_cloud_partial_api_permissions",
+      "tags": ["partially_supported", "compound_claim"],
+      "query": "What can the reporting API key do?",
+      "claim": "The reporting API key can read reports and modify billing settings.",
+      "contexts": [{"id": "api_permissions", "text": "The reporting API key can read reports. Billing-setting permissions are not described."}],
+      "expected_verdict": "partially_supported",
+      "expected_evidence_context_ids": ["api_permissions"]
+    },
+    {
+      "id": "dev_clinic_contradicted_temperature",
+      "tags": ["contradicted", "number"],
+      "query": "At what temperature are specimens stored?",
+      "claim": "Specimens are stored at minus 20 degrees Celsius.",
+      "contexts": [{"id": "lab_protocol", "text": "Specimens must be stored at minus 80 degrees Celsius."}],
+      "expected_verdict": "contradicted",
+      "expected_evidence_context_ids": ["lab_protocol"]
+    },
+    {
+      "id": "dev_cloud_contradicted_negation",
+      "tags": ["contradicted", "negation"],
+      "query": "Can editors publish directly?",
+      "claim": "Editors may publish changes directly to production.",
+      "contexts": [{"id": "deployment_policy", "text": "Editors may not publish changes directly to production; an approver must deploy them."}],
+      "expected_verdict": "contradicted",
+      "expected_evidence_context_ids": ["deployment_policy"]
+    },
+    {
+      "id": "dev_warehouse_contradicted_attribution",
+      "tags": ["contradicted", "wrong_attribution"],
+      "query": "Who approved the conveyor migration?",
+      "claim": "Alex approved the conveyor migration.",
+      "contexts": [{"id": "migration_record", "text": "Alex documented the conveyor migration, and Priya approved it."}],
+      "expected_verdict": "contradicted",
+      "expected_evidence_context_ids": ["migration_record"]
+    },
+    {
+      "id": "dev_library_unverifiable_priority",
+      "tags": ["unverifiable", "qualified_evidence"],
+      "query": "Do all partner libraries receive priority delivery?",
+      "claim": "Every partner library receives priority delivery.",
+      "contexts": [{"id": "partner_terms", "text": "Priority delivery may be available to eligible partner libraries, depending on their agreement."}],
+      "expected_verdict": "unverifiable",
+      "expected_evidence_context_ids": ["partner_terms"]
+    },
+    {
+      "id": "dev_cloud_unverifiable_conflict",
+      "tags": ["unverifiable", "conflicting_sources"],
+      "query": "Is guest access enabled?",
+      "claim": "Guest access is enabled.",
+      "contexts": [
+        {"id": "admin_guide", "text": "Guest access is enabled."},
+        {"id": "security_notice", "text": "Guest access is not enabled."}
+      ],
+      "expected_verdict": "unverifiable",
+      "expected_evidence_context_ids": ["admin_guide", "security_notice"]
+    },
+    {
+      "id": "dev_conference_unverifiable_capacity",
+      "tags": ["unverifiable", "approximate_evidence"],
+      "query": "What is the exact workshop capacity?",
+      "claim": "The workshop capacity is exactly 100 attendees.",
+      "contexts": [{"id": "event_note", "text": "The workshop is planned for approximately 100 attendees; the final room assignment is pending."}],
+      "expected_verdict": "unverifiable",
+      "expected_evidence_context_ids": ["event_note"]
+    }
+  ]
+}
+

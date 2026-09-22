@@ -1,0 +1,323 @@
+{
+  "experiment": "contexttrace_jev_claim_verification",
+  "remote_provider": "typesafe_jev",
+  "rows": [
+    {
+      "baseline": {
+        "confidence": 1.0,
+        "provider": "contexttrace_stable",
+        "verdict": "supported"
+      },
+      "case_id": "dev_supported_refund_window",
+      "category": "supported",
+      "expected_verdict": "supported",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "selected_evidence": [
+          {
+            "characters": 58,
+            "selected_id": "refund_policy:span:1",
+            "sha256": "114bdaf7028fc821d047c2ffab035a7073926f1435fbe7f5b271ed0e15f0fcbc",
+            "source_context_id": "refund_policy"
+          },
+          {
+            "characters": 51,
+            "selected_id": "refund_policy:span:2",
+            "sha256": "d2818cb6cd1bbbc7f08619c06d605ea86fc49d2cfa6728911287519ec8cba5e8",
+            "source_context_id": "refund_policy"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "state_sha256": "026350f3202c557aee020d86e032f5928cf5384c1400e691d7a8f8d77d86ae13"
+      },
+      "jev": {
+        "confidence": 1.0,
+        "conflicting_facts": [],
+        "latency_ms": 618.048,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.0,
+          "supported": 1.0,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "provider": "typesafe_jev",
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 573,
+          "output_tokens": 62,
+          "total_tokens": 635
+        },
+        "verdict": "supported"
+      },
+      "split": "development"
+    },
+    {
+      "baseline": {
+        "confidence": 0.421,
+        "provider": "contexttrace_stable",
+        "verdict": "unverifiable"
+      },
+      "case_id": "dev_unsupported_refund_speed",
+      "category": "unsupported_addition",
+      "expected_verdict": "unsupported",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "selected_evidence": [
+          {
+            "characters": 56,
+            "selected_id": "refund_policy:span:1",
+            "sha256": "756e2bc057c786ae7eaceef9357db50fe241e1a7a425a2cf1e4fc6394e33a6be",
+            "source_context_id": "refund_policy"
+          },
+          {
+            "characters": 52,
+            "selected_id": "refund_policy:span:2",
+            "sha256": "b5592e8da999cbe02bf53e8681fcd269e249e313461a27638b94e83328b79c7e",
+            "source_context_id": "refund_policy"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "state_sha256": "871f75380620f67909a38df03b2a034411265bf7f203272471c9dc1fc284685b"
+      },
+      "jev": {
+        "confidence": 0.93,
+        "conflicting_facts": [],
+        "latency_ms": 190.696,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.01,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.94,
+          "unverifiable": 0.05
+        },
+        "provider": "typesafe_jev",
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 570,
+          "output_tokens": 62,
+          "total_tokens": 632
+        },
+        "verdict": "unsupported"
+      },
+      "split": "development"
+    },
+    {
+      "baseline": {
+        "confidence": 0.837,
+        "provider": "contexttrace_stable",
+        "verdict": "contradicted"
+      },
+      "case_id": "dev_contradicted_refund_window",
+      "category": "contradiction",
+      "expected_verdict": "contradicted",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "selected_evidence": [
+          {
+            "characters": 58,
+            "selected_id": "refund_policy:span:1",
+            "sha256": "114bdaf7028fc821d047c2ffab035a7073926f1435fbe7f5b271ed0e15f0fcbc",
+            "source_context_id": "refund_policy"
+          },
+          {
+            "characters": 39,
+            "selected_id": "refund_policy:span:2",
+            "sha256": "f02b64697576851d01b0f96214eac5a2dfb37f827949293c2c4b4bf2b6b8c1a3",
+            "source_context_id": "refund_policy"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "state_sha256": "890cd0f52e86b1bf9ab1bdeb4c33a62f9aafedb277b1e16e7b345933174c3cd2"
+      },
+      "jev": {
+        "confidence": 1.0,
+        "conflicting_facts": [],
+        "latency_ms": 162.53,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 1.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "provider": "typesafe_jev",
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 572,
+          "output_tokens": 65,
+          "total_tokens": 637
+        },
+        "verdict": "contradicted"
+      },
+      "split": "development"
+    },
+    {
+      "baseline": {
+        "confidence": 0.82,
+        "provider": "contexttrace_stable",
+        "verdict": "supported"
+      },
+      "case_id": "dev_partial_refund_shipping",
+      "category": "partial_support",
+      "expected_verdict": "partially_supported",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "selected_evidence": [
+          {
+            "characters": 58,
+            "selected_id": "refund_policy:span:1",
+            "sha256": "114bdaf7028fc821d047c2ffab035a7073926f1435fbe7f5b271ed0e15f0fcbc",
+            "source_context_id": "refund_policy"
+          },
+          {
+            "characters": 62,
+            "selected_id": "refund_policy:span:2",
+            "sha256": "ac2a488d483d97bf260e18d7c8b11d6bd6cb85b6536bb032a6416c0764591ac6",
+            "source_context_id": "refund_policy"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "state_sha256": "5b733dbdfc43a7b417733fa83c64b28971a2397439d5d21aa6fc96df557aae50"
+      },
+      "jev": {
+        "confidence": 0.99,
+        "conflicting_facts": [],
+        "latency_ms": 202.087,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 1.0,
+          "supported": 0.0,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "provider": "typesafe_jev",
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 580,
+          "output_tokens": 65,
+          "total_tokens": 645
+        },
+        "verdict": "partially_supported"
+      },
+      "split": "development"
+    },
+    {
+      "baseline": {
+        "confidence": 0.456,
+        "provider": "contexttrace_stable",
+        "verdict": "partially_supported"
+      },
+      "case_id": "dev_ambiguous_priority_support",
+      "category": "ambiguous_evidence",
+      "expected_verdict": "unverifiable",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "selected_evidence": [
+          {
+            "characters": 85,
+            "selected_id": "support_terms:span:1",
+            "sha256": "3488034309eab645d15fdc539e4fa6cbec5858d0db49213d70182d7ab381c4e2",
+            "source_context_id": "support_terms"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "state_sha256": "bcbe614f58a211e675eb4ba28f876d158385b6c4fff796fc91a254ff55910e56"
+      },
+      "jev": {
+        "confidence": 0.48,
+        "conflicting_facts": [],
+        "latency_ms": 374.274,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.58,
+          "partially_supported": 0.05,
+          "supported": 0.0,
+          "unsupported": 0.32,
+          "unverifiable": 0.05
+        },
+        "provider": "typesafe_jev",
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 540,
+          "output_tokens": 65,
+          "total_tokens": 605
+        },
+        "verdict": "contradicted"
+      },
+      "split": "development"
+    }
+  ],
+  "schema_version": "1.0",
+  "stable_defaults_changed": false,
+  "summary": {
+    "baseline_accuracy": 0.4,
+    "baseline_jev_disagreements": [
+      {
+        "baseline": "unverifiable",
+        "case_id": "dev_unsupported_refund_speed",
+        "expected": "unsupported",
+        "jev": "unsupported"
+      },
+      {
+        "baseline": "supported",
+        "case_id": "dev_partial_refund_shipping",
+        "expected": "partially_supported",
+        "jev": "partially_supported"
+      },
+      {
+        "baseline": "partially_supported",
+        "case_id": "dev_ambiguous_priority_support",
+        "expected": "unverifiable",
+        "jev": "contradicted"
+      }
+    ],
+    "cases": 5,
+    "dangerous_false_supported_case_ids": [],
+    "jev_accuracy": 0.8,
+    "jev_run_complete": true,
+    "jev_total_input_tokens": 2835,
+    "jev_total_output_tokens": 319,
+    "mean_jev_latency_ms": 309.527,
+    "unsupported_false_supported_case_ids": []
+  }
+}

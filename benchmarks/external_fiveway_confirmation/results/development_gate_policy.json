@@ -1,0 +1,20 @@
+{
+  "decision_order": [
+    "If linguistic_ambiguity is at or above threshold, return unverifiable.",
+    "Otherwise, use complete_support to choose supported versus partially_supported when the base verdict is either.",
+    "Otherwise, retain the base Jev verdict.",
+    "Require review for every supported or unverifiable verdict and for signals within 0.10 of a threshold."
+  ],
+  "heldout_used_for_selection": false,
+  "policy": {
+    "ambiguity_threshold": 0.7,
+    "complete_support_threshold": 0.7,
+    "max_false_support_rate": 0.05
+  },
+  "policy_id": "40c179cb0b9905bbac2035306720c808a43745a3cd9c455615a7a447f24e2f74",
+  "remote_provider_default_enabled": false,
+  "schema_version": "jev-ambiguity-support-gate-policy-1.0",
+  "selection_split": "development.calibration",
+  "stable_defaults_changed": false,
+  "validation_split": "development.validation"
+}

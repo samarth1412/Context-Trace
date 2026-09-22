@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "split": "development",
+  "cases": [
+    {
+      "id": "dev_supported_refund_window",
+      "category": "supported",
+      "query": "What is the refund window?",
+      "claim": "Customers may request a refund within 30 days of purchase.",
+      "contexts": [
+        {
+          "id": "refund_policy",
+          "text": "Customers may request a refund within 30 days of purchase. Items must be returned in their original condition."
+        }
+      ],
+      "expected_verdict": "supported"
+    },
+    {
+      "id": "dev_unsupported_refund_speed",
+      "category": "unsupported_addition",
+      "query": "How quickly are refunds processed?",
+      "claim": "Refund requests are processed within two hours.",
+      "contexts": [
+        {
+          "id": "refund_policy",
+          "text": "Refund requests are accepted within 30 days of purchase. The policy does not state how long processing takes."
+        }
+      ],
+      "expected_verdict": "unsupported"
+    },
+    {
+      "id": "dev_contradicted_refund_window",
+      "category": "contradiction",
+      "query": "What is the refund window?",
+      "claim": "Customers may request a refund within 60 days of purchase.",
+      "contexts": [
+        {
+          "id": "refund_policy",
+          "text": "Customers may request a refund within 30 days of purchase. Requests received later are ineligible."
+        }
+      ],
+      "expected_verdict": "contradicted"
+    },
+    {
+      "id": "dev_partial_refund_shipping",
+      "category": "partial_support",
+      "query": "What benefits apply to a return?",
+      "claim": "Customers may request a refund within 30 days and receive free return shipping.",
+      "contexts": [
+        {
+          "id": "refund_policy",
+          "text": "Customers may request a refund within 30 days of purchase. The policy gives no information about return-shipping charges."
+        }
+      ],
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "id": "dev_ambiguous_priority_support",
+      "category": "ambiguous_evidence",
+      "query": "Do enterprise plans have priority support?",
+      "claim": "Every enterprise plan includes priority support.",
+      "contexts": [
+        {
+          "id": "support_terms",
+          "text": "Priority support may be available for some plans, subject to the customer's contract."
+        }
+      ],
+      "expected_verdict": "unverifiable"
+    }
+  ]
+}
+

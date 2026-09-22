@@ -1,0 +1,79 @@
+{
+  "base_encoder": {
+    "id": "sentence-transformers/all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
+  },
+  "files": [
+    {
+      "bytes": 909,
+      "path": "config.json",
+      "sha256": "fafda67b01916d5114ef1ff2185e69d520bc418e443ecede2d4d16b3e622c615"
+    },
+    {
+      "bytes": 90867952,
+      "path": "model.safetensors",
+      "sha256": "3549a7d5a11cfd08952497afa47aefc9cb97e681fabe747f5ff2f952a439d962"
+    },
+    {
+      "bytes": 711647,
+      "path": "tokenizer.json",
+      "sha256": "fd823293c3376ed9d85ead2b0de5e6c80f642b8d8de20f4ad8b8745c57ec2107"
+    },
+    {
+      "bytes": 592,
+      "path": "tokenizer_config.json",
+      "sha256": "1128dd50ff3f913671a9405619c1bd8f9e9ddc28f62257cb94ed70683590b715"
+    }
+  ],
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.693106,
+      "validation_accuracy_at_0_5": 0.5915,
+      "validation_average_precision": 0.5018,
+      "validation_roc_auc": 0.5588
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.681612,
+      "validation_accuracy_at_0_5": 0.5732,
+      "validation_average_precision": 0.4902,
+      "validation_roc_auc": 0.5515
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.608009,
+      "validation_accuracy_at_0_5": 0.5305,
+      "validation_average_precision": 0.5005,
+      "validation_roc_auc": 0.5291
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.425488,
+      "validation_accuracy_at_0_5": 0.5549,
+      "validation_average_precision": 0.476,
+      "validation_roc_auc": 0.535
+    }
+  ],
+  "model_id": "038b4c945486f2aeda66b7ac8ca5509eac692a2237ca4dd1fe0ed9320d903a13",
+  "runtime_network_required": false,
+  "schema_version": "local-completeness-finetune-1.0",
+  "stable_defaults_changed": false,
+  "training": {
+    "batch_size": 8,
+    "best_epoch": 1,
+    "device": "cpu",
+    "epochs_requested": 4,
+    "learning_rate": 2e-05,
+    "max_length": 512,
+    "random_seed": 20260923,
+    "weight_decay": 0.01
+  },
+  "training_source": {
+    "dataset": "WiCE",
+    "internal_validation_cases": 164,
+    "sha256": "3ef74c7203e1d9b369cb2c145e764d8ab4743f008f9765fa47f9bdd6ffa2d2e1",
+    "split": "train",
+    "train_cases": 927
+  }
+}

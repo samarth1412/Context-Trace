@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "split": "heldout",
+  "cases": [
+    {
+      "id": "heldout_supported_leave",
+      "category": "supported",
+      "query": "How much annual leave do full-time employees receive?",
+      "claim": "Full-time employees receive 15 paid leave days each year.",
+      "contexts": [
+        {
+          "id": "leave_handbook",
+          "text": "Full-time employees receive 15 paid leave days each calendar year. Unused days do not roll over."
+        }
+      ],
+      "expected_verdict": "supported"
+    },
+    {
+      "id": "heldout_unsupported_backup_schedule",
+      "category": "unsupported_addition",
+      "query": "How often is customer data backed up?",
+      "claim": "Customer data is backed up every six hours.",
+      "contexts": [
+        {
+          "id": "security_overview",
+          "text": "Customer data is encrypted at rest and in transit. The overview does not specify a backup schedule."
+        }
+      ],
+      "expected_verdict": "unsupported"
+    },
+    {
+      "id": "heldout_contradicted_remote_days",
+      "category": "contradiction",
+      "query": "How many remote-work days are allowed?",
+      "claim": "Employees may work remotely three days per week.",
+      "contexts": [
+        {
+          "id": "work_policy",
+          "text": "Employees may work remotely up to two days per week. A third remote day is not permitted without an accommodation."
+        }
+      ],
+      "expected_verdict": "contradicted"
+    },
+    {
+      "id": "heldout_partial_travel_approval",
+      "category": "partial_support",
+      "query": "What is required for travel reimbursement?",
+      "claim": "Travel reimbursement requires itemized receipts and approval from both a manager and the finance director.",
+      "contexts": [
+        {
+          "id": "travel_policy",
+          "text": "Travel reimbursement requires itemized receipts and the employee's manager must approve the expense report."
+        }
+      ],
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "id": "heldout_ambiguous_beta_access",
+      "category": "ambiguous_evidence",
+      "query": "Can all paid customers use the beta feature?",
+      "claim": "All paid customers can use the beta feature.",
+      "contexts": [
+        {
+          "id": "beta_notice",
+          "text": "The beta feature is being enabled gradually for eligible paid accounts. Eligibility criteria are not described here."
+        }
+      ],
+      "expected_verdict": "unverifiable"
+    }
+  ]
+}
+

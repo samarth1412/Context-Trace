@@ -1,0 +1,12 @@
+{
+  "frozen_at": "2026-09-20",
+  "frozen_before_scoring": true,
+  "development_cases_sha256": "6cde04b206e16c64a0283c0c214d5353d2ef49fc4cda0718e34886317b1415e7",
+  "heldout_cases_sha256": "1ca916426fe4838ecdca430be14b5f91e65e2a9e91e4b88444df0fd4ea13936e",
+  "scored_implementation_sha256": "9e5f9a1d8413a0b13b2518382616512a82e7cad2abefbfc76c1cc2cd7e411a21",
+  "benchmark_runner_sha256": "c24b780ca4a781a63767c0d959cbd5cce12e003a2c44009909753af18ec9f943",
+  "development_result_sha256": "0746698df1b66276630c0f72ef3d2a8e0a7c05cdc93ea52ffda4648430b635a8",
+  "one_shot_heldout_result_sha256": "9e9bdb8c791ef2390a61cbbec80731cea6f7947f6a62d6d2d08ad9e447ec5aec",
+  "separation": "Scenario families are disjoint across development and held-out files.",
+  "label_provenance": "Synthetic cases and labels authored for this evaluation; not independently reviewed."
+}

@@ -1,0 +1,682 @@
+{
+  "base_calibration": {
+    "accuracy": 0.6125,
+    "cases": 80,
+    "confusion": {
+      "partially_supported": {
+        "contradicted": 1,
+        "partially_supported": 35,
+        "supported": 3,
+        "unsupported": 1
+      },
+      "supported": {
+        "partially_supported": 25,
+        "supported": 14,
+        "unsupported": 1
+      }
+    },
+    "macro_f1": 0.5956,
+    "other_verdict_count": 3,
+    "partial_incorrectly_supported_count": 3,
+    "partial_incorrectly_supported_rate": 0.075,
+    "per_label_recall": {
+      "partially_supported": 0.875,
+      "supported": 0.35
+    }
+  },
+  "base_validation": {
+    "accuracy": 0.6,
+    "cases": 40,
+    "confusion": {
+      "partially_supported": {
+        "partially_supported": 19,
+        "supported": 1
+      },
+      "supported": {
+        "partially_supported": 15,
+        "supported": 5
+      }
+    },
+    "macro_f1": 0.5442,
+    "other_verdict_count": 0,
+    "partial_incorrectly_supported_count": 1,
+    "partial_incorrectly_supported_rate": 0.05,
+    "per_label_recall": {
+      "partially_supported": 0.95,
+      "supported": 0.25
+    }
+  },
+  "binary_ranking": {
+    "calibration_average_precision": 0.8185,
+    "calibration_roc_auc": 0.8019,
+    "validation_average_precision": 0.8474,
+    "validation_roc_auc": 0.8325
+  },
+  "candidate_count": 19,
+  "candidates": [
+    {
+      "meets_recall_targets": false,
+      "metrics": {
+        "accuracy": 0.4875,
+        "cases": 80,
+        "confusion": {
+          "partially_supported": {
+            "contradicted": 1,
+            "supported": 38,
+            "unsupported": 1
+          },
+          "supported": {
+            "supported": 39,
+            "unsupported": 1
+          }
+        },
+        "macro_f1": 0.3333,
+        "other_verdict_count": 3,
+        "partial_incorrectly_supported_count": 38,
+        "partial_incorrectly_supported_rate": 0.95,
+        "per_label_recall": {
+          "partially_supported": 0.0,
+          "supported": 0.975
+        }
+      },
+      "qualifies_safety": false,
+      "support_threshold": 0.05
+    },
+    {
+      "meets_recall_targets": false,
+      "metrics": {
+        "accuracy": 0.4875,
+        "cases": 80,
+        "confusion": {
+          "partially_supported": {
+            "contradicted": 1,
+            "supported": 38,
+            "unsupported": 1
+          },
+          "supported": {
+            "supported": 39,
+            "unsupported": 1
+          }
+        },
+        "macro_f1": 0.3333,
+        "other_verdict_count": 3,
+        "partial_incorrectly_supported_count": 38,
+        "partial_incorrectly_supported_rate": 0.95,
+        "per_label_recall": {
+          "partially_supported": 0.0,
+          "supported": 0.975
+        }
+      },
+      "qualifies_safety": false,
+      "support_threshold": 0.1
+    },
+    {
+      "meets_recall_targets": false,
+      "metrics": {
+        "accuracy": 0.525,
+        "cases": 80,
+        "confusion": {
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 3,
+            "supported": 35,
+            "unsupported": 1
+          },
+          "supported": {
+            "supported": 39,
+            "unsupported": 1
+          }
+        },
+        "macro_f1": 0.4119,
+        "other_verdict_count": 3,
+        "partial_incorrectly_supported_count": 35,
+        "partial_incorrectly_supported_rate": 0.875,
+        "per_label_recall": {
+          "partially_supported": 0.075,
+          "supported": 0.975
+        }
+      },
+      "qualifies_safety": false,
+      "support_threshold": 0.15
+    },
+    {
+      "meets_recall_targets": false,
+      "metrics": {
+        "accuracy": 0.525,
+        "cases": 80,
+        "confusion": {
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 3,
+            "supported": 35,
+            "unsupported": 1
+          },
+          "supported": {
+            "supported": 39,
+            "unsupported": 1
+          }
+        },
+        "macro_f1": 0.4119,
+        "other_verdict_count": 3,
+        "partial_incorrectly_supported_count": 35,
+        "partial_incorrectly_supported_rate": 0.875,
+        "per_label_recall": {
+          "partially_supported": 0.075,
+          "supported": 0.975
+        }
+      },
+      "qualifies_safety": false,
+      "support_threshold": 0.2
+    },
+    {
+      "meets_recall_targets": false,
+      "metrics": {
+        "accuracy": 0.5375,
+        "cases": 80,
+        "confusion": {
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 6,
+            "supported": 32,
+            "unsupported": 1
+          },
+          "supported": {
+            "partially_supported": 2,
+            "supported": 37,
+            "unsupported": 1
+          }
+        },
+        "macro_f1": 0.4644,
+        "other_verdict_count": 3,
+        "partial_incorrectly_supported_count": 32,
+        "partial_incorrectly_supported_rate": 0.8,
+        "per_label_recall": {
+          "partially_supported": 0.15,
+          "supported": 0.925
+        }
+      },
+      "qualifies_safety": false,
+      "support_threshold": 0.25
+    },
+    {
+      "meets_recall_targets": false,
+      "metrics": {
+        "accuracy": 0.625,
+        "cases": 80,
+        "confusion": {
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 15,
+            "supported": 23,
+            "unsupported": 1
+          },
+          "supported": {
+            "partially_supported": 4,
+            "supported": 35,
+            "unsupported": 1
+          }
+        },
+        "macro_f1": 0.6114,
+        "other_verdict_count": 3,
+        "partial_incorrectly_supported_count": 23,
+        "partial_incorrectly_supported_rate": 0.575,
+        "per_label_recall": {
+          "partially_supported": 0.375,
+          "supported": 0.875
+        }
+      },
+      "qualifies_safety": false,
+      "support_threshold": 0.3
+    },
+    {
+      "meets_recall_targets": false,
+      "metrics": {
+        "accuracy": 0.6875,
+        "cases": 80,
+        "confusion": {
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 22,
+            "supported": 16,
+            "unsupported": 1
+          },
+          "supported": {
+            "partially_supported": 6,
+            "supported": 33,
+            "unsupported": 1
+          }
+        },
+        "macro_f1": 0.6943,
+        "other_verdict_count": 3,
+        "partial_incorrectly_supported_count": 16,
+        "partial_incorrectly_supported_rate": 0.4,
+        "per_label_recall": {
+          "partially_supported": 0.55,
+          "supported": 0.825
+        }
+      },
+      "qualifies_safety": false,
+      "support_threshold": 0.35
+    },
+    {
+      "meets_recall_targets": false,
+      "metrics": {
+        "accuracy": 0.7125,
+        "cases": 80,
+        "confusion": {
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 26,
+            "supported": 12,
+            "unsupported": 1
+          },
+          "supported": {
+            "partially_supported": 8,
+            "supported": 31,
+            "unsupported": 1
+          }
+        },
+        "macro_f1": 0.7248,
+        "other_verdict_count": 3,
+        "partial_incorrectly_supported_count": 12,
+        "partial_incorrectly_supported_rate": 0.3,
+        "per_label_recall": {
+          "partially_supported": 0.65,
+          "supported": 0.775
+        }
+      },
+      "qualifies_safety": false,
+      "support_threshold": 0.4
+    },
+    {
+      "meets_recall_targets": true,
+      "metrics": {
+        "accuracy": 0.7,
+        "cases": 80,
+        "confusion": {
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 28,
+            "supported": 10,
+            "unsupported": 1
+          },
+          "supported": {
+            "partially_supported": 11,
+            "supported": 28,
+            "unsupported": 1
+          }
+        },
+        "macro_f1": 0.7134,
+        "other_verdict_count": 3,
+        "partial_incorrectly_supported_count": 10,
+        "partial_incorrectly_supported_rate": 0.25,
+        "per_label_recall": {
+          "partially_supported": 0.7,
+          "supported": 0.7
+        }
+      },
+      "qualifies_safety": false,
+      "support_threshold": 0.45
+    },
+    {
+      "meets_recall_targets": true,
+      "metrics": {
+        "accuracy": 0.7125,
+        "cases": 80,
+        "confusion": {
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 30,
+            "supported": 8,
+            "unsupported": 1
+          },
+          "supported": {
+            "partially_supported": 12,
+            "supported": 27,
+            "unsupported": 1
+          }
+        },
+        "macro_f1": 0.7259,
+        "other_verdict_count": 3,
+        "partial_incorrectly_supported_count": 8,
+        "partial_incorrectly_supported_rate": 0.2,
+        "per_label_recall": {
+          "partially_supported": 0.75,
+          "supported": 0.675
+        }
+      },
+      "qualifies_safety": false,
+      "support_threshold": 0.5
+    },
+    {
+      "meets_recall_targets": true,
+      "metrics": {
+        "accuracy": 0.6875,
+        "cases": 80,
+        "confusion": {
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 32,
+            "supported": 6,
+            "unsupported": 1
+          },
+          "supported": {
+            "partially_supported": 16,
+            "supported": 23,
+            "unsupported": 1
+          }
+        },
+        "macro_f1": 0.697,
+        "other_verdict_count": 3,
+        "partial_incorrectly_supported_count": 6,
+        "partial_incorrectly_supported_rate": 0.15,
+        "per_label_recall": {
+          "partially_supported": 0.8,
+          "supported": 0.575
+        }
+      },
+      "qualifies_safety": false,
+      "support_threshold": 0.55
+    },
+    {
+      "meets_recall_targets": true,
+      "metrics": {
+        "accuracy": 0.675,
+        "cases": 80,
+        "confusion": {
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 32,
+            "supported": 6,
+            "unsupported": 1
+          },
+          "supported": {
+            "partially_supported": 17,
+            "supported": 22,
+            "unsupported": 1
+          }
+        },
+        "macro_f1": 0.6831,
+        "other_verdict_count": 3,
+        "partial_incorrectly_supported_count": 6,
+        "partial_incorrectly_supported_rate": 0.15,
+        "per_label_recall": {
+          "partially_supported": 0.8,
+          "supported": 0.55
+        }
+      },
+      "qualifies_safety": false,
+      "support_threshold": 0.6
+    },
+    {
+      "meets_recall_targets": true,
+      "metrics": {
+        "accuracy": 0.6625,
+        "cases": 80,
+        "confusion": {
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 33,
+            "supported": 5,
+            "unsupported": 1
+          },
+          "supported": {
+            "partially_supported": 19,
+            "supported": 20,
+            "unsupported": 1
+          }
+        },
+        "macro_f1": 0.6664,
+        "other_verdict_count": 3,
+        "partial_incorrectly_supported_count": 5,
+        "partial_incorrectly_supported_rate": 0.125,
+        "per_label_recall": {
+          "partially_supported": 0.825,
+          "supported": 0.5
+        }
+      },
+      "qualifies_safety": false,
+      "support_threshold": 0.65
+    },
+    {
+      "meets_recall_targets": false,
+      "metrics": {
+        "accuracy": 0.6625,
+        "cases": 80,
+        "confusion": {
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 36,
+            "supported": 2,
+            "unsupported": 1
+          },
+          "supported": {
+            "partially_supported": 22,
+            "supported": 17,
+            "unsupported": 1
+          }
+        },
+        "macro_f1": 0.6555,
+        "other_verdict_count": 3,
+        "partial_incorrectly_supported_count": 2,
+        "partial_incorrectly_supported_rate": 0.05,
+        "per_label_recall": {
+          "partially_supported": 0.9,
+          "supported": 0.425
+        }
+      },
+      "qualifies_safety": true,
+      "support_threshold": 0.7
+    },
+    {
+      "meets_recall_targets": false,
+      "metrics": {
+        "accuracy": 0.65,
+        "cases": 80,
+        "confusion": {
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 36,
+            "supported": 2,
+            "unsupported": 1
+          },
+          "supported": {
+            "partially_supported": 23,
+            "supported": 16,
+            "unsupported": 1
+          }
+        },
+        "macro_f1": 0.6395,
+        "other_verdict_count": 3,
+        "partial_incorrectly_supported_count": 2,
+        "partial_incorrectly_supported_rate": 0.05,
+        "per_label_recall": {
+          "partially_supported": 0.9,
+          "supported": 0.4
+        }
+      },
+      "qualifies_safety": true,
+      "support_threshold": 0.75
+    },
+    {
+      "meets_recall_targets": false,
+      "metrics": {
+        "accuracy": 0.625,
+        "cases": 80,
+        "confusion": {
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 37,
+            "supported": 1,
+            "unsupported": 1
+          },
+          "supported": {
+            "partially_supported": 26,
+            "supported": 13,
+            "unsupported": 1
+          }
+        },
+        "macro_f1": 0.6,
+        "other_verdict_count": 3,
+        "partial_incorrectly_supported_count": 1,
+        "partial_incorrectly_supported_rate": 0.025,
+        "per_label_recall": {
+          "partially_supported": 0.925,
+          "supported": 0.325
+        }
+      },
+      "qualifies_safety": true,
+      "support_threshold": 0.8
+    },
+    {
+      "meets_recall_targets": false,
+      "metrics": {
+        "accuracy": 0.6125,
+        "cases": 80,
+        "confusion": {
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 37,
+            "supported": 1,
+            "unsupported": 1
+          },
+          "supported": {
+            "partially_supported": 27,
+            "supported": 12,
+            "unsupported": 1
+          }
+        },
+        "macro_f1": 0.5822,
+        "other_verdict_count": 3,
+        "partial_incorrectly_supported_count": 1,
+        "partial_incorrectly_supported_rate": 0.025,
+        "per_label_recall": {
+          "partially_supported": 0.925,
+          "supported": 0.3
+        }
+      },
+      "qualifies_safety": true,
+      "support_threshold": 0.85
+    },
+    {
+      "meets_recall_targets": false,
+      "metrics": {
+        "accuracy": 0.55,
+        "cases": 80,
+        "confusion": {
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 38,
+            "unsupported": 1
+          },
+          "supported": {
+            "partially_supported": 33,
+            "supported": 6,
+            "unsupported": 1
+          }
+        },
+        "macro_f1": 0.4728,
+        "other_verdict_count": 3,
+        "partial_incorrectly_supported_count": 0,
+        "partial_incorrectly_supported_rate": 0.0,
+        "per_label_recall": {
+          "partially_supported": 0.95,
+          "supported": 0.15
+        }
+      },
+      "qualifies_safety": true,
+      "support_threshold": 0.9
+    },
+    {
+      "meets_recall_targets": false,
+      "metrics": {
+        "accuracy": 0.4875,
+        "cases": 80,
+        "confusion": {
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 38,
+            "unsupported": 1
+          },
+          "supported": {
+            "partially_supported": 38,
+            "supported": 1,
+            "unsupported": 1
+          }
+        },
+        "macro_f1": 0.352,
+        "other_verdict_count": 3,
+        "partial_incorrectly_supported_count": 0,
+        "partial_incorrectly_supported_rate": 0.0,
+        "per_label_recall": {
+          "partially_supported": 0.95,
+          "supported": 0.025
+        }
+      },
+      "qualifies_safety": true,
+      "support_threshold": 0.95
+    }
+  ],
+  "meets_prespecified_success": false,
+  "policy_id": "8275146a91119ccc783b998f85d33b0f72875974dfbe3d57d6c6b54bcdaae5ce",
+  "prespecified_success_criteria": {
+    "macro_f1_must_improve": true,
+    "partial_recall_at_least": 0.7,
+    "partial_to_supported_rate_at_most": 0.05,
+    "supported_recall_at_least": 0.5
+  },
+  "qualifying_candidate_count": 6,
+  "schema_version": "jev-completeness-analysis-1.0",
+  "selected_calibration": {
+    "meets_recall_targets": false,
+    "metrics": {
+      "accuracy": 0.6625,
+      "cases": 80,
+      "confusion": {
+        "partially_supported": {
+          "contradicted": 1,
+          "partially_supported": 36,
+          "supported": 2,
+          "unsupported": 1
+        },
+        "supported": {
+          "partially_supported": 22,
+          "supported": 17,
+          "unsupported": 1
+        }
+      },
+      "macro_f1": 0.6555,
+      "other_verdict_count": 3,
+      "partial_incorrectly_supported_count": 2,
+      "partial_incorrectly_supported_rate": 0.05,
+      "per_label_recall": {
+        "partially_supported": 0.9,
+        "supported": 0.425
+      }
+    },
+    "qualifies_safety": true,
+    "support_threshold": 0.7
+  },
+  "selected_validation": {
+    "accuracy": 0.6,
+    "cases": 40,
+    "confusion": {
+      "partially_supported": {
+        "partially_supported": 19,
+        "supported": 1
+      },
+      "supported": {
+        "partially_supported": 15,
+        "supported": 5
+      }
+    },
+    "macro_f1": 0.5442,
+    "other_verdict_count": 0,
+    "partial_incorrectly_supported_count": 1,
+    "partial_incorrectly_supported_rate": 0.05,
+    "per_label_recall": {
+      "partially_supported": 0.95,
+      "supported": 0.25
+    }
+  }
+}

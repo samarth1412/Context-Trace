@@ -1,0 +1,73 @@
+{
+  "case_pack": "benchmarks/external_fiveway_confirmation/confirmation_cases.json",
+  "case_pack_sha256": "b50b90f40eddbad6b8ada051d8b223c7e04d408797148f755eba66b5796c75a3",
+  "cases": 125,
+  "duplicate_normalized_claims_within_pack": [],
+  "label_counts": {
+    "contradicted": 25,
+    "partially_supported": 25,
+    "supported": 25,
+    "unsupported": 25,
+    "unverifiable": 25
+  },
+  "label_isolation": {
+    "evaluation_labels_sent": false,
+    "sent_fields": [
+      "query",
+      "claim",
+      "selected_evidence"
+    ]
+  },
+  "prior_case_packs_checked": [
+    "benchmarks/jev_claim_verification/development_cases.json",
+    "benchmarks/jev_claim_verification/heldout_cases.json",
+    "benchmarks/jev_v2_verification/ragtruth_sentence_extension_development.json",
+    "benchmarks/jev_v2_verification/ragtruth_sentence_extension_heldout.json"
+  ],
+  "prior_overlap": {
+    "case_ids": [],
+    "normalized_claims": [],
+    "normalized_inputs": []
+  },
+  "selection": {
+    "at_least_one_upstream_annotated_span_retrieved": {
+      "contradicted": {
+        "annotated_cases": 25,
+        "hits": 25,
+        "rate": 1.0
+      },
+      "partially_supported": {
+        "annotated_cases": 25,
+        "hits": 25,
+        "rate": 1.0
+      },
+      "supported": {
+        "annotated_cases": 25,
+        "hits": 25,
+        "rate": 1.0
+      },
+      "unsupported": {
+        "annotated_cases": 2,
+        "hits": 1,
+        "rate": 0.5
+      }
+    },
+    "max_spans": 8,
+    "nonempty_for_every_case": true,
+    "selected_characters": {
+      "maximum": 2666,
+      "mean": 555.12,
+      "minimum": 13
+    },
+    "selected_span_count_distribution": {
+      "1": 51,
+      "2": 3,
+      "3": 1,
+      "5": 1,
+      "6": 2,
+      "7": 2,
+      "8": 65
+    }
+  },
+  "valid": true
+}

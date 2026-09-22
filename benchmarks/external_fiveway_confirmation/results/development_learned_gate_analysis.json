@@ -1,0 +1,949 @@
+{
+  "base_calibration": {
+    "accuracy": 0.4667,
+    "cases": 75,
+    "confusion": {
+      "contradicted": {
+        "contradicted": 12,
+        "supported": 2,
+        "unverifiable": 1
+      },
+      "partially_supported": {
+        "contradicted": 1,
+        "partially_supported": 13,
+        "unsupported": 1
+      },
+      "supported": {
+        "partially_supported": 10,
+        "supported": 4,
+        "unsupported": 1
+      },
+      "unsupported": {
+        "partially_supported": 8,
+        "unsupported": 6,
+        "unverifiable": 1
+      },
+      "unverifiable": {
+        "contradicted": 3,
+        "partially_supported": 3,
+        "supported": 4,
+        "unsupported": 5
+      }
+    },
+    "false_support_count": 6,
+    "false_support_rate": 0.1,
+    "macro_f1": 0.4107,
+    "per_label_recall": {
+      "contradicted": 0.8,
+      "partially_supported": 0.8667,
+      "supported": 0.2667,
+      "unsupported": 0.4,
+      "unverifiable": 0.0
+    },
+    "unsupported_incorrectly_supported": 0
+  },
+  "base_validation": {
+    "accuracy": 0.52,
+    "cases": 50,
+    "confusion": {
+      "contradicted": {
+        "contradicted": 7,
+        "partially_supported": 2,
+        "supported": 1
+      },
+      "partially_supported": {
+        "partially_supported": 8,
+        "unsupported": 2
+      },
+      "supported": {
+        "partially_supported": 7,
+        "supported": 3
+      },
+      "unsupported": {
+        "partially_supported": 2,
+        "unsupported": 8
+      },
+      "unverifiable": {
+        "contradicted": 4,
+        "partially_supported": 2,
+        "supported": 2,
+        "unsupported": 2
+      }
+    },
+    "false_support_count": 3,
+    "false_support_rate": 0.075,
+    "macro_f1": 0.457,
+    "per_label_recall": {
+      "contradicted": 0.7,
+      "partially_supported": 0.8,
+      "supported": 0.3,
+      "unsupported": 0.8,
+      "unverifiable": 0.0
+    },
+    "unsupported_incorrectly_supported": 0
+  },
+  "binary_ranking": {
+    "calibration_average_precision": 0.8488,
+    "calibration_roc_auc": 0.95,
+    "validation_average_precision": 0.7537,
+    "validation_roc_auc": 0.8975
+  },
+  "candidate_count": 15,
+  "candidates": [
+    {
+      "ambiguity_threshold": 0.2,
+      "metrics": {
+        "accuracy": 0.44,
+        "cases": 75,
+        "confusion": {
+          "contradicted": {
+            "contradicted": 4,
+            "supported": 1,
+            "unverifiable": 10
+          },
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 9,
+            "unverifiable": 5
+          },
+          "supported": {
+            "partially_supported": 5,
+            "unverifiable": 10
+          },
+          "unsupported": {
+            "partially_supported": 6,
+            "unsupported": 5,
+            "unverifiable": 4
+          },
+          "unverifiable": {
+            "unverifiable": 15
+          }
+        },
+        "false_support_count": 1,
+        "false_support_rate": 0.0167,
+        "macro_f1": 0.3846,
+        "per_label_recall": {
+          "contradicted": 0.2667,
+          "partially_supported": 0.6,
+          "supported": 0.0,
+          "unsupported": 0.3333,
+          "unverifiable": 1.0
+        },
+        "unsupported_incorrectly_supported": 0
+      },
+      "qualifies": true
+    },
+    {
+      "ambiguity_threshold": 0.25,
+      "metrics": {
+        "accuracy": 0.4533,
+        "cases": 75,
+        "confusion": {
+          "contradicted": {
+            "contradicted": 5,
+            "supported": 1,
+            "unverifiable": 9
+          },
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 9,
+            "unverifiable": 5
+          },
+          "supported": {
+            "partially_supported": 7,
+            "unverifiable": 8
+          },
+          "unsupported": {
+            "partially_supported": 6,
+            "unsupported": 5,
+            "unverifiable": 4
+          },
+          "unverifiable": {
+            "unverifiable": 15
+          }
+        },
+        "false_support_count": 1,
+        "false_support_rate": 0.0167,
+        "macro_f1": 0.3997,
+        "per_label_recall": {
+          "contradicted": 0.3333,
+          "partially_supported": 0.6,
+          "supported": 0.0,
+          "unsupported": 0.3333,
+          "unverifiable": 1.0
+        },
+        "unsupported_incorrectly_supported": 0
+      },
+      "qualifies": true
+    },
+    {
+      "ambiguity_threshold": 0.3,
+      "metrics": {
+        "accuracy": 0.48,
+        "cases": 75,
+        "confusion": {
+          "contradicted": {
+            "contradicted": 6,
+            "supported": 1,
+            "unverifiable": 8
+          },
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 10,
+            "unverifiable": 4
+          },
+          "supported": {
+            "partially_supported": 8,
+            "unverifiable": 7
+          },
+          "unsupported": {
+            "partially_supported": 6,
+            "unsupported": 5,
+            "unverifiable": 4
+          },
+          "unverifiable": {
+            "unverifiable": 15
+          }
+        },
+        "false_support_count": 1,
+        "false_support_rate": 0.0167,
+        "macro_f1": 0.4249,
+        "per_label_recall": {
+          "contradicted": 0.4,
+          "partially_supported": 0.6667,
+          "supported": 0.0,
+          "unsupported": 0.3333,
+          "unverifiable": 1.0
+        },
+        "unsupported_incorrectly_supported": 0
+      },
+      "qualifies": true
+    },
+    {
+      "ambiguity_threshold": 0.35,
+      "metrics": {
+        "accuracy": 0.52,
+        "cases": 75,
+        "confusion": {
+          "contradicted": {
+            "contradicted": 8,
+            "supported": 1,
+            "unverifiable": 6
+          },
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 10,
+            "unverifiable": 4
+          },
+          "supported": {
+            "partially_supported": 8,
+            "unverifiable": 7
+          },
+          "unsupported": {
+            "partially_supported": 6,
+            "unsupported": 6,
+            "unverifiable": 3
+          },
+          "unverifiable": {
+            "unverifiable": 15
+          }
+        },
+        "false_support_count": 1,
+        "false_support_rate": 0.0167,
+        "macro_f1": 0.4702,
+        "per_label_recall": {
+          "contradicted": 0.5333,
+          "partially_supported": 0.6667,
+          "supported": 0.0,
+          "unsupported": 0.4,
+          "unverifiable": 1.0
+        },
+        "unsupported_incorrectly_supported": 0
+      },
+      "qualifies": true
+    },
+    {
+      "ambiguity_threshold": 0.4,
+      "metrics": {
+        "accuracy": 0.5467,
+        "cases": 75,
+        "confusion": {
+          "contradicted": {
+            "contradicted": 10,
+            "supported": 1,
+            "unverifiable": 4
+          },
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 10,
+            "unsupported": 1,
+            "unverifiable": 3
+          },
+          "supported": {
+            "partially_supported": 9,
+            "unverifiable": 6
+          },
+          "unsupported": {
+            "partially_supported": 6,
+            "unsupported": 6,
+            "unverifiable": 3
+          },
+          "unverifiable": {
+            "unverifiable": 15
+          }
+        },
+        "false_support_count": 1,
+        "false_support_rate": 0.0167,
+        "macro_f1": 0.4934,
+        "per_label_recall": {
+          "contradicted": 0.6667,
+          "partially_supported": 0.6667,
+          "supported": 0.0,
+          "unsupported": 0.4,
+          "unverifiable": 1.0
+        },
+        "unsupported_incorrectly_supported": 0
+      },
+      "qualifies": true
+    },
+    {
+      "ambiguity_threshold": 0.45,
+      "metrics": {
+        "accuracy": 0.5467,
+        "cases": 75,
+        "confusion": {
+          "contradicted": {
+            "contradicted": 10,
+            "supported": 1,
+            "unverifiable": 4
+          },
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 11,
+            "unsupported": 1,
+            "unverifiable": 2
+          },
+          "supported": {
+            "partially_supported": 10,
+            "supported": 1,
+            "unsupported": 1,
+            "unverifiable": 3
+          },
+          "unsupported": {
+            "partially_supported": 7,
+            "unsupported": 6,
+            "unverifiable": 2
+          },
+          "unverifiable": {
+            "contradicted": 1,
+            "unsupported": 1,
+            "unverifiable": 13
+          }
+        },
+        "false_support_count": 1,
+        "false_support_rate": 0.0167,
+        "macro_f1": 0.5073,
+        "per_label_recall": {
+          "contradicted": 0.6667,
+          "partially_supported": 0.7333,
+          "supported": 0.0667,
+          "unsupported": 0.4,
+          "unverifiable": 0.8667
+        },
+        "unsupported_incorrectly_supported": 0
+      },
+      "qualifies": true
+    },
+    {
+      "ambiguity_threshold": 0.5,
+      "metrics": {
+        "accuracy": 0.5867,
+        "cases": 75,
+        "confusion": {
+          "contradicted": {
+            "contradicted": 12,
+            "supported": 1,
+            "unverifiable": 2
+          },
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 11,
+            "unsupported": 1,
+            "unverifiable": 2
+          },
+          "supported": {
+            "partially_supported": 10,
+            "supported": 2,
+            "unsupported": 1,
+            "unverifiable": 2
+          },
+          "unsupported": {
+            "partially_supported": 7,
+            "unsupported": 6,
+            "unverifiable": 2
+          },
+          "unverifiable": {
+            "contradicted": 1,
+            "unsupported": 1,
+            "unverifiable": 13
+          }
+        },
+        "false_support_count": 1,
+        "false_support_rate": 0.0167,
+        "macro_f1": 0.5567,
+        "per_label_recall": {
+          "contradicted": 0.8,
+          "partially_supported": 0.7333,
+          "supported": 0.1333,
+          "unsupported": 0.4,
+          "unverifiable": 0.8667
+        },
+        "unsupported_incorrectly_supported": 0
+      },
+      "qualifies": true
+    },
+    {
+      "ambiguity_threshold": 0.55,
+      "metrics": {
+        "accuracy": 0.6133,
+        "cases": 75,
+        "confusion": {
+          "contradicted": {
+            "contradicted": 12,
+            "supported": 1,
+            "unverifiable": 2
+          },
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 12,
+            "unsupported": 1,
+            "unverifiable": 1
+          },
+          "supported": {
+            "partially_supported": 10,
+            "supported": 4,
+            "unsupported": 1
+          },
+          "unsupported": {
+            "partially_supported": 7,
+            "unsupported": 6,
+            "unverifiable": 2
+          },
+          "unverifiable": {
+            "contradicted": 1,
+            "partially_supported": 1,
+            "unsupported": 1,
+            "unverifiable": 12
+          }
+        },
+        "false_support_count": 1,
+        "false_support_rate": 0.0167,
+        "macro_f1": 0.6022,
+        "per_label_recall": {
+          "contradicted": 0.8,
+          "partially_supported": 0.8,
+          "supported": 0.2667,
+          "unsupported": 0.4,
+          "unverifiable": 0.8
+        },
+        "unsupported_incorrectly_supported": 0
+      },
+      "qualifies": true
+    },
+    {
+      "ambiguity_threshold": 0.6,
+      "metrics": {
+        "accuracy": 0.6133,
+        "cases": 75,
+        "confusion": {
+          "contradicted": {
+            "contradicted": 12,
+            "supported": 1,
+            "unverifiable": 2
+          },
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 12,
+            "unsupported": 1,
+            "unverifiable": 1
+          },
+          "supported": {
+            "partially_supported": 10,
+            "supported": 4,
+            "unsupported": 1
+          },
+          "unsupported": {
+            "partially_supported": 8,
+            "unsupported": 6,
+            "unverifiable": 1
+          },
+          "unverifiable": {
+            "contradicted": 1,
+            "partially_supported": 1,
+            "unsupported": 1,
+            "unverifiable": 12
+          }
+        },
+        "false_support_count": 1,
+        "false_support_rate": 0.0167,
+        "macro_f1": 0.6047,
+        "per_label_recall": {
+          "contradicted": 0.8,
+          "partially_supported": 0.8,
+          "supported": 0.2667,
+          "unsupported": 0.4,
+          "unverifiable": 0.8
+        },
+        "unsupported_incorrectly_supported": 0
+      },
+      "qualifies": true
+    },
+    {
+      "ambiguity_threshold": 0.65,
+      "metrics": {
+        "accuracy": 0.6,
+        "cases": 75,
+        "confusion": {
+          "contradicted": {
+            "contradicted": 12,
+            "supported": 1,
+            "unverifiable": 2
+          },
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 12,
+            "unsupported": 1,
+            "unverifiable": 1
+          },
+          "supported": {
+            "partially_supported": 10,
+            "supported": 4,
+            "unsupported": 1
+          },
+          "unsupported": {
+            "partially_supported": 8,
+            "unsupported": 6,
+            "unverifiable": 1
+          },
+          "unverifiable": {
+            "contradicted": 1,
+            "partially_supported": 2,
+            "unsupported": 1,
+            "unverifiable": 11
+          }
+        },
+        "false_support_count": 1,
+        "false_support_rate": 0.0167,
+        "macro_f1": 0.5943,
+        "per_label_recall": {
+          "contradicted": 0.8,
+          "partially_supported": 0.8,
+          "supported": 0.2667,
+          "unsupported": 0.4,
+          "unverifiable": 0.7333
+        },
+        "unsupported_incorrectly_supported": 0
+      },
+      "qualifies": true
+    },
+    {
+      "ambiguity_threshold": 0.7,
+      "metrics": {
+        "accuracy": 0.5733,
+        "cases": 75,
+        "confusion": {
+          "contradicted": {
+            "contradicted": 12,
+            "supported": 1,
+            "unverifiable": 2
+          },
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 12,
+            "unsupported": 1,
+            "unverifiable": 1
+          },
+          "supported": {
+            "partially_supported": 10,
+            "supported": 4,
+            "unsupported": 1
+          },
+          "unsupported": {
+            "partially_supported": 8,
+            "unsupported": 6,
+            "unverifiable": 1
+          },
+          "unverifiable": {
+            "contradicted": 1,
+            "partially_supported": 3,
+            "supported": 1,
+            "unsupported": 1,
+            "unverifiable": 9
+          }
+        },
+        "false_support_count": 2,
+        "false_support_rate": 0.0333,
+        "macro_f1": 0.5703,
+        "per_label_recall": {
+          "contradicted": 0.8,
+          "partially_supported": 0.8,
+          "supported": 0.2667,
+          "unsupported": 0.4,
+          "unverifiable": 0.6
+        },
+        "unsupported_incorrectly_supported": 0
+      },
+      "qualifies": true
+    },
+    {
+      "ambiguity_threshold": 0.75,
+      "metrics": {
+        "accuracy": 0.5733,
+        "cases": 75,
+        "confusion": {
+          "contradicted": {
+            "contradicted": 12,
+            "supported": 1,
+            "unverifiable": 2
+          },
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 12,
+            "unsupported": 1,
+            "unverifiable": 1
+          },
+          "supported": {
+            "partially_supported": 10,
+            "supported": 4,
+            "unsupported": 1
+          },
+          "unsupported": {
+            "partially_supported": 8,
+            "unsupported": 6,
+            "unverifiable": 1
+          },
+          "unverifiable": {
+            "contradicted": 1,
+            "partially_supported": 3,
+            "supported": 1,
+            "unsupported": 1,
+            "unverifiable": 9
+          }
+        },
+        "false_support_count": 2,
+        "false_support_rate": 0.0333,
+        "macro_f1": 0.5703,
+        "per_label_recall": {
+          "contradicted": 0.8,
+          "partially_supported": 0.8,
+          "supported": 0.2667,
+          "unsupported": 0.4,
+          "unverifiable": 0.6
+        },
+        "unsupported_incorrectly_supported": 0
+      },
+      "qualifies": true
+    },
+    {
+      "ambiguity_threshold": 0.8,
+      "metrics": {
+        "accuracy": 0.56,
+        "cases": 75,
+        "confusion": {
+          "contradicted": {
+            "contradicted": 12,
+            "supported": 1,
+            "unverifiable": 2
+          },
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 12,
+            "unsupported": 1,
+            "unverifiable": 1
+          },
+          "supported": {
+            "partially_supported": 10,
+            "supported": 4,
+            "unsupported": 1
+          },
+          "unsupported": {
+            "partially_supported": 8,
+            "unsupported": 6,
+            "unverifiable": 1
+          },
+          "unverifiable": {
+            "contradicted": 1,
+            "partially_supported": 3,
+            "supported": 2,
+            "unsupported": 1,
+            "unverifiable": 8
+          }
+        },
+        "false_support_count": 3,
+        "false_support_rate": 0.05,
+        "macro_f1": 0.5568,
+        "per_label_recall": {
+          "contradicted": 0.8,
+          "partially_supported": 0.8,
+          "supported": 0.2667,
+          "unsupported": 0.4,
+          "unverifiable": 0.5333
+        },
+        "unsupported_incorrectly_supported": 0
+      },
+      "qualifies": true
+    },
+    {
+      "ambiguity_threshold": 0.85,
+      "metrics": {
+        "accuracy": 0.5467,
+        "cases": 75,
+        "confusion": {
+          "contradicted": {
+            "contradicted": 12,
+            "supported": 2,
+            "unverifiable": 1
+          },
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 13,
+            "unsupported": 1
+          },
+          "supported": {
+            "partially_supported": 10,
+            "supported": 4,
+            "unsupported": 1
+          },
+          "unsupported": {
+            "partially_supported": 8,
+            "unsupported": 6,
+            "unverifiable": 1
+          },
+          "unverifiable": {
+            "contradicted": 3,
+            "partially_supported": 3,
+            "supported": 2,
+            "unsupported": 1,
+            "unverifiable": 6
+          }
+        },
+        "false_support_count": 4,
+        "false_support_rate": 0.0667,
+        "macro_f1": 0.5349,
+        "per_label_recall": {
+          "contradicted": 0.8,
+          "partially_supported": 0.8667,
+          "supported": 0.2667,
+          "unsupported": 0.4,
+          "unverifiable": 0.4
+        },
+        "unsupported_incorrectly_supported": 0
+      },
+      "qualifies": false
+    },
+    {
+      "ambiguity_threshold": 0.9,
+      "metrics": {
+        "accuracy": 0.5333,
+        "cases": 75,
+        "confusion": {
+          "contradicted": {
+            "contradicted": 12,
+            "supported": 2,
+            "unverifiable": 1
+          },
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 13,
+            "unsupported": 1
+          },
+          "supported": {
+            "partially_supported": 10,
+            "supported": 4,
+            "unsupported": 1
+          },
+          "unsupported": {
+            "partially_supported": 8,
+            "unsupported": 6,
+            "unverifiable": 1
+          },
+          "unverifiable": {
+            "contradicted": 3,
+            "partially_supported": 3,
+            "supported": 3,
+            "unsupported": 1,
+            "unverifiable": 5
+          }
+        },
+        "false_support_count": 5,
+        "false_support_rate": 0.0833,
+        "macro_f1": 0.5185,
+        "per_label_recall": {
+          "contradicted": 0.8,
+          "partially_supported": 0.8667,
+          "supported": 0.2667,
+          "unsupported": 0.4,
+          "unverifiable": 0.3333
+        },
+        "unsupported_incorrectly_supported": 0
+      },
+      "qualifies": false
+    }
+  ],
+  "policy_id": "bfd4d056c919748265d41fddef44c5dc8ac54c4affa89e848409781350bc2163",
+  "qualifying_candidate_count": 13,
+  "schema_version": "jev-learned-ambiguity-analysis-1.0",
+  "score_distribution": {
+    "calibration": {
+      "contradicted": {
+        "maximum": 0.8361,
+        "mean": 0.3214,
+        "median": 0.3171,
+        "minimum": 0.0626
+      },
+      "partially_supported": {
+        "maximum": 0.828,
+        "mean": 0.202,
+        "median": 0.0575,
+        "minimum": 0.0115
+      },
+      "supported": {
+        "maximum": 0.5416,
+        "mean": 0.2849,
+        "median": 0.2752,
+        "minimum": 0.0308
+      },
+      "unsupported": {
+        "maximum": 0.5658,
+        "mean": 0.16,
+        "median": 0.1132,
+        "minimum": 0.0103
+      },
+      "unverifiable": {
+        "maximum": 0.9737,
+        "mean": 0.7578,
+        "median": 0.8076,
+        "minimum": 0.4071
+      }
+    },
+    "validation": {
+      "contradicted": {
+        "maximum": 0.8505,
+        "mean": 0.3251,
+        "median": 0.2101,
+        "minimum": 0.0876
+      },
+      "partially_supported": {
+        "maximum": 0.5137,
+        "mean": 0.1722,
+        "median": 0.0929,
+        "minimum": 0.0125
+      },
+      "supported": {
+        "maximum": 0.6459,
+        "mean": 0.2628,
+        "median": 0.1063,
+        "minimum": 0.0057
+      },
+      "unsupported": {
+        "maximum": 0.5919,
+        "mean": 0.2725,
+        "median": 0.2906,
+        "minimum": 0.0334
+      },
+      "unverifiable": {
+        "maximum": 0.9583,
+        "mean": 0.6873,
+        "median": 0.7608,
+        "minimum": 0.2916
+      }
+    }
+  },
+  "selected_calibration": {
+    "ambiguity_threshold": 0.6,
+    "metrics": {
+      "accuracy": 0.6133,
+      "cases": 75,
+      "confusion": {
+        "contradicted": {
+          "contradicted": 12,
+          "supported": 1,
+          "unverifiable": 2
+        },
+        "partially_supported": {
+          "contradicted": 1,
+          "partially_supported": 12,
+          "unsupported": 1,
+          "unverifiable": 1
+        },
+        "supported": {
+          "partially_supported": 10,
+          "supported": 4,
+          "unsupported": 1
+        },
+        "unsupported": {
+          "partially_supported": 8,
+          "unsupported": 6,
+          "unverifiable": 1
+        },
+        "unverifiable": {
+          "contradicted": 1,
+          "partially_supported": 1,
+          "unsupported": 1,
+          "unverifiable": 12
+        }
+      },
+      "false_support_count": 1,
+      "false_support_rate": 0.0167,
+      "macro_f1": 0.6047,
+      "per_label_recall": {
+        "contradicted": 0.8,
+        "partially_supported": 0.8,
+        "supported": 0.2667,
+        "unsupported": 0.4,
+        "unverifiable": 0.8
+      },
+      "unsupported_incorrectly_supported": 0
+    },
+    "qualifies": true
+  },
+  "selected_validation": {
+    "accuracy": 0.62,
+    "cases": 50,
+    "confusion": {
+      "contradicted": {
+        "contradicted": 7,
+        "partially_supported": 1,
+        "unverifiable": 2
+      },
+      "partially_supported": {
+        "partially_supported": 8,
+        "unsupported": 2
+      },
+      "supported": {
+        "partially_supported": 6,
+        "supported": 1,
+        "unverifiable": 3
+      },
+      "unsupported": {
+        "partially_supported": 2,
+        "unsupported": 8
+      },
+      "unverifiable": {
+        "contradicted": 3,
+        "unverifiable": 7
+      }
+    },
+    "false_support_count": 0,
+    "false_support_rate": 0.0,
+    "macro_f1": 0.5822,
+    "per_label_recall": {
+      "contradicted": 0.7,
+      "partially_supported": 0.8,
+      "supported": 0.1,
+      "unsupported": 0.8,
+      "unverifiable": 0.7
+    },
+    "unsupported_incorrectly_supported": 0
+  }
+}

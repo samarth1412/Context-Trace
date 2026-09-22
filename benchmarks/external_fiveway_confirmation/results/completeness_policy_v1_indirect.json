@@ -1,0 +1,81 @@
+{
+  "additional_remote_requests": 0,
+  "heldout_used_for_selection": false,
+  "policy": {
+    "max_partial_to_supported_rate": 0.05,
+    "model": {
+      "feature_order": [
+        "completeness.every_requirement_supported",
+        "completeness.no_material_omission",
+        "completeness.entity_relation_alignment",
+        "completeness.qualifier_scope_alignment",
+        "completeness.numeric_temporal_alignment",
+        "completeness.coordination_coverage",
+        "completeness.no_inference_gap",
+        "verdict_probability.supported",
+        "verdict_probability.partially_supported",
+        "verdict_probability.unsupported",
+        "verdict_probability.contradicted",
+        "verdict_probability.unverifiable"
+      ],
+      "logistic_regression": {
+        "C": 1.0,
+        "class_weight": "balanced",
+        "coefficients": [
+          1.0604821419308623,
+          -0.7717733896170972,
+          0.5062777014948894,
+          0.10551865437485773,
+          0.17056968606784262,
+          0.4323703842405979,
+          -0.25823736650010304,
+          0.11520879833921259,
+          -0.15699798176112856,
+          0.11432068622139886,
+          -0.19312233758764963,
+          0.39567793555553143
+        ],
+        "intercept": 0.13011692956697687,
+        "random_seed": 20260923,
+        "solver": "lbfgs"
+      },
+      "standard_scaler": {
+        "mean": [
+          0.2873749999999999,
+          0.26849999999999996,
+          0.3395000000000001,
+          0.3233749999999999,
+          0.38774999999999993,
+          0.4396249999999998,
+          0.3533750000000001,
+          0.24575000000000005,
+          0.6166250000000003,
+          0.061624999999999965,
+          0.06074999999999995,
+          0.014750000000000004
+        ],
+        "scale": [
+          0.24487621235024035,
+          0.21132971868622738,
+          0.23952505088194845,
+          0.2280567021049809,
+          0.2803523452728726,
+          0.27669678237196765,
+          0.26466461677942515,
+          0.31603708247609186,
+          0.32245908170650117,
+          0.17253582055619643,
+          0.1373751706095391,
+          0.029537053001272823
+        ]
+      }
+    },
+    "support_threshold": 0.8
+  },
+  "policy_id": "497e8042d4f827305944d69615a828657657b58fef418e83620a1f75986ba4e2",
+  "remote_provider_default_enabled": false,
+  "schema_version": "jev-completeness-policy-1.0",
+  "selection_split": "development.calibration",
+  "stable_defaults_changed": false,
+  "validation_split": "development.validation"
+}

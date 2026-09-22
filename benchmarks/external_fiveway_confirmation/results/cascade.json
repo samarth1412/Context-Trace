@@ -1,0 +1,1719 @@
+{
+  "experiment": "contexttrace_local_first_jev_cascade",
+  "heldout_used_for_selection": false,
+  "metrics": {
+    "automatic_accuracy": 0.5965,
+    "automatic_coverage": 0.456,
+    "automatic_false_support_case_ids": [],
+    "automatic_false_support_count": 0,
+    "binary_accuracy": 0.776,
+    "cases": 125,
+    "false_support_case_ids": [
+      "ambient_101528",
+      "ambient_116_c",
+      "ambient_121_c",
+      "ambient_125_c",
+      "ambient_16733",
+      "ambient_37201",
+      "ambient_40028",
+      "ambient_77_c",
+      "ambient_78003",
+      "vitaminc_5ebe6f31c9e77c0008408f31_3"
+    ],
+    "false_support_count": 10,
+    "false_support_rate": 0.1,
+    "five_way_accuracy": 0.544,
+    "observed_label_macro_f1": 0.4947,
+    "review_count": 68,
+    "supported_recall": 0.28
+  },
+  "operations": {
+    "remote_call_rate": 0.928,
+    "remote_call_reduction": 0.072,
+    "remote_calls": 116,
+    "remote_calls_saved": 9,
+    "sequential_latency_ms": {
+      "mean": 217.244,
+      "p50": 218.065,
+      "p95": 331.389
+    },
+    "tokens": {
+      "always_jev_total": 109595,
+      "input": 95861,
+      "output": 7417,
+      "saved": 6317,
+      "total": 103278
+    }
+  },
+  "paired_vs_always_jev": {
+    "binary": {
+      "baseline_only_correct": 4,
+      "candidate_only_correct": 5,
+      "discordant_pairs": 9,
+      "exact_two_sided_p": 1.0
+    },
+    "five_way": {
+      "baseline_only_correct": 2,
+      "candidate_only_correct": 3,
+      "discordant_pairs": 5,
+      "exact_two_sided_p": 1.0
+    }
+  },
+  "policy": {
+    "always_review_supported": true,
+    "jev_supported_probability": 0.75,
+    "local_supported_confidence": 0.9,
+    "review_confidence": 0.8
+  },
+  "policy_id": "e6e5126dc1810c275be902496783b620f32df280ad4180214b62b8c842ef9025",
+  "policy_selection_split": "development",
+  "remote_provider_default_enabled": false,
+  "rows": [
+    {
+      "case_id": "ambient_101528",
+      "decision": {
+        "decision_source": "stable_semantic",
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "ambient_116_c",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "ambient_121_c",
+      "decision": {
+        "decision_source": "stable_semantic",
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "ambient_125_c",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "ambient_14_c",
+      "decision": {
+        "decision_source": "stable_fallback_after_jev_support_gate",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold",
+          "unverifiable_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": true,
+        "verdict": "unverifiable"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "ambient_16733",
+      "decision": {
+        "decision_source": "stable_semantic",
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "ambient_24621",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "ambient_25982",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "ambient_33124",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "ambient_36637",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "ambient_37201",
+      "decision": {
+        "decision_source": "stable_semantic",
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "ambient_39059",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "ambient_39987",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "ambient_40028",
+      "decision": {
+        "decision_source": "stable_semantic",
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "ambient_46238",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold",
+          "unverifiable_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "unverifiable"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "ambient_53095",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "ambient_5393",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "ambient_6615",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "ambient_74_c",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "ambient_75807",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "ambient_7642",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "ambient_77608",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "ambient_77_c",
+      "decision": {
+        "decision_source": "stable_semantic",
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "ambient_78003",
+      "decision": {
+        "decision_source": "stable_semantic",
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "ambient_80_c",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "unverifiable"
+    },
+    {
+      "case_id": "vitaminc_5eb29889c9e77c0008d94019_2",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "vitaminc_5ebbf32bc9e77c0009295160_3",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "vitaminc_5ebbf32bc9e77c00092956dd_2",
+      "decision": {
+        "decision_source": "stable_fallback_after_jev_support_gate",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": true,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "vitaminc_5ebe6f2cc9e77c0008407739_2",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "vitaminc_5ebe6f2fc9e77c000840810e_3",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "vitaminc_5ebe6f2fc9e77c0008408121_2",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "vitaminc_5ebe6f30c9e77c0008408abe_3",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "vitaminc_5ebe6f31c9e77c0008408d15_3",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "vitaminc_5ebe6f31c9e77c0008408f02_2",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "vitaminc_5ebe6f31c9e77c0008408f31_3",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict",
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "vitaminc_5ec55990c9e77c000842d624_2",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "vitaminc_5ec7d50bc9e77c0008440d13_2",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "vitaminc_5ec7d50fc9e77c0008443263_3",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "vitaminc_5ec7d50fc9e77c000844336e_2",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "vitaminc_5ed4de03c9e77c0008489371_3",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "vitaminc_5ed4de0ac9e77c000848b37e_2",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "vitaminc_5ed4de0ac9e77c000848b457_2",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "vitaminc_5ede072fc9e77c00084d2b63_2",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "vitaminc_5ede072fc9e77c00084d2f8a_2",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "vitaminc_5ee393b6c9e77c0008ccc0f3_2",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "vitaminc_5ee393b7c9e77c0008ccc657_3",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "vitaminc_5ee393b7c9e77c0008ccc85f_2",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "vitaminc_5ee393b8c9e77c0008ccd54f_2",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "vitaminc_5ee39418c9e77c0008ccf57e_3",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "vitaminc_5ee39419c9e77c0008ccf85d_2",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "contradicted"
+    },
+    {
+      "case_id": "wice_test00060",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test00128",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "wice_test00185",
+      "decision": {
+        "decision_source": "stable_fallback_after_jev_support_gate",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold",
+          "unverifiable_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": true,
+        "verdict": "unverifiable"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "wice_test00231",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test00301",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "wice_test00308",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test00373",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test00615",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test00726",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test00777",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test00937",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test01037",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test01052",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test01084",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test01181",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "wice_test01231",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "wice_test01447",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test01464",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test01572",
+      "decision": {
+        "decision_source": "stable_fallback_after_jev_support_gate",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict",
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": true,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test01578",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "wice_test01678",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test01756",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test01760",
+      "decision": {
+        "decision_source": "stable_fallback_after_jev_support_gate",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": true,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "wice_test01785",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test02052",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test02095",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test02139",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test02196",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test02207",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test02220",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test02272",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test02292",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "wice_test02315",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test02351",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test02384",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "contradicted"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test02405",
+      "decision": {
+        "decision_source": "stable_semantic",
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test02459",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "wice_test02553",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test02557",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "wice_test02571",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "wice_test02574",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "wice_test02672",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test02823",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test02996",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "wice_test03014",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test03052",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "wice_test03215",
+      "decision": {
+        "decision_source": "stable_fallback_after_jev_support_gate",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold",
+          "unverifiable_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": true,
+        "verdict": "unverifiable"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test03288",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test03321",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test03508",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test03549",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "wice_test03553",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test03564",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test03602",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "wice_test03636",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "wice_test03718",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "wice_test03756",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "wice_test03760",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test03777",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "wice_test03788",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "wice_test03809",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "wice_test03887",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test03922",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test03989",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "wice_test04098",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test04131",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test04216",
+      "decision": {
+        "decision_source": "stable_fallback_after_jev_support_gate",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": true,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test04229",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test04307",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test04324",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test04331",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test04426",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "partially_supported"
+    },
+    {
+      "case_id": "wice_test04475",
+      "decision": {
+        "decision_source": "stable_semantic",
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "supported"
+      },
+      "expected_verdict": "supported"
+    },
+    {
+      "case_id": "wice_test04499",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "unsupported"
+      },
+      "expected_verdict": "unsupported"
+    },
+    {
+      "case_id": "wice_test04504",
+      "decision": {
+        "decision_source": "jev",
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "support_gate_applied": false,
+        "verdict": "partially_supported"
+      },
+      "expected_verdict": "partially_supported"
+    }
+  ],
+  "schema_version": "1.0",
+  "source_sha256": "7836451ce7c7c205c944b80a15370c8678e99434bc19493f72bff2b0480565ed",
+  "split": "heldout",
+  "stable_defaults_changed": false
+}

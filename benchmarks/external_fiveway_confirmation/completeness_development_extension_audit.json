@@ -1,0 +1,15 @@
+{
+  "cases": 60,
+  "label_counts": {
+    "partially_supported": 30,
+    "supported": 30
+  },
+  "overlap_current_claims": [],
+  "overlap_current_ids": [],
+  "partitions": {
+    "validation": 60
+  },
+  "predictions_present": false,
+  "sha256": "50221d95206d3f477ad462cb1d8a7e2f9696a1d7d19cbf22878eb46b47afec7c",
+  "valid": true
+}

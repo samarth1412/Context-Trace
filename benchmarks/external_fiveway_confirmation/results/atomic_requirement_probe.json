@@ -1,0 +1,2896 @@
+{
+  "rows": [
+    {
+      "atoms": [
+        "In 2017, Shout! Factory released a Blu-ray edition restoring the original songs.",
+        "making this the first home media version since the original VHS release to feature a completely unaltered soundtrack."
+      ],
+      "case_id": "wice_dev00016",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0006009284406900406,
+          "entailment": 0.0011524584842845798,
+          "neutral": 0.9982466697692871
+        },
+        {
+          "contradiction": 0.3913073241710663,
+          "entailment": 0.017548533156514168,
+          "neutral": 0.5911440849304199
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "It had been previously been described as \"Antechinus swainsonii mimetes\", a subspecies of the Dusky antechinus."
+      ],
+      "case_id": "wice_dev00018",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0017875264165923,
+          "entailment": 0.9941756725311279,
+          "neutral": 0.0040367827750742435
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Creem's Kurt B. Riley was critical of the album, feeling that the songwriting was \"done a great disservice by ill-fitting arrangements\"."
+      ],
+      "case_id": "wice_dev00030",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0054763974621891975,
+          "entailment": 0.0005815318436361849,
+          "neutral": 0.9939420819282532
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "This company is also home to historic imprints including Verve Forecast Records, Impulse! Records and Decca Records."
+      ],
+      "case_id": "wice_dev00164",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0035571835469454527,
+          "entailment": 0.9840473532676697,
+          "neutral": 0.012395470403134823
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The film was also streamed in the United States and Canada during May 2018 while Crunchyroll later streamed it starting in November from the same year."
+      ],
+      "case_id": "wice_dev00280",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.001554497517645359,
+          "entailment": 0.0017270366661250591,
+          "neutral": 0.9967184662818909
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Finishing each lap extends the game timer like in most arcade-style racing games."
+      ],
+      "case_id": "wice_dev00315",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.01356226671487093,
+          "entailment": 0.10128334909677505,
+          "neutral": 0.8851543664932251
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "He was married to his wife, the former Mildred Schmidt, of Grants Pass, Oregon, for 69 years until her death 16 November 2012."
+      ],
+      "case_id": "wice_dev00316",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0026926526334136724,
+          "entailment": 0.00014172714145388454,
+          "neutral": 0.9971656203269958
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Lady Amelia is the younger sister of Edward Windsor, Lord Downpatrick.",
+        "and Lady Marina Windsor."
+      ],
+      "case_id": "wice_dev00327",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0031162931118160486,
+          "entailment": 0.000823255511932075,
+          "neutral": 0.9960604310035706
+        },
+        {
+          "contradiction": 0.9956587553024292,
+          "entailment": 0.001064550713635981,
+          "neutral": 0.003276733448728919
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Swift announced in February 2014 that she was working again with Max Martin and Shellback, with whom she had collaborated on three songs for \"Red\"."
+      ],
+      "case_id": "wice_dev00405",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0010014170547947288,
+          "entailment": 0.00016480394697282463,
+          "neutral": 0.9988338351249695
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "James Hartley Jones.",
+        "whose name appears on the Ambleston War Memorial, is recorded as having enlisted at Woodstock (he lived in the nearby hamlet of Wallis) early in World War I."
+      ],
+      "case_id": "wice_dev00556",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.002886176109313965,
+          "entailment": 0.9904537200927734,
+          "neutral": 0.006660161539912224
+        },
+        {
+          "contradiction": 0.007516093552112579,
+          "entailment": 0.00021082803141325712,
+          "neutral": 0.9922730326652527
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In addition to the widespread term \"wicked,\" the word \"pisser,\" often phonetically spelled \"pissa(h),\" is another Northeastern New England intensifier (plus sometimes an uncountable noun) for something that is very highly regarded by the speaker."
+      ],
+      "case_id": "wice_dev00572",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0037756578531116247,
+          "entailment": 0.0013817764120176435,
+          "neutral": 0.9948425889015198
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Mars also performed a shortened version of the song as part of his Super Bowl XLVIII halftime show, with a reference to The Isley Brothers' \"Shout\" and the James Brown-inspired choreography."
+      ],
+      "case_id": "wice_dev00704",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0003647261473815888,
+          "entailment": 0.0003431329096201807,
+          "neutral": 0.9992921352386475
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Mowlam had two step-children.",
+        "Henrietta and Freddie from Norton's first marriage to Geraldine Bedell."
+      ],
+      "case_id": "wice_dev00732",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0005043137934990227,
+          "entailment": 0.00030080153374001384,
+          "neutral": 0.9991949200630188
+        },
+        {
+          "contradiction": 0.009790057316422462,
+          "entailment": 0.0005704619688913226,
+          "neutral": 0.9896395206451416
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Gauthe was later jailed for violating the Texas sex offender registration law and released in April 2010."
+      ],
+      "case_id": "wice_dev00782",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.008603684604167938,
+          "entailment": 0.0007413144339807332,
+          "neutral": 0.9906550049781799
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "A second Industry Summit was held in 2018.",
+        "and plans are to continue this again in November 2019."
+      ],
+      "case_id": "wice_dev00825",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0012398348189890385,
+          "entailment": 9.58462551352568e-05,
+          "neutral": 0.998664379119873
+        },
+        {
+          "contradiction": 0.003463936038315296,
+          "entailment": 0.0012358244275674224,
+          "neutral": 0.9953001737594604
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In September 2017, the Russian Ministry of Defence released a video showing two Su-25s helping to rescue  Russian troops encircled by Tahrir al-Sham militants."
+      ],
+      "case_id": "wice_dev00831",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.014108752831816673,
+          "entailment": 0.00025879073655232787,
+          "neutral": 0.9856324195861816
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The band's third album, \"Emotive\", was released on November 2, 2004\u00a0\u2013 the actual U.S Presidential Election Day."
+      ],
+      "case_id": "wice_dev00866",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.9409528970718384,
+          "entailment": 0.0014991803327575326,
+          "neutral": 0.05754802003502846
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In 2014 Starbucks was scheduled to open a store in Azerbaijan, in the Port Baku Mall."
+      ],
+      "case_id": "wice_dev00940",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0013962360098958015,
+          "entailment": 0.0003537651791702956,
+          "neutral": 0.9982499480247498
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Concerning the issues with \"It Ain't Half Hot Mum\", Alex Massie wrote in January 2019, shortly after the starring actor Windsor Davies died, that \"even when judged by modern standards\" the series is a \"relatively minor offender when compared with programmes\" such as \"Mind Your Language\", \"Love Thy Neighbour\" and \"Curry and Chips\"."
+      ],
+      "case_id": "wice_dev00964",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.03581064194440842,
+          "entailment": 0.004977719858288765,
+          "neutral": 0.9592116475105286
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "She said she aimed to open a chain of stores that would sell coffee and chocolate-based cosmetics."
+      ],
+      "case_id": "wice_dev00989",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.005175710655748844,
+          "entailment": 0.9886612892150879,
+          "neutral": 0.006163004785776138
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In this way, two comics were merged with the original \"Eagle\", \"Swift\" in 1963 and \"Boys' World\" in 1964, before the \"Eagle\" itself came to an end when it was merged with \"Lion\" in 1969."
+      ],
+      "case_id": "wice_dev01098",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.2978736460208893,
+          "entailment": 0.6384493112564087,
+          "neutral": 0.06367704272270203
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The panel in Bruges is in the best condition and of exceptional quality.",
+        "but dates from c. 1491\u20131510."
+      ],
+      "case_id": "wice_dev01120",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0008528200560249388,
+          "entailment": 0.014474053867161274,
+          "neutral": 0.9846732020378113
+        },
+        {
+          "contradiction": 0.00520838238298893,
+          "entailment": 0.9841790795326233,
+          "neutral": 0.01061258278787136
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In the 1940s and 50s, the Qu\u00e9bec government was responsible for a significant number of healthy older children being diagnosed as mentally incompetent and sent to psychiatric hospitals, based on superficial diagnoses made for fiscal reasons."
+      ],
+      "case_id": "wice_dev01152",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0007015234441496432,
+          "entailment": 0.00048660117317922413,
+          "neutral": 0.9988118410110474
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Todd Watson is the head coach of the Odessa Jackalopes in the North American Hockey League (NAHL) since 2019."
+      ],
+      "case_id": "wice_dev01190",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0010203153360635042,
+          "entailment": 0.00254831463098526,
+          "neutral": 0.9964313507080078
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "He was a regular substitute presenter for James Richardson on the Guardian's Football Weekly podcast, before becoming its main host in 2017."
+      ],
+      "case_id": "wice_dev01222",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.1372334361076355,
+          "entailment": 0.0016583966789767146,
+          "neutral": 0.8611082434654236
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Three weeks before election day, Bender gave birth to her second daughter in October 2013."
+      ],
+      "case_id": "wice_dev01275",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.27847838401794434,
+          "entailment": 0.00010925074457190931,
+          "neutral": 0.7214123606681824
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Winslet teamed with Lanc\u00f4me and the National Literacy Trust in 2018 to launch a programme that aims to educate underprivileged women in the UK."
+      ],
+      "case_id": "wice_dev01296",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 9.529021917842329e-05,
+          "entailment": 0.011467681266367435,
+          "neutral": 0.9884369969367981
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Their frames can be made out of wood, metal or a combination of wood and metal."
+      ],
+      "case_id": "wice_dev01445",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.00015780251123942435,
+          "entailment": 0.009217962622642517,
+          "neutral": 0.9906242489814758
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "On August 10, Smith was hired to replace Tony Stewart in the Cheez-It 355 at The Glen after Stewart hit and killed a driver during a sprint car race the previous day."
+      ],
+      "case_id": "wice_dev01523",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0008043574634939432,
+          "entailment": 0.00021076244593132287,
+          "neutral": 0.9989848732948303
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "She was elected to the Seattle City Council in 2017 to represent the at-large position 8."
+      ],
+      "case_id": "wice_dev01524",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.8788415789604187,
+          "entailment": 0.0010940321953967214,
+          "neutral": 0.1200643926858902
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "It has been a part of the university's Founders' Celebration every November since 2011, when it was created to replace its predecessor, FallFest."
+      ],
+      "case_id": "wice_dev01549",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.046041056513786316,
+          "entailment": 0.00011389082646928728,
+          "neutral": 0.9538450241088867
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In 2013, White recorded and produced for an album by DIIV.",
+        "but the session was ultimately scrapped."
+      ],
+      "case_id": "wice_dev01583",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.03564762696623802,
+          "entailment": 0.9526601433753967,
+          "neutral": 0.011692206375300884
+        },
+        {
+          "contradiction": 0.0009633611189201474,
+          "entailment": 0.002545266645029187,
+          "neutral": 0.9964913725852966
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In the United States, the generation was comparatively small because the financial insecurity of the 1930s and the war in the early 1940s caused people to have fewer children."
+      ],
+      "case_id": "wice_dev01627",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0010303290328010917,
+          "entailment": 0.002879549516364932,
+          "neutral": 0.9960901141166687
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In 2019 she became the first person with a disability to brief the United Nations Security Council on her experiences during the war in Syria and policy regarding disabled persons."
+      ],
+      "case_id": "wice_dev01660",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0073859854601323605,
+          "entailment": 0.00505414605140686,
+          "neutral": 0.9875598549842834
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Inez joined the band again for their West Coast and Japanese tour in 2003."
+      ],
+      "case_id": "wice_dev01665",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.00417410209774971,
+          "entailment": 0.00012566702207550406,
+          "neutral": 0.9957002401351929
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Brian Pendleton (13 April 1944 \u2013 16 May 2001) was a British guitarist.",
+        "and a founder member of the 1960s pop group The Pretty Things."
+      ],
+      "case_id": "wice_dev01696",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0010759081924334168,
+          "entailment": 0.0006565217045135796,
+          "neutral": 0.9982675313949585
+        },
+        {
+          "contradiction": 0.9878145456314087,
+          "entailment": 0.0014926239382475615,
+          "neutral": 0.010692919604480267
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "For the latter, she led an initiative called Lead Like A Woman.",
+        "and featured in a short film named \"Leading with Intensity\" (2019) made by an all-female cast and crew."
+      ],
+      "case_id": "wice_dev01774",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.000823428388684988,
+          "entailment": 0.00025447693769820035,
+          "neutral": 0.9989221096038818
+        },
+        {
+          "contradiction": 0.0006568909739144146,
+          "entailment": 0.08935359865427017,
+          "neutral": 0.9099894762039185
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The law applied to private employee unions as well as public."
+      ],
+      "case_id": "wice_dev01786",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.016103114932775497,
+          "entailment": 0.0063600074499845505,
+          "neutral": 0.9775369167327881
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "This became an impetus for galleries and museums across the UK to celebrate \"the making, debating and exhibiting art at the Royal Academy\"."
+      ],
+      "case_id": "wice_dev01841",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.00017987603496294469,
+          "entailment": 0.0033655865117907524,
+          "neutral": 0.9964545965194702
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "She spoke out in support of Michelle Williams.",
+        "who received lesser pay than her co-star Mark Wahlberg for the 2017 film \"All the Money in the World\".",
+        "which Williams said led to greater awareness about the issue and a donation worth $2 million to the Time's Up legal defense fund."
+      ],
+      "case_id": "wice_dev01863",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.00038440286880359054,
+          "entailment": 0.0012986971996724606,
+          "neutral": 0.9983168840408325
+        },
+        {
+          "contradiction": 0.014821616932749748,
+          "entailment": 0.003493351163342595,
+          "neutral": 0.9816851019859314
+        },
+        {
+          "contradiction": 0.00033920243731699884,
+          "entailment": 0.993410050868988,
+          "neutral": 0.00625081080943346
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "While the Park area remains open throughout the year, certain roads and facilities close in the winter season."
+      ],
+      "case_id": "wice_dev01893",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 9.920175943989307e-05,
+          "entailment": 0.9742100238800049,
+          "neutral": 0.025690793991088867
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The first \"Matrix\" film features numerous references to the \"White Rabbit\", the \"Rabbit Hole\" and mirrors, referring to Lewis Carroll's \"Alice's Adventures in Wonderland\" and \"Through the Looking-Glass\"."
+      ],
+      "case_id": "wice_dev01904",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0005184190231375396,
+          "entailment": 0.0016307366313412786,
+          "neutral": 0.9978508949279785
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "For the draw now only 3 players will be allowed into the midfield area until possession has been established."
+      ],
+      "case_id": "wice_dev02041",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0008518911781720817,
+          "entailment": 0.9886555671691895,
+          "neutral": 0.010492625646293163
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In October 2018, she was named in India's squad for the 2018 ICC Women's World Twenty20 tournament in the West Indies."
+      ],
+      "case_id": "wice_dev02061",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.9237046241760254,
+          "entailment": 0.0058260452933609486,
+          "neutral": 0.07046934962272644
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Since its introduction, the People's Flag has been adopted by local businesses.",
+        "Since its introduction, the People's Flag has used on commercial products from bicycles to microbrew labels."
+      ],
+      "case_id": "wice_dev02126",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0005988429766148329,
+          "entailment": 0.0005125101888552308,
+          "neutral": 0.9988886713981628
+        },
+        {
+          "contradiction": 0.004200365394353867,
+          "entailment": 0.0026123824063688517,
+          "neutral": 0.9931873083114624
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The winner advances to play the 15th-ranked and 15th-seeded Butler Bulldogs in Indianapolis on November 20."
+      ],
+      "case_id": "wice_dev02139",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.060456518083810806,
+          "entailment": 0.0005598212592303753,
+          "neutral": 0.938983678817749
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "They were, by their own account, towed back to England by the AA."
+      ],
+      "case_id": "wice_dev02178",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0015856764512136579,
+          "entailment": 5.070666884421371e-05,
+          "neutral": 0.9983636736869812
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Along with Mastodon and Deftones, Alice in Chains toured the United States and Canada in late 2010 on the Blackdiamondskye tour, an amalgam of the three bands' latest album titles (\"Black Gives Way to Blue\", \"Diamond Eyes\".",
+        "and \"Crack the Skye\")."
+      ],
+      "case_id": "wice_dev02191",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.001935859676450491,
+          "entailment": 0.0014581980649381876,
+          "neutral": 0.9966059923171997
+        },
+        {
+          "contradiction": 0.03191295638680458,
+          "entailment": 0.830697774887085,
+          "neutral": 0.1373891979455948
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Hudgens was included in \"Forbes\" richest list in early 2007.",
+        "and the \"Forbes\" article noted that she was included in \"Young Hollywood's Top Earning-Stars\"."
+      ],
+      "case_id": "wice_dev02195",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0013136881170794368,
+          "entailment": 0.0001420022890670225,
+          "neutral": 0.9985443353652954
+        },
+        {
+          "contradiction": 0.009120602160692215,
+          "entailment": 0.016172675415873528,
+          "neutral": 0.974706768989563
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Workshops are low-cost or free-of-charge and include art-making and music lessons, such as Afro-Puerto Rican drum classes offered by Jose \"Dr. Drum\" Ortiz."
+      ],
+      "case_id": "wice_dev02199",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.013949728570878506,
+          "entailment": 0.9445648789405823,
+          "neutral": 0.04148539900779724
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "She next took on the role of the young daughter of a bankrupt middle-aged man (played by Ray Winstone) in the television sitcom \"Get Back\" (1992\u201393)."
+      ],
+      "case_id": "wice_dev02210",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.660417377948761,
+          "entailment": 0.005664218217134476,
+          "neutral": 0.33391833305358887
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The expedition did find several new strains of extremophile microorganisms in the lake's waters.",
+        "including a chemolithotroph that metabolises hydrogen."
+      ],
+      "case_id": "wice_dev02252",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0017923855921253562,
+          "entailment": 8.647041977383196e-05,
+          "neutral": 0.9981210827827454
+        },
+        {
+          "contradiction": 0.3471437394618988,
+          "entailment": 0.1971684992313385,
+          "neutral": 0.4556877911090851
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In 2011, Michaels contributed to the Bush Theatre's 24-hour performance of \"Sixty-Six Books\" to mark the 400th anniversary of the King James Bible, providing 66 playwrights, poets, songwriters.",
+        "and novelists - of all faiths and none, from over a dozen countries and across five continents - the opportunity to respond to some of the oldest stories ever told."
+      ],
+      "case_id": "wice_dev02254",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.011291995644569397,
+          "entailment": 0.0005113768274895847,
+          "neutral": 0.9881965517997742
+        },
+        {
+          "contradiction": 0.0005194519180804491,
+          "entailment": 0.9917914867401123,
+          "neutral": 0.007689003832638264
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The polling through most of the race was close and no candidate was a definitive favorite."
+      ],
+      "case_id": "wice_dev02271",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.002044415334239602,
+          "entailment": 0.21202805638313293,
+          "neutral": 0.7859274744987488
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Both the men's and women's volleyball team also won the national student cup in 2019."
+      ],
+      "case_id": "wice_dev02311",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0016637990484014153,
+          "entailment": 0.00046029279474169016,
+          "neutral": 0.9978759288787842
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Alice in Chains joined Velvet Revolver for a run of U.S. and Canadian gigs from August through October 2007."
+      ],
+      "case_id": "wice_dev02319",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0013311710208654404,
+          "entailment": 0.0015426605241373181,
+          "neutral": 0.9971261620521545
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Full implementation of the name change is taking place during the 2018\u201319 academic year."
+      ],
+      "case_id": "wice_dev02358",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0009006455074995756,
+          "entailment": 0.003994138445705175,
+          "neutral": 0.9951052665710449
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "On May 22, 2014, with 17 hours left, the game was successfully funded."
+      ],
+      "case_id": "wice_dev02502",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.004189331084489822,
+          "entailment": 0.00014062825357541442,
+          "neutral": 0.9956700801849365
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "NYU is a private, global, non-sectarian and not-for-profit institution of higher education organized into 10 undergraduate schools and 15 graduate/professional schools, with a roughly even split of students between the divisions."
+      ],
+      "case_id": "wice_dev02597",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.5270822644233704,
+          "entailment": 0.0006617557955905795,
+          "neutral": 0.4722559154033661
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Howard lives in Camden, London with his wife Cerys, a doctor.",
+        "and their dog, a Jack Russell Terrier named Archie."
+      ],
+      "case_id": "wice_dev02628",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.8562050461769104,
+          "entailment": 0.08508449047803879,
+          "neutral": 0.058710478246212006
+        },
+        {
+          "contradiction": 0.004518070258200169,
+          "entailment": 0.009072765707969666,
+          "neutral": 0.9864091873168945
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In November 2013, she was the only member of the Washington Health Benefit Exchange who voted against increasing the salary of the health exchange's CEO by 13%."
+      ],
+      "case_id": "wice_dev02638",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.014680408872663975,
+          "entailment": 0.00014736079901922494,
+          "neutral": 0.9851722717285156
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In March he won the Candidates Tournament 2018 with a score of 9/14, thus winning the right to challenge Magnus Carlsen in the World Chess Championship 2018 in London in November 2018."
+      ],
+      "case_id": "wice_dev02746",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.004266933538019657,
+          "entailment": 0.0004541960370261222,
+          "neutral": 0.9952788352966309
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "This resulted in the 2018 landmark judgment in \"Navtej Singh Johar and others v. Union of India\" in which the Supreme Court unanimously declared the law unconstitutional \"in so far as it criminalises consensual sexual conduct between adults of the same sex\"."
+      ],
+      "case_id": "wice_dev02830",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.015466754324734211,
+          "entailment": 0.0014449722366407514,
+          "neutral": 0.9830883145332336
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The end of the tour concluded his relationship with Pepsi-Cola which sponsored the tour."
+      ],
+      "case_id": "wice_dev02849",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.11851178109645844,
+          "entailment": 0.7049921154975891,
+          "neutral": 0.17649607360363007
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In England the Shuttleworth Collection owns and operates a Merlin-powered Hawker Sea Hurricane IB and a Supermarine Spitfire VC\u00a0\u2013 Both can be seen flying at home displays throughout the summer months."
+      ],
+      "case_id": "wice_dev02851",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.13027064502239227,
+          "entailment": 0.006050090305507183,
+          "neutral": 0.8636792302131653
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "When the dynastic struggle known as the Wars of the Roses broke out in the later fifteenth century, the Beauforts were the chief supporters of Henry VI and the House of Lancaster."
+      ],
+      "case_id": "wice_dev02875",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0035767743829637766,
+          "entailment": 0.0005234239506535232,
+          "neutral": 0.9958997368812561
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "On December 22, 2017, the merger agreement deadline was extended to June 21, 2018, under a big vote of confidence."
+      ],
+      "case_id": "wice_dev02950",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0021448261104524136,
+          "entailment": 0.00019381119636818767,
+          "neutral": 0.9976613521575928
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "On March 1, 2017 Powell was named as one of three potential applicants to fill the vacant Supreme Court seat, the other two applicants being Judge Lisa White Hardwick and attorney  Benjamin A. Lipman."
+      ],
+      "case_id": "wice_dev02968",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0015812069177627563,
+          "entailment": 0.0011368453269824386,
+          "neutral": 0.9972819089889526
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Arnold is currently the publisher and editorial director of Media Play News, one of five Hollywood trades and the only one dedicated to the home entertainment sector."
+      ],
+      "case_id": "wice_dev02986",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.004598560277372599,
+          "entailment": 0.0002306636597495526,
+          "neutral": 0.9951707720756531
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "It eventually was picked up by Paramount as a film which then led to the spin-off series."
+      ],
+      "case_id": "wice_dev02994",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0016718157567083836,
+          "entailment": 0.0005276707815937698,
+          "neutral": 0.9978005290031433
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The writer Robert McCrum, in a personal list of \"The 100 greatest novels of all time\" published in \"The Observer\" newspaper, listed the \"Diary\" at number 35."
+      ],
+      "case_id": "wice_dev03051",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.002498508431017399,
+          "entailment": 0.0029759223107248545,
+          "neutral": 0.9945255517959595
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Krispy Kreme is set to open its first Taiwan store at the Xinyi Vieshow Cinemas Complex in Xinyi District, Taipei on 12 December 2013."
+      ],
+      "case_id": "wice_dev03078",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.00023965656873770058,
+          "entailment": 0.0003761463158298284,
+          "neutral": 0.9993841648101807
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "As per constitution of India and Panchyati Raaj Act, the area is administrated by Sarpanch (Head of Village) who is elected representative of village under the government of Haryana."
+      ],
+      "case_id": "wice_dev03128",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0005749023403041065,
+          "entailment": 0.5654878616333008,
+          "neutral": 0.4339372515678406
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "This reignites his rivalry with a now-successful LaRusso.",
+        "who has been struggling to maintain balance in his life without the guidance of his mentor, Mr. Miyagi.",
+        "whose death in the series took place seven years before episode 1."
+      ],
+      "case_id": "wice_dev03142",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.002868930110707879,
+          "entailment": 0.9898895621299744,
+          "neutral": 0.007241509389132261
+        },
+        {
+          "contradiction": 0.005072411149740219,
+          "entailment": 0.0004602550470735878,
+          "neutral": 0.9944672584533691
+        },
+        {
+          "contradiction": 0.6904503703117371,
+          "entailment": 0.00022355660621542484,
+          "neutral": 0.3093261122703552
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Emilee Lindner of MTV called the video \"mature, tasteful.",
+        "and [...] sexy\"."
+      ],
+      "case_id": "wice_dev03250",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0024081231094896793,
+          "entailment": 0.000411996035836637,
+          "neutral": 0.9971798658370972
+        },
+        {
+          "contradiction": 0.004663725849241018,
+          "entailment": 0.9548231363296509,
+          "neutral": 0.04051318019628525
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "As of October 2014 there is renewed interest from TFGM, particularly as the route could link with HS2 Manchester Interchange."
+      ],
+      "case_id": "wice_dev03282",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.002891864161938429,
+          "entailment": 0.00015537282160948962,
+          "neutral": 0.9969527721405029
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "With another Academy Award for Best Actress nomination, Winslet, at 31, became the youngest performer to accrue five Oscar nominations."
+      ],
+      "case_id": "wice_dev03292",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0008717920864000916,
+          "entailment": 0.0008367666741833091,
+          "neutral": 0.9982914328575134
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Over the course of more than 140 years, 37 Nobel laureates and 1 Fields Medalist have been affiliated with Johns Hopkins."
+      ],
+      "case_id": "wice_dev03358",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0010855153668671846,
+          "entailment": 0.8919049501419067,
+          "neutral": 0.10700947791337967
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The announcement took place in Bayamon, Puerto Rico.",
+        "the future home base of Puerto Rico FC, scheduled to begin its first season at Juan Ramon Loubriel Stadium in the 2016 fall season."
+      ],
+      "case_id": "wice_dev03392",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0021179895848035812,
+          "entailment": 0.05980141833424568,
+          "neutral": 0.9380805492401123
+        },
+        {
+          "contradiction": 0.0009763480047695339,
+          "entailment": 0.9952579140663147,
+          "neutral": 0.0037657783832401037
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "It is based at Hamamatsu Air Base in Shizuoka Prefecture."
+      ],
+      "case_id": "wice_dev03439",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0023308841045945883,
+          "entailment": 0.9536522030830383,
+          "neutral": 0.04401697590947151
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In 2014, Evans was involved in a debate with Michael Gove, the British education secretary, about the content and style of history teaching and the way that the curriculum is structured and how the First World War should be portrayed."
+      ],
+      "case_id": "wice_dev03529",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.6587207913398743,
+          "entailment": 0.004045589827001095,
+          "neutral": 0.33723369240760803
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "At the time of his death, Hoffman was filming \"The Hunger Games: Mockingjay \u2013 Part 2\", the final film in the series.",
+        "and had already completed the majority of his scenes."
+      ],
+      "case_id": "wice_dev03536",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.6347020864486694,
+          "entailment": 0.022974135354161263,
+          "neutral": 0.34232378005981445
+        },
+        {
+          "contradiction": 0.998788058757782,
+          "entailment": 0.0007255714735947549,
+          "neutral": 0.00048640588647685945
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "As diabetes becomes a rising epidemic, the Center for Disease Control and Prevention estimates that up to nearly 8 million U.S. citizens may have undiagnosed diabetes or its precursor."
+      ],
+      "case_id": "wice_dev03609",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.000842157460283488,
+          "entailment": 0.0009723078110255301,
+          "neutral": 0.9981854557991028
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The PKK later released video footage of the rocket being fired and striking the helicopter."
+      ],
+      "case_id": "wice_dev03640",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0014555943198502064,
+          "entailment": 0.00016193541523534805,
+          "neutral": 0.9983824491500854
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "This interactive educational website tells story of African-Americans and the role they played.",
+        "and still play, in the horse industry."
+      ],
+      "case_id": "wice_dev03649",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0016544349491596222,
+          "entailment": 0.9111959338188171,
+          "neutral": 0.08714968711137772
+        },
+        {
+          "contradiction": 0.00033244944643229246,
+          "entailment": 0.0014873640611767769,
+          "neutral": 0.9981801509857178
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "He attended the Skowhegan School of Painting and Sculpture in Skowhegan, Maine in 1966 and the New York Studio School in New York.",
+        "where he studied primarily with Milton Resnick as well as Mercedes Matter and Esteban Vicente while on a Rockefeller Foundation Fellowship in 1967."
+      ],
+      "case_id": "wice_dev03672",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0013219761895015836,
+          "entailment": 0.0004919747007079422,
+          "neutral": 0.9981860518455505
+        },
+        {
+          "contradiction": 0.0007138976361602545,
+          "entailment": 0.00011017526412615553,
+          "neutral": 0.9991758465766907
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "These clinics provide patients quality health care and allow UC Davis medical students to gain real world clinical experience during the early stages of their training."
+      ],
+      "case_id": "wice_dev03712",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.004217395558953285,
+          "entailment": 0.05628732591867447,
+          "neutral": 0.939495325088501
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Increase of coal usage would greatly increase air pollution especially in areas surrounding the facilities many of which are located in communities of color and low-income."
+      ],
+      "case_id": "wice_dev03756",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.002301847329363227,
+          "entailment": 0.0011080174008384347,
+          "neutral": 0.9965901374816895
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In a highly publicized case, Milken was indicted by a grand jury on these charges."
+      ],
+      "case_id": "wice_dev03792",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0005751490243710577,
+          "entailment": 0.9054593443870544,
+          "neutral": 0.09396561980247498
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The offer was also extended to Criss Oliva who also declined as he did not want to leave Savatage."
+      ],
+      "case_id": "wice_dev03810",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0010391761315986514,
+          "entailment": 0.0004155576752964407,
+          "neutral": 0.9985452890396118
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Mustaine congratulated the group respectfully.",
+        "and honored his commitment to the European tour with Judas Priest."
+      ],
+      "case_id": "wice_dev03830",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.00032816798193380237,
+          "entailment": 0.9798478484153748,
+          "neutral": 0.019823962822556496
+        },
+        {
+          "contradiction": 0.9949533343315125,
+          "entailment": 0.0005125274183228612,
+          "neutral": 0.004534079693257809
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In 2014 she returned to the Freer and Sackler Galleries.",
+        "where she is currently the Melvin R. Seiden Curator of Chinese Art at the Freer Gallery of Art and Arthur M. Sackler Gallery in Washington, D.C."
+      ],
+      "case_id": "wice_dev03832",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0009569203248247504,
+          "entailment": 0.0003855030226986855,
+          "neutral": 0.9986575841903687
+        },
+        {
+          "contradiction": 0.03309391438961029,
+          "entailment": 0.004480720032006502,
+          "neutral": 0.9624253511428833
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The prize money to be distributed was announced in March 2018, with a total of \u20ac76.25\u00a0million in solidarity and bonus fees due to be distributed to the 55 participating national teams."
+      ],
+      "case_id": "wice_dev03851",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.000263711903244257,
+          "entailment": 0.0008021621033549309,
+          "neutral": 0.9989340901374817
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "He was recalled by the Wizards a week later."
+      ],
+      "case_id": "wice_dev03856",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.001969965174794197,
+          "entailment": 9.570999827701598e-05,
+          "neutral": 0.9979343414306641
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Riverside Military Academy won its seventh consecutive Atlanta Veterans day, Presidents' Trophy in 2016."
+      ],
+      "case_id": "wice_dev03925",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0009655328467488289,
+          "entailment": 0.0018214201554656029,
+          "neutral": 0.9972130656242371
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In the spring of 2003,\"AsianWeek\" partnered with the University of California at Los Angeles\u2019 Asian American studies department to co-publish a book focused on 2000 U.S. Census data, titled The new Face of Asian Pacific America:  Numbers, Diversity.",
+        "and Change in the 21st Century."
+      ],
+      "case_id": "wice_dev03946",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.9211933612823486,
+          "entailment": 0.0009159590699709952,
+          "neutral": 0.07789061218500137
+        },
+        {
+          "contradiction": 0.00044409395195543766,
+          "entailment": 0.00032482430106028914,
+          "neutral": 0.9992311000823975
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "It was shown on 18 October 2018 as part of the 2018 BFI London Film Festival and given a limited cinema release on 9 November 2018, with a DVD and digital release on 12 November."
+      ],
+      "case_id": "wice_dev03965",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.00035061052767559886,
+          "entailment": 0.9882628321647644,
+          "neutral": 0.011386540718376637
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The \"CBS Evening News\" streams every evening on CBSN, CBS News' 24/7 live, streaming news service."
+      ],
+      "case_id": "wice_dev03969",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0003862304729409516,
+          "entailment": 0.022310318425297737,
+          "neutral": 0.9773034453392029
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Ly graduated with distinction in 1991 with a Bachelor of Science in Symbolic Systems and as a member of the Phi Beta Kappa Society."
+      ],
+      "case_id": "wice_dev04007",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0019274801015853882,
+          "entailment": 0.00027705964748747647,
+          "neutral": 0.9977954626083374
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "On October 6, 1995, the band released the studio version of the song to radio via satellite uplink to stem excessive spread of taped copies of the song."
+      ],
+      "case_id": "wice_dev04059",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.9463328719139099,
+          "entailment": 0.02144044265151024,
+          "neutral": 0.03222668543457985
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In 2013, Bakir was awarded the Gold Coast Young Entrepreneur of the Year due to his success with HomeCorp."
+      ],
+      "case_id": "wice_dev04077",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0007760661537759006,
+          "entailment": 0.0004502372466959059,
+          "neutral": 0.9987736344337463
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "A graduate of the Class of 1978, Warshaw joined surfing icon Dewey Weber (Class of 1956) and punk rock musician Jim Lindberg (Class of 1983), among other prominent MCHS alumni recognized for their achievements in national and international politics, business, science, entertainment."
+      ],
+      "case_id": "wice_dev04085",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.9655951857566833,
+          "entailment": 0.000345129199558869,
+          "neutral": 0.03405971825122833
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "They started by announcing the departure of club captain Per Mertesacker.",
+        "who retired to become their new academy coach."
+      ],
+      "case_id": "wice_dev04091",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.9930434226989746,
+          "entailment": 0.0002507187600713223,
+          "neutral": 0.006705868989229202
+        },
+        {
+          "contradiction": 0.9896473288536072,
+          "entailment": 0.0010271623032167554,
+          "neutral": 0.009325478225946426
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "A second student accused Daniels of sexual assault.",
+        "and brought civil lawsuits against both Daniels and the University of Michigan, in October 2018."
+      ],
+      "case_id": "wice_dev04093",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.006109314039349556,
+          "entailment": 0.0011307994136586785,
+          "neutral": 0.9927599430084229
+        },
+        {
+          "contradiction": 0.004621646832674742,
+          "entailment": 0.00024598659365437925,
+          "neutral": 0.9951323866844177
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Ronnie O'Sullivan was the defending champion.",
+        "but he decided not to compete this year."
+      ],
+      "case_id": "wice_dev04100",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0034087859094142914,
+          "entailment": 0.0003052914107684046,
+          "neutral": 0.9962859153747559
+        },
+        {
+          "contradiction": 0.0026034386828541756,
+          "entailment": 0.08204814791679382,
+          "neutral": 0.9153484106063843
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The ditcher, a flatcar-mounted crane designed to excavate soil on either side of a railroad, was invented by Oliver Crosby in 1904."
+      ],
+      "case_id": "wice_dev04101",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0001858856121543795,
+          "entailment": 0.0002815405314322561,
+          "neutral": 0.9995325803756714
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "He stepped down in December, to take up the financially lucrative post as advisor to the Saudi Arabia national football team."
+      ],
+      "case_id": "wice_dev04117",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.48071619868278503,
+          "entailment": 0.0007705137832090259,
+          "neutral": 0.5185133218765259
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In 2018 she began her daily SiriusXM show, \"The Michelle Collins Show\"."
+      ],
+      "case_id": "wice_dev04119",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0004465469974093139,
+          "entailment": 0.0011947255115956068,
+          "neutral": 0.9983586668968201
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In 2013, Gaetz announced that in 2016 he would run for the 1st District state senate seat then held by his father, state senator Don Gaetz.",
+        "who was due to be term-limited out of the Senate in 2016."
+      ],
+      "case_id": "wice_dev04133",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.00938296876847744,
+          "entailment": 0.0033069481141865253,
+          "neutral": 0.9873100519180298
+        },
+        {
+          "contradiction": 0.15221211314201355,
+          "entailment": 0.06195969879627228,
+          "neutral": 0.7858282327651978
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "His grandson, Clive Uhr, would become a noted radiologist and Knight Commander of the Order of the British Empire."
+      ],
+      "case_id": "wice_dev04159",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.8301432728767395,
+          "entailment": 0.00023268599761649966,
+          "neutral": 0.16962404549121857
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The collection that Petiver amassed was the largest natural history collection in his time."
+      ],
+      "case_id": "wice_dev04169",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0008582218433730304,
+          "entailment": 0.9528222680091858,
+          "neutral": 0.04631946235895157
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Staring at the prospect of losing the team, the state agreed to fund a renovation of the Devils' arena."
+      ],
+      "case_id": "wice_dev04217",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.19656462967395782,
+          "entailment": 0.0010377553990110755,
+          "neutral": 0.802397608757019
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Soyuz MS-06 launched on September 13, 2017, transporting Alexander Misurkin, Mark T. Vande Hei and Joe Acaba."
+      ],
+      "case_id": "wice_dev04220",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.1715073585510254,
+          "entailment": 0.7158263921737671,
+          "neutral": 0.11266626417636871
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "About three months prior to the start of filming, the animals started their training for the film."
+      ],
+      "case_id": "wice_dev04359",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.00019404609338380396,
+          "entailment": 0.9975500702857971,
+          "neutral": 0.0022558707278221846
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "By comparison, a Canadian nickel (which is primarily made of steel) still costs less than its face value to produce as of 2013."
+      ],
+      "case_id": "wice_dev04385",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.001963595626875758,
+          "entailment": 0.0001775614364305511,
+          "neutral": 0.9978588223457336
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The following month, the first single, \"Never Be like You\".",
+        "featuring vocals from Canadian singer Kai, reached number one in Australia.",
+        "making it Flume's first chart-topping song."
+      ],
+      "case_id": "wice_dev04425",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.98055100440979,
+          "entailment": 0.006175381597131491,
+          "neutral": 0.013273661956191063
+        },
+        {
+          "contradiction": 0.9859341979026794,
+          "entailment": 0.00037345950840972364,
+          "neutral": 0.013692478649318218
+        },
+        {
+          "contradiction": 0.026901911944150925,
+          "entailment": 0.004843349568545818,
+          "neutral": 0.968254804611206
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In March 2006, Tom Bromley joined the band, assuming the role of lead guitarist, later followed by Gareth David Paisey \u2013 who became the band's principal lyricist \u2013 on lead vocals and glockenspiel, Harriet Coleman on violin and keyboard.",
+        "and finally Aleksandra Berditchevskaia on vocals, keyboards and melodica."
+      ],
+      "case_id": "wice_dev04441",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0023607967887073755,
+          "entailment": 0.00023407398839481175,
+          "neutral": 0.9974051117897034
+        },
+        {
+          "contradiction": 0.9459751844406128,
+          "entailment": 0.00039683119393885136,
+          "neutral": 0.05362798646092415
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "They include Erik Hersman, Juliana Rotich, Ory Okolloh.",
+        "and David Kobia."
+      ],
+      "case_id": "wice_dev04456",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0032306830398738384,
+          "entailment": 0.0008304766961373389,
+          "neutral": 0.9959388971328735
+        },
+        {
+          "contradiction": 0.9770207405090332,
+          "entailment": 7.767396891722456e-05,
+          "neutral": 0.022901544347405434
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Wellington was chosen for its central location, with Parliament officially sitting there for the first time in 1865."
+      ],
+      "case_id": "wice_dev04471",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.7587250471115112,
+          "entailment": 0.002018899889662862,
+          "neutral": 0.2392561137676239
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The company existed for eight years.",
+        "on 12 February 2009, Ericsson announced it would be merged with the mobile platform company of STMicroelectronics, ST-NXP Wireless, to create a 50/50 joint venture owned by Ericsson and STMicroelectronics."
+      ],
+      "case_id": "wice_dev04516",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0002818214416038245,
+          "entailment": 0.0007167333969846368,
+          "neutral": 0.9990014433860779
+        },
+        {
+          "contradiction": 0.001231070258654654,
+          "entailment": 0.7444482445716858,
+          "neutral": 0.25432074069976807
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "\"Mad Love'\"s reputation has grown over the years.",
+        "\"Mad Love'\"s reputation has it is viewed in a more positive light by modern film critics, gaining the status of cult classic."
+      ],
+      "case_id": "wice_dev00126",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.00043417667620815337,
+          "entailment": 0.00027437577955424786,
+          "neutral": 0.9992914199829102
+        },
+        {
+          "contradiction": 0.0006795955123379827,
+          "entailment": 0.000992403132840991,
+          "neutral": 0.9983280301094055
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "On October 20, 2015, Blanchard signed to the Indianapolis Colts practice squad, reuniting him with former teammate Anthony Castonzo."
+      ],
+      "case_id": "wice_dev00156",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.9988011121749878,
+          "entailment": 2.0964436771464534e-05,
+          "neutral": 0.0011779132764786482
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The busy centre works exclusively with young 10-24 year old Jordanians from a range of backgrounds."
+      ],
+      "case_id": "wice_dev00224",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.023933786898851395,
+          "entailment": 0.0004289529751986265,
+          "neutral": 0.9756372570991516
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Tobacco and alcohol are also not allowed."
+      ],
+      "case_id": "wice_dev00287",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0029918518848717213,
+          "entailment": 0.8659737706184387,
+          "neutral": 0.13103435933589935
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Paterson died on November 10, 2018, at the age of 78."
+      ],
+      "case_id": "wice_dev00328",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0003023605386260897,
+          "entailment": 0.0001371369871776551,
+          "neutral": 0.999560534954071
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The school opened in fall 2016 with 400 9th-grade students."
+      ],
+      "case_id": "wice_dev00624",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.003680085064843297,
+          "entailment": 0.00026859319768846035,
+          "neutral": 0.9960513710975647
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Also some other softenings were foreseen, e.g. for women having 3 and more children."
+      ],
+      "case_id": "wice_dev00633",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0003608757397159934,
+          "entailment": 0.003644309239462018,
+          "neutral": 0.9959948062896729
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "After \"The Sunday Times\" branded his speeches \"racialist\", Powell sued it for libel.",
+        "but withdrew when he was required to provide the letters he had quoted from because he had promised anonymity for the writer.",
+        "who refused to waive it."
+      ],
+      "case_id": "wice_dev00771",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.14573296904563904,
+          "entailment": 0.0779842957854271,
+          "neutral": 0.776282787322998
+        },
+        {
+          "contradiction": 0.0043242378160357475,
+          "entailment": 0.004460180643945932,
+          "neutral": 0.9912155866622925
+        },
+        {
+          "contradiction": 0.010721738450229168,
+          "entailment": 0.0033846967853605747,
+          "neutral": 0.9858934879302979
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "However, in October 2018, the solidarity fees and bonus payments for group winners were increased by 50%.",
+        "while the bonuses for the teams appearing in the Nations League Finals also increased.",
+        "resulting in a total of \u20ac112.875\u00a0million in prize money."
+      ],
+      "case_id": "wice_dev00851",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.001194323063828051,
+          "entailment": 0.000293899851385504,
+          "neutral": 0.9985117316246033
+        },
+        {
+          "contradiction": 0.002136891009286046,
+          "entailment": 0.023453880101442337,
+          "neutral": 0.9744092226028442
+        },
+        {
+          "contradiction": 0.8703469038009644,
+          "entailment": 0.009061506018042564,
+          "neutral": 0.12059155851602554
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In 2014, \"Variety\" magazine reported that, in addition to her voice role, Rihanna created a concept album for the film which was released on March 23, 2015."
+      ],
+      "case_id": "wice_dev00932",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.033391956239938736,
+          "entailment": 0.0032378090545535088,
+          "neutral": 0.9633702635765076
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "He died after complications from a surgery at a hospital in Calgary, Alberta on May 7, 2018."
+      ],
+      "case_id": "wice_dev00956",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0005237010773271322,
+          "entailment": 0.005052817519754171,
+          "neutral": 0.9944234490394592
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The Soci\u00e9t\u00e9 de transport de Montr\u00e9al (STM) 747 Shuttle Bus replaced the \"Aerobus\" that was privately operated by Groupe La Qu\u00e9b\u00e9coise as a direct connection between the former Montreal central bus station and the airport."
+      ],
+      "case_id": "wice_dev01180",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.006105643231421709,
+          "entailment": 0.002029996830970049,
+          "neutral": 0.9918644428253174
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "After a crash at the Canadian Grand Prix, Hill announced plans to retire from the sport at the end of the year.",
+        "but after failing to finish the French Grand Prix that Frentzen won, he considered quitting the sport immediately."
+      ],
+      "case_id": "wice_dev01234",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0029963022097945213,
+          "entailment": 0.00043028019717894495,
+          "neutral": 0.9965734481811523
+        },
+        {
+          "contradiction": 0.0015463141025975347,
+          "entailment": 6.533225678140298e-05,
+          "neutral": 0.998388409614563
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The film had its world premiere at the Cannes Film Festival on May 19, 2016."
+      ],
+      "case_id": "wice_dev01418",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.8855714797973633,
+          "entailment": 0.00040330979391001165,
+          "neutral": 0.11402516067028046
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "On August 22, 2017, Richard Amardi was selected to play for the Canadian Senior Men's National Team to compete in the FIBA AmeriCup 2017 in Argentina."
+      ],
+      "case_id": "wice_dev01451",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0018627980025485158,
+          "entailment": 0.0004625546280294657,
+          "neutral": 0.9976746439933777
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Following criticism against her for choosing to work with him, Newton was replaced by Tate Taylor."
+      ],
+      "case_id": "wice_dev01552",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.00016471008711960167,
+          "entailment": 0.006416717544198036,
+          "neutral": 0.9934185743331909
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In 2009, Angelou wrote \"We Had Him\", a poem about Michael Jackson.",
+        "which was read by Queen Latifah at his funeral."
+      ],
+      "case_id": "wice_dev01563",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0004302425077185035,
+          "entailment": 0.0007068116683512926,
+          "neutral": 0.9988629817962646
+        },
+        {
+          "contradiction": 0.031550973653793335,
+          "entailment": 0.0990859866142273,
+          "neutral": 0.869363009929657
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The museum estimates that it has had over half a million visitors from every state in the U.S.",
+        "The museum estimates that it has over 100 other countries, since its opening."
+      ],
+      "case_id": "wice_dev01662",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.000537720276042819,
+          "entailment": 7.678280962863937e-05,
+          "neutral": 0.9993854761123657
+        },
+        {
+          "contradiction": 0.0023612689692527056,
+          "entailment": 3.994729559053667e-05,
+          "neutral": 0.9975988268852234
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The front cover marked the debut of band mascot Vic Rattlehead.",
+        "who regularly appeared on subsequent album artwork."
+      ],
+      "case_id": "wice_dev01864",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0089930584654212,
+          "entailment": 0.02297557145357132,
+          "neutral": 0.9680314064025879
+        },
+        {
+          "contradiction": 0.003351090243086219,
+          "entailment": 0.028071986511349678,
+          "neutral": 0.9685768485069275
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The band also covered \"Iron Maiden\", originally by the band of the same name, for the \"Kerrang!\" tribute album \"Maiden Heaven: A Tribute to Iron Maiden\" the same year."
+      ],
+      "case_id": "wice_dev01883",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.003643405856564641,
+          "entailment": 0.0029069490265101194,
+          "neutral": 0.9934496283531189
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "He had previously announced that he would retire from racing in June, having signed a six-month contract extension with Team Jumbo\u2013Visma for 2016."
+      ],
+      "case_id": "wice_dev01927",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.009171406738460064,
+          "entailment": 0.0033667993266135454,
+          "neutral": 0.9874617457389832
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "A 2013 Oxford University radio carbon dating study of the Predynastic period, however, suggests a much later date beginning sometime between 3,800-3,700 BC."
+      ],
+      "case_id": "wice_dev02115",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.001395652536302805,
+          "entailment": 0.0003460489970166236,
+          "neutral": 0.9982582926750183
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The Flames retired Jarome Iginla's No. 12 on March 2, 2019.",
+        "he played right wing for the Flames from 1996 to 2013 and also served as the team's captain from 2003 to 2013."
+      ],
+      "case_id": "wice_dev02187",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.004677111748605967,
+          "entailment": 0.00010545105033088475,
+          "neutral": 0.9952174425125122
+        },
+        {
+          "contradiction": 0.002170122694224119,
+          "entailment": 0.0008920718682929873,
+          "neutral": 0.9969378709793091
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Graham was working and writing songs with music manager Tom Watkins.",
+        "and he suggested that Watkins meet the group."
+      ],
+      "case_id": "wice_dev02198",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0020851418375968933,
+          "entailment": 0.6211444735527039,
+          "neutral": 0.37677040696144104
+        },
+        {
+          "contradiction": 0.005553125869482756,
+          "entailment": 0.0001992360776057467,
+          "neutral": 0.9942476749420166
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Williams then pulled away once again, winning the final three frames to take a 10\u20137 lead overnight."
+      ],
+      "case_id": "wice_dev02246",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0020165888126939535,
+          "entailment": 0.0006154437432996929,
+          "neutral": 0.9973680377006531
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In October 2016, Nazir was appointed as the inaugural chair of World Economic Forum's ASEAN Regional Business Council.",
+        "which aims to champion initiatives that call for trust and co-operation between the public and private sectors in the region."
+      ],
+      "case_id": "wice_dev02304",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.000193930376553908,
+          "entailment": 0.0007702679140493274,
+          "neutral": 0.9990358352661133
+        },
+        {
+          "contradiction": 0.00013872051204089075,
+          "entailment": 0.07482318580150604,
+          "neutral": 0.9250380992889404
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In November of that year the City of Milwaukee's Arts Board said the original search for a new flag wasn't inclusive enough.",
+        "and that the flag may go back to the drawing board."
+      ],
+      "case_id": "wice_dev02401",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.04160542041063309,
+          "entailment": 0.003561168210580945,
+          "neutral": 0.954833447933197
+        },
+        {
+          "contradiction": 0.002869154792279005,
+          "entailment": 0.010959894396364689,
+          "neutral": 0.9861709475517273
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Instead of attending his local school Teaneck High School, Lecque decided to enroll at Monsignor Scanlan High School in The Bronx because of its superior basketball program."
+      ],
+      "case_id": "wice_dev02455",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.9969370365142822,
+          "entailment": 5.9322792367311195e-05,
+          "neutral": 0.0030036894604563713
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In 2019 during Star Wars Celebration, Dave Filoni revealed that Park reprised his role as Maul for the final season of \"Star Wars: The Clone Wars\" through mo-cap performance."
+      ],
+      "case_id": "wice_dev02478",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0009832419455051422,
+          "entailment": 0.00048391480231657624,
+          "neutral": 0.9985328912734985
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Fitzpatrick graduated from Kent State University with a Bachelor of Arts degree in journalism and sociology."
+      ],
+      "case_id": "wice_dev02595",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0003058305592276156,
+          "entailment": 0.0004689211491495371,
+          "neutral": 0.9992252588272095
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The collapse has been seen in other alt-right groups.",
+        "The collapse has has been attributed to widespread public backlash against neo-Nazism and white supremacy since the 2017 Charlottesville rally."
+      ],
+      "case_id": "wice_dev02618",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.00016172134201042354,
+          "entailment": 0.0005252531846053898,
+          "neutral": 0.9993129968643188
+        },
+        {
+          "contradiction": 0.004620338790118694,
+          "entailment": 0.015806930139660835,
+          "neutral": 0.9795727133750916
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "In 2018, Australian former series' champions Will Power won the race after a decade of participation as the first Australian to win the 500.",
+        "whereas his Penske teammate Simon Pagenaud repeated that feat.",
+        "becoming the first French winner of the race in 2019 after a last-lap duel with 2016 winner Rossi."
+      ],
+      "case_id": "wice_dev02629",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.01372312568128109,
+          "entailment": 0.0035598117392510176,
+          "neutral": 0.9827170372009277
+        },
+        {
+          "contradiction": 0.000843104615341872,
+          "entailment": 0.0021088290959596634,
+          "neutral": 0.9970480799674988
+        },
+        {
+          "contradiction": 0.0014910383615642786,
+          "entailment": 0.0033560493029654026,
+          "neutral": 0.9951529502868652
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The park offers canoeing, paddleboat rentals, hiking, camp-grounds, fishing.",
+        "The park offers picnicking."
+      ],
+      "case_id": "wice_dev02657",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0005011240136809647,
+          "entailment": 0.002653787611052394,
+          "neutral": 0.9968451261520386
+        },
+        {
+          "contradiction": 0.00013940634380560368,
+          "entailment": 0.9918328523635864,
+          "neutral": 0.008027749136090279
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Controllers initially thought this was a military fighter, due to its high speed and maneuvering."
+      ],
+      "case_id": "wice_dev02670",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0025664065033197403,
+          "entailment": 0.9340998530387878,
+          "neutral": 0.06333383917808533
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Miles was originally at fourth place in the 2008 Summer Olympic Games in Beijing, China.",
+        "but Ukrainian Denys Yurchenko who originally finished third, was disqualified in November 2016 due to use of dehydrochlormethyltestosterone."
+      ],
+      "case_id": "wice_dev02718",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0010868535609915853,
+          "entailment": 0.0002815191983245313,
+          "neutral": 0.9986316561698914
+        },
+        {
+          "contradiction": 0.005275352392345667,
+          "entailment": 0.0006701078382320702,
+          "neutral": 0.9940546154975891
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The man has never been identified.",
+        "The man has the investigation remains open (June 2018)."
+      ],
+      "case_id": "wice_dev02827",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.00251440005376935,
+          "entailment": 0.009980074129998684,
+          "neutral": 0.9875055551528931
+        },
+        {
+          "contradiction": 0.0016306102043017745,
+          "entailment": 0.0001651157217565924,
+          "neutral": 0.998204231262207
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "He reportedly grew close with the twins after rooming with them and staff considered the Pounceys a positive influence on Hernandez."
+      ],
+      "case_id": "wice_dev02854",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.03772595897316933,
+          "entailment": 0.02690180204808712,
+          "neutral": 0.9353722333908081
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "He subsequently appeared with the words \"Gimme a fix\" on his chest\u2014accounts vary as to whether the words were written or carved there."
+      ],
+      "case_id": "wice_dev02891",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.004139612894505262,
+          "entailment": 0.0020102369599044323,
+          "neutral": 0.9938501119613647
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The exterior panels of the shell were replaced.",
+        "which required a laser scan of the shell and fabrication of 673 separate panels in 93 different shapes."
+      ],
+      "case_id": "wice_dev02905",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0075891511514782906,
+          "entailment": 0.9655671715736389,
+          "neutral": 0.026843693107366562
+        },
+        {
+          "contradiction": 0.5822805762290955,
+          "entailment": 0.34785428643226624,
+          "neutral": 0.0698651373386383
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "She began singing at a young age.",
+        "and learned guitar in her teenage years."
+      ],
+      "case_id": "wice_dev03013",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.02267817035317421,
+          "entailment": 0.9476783275604248,
+          "neutral": 0.02964351512491703
+        },
+        {
+          "contradiction": 0.0005033746128901839,
+          "entailment": 0.0002816806372720748,
+          "neutral": 0.9992148876190186
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "He was Chef de Mission of Team GB at the 2016 Olympics, being appointed on 29 April 2014."
+      ],
+      "case_id": "wice_dev03019",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.04347425326704979,
+          "entailment": 0.00027866894379258156,
+          "neutral": 0.956247091293335
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "It then became 2nd (City of London) Battalion, London Regiment (Royal Fusiliers) and retained that identity until that regiment disbanded in 1937."
+      ],
+      "case_id": "wice_dev03033",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0018737214850261807,
+          "entailment": 0.0001667080941842869,
+          "neutral": 0.9979596138000488
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "\"Merry Company on a Terrace\" (1616) is in the collection of the Mauritshuis, the Hague."
+      ],
+      "case_id": "wice_dev03176",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.007090096827596426,
+          "entailment": 0.9584058523178101,
+          "neutral": 0.03450407460331917
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The couple married in New York in December 2012.",
+        "and their son, Bear, was born the next year."
+      ],
+      "case_id": "wice_dev03310",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.005277374293655157,
+          "entailment": 7.837936573196203e-05,
+          "neutral": 0.994644284248352
+        },
+        {
+          "contradiction": 0.0007996000349521637,
+          "entailment": 0.0003314991481602192,
+          "neutral": 0.9988688826560974
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Hetherington was killed while covering the front lines in the besieged city of Misrata, Libya, during the 2011 Libyan civil war."
+      ],
+      "case_id": "wice_dev03329",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0017791937571018934,
+          "entailment": 0.00243337987922132,
+          "neutral": 0.9957874417304993
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Also in 2006, the band recorded a cover version of Metallica's \"Master of Puppets\" for the \"Kerrang!\" release \"Remastered: Metallica's Master of Puppets Revisited\"."
+      ],
+      "case_id": "wice_dev03481",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.002119074808433652,
+          "entailment": 0.000565481255762279,
+          "neutral": 0.9973154664039612
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The company expanded to 180,000 square feet (17,000\u00a0m) in May 2019 by leasing the entire 28th floor."
+      ],
+      "case_id": "wice_dev03525",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.022253315895795822,
+          "entailment": 0.00024228998518083245,
+          "neutral": 0.9775043725967407
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "She is currently the Melvin R. Seiden Curator of Chinese Art at the Freer Gallery of Art and Arthur M. Sackler Gallery in Washington, D.C."
+      ],
+      "case_id": "wice_dev03549",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.6600685119628906,
+          "entailment": 0.013567263260483742,
+          "neutral": 0.3263642489910126
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Jasmine Waltz is an American model, actress.",
+        "and reality television personality from Las Vegas, Nevada."
+      ],
+      "case_id": "wice_dev03568",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 9.388993203174323e-05,
+          "entailment": 0.998134970664978,
+          "neutral": 0.0017710663378238678
+        },
+        {
+          "contradiction": 0.05065741762518883,
+          "entailment": 0.0008881852845661342,
+          "neutral": 0.9484544396400452
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Bolsonaro was sworn in as President of the Republic on 1 January 2019, succeeding Michel Temer."
+      ],
+      "case_id": "wice_dev03717",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.008652244694530964,
+          "entailment": 0.003941594623029232,
+          "neutral": 0.9874061942100525
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "She is a third cousin of Prince William, Duke of Cambridge.",
+        "and Prince Harry, Duke of Sussex."
+      ],
+      "case_id": "wice_dev03748",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0006224822718650103,
+          "entailment": 0.0008199255098588765,
+          "neutral": 0.9985576272010803
+        },
+        {
+          "contradiction": 0.028403645381331444,
+          "entailment": 0.025130802765488625,
+          "neutral": 0.9464654922485352
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Smith died in Blackville, New Brunswick, on 24 January 1957."
+      ],
+      "case_id": "wice_dev03806",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.9928663969039917,
+          "entailment": 0.001055268570780754,
+          "neutral": 0.006078312173485756
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Giantsopoulos returned to Canada and signed with Cavalry FC of the Canadian Premier League on January 23, 2019."
+      ],
+      "case_id": "wice_dev04032",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.7281612157821655,
+          "entailment": 0.2039838582277298,
+          "neutral": 0.0678548663854599
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "On October 9, French Montana's brother Cokeboy Zack appeared on Revolt TV announcing the release of the mixtape \"Coke Zoo\", a collaboration between French Montana and Fetty Wap."
+      ],
+      "case_id": "wice_dev04047",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0009674117900431156,
+          "entailment": 0.0011515287915244699,
+          "neutral": 0.9978809952735901
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "Teaching Excellence Framework (TEF): LIPA was placed in the gold category, achieving the 15th highest award in the country."
+      ],
+      "case_id": "wice_dev04062",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.001406478462740779,
+          "entailment": 0.00014689459931105375,
+          "neutral": 0.9984466433525085
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "A comprehensive 2016 report by the Chief Public Health Officer of Canada found that 88% of  Canadians.",
+        "one of the highest proportions of the population among G7 countries, indicated that they \"had good or very good health\"."
+      ],
+      "case_id": "wice_dev04121",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0014834402827546,
+          "entailment": 0.000194495587493293,
+          "neutral": 0.998322069644928
+        },
+        {
+          "contradiction": 0.0001813058479456231,
+          "entailment": 0.9961344003677368,
+          "neutral": 0.0036842443514615297
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "It aired on March 4, 2019, in Australia and launched worldwide on Netflix on March 6, 2019."
+      ],
+      "case_id": "wice_dev04175",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.9894858598709106,
+          "entailment": 0.00042375188786536455,
+          "neutral": 0.01009043026715517
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "It is also popular in Iraq, Libya and Nepal."
+      ],
+      "case_id": "wice_dev04211",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.00268848636187613,
+          "entailment": 0.0003780768602155149,
+          "neutral": 0.9969334602355957
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "The first, titled \"Booth memorials: Passages, incidents.",
+        "and anecdotes in the life of Junius Brutus Booth (the Elder) by His Daughter,\" was published in December of 1865, within a year of Lincoln's assassination."
+      ],
+      "case_id": "wice_dev04389",
+      "expected_verdict": "supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.8522918820381165,
+          "entailment": 0.009072988294064999,
+          "neutral": 0.13863515853881836
+        },
+        {
+          "contradiction": 0.0007869197288528085,
+          "entailment": 0.0005298167816363275,
+          "neutral": 0.9986832737922668
+        }
+      ]
+    },
+    {
+      "atoms": [
+        "MyHeritage launched its genetic testing service in 2016, allowing users to use cheek swabs to collect samples."
+      ],
+      "case_id": "wice_dev04446",
+      "expected_verdict": "partially_supported",
+      "nli_probabilities": [
+        {
+          "contradiction": 0.0007621714030392468,
+          "entailment": 0.00017643200408201665,
+          "neutral": 0.9990614056587219
+        }
+      ]
+    }
+  ]
+}

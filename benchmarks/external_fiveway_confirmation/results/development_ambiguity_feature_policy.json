@@ -1,0 +1,14 @@
+{
+  "heldout_used_for_selection": false,
+  "policy": {
+    "ambiguity_aggregation": "top_two_mean",
+    "ambiguity_threshold": 0.4,
+    "max_false_support_rate": 0.05
+  },
+  "policy_id": "dc3fe29c11cf09f4afa51c2a4cc3d1f25cca764ee1c0631fafecf20a26a41a9a",
+  "remote_provider_default_enabled": false,
+  "schema_version": "jev-decomposed-ambiguity-policy-1.0",
+  "selection_split": "development.calibration",
+  "stable_defaults_changed": false,
+  "validation_split": "development.validation"
+}

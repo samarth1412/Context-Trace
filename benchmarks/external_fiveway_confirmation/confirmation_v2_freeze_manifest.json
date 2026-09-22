@@ -1,0 +1,80 @@
+{
+  "case_pack": {
+    "cases": 35,
+    "label_counts": {
+      "contradicted": 7,
+      "partially_supported": 7,
+      "supported": 7,
+      "unsupported": 7,
+      "unverifiable": 7
+    },
+    "path": "benchmarks/external_fiveway_confirmation/confirmation_v2_cases.json",
+    "sha256": "c92cf96e54c3b5bab5f6306523a62305b9cc69f3f59655b9d8f6c654c4157ded"
+  },
+  "code": [
+    {
+      "path": "benchmarks/external_fiveway_confirmation/confirmation_v2.py",
+      "sha256": "4f12ce335b187f8d01ac1efb5b6fe00ec073fc3d8d5ab35e28eb51fa61164bee"
+    },
+    {
+      "path": "benchmarks/external_fiveway_confirmation/adapter.py",
+      "sha256": "07de58f40ba774b17e800b392e6d4e1ceff6a8cde0aeb00c86469cbca8a5fa72"
+    },
+    {
+      "path": "benchmarks/external_fiveway_confirmation/ambiguity_features.py",
+      "sha256": "7d707a43589cc1245e066e83a4237cfedde349826907807f76710dac68b95d41"
+    },
+    {
+      "path": "benchmarks/external_fiveway_confirmation/ambiguity_gate.py",
+      "sha256": "9d12c2c2ec57cfb5ce0a3c96a19c0a15c2918c2619e4e3e65775ad779d76c52d"
+    },
+    {
+      "path": "benchmarks/external_fiveway_confirmation/learned_ambiguity_gate.py",
+      "sha256": "a036de5d4c9d975ace1d622dfc6b2544a9142c19b768aab9130339979480de20"
+    },
+    {
+      "path": "benchmarks/jev_claim_verification/experiment.py",
+      "sha256": "255f6eae0a9c7b35b67d2857263239d2bb25a3220043fd506f2037931ffc0122"
+    },
+    {
+      "path": "benchmarks/jev_v2_verification/run.py",
+      "sha256": "cb04821f39092a61c170e5afe696940e5fc35d44efa05a82ff791292ffb01a1a"
+    }
+  ],
+  "frozen_at": "2026-09-22T05:30:57.072204+00:00",
+  "frozen_policy": {
+    "path": "benchmarks/external_fiveway_confirmation/results/development_learned_gate_policy.json",
+    "policy_id": "bfd4d056c919748265d41fddef44c5dc8ac54c4affa89e848409781350bc2163",
+    "selection_split": "development.calibration",
+    "sha256": "c6c41dd4469b145a1ca0255e3ee92598e97eaeb1c11dde01d169de0d16771831",
+    "validation_split": "development.validation"
+  },
+  "labels_used_for_policy_selection": false,
+  "predictions_absent_when_frozen": true,
+  "remote_provider_default_enabled": false,
+  "schema_version": "external-fiveway-freeze-2.0",
+  "source_files": {
+    "ambient": {
+      "bytes": 593110,
+      "file": "ambient_test.jsonl",
+      "sha256": "f31fa1f24307ae6c4b4b25da1c0aae2193ccbe14252928c279fc909c950540df",
+      "url": "https://raw.githubusercontent.com/alisawuffles/ambient/1fcb43effda068f3047d46b6f9ff0e50e0ee1c1b/AmbiEnt/test.jsonl"
+    },
+    "vitaminc": {
+      "archive_member": "vitaminc/test.jsonl",
+      "archive_member_sha256": "7f799e076dec184e31533d46704fef2022d08ef68a0db2c44f138d2b4e552f36",
+      "bytes": 22381149,
+      "file": "vitaminc.zip",
+      "sha256": "49d82dc1690cbee420d18e2c26f687a7937710bb211845d2571430dfd4dc0337",
+      "url": "https://github.com/TalSchuster/talschuster.github.io/raw/master/static/vitaminc.zip"
+    },
+    "wice": {
+      "bytes": 3624529,
+      "file": "wice_test.jsonl",
+      "sha256": "4c91b9e9590cfcd8f8a0f7288b5ff315af8ade946d7bf26f50fbd671bb86dbe8",
+      "url": "https://raw.githubusercontent.com/ryokamoi/wice/ddeb6c183665e2a20c5f03c5aa07f03888b9870f/data/entailment_retrieval/claim/test.jsonl"
+    }
+  },
+  "split": "heldout",
+  "stable_defaults_changed": false
+}

@@ -1,0 +1,147 @@
+{
+  "schema_version": "1.0",
+  "split": "heldout",
+  "provenance": "synthetic_author_labeled",
+  "scenario_families": ["education", "manufacturing", "banking", "transit", "agriculture"],
+  "cases": [
+    {
+      "id": "test_education_supported_deadline",
+      "tags": ["supported", "date"],
+      "query": "When do scholarship applications close?",
+      "claim": "Scholarship applications close on March 1.",
+      "contexts": [{"id": "scholarship_notice", "text": "The final day to submit a scholarship application is March 1."}],
+      "expected_verdict": "supported",
+      "expected_evidence_context_ids": ["scholarship_notice"]
+    },
+    {
+      "id": "test_manufacturing_supported_inspection",
+      "tags": ["supported", "paraphrase"],
+      "query": "How often is Press 7 inspected?",
+      "claim": "Press 7 is inspected weekly.",
+      "contexts": [{"id": "maintenance_plan", "text": "Technicians inspect Press 7 once each week."}],
+      "expected_verdict": "supported",
+      "expected_evidence_context_ids": ["maintenance_plan"]
+    },
+    {
+      "id": "test_banking_supported_settlement",
+      "tags": ["supported", "number"],
+      "query": "When do domestic transfers settle?",
+      "claim": "Domestic transfers settle within one business day.",
+      "contexts": [{"id": "transfer_terms", "text": "A domestic transfer settles no later than one business day after submission."}],
+      "expected_verdict": "supported",
+      "expected_evidence_context_ids": ["transfer_terms"]
+    },
+    {
+      "id": "test_transit_unsupported_wifi",
+      "tags": ["unsupported", "explicit_absence"],
+      "query": "Does Route 8 offer Wi-Fi?",
+      "claim": "Every Route 8 bus provides free Wi-Fi.",
+      "contexts": [{"id": "route_8_page", "text": "The Route 8 page lists stops and departure times but does not mention onboard Wi-Fi."}],
+      "expected_verdict": "unsupported",
+      "expected_evidence_context_ids": ["route_8_page"]
+    },
+    {
+      "id": "test_agriculture_unsupported_pesticide",
+      "tags": ["unsupported", "lexical_overlap_trap"],
+      "query": "What do survey drones carry?",
+      "claim": "Survey drones spray pesticide on the fields.",
+      "contexts": [{"id": "drone_manual", "text": "Survey drones photograph fields and generate crop-health maps."}],
+      "expected_verdict": "unsupported",
+      "expected_evidence_context_ids": ["drone_manual"]
+    },
+    {
+      "id": "test_education_unsupported_recording",
+      "tags": ["unsupported", "unsupported_addition"],
+      "query": "What is included with seminar enrollment?",
+      "claim": "Seminar enrollment includes downloadable lecture recordings.",
+      "contexts": [{"id": "seminar_page", "text": "Seminar enrollment includes live attendance and printed notes. Recording access is not specified."}],
+      "expected_verdict": "unsupported",
+      "expected_evidence_context_ids": ["seminar_page"]
+    },
+    {
+      "id": "test_education_partial_assessment",
+      "tags": ["partially_supported", "compound_claim"],
+      "query": "What is required to pass the course?",
+      "claim": "Passing the course requires a final essay and an oral examination.",
+      "contexts": [{"id": "course_outline", "text": "Passing the course requires a final essay. The outline does not list an oral examination."}],
+      "expected_verdict": "partially_supported",
+      "expected_evidence_context_ids": ["course_outline"]
+    },
+    {
+      "id": "test_manufacturing_partial_packaging",
+      "tags": ["partially_supported", "compound_claim"],
+      "query": "What must a finished package have?",
+      "claim": "A finished package requires a tamper seal and a batch label.",
+      "contexts": [{"id": "packaging_standard", "text": "A finished package requires a tamper seal. The standard provides no details about a batch label."}],
+      "expected_verdict": "partially_supported",
+      "expected_evidence_context_ids": ["packaging_standard"]
+    },
+    {
+      "id": "test_banking_partial_identity",
+      "tags": ["partially_supported", "compound_claim"],
+      "query": "What documents are required to open the account?",
+      "claim": "Opening the account requires photo identification and proof of address.",
+      "contexts": [{"id": "account_checklist", "text": "Opening the account requires photo identification. Proof-of-address requirements are not described."}],
+      "expected_verdict": "partially_supported",
+      "expected_evidence_context_ids": ["account_checklist"]
+    },
+    {
+      "id": "test_transit_contradicted_platform",
+      "tags": ["contradicted", "number"],
+      "query": "Which platform serves the airport train?",
+      "claim": "The airport train departs from platform 4.",
+      "contexts": [{"id": "station_board", "text": "The airport train departs from platform 7."}],
+      "expected_verdict": "contradicted",
+      "expected_evidence_context_ids": ["station_board"]
+    },
+    {
+      "id": "test_agriculture_contradicted_prohibition",
+      "tags": ["contradicted", "negation"],
+      "query": "Can fertilizer be applied near the stream?",
+      "claim": "Growers may apply fertilizer within the stream buffer.",
+      "contexts": [{"id": "field_standard", "text": "Growers may not apply fertilizer within the stream buffer."}],
+      "expected_verdict": "contradicted",
+      "expected_evidence_context_ids": ["field_standard"]
+    },
+    {
+      "id": "test_manufacturing_contradicted_attribution",
+      "tags": ["contradicted", "wrong_attribution"],
+      "query": "Who signed the safety release?",
+      "claim": "Dana signed the safety release.",
+      "contexts": [{"id": "release_log", "text": "Dana prepared the safety release. Omar reviewed and signed it."}],
+      "expected_verdict": "contradicted",
+      "expected_evidence_context_ids": ["release_log"]
+    },
+    {
+      "id": "test_education_unverifiable_weekends",
+      "tags": ["unverifiable", "qualified_evidence"],
+      "query": "Are all campus buildings open on weekends?",
+      "claim": "Every campus building is open on weekends.",
+      "contexts": [{"id": "campus_hours", "text": "Some eligible campus buildings may open on weekends during teaching periods."}],
+      "expected_verdict": "unverifiable",
+      "expected_evidence_context_ids": ["campus_hours"]
+    },
+    {
+      "id": "test_transit_unverifiable_conflict",
+      "tags": ["unverifiable", "conflicting_sources"],
+      "query": "Does the last ferry leave at 22:00?",
+      "claim": "The last ferry leaves at 22:00.",
+      "contexts": [
+        {"id": "terminal_board", "text": "The last ferry leaves at 22:00."},
+        {"id": "service_alert", "text": "The last ferry does not leave at 22:00; a temporary schedule applies."}
+      ],
+      "expected_verdict": "unverifiable",
+      "expected_evidence_context_ids": ["terminal_board", "service_alert"]
+    },
+    {
+      "id": "test_banking_unverifiable_rate",
+      "tags": ["unverifiable", "approximate_evidence"],
+      "query": "What is the exact promotional rate?",
+      "claim": "The promotional rate is exactly 10 percent.",
+      "contexts": [{"id": "campaign_draft", "text": "The draft campaign uses an approximate rate of 10 percent; final approval is pending."}],
+      "expected_verdict": "unverifiable",
+      "expected_evidence_context_ids": ["campaign_draft"]
+    }
+  ]
+}
+

@@ -1,0 +1,453 @@
+{
+  "cases": [
+    {
+      "answer_character_span": {
+        "end": 627,
+        "start": 484
+      },
+      "claim": "According to customer reviews, The Spot is known for its delicious onion rings and burgers, as well as its chili cheese fries and clam chowder.",
+      "contexts": [
+        {
+          "id": "ragtruth_source_15031",
+          "text": "{\"address\": \"389 Linden Ave\", \"attributes\": {\"Ambience\": {\"casual\": true, \"classy\": false, \"divey\": null, \"hipster\": false, \"intimate\": false, \"romantic\": false, \"touristy\": null, \"trendy\": false, \"upscale\": false}, \"BusinessParking\": {\"garage\": false, \"lot\": true, \"street\": true, \"valet\": false, \"validated\": false}, \"Music\": null, \"OutdoorSeating\": true, \"RestaurantsGoodForGroups\": true, \"RestaurantsReservations\": false, \"RestaurantsTakeOut\": true, \"WiFi\": \"no\"}, \"business_stars\": 3.5, \"categories\": \"Mexican, American (Traditional), Burgers, Restaurants\", \"city\": \"Carpinteria\", \"hours\": {\"Friday\": \"10:0-20:0\", \"Monday\": \"10:0-16:0\", \"Saturday\": \"10:0-20:0\", \"Sunday\": \"10:0-17:0\", \"Thursday\": \"10:0-19:0\", \"Tuesday\": \"10:0-19:0\", \"Wednesday\": \"10:0-19:0\"}, \"name\": \"The Spot\", \"review_info\": [{\"review_date\": \"2022-01-17 06:27:16\", \"review_stars\": 5.0, \"review_text\": \"This is your sign to treat yourself to some top tier onion rings. Super quick and delicious food right by the beach what more could you want\"}, {\"review_date\": \"2021-11-02 16:21:26\", \"review_stars\": 5.0, \"review_text\": \"Best burgers, period. Chili cheese fries with pico de gallo also bomb. Fish sandwich, delish. Clam chowder is the real deal. Tons of options, American, seafood, Mexican. It's all here. Just. Do. It.\"}, {\"review_date\": \"2021-10-08 01:19:04\", \"review_stars\": 4.0, \"review_text\": \"Always good to eat !! Except they don't take card's. Only cash but don't worry, there's an ATM there !\"}], \"state\": \"CA\"}"
+        }
+      ],
+      "dataset": "RAGTruth",
+      "expected_verdict": "supported",
+      "id": "ragtruth_11524_s008",
+      "label_scope": "sentence_level_projected_from_upstream_answer_spans",
+      "overlapping_upstream_annotations": [],
+      "query": "Instruction:\nWrite an objective overview about the following local business based only on the provided structured data in the JSON format. You should include details and cover the information mentioned in the customers' review. The overview should be 100 - 200 words. Don't make up information. Structured data:\n{'name': 'The Spot', 'address': '389 Linden Ave', 'city': 'Carpinteria', 'state': 'CA', 'categories': 'Mexican, American (Traditional), Burgers, Restaurants', 'hours': {'Monday': '10:0-16:0', 'Tuesday': '10:0-19:0', 'Wednesday': '10:0-19:0', 'Thursday': '10:0-19:0', 'Friday': '10:0-20:0', 'Saturday': '10:0-20:0', 'Sunday': '10:0-17:0'}, 'attributes': {'BusinessParking': {'garage': False, 'street': True, 'validated': False, 'lot': True, 'valet': False}, 'RestaurantsReservations': False, 'OutdoorSeating': True, 'WiFi': 'no', 'RestaurantsTakeOut': True, 'RestaurantsGoodForGroups': True, 'Music': None, 'Ambience': {'touristy': None, 'hipster': False, 'romantic': False, 'divey': None, 'intimate': False, 'trendy': False, 'upscale': False, 'classy': False, 'casual': True}}, 'business_stars': 3.5, 'review_info': [{'review_stars': 5.0, 'review_date': '2022-01-17 06:27:16', 'review_text': 'This is your sign to treat yourself to some top tier onion rings. Super quick and delicious food right by the beach what more could you want'}, {'review_stars': 5.0, 'review_date': '2021-11-02 16:21:26', 'review_text': \"Best burgers, period. Chili cheese fries with pico de gallo also bomb. Fish sandwich, delish. Clam chowder is the real deal. Tons of options, American, seafood, Mexican. It's all here. Just. Do. It.\"}, {'review_stars': 4.0, 'review_date': '2021-10-08 01:19:04', 'review_text': \"Always good to eat !! Except they don't take card's. Only cash but don't worry, there's an ATM there !\"}]}\nOverview:",
+      "split": "development",
+      "upstream_label": "contradicted_answer",
+      "upstream_model": "llama-2-13b-chat",
+      "upstream_response_id": "11524",
+      "upstream_task_type": ""
+    },
+    {
+      "answer_character_span": {
+        "end": 1071,
+        "start": 895
+      },
+      "claim": "It's recommended to use a meat thermometer to ensure the roast reaches a safe internal temperature of at least 145\u00b0F for medium-rare, 160\u00b0F for medium, and 170\u00b0F for well-done.",
+      "contexts": [
+        {
+          "id": "ragtruth_source_15112",
+          "text": "passage 1:Directions. Allow roast to stand at room temperature for at least 1 hour. Preheat the oven to 375 degree F. Rub roast with House Seasoning; place roast on a rack in the pan with the rib side down and the fatty side up.Roast for 1 hour.Turn off oven.irections. Allow roast to stand at room temperature for at least 1 hour. Preheat the oven to 375 degree F. Rub roast with House Seasoning; place roast on a rack in the pan with the rib side down and the fatty side up.\n\npassage 2:1 Set oven to 450\u00b0F and allow the oven to preheat for a minimum of 15 minutes. 2  Season the roast with only a small amount of salt but lots of fresh ground black pepper pepper (that's all nothing else but a little salt and fresh ground black pepper, using any other spices will take away the flavor from the prime rib!). Set oven to 450\u00b0F and allow the oven to preheat for a minimum of 15 minutes. 2  Season the roast with only a small amount of salt but lots of fresh ground black pepper pepper (that's all nothing else but a little salt and fresh ground black pepper, using any other spices will take away the flavor from the prime rib!).\n\npassage 3:1 While the roast is resting prepare the au jus; place the roasting pan on top of the stove over high heat. 2  Add in the wine; cook for 8-10 minutes, stirring and scraping any brown bits. 3  Add in the beef stock; cook and reduce the juice by half (this might take about 20 minutes). 4  Add salt and pepper to taste. Set oven to 450\u00b0F and allow the oven to preheat for a minimum of 15 minutes. 2  Season the roast with only a small amount of salt but lots of fresh ground black pepper pepper (that's all nothing else but a little salt and fresh ground black pepper, using any other spices will take away the flavor from the prime rib!)."
+        }
+      ],
+      "dataset": "RAGTruth",
+      "expected_verdict": "partially_supported",
+      "id": "ragtruth_13163_s010",
+      "label_scope": "sentence_level_projected_from_upstream_answer_spans",
+      "overlapping_upstream_annotations": [
+        {
+          "end": 1071,
+          "label_type": "Evident Baseless Info",
+          "start": 966
+        }
+      ],
+      "query": "how to cook a small prime rib roast in oven",
+      "split": "development",
+      "upstream_label": "partial_support",
+      "upstream_model": "llama-2-70b-chat",
+      "upstream_response_id": "13163",
+      "upstream_task_type": ""
+    },
+    {
+      "answer_character_span": {
+        "end": 385,
+        "start": 286
+      },
+      "claim": "Unlike Christmas, Easter's date varies each year based on moon phases and the Earth's tilting axis.",
+      "contexts": [
+        {
+          "id": "ragtruth_source_11323",
+          "text": "Easter is a cornerstone event in the Christian faith, but it's surrounded by interesting quirks. It celebrates the completion of Christ's mission of salvation in the Crucifixion and Resurrection. By dying on Good Friday, Christ atoned for the sins of others; by rising from the grave on Sunday, Christ conquered death. Simple enough and reason for Christians to celebrate. But, like Christmas with its tree, ornaments and Santa Claus, Easter has picked up its peripheral trappings -- the bunny and colorful eggs.  Unlike Christmas, it doesn't fall on the same day every year but shifts around in spring depending upon cosmic events. And that blood moon we just had -- is it pure coincidence that it fell around Easter? (No.) Here's a journey from the Vatican to the Holy Land, around the moon and the Earth's tilting axis, to Germany and the United States to try to explain the complex holiday called Easter. And you'll learn to how to color Easter eggs with Kool-Aid. Let's start at the Vatican. At the Vatican, Holy Week began with Palm Sunday last week and culminated in Easter Sunday Mass with multiple celebrations in between to mark the final week of Christ's mortal life. Jesus rode on the back of a donkey into Jerusalem on Palm Sunday where crowds celebrated him as the Messiah and laid down palm branches in his path. But the crowd and the Romans turned on him in the course of the week, according to the Bible, leading to his crucifixion and resurrection. Rain sprinkled down on worshipers standing under a sea of umbrellas as they gathered in a gray St. Peter's Square on Sunday to partake in the outdoor services held by Pope Francis. Afterward, the Pontiff took a moment to tell the world to do right those in need in his Urbi et Orbi address. Francis lamented the suffering of people in many of the conflicts around the globe. From Nigeria to South Sudan, Iraq to Ukraine, he expressed hope that violence would end. Francis also doesn't put on airs. This week he washed the feet of believers, repeating the Biblical account of a woman, a sinner, washing Jesus' feet and anointing them with oil. Let's move on to old Jerusalem, the birthplace of Easter. The Church of the Holy Sepulcher in old Jerusalem unifies the spot where Christ was crucified -- Calvary -- with his tomb, or sepulcher. On Sunday, Catholics and Armenian Christians celebrated the Resurrection there. In the morning, the Latin Patriarch, the Archbishop of Jerusalem, entered the basilica. Then mass was held followed by a procession. But a large group of indigenous Christians didn't join them. It's not quite Easter yet in the Holy Land for Eastern Orthodox Christians. They'll be celebrating a week from now, because they determine Easter's date by a different calendar than Western Christians -- the Julian calendar. Which brings us to the question of how astronomy is used to determine the date of Easter Sunday. A blood moon appeared in the sky early Saturday, right between Good Friday and Easter Sunday and during Passover. Just a coincidence? Not completely, because the dates for both Passover -- the Jewish holiday celebrating the deliverance from slavery in Egypt -- and Easter are determined by moon phases, according to timeanddate.com. Easter's timing is related to Passover, because Jesus was crucified around then, according to the Bible. Many Jewish holidays, including Passover, fall on full moon, which is also a prerequisite for a lunar eclipse, the event that turns the moon a blood red color. Since the timing of moon phases doesn't jibe with Earth's orbit -- which is how we determine the length of a year now -- Passover's exact date moves around -- and so does Easter's. When Christian bishops first convened at the Council of Nicaea in the year 325, they made a rule to determine the date of Easter, so as to fairly reliably pin it to Passover:. It would fall on the first Sunday after the first full moon following the vernal equinox. That's the day in March when Earth's axis reaches a midpoint between winter and summer and the day and night are of equal length. But ... if the full moon fell on Sunday, Easter would be pushed down a week. Confusing? It got worse. When the West moved from the Julian calendar to the Gregorian calendar, Orthodox Christians stayed put, resulting in -- usually -- two separate dates for Easter. In 1997, the World Council of Churches pushed for a unified method of determining a date based on astronomical occurrences. It didn't catch on. But some odd Easter trappings that popped up after the Middle Ages very much have -- the eggs and the bunny. The bunny is an egg-laying pagan that worships the moon. That's one notion of its origins, but probably not the actual one. German immigrants appear to have brought it to North America in the 1700s. German historians are not clear on its beginnings, but the first known mention of the bunny and the eggs in writing was in 1682. Professor of medicine Georg Franck von Frankenau described in his paper \"De ovis paschalibus,\" or \"On Easter eggs,\" a custom in the Alsace region involving a bunny and eggs, according to German public television. Some also credit the region with inadvertently inventing the Christmas tree. But von Frankenau left out any explanation of how the tradition arose, leading to a number of theories in Germany. One common idea: During Lent, people had to abstain from eating eggs, but hens kept on laying them, so farmers boiled and preserved them. By the time Easter rolled around, they were practically swimming in them. They had to figure out something to do with them when the holiday hit. Play hide and seek with them; color them; give them as gifts. Parents may have invented the bunny as a playful explanation for children on where the Easter eggs came from. If you're coloring eggs this year, here's an interesting tip.  Instead of stinking up your place with the smell of vinegar, use Kool-Aid, YouTube science geek Grant Thompson suggests. And it appears to work. Just use a whole packet in a small glass of hot water and gently lay the eggs in. They turn out as bright as they would in any other food dye. But be careful, it stains everything else, like clothes and upholstery, Thompson warns. That's why your tongue changes colors when you drink it. Happy Easter! Happy Passover!"
+        }
+      ],
+      "dataset": "RAGTruth",
+      "expected_verdict": "supported",
+      "id": "ragtruth_1513_s003",
+      "label_scope": "sentence_level_projected_from_upstream_answer_spans",
+      "overlapping_upstream_annotations": [],
+      "query": "Summarize the following news within 200 words:\nEaster is a cornerstone event in the Christian faith, but it's surrounded by interesting quirks. It celebrates the completion of Christ's mission of salvation in the Crucifixion and Resurrection. By dying on Good Friday, Christ atoned for the sins of others; by rising from the grave on Sunday, Christ conquered death. Simple enough and reason for Christians to celebrate. But, like Christmas with its tree, ornaments and Santa Claus, Easter has picked up its peripheral trappings -- the bunny and colorful eggs.  Unlike Christmas, it doesn't fall on the same day every year but shifts around in spring depending upon cosmic events. And that blood moon we just had -- is it pure coincidence that it fell around Easter? (No.) Here's a journey from the Vatican to the Holy Land, around the moon and the Earth's tilting axis, to Germany and the United States to try to explain the complex holiday called Easter. And you'll learn to how to color Easter eggs with Kool-Aid. Let's start at the Vatican. At the Vatican, Holy Week began with Palm Sunday last week and culminated in Easter Sunday Mass with multiple celebrations in between to mark the final week of Christ's mortal life. Jesus rode on the back of a donkey into Jerusalem on Palm Sunday where crowds celebrated him as the Messiah and laid down palm branches in his path. But the crowd and the Romans turned on him in the course of the week, according to the Bible, leading to his crucifixion and resurrection. Rain sprinkled down on worshipers standing under a sea of umbrellas as they gathered in a gray St. Peter's Square on Sunday to partake in the outdoor services held by Pope Francis. Afterward, the Pontiff took a moment to tell the world to do right those in need in his Urbi et Orbi address. Francis lamented the suffering of people in many of the conflicts around the globe. From Nigeria to South Sudan, Iraq to Ukraine, he expressed hope that violence would end. Francis also doesn't put on airs. This week he washed the feet of believers, repeating the Biblical account of a woman, a sinner, washing Jesus' feet and anointing them with oil. Let's move on to old Jerusalem, the birthplace of Easter. The Church of the Holy Sepulcher in old Jerusalem unifies the spot where Christ was crucified -- Calvary -- with his tomb, or sepulcher. On Sunday, Catholics and Armenian Christians celebrated the Resurrection there. In the morning, the Latin Patriarch, the Archbishop of Jerusalem, entered the basilica. Then mass was held followed by a procession. But a large group of indigenous Christians didn't join them. It's not quite Easter yet in the Holy Land for Eastern Orthodox Christians. They'll be celebrating a week from now, because they determine Easter's date by a different calendar than Western Christians -- the Julian calendar. Which brings us to the question of how astronomy is used to determine the date of Easter Sunday. A blood moon appeared in the sky early Saturday, right between Good Friday and Easter Sunday and during Passover. Just a coincidence? Not completely, because the dates for both Passover -- the Jewish holiday celebrating the deliverance from slavery in Egypt -- and Easter are determined by moon phases, according to timeanddate.com. Easter's timing is related to Passover, because Jesus was crucified around then, according to the Bible. Many Jewish holidays, including Passover, fall on full moon, which is also a prerequisite for a lunar eclipse, the event that turns the moon a blood red color. Since the timing of moon phases doesn't jibe with Earth's orbit -- which is how we determine the length of a year now -- Passover's exact date moves around -- and so does Easter's. When Christian bishops first convened at the Council of Nicaea in the year 325, they made a rule to determine the date of Easter, so as to fairly reliably pin it to Passover:. It would fall on the first Sunday after the first full moon following the vernal equinox. That's the day in March when Earth's axis reaches a midpoint between winter and summer and the day and night are of equal length. But ... if the full moon fell on Sunday, Easter would be pushed down a week. Confusing? It got worse. When the West moved from the Julian calendar to the Gregorian calendar, Orthodox Christians stayed put, resulting in -- usually -- two separate dates for Easter. In 1997, the World Council of Churches pushed for a unified method of determining a date based on astronomical occurrences. It didn't catch on. But some odd Easter trappings that popped up after the Middle Ages very much have -- the eggs and the bunny. The bunny is an egg-laying pagan that worships the moon. That's one notion of its origins, but probably not the actual one. German immigrants appear to have brought it to North America in the 1700s. German historians are not clear on its beginnings, but the first known mention of the bunny and the eggs in writing was in 1682. Professor of medicine Georg Franck von Frankenau described in his paper \"De ovis paschalibus,\" or \"On Easter eggs,\" a custom in the Alsace region involving a bunny and eggs, according to German public television. Some also credit the region with inadvertently inventing the Christmas tree. But von Frankenau left out any explanation of how the tradition arose, leading to a number of theories in Germany. One common idea: During Lent, people had to abstain from eating eggs, but hens kept on laying them, so farmers boiled and preserved them. By the time Easter rolled around, they were practically swimming in them. They had to figure out something to do with them when the holiday hit. Play hide and seek with them; color them; give them as gifts. Parents may have invented the bunny as a playful explanation for children on where the Easter eggs came from. If you're coloring eggs this year, here's an interesting tip.  Instead of stinking up your place with the smell of vinegar, use Kool-Aid, YouTube science geek Grant Thompson suggests. And it appears to work. Just use a whole packet in a small glass of hot water and gently lay the eggs in. They turn out as bright as they would in any other food dye. But be careful, it stains everything else, like clothes and upholstery, Thompson warns. That's why your tongue changes colors when you drink it. Happy Easter! Happy Passover!\n\noutput:",
+      "split": "development",
+      "upstream_label": "partial_support",
+      "upstream_model": "gpt-3.5-turbo-0613",
+      "upstream_response_id": "1513",
+      "upstream_task_type": ""
+    },
+    {
+      "answer_character_span": {
+        "end": 203,
+        "start": 40
+      },
+      "claim": "Unicef delivered vital aid to Yemen's capital city of Sanaa despite the ongoing conflict, using a rare window of peace to bring food and supplies to those in need.",
+      "contexts": [
+        {
+          "id": "ragtruth_source_11383",
+          "text": "Sanaa, Yemen (CNN)As the transport plane comes in to land at Sanaa Airport, the deep scars of the brutal conflict tearing Yemen apart are only too clear: wrecked aircraft line the runway, and nearby buildings lie in ruins. To most of the outside world, this war-torn country is off limits, the weeks-long battle between Houthi rebels and Saudi-led coalition forces making it too dangerous to visit, and a no-fly zone rendering its international airport all but obsolete -- but on Tuesday, CNN was granted rare access on a desperate aid mission by Unicef, the United Nations Children's Fund. The airport has previously been bombed. Hostilities are likely to resume before the day is out: a brief, peaceful window has been delicately negotiated following a special request from the U.N. -- but it won't last long. Unicef hopes there will be just enough time to deliver vital food and supplies, helping to ease the country's worsening humanitarian crisis. More than 100,000 Yemeni civilians have fled their homes since fighting began, and OCHA, the United Nations Office for the Coordination of Humanitarian Affairs, estimates that 15.9 million people here are in need of assistance. The main terminal at El Rahaba Airport is under the control of the Houthi rebels. We can't get near it for fear of provoking trouble. But there is plenty to be done out on the tarmac. Within minutes of touching down, a small army of aid workers is busy unloading huge mounds of much-needed provisions. Gusts of wind blow dust across the runway, as crates and pallets of emergency nutrition and medical equipment pile up rapidly beside the plane. Unicef's team has overcome more than one hurdle just getting it this far -- now they'll have to work out how to distribute it to those most in need in a country paralyzed by a lack of resources. Even before Saudi airstrikes, most of the 25 million people in Yemen required humanitarian assistance to meet their most basic needs, according to the United Nations. As they work, an Air India plane is taxiing away from the terminal. Thousands have fled the country on evacuation flights in recent weeks as the situation in Yemen has deteriorated. But for those who have nowhere else to go and no chance of a flight out, mercy missions by Unicef and other NGOs like it are the only hope. READ MORE: 'A window into hell' - desperate Yemenis flee by boatREAD MORE: Civilian catastrophe looming in YemenREAD MORE: Yemen crisis - how you can help. Bryony Jones contributed to this report."
+        }
+      ],
+      "dataset": "RAGTruth",
+      "expected_verdict": "supported",
+      "id": "ragtruth_1678_s003",
+      "label_scope": "sentence_level_projected_from_upstream_answer_spans",
+      "overlapping_upstream_annotations": [],
+      "query": "Summarize the following news within 106 words:\nSanaa, Yemen (CNN)As the transport plane comes in to land at Sanaa Airport, the deep scars of the brutal conflict tearing Yemen apart are only too clear: wrecked aircraft line the runway, and nearby buildings lie in ruins. To most of the outside world, this war-torn country is off limits, the weeks-long battle between Houthi rebels and Saudi-led coalition forces making it too dangerous to visit, and a no-fly zone rendering its international airport all but obsolete -- but on Tuesday, CNN was granted rare access on a desperate aid mission by Unicef, the United Nations Children's Fund. The airport has previously been bombed. Hostilities are likely to resume before the day is out: a brief, peaceful window has been delicately negotiated following a special request from the U.N. -- but it won't last long. Unicef hopes there will be just enough time to deliver vital food and supplies, helping to ease the country's worsening humanitarian crisis. More than 100,000 Yemeni civilians have fled their homes since fighting began, and OCHA, the United Nations Office for the Coordination of Humanitarian Affairs, estimates that 15.9 million people here are in need of assistance. The main terminal at El Rahaba Airport is under the control of the Houthi rebels. We can't get near it for fear of provoking trouble. But there is plenty to be done out on the tarmac. Within minutes of touching down, a small army of aid workers is busy unloading huge mounds of much-needed provisions. Gusts of wind blow dust across the runway, as crates and pallets of emergency nutrition and medical equipment pile up rapidly beside the plane. Unicef's team has overcome more than one hurdle just getting it this far -- now they'll have to work out how to distribute it to those most in need in a country paralyzed by a lack of resources. Even before Saudi airstrikes, most of the 25 million people in Yemen required humanitarian assistance to meet their most basic needs, according to the United Nations. As they work, an Air India plane is taxiing away from the terminal. Thousands have fled the country on evacuation flights in recent weeks as the situation in Yemen has deteriorated. But for those who have nowhere else to go and no chance of a flight out, mercy missions by Unicef and other NGOs like it are the only hope. READ MORE: 'A window into hell' - desperate Yemenis flee by boatREAD MORE: Civilian catastrophe looming in YemenREAD MORE: Yemen crisis - how you can help. Bryony Jones contributed to this report.\n\noutput:",
+      "split": "development",
+      "upstream_label": "no_failure_detected",
+      "upstream_model": "llama-2-13b-chat",
+      "upstream_response_id": "1678",
+      "upstream_task_type": ""
+    },
+    {
+      "answer_character_span": {
+        "end": 404,
+        "start": 332
+      },
+      "claim": "Deep purple urine is associated with porphyria, a rare genetic disorder.",
+      "contexts": [
+        {
+          "id": "ragtruth_source_12307",
+          "text": "passage 1:Seeing red urine is typically a sign that there is blood in the urine, a little blood can produce a dramatic color change, and can be a sign of something serious, like an infection or cancer, and it warrants a visit to your doctor or urologist.\n\npassage 2:Deep purple urine is an identifying characteristic of porphyria, a rare, inherited disorder of red blood cells. Pigments and other compounds in certain foods and medications may change your urine color. Beets, berries and fava beans are among the foods most likely to affect urine color.\n\npassage 3:The normal color of urine is pale yellow, and this color is due to the pigment urochrome. However, this pale color of urine is sometimes altered when, in cases of kidney diseases, the filtration and selective re-absorption stages of urine production are malfunctioning."
+        }
+      ],
+      "dataset": "RAGTruth",
+      "expected_verdict": "supported",
+      "id": "ragtruth_16895_s004",
+      "label_scope": "sentence_level_projected_from_upstream_answer_spans",
+      "overlapping_upstream_annotations": [],
+      "query": "color of urin meaning",
+      "split": "development",
+      "upstream_label": "partial_support",
+      "upstream_model": "llama-2-70b-chat",
+      "upstream_response_id": "16895",
+      "upstream_task_type": ""
+    },
+    {
+      "answer_character_span": {
+        "end": 646,
+        "start": 499
+      },
+      "claim": "However, any persistent or significant changes in urine color should be evaluated by a healthcare professional to rule out potential health issues.",
+      "contexts": [
+        {
+          "id": "ragtruth_source_12307",
+          "text": "passage 1:Seeing red urine is typically a sign that there is blood in the urine, a little blood can produce a dramatic color change, and can be a sign of something serious, like an infection or cancer, and it warrants a visit to your doctor or urologist.\n\npassage 2:Deep purple urine is an identifying characteristic of porphyria, a rare, inherited disorder of red blood cells. Pigments and other compounds in certain foods and medications may change your urine color. Beets, berries and fava beans are among the foods most likely to affect urine color.\n\npassage 3:The normal color of urine is pale yellow, and this color is due to the pigment urochrome. However, this pale color of urine is sometimes altered when, in cases of kidney diseases, the filtration and selective re-absorption stages of urine production are malfunctioning."
+        }
+      ],
+      "dataset": "RAGTruth",
+      "expected_verdict": "partially_supported",
+      "id": "ragtruth_16895_s006",
+      "label_scope": "sentence_level_projected_from_upstream_answer_spans",
+      "overlapping_upstream_annotations": [
+        {
+          "end": 646,
+          "label_type": "Evident Baseless Info",
+          "start": 499
+        }
+      ],
+      "query": "color of urin meaning",
+      "split": "development",
+      "upstream_label": "partial_support",
+      "upstream_model": "llama-2-70b-chat",
+      "upstream_response_id": "16895",
+      "upstream_task_type": ""
+    },
+    {
+      "answer_character_span": {
+        "end": 452,
+        "start": 349
+      },
+      "claim": "Tameka discussed her journey as a mother and entrepreneur, balancing her work and raising two children.",
+      "contexts": [
+        {
+          "id": "ragtruth_source_13870",
+          "text": "Usher\u2019s Ex-Wife Tameka Raymond Chats with Ariel Shaw, MBA of Southern Crescent Women In Business\nUsher\u2019s Ex-Wife Tameka Raymond Joins Ariel Shaw, MBA of Southern Crescent Women In Business for A Fireside Chat About Her New Memoir\nOctober 29, 2023 (Atlanta, GA) \u2013 On Wednesday October 25th, Southern Crescent Women In Business held an Intimate Fireside Chat with Celebrity Stylist and Mompreneur Tameka Raymond, ex-wife of Singer Usher, at Eagles Landing Country Club. Tameka Raymond is most known for her extensive career as a celebrity fashion stylist, lending her creative talents to legendary soul singers like Patti Labelle, Chaka Khan and Aretha Franklin to chart-toppers such as Jay-Z, Toni Braxton, Usher, Chris Brown, Mary J. Blige, and more.\nThe event allowed attendees to get up-close and personal with Tameka Raymond, beyond her messy and public divorce, to learn more about her role as a formidable businesswoman, mother, and philanthropist. Fireside Chat Host, Ariel Shaw, MBA covered a wide array of topics with Tameka, who graciously and readily answered questions that allowed the other women in the room to emotionally engage and also share. Tameka shared with Ariel and the audience how she balanced being a mother and an entrepreneur, the mission of The Kile\u2019s World Foundation, and her recently released memoir \u2018Here I Stand\u2026In A Beautiful State.\u2019 A memoir dedicated to growth and striving to remain in what Tameka has labeled a \u201cbeautiful state\u201d ;also sharing that \u201c\u2026each chapter of the memoir was named after a song that was representative of that particular time in her life.\u201d The event continued with questions from attendees, a book signing, and a photo opportunities with Tameka. Learn more at https://www.tamekaraymond.com.\nSponsors for the event included Southern Crescent Women in Business Inc, The Empire Contracting Company, DLS Installation LLC, and Seven Twelve Vodka.\nABOUT SOUTHERN CRESCENT WOMEN IN BUSINESS\nSouthern Crescent Women in Business (SCWIB) is a conglomerate of women owned businesses and women in business that have come together to change the economic landscape in the Southern Crescent area. With active Chapters in South Metro and now North Metro. Their vision is to develop key partnerships, deepen business relationships and to provide resources to assist in the growth of women owned business. To join this organization as a member or to find out more, visit www.scwibga.org."
+        }
+      ],
+      "dataset": "RAGTruth",
+      "expected_verdict": "partially_supported",
+      "id": "ragtruth_4196_s003",
+      "label_scope": "sentence_level_projected_from_upstream_answer_spans",
+      "overlapping_upstream_annotations": [
+        {
+          "end": 451,
+          "label_type": "Evident Baseless Info",
+          "start": 431
+        }
+      ],
+      "query": "Summarize the following news within 94 words:\nUsher\u2019s Ex-Wife Tameka Raymond Chats with Ariel Shaw, MBA of Southern Crescent Women In Business\nUsher\u2019s Ex-Wife Tameka Raymond Joins Ariel Shaw, MBA of Southern Crescent Women In Business for A Fireside Chat About Her New Memoir\nOctober 29, 2023 (Atlanta, GA) \u2013 On Wednesday October 25th, Southern Crescent Women In Business held an Intimate Fireside Chat with Celebrity Stylist and Mompreneur Tameka Raymond, ex-wife of Singer Usher, at Eagles Landing Country Club. Tameka Raymond is most known for her extensive career as a celebrity fashion stylist, lending her creative talents to legendary soul singers like Patti Labelle, Chaka Khan and Aretha Franklin to chart-toppers such as Jay-Z, Toni Braxton, Usher, Chris Brown, Mary J. Blige, and more.\nThe event allowed attendees to get up-close and personal with Tameka Raymond, beyond her messy and public divorce, to learn more about her role as a formidable businesswoman, mother, and philanthropist. Fireside Chat Host, Ariel Shaw, MBA covered a wide array of topics with Tameka, who graciously and readily answered questions that allowed the other women in the room to emotionally engage and also share. Tameka shared with Ariel and the audience how she balanced being a mother and an entrepreneur, the mission of The Kile\u2019s World Foundation, and her recently released memoir \u2018Here I Stand\u2026In A Beautiful State.\u2019 A memoir dedicated to growth and striving to remain in what Tameka has labeled a \u201cbeautiful state\u201d ;also sharing that \u201c\u2026each chapter of the memoir was named after a song that was representative of that particular time in her life.\u201d The event continued with questions from attendees, a book signing, and a photo opportunities with Tameka. Learn more at https://www.tamekaraymond.com.\nSponsors for the event included Southern Crescent Women in Business Inc, The Empire Contracting Company, DLS Installation LLC, and Seven Twelve Vodka.\nABOUT SOUTHERN CRESCENT WOMEN IN BUSINESS\nSouthern Crescent Women in Business (SCWIB) is a conglomerate of women owned businesses and women in business that have come together to change the economic landscape in the Southern Crescent area. With active Chapters in South Metro and now North Metro. Their vision is to develop key partnerships, deepen business relationships and to provide resources to assist in the growth of women owned business. To join this organization as a member or to find out more, visit www.scwibga.org.\noutput:",
+      "split": "development",
+      "upstream_label": "partial_support",
+      "upstream_model": "mistral-7B-instruct",
+      "upstream_response_id": "4196",
+      "upstream_task_type": ""
+    },
+    {
+      "answer_character_span": {
+        "end": 709,
+        "start": 580
+      },
+      "claim": "Customers particularly rave about the mimosas, which are made with freshly squeezed orange juice and served with a generous pour.",
+      "contexts": [
+        {
+          "id": "ragtruth_source_13761",
+          "text": "{\"address\": \"973 Linden Ave\", \"attributes\": {\"Ambience\": {\"casual\": true, \"classy\": false, \"divey\": false, \"hipster\": false, \"intimate\": false, \"romantic\": false, \"touristy\": false, \"trendy\": false, \"upscale\": false}, \"BusinessParking\": {\"garage\": false, \"lot\": false, \"street\": true, \"valet\": false, \"validated\": false}, \"Music\": null, \"OutdoorSeating\": true, \"RestaurantsGoodForGroups\": true, \"RestaurantsReservations\": false, \"RestaurantsTakeOut\": true, \"WiFi\": \"no\"}, \"business_stars\": 4.0, \"categories\": \"Breakfast & Brunch, Diners, Restaurants, American (Traditional)\", \"city\": \"Carpinteria\", \"hours\": {\"Friday\": \"8:0-14:0\", \"Monday\": \"0:0-0:0\", \"Saturday\": \"8:0-14:0\", \"Sunday\": \"8:0-14:0\", \"Thursday\": \"8:0-14:0\", \"Tuesday\": \"8:0-14:0\", \"Wednesday\": \"8:0-14:0\"}, \"name\": \"The Worker Bee Cafe\", \"review_info\": [{\"review_date\": \"2022-01-16 16:42:35\", \"review_stars\": 5.0, \"review_text\": \"Always the best place for breakfast in Carpenteria. Mimosas are the best. Service is stellar. You can't go wrong if you randomly choose something off the daily specials menu. I love this place!\"}, {\"review_date\": \"2022-01-16 16:35:55\", \"review_stars\": 5.0, \"review_text\": \"This is my favorite restaurant. It's a must have whenever my family and I are in Carpinteria. The entire staff is incredibly nice and there isn't a bad thing on the menu. The welcoming nature and delicious food make this an easy five star rating. The owner, Rick, is the nicest guy on earth. I recommend chatting with him if you get the chance!\"}, {\"review_date\": \"2022-01-07 20:38:55\", \"review_stars\": 5.0, \"review_text\": \"Absolutely, positively my most favorite hole in the wall breakfast/brunch/lunch spot around! Always love seeing Rick, the owner and his team of fabulous bees! The specials are always spectacular and unique. High quality, fresh food. Don't forget the generous mimosa! See you soon, Rick! We  you!\"}], \"state\": \"CA\"}"
+        }
+      ],
+      "dataset": "RAGTruth",
+      "expected_verdict": "partially_supported",
+      "id": "ragtruth_6550_s006",
+      "label_scope": "sentence_level_projected_from_upstream_answer_spans",
+      "overlapping_upstream_annotations": [
+        {
+          "end": 708,
+          "label_type": "Subtle Baseless Info",
+          "start": 627
+        }
+      ],
+      "query": "Instruction:\nWrite an objective overview about the following local business based only on the provided structured data in the JSON format. You should include details and cover the information mentioned in the customers' review. The overview should be 100 - 200 words. Don't make up information. Structured data:\n{'name': 'The Worker Bee Cafe', 'address': '973 Linden Ave', 'city': 'Carpinteria', 'state': 'CA', 'categories': 'Breakfast & Brunch, Diners, Restaurants, American (Traditional)', 'hours': {'Monday': '0:0-0:0', 'Tuesday': '8:0-14:0', 'Wednesday': '8:0-14:0', 'Thursday': '8:0-14:0', 'Friday': '8:0-14:0', 'Saturday': '8:0-14:0', 'Sunday': '8:0-14:0'}, 'attributes': {'BusinessParking': {'garage': False, 'street': True, 'validated': False, 'lot': False, 'valet': False}, 'RestaurantsReservations': False, 'OutdoorSeating': True, 'WiFi': 'no', 'RestaurantsTakeOut': True, 'RestaurantsGoodForGroups': True, 'Music': None, 'Ambience': {'touristy': False, 'hipster': False, 'romantic': False, 'divey': False, 'intimate': False, 'trendy': False, 'upscale': False, 'classy': False, 'casual': True}}, 'business_stars': 4.0, 'review_info': [{'review_stars': 5.0, 'review_date': '2022-01-16 16:42:35', 'review_text': \"Always the best place for breakfast in Carpenteria. Mimosas are the best. Service is stellar. You can't go wrong if you randomly choose something off the daily specials menu. I love this place!\"}, {'review_stars': 5.0, 'review_date': '2022-01-16 16:35:55', 'review_text': \"This is my favorite restaurant. It's a must have whenever my family and I are in Carpinteria. The entire staff is incredibly nice and there isn't a bad thing on the menu. The welcoming nature and delicious food make this an easy five star rating. The owner, Rick, is the nicest guy on earth. I recommend chatting with him if you get the chance!\"}, {'review_stars': 5.0, 'review_date': '2022-01-07 20:38:55', 'review_text': \"Absolutely, positively my most favorite hole in the wall breakfast/brunch/lunch spot around! Always love seeing Rick, the owner and his team of fabulous bees! The specials are always spectacular and unique. High quality, fresh food. Don't forget the generous mimosa! See you soon, Rick! We  you!\"}]}\nOverview:",
+      "split": "development",
+      "upstream_label": "contradicted_answer",
+      "upstream_model": "llama-2-13b-chat",
+      "upstream_response_id": "6550",
+      "upstream_task_type": ""
+    },
+    {
+      "answer_character_span": {
+        "end": 975,
+        "start": 836
+      },
+      "claim": "The ambiance is casual and intimate, with outdoor seating available for those who want to enjoy the beautiful Santa Barbara County weather.",
+      "contexts": [
+        {
+          "id": "ragtruth_source_13761",
+          "text": "{\"address\": \"973 Linden Ave\", \"attributes\": {\"Ambience\": {\"casual\": true, \"classy\": false, \"divey\": false, \"hipster\": false, \"intimate\": false, \"romantic\": false, \"touristy\": false, \"trendy\": false, \"upscale\": false}, \"BusinessParking\": {\"garage\": false, \"lot\": false, \"street\": true, \"valet\": false, \"validated\": false}, \"Music\": null, \"OutdoorSeating\": true, \"RestaurantsGoodForGroups\": true, \"RestaurantsReservations\": false, \"RestaurantsTakeOut\": true, \"WiFi\": \"no\"}, \"business_stars\": 4.0, \"categories\": \"Breakfast & Brunch, Diners, Restaurants, American (Traditional)\", \"city\": \"Carpinteria\", \"hours\": {\"Friday\": \"8:0-14:0\", \"Monday\": \"0:0-0:0\", \"Saturday\": \"8:0-14:0\", \"Sunday\": \"8:0-14:0\", \"Thursday\": \"8:0-14:0\", \"Tuesday\": \"8:0-14:0\", \"Wednesday\": \"8:0-14:0\"}, \"name\": \"The Worker Bee Cafe\", \"review_info\": [{\"review_date\": \"2022-01-16 16:42:35\", \"review_stars\": 5.0, \"review_text\": \"Always the best place for breakfast in Carpenteria. Mimosas are the best. Service is stellar. You can't go wrong if you randomly choose something off the daily specials menu. I love this place!\"}, {\"review_date\": \"2022-01-16 16:35:55\", \"review_stars\": 5.0, \"review_text\": \"This is my favorite restaurant. It's a must have whenever my family and I are in Carpinteria. The entire staff is incredibly nice and there isn't a bad thing on the menu. The welcoming nature and delicious food make this an easy five star rating. The owner, Rick, is the nicest guy on earth. I recommend chatting with him if you get the chance!\"}, {\"review_date\": \"2022-01-07 20:38:55\", \"review_stars\": 5.0, \"review_text\": \"Absolutely, positively my most favorite hole in the wall breakfast/brunch/lunch spot around! Always love seeing Rick, the owner and his team of fabulous bees! The specials are always spectacular and unique. High quality, fresh food. Don't forget the generous mimosa! See you soon, Rick! We  you!\"}], \"state\": \"CA\"}"
+        }
+      ],
+      "dataset": "RAGTruth",
+      "expected_verdict": "contradicted",
+      "id": "ragtruth_6550_s008",
+      "label_scope": "sentence_level_projected_from_upstream_answer_spans",
+      "overlapping_upstream_annotations": [
+        {
+          "end": 871,
+          "label_type": "Evident Conflict",
+          "start": 863
+        }
+      ],
+      "query": "Instruction:\nWrite an objective overview about the following local business based only on the provided structured data in the JSON format. You should include details and cover the information mentioned in the customers' review. The overview should be 100 - 200 words. Don't make up information. Structured data:\n{'name': 'The Worker Bee Cafe', 'address': '973 Linden Ave', 'city': 'Carpinteria', 'state': 'CA', 'categories': 'Breakfast & Brunch, Diners, Restaurants, American (Traditional)', 'hours': {'Monday': '0:0-0:0', 'Tuesday': '8:0-14:0', 'Wednesday': '8:0-14:0', 'Thursday': '8:0-14:0', 'Friday': '8:0-14:0', 'Saturday': '8:0-14:0', 'Sunday': '8:0-14:0'}, 'attributes': {'BusinessParking': {'garage': False, 'street': True, 'validated': False, 'lot': False, 'valet': False}, 'RestaurantsReservations': False, 'OutdoorSeating': True, 'WiFi': 'no', 'RestaurantsTakeOut': True, 'RestaurantsGoodForGroups': True, 'Music': None, 'Ambience': {'touristy': False, 'hipster': False, 'romantic': False, 'divey': False, 'intimate': False, 'trendy': False, 'upscale': False, 'classy': False, 'casual': True}}, 'business_stars': 4.0, 'review_info': [{'review_stars': 5.0, 'review_date': '2022-01-16 16:42:35', 'review_text': \"Always the best place for breakfast in Carpenteria. Mimosas are the best. Service is stellar. You can't go wrong if you randomly choose something off the daily specials menu. I love this place!\"}, {'review_stars': 5.0, 'review_date': '2022-01-16 16:35:55', 'review_text': \"This is my favorite restaurant. It's a must have whenever my family and I are in Carpinteria. The entire staff is incredibly nice and there isn't a bad thing on the menu. The welcoming nature and delicious food make this an easy five star rating. The owner, Rick, is the nicest guy on earth. I recommend chatting with him if you get the chance!\"}, {'review_stars': 5.0, 'review_date': '2022-01-07 20:38:55', 'review_text': \"Absolutely, positively my most favorite hole in the wall breakfast/brunch/lunch spot around! Always love seeing Rick, the owner and his team of fabulous bees! The specials are always spectacular and unique. High quality, fresh food. Don't forget the generous mimosa! See you soon, Rick! We  you!\"}]}\nOverview:",
+      "split": "development",
+      "upstream_label": "contradicted_answer",
+      "upstream_model": "llama-2-13b-chat",
+      "upstream_response_id": "6550",
+      "upstream_task_type": ""
+    },
+    {
+      "answer_character_span": {
+        "end": 852,
+        "start": 701
+      },
+      "claim": "On the other hand, one customer praised the restaurant's Pad Thai, noting that the chicken and shrimp were cooked well but the dish was a little bland.",
+      "contexts": [
+        {
+          "id": "ragtruth_source_14043",
+          "text": "{\"address\": \"5918 Hollister Ave\", \"attributes\": {\"Ambience\": {\"casual\": true, \"classy\": false, \"divey\": false, \"hipster\": false, \"intimate\": false, \"romantic\": false, \"touristy\": false, \"trendy\": false, \"upscale\": false}, \"BusinessParking\": {\"garage\": false, \"lot\": true, \"street\": false, \"valet\": false, \"validated\": false}, \"Music\": null, \"OutdoorSeating\": null, \"RestaurantsGoodForGroups\": true, \"RestaurantsReservations\": true, \"RestaurantsTakeOut\": true, \"WiFi\": \"no\"}, \"business_stars\": 3.5, \"categories\": \"Restaurants, Thai\", \"city\": \"Goleta\", \"hours\": {\"Friday\": \"17:0-21:0\", \"Saturday\": \"17:0-21:0\", \"Sunday\": \"17:0-21:0\", \"Thursday\": \"17:0-21:0\", \"Tuesday\": \"17:0-21:0\", \"Wednesday\": \"17:0-21:0\"}, \"name\": \"Pattaya Thai Restaurant\", \"review_info\": [{\"review_date\": \"2022-01-18 10:53:32\", \"review_stars\": 3.0, \"review_text\": \"Went in for lunch and felt like I'd gone back in time. Service was lousy. The place was dark. An upgrade is sorely needed. Few customers. And you couldn't smell anything cooking despite the noise from the kitchen. Waited for server so I left!\"}, {\"review_date\": \"2021-10-29 04:42:47\", \"review_stars\": 1.0, \"review_text\": \"Food poisoning. Ordered the spicy fried rice and it tasted bad, spicy in areas badly seasoned and food poisoning to follow. HORRIBLE.\"}, {\"review_date\": \"2021-10-01 03:55:33\", \"review_stars\": 4.0, \"review_text\": \"As you can tell, I am a big fan of Pad Thai lol. This time is a Pad Thai from Pattaya Thai, and despite the chicken and shrimp being cooked very well and not overcooked, I unfortunately found this Pad Thai to be a bit bland. Now I have high standards for Pad Thai, but I know Pattaya is able to deliver better results. The flavors were all there, but with Pad Thai it is easy for there to be not enough flavor, which makes the dish taste terrible. This was alright.\\n\\nAveraged from my last review, this is 4 stars.\"}], \"state\": \"CA\"}"
+        }
+      ],
+      "dataset": "RAGTruth",
+      "expected_verdict": "contradicted",
+      "id": "ragtruth_7052_s009",
+      "label_scope": "sentence_level_projected_from_upstream_answer_spans",
+      "overlapping_upstream_annotations": [
+        {
+          "end": 819,
+          "label_type": "Evident Conflict",
+          "start": 701
+        }
+      ],
+      "query": "Instruction:\nWrite an objective overview about the following local business based only on the provided structured data in the JSON format. You should include details and cover the information mentioned in the customers' review. The overview should be 100 - 200 words. Don't make up information. Structured data:\n{'name': 'Pattaya Thai Restaurant', 'address': '5918 Hollister Ave', 'city': 'Goleta', 'state': 'CA', 'categories': 'Restaurants, Thai', 'hours': {'Tuesday': '17:0-21:0', 'Wednesday': '17:0-21:0', 'Thursday': '17:0-21:0', 'Friday': '17:0-21:0', 'Saturday': '17:0-21:0', 'Sunday': '17:0-21:0'}, 'attributes': {'BusinessParking': {'garage': False, 'street': False, 'validated': False, 'lot': True, 'valet': False}, 'RestaurantsReservations': True, 'OutdoorSeating': None, 'WiFi': 'no', 'RestaurantsTakeOut': True, 'RestaurantsGoodForGroups': True, 'Music': None, 'Ambience': {'romantic': False, 'intimate': False, 'touristy': False, 'hipster': False, 'divey': False, 'classy': False, 'trendy': False, 'upscale': False, 'casual': True}}, 'business_stars': 3.5, 'review_info': [{'review_stars': 3.0, 'review_date': '2022-01-18 10:53:32', 'review_text': \"Went in for lunch and felt like I'd gone back in time. Service was lousy. The place was dark. An upgrade is sorely needed. Few customers. And you couldn't smell anything cooking despite the noise from the kitchen. Waited for server so I left!\"}, {'review_stars': 1.0, 'review_date': '2021-10-29 04:42:47', 'review_text': 'Food poisoning. Ordered the spicy fried rice and it tasted bad, spicy in areas badly seasoned and food poisoning to follow. HORRIBLE.'}, {'review_stars': 4.0, 'review_date': '2021-10-01 03:55:33', 'review_text': 'As you can tell, I am a big fan of Pad Thai lol. This time is a Pad Thai from Pattaya Thai, and despite the chicken and shrimp being cooked very well and not overcooked, I unfortunately found this Pad Thai to be a bit bland. Now I have high standards for Pad Thai, but I know Pattaya is able to deliver better results. The flavors were all there, but with Pad Thai it is easy for there to be not enough flavor, which makes the dish taste terrible. This was alright.\\n\\nAveraged from my last review, this is 4 stars.'}]}\nOverview:",
+      "split": "development",
+      "upstream_label": "contradicted_answer",
+      "upstream_model": "mistral-7B-instruct",
+      "upstream_response_id": "7052",
+      "upstream_task_type": ""
+    },
+    {
+      "answer_character_span": {
+        "end": 398,
+        "start": 298
+      },
+      "claim": "They are open Monday through Saturday from 7:30am to 6:00pm and offer free WiFi and outdoor seating.",
+      "contexts": [
+        {
+          "id": "ragtruth_source_14059",
+          "text": "{\"address\": \"24 W Figueroa St\", \"attributes\": {\"Ambience\": {\"casual\": true, \"classy\": true, \"divey\": false, \"hipster\": false, \"intimate\": false, \"romantic\": false, \"touristy\": false, \"trendy\": false, \"upscale\": false}, \"BusinessParking\": {\"garage\": false, \"lot\": true, \"street\": true, \"valet\": false, \"validated\": false}, \"Music\": null, \"OutdoorSeating\": true, \"RestaurantsGoodForGroups\": true, \"RestaurantsReservations\": false, \"RestaurantsTakeOut\": true, \"WiFi\": \"free\"}, \"business_stars\": 4.5, \"categories\": \"Restaurants, Delis, Coffee & Tea, Breakfast & Brunch, Food, Gluten-Free, Cafes, Beer, Wine & Spirits\", \"city\": \"Santa Barbara\", \"hours\": {\"Friday\": \"7:30-16:0\", \"Monday\": \"7:30-16:0\", \"Saturday\": \"7:30-16:0\", \"Thursday\": \"7:30-16:0\", \"Tuesday\": \"7:30-16:0\", \"Wednesday\": \"7:30-16:0\"}, \"name\": \"Savoy Cafe & Deli\", \"review_info\": [{\"review_date\": \"2022-01-12 18:13:50\", \"review_stars\": 5.0, \"review_text\": \"So good, that we went for breakfast and then again for lunch.\\n\\nWe really loved the gluten-free bread options. I have not had a sandwich in a long time.  It was so thick with turkey!\\n\\nA very lovely restaurant with a salad bar (yes, really), open space, nice outdoor seating, and a comfortable bar area.\"}, {\"review_date\": \"2021-12-28 21:02:56\", \"review_stars\": 5.0, \"review_text\": \"Savoy is impeccable.  Somehow every single item is delicious and fresh.  I always have a good experience.  The salad bar is for sure the best in the city.  The sandwiches, excellent.  The entrees, you guessed it, so good.  I would recommend them to anyone -- you gotta try it.  Note: closed Sundays!\"}, {\"review_date\": \"2021-12-22 20:28:32\", \"review_stars\": 5.0, \"review_text\": \"Great food and service! I don't live in the area, but next time I'm in Santa Barbara,  I will definitely eat there.\"}], \"state\": \"CA\"}"
+        }
+      ],
+      "dataset": "RAGTruth",
+      "expected_verdict": "contradicted",
+      "id": "ragtruth_7138_s004",
+      "label_scope": "sentence_level_projected_from_upstream_answer_spans",
+      "overlapping_upstream_annotations": [
+        {
+          "end": 357,
+          "label_type": "Evident Conflict",
+          "start": 341
+        }
+      ],
+      "query": "Instruction:\nWrite an objective overview about the following local business based only on the provided structured data in the JSON format. You should include details and cover the information mentioned in the customers' review. The overview should be 100 - 200 words. Don't make up information. Structured data:\n{'name': 'Savoy Cafe & Deli', 'address': '24 W Figueroa St', 'city': 'Santa Barbara', 'state': 'CA', 'categories': 'Restaurants, Delis, Coffee & Tea, Breakfast & Brunch, Food, Gluten-Free, Cafes, Beer, Wine & Spirits', 'hours': {'Monday': '7:30-16:0', 'Tuesday': '7:30-16:0', 'Wednesday': '7:30-16:0', 'Thursday': '7:30-16:0', 'Friday': '7:30-16:0', 'Saturday': '7:30-16:0'}, 'attributes': {'BusinessParking': {'garage': False, 'street': True, 'validated': False, 'lot': True, 'valet': False}, 'RestaurantsReservations': False, 'OutdoorSeating': True, 'WiFi': 'free', 'RestaurantsTakeOut': True, 'RestaurantsGoodForGroups': True, 'Music': None, 'Ambience': {'touristy': False, 'hipster': False, 'romantic': False, 'divey': False, 'intimate': False, 'trendy': False, 'upscale': False, 'classy': True, 'casual': True}}, 'business_stars': 4.5, 'review_info': [{'review_stars': 5.0, 'review_date': '2022-01-12 18:13:50', 'review_text': 'So good, that we went for breakfast and then again for lunch.\\n\\nWe really loved the gluten-free bread options. I have not had a sandwich in a long time.  It was so thick with turkey!\\n\\nA very lovely restaurant with a salad bar (yes, really), open space, nice outdoor seating, and a comfortable bar area.'}, {'review_stars': 5.0, 'review_date': '2021-12-28 21:02:56', 'review_text': 'Savoy is impeccable.  Somehow every single item is delicious and fresh.  I always have a good experience.  The salad bar is for sure the best in the city.  The sandwiches, excellent.  The entrees, you guessed it, so good.  I would recommend them to anyone -- you gotta try it.  Note: closed Sundays!'}, {'review_stars': 5.0, 'review_date': '2021-12-22 20:28:32', 'review_text': \"Great food and service! I don't live in the area, but next time I'm in Santa Barbara,  I will definitely eat there.\"}]}\nOverview:",
+      "split": "development",
+      "upstream_label": "contradicted_answer",
+      "upstream_model": "llama-2-13b-chat",
+      "upstream_response_id": "7138",
+      "upstream_task_type": ""
+    },
+    {
+      "answer_character_span": {
+        "end": 225,
+        "start": 134
+      },
+      "claim": "They do not have parking facilities available, and WiFi is not available at the restaurant.",
+      "contexts": [
+        {
+          "id": "ragtruth_source_14081",
+          "text": "{\"address\": \"1024 Coast Village Rd\", \"attributes\": {\"Ambience\": {\"casual\": true, \"classy\": false, \"divey\": null, \"hipster\": false, \"intimate\": false, \"romantic\": false, \"touristy\": false, \"trendy\": false, \"upscale\": false}, \"BusinessParking\": {\"garage\": false, \"lot\": true, \"street\": false, \"valet\": false, \"validated\": false}, \"Music\": null, \"OutdoorSeating\": true, \"RestaurantsGoodForGroups\": true, \"RestaurantsReservations\": false, \"RestaurantsTakeOut\": true, \"WiFi\": \"no\"}, \"business_stars\": 3.5, \"categories\": \"Restaurants, Mexican\", \"city\": \"Santa Barbara\", \"hours\": {\"Friday\": \"10:0-20:0\", \"Monday\": \"10:0-20:0\", \"Saturday\": \"10:0-20:0\", \"Thursday\": \"10:0-20:0\", \"Tuesday\": \"10:0-20:0\", \"Wednesday\": \"10:0-20:0\"}, \"name\": \"Little Alex's\", \"review_info\": [{\"review_date\": \"2021-11-27 07:10:59\", \"review_stars\": 1.0, \"review_text\": \"Drove there and it was under construction. Yelp said it was open & looked through the window and paint cans and cutting supplies glore.\"}, {\"review_date\": \"2021-09-29 17:23:43\", \"review_stars\": 2.0, \"review_text\": \"I've lived in Cito for 30+ years. When I was a kid we'd often come here for family dinners. We always had a great time and the food was tasty. We call their chicken soup \\\"sick soup\\\" and request it every time we have a cold or flu. It used to be delicious. (Even though they've always used frozen veggies and the chicken is terribly dry). This place has gone so far downhill in the past years. There is no flavor. It's about as Americanized as it can be, maybe dumbed down for SB's growing intolerance for spice. This is as close to Mexican food as the $2 tacos from Jack in the box.\"}, {\"review_date\": \"2021-09-28 01:37:48\", \"review_stars\": 5.0, \"review_text\": \"So so so good. Traveling from Austin, TX and naturally wanted some Mexican food with my family. Service was amazing, very kind employees. I did not catch her name but the employees was helpful & always made sure our chips were refilled. It was very good! Throughout the whole meal my family and I kept commenting on how good the food was. Thank you!!!\"}], \"state\": \"CA\"}"
+        }
+      ],
+      "dataset": "RAGTruth",
+      "expected_verdict": "contradicted",
+      "id": "ragtruth_7262_s003",
+      "label_scope": "sentence_level_projected_from_upstream_answer_spans",
+      "overlapping_upstream_annotations": [
+        {
+          "end": 179,
+          "label_type": "Evident Conflict",
+          "start": 134
+        }
+      ],
+      "query": "Instruction:\nWrite an objective overview about the following local business based only on the provided structured data in the JSON format. You should include details and cover the information mentioned in the customers' review. The overview should be 100 - 200 words. Don't make up information. Structured data:\n{'name': \"Little Alex's\", 'address': '1024 Coast Village Rd', 'city': 'Santa Barbara', 'state': 'CA', 'categories': 'Restaurants, Mexican', 'hours': {'Monday': '10:0-20:0', 'Tuesday': '10:0-20:0', 'Wednesday': '10:0-20:0', 'Thursday': '10:0-20:0', 'Friday': '10:0-20:0', 'Saturday': '10:0-20:0'}, 'attributes': {'BusinessParking': {'garage': False, 'street': False, 'validated': False, 'lot': True, 'valet': False}, 'RestaurantsReservations': False, 'OutdoorSeating': True, 'WiFi': 'no', 'RestaurantsTakeOut': True, 'RestaurantsGoodForGroups': True, 'Music': None, 'Ambience': {'touristy': False, 'hipster': False, 'romantic': False, 'divey': None, 'intimate': False, 'trendy': False, 'upscale': False, 'classy': False, 'casual': True}}, 'business_stars': 3.5, 'review_info': [{'review_stars': 1.0, 'review_date': '2021-11-27 07:10:59', 'review_text': 'Drove there and it was under construction. Yelp said it was open & looked through the window and paint cans and cutting supplies glore.'}, {'review_stars': 2.0, 'review_date': '2021-09-29 17:23:43', 'review_text': 'I\\'ve lived in Cito for 30+ years. When I was a kid we\\'d often come here for family dinners. We always had a great time and the food was tasty. We call their chicken soup \"sick soup\" and request it every time we have a cold or flu. It used to be delicious. (Even though they\\'ve always used frozen veggies and the chicken is terribly dry). This place has gone so far downhill in the past years. There is no flavor. It\\'s about as Americanized as it can be, maybe dumbed down for SB\\'s growing intolerance for spice. This is as close to Mexican food as the $2 tacos from Jack in the box.'}, {'review_stars': 5.0, 'review_date': '2021-09-28 01:37:48', 'review_text': 'So so so good. Traveling from Austin, TX and naturally wanted some Mexican food with my family. Service was amazing, very kind employees. I did not catch her name but the employees was helpful & always made sure our chips were refilled. It was very good! Throughout the whole meal my family and I kept commenting on how good the food was. Thank you!!!'}]}\nOverview:",
+      "split": "development",
+      "upstream_label": "contradicted_answer",
+      "upstream_model": "mistral-7B-instruct",
+      "upstream_response_id": "7262",
+      "upstream_task_type": ""
+    },
+    {
+      "answer_character_span": {
+        "end": 614,
+        "start": 461
+      },
+      "claim": "However, recent reviews suggest that the quality of the food has declined over time, with some customers describing the food as bland and lacking flavor.",
+      "contexts": [
+        {
+          "id": "ragtruth_source_14081",
+          "text": "{\"address\": \"1024 Coast Village Rd\", \"attributes\": {\"Ambience\": {\"casual\": true, \"classy\": false, \"divey\": null, \"hipster\": false, \"intimate\": false, \"romantic\": false, \"touristy\": false, \"trendy\": false, \"upscale\": false}, \"BusinessParking\": {\"garage\": false, \"lot\": true, \"street\": false, \"valet\": false, \"validated\": false}, \"Music\": null, \"OutdoorSeating\": true, \"RestaurantsGoodForGroups\": true, \"RestaurantsReservations\": false, \"RestaurantsTakeOut\": true, \"WiFi\": \"no\"}, \"business_stars\": 3.5, \"categories\": \"Restaurants, Mexican\", \"city\": \"Santa Barbara\", \"hours\": {\"Friday\": \"10:0-20:0\", \"Monday\": \"10:0-20:0\", \"Saturday\": \"10:0-20:0\", \"Thursday\": \"10:0-20:0\", \"Tuesday\": \"10:0-20:0\", \"Wednesday\": \"10:0-20:0\"}, \"name\": \"Little Alex's\", \"review_info\": [{\"review_date\": \"2021-11-27 07:10:59\", \"review_stars\": 1.0, \"review_text\": \"Drove there and it was under construction. Yelp said it was open & looked through the window and paint cans and cutting supplies glore.\"}, {\"review_date\": \"2021-09-29 17:23:43\", \"review_stars\": 2.0, \"review_text\": \"I've lived in Cito for 30+ years. When I was a kid we'd often come here for family dinners. We always had a great time and the food was tasty. We call their chicken soup \\\"sick soup\\\" and request it every time we have a cold or flu. It used to be delicious. (Even though they've always used frozen veggies and the chicken is terribly dry). This place has gone so far downhill in the past years. There is no flavor. It's about as Americanized as it can be, maybe dumbed down for SB's growing intolerance for spice. This is as close to Mexican food as the $2 tacos from Jack in the box.\"}, {\"review_date\": \"2021-09-28 01:37:48\", \"review_stars\": 5.0, \"review_text\": \"So so so good. Traveling from Austin, TX and naturally wanted some Mexican food with my family. Service was amazing, very kind employees. I did not catch her name but the employees was helpful & always made sure our chips were refilled. It was very good! Throughout the whole meal my family and I kept commenting on how good the food was. Thank you!!!\"}], \"state\": \"CA\"}"
+        }
+      ],
+      "dataset": "RAGTruth",
+      "expected_verdict": "supported",
+      "id": "ragtruth_7262_s006",
+      "label_scope": "sentence_level_projected_from_upstream_answer_spans",
+      "overlapping_upstream_annotations": [],
+      "query": "Instruction:\nWrite an objective overview about the following local business based only on the provided structured data in the JSON format. You should include details and cover the information mentioned in the customers' review. The overview should be 100 - 200 words. Don't make up information. Structured data:\n{'name': \"Little Alex's\", 'address': '1024 Coast Village Rd', 'city': 'Santa Barbara', 'state': 'CA', 'categories': 'Restaurants, Mexican', 'hours': {'Monday': '10:0-20:0', 'Tuesday': '10:0-20:0', 'Wednesday': '10:0-20:0', 'Thursday': '10:0-20:0', 'Friday': '10:0-20:0', 'Saturday': '10:0-20:0'}, 'attributes': {'BusinessParking': {'garage': False, 'street': False, 'validated': False, 'lot': True, 'valet': False}, 'RestaurantsReservations': False, 'OutdoorSeating': True, 'WiFi': 'no', 'RestaurantsTakeOut': True, 'RestaurantsGoodForGroups': True, 'Music': None, 'Ambience': {'touristy': False, 'hipster': False, 'romantic': False, 'divey': None, 'intimate': False, 'trendy': False, 'upscale': False, 'classy': False, 'casual': True}}, 'business_stars': 3.5, 'review_info': [{'review_stars': 1.0, 'review_date': '2021-11-27 07:10:59', 'review_text': 'Drove there and it was under construction. Yelp said it was open & looked through the window and paint cans and cutting supplies glore.'}, {'review_stars': 2.0, 'review_date': '2021-09-29 17:23:43', 'review_text': 'I\\'ve lived in Cito for 30+ years. When I was a kid we\\'d often come here for family dinners. We always had a great time and the food was tasty. We call their chicken soup \"sick soup\" and request it every time we have a cold or flu. It used to be delicious. (Even though they\\'ve always used frozen veggies and the chicken is terribly dry). This place has gone so far downhill in the past years. There is no flavor. It\\'s about as Americanized as it can be, maybe dumbed down for SB\\'s growing intolerance for spice. This is as close to Mexican food as the $2 tacos from Jack in the box.'}, {'review_stars': 5.0, 'review_date': '2021-09-28 01:37:48', 'review_text': 'So so so good. Traveling from Austin, TX and naturally wanted some Mexican food with my family. Service was amazing, very kind employees. I did not catch her name but the employees was helpful & always made sure our chips were refilled. It was very good! Throughout the whole meal my family and I kept commenting on how good the food was. Thank you!!!'}]}\nOverview:",
+      "split": "development",
+      "upstream_label": "contradicted_answer",
+      "upstream_model": "mistral-7B-instruct",
+      "upstream_response_id": "7262",
+      "upstream_task_type": ""
+    },
+    {
+      "answer_character_span": {
+        "end": 690,
+        "start": 572
+      },
+      "claim": "While the restaurant does not offer business parking or reservations, it has Wifi available and allows takeout orders.",
+      "contexts": [
+        {
+          "id": "ragtruth_source_14524",
+          "text": "{\"address\": \"815 E Figueroa St\", \"attributes\": {\"Ambience\": null, \"BusinessParking\": null, \"Music\": null, \"OutdoorSeating\": true, \"RestaurantsGoodForGroups\": null, \"RestaurantsReservations\": null, \"RestaurantsTakeOut\": true, \"WiFi\": null}, \"business_stars\": 5.0, \"categories\": \"Ethiopian, Soul Food, Restaurants, Comfort Food\", \"city\": \"Santa Barbara\", \"hours\": {\"Friday\": \"12:0-16:0\", \"Saturday\": \"12:0-16:0\", \"Thursday\": \"12:0-16:0\", \"Tuesday\": \"12:0-16:0\", \"Wednesday\": \"12:0-16:0\"}, \"name\": \"Aksum Restaurant\", \"review_info\": [{\"review_date\": \"2021-10-09 22:42:10\", \"review_stars\": 5.0, \"review_text\": \"We stopped by here for lunch. Aksum is a great option for Ethiopian food in Santa Barbara. The staff was super friendly and the food was delicious. We tried the vegetable combo and meat combo since it was our first time here and we wanted to try some things. It was all delicious and I would probably roll with one or two of the combos next time around as well. Injera was on point and overall we had a great lunch. Thanks Aksum!!\"}, {\"review_date\": \"2021-10-07 19:08:02\", \"review_stars\": 5.0, \"review_text\": \"A friend an I were excited to try this place. I recently moved from San Diego to SB, and was really hoping to find some great Ethiopian food. We got the veggie combo, and it was honestly amazing. The service was outstanding!! We were there for my birthday, and they made me feel as home as I've felt in SB. Highly recommend.\"}, {\"review_date\": \"2021-09-18 23:06:49\", \"review_stars\": 5.0, \"review_text\": \"Went here for  lunch today. Wasn't Planning on stopping here but people's plates looked amazing. So glad we did. I have always heard Ethiopian food was amazing so I was excited to try it and so glad I did. Got the meat platter and shared with a friend and thoroughly enjoyed it. I will be back. Bummer they're only open for lunch. They share the location with the carribean restaurant too.\"}], \"state\": \"CA\"}"
+        }
+      ],
+      "dataset": "RAGTruth",
+      "expected_verdict": "partially_supported",
+      "id": "ragtruth_8625_s006",
+      "label_scope": "sentence_level_projected_from_upstream_answer_spans",
+      "overlapping_upstream_annotations": [
+        {
+          "end": 640,
+          "label_type": "Evident Baseless Info",
+          "start": 608
+        },
+        {
+          "end": 663,
+          "label_type": "Evident Baseless Info",
+          "start": 649
+        }
+      ],
+      "query": "Instruction:\nWrite an objective overview about the following local business based only on the provided structured data in the JSON format. You should include details and cover the information mentioned in the customers' review. The overview should be 100 - 200 words. Don't make up information. Structured data:\n{'name': 'Aksum Restaurant', 'address': '815 E Figueroa St', 'city': 'Santa Barbara', 'state': 'CA', 'categories': 'Ethiopian, Soul Food, Restaurants, Comfort Food', 'hours': {'Tuesday': '12:0-16:0', 'Wednesday': '12:0-16:0', 'Thursday': '12:0-16:0', 'Friday': '12:0-16:0', 'Saturday': '12:0-16:0'}, 'attributes': {'BusinessParking': None, 'RestaurantsReservations': None, 'OutdoorSeating': True, 'WiFi': None, 'RestaurantsTakeOut': True, 'RestaurantsGoodForGroups': None, 'Music': None, 'Ambience': None}, 'business_stars': 5.0, 'review_info': [{'review_stars': 5.0, 'review_date': '2021-10-09 22:42:10', 'review_text': 'We stopped by here for lunch. Aksum is a great option for Ethiopian food in Santa Barbara. The staff was super friendly and the food was delicious. We tried the vegetable combo and meat combo since it was our first time here and we wanted to try some things. It was all delicious and I would probably roll with one or two of the combos next time around as well. Injera was on point and overall we had a great lunch. Thanks Aksum!!'}, {'review_stars': 5.0, 'review_date': '2021-10-07 19:08:02', 'review_text': \"A friend an I were excited to try this place. I recently moved from San Diego to SB, and was really hoping to find some great Ethiopian food. We got the veggie combo, and it was honestly amazing. The service was outstanding!! We were there for my birthday, and they made me feel as home as I've felt in SB. Highly recommend.\"}, {'review_stars': 5.0, 'review_date': '2021-09-18 23:06:49', 'review_text': \"Went here for  lunch today. Wasn't Planning on stopping here but people's plates looked amazing. So glad we did. I have always heard Ethiopian food was amazing so I was excited to try it and so glad I did. Got the meat platter and shared with a friend and thoroughly enjoyed it. I will be back. Bummer they're only open for lunch. They share the location with the carribean restaurant too.\"}]}\nOverview:",
+      "split": "development",
+      "upstream_label": "partial_support",
+      "upstream_model": "llama-2-7b-chat",
+      "upstream_response_id": "8625",
+      "upstream_task_type": ""
+    },
+    {
+      "answer_character_span": {
+        "end": 609,
+        "start": 506
+      },
+      "claim": "Customers can enjoy a variety of beers, including craft options, and take advantage of the bar's Wi-Fi.",
+      "contexts": [
+        {
+          "id": "ragtruth_source_14541",
+          "text": "{\"address\": \"3116 State St\", \"attributes\": {\"Ambience\": {\"casual\": true, \"classy\": true, \"divey\": true, \"hipster\": false, \"intimate\": false, \"romantic\": false, \"touristy\": false, \"trendy\": false, \"upscale\": false}, \"BusinessParking\": {\"garage\": false, \"lot\": false, \"street\": true, \"valet\": false, \"validated\": false}, \"Music\": true, \"OutdoorSeating\": false, \"RestaurantsGoodForGroups\": true, \"RestaurantsReservations\": false, \"RestaurantsTakeOut\": null, \"WiFi\": \"no\"}, \"business_stars\": 4.0, \"categories\": \"Karaoke, Nightlife, Dive Bars, Bars\", \"city\": \"Santa Barbara\", \"hours\": {\"Friday\": \"12:0-2:0\", \"Monday\": \"14:0-2:0\", \"Saturday\": \"12:0-2:0\", \"Sunday\": \"12:0-2:0\", \"Thursday\": \"14:0-2:0\", \"Tuesday\": \"14:0-2:0\", \"Wednesday\": \"14:0-2:0\"}, \"name\": \"Tiburon Tavern\", \"review_info\": [{\"review_date\": \"2021-08-07 20:14:06\", \"review_stars\": 5.0, \"review_text\": \"Divey but endearing spot. \\n\\nPrior to the other evening, I had only ever come here for their Friday night karaoke events. They have always been quite popular and there's typically a packed room. I feel that the gentleman hosting the event does a wonderful job and the music selection is superior. \\n\\nI came in this time around on a Thursday night, fiesta week, and there were surprisingly just a few other patrons. Talk about a hidden gem of a spot. Sandy, our bartender was friendly and efficient and made sure that our group was taken care of. \\n\\nThe bar was clean and organized. Even the bathroom was tidy which is a rare occurrence for dive bars. I have only ever ordered beers from here but they do have a full selection for your needs. I like how Tiburon also has a modern jukebox which you can control from an app on your phone. Being able to select songs from the comfort of your seat beats the heck out of feeding money into some dirty machine. \\n\\nA good overall spot if you're looking to separate yourself from the craze of the downtown bar scene.\"}, {\"review_date\": \"2019-12-16 06:07:14\", \"review_stars\": 5.0, \"review_text\": \"Amazing bar.  I'm from out of town and I heard of this place from multiple establishments.  Finally checked it out after a long days work and I have to say- it definitely delivered.  Nice spot, easy to get too,  with friendly local people that will strike up a conversation with you.  Special shoutout to the bartender Rosa who served the BEST drinks.  Ask for for a cocktail if you really want to be treated - that's her specialty!  Will definitely be coming back here when I can!\"}, {\"review_date\": \"2019-11-24 19:45:32\", \"review_stars\": 5.0, \"review_text\": \"Great local watering hole. Been here a couple times while passing through Santa Barbara. Enjoy the place so much I usually spend more time there than I had anticipated. Staff and patrons are friendly. Definitely a no-frills dive bar. However, they do have a pool table.\"}], \"state\": \"CA\"}"
+        }
+      ],
+      "dataset": "RAGTruth",
+      "expected_verdict": "contradicted",
+      "id": "ragtruth_8727_s005",
+      "label_scope": "sentence_level_projected_from_upstream_answer_spans",
+      "overlapping_upstream_annotations": [
+        {
+          "end": 608,
+          "label_type": "Evident Conflict",
+          "start": 603
+        }
+      ],
+      "query": "Instruction:\nWrite an objective overview about the following local business based only on the provided structured data in the JSON format. You should include details and cover the information mentioned in the customers' review. The overview should be 100 - 200 words. Don't make up information. Structured data:\n{'name': 'Tiburon Tavern', 'address': '3116 State St', 'city': 'Santa Barbara', 'state': 'CA', 'categories': 'Karaoke, Nightlife, Dive Bars, Bars', 'hours': {'Monday': '14:0-2:0', 'Tuesday': '14:0-2:0', 'Wednesday': '14:0-2:0', 'Thursday': '14:0-2:0', 'Friday': '12:0-2:0', 'Saturday': '12:0-2:0', 'Sunday': '12:0-2:0'}, 'attributes': {'BusinessParking': {'garage': False, 'street': True, 'validated': False, 'lot': False, 'valet': False}, 'RestaurantsReservations': False, 'OutdoorSeating': False, 'WiFi': 'no', 'RestaurantsTakeOut': None, 'RestaurantsGoodForGroups': True, 'Music': True, 'Ambience': {'touristy': False, 'hipster': False, 'romantic': False, 'divey': True, 'intimate': False, 'trendy': False, 'upscale': False, 'classy': True, 'casual': True}}, 'business_stars': 4.0, 'review_info': [{'review_stars': 5.0, 'review_date': '2021-08-07 20:14:06', 'review_text': \"Divey but endearing spot. \\n\\nPrior to the other evening, I had only ever come here for their Friday night karaoke events. They have always been quite popular and there's typically a packed room. I feel that the gentleman hosting the event does a wonderful job and the music selection is superior. \\n\\nI came in this time around on a Thursday night, fiesta week, and there were surprisingly just a few other patrons. Talk about a hidden gem of a spot. Sandy, our bartender was friendly and efficient and made sure that our group was taken care of. \\n\\nThe bar was clean and organized. Even the bathroom was tidy which is a rare occurrence for dive bars. I have only ever ordered beers from here but they do have a full selection for your needs. I like how Tiburon also has a modern jukebox which you can control from an app on your phone. Being able to select songs from the comfort of your seat beats the heck out of feeding money into some dirty machine. \\n\\nA good overall spot if you're looking to separate yourself from the craze of the downtown bar scene.\"}, {'review_stars': 5.0, 'review_date': '2019-12-16 06:07:14', 'review_text': \"Amazing bar.  I'm from out of town and I heard of this place from multiple establishments.  Finally checked it out after a long days work and I have to say- it definitely delivered.  Nice spot, easy to get too,  with friendly local people that will strike up a conversation with you.  Special shoutout to the bartender Rosa who served the BEST drinks.  Ask for for a cocktail if you really want to be treated - that's her specialty!  Will definitely be coming back here when I can!\"}, {'review_stars': 5.0, 'review_date': '2019-11-24 19:45:32', 'review_text': 'Great local watering hole. Been here a couple times while passing through Santa Barbara. Enjoy the place so much I usually spend more time there than I had anticipated. Staff and patrons are friendly. Definitely a no-frills dive bar. However, they do have a pool table.'}]}\nOverview:",
+      "split": "development",
+      "upstream_label": "contradicted_answer",
+      "upstream_model": "llama-2-7b-chat",
+      "upstream_response_id": "8727",
+      "upstream_task_type": ""
+    }
+  ],
+  "dataset": "RAGTruth",
+  "independent_source_labels": false,
+  "label_counts": {
+    "contradicted": 5,
+    "partially_supported": 5,
+    "supported": 5
+  },
+  "label_scope": "sentence_level_projected_from_upstream_answer_spans",
+  "limitations": [
+    "RAGTruth labels answers and answer-side hallucination spans, not ContextTrace atomic claims.",
+    "Sentence labels are deterministic projections from upstream answer spans, not independently annotated claim labels.",
+    "The adapter does not score source-span localization.",
+    "RAGTruth does not provide an unverifiable class and has little unsupported coverage in this split."
+  ],
+  "provenance": "deterministic_sentence_projection_of_upstream_human_answer_spans",
+  "schema_version": "jev-v2-case-pack-1.0",
+  "selection": {
+    "method": "stable_hash_stratified_by_expected_verdict",
+    "per_label_cap": 5,
+    "seed": 20260920
+  },
+  "source_case_pack": "benchmarks/contexttrace_bench/out/arr_ragtruth_dev/inputs/ragtruth_dev_case_pack.json",
+  "source_case_pack_sha256": "3224c78c7b1c19e3a158763acb69762019dd357533c7bc6e9408367b763cf88c",
+  "split": "development"
+}

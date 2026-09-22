@@ -1,0 +1,73 @@
+{
+  "additional_remote_requests": 0,
+  "heldout_used_for_selection": false,
+  "policy": {
+    "ambiguity_threshold": 0.6,
+    "max_false_support_rate": 0.05,
+    "model": {
+      "feature_order": [
+        "ambiguity.lexical",
+        "ambiguity.reference",
+        "ambiguity.structure_scope",
+        "ambiguity.pragmatic",
+        "ambiguity.verdict_instability",
+        "verdict_probability.supported",
+        "verdict_probability.partially_supported",
+        "verdict_probability.unsupported",
+        "verdict_probability.contradicted",
+        "verdict_probability.unverifiable"
+      ],
+      "logistic_regression": {
+        "C": 1.0,
+        "class_weight": "balanced",
+        "coefficients": [
+          -0.18758459236985423,
+          -1.7147549012178407,
+          -0.9229845339916498,
+          2.109562227761085,
+          -0.5261415297583211,
+          0.3036097490822999,
+          0.0002693661932095932,
+          0.32406340402107425,
+          -0.4347777675266409,
+          -0.21947206161698407
+        ],
+        "intercept": -0.990102242114898,
+        "random_seed": 20260922,
+        "solver": "lbfgs"
+      },
+      "standard_scaler": {
+        "mean": [
+          0.4453333333333332,
+          0.4168,
+          0.4722666666666668,
+          0.5059999999999999,
+          0.46146666666666664,
+          0.14239999999999997,
+          0.41213333333333346,
+          0.1715999999999999,
+          0.2306666666666667,
+          0.0429333333333333
+        ],
+        "scale": [
+          0.14334418563567744,
+          0.2219559115380049,
+          0.17499389195689724,
+          0.16956414715381313,
+          0.1379632157094379,
+          0.29445923317158856,
+          0.3753160209151158,
+          0.25508712237194564,
+          0.363495376709098,
+          0.11152008289491581
+        ]
+      }
+    }
+  },
+  "policy_id": "bfd4d056c919748265d41fddef44c5dc8ac54c4affa89e848409781350bc2163",
+  "remote_provider_default_enabled": false,
+  "schema_version": "jev-learned-ambiguity-policy-1.0",
+  "selection_split": "development.calibration",
+  "stable_defaults_changed": false,
+  "validation_split": "development.validation"
+}

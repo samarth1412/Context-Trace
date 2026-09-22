@@ -1,0 +1,68 @@
+{
+  "case_pack": "benchmarks/external_fiveway_confirmation/confirmation_v2_cases.json",
+  "case_pack_sha256": "c92cf96e54c3b5bab5f6306523a62305b9cc69f3f59655b9d8f6c654c4157ded",
+  "cases": 35,
+  "duplicate_normalized_claims_within_pack": [],
+  "label_counts": {
+    "contradicted": 7,
+    "partially_supported": 7,
+    "supported": 7,
+    "unsupported": 7,
+    "unverifiable": 7
+  },
+  "label_isolation": {
+    "evaluation_labels_sent": false,
+    "sent_fields": [
+      "query",
+      "claim",
+      "selected_evidence"
+    ]
+  },
+  "prior_case_packs_checked": [
+    "benchmarks/external_fiveway_confirmation/confirmation_cases.json",
+    "benchmarks/external_fiveway_confirmation/development_cases.json",
+    "benchmarks/jev_claim_verification/development_cases.json",
+    "benchmarks/jev_claim_verification/heldout_cases.json",
+    "benchmarks/jev_v2_verification/ragtruth_sentence_extension_development.json",
+    "benchmarks/jev_v2_verification/ragtruth_sentence_extension_heldout.json"
+  ],
+  "prior_overlap": {
+    "case_ids": [],
+    "normalized_claims": [],
+    "normalized_inputs": []
+  },
+  "selection": {
+    "at_least_one_upstream_annotated_span_retrieved": {
+      "contradicted": {
+        "annotated_cases": 7,
+        "hits": 7,
+        "rate": 1.0
+      },
+      "partially_supported": {
+        "annotated_cases": 7,
+        "hits": 6,
+        "rate": 0.8571
+      },
+      "supported": {
+        "annotated_cases": 7,
+        "hits": 7,
+        "rate": 1.0
+      }
+    },
+    "max_spans": 8,
+    "nonempty_for_every_case": true,
+    "selected_characters": {
+      "maximum": 1116,
+      "mean": 411.03,
+      "minimum": 30
+    },
+    "selected_span_count_distribution": {
+      "1": 15,
+      "3": 1,
+      "4": 1,
+      "7": 3,
+      "8": 15
+    }
+  },
+  "valid": true
+}

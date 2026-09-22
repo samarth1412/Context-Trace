@@ -1,0 +1,1804 @@
+{
+  "rows": [
+    {
+      "case_id": "wice_dev00016",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.0008639986044727266,
+        "entailment": 0.005436568055301905,
+        "neutral": 0.9936994314193726
+      }
+    },
+    {
+      "case_id": "wice_dev00018",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.035807617008686066,
+        "entailment": 0.5863292217254639,
+        "neutral": 0.37786319851875305
+      }
+    },
+    {
+      "case_id": "wice_dev00030",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.9301255345344543,
+        "entailment": 0.04583010450005531,
+        "neutral": 0.02404434233903885
+      }
+    },
+    {
+      "case_id": "wice_dev00164",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0017040742095559835,
+        "entailment": 0.9908247590065002,
+        "neutral": 0.007471188437193632
+      }
+    },
+    {
+      "case_id": "wice_dev00280",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0018615078879520297,
+        "entailment": 0.0013125960249453783,
+        "neutral": 0.9968259334564209
+      }
+    },
+    {
+      "case_id": "wice_dev00315",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.06852509826421738,
+        "entailment": 0.06588342040777206,
+        "neutral": 0.8655914664268494
+      }
+    },
+    {
+      "case_id": "wice_dev00316",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.025348126888275146,
+        "entailment": 0.0005839446093887091,
+        "neutral": 0.9740679860115051
+      }
+    },
+    {
+      "case_id": "wice_dev00327",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0026960400864481926,
+        "entailment": 0.0006342952256090939,
+        "neutral": 0.9966697096824646
+      }
+    },
+    {
+      "case_id": "wice_dev00405",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.01112169399857521,
+        "entailment": 0.0005961339920759201,
+        "neutral": 0.9882821440696716
+      }
+    },
+    {
+      "case_id": "wice_dev00556",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.18108955025672913,
+        "entailment": 0.7536554932594299,
+        "neutral": 0.06525489687919617
+      }
+    },
+    {
+      "case_id": "wice_dev00572",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.007350075989961624,
+        "entailment": 0.007062525488436222,
+        "neutral": 0.9855873584747314
+      }
+    },
+    {
+      "case_id": "wice_dev00704",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.0005434632184915245,
+        "entailment": 0.0008745105587877333,
+        "neutral": 0.9985820055007935
+      }
+    },
+    {
+      "case_id": "wice_dev00732",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.0006302975816652179,
+        "entailment": 0.0012132711708545685,
+        "neutral": 0.9981563687324524
+      }
+    },
+    {
+      "case_id": "wice_dev00782",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.009948810562491417,
+        "entailment": 0.0003691326710395515,
+        "neutral": 0.9896820187568665
+      }
+    },
+    {
+      "case_id": "wice_dev00825",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.0009546871879138052,
+        "entailment": 0.00027616950683295727,
+        "neutral": 0.9987691044807434
+      }
+    },
+    {
+      "case_id": "wice_dev00831",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.0032067270949482918,
+        "entailment": 0.0016328032361343503,
+        "neutral": 0.9951605200767517
+      }
+    },
+    {
+      "case_id": "wice_dev00866",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.9766128063201904,
+        "entailment": 0.002731495536863804,
+        "neutral": 0.02065574750304222
+      }
+    },
+    {
+      "case_id": "wice_dev00940",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.0013196357758715749,
+        "entailment": 0.00041437786421738565,
+        "neutral": 0.9982660412788391
+      }
+    },
+    {
+      "case_id": "wice_dev00964",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.0007643551216460764,
+        "entailment": 0.002004265086725354,
+        "neutral": 0.9972314238548279
+      }
+    },
+    {
+      "case_id": "wice_dev00989",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0604369230568409,
+        "entailment": 0.1816844940185547,
+        "neutral": 0.7578786015510559
+      }
+    },
+    {
+      "case_id": "wice_dev01098",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.9757025837898254,
+        "entailment": 0.008378318510949612,
+        "neutral": 0.015918999910354614
+      }
+    },
+    {
+      "case_id": "wice_dev01120",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0033910172060132027,
+        "entailment": 0.8265385031700134,
+        "neutral": 0.17007046937942505
+      }
+    },
+    {
+      "case_id": "wice_dev01152",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.003793964860960841,
+        "entailment": 0.00041577647789381444,
+        "neutral": 0.9957903027534485
+      }
+    },
+    {
+      "case_id": "wice_dev01190",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.007113671861588955,
+        "entailment": 0.0014633128885179758,
+        "neutral": 0.9914230704307556
+      }
+    },
+    {
+      "case_id": "wice_dev01222",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.027394302189350128,
+        "entailment": 0.0013910745037719607,
+        "neutral": 0.9712146520614624
+      }
+    },
+    {
+      "case_id": "wice_dev01275",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.029802288860082626,
+        "entailment": 0.00019957349286414683,
+        "neutral": 0.9699981212615967
+      }
+    },
+    {
+      "case_id": "wice_dev01296",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.00019288359908387065,
+        "entailment": 0.0019369578221812844,
+        "neutral": 0.9978700876235962
+      }
+    },
+    {
+      "case_id": "wice_dev01445",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0010544899851083755,
+        "entailment": 0.0019707297906279564,
+        "neutral": 0.9969748258590698
+      }
+    },
+    {
+      "case_id": "wice_dev01523",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0017563458532094955,
+        "entailment": 0.0002927322348114103,
+        "neutral": 0.9979509711265564
+      }
+    },
+    {
+      "case_id": "wice_dev01524",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.010369435884058475,
+        "entailment": 0.0005635737325064838,
+        "neutral": 0.9890669584274292
+      }
+    },
+    {
+      "case_id": "wice_dev01549",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.33163341879844666,
+        "entailment": 0.0006954174605198205,
+        "neutral": 0.6676711440086365
+      }
+    },
+    {
+      "case_id": "wice_dev01583",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.005789523478597403,
+        "entailment": 0.9848640561103821,
+        "neutral": 0.009346432983875275
+      }
+    },
+    {
+      "case_id": "wice_dev01627",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.004065793007612228,
+        "entailment": 0.0021940828301012516,
+        "neutral": 0.9937402009963989
+      }
+    },
+    {
+      "case_id": "wice_dev01660",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0021949249785393476,
+        "entailment": 0.0029294861014932394,
+        "neutral": 0.9948756098747253
+      }
+    },
+    {
+      "case_id": "wice_dev01665",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.017777036875486374,
+        "entailment": 0.053358495235443115,
+        "neutral": 0.9288644194602966
+      }
+    },
+    {
+      "case_id": "wice_dev01696",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.004936709068715572,
+        "entailment": 0.0021171991247683764,
+        "neutral": 0.9929460883140564
+      }
+    },
+    {
+      "case_id": "wice_dev01774",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.004542320501059294,
+        "entailment": 0.1537591964006424,
+        "neutral": 0.8416985273361206
+      }
+    },
+    {
+      "case_id": "wice_dev01786",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.01630340702831745,
+        "entailment": 0.0019257778767496347,
+        "neutral": 0.9817708134651184
+      }
+    },
+    {
+      "case_id": "wice_dev01841",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.015238797292113304,
+        "entailment": 0.005585339851677418,
+        "neutral": 0.9791758060455322
+      }
+    },
+    {
+      "case_id": "wice_dev01863",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.3535175025463104,
+        "entailment": 0.0025749558117240667,
+        "neutral": 0.6439076066017151
+      }
+    },
+    {
+      "case_id": "wice_dev01893",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.00019489609985612333,
+        "entailment": 0.9986839890480042,
+        "neutral": 0.0011210683733224869
+      }
+    },
+    {
+      "case_id": "wice_dev01904",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.002994885202497244,
+        "entailment": 0.005043649580329657,
+        "neutral": 0.9919614195823669
+      }
+    },
+    {
+      "case_id": "wice_dev02041",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.17122694849967957,
+        "entailment": 0.5842958092689514,
+        "neutral": 0.2444772720336914
+      }
+    },
+    {
+      "case_id": "wice_dev02061",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.01019230205565691,
+        "entailment": 0.009515953250229359,
+        "neutral": 0.9802917242050171
+      }
+    },
+    {
+      "case_id": "wice_dev02126",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.01582808792591095,
+        "entailment": 0.0005855608615092933,
+        "neutral": 0.9835863709449768
+      }
+    },
+    {
+      "case_id": "wice_dev02139",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.05667051672935486,
+        "entailment": 0.0022584216203540564,
+        "neutral": 0.941071093082428
+      }
+    },
+    {
+      "case_id": "wice_dev02178",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.017872503027319908,
+        "entailment": 0.9224279522895813,
+        "neutral": 0.05969952791929245
+      }
+    },
+    {
+      "case_id": "wice_dev02191",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.005546845030039549,
+        "entailment": 0.0014475116040557623,
+        "neutral": 0.9930056929588318
+      }
+    },
+    {
+      "case_id": "wice_dev02195",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.002728361403569579,
+        "entailment": 0.0009417053079232574,
+        "neutral": 0.9963299632072449
+      }
+    },
+    {
+      "case_id": "wice_dev02199",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.026260942220687866,
+        "entailment": 0.025082407519221306,
+        "neutral": 0.9486566185951233
+      }
+    },
+    {
+      "case_id": "wice_dev02210",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.9714306592941284,
+        "entailment": 0.0014118300750851631,
+        "neutral": 0.027157491073012352
+      }
+    },
+    {
+      "case_id": "wice_dev02252",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.009145286865532398,
+        "entailment": 0.012010418809950352,
+        "neutral": 0.9788442254066467
+      }
+    },
+    {
+      "case_id": "wice_dev02254",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.018039368093013763,
+        "entailment": 0.031458619982004166,
+        "neutral": 0.9505020380020142
+      }
+    },
+    {
+      "case_id": "wice_dev02271",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.001338562578894198,
+        "entailment": 0.12249457836151123,
+        "neutral": 0.876166820526123
+      }
+    },
+    {
+      "case_id": "wice_dev02311",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0015239004278555512,
+        "entailment": 0.0003068853111471981,
+        "neutral": 0.9981691837310791
+      }
+    },
+    {
+      "case_id": "wice_dev02319",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.5157742500305176,
+        "entailment": 0.003586159087717533,
+        "neutral": 0.4806395173072815
+      }
+    },
+    {
+      "case_id": "wice_dev02358",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.023007767274975777,
+        "entailment": 0.0515718087553978,
+        "neutral": 0.9254204630851746
+      }
+    },
+    {
+      "case_id": "wice_dev02502",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.22359979152679443,
+        "entailment": 0.0005480429972521961,
+        "neutral": 0.7758521437644958
+      }
+    },
+    {
+      "case_id": "wice_dev02597",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.015830861404538155,
+        "entailment": 0.0010107829002663493,
+        "neutral": 0.9831583499908447
+      }
+    },
+    {
+      "case_id": "wice_dev02628",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.9652944803237915,
+        "entailment": 0.010014019906520844,
+        "neutral": 0.02469150722026825
+      }
+    },
+    {
+      "case_id": "wice_dev02638",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.010520750656723976,
+        "entailment": 0.00038189435144886374,
+        "neutral": 0.9890973567962646
+      }
+    },
+    {
+      "case_id": "wice_dev02746",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.06331603229045868,
+        "entailment": 0.0013605615822598338,
+        "neutral": 0.9353234171867371
+      }
+    },
+    {
+      "case_id": "wice_dev02830",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.0010031642159447074,
+        "entailment": 0.000887832953594625,
+        "neutral": 0.998108983039856
+      }
+    },
+    {
+      "case_id": "wice_dev02849",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.02084578573703766,
+        "entailment": 0.05401044711470604,
+        "neutral": 0.9251437783241272
+      }
+    },
+    {
+      "case_id": "wice_dev02851",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.01383066363632679,
+        "entailment": 0.002561645582318306,
+        "neutral": 0.9836077094078064
+      }
+    },
+    {
+      "case_id": "wice_dev02875",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.8856446146965027,
+        "entailment": 0.01643846184015274,
+        "neutral": 0.09791694581508636
+      }
+    },
+    {
+      "case_id": "wice_dev02950",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.006536559201776981,
+        "entailment": 0.0007616103393957019,
+        "neutral": 0.9927017688751221
+      }
+    },
+    {
+      "case_id": "wice_dev02968",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.007946433499455452,
+        "entailment": 0.0022187614813447,
+        "neutral": 0.989834725856781
+      }
+    },
+    {
+      "case_id": "wice_dev02986",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.045693736523389816,
+        "entailment": 0.00044432576396502554,
+        "neutral": 0.9538619518280029
+      }
+    },
+    {
+      "case_id": "wice_dev02994",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0280783548951149,
+        "entailment": 0.012659125961363316,
+        "neutral": 0.9592625498771667
+      }
+    },
+    {
+      "case_id": "wice_dev03051",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.9940567016601562,
+        "entailment": 0.0001573783956700936,
+        "neutral": 0.005785971414297819
+      }
+    },
+    {
+      "case_id": "wice_dev03078",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.0013808537041768432,
+        "entailment": 0.0003637289337348193,
+        "neutral": 0.9982554316520691
+      }
+    },
+    {
+      "case_id": "wice_dev03128",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.020076019689440727,
+        "entailment": 0.11338520795106888,
+        "neutral": 0.8665387630462646
+      }
+    },
+    {
+      "case_id": "wice_dev03142",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.006484053563326597,
+        "entailment": 0.0009631419088691473,
+        "neutral": 0.9925528168678284
+      }
+    },
+    {
+      "case_id": "wice_dev03250",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0004552208411041647,
+        "entailment": 0.9898476004600525,
+        "neutral": 0.009697130881249905
+      }
+    },
+    {
+      "case_id": "wice_dev03282",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.0019893175922334194,
+        "entailment": 0.0008097283425740898,
+        "neutral": 0.9972009658813477
+      }
+    },
+    {
+      "case_id": "wice_dev03292",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.00224311207421124,
+        "entailment": 0.017386430874466896,
+        "neutral": 0.9803704023361206
+      }
+    },
+    {
+      "case_id": "wice_dev03358",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.0003769736213143915,
+        "entailment": 0.9960488677024841,
+        "neutral": 0.003574090776965022
+      }
+    },
+    {
+      "case_id": "wice_dev03392",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.04968412593007088,
+        "entailment": 0.8717595338821411,
+        "neutral": 0.07855634391307831
+      }
+    },
+    {
+      "case_id": "wice_dev03439",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.002226670738309622,
+        "entailment": 0.9830840229988098,
+        "neutral": 0.014689330011606216
+      }
+    },
+    {
+      "case_id": "wice_dev03529",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.04594259336590767,
+        "entailment": 0.2461548000574112,
+        "neutral": 0.7079025506973267
+      }
+    },
+    {
+      "case_id": "wice_dev03536",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.023859774693846703,
+        "entailment": 0.028465501964092255,
+        "neutral": 0.9476746916770935
+      }
+    },
+    {
+      "case_id": "wice_dev03609",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.0011630619410425425,
+        "entailment": 0.0007933617453090847,
+        "neutral": 0.9980435371398926
+      }
+    },
+    {
+      "case_id": "wice_dev03640",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0029004202224314213,
+        "entailment": 0.0002544613089412451,
+        "neutral": 0.9968451261520386
+      }
+    },
+    {
+      "case_id": "wice_dev03649",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.00027714052703231573,
+        "entailment": 0.9795728325843811,
+        "neutral": 0.02015005238354206
+      }
+    },
+    {
+      "case_id": "wice_dev03672",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.00199318234808743,
+        "entailment": 0.0006440402939915657,
+        "neutral": 0.9973627924919128
+      }
+    },
+    {
+      "case_id": "wice_dev03712",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0025419259909540415,
+        "entailment": 0.004261881113052368,
+        "neutral": 0.9931962490081787
+      }
+    },
+    {
+      "case_id": "wice_dev03756",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.017696097493171692,
+        "entailment": 0.0069617400877177715,
+        "neutral": 0.9753422141075134
+      }
+    },
+    {
+      "case_id": "wice_dev03792",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.002175897127017379,
+        "entailment": 0.006113702896982431,
+        "neutral": 0.9917104840278625
+      }
+    },
+    {
+      "case_id": "wice_dev03810",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0013313074596226215,
+        "entailment": 0.000605383887887001,
+        "neutral": 0.9980632662773132
+      }
+    },
+    {
+      "case_id": "wice_dev03830",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.006395367439836264,
+        "entailment": 0.19743245840072632,
+        "neutral": 0.7961722016334534
+      }
+    },
+    {
+      "case_id": "wice_dev03832",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.03843250498175621,
+        "entailment": 0.7296258807182312,
+        "neutral": 0.23194155097007751
+      }
+    },
+    {
+      "case_id": "wice_dev03851",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0022572216112166643,
+        "entailment": 0.0010160248493775725,
+        "neutral": 0.9967267513275146
+      }
+    },
+    {
+      "case_id": "wice_dev03856",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.9710030555725098,
+        "entailment": 0.0021298974752426147,
+        "neutral": 0.02686714380979538
+      }
+    },
+    {
+      "case_id": "wice_dev03925",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0017117236275225878,
+        "entailment": 0.0007451768615283072,
+        "neutral": 0.9975430965423584
+      }
+    },
+    {
+      "case_id": "wice_dev03946",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.004389525391161442,
+        "entailment": 0.02653404325246811,
+        "neutral": 0.9690764546394348
+      }
+    },
+    {
+      "case_id": "wice_dev03965",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.003194520715624094,
+        "entailment": 0.9790449738502502,
+        "neutral": 0.017760490998625755
+      }
+    },
+    {
+      "case_id": "wice_dev03969",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.014687960967421532,
+        "entailment": 0.6620859503746033,
+        "neutral": 0.32322609424591064
+      }
+    },
+    {
+      "case_id": "wice_dev04007",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.00586095592007041,
+        "entailment": 0.0002852274919860065,
+        "neutral": 0.9938538074493408
+      }
+    },
+    {
+      "case_id": "wice_dev04059",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.8755695819854736,
+        "entailment": 0.08228237926959991,
+        "neutral": 0.042148083448410034
+      }
+    },
+    {
+      "case_id": "wice_dev04077",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.07946345210075378,
+        "entailment": 0.004451762419193983,
+        "neutral": 0.9160848259925842
+      }
+    },
+    {
+      "case_id": "wice_dev04085",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.016683265566825867,
+        "entailment": 0.0016639473615214229,
+        "neutral": 0.9816527962684631
+      }
+    },
+    {
+      "case_id": "wice_dev04091",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.9833199381828308,
+        "entailment": 0.0020697179716080427,
+        "neutral": 0.014610331505537033
+      }
+    },
+    {
+      "case_id": "wice_dev04093",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.0019507847027853131,
+        "entailment": 0.0002841134846676141,
+        "neutral": 0.997765064239502
+      }
+    },
+    {
+      "case_id": "wice_dev04100",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.000832983001600951,
+        "entailment": 0.000930430309381336,
+        "neutral": 0.9982365369796753
+      }
+    },
+    {
+      "case_id": "wice_dev04101",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.020916979759931564,
+        "entailment": 0.001188076101243496,
+        "neutral": 0.9778949618339539
+      }
+    },
+    {
+      "case_id": "wice_dev04117",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.032333023846149445,
+        "entailment": 0.001287641003727913,
+        "neutral": 0.9663794040679932
+      }
+    },
+    {
+      "case_id": "wice_dev04119",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0009543005144223571,
+        "entailment": 0.0014225097838789225,
+        "neutral": 0.9976231455802917
+      }
+    },
+    {
+      "case_id": "wice_dev04133",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.0007192213088274002,
+        "entailment": 0.0008741102064959705,
+        "neutral": 0.998406708240509
+      }
+    },
+    {
+      "case_id": "wice_dev04159",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.1809019148349762,
+        "entailment": 0.0003075623535551131,
+        "neutral": 0.8187904953956604
+      }
+    },
+    {
+      "case_id": "wice_dev04169",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0005596735863946378,
+        "entailment": 0.0005603761528618634,
+        "neutral": 0.9988799691200256
+      }
+    },
+    {
+      "case_id": "wice_dev04217",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0026216742116957903,
+        "entailment": 0.0024551914539188147,
+        "neutral": 0.9949231743812561
+      }
+    },
+    {
+      "case_id": "wice_dev04220",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.13759136199951172,
+        "entailment": 0.833939790725708,
+        "neutral": 0.028468826785683632
+      }
+    },
+    {
+      "case_id": "wice_dev04359",
+      "development_partition": "calibration",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.9558919072151184,
+        "entailment": 0.011666878126561642,
+        "neutral": 0.03244122117757797
+      }
+    },
+    {
+      "case_id": "wice_dev04385",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.0011456413194537163,
+        "entailment": 0.0006486450438387692,
+        "neutral": 0.9982056617736816
+      }
+    },
+    {
+      "case_id": "wice_dev04425",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.08974754065275192,
+        "entailment": 0.12012748420238495,
+        "neutral": 0.7901249527931213
+      }
+    },
+    {
+      "case_id": "wice_dev04441",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.003290718887001276,
+        "entailment": 0.00045800660154782236,
+        "neutral": 0.9962512850761414
+      }
+    },
+    {
+      "case_id": "wice_dev04456",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.0019664671272039413,
+        "entailment": 0.0003804703301284462,
+        "neutral": 0.997653067111969
+      }
+    },
+    {
+      "case_id": "wice_dev04471",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.09788183867931366,
+        "entailment": 0.045894816517829895,
+        "neutral": 0.8562234044075012
+      }
+    },
+    {
+      "case_id": "wice_dev04516",
+      "development_partition": "calibration",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.0002725452941376716,
+        "entailment": 0.000979155651293695,
+        "neutral": 0.9987483024597168
+      }
+    },
+    {
+      "case_id": "wice_dev00126",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.011422516778111458,
+        "entailment": 0.0014432735042646527,
+        "neutral": 0.9871341586112976
+      }
+    },
+    {
+      "case_id": "wice_dev00156",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.9624951481819153,
+        "entailment": 0.00039645525976084173,
+        "neutral": 0.0371084026992321
+      }
+    },
+    {
+      "case_id": "wice_dev00224",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.012031466700136662,
+        "entailment": 0.00040558865293860435,
+        "neutral": 0.9875630140304565
+      }
+    },
+    {
+      "case_id": "wice_dev00287",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.013749266043305397,
+        "entailment": 0.5030320882797241,
+        "neutral": 0.4832186996936798
+      }
+    },
+    {
+      "case_id": "wice_dev00328",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0197133868932724,
+        "entailment": 0.00035544339334592223,
+        "neutral": 0.9799312353134155
+      }
+    },
+    {
+      "case_id": "wice_dev00624",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.002069350564852357,
+        "entailment": 0.0002072660718113184,
+        "neutral": 0.997723400592804
+      }
+    },
+    {
+      "case_id": "wice_dev00633",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.0014715350698679686,
+        "entailment": 0.0005900882533751428,
+        "neutral": 0.997938334941864
+      }
+    },
+    {
+      "case_id": "wice_dev00771",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.001970962854102254,
+        "entailment": 0.0013707031030207872,
+        "neutral": 0.9966583251953125
+      }
+    },
+    {
+      "case_id": "wice_dev00851",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.0009938532020896673,
+        "entailment": 0.00035453791497275233,
+        "neutral": 0.9986516833305359
+      }
+    },
+    {
+      "case_id": "wice_dev00932",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.005831151269376278,
+        "entailment": 0.0006448198691941798,
+        "neutral": 0.9935240745544434
+      }
+    },
+    {
+      "case_id": "wice_dev00956",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0005293871508911252,
+        "entailment": 0.0004110786831006408,
+        "neutral": 0.9990594983100891
+      }
+    },
+    {
+      "case_id": "wice_dev01180",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.027134772390127182,
+        "entailment": 0.0038587807212024927,
+        "neutral": 0.9690064191818237
+      }
+    },
+    {
+      "case_id": "wice_dev01234",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.0037075658328831196,
+        "entailment": 0.0019569937139749527,
+        "neutral": 0.9943354725837708
+      }
+    },
+    {
+      "case_id": "wice_dev01418",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.9709290862083435,
+        "entailment": 0.0013609710149466991,
+        "neutral": 0.027709946036338806
+      }
+    },
+    {
+      "case_id": "wice_dev01451",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.11398644745349884,
+        "entailment": 0.19685278832912445,
+        "neutral": 0.6891607642173767
+      }
+    },
+    {
+      "case_id": "wice_dev01552",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.00040592675213702023,
+        "entailment": 0.027608126401901245,
+        "neutral": 0.971985936164856
+      }
+    },
+    {
+      "case_id": "wice_dev01563",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.004790968261659145,
+        "entailment": 0.007742383982986212,
+        "neutral": 0.9874666333198547
+      }
+    },
+    {
+      "case_id": "wice_dev01662",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.0015112628461793065,
+        "entailment": 8.725335646886379e-05,
+        "neutral": 0.9984014630317688
+      }
+    },
+    {
+      "case_id": "wice_dev01864",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.9963924288749695,
+        "entailment": 0.001092329272069037,
+        "neutral": 0.0025152137968689203
+      }
+    },
+    {
+      "case_id": "wice_dev01883",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0008909202879294753,
+        "entailment": 0.0006706564454361796,
+        "neutral": 0.9984384179115295
+      }
+    },
+    {
+      "case_id": "wice_dev01927",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.48192986845970154,
+        "entailment": 0.018254294991493225,
+        "neutral": 0.49981576204299927
+      }
+    },
+    {
+      "case_id": "wice_dev02115",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0013999785296618938,
+        "entailment": 0.0016944322269409895,
+        "neutral": 0.9969056248664856
+      }
+    },
+    {
+      "case_id": "wice_dev02187",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.016952311620116234,
+        "entailment": 0.0018660378409549594,
+        "neutral": 0.9811816811561584
+      }
+    },
+    {
+      "case_id": "wice_dev02198",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.9929403066635132,
+        "entailment": 0.00012084340414730832,
+        "neutral": 0.006938811391592026
+      }
+    },
+    {
+      "case_id": "wice_dev02246",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.017368817701935768,
+        "entailment": 0.0022297825198620558,
+        "neutral": 0.9804014563560486
+      }
+    },
+    {
+      "case_id": "wice_dev02304",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.00022544486273545772,
+        "entailment": 0.000621720333583653,
+        "neutral": 0.9991527795791626
+      }
+    },
+    {
+      "case_id": "wice_dev02401",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0014242961769923568,
+        "entailment": 0.00045784778194501996,
+        "neutral": 0.9981179237365723
+      }
+    },
+    {
+      "case_id": "wice_dev02455",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.9671083688735962,
+        "entailment": 0.0007660136907361448,
+        "neutral": 0.032125696539878845
+      }
+    },
+    {
+      "case_id": "wice_dev02478",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0059074535965919495,
+        "entailment": 0.0014053849736228585,
+        "neutral": 0.9926872253417969
+      }
+    },
+    {
+      "case_id": "wice_dev02595",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.001323736971244216,
+        "entailment": 0.00042043166467919946,
+        "neutral": 0.9982557892799377
+      }
+    },
+    {
+      "case_id": "wice_dev02618",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0005199629813432693,
+        "entailment": 0.0005985959433019161,
+        "neutral": 0.9988813996315002
+      }
+    },
+    {
+      "case_id": "wice_dev02629",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.043775178492069244,
+        "entailment": 0.03369392827153206,
+        "neutral": 0.9225309491157532
+      }
+    },
+    {
+      "case_id": "wice_dev02657",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.00028681306866928935,
+        "entailment": 0.0016660995315760374,
+        "neutral": 0.9980471134185791
+      }
+    },
+    {
+      "case_id": "wice_dev02670",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.003938391339033842,
+        "entailment": 0.006570201367139816,
+        "neutral": 0.98949134349823
+      }
+    },
+    {
+      "case_id": "wice_dev02718",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.4948256015777588,
+        "entailment": 0.042635612189769745,
+        "neutral": 0.46253880858421326
+      }
+    },
+    {
+      "case_id": "wice_dev02827",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.1987912952899933,
+        "entailment": 0.003984484355896711,
+        "neutral": 0.7972241640090942
+      }
+    },
+    {
+      "case_id": "wice_dev02854",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0036215437576174736,
+        "entailment": 0.0023785990197211504,
+        "neutral": 0.9939998388290405
+      }
+    },
+    {
+      "case_id": "wice_dev02891",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.04140222445130348,
+        "entailment": 0.12537781894207,
+        "neutral": 0.8332200050354004
+      }
+    },
+    {
+      "case_id": "wice_dev02905",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.19451239705085754,
+        "entailment": 0.7421213388442993,
+        "neutral": 0.06336628645658493
+      }
+    },
+    {
+      "case_id": "wice_dev03013",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.015348047018051147,
+        "entailment": 0.9445666670799255,
+        "neutral": 0.04008522629737854
+      }
+    },
+    {
+      "case_id": "wice_dev03019",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.003226421307772398,
+        "entailment": 0.00030749564757570624,
+        "neutral": 0.9964660406112671
+      }
+    },
+    {
+      "case_id": "wice_dev03033",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.003635574132204056,
+        "entailment": 0.0003629066632129252,
+        "neutral": 0.9960015416145325
+      }
+    },
+    {
+      "case_id": "wice_dev03176",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.03377402573823929,
+        "entailment": 0.051120415329933167,
+        "neutral": 0.9151055812835693
+      }
+    },
+    {
+      "case_id": "wice_dev03310",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0025862783659249544,
+        "entailment": 0.0017488107550889254,
+        "neutral": 0.9956648945808411
+      }
+    },
+    {
+      "case_id": "wice_dev03329",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.011606564745306969,
+        "entailment": 0.003011709777638316,
+        "neutral": 0.9853817224502563
+      }
+    },
+    {
+      "case_id": "wice_dev03481",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.00429973378777504,
+        "entailment": 0.0010120056103914976,
+        "neutral": 0.9946882724761963
+      }
+    },
+    {
+      "case_id": "wice_dev03525",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.011715629138052464,
+        "entailment": 0.00040853515383787453,
+        "neutral": 0.9878758192062378
+      }
+    },
+    {
+      "case_id": "wice_dev03549",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.004715752322226763,
+        "entailment": 0.0051765223033726215,
+        "neutral": 0.9901076555252075
+      }
+    },
+    {
+      "case_id": "wice_dev03568",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.000755844812374562,
+        "entailment": 0.0009944228222593665,
+        "neutral": 0.9982497096061707
+      }
+    },
+    {
+      "case_id": "wice_dev03717",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.0011231026146560907,
+        "entailment": 0.001067498465999961,
+        "neutral": 0.9978094696998596
+      }
+    },
+    {
+      "case_id": "wice_dev03748",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0034781668800860643,
+        "entailment": 0.0004925323883071542,
+        "neutral": 0.9960293769836426
+      }
+    },
+    {
+      "case_id": "wice_dev03806",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.43355152010917664,
+        "entailment": 0.537811815738678,
+        "neutral": 0.02863667905330658
+      }
+    },
+    {
+      "case_id": "wice_dev04032",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.028949830681085587,
+        "entailment": 0.6232522130012512,
+        "neutral": 0.3477979004383087
+      }
+    },
+    {
+      "case_id": "wice_dev04047",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.18992960453033447,
+        "entailment": 0.010567616671323776,
+        "neutral": 0.7995027899742126
+      }
+    },
+    {
+      "case_id": "wice_dev04062",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.0004126469721086323,
+        "entailment": 0.0006548045203089714,
+        "neutral": 0.9989325404167175
+      }
+    },
+    {
+      "case_id": "wice_dev04121",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.00031509852851741016,
+        "entailment": 0.9726600050926208,
+        "neutral": 0.02702483907341957
+      }
+    },
+    {
+      "case_id": "wice_dev04175",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.9831751585006714,
+        "entailment": 0.003523480147123337,
+        "neutral": 0.013301285915076733
+      }
+    },
+    {
+      "case_id": "wice_dev04211",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.0008691649418324232,
+        "entailment": 0.0001295032270718366,
+        "neutral": 0.9990013241767883
+      }
+    },
+    {
+      "case_id": "wice_dev04389",
+      "development_partition": "validation",
+      "expected_verdict": "supported",
+      "probabilities": {
+        "contradiction": 0.0005158229032531381,
+        "entailment": 0.0007032767753116786,
+        "neutral": 0.9987809062004089
+      }
+    },
+    {
+      "case_id": "wice_dev04446",
+      "development_partition": "validation",
+      "expected_verdict": "partially_supported",
+      "probabilities": {
+        "contradiction": 0.00038217156543396413,
+        "entailment": 0.00036670034751296043,
+        "neutral": 0.9992510676383972
+      }
+    }
+  ]
+}

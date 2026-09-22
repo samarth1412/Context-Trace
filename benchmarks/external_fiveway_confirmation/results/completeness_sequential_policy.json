@@ -1,0 +1,93 @@
+{
+  "additional_remote_requests": 0,
+  "heldout_used_for_selection": false,
+  "policy": {
+    "max_partial_to_supported_rate": 0.05,
+    "model": {
+      "feature_order": [
+        "completeness.every_requirement_supported",
+        "completeness.no_material_omission",
+        "completeness.entity_relation_alignment",
+        "completeness.qualifier_scope_alignment",
+        "completeness.numeric_temporal_alignment",
+        "completeness.coordination_coverage",
+        "completeness.no_inference_gap",
+        "verdict_probability.supported",
+        "verdict_probability.partially_supported",
+        "verdict_probability.unsupported",
+        "verdict_probability.contradicted",
+        "verdict_probability.unverifiable",
+        "support_extent_probability.complete_support",
+        "support_extent_probability.partial_support",
+        "local_support_probability"
+      ],
+      "logistic_regression": {
+        "C": 1.0,
+        "class_weight": "balanced",
+        "coefficients": [
+          0.44287187834317543,
+          -1.0312191850573593,
+          0.8622387115580094,
+          0.3905824253266141,
+          -0.02318926715218387,
+          0.4247863049232989,
+          -0.31239661115969103,
+          -0.23904436151945757,
+          0.20653421966670235,
+          0.17057474241906756,
+          -0.1946804665947702,
+          0.3872628260080605,
+          0.38953621538264355,
+          -0.3895362153826448,
+          0.0
+        ],
+        "intercept": 0.06820781056199202,
+        "random_seed": 20260923,
+        "solver": "lbfgs"
+      },
+      "standard_scaler": {
+        "mean": [
+          0.26116666666666666,
+          0.24441666666666648,
+          0.31433333333333324,
+          0.3039166666666667,
+          0.3389999999999998,
+          0.41858333333333325,
+          0.32008333333333305,
+          0.2145000000000001,
+          0.67775,
+          0.04391666666666661,
+          0.047833333333333304,
+          0.015916666666666673,
+          0.16049999999999998,
+          0.8395,
+          0.5
+        ],
+        "scale": [
+          0.23278453318227338,
+          0.19734823634603094,
+          0.22712600516502338,
+          0.21991019315974317,
+          0.27542210029940106,
+          0.2684067058071058,
+          0.2572757788616894,
+          0.308060735353707,
+          0.3087406206402606,
+          0.10548535311701925,
+          0.09506299081252502,
+          0.0338500574429186,
+          0.26180415708438753,
+          0.26180415708438753,
+          1.0
+        ]
+      }
+    },
+    "support_threshold": 0.85
+  },
+  "policy_id": "92cac3b312cb3cb5707737c283d9e85f7fbe5294e1da4bb32b58df33b465642b",
+  "remote_provider_default_enabled": false,
+  "schema_version": "jev-completeness-policy-1.0",
+  "selection_split": "development.calibration",
+  "stable_defaults_changed": false,
+  "validation_split": "development.validation"
+}
