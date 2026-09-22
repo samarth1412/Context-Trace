@@ -1,0 +1,2061 @@
+{
+  "baseline_comparison": {
+    "binary_mapping": "supported versus every other existing verdict",
+    "exact_case_ids_and_selected_inputs_required": true,
+    "variants": {
+      "jev": {
+        "agreement_rate": 0.8,
+        "agreements": 12,
+        "baseline_only_correct": 2,
+        "both_correct": 11,
+        "both_wrong": 1,
+        "cases": 15,
+        "disagreements": [
+          {
+            "baseline_binary": "supported",
+            "baseline_five_way": "supported",
+            "binary_gold": "supported",
+            "case_id": "ragtruth_1678_s003",
+            "five_way_gold": "supported",
+            "minicheck": "not_supported"
+          },
+          {
+            "baseline_binary": "supported",
+            "baseline_five_way": "supported",
+            "binary_gold": "not_supported",
+            "case_id": "ragtruth_7138_s004",
+            "five_way_gold": "contradicted",
+            "minicheck": "not_supported"
+          },
+          {
+            "baseline_binary": "not_supported",
+            "baseline_five_way": "partially_supported",
+            "binary_gold": "not_supported",
+            "case_id": "ragtruth_8625_s006",
+            "five_way_gold": "partially_supported",
+            "minicheck": "supported"
+          }
+        ],
+        "minicheck_only_correct": 1
+      },
+      "stable_semantic": {
+        "agreement_rate": 0.6667,
+        "agreements": 10,
+        "baseline_only_correct": 2,
+        "both_correct": 9,
+        "both_wrong": 1,
+        "cases": 15,
+        "disagreements": [
+          {
+            "baseline_binary": "not_supported",
+            "baseline_five_way": "unverifiable",
+            "binary_gold": "supported",
+            "case_id": "ragtruth_11524_s008",
+            "five_way_gold": "supported",
+            "minicheck": "supported"
+          },
+          {
+            "baseline_binary": "not_supported",
+            "baseline_five_way": "contradicted",
+            "binary_gold": "supported",
+            "case_id": "ragtruth_1513_s003",
+            "five_way_gold": "supported",
+            "minicheck": "supported"
+          },
+          {
+            "baseline_binary": "not_supported",
+            "baseline_five_way": "contradicted",
+            "binary_gold": "not_supported",
+            "case_id": "ragtruth_7052_s009",
+            "five_way_gold": "contradicted",
+            "minicheck": "supported"
+          },
+          {
+            "baseline_binary": "not_supported",
+            "baseline_five_way": "unsupported",
+            "binary_gold": "supported",
+            "case_id": "ragtruth_7262_s006",
+            "five_way_gold": "supported",
+            "minicheck": "supported"
+          },
+          {
+            "baseline_binary": "not_supported",
+            "baseline_five_way": "partially_supported",
+            "binary_gold": "not_supported",
+            "case_id": "ragtruth_8625_s006",
+            "five_way_gold": "partially_supported",
+            "minicheck": "supported"
+          }
+        ],
+        "minicheck_only_correct": 3
+      }
+    }
+  },
+  "cases_completed": 15,
+  "experiment": "contexttrace_minicheck_shared_input_binary",
+  "input_contract": {
+    "evaluation_labels_sent": false,
+    "no_generated_explanations_or_evidence_spans": true,
+    "query_used_by_shared_selector_only": true,
+    "same_selector_as_jev_v2": true,
+    "sent_fields": [
+      "claim",
+      "selected_evidence"
+    ]
+  },
+  "metrics": {
+    "accuracy": 0.8,
+    "balanced_accuracy": 0.8,
+    "by_five_way_gold": {
+      "contradicted": {
+        "cases": 5,
+        "predicted_supported": 1,
+        "predicted_supported_rate": 0.2
+      },
+      "partially_supported": {
+        "cases": 5,
+        "predicted_supported": 1,
+        "predicted_supported_rate": 0.2
+      },
+      "supported": {
+        "cases": 5,
+        "predicted_supported": 4,
+        "predicted_supported_rate": 0.8
+      }
+    },
+    "cases": 15,
+    "confusion": {
+      "not_supported": {
+        "not_supported": 8,
+        "supported": 2
+      },
+      "supported": {
+        "not_supported": 1,
+        "supported": 4
+      }
+    },
+    "dangerous_false_support": {
+      "case_ids": [
+        "ragtruth_7052_s009",
+        "ragtruth_8625_s006"
+      ],
+      "count": 2,
+      "denominator_not_supported": 10,
+      "rate": 0.2
+    },
+    "false_rejection_of_supported": {
+      "case_ids": [
+        "ragtruth_1678_s003"
+      ],
+      "count": 1,
+      "denominator_supported": 5,
+      "rate": 0.2
+    },
+    "input_tokens": {
+      "mean": 601.133,
+      "total": 9017
+    },
+    "latency_ms": {
+      "mean": 400.05,
+      "p50": 444.724,
+      "p95": 607.497
+    },
+    "macro_f1": 0.7847,
+    "per_label": {
+      "not_supported": {
+        "f1": 0.8421,
+        "precision": 0.8889,
+        "recall": 0.8,
+        "support": 10
+      },
+      "supported": {
+        "f1": 0.7273,
+        "precision": 0.6667,
+        "recall": 0.8,
+        "support": 5
+      }
+    },
+    "probability_quality": {
+      "binary_brier": 0.173927,
+      "top_label_ece_10_bins": 0.204206
+    }
+  },
+  "model": {
+    "automatic_download": false,
+    "cache_dir_name": "minicheck-roberta-cache",
+    "model_name": "roberta-large",
+    "model_repo": "lytang/MiniCheck-RoBERTa-Large",
+    "package_version": "0.1.0",
+    "provider": "official_minicheck",
+    "remote_inference": false,
+    "resolved_model_revision": "74c8919647e61ed0f71bc177d94f10930f090068",
+    "source_commit": "b58b9fa69acbd1015ec970fa65dd752413a053d2",
+    "weight_bytes": 1421577710,
+    "weight_filename": "pytorch_model.bin",
+    "weight_sha256": "67af45a2d5a2706283821049232c7d7c81cea22e81dfdbb7097487a98bc61b53"
+  },
+  "rows": [
+    {
+      "binary_gold": "supported",
+      "case_id": "ragtruth_11524_s008",
+      "document_sha256": "e6a29880ff7e1c0387cade52e8609018b93aafb895b8f97319aad76b0ef306c4",
+      "five_way_gold": "supported",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "exact_shared_input": {
+          "claim": "According to customer reviews, The Spot is known for its delicious onion rings and burgers, as well as its chili cheese fries and clam chowder.",
+          "query": "Instruction:\nWrite an objective overview about the following local business based only on the provided structured data in the JSON format. You should include details and cover the information mentioned in the customers' review. The overview should be 100 - 200 words. Don't make up information. Structured data:\n{'name': 'The Spot', 'address': '389 Linden Ave', 'city': 'Carpinteria', 'state': 'CA', 'categories': 'Mexican, American (Traditional), Burgers, Restaurants', 'hours': {'Monday': '10:0-16:0', 'Tuesday': '10:0-19:0', 'Wednesday': '10:0-19:0', 'Thursday': '10:0-19:0', 'Friday': '10:0-20:0', 'Saturday': '10:0-20:0', 'Sunday': '10:0-17:0'}, 'attributes': {'BusinessParking': {'garage': False, 'street': True, 'validated': False, 'lot': True, 'valet': False}, 'RestaurantsReservations': False, 'OutdoorSeating': True, 'WiFi': 'no', 'RestaurantsTakeOut': True, 'RestaurantsGoodForGroups': True, 'Music': None, 'Ambience': {'touristy': None, 'hipster': False, 'romantic': False, 'divey': None, 'intimate': False, 'trendy': False, 'upscale': False, 'classy': False, 'casual': True}}, 'business_stars': 3.5, 'review_info': [{'review_stars': 5.0, 'review_date': '2022-01-17 06:27:16', 'review_text': 'This is your sign to treat yourself to some top tier onion rings. Super quick and delicious food right by the beach what more could you want'}, {'review_stars': 5.0, 'review_date': '2021-11-02 16:21:26', 'review_text': \"Best burgers, period. Chili cheese fries with pico de gallo also bomb. Fish sandwich, delish. Clam chowder is the real deal. Tons of options, American, seafood, Mexican. It's all here. Just. Do. It.\"}, {'review_stars': 4.0, 'review_date': '2021-10-08 01:19:04', 'review_text': \"Always good to eat !! Except they don't take card's. Only cash but don't worry, there's an ATM there !\"}]}\nOverview:",
+          "selected_evidence": [
+            {
+              "id": "ragtruth_source_15031:0:943",
+              "text": "{\"address\": \"389 Linden Ave\", \"attributes\": {\"Ambience\": {\"casual\": true, \"classy\": false, \"divey\": null, \"hipster\": false, \"intimate\": false, \"romantic\": false, \"touristy\": null, \"trendy\": false, \"upscale\": false}, \"BusinessParking\": {\"garage\": false, \"lot\": true, \"street\": true, \"valet\": false, \"validated\": false}, \"Music\": null, \"OutdoorSeating\": true, \"RestaurantsGoodForGroups\": true, \"RestaurantsReservations\": false, \"RestaurantsTakeOut\": true, \"WiFi\": \"no\"}, \"business_stars\": 3.5, \"categories\": \"Mexican, American (Traditional), Burgers, Restaurants\", \"city\": \"Carpinteria\", \"hours\": {\"Friday\": \"10:0-20:0\", \"Monday\": \"10:0-16:0\", \"Saturday\": \"10:0-20:0\", \"Sunday\": \"10:0-17:0\", \"Thursday\": \"10:0-19:0\", \"Tuesday\": \"10:0-19:0\", \"Wednesday\": \"10:0-19:0\"}, \"name\": \"The Spot\", \"review_info\": [{\"review_date\": \"2022-01-17 06:27:16\", \"review_stars\": 5.0, \"review_text\": \"This is your sign to treat yourself to some top tier onion rings."
+            },
+            {
+              "id": "ragtruth_source_15031:1098:1296",
+              "text": "Best burgers, period. Chili cheese fries with pico de gallo also bomb. Fish sandwich, delish. Clam chowder is the real deal. Tons of options, American, seafood, Mexican. It's all here. Just. Do. It."
+            },
+            {
+              "id": "ragtruth_source_15031:944:1119",
+              "text": "Super quick and delicious food right by the beach what more could you want\"}, {\"review_date\": \"2021-11-02 16:21:26\", \"review_stars\": 5.0, \"review_text\": \"Best burgers, period."
+            },
+            {
+              "id": "ragtruth_source_15031:1376:1478",
+              "text": "Always good to eat !! Except they don't take card's. Only cash but don't worry, there's an ATM there !"
+            },
+            {
+              "id": "ragtruth_source_15031:878:1018",
+              "text": "This is your sign to treat yourself to some top tier onion rings. Super quick and delicious food right by the beach what more could you want"
+            },
+            {
+              "id": "ragtruth_source_15031:1429:1478",
+              "text": "Only cash but don't worry, there's an ATM there !"
+            },
+            {
+              "id": "ragtruth_source_15031:1296:1396",
+              "text": "\"}, {\"review_date\": \"2021-10-08 01:19:04\", \"review_stars\": 4.0, \"review_text\": \"Always good to eat !"
+            },
+            {
+              "id": "ragtruth_source_15031:586:764",
+              "text": "\"hours\": {\"Friday\": \"10:0-20:0\", \"Monday\": \"10:0-16:0\", \"Saturday\": \"10:0-20:0\", \"Sunday\": \"10:0-17:0\", \"Thursday\": \"10:0-19:0\", \"Tuesday\": \"10:0-19:0\", \"Wednesday\": \"10:0-19:0\"}"
+            }
+          ]
+        },
+        "input_sha256": "791620833de62f74fce4fa56fb20ebe3aeab4a260d0b4878f4bcb51cfa8fe47b",
+        "selected_span_count": 8,
+        "selected_spans": [
+          {
+            "characters": 943,
+            "id": "ragtruth_source_15031:0:943",
+            "text_sha256": "3c33637d6441d3b6e9e16fd0383cbc32f0b3c81df64a32bf7d8164ccae675325"
+          },
+          {
+            "characters": 198,
+            "id": "ragtruth_source_15031:1098:1296",
+            "text_sha256": "73318d4dd3cccb8d6aeae2e4ccfd87bd0766128fe44605b5f20274ec02ea3857"
+          },
+          {
+            "characters": 175,
+            "id": "ragtruth_source_15031:944:1119",
+            "text_sha256": "81aa7e57bd281ad968b44f8a152a246bfd1e54b83ad8a5d73678376de76935a6"
+          },
+          {
+            "characters": 102,
+            "id": "ragtruth_source_15031:1376:1478",
+            "text_sha256": "0dfd844014f25a2f8f74ea017b988cc2730fcc8d16e686b0f1cc7cdfbf6bf885"
+          },
+          {
+            "characters": 140,
+            "id": "ragtruth_source_15031:878:1018",
+            "text_sha256": "ca87976fb2b94c15853f10757cc3e58a0922b89f64d1705360da6841cf47ce13"
+          },
+          {
+            "characters": 49,
+            "id": "ragtruth_source_15031:1429:1478",
+            "text_sha256": "284a70d447723d1a5c668cb46022d5c760fd6fb4a24104a0bf1e3b4506395b9b"
+          },
+          {
+            "characters": 100,
+            "id": "ragtruth_source_15031:1296:1396",
+            "text_sha256": "76bdb2f386138ede31b1f0fde74fde1ca208798c2d2d9e61a950d608b466420b"
+          },
+          {
+            "characters": 178,
+            "id": "ragtruth_source_15031:586:764",
+            "text_sha256": "c913ed1a1b78f4e282e2bbc49ba5157a6a8535d8d663a417b8eee4bd712b4d08"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "source_context_count": 1
+      },
+      "prediction": {
+        "confidence": 0.687179684638977,
+        "confidence_semantics": "minicheck_binary_support_probability",
+        "evidence_spans": [],
+        "explanation": null,
+        "input_tokens": 713,
+        "label": "supported",
+        "latency_ms": 589.14,
+        "matched_facts": [],
+        "probabilities": {
+          "not_supported": 0.31282031536102295,
+          "supported": 0.687179684638977
+        },
+        "threshold": 0.5,
+        "used_chunks": [
+          {
+            "characters": 1144,
+            "support_probability": 0.687179684638977,
+            "text_sha256": "d9a08a87090af9e465ffdea340e088e91ed06a4b721312006cb5019e1af759c7"
+          },
+          {
+            "characters": 760,
+            "support_probability": 0.006364710163325071,
+            "text_sha256": "033cf75a478949eff787514e829f0e5578ddec1296935fc9dde251b2c6332bbb"
+          }
+        ]
+      }
+    },
+    {
+      "binary_gold": "not_supported",
+      "case_id": "ragtruth_13163_s010",
+      "document_sha256": "24bc7bbcac59563f29d06198e2a9f2748d4f18951bef7d0e1de92ecd4125999b",
+      "five_way_gold": "partially_supported",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "exact_shared_input": {
+          "claim": "It's recommended to use a meat thermometer to ensure the roast reaches a safe internal temperature of at least 145\u00b0F for medium-rare, 160\u00b0F for medium, and 170\u00b0F for well-done.",
+          "query": "how to cook a small prime rib roast in oven",
+          "selected_evidence": [
+            {
+              "id": "ragtruth_source_15112:366:476",
+              "text": "Rub roast with House Seasoning; place roast on a rack in the pan with the rib side down and the fatty side up."
+            },
+            {
+              "id": "ragtruth_source_15112:1131:1778",
+              "text": "passage 3:1 While the roast is resting prepare the au jus; place the roasting pan on top of the stove over high heat. 2  Add in the wine; cook for 8-10 minutes, stirring and scraping any brown bits. 3  Add in the beef stock; cook and reduce the juice by half (this might take about 20 minutes). 4  Add salt and pepper to taste. Set oven to 450\u00b0F and allow the oven to preheat for a minimum of 15 minutes. 2  Season the roast with only a small amount of salt but lots of fresh ground black pepper pepper (that's all nothing else but a little salt and fresh ground black pepper, using any other spices will take away the flavor from the prime rib!)."
+            },
+            {
+              "id": "ragtruth_source_15112:0:476",
+              "text": "passage 1:Directions. Allow roast to stand at room temperature for at least 1 hour. Preheat the oven to 375 degree F. Rub roast with House Seasoning; place roast on a rack in the pan with the rib side down and the fatty side up.Roast for 1 hour.Turn off oven.irections. Allow roast to stand at room temperature for at least 1 hour. Preheat the oven to 375 degree F. Rub roast with House Seasoning; place roast on a rack in the pan with the rib side down and the fatty side up."
+            },
+            {
+              "id": "ragtruth_source_15112:478:1129",
+              "text": "passage 2:1 Set oven to 450\u00b0F and allow the oven to preheat for a minimum of 15 minutes. 2  Season the roast with only a small amount of salt but lots of fresh ground black pepper pepper (that's all nothing else but a little salt and fresh ground black pepper, using any other spices will take away the flavor from the prime rib!). Set oven to 450\u00b0F and allow the oven to preheat for a minimum of 15 minutes. 2  Season the roast with only a small amount of salt but lots of fresh ground black pepper pepper (that's all nothing else but a little salt and fresh ground black pepper, using any other spices will take away the flavor from the prime rib!)."
+            },
+            {
+              "id": "ragtruth_source_15112:567:807",
+              "text": "2  Season the roast with only a small amount of salt but lots of fresh ground black pepper pepper (that's all nothing else but a little salt and fresh ground black pepper, using any other spices will take away the flavor from the prime rib!"
+            }
+          ]
+        },
+        "input_sha256": "cc4d177091e0a8120a9e0f341aee99e1b4d087ebac6741d24a8095873ace0aee",
+        "selected_span_count": 5,
+        "selected_spans": [
+          {
+            "characters": 110,
+            "id": "ragtruth_source_15112:366:476",
+            "text_sha256": "b1440a3b4d6b9a1100a028ff6e39fa9f0eae5d1a27997189a661c1d5368cac95"
+          },
+          {
+            "characters": 647,
+            "id": "ragtruth_source_15112:1131:1778",
+            "text_sha256": "71c3975484f5c183ce154a462e1fc2269351b938db4e573a632968b089881f1e"
+          },
+          {
+            "characters": 476,
+            "id": "ragtruth_source_15112:0:476",
+            "text_sha256": "8482abacbd8cfe15df927b9dee7be98a98ce853cb567a50963aefbe234469d15"
+          },
+          {
+            "characters": 651,
+            "id": "ragtruth_source_15112:478:1129",
+            "text_sha256": "95f55b6cb25b49a9c9cf98ce285f225773ca40d367c807760f56f5bfe9020321"
+          },
+          {
+            "characters": 240,
+            "id": "ragtruth_source_15112:567:807",
+            "text_sha256": "7d5ad20431fa10682292c80d1855a080d32a93d11830f9d4885dbdbcc7b2abb4"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "source_context_count": 1
+      },
+      "prediction": {
+        "confidence": 0.9604513384401798,
+        "confidence_semantics": "minicheck_binary_support_probability",
+        "evidence_spans": [],
+        "explanation": null,
+        "input_tokens": 589,
+        "label": "not_supported",
+        "latency_ms": 473.069,
+        "matched_facts": [],
+        "probabilities": {
+          "not_supported": 0.9604513384401798,
+          "supported": 0.039548661559820175
+        },
+        "threshold": 0.5,
+        "used_chunks": [
+          {
+            "characters": 1651,
+            "support_probability": 0.039548661559820175,
+            "text_sha256": "44ca3fd696f2102fe35acf1da02ccd0fbee6cd15d33aa41e30b8a7378c859009"
+          },
+          {
+            "characters": 486,
+            "support_probability": 0.009047523140907288,
+            "text_sha256": "663f18181d4b08ffc0eb19a0efcac2143b23f77dc470d99a43e2aa1e077ce198"
+          }
+        ]
+      }
+    },
+    {
+      "binary_gold": "supported",
+      "case_id": "ragtruth_1513_s003",
+      "document_sha256": "4a53ad23e355fe25e51b5a99cbbeb2f3e49f4a1d8a88a0f094b04e90c90bc7ed",
+      "five_way_gold": "supported",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "exact_shared_input": {
+          "claim": "Unlike Christmas, Easter's date varies each year based on moon phases and the Earth's tilting axis.",
+          "query": "Summarize the following news within 200 words:\nEaster is a cornerstone event in the Christian faith, but it's surrounded by interesting quirks. It celebrates the completion of Christ's mission of salvation in the Crucifixion and Resurrection. By dying on Good Friday, Christ atoned for the sins of others; by rising from the grave on Sunday, Christ conquered death. Simple enough and reason for Christians to celebrate. But, like Christmas with its tree, ornaments and Santa Claus, Easter has picked up its peripheral trappings -- the bunny and colorful eggs.  Unlike Christmas, it doesn't fall on the same day every year but shifts around in spring depending upon cosmic events. And that blood moon we just had -- is it pure coincidence that it fell around Easter? (No.) Here's a journey from the Vatican to the Holy Land, around the moon and the Earth's tilting axis, to Germany and the United States to try to explain the complex holiday called Easter. And you'll learn to how to color Easter eggs with Kool-Aid. Let's start at the Vatican. At the Vatican, Holy Week began with Palm Sunday last week and culminated in Easter Sunday Mass with multiple celebrations in between to mark the final week of Christ's mortal life. Jesus rode on the back of a donkey into Jerusalem on Palm Sunday where crowds celebrated him as the Messiah and laid down palm branches in his path. But the crowd and the Romans turned on him in the course of the week, according to the Bible, leading to his crucifixion and resurrection. Rain sprinkled down on worshipers standing under a sea of umbrellas as they gathered in a gray St. Peter's Square on Sunday to partake in the outdoor services held by Pope Francis. Afterward, the Pontiff took a moment to tell the world to do right those in need in his Urbi et Orbi address. Francis lamented the suffering of people in many of the conflicts around the globe. From Nigeria to South Sudan, Iraq to Ukraine, he expressed hope that violence would end. Francis also doesn't put on airs. This week he washed the feet of believers, repeating the Biblical account of a woman, a sinner, washing Jesus' feet and anointing them with oil. Let's move on to old Jerusalem, the birthplace of Easter. The Church of the Holy Sepulcher in old Jerusalem unifies the spot where Christ was crucified -- Calvary -- with his tomb, or sepulcher. On Sunday, Catholics and Armenian Christians celebrated the Resurrection there. In the morning, the Latin Patriarch, the Archbishop of Jerusalem, entered the basilica. Then mass was held followed by a procession. But a large group of indigenous Christians didn't join them. It's not quite Easter yet in the Holy Land for Eastern Orthodox Christians. They'll be celebrating a week from now, because they determine Easter's date by a different calendar than Western Christians -- the Julian calendar. Which brings us to the question of how astronomy is used to determine the date of Easter Sunday. A blood moon appeared in the sky early Saturday, right between Good Friday and Easter Sunday and during Passover. Just a coincidence? Not completely, because the dates for both Passover -- the Jewish holiday celebrating the deliverance from slavery in Egypt -- and Easter are determined by moon phases, according to timeanddate.com. Easter's timing is related to Passover, because Jesus was crucified around then, according to the Bible. Many Jewish holidays, including Passover, fall on full moon, which is also a prerequisite for a lunar eclipse, the event that turns the moon a blood red color. Since the timing of moon phases doesn't jibe with Earth's orbit -- which is how we determine the length of a year now -- Passover's exact date moves around -- and so does Easter's. When Christian bishops first convened at the Council of Nicaea in the year 325, they made a rule to determine the date of Easter, so as to fairly reliably pin it to Passover:. It would fall on the first Sunday after the first full moon following the vernal equinox. That's the day in March when Earth's axis reaches a midpoint between winter and summer and the day and night are of equal length. But ... if the full moon fell on Sunday, Easter would be pushed down a week. Confusing? It got worse. When the West moved from the Julian calendar to the Gregorian calendar, Orthodox Christians stayed put, resulting in -- usually -- two separate dates for Easter. In 1997, the World Council of Churches pushed for a unified method of determining a date based on astronomical occurrences. It didn't catch on. But some odd Easter trappings that popped up after the Middle Ages very much have -- the eggs and the bunny. The bunny is an egg-laying pagan that worships the moon. That's one notion of its origins, but probably not the actual one. German immigrants appear to have brought it to North America in the 1700s. German historians are not clear on its beginnings, but the first known mention of the bunny and the eggs in writing was in 1682. Professor of medicine Georg Franck von Frankenau described in his paper \"De ovis paschalibus,\" or \"On Easter eggs,\" a custom in the Alsace region involving a bunny and eggs, according to German public television. Some also credit the region with inadvertently inventing the Christmas tree. But von Frankenau left out any explanation of how the tradition arose, leading to a number of theories in Germany. One common idea: During Lent, people had to abstain from eating eggs, but hens kept on laying them, so farmers boiled and preserved them. By the time Easter rolled around, they were practically swimming in them. They had to figure out something to do with them when the holiday hit. Play hide and seek with them; color them; give them as gifts. Parents may have invented the bunny as a playful explanation for children on where the Easter eggs came from. If you're coloring eggs this year, here's an interesting tip.  Instead of stinking up your place with the smell of vinegar, use Kool-Aid, YouTube science geek Grant Thompson suggests. And it appears to work. Just use a whole packet in a small glass of hot water and gently lay the eggs in. They turn out as bright as they would in any other food dye. But be careful, it stains everything else, like clothes and upholstery, Thompson warns. That's why your tongue changes colors when you drink it. Happy Easter! Happy Passover!\n\noutput:",
+          "selected_evidence": [
+            {
+              "id": "ragtruth_source_11323:514:632",
+              "text": "Unlike Christmas, it doesn't fall on the same day every year but shifts around in spring depending upon cosmic events."
+            },
+            {
+              "id": "ragtruth_source_11323:2579:2654",
+              "text": "It's not quite Easter yet in the Holy Land for Eastern Orthodox Christians."
+            },
+            {
+              "id": "ragtruth_source_11323:3035:3233",
+              "text": "Not completely, because the dates for both Passover -- the Jewish holiday celebrating the deliverance from slavery in Egypt -- and Easter are determined by moon phases, according to timeanddate.com."
+            },
+            {
+              "id": "ragtruth_source_11323:3499:3679",
+              "text": "Since the timing of moon phases doesn't jibe with Earth's orbit -- which is how we determine the length of a year now -- Passover's exact date moves around -- and so does Easter's."
+            },
+            {
+              "id": "ragtruth_source_11323:4921:5133",
+              "text": "Professor of medicine Georg Franck von Frankenau described in his paper \"De ovis paschalibus,\" or \"On Easter eggs,\" a custom in the Alsace region involving a bunny and eggs, according to German public television."
+            },
+            {
+              "id": "ragtruth_source_11323:723:908",
+              "text": ") Here's a journey from the Vatican to the Holy Land, around the moon and the Earth's tilting axis, to Germany and the United States to try to explain the complex holiday called Easter."
+            },
+            {
+              "id": "ragtruth_source_11323:4178:4339",
+              "text": "When the West moved from the Julian calendar to the Gregorian calendar, Orthodox Christians stayed put, resulting in -- usually -- two separate dates for Easter."
+            },
+            {
+              "id": "ragtruth_source_11323:1179:1327",
+              "text": "Jesus rode on the back of a donkey into Jerusalem on Palm Sunday where crowds celebrated him as the Messiah and laid down palm branches in his path."
+            }
+          ]
+        },
+        "input_sha256": "e9a15765d4a90dab828e84c1a544297611ef465e6694ab2001602007da4fb7c4",
+        "selected_span_count": 8,
+        "selected_spans": [
+          {
+            "characters": 118,
+            "id": "ragtruth_source_11323:514:632",
+            "text_sha256": "423c3487968a43a916aa52ae3be7e86ca92416cf2dbd19d6e64b914f542920ba"
+          },
+          {
+            "characters": 75,
+            "id": "ragtruth_source_11323:2579:2654",
+            "text_sha256": "354105602bf12b5dc3081a3c69926bc46b0abc220ad2e792f709f22389e24526"
+          },
+          {
+            "characters": 198,
+            "id": "ragtruth_source_11323:3035:3233",
+            "text_sha256": "b9540cfa8d980687a66f663ed7f6d85b21d7594dfe1071631df1e1a3a243c9a8"
+          },
+          {
+            "characters": 180,
+            "id": "ragtruth_source_11323:3499:3679",
+            "text_sha256": "5ad38423bc8842c815f2a05d9e80abce1d62418389a7ff7d6b3edc8d7982eaf1"
+          },
+          {
+            "characters": 212,
+            "id": "ragtruth_source_11323:4921:5133",
+            "text_sha256": "3c55e5ea1010ed0cf29ea86d3b1aa34a1ae839ca4fa919d9953bdf6c731c9ab3"
+          },
+          {
+            "characters": 185,
+            "id": "ragtruth_source_11323:723:908",
+            "text_sha256": "974903946629887d41a4196e8fdb3b48af494922637f8ba6ee3be964dc3d049f"
+          },
+          {
+            "characters": 161,
+            "id": "ragtruth_source_11323:4178:4339",
+            "text_sha256": "5baeb3754993db38eaf95b639a11ce93e4ede8fbcd502cda6a3dd2f40cb61ed7"
+          },
+          {
+            "characters": 148,
+            "id": "ragtruth_source_11323:1179:1327",
+            "text_sha256": "d9e1ea71656b09817cc30a268a64b339480e38d5bc7ceac2f3e98662934bf793"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "source_context_count": 1
+      },
+      "prediction": {
+        "confidence": 0.9031500816345215,
+        "confidence_semantics": "minicheck_binary_support_probability",
+        "evidence_spans": [],
+        "explanation": null,
+        "input_tokens": 295,
+        "label": "supported",
+        "latency_ms": 179.544,
+        "matched_facts": [],
+        "probabilities": {
+          "not_supported": 0.09684991836547852,
+          "supported": 0.9031500816345215
+        },
+        "threshold": 0.5,
+        "used_chunks": [
+          {
+            "characters": 1298,
+            "support_probability": 0.9031500816345215,
+            "text_sha256": "7643766849c67649232d3dd8e18b5d7b3d6206c8f24b9a3fcdae688f1cb1b2cb"
+          }
+        ]
+      }
+    },
+    {
+      "binary_gold": "supported",
+      "case_id": "ragtruth_1678_s003",
+      "document_sha256": "ebe4ffe8b77b829a083869d71cecd3f1672584beeedafc9a156003f64770cf8c",
+      "five_way_gold": "supported",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "exact_shared_input": {
+          "claim": "Unicef delivered vital aid to Yemen's capital city of Sanaa despite the ongoing conflict, using a rare window of peace to bring food and supplies to those in need.",
+          "query": "Summarize the following news within 106 words:\nSanaa, Yemen (CNN)As the transport plane comes in to land at Sanaa Airport, the deep scars of the brutal conflict tearing Yemen apart are only too clear: wrecked aircraft line the runway, and nearby buildings lie in ruins. To most of the outside world, this war-torn country is off limits, the weeks-long battle between Houthi rebels and Saudi-led coalition forces making it too dangerous to visit, and a no-fly zone rendering its international airport all but obsolete -- but on Tuesday, CNN was granted rare access on a desperate aid mission by Unicef, the United Nations Children's Fund. The airport has previously been bombed. Hostilities are likely to resume before the day is out: a brief, peaceful window has been delicately negotiated following a special request from the U.N. -- but it won't last long. Unicef hopes there will be just enough time to deliver vital food and supplies, helping to ease the country's worsening humanitarian crisis. More than 100,000 Yemeni civilians have fled their homes since fighting began, and OCHA, the United Nations Office for the Coordination of Humanitarian Affairs, estimates that 15.9 million people here are in need of assistance. The main terminal at El Rahaba Airport is under the control of the Houthi rebels. We can't get near it for fear of provoking trouble. But there is plenty to be done out on the tarmac. Within minutes of touching down, a small army of aid workers is busy unloading huge mounds of much-needed provisions. Gusts of wind blow dust across the runway, as crates and pallets of emergency nutrition and medical equipment pile up rapidly beside the plane. Unicef's team has overcome more than one hurdle just getting it this far -- now they'll have to work out how to distribute it to those most in need in a country paralyzed by a lack of resources. Even before Saudi airstrikes, most of the 25 million people in Yemen required humanitarian assistance to meet their most basic needs, according to the United Nations. As they work, an Air India plane is taxiing away from the terminal. Thousands have fled the country on evacuation flights in recent weeks as the situation in Yemen has deteriorated. But for those who have nowhere else to go and no chance of a flight out, mercy missions by Unicef and other NGOs like it are the only hope. READ MORE: 'A window into hell' - desperate Yemenis flee by boatREAD MORE: Civilian catastrophe looming in YemenREAD MORE: Yemen crisis - how you can help. Bryony Jones contributed to this report.\n\noutput:",
+          "selected_evidence": [
+            {
+              "id": "ragtruth_source_11383:223:590",
+              "text": "To most of the outside world, this war-torn country is off limits, the weeks-long battle between Houthi rebels and Saudi-led coalition forces making it too dangerous to visit, and a no-fly zone rendering its international airport all but obsolete -- but on Tuesday, CNN was granted rare access on a desperate aid mission by Unicef, the United Nations Children's Fund."
+            },
+            {
+              "id": "ragtruth_source_11383:2171:2310",
+              "text": "But for those who have nowhere else to go and no chance of a flight out, mercy missions by Unicef and other NGOs like it are the only hope."
+            },
+            {
+              "id": "ragtruth_source_11383:1365:1482",
+              "text": "Within minutes of touching down, a small army of aid workers is busy unloading huge mounds of much-needed provisions."
+            },
+            {
+              "id": "ragtruth_source_11383:1627:1821",
+              "text": "Unicef's team has overcome more than one hurdle just getting it this far -- now they'll have to work out how to distribute it to those most in need in a country paralyzed by a lack of resources."
+            },
+            {
+              "id": "ragtruth_source_11383:0:222",
+              "text": "Sanaa, Yemen (CNN)As the transport plane comes in to land at Sanaa Airport, the deep scars of the brutal conflict tearing Yemen apart are only too clear: wrecked aircraft line the runway, and nearby buildings lie in ruins."
+            },
+            {
+              "id": "ragtruth_source_11383:1483:1626",
+              "text": "Gusts of wind blow dust across the runway, as crates and pallets of emergency nutrition and medical equipment pile up rapidly beside the plane."
+            },
+            {
+              "id": "ragtruth_source_11383:953:1180",
+              "text": "More than 100,000 Yemeni civilians have fled their homes since fighting began, and OCHA, the United Nations Office for the Coordination of Humanitarian Affairs, estimates that 15.9 million people here are in need of assistance."
+            },
+            {
+              "id": "ragtruth_source_11383:812:952",
+              "text": "Unicef hopes there will be just enough time to deliver vital food and supplies, helping to ease the country's worsening humanitarian crisis."
+            }
+          ]
+        },
+        "input_sha256": "50bbf82b756e78ac5b7cb8604096c9a96f469f57d2cad1c7d6303c94cd3365e2",
+        "selected_span_count": 8,
+        "selected_spans": [
+          {
+            "characters": 367,
+            "id": "ragtruth_source_11383:223:590",
+            "text_sha256": "447638df3afe639fd11068655838b8a2ab5db7418893f5d5129bf8011713844c"
+          },
+          {
+            "characters": 139,
+            "id": "ragtruth_source_11383:2171:2310",
+            "text_sha256": "38c21649fe8ec613e3c1586fd0df176b31cdaff1293f8c14d7a13655fa8423df"
+          },
+          {
+            "characters": 117,
+            "id": "ragtruth_source_11383:1365:1482",
+            "text_sha256": "0e4c8352aa325db578ffd779b0785c9f443bf1faccdea6d350564472732734ea"
+          },
+          {
+            "characters": 194,
+            "id": "ragtruth_source_11383:1627:1821",
+            "text_sha256": "67f18c4001dd2d8f40837de5a3d1d68869e7dcb8b18e9ff67ae64087adfc9048"
+          },
+          {
+            "characters": 222,
+            "id": "ragtruth_source_11383:0:222",
+            "text_sha256": "55704d764f18a26bba5770712ed0a52b683d4861d20b14962989986439224b98"
+          },
+          {
+            "characters": 143,
+            "id": "ragtruth_source_11383:1483:1626",
+            "text_sha256": "60a881af68a6012899e2aff957adccd22bd21d1a038e99e9445bbb669cfca685"
+          },
+          {
+            "characters": 227,
+            "id": "ragtruth_source_11383:953:1180",
+            "text_sha256": "2eed6a88d01149d585ecfa41fa5d39d027507dd898571d8495c4121635e2c253"
+          },
+          {
+            "characters": 140,
+            "id": "ragtruth_source_11383:812:952",
+            "text_sha256": "52bf5db63c2a5e17637b8d74fe274a842a8d99dc08115a845953131bf67bf0e5"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "source_context_count": 1
+      },
+      "prediction": {
+        "confidence": 0.9230315536260605,
+        "confidence_semantics": "minicheck_binary_support_probability",
+        "evidence_spans": [],
+        "explanation": null,
+        "input_tokens": 373,
+        "label": "not_supported",
+        "latency_ms": 223.112,
+        "matched_facts": [],
+        "probabilities": {
+          "not_supported": 0.9230315536260605,
+          "supported": 0.07696844637393951
+        },
+        "threshold": 0.5,
+        "used_chunks": [
+          {
+            "characters": 1570,
+            "support_probability": 0.07696844637393951,
+            "text_sha256": "548269c2d6faf2e5efd1623b078858c8197fd92056cf2e9b6a549e02640c1c8c"
+          }
+        ]
+      }
+    },
+    {
+      "binary_gold": "supported",
+      "case_id": "ragtruth_16895_s004",
+      "document_sha256": "fd6a046e965e71fd31a3e24fd478d687a3208f50452b745e18a7a8baf830dea5",
+      "five_way_gold": "supported",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "exact_shared_input": {
+          "claim": "Deep purple urine is associated with porphyria, a rare genetic disorder.",
+          "query": "color of urin meaning",
+          "selected_evidence": [
+            {
+              "id": "ragtruth_source_12307:256:553",
+              "text": "passage 2:Deep purple urine is an identifying characteristic of porphyria, a rare, inherited disorder of red blood cells. Pigments and other compounds in certain foods and medications may change your urine color. Beets, berries and fava beans are among the foods most likely to affect urine color."
+            },
+            {
+              "id": "ragtruth_source_12307:266:377",
+              "text": "Deep purple urine is an identifying characteristic of porphyria, a rare, inherited disorder of red blood cells."
+            },
+            {
+              "id": "ragtruth_source_12307:256:377",
+              "text": "passage 2:Deep purple urine is an identifying characteristic of porphyria, a rare, inherited disorder of red blood cells."
+            },
+            {
+              "id": "ragtruth_source_12307:378:468",
+              "text": "Pigments and other compounds in certain foods and medications may change your urine color."
+            },
+            {
+              "id": "ragtruth_source_12307:565:654",
+              "text": "The normal color of urine is pale yellow, and this color is due to the pigment urochrome."
+            },
+            {
+              "id": "ragtruth_source_12307:469:553",
+              "text": "Beets, berries and fava beans are among the foods most likely to affect urine color."
+            },
+            {
+              "id": "ragtruth_source_12307:555:654",
+              "text": "passage 3:The normal color of urine is pale yellow, and this color is due to the pigment urochrome."
+            },
+            {
+              "id": "ragtruth_source_12307:655:834",
+              "text": "However, this pale color of urine is sometimes altered when, in cases of kidney diseases, the filtration and selective re-absorption stages of urine production are malfunctioning."
+            }
+          ]
+        },
+        "input_sha256": "3f8ae809862928ba95bd632701c819a267c3911ec8d78ef93591cbe4ae892911",
+        "selected_span_count": 8,
+        "selected_spans": [
+          {
+            "characters": 297,
+            "id": "ragtruth_source_12307:256:553",
+            "text_sha256": "69de4d90bde7f7ca3949a6eb3155539cdf1f6885f540d7b29934e6fde8aa6e86"
+          },
+          {
+            "characters": 111,
+            "id": "ragtruth_source_12307:266:377",
+            "text_sha256": "d61b60866249c3ec990dd762d662c4568114d5dabb2cbc2ea02499b789c07685"
+          },
+          {
+            "characters": 121,
+            "id": "ragtruth_source_12307:256:377",
+            "text_sha256": "1ef70d4de0a21d8952158de93c5a2b851444a7995acdf90e0c323bb86c6efae3"
+          },
+          {
+            "characters": 90,
+            "id": "ragtruth_source_12307:378:468",
+            "text_sha256": "af80105eda2cea492dab759a97c73d6f8839897ce3248e843785fe7ea079c14d"
+          },
+          {
+            "characters": 89,
+            "id": "ragtruth_source_12307:565:654",
+            "text_sha256": "2998ca0173fbbbfb752fd831eecfb4b835d26ea400d61910bb9235674cafff8c"
+          },
+          {
+            "characters": 84,
+            "id": "ragtruth_source_12307:469:553",
+            "text_sha256": "72f3c8f6d06029eecd671e986e98d6bc85f35d76b5dfed31938fc1c6fa83229b"
+          },
+          {
+            "characters": 99,
+            "id": "ragtruth_source_12307:555:654",
+            "text_sha256": "e37eca893a23ba5fe90f596c0ec4e11868f33251d6844189dd3d484d0259d533"
+          },
+          {
+            "characters": 179,
+            "id": "ragtruth_source_12307:655:834",
+            "text_sha256": "ea1ca130afce80dce3f0cab25387e8295abd1509a1361231381ff8d4730ce79c"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "source_context_count": 1
+      },
+      "prediction": {
+        "confidence": 0.9064257740974426,
+        "confidence_semantics": "minicheck_binary_support_probability",
+        "evidence_spans": [],
+        "explanation": null,
+        "input_tokens": 249,
+        "label": "supported",
+        "latency_ms": 153.036,
+        "matched_facts": [],
+        "probabilities": {
+          "not_supported": 0.09357422590255737,
+          "supported": 0.9064257740974426
+        },
+        "threshold": 0.5,
+        "used_chunks": [
+          {
+            "characters": 1091,
+            "support_probability": 0.9064257740974426,
+            "text_sha256": "5019974dd431834e3e134dd095a85fcc7f1ed8e70a02f36ca66cbecf9b5178f2"
+          }
+        ]
+      }
+    },
+    {
+      "binary_gold": "not_supported",
+      "case_id": "ragtruth_16895_s006",
+      "document_sha256": "f13f7b95e0cb5ae613cc91b3a0e9b5ae5315a81e7886754a789fc1538bc056f5",
+      "five_way_gold": "partially_supported",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "exact_shared_input": {
+          "claim": "However, any persistent or significant changes in urine color should be evaluated by a healthcare professional to rule out potential health issues.",
+          "query": "color of urin meaning",
+          "selected_evidence": [
+            {
+              "id": "ragtruth_source_12307:0:254",
+              "text": "passage 1:Seeing red urine is typically a sign that there is blood in the urine, a little blood can produce a dramatic color change, and can be a sign of something serious, like an infection or cancer, and it warrants a visit to your doctor or urologist."
+            },
+            {
+              "id": "ragtruth_source_12307:256:553",
+              "text": "passage 2:Deep purple urine is an identifying characteristic of porphyria, a rare, inherited disorder of red blood cells. Pigments and other compounds in certain foods and medications may change your urine color. Beets, berries and fava beans are among the foods most likely to affect urine color."
+            },
+            {
+              "id": "ragtruth_source_12307:378:468",
+              "text": "Pigments and other compounds in certain foods and medications may change your urine color."
+            },
+            {
+              "id": "ragtruth_source_12307:565:654",
+              "text": "The normal color of urine is pale yellow, and this color is due to the pigment urochrome."
+            },
+            {
+              "id": "ragtruth_source_12307:469:553",
+              "text": "Beets, berries and fava beans are among the foods most likely to affect urine color."
+            },
+            {
+              "id": "ragtruth_source_12307:555:654",
+              "text": "passage 3:The normal color of urine is pale yellow, and this color is due to the pigment urochrome."
+            },
+            {
+              "id": "ragtruth_source_12307:655:834",
+              "text": "However, this pale color of urine is sometimes altered when, in cases of kidney diseases, the filtration and selective re-absorption stages of urine production are malfunctioning."
+            },
+            {
+              "id": "ragtruth_source_12307:555:834",
+              "text": "passage 3:The normal color of urine is pale yellow, and this color is due to the pigment urochrome. However, this pale color of urine is sometimes altered when, in cases of kidney diseases, the filtration and selective re-absorption stages of urine production are malfunctioning."
+            }
+          ]
+        },
+        "input_sha256": "e4a27fae143e8bf5abd6fa766e9b681518ee7d15f5ee2a804cad20f74c2ad5a4",
+        "selected_span_count": 8,
+        "selected_spans": [
+          {
+            "characters": 254,
+            "id": "ragtruth_source_12307:0:254",
+            "text_sha256": "d092dd5ad9d334270753c9119c2161be14c7929e2409b6388f9d4beb9a114f13"
+          },
+          {
+            "characters": 297,
+            "id": "ragtruth_source_12307:256:553",
+            "text_sha256": "69de4d90bde7f7ca3949a6eb3155539cdf1f6885f540d7b29934e6fde8aa6e86"
+          },
+          {
+            "characters": 90,
+            "id": "ragtruth_source_12307:378:468",
+            "text_sha256": "af80105eda2cea492dab759a97c73d6f8839897ce3248e843785fe7ea079c14d"
+          },
+          {
+            "characters": 89,
+            "id": "ragtruth_source_12307:565:654",
+            "text_sha256": "2998ca0173fbbbfb752fd831eecfb4b835d26ea400d61910bb9235674cafff8c"
+          },
+          {
+            "characters": 84,
+            "id": "ragtruth_source_12307:469:553",
+            "text_sha256": "72f3c8f6d06029eecd671e986e98d6bc85f35d76b5dfed31938fc1c6fa83229b"
+          },
+          {
+            "characters": 99,
+            "id": "ragtruth_source_12307:555:654",
+            "text_sha256": "e37eca893a23ba5fe90f596c0ec4e11868f33251d6844189dd3d484d0259d533"
+          },
+          {
+            "characters": 179,
+            "id": "ragtruth_source_12307:655:834",
+            "text_sha256": "ea1ca130afce80dce3f0cab25387e8295abd1509a1361231381ff8d4730ce79c"
+          },
+          {
+            "characters": 279,
+            "id": "ragtruth_source_12307:555:834",
+            "text_sha256": "3221ca0711fb6b98ca3eec2a91fc8f968ee54c762daf5537eda455cac11a91a7"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "source_context_count": 1
+      },
+      "prediction": {
+        "confidence": 0.5183514058589935,
+        "confidence_semantics": "minicheck_binary_support_probability",
+        "evidence_spans": [],
+        "explanation": null,
+        "input_tokens": 327,
+        "label": "not_supported",
+        "latency_ms": 201.482,
+        "matched_facts": [],
+        "probabilities": {
+          "not_supported": 0.5183514058589935,
+          "supported": 0.48164859414100647
+        },
+        "threshold": 0.5,
+        "used_chunks": [
+          {
+            "characters": 1392,
+            "support_probability": 0.48164859414100647,
+            "text_sha256": "ebd7a438e870f0fcec6316be4036cf1416976e62605421473153b687eb2c8c1c"
+          }
+        ]
+      }
+    },
+    {
+      "binary_gold": "not_supported",
+      "case_id": "ragtruth_4196_s003",
+      "document_sha256": "e997dc1e7195cf56e3199e7f52ffaff98f9cad9d4434182afef73b1f404e9320",
+      "five_way_gold": "partially_supported",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "exact_shared_input": {
+          "claim": "Tameka discussed her journey as a mother and entrepreneur, balancing her work and raising two children.",
+          "query": "Summarize the following news within 94 words:\nUsher\u2019s Ex-Wife Tameka Raymond Chats with Ariel Shaw, MBA of Southern Crescent Women In Business\nUsher\u2019s Ex-Wife Tameka Raymond Joins Ariel Shaw, MBA of Southern Crescent Women In Business for A Fireside Chat About Her New Memoir\nOctober 29, 2023 (Atlanta, GA) \u2013 On Wednesday October 25th, Southern Crescent Women In Business held an Intimate Fireside Chat with Celebrity Stylist and Mompreneur Tameka Raymond, ex-wife of Singer Usher, at Eagles Landing Country Club. Tameka Raymond is most known for her extensive career as a celebrity fashion stylist, lending her creative talents to legendary soul singers like Patti Labelle, Chaka Khan and Aretha Franklin to chart-toppers such as Jay-Z, Toni Braxton, Usher, Chris Brown, Mary J. Blige, and more.\nThe event allowed attendees to get up-close and personal with Tameka Raymond, beyond her messy and public divorce, to learn more about her role as a formidable businesswoman, mother, and philanthropist. Fireside Chat Host, Ariel Shaw, MBA covered a wide array of topics with Tameka, who graciously and readily answered questions that allowed the other women in the room to emotionally engage and also share. Tameka shared with Ariel and the audience how she balanced being a mother and an entrepreneur, the mission of The Kile\u2019s World Foundation, and her recently released memoir \u2018Here I Stand\u2026In A Beautiful State.\u2019 A memoir dedicated to growth and striving to remain in what Tameka has labeled a \u201cbeautiful state\u201d ;also sharing that \u201c\u2026each chapter of the memoir was named after a song that was representative of that particular time in her life.\u201d The event continued with questions from attendees, a book signing, and a photo opportunities with Tameka. Learn more at https://www.tamekaraymond.com.\nSponsors for the event included Southern Crescent Women in Business Inc, The Empire Contracting Company, DLS Installation LLC, and Seven Twelve Vodka.\nABOUT SOUTHERN CRESCENT WOMEN IN BUSINESS\nSouthern Crescent Women in Business (SCWIB) is a conglomerate of women owned businesses and women in business that have come together to change the economic landscape in the Southern Crescent area. With active Chapters in South Metro and now North Metro. Their vision is to develop key partnerships, deepen business relationships and to provide resources to assist in the growth of women owned business. To join this organization as a member or to find out more, visit www.scwibga.org.\noutput:",
+          "selected_evidence": [
+            {
+              "id": "ragtruth_source_13870:0:467",
+              "text": "Usher\u2019s Ex-Wife Tameka Raymond Chats with Ariel Shaw, MBA of Southern Crescent Women In Business\nUsher\u2019s Ex-Wife Tameka Raymond Joins Ariel Shaw, MBA of Southern Crescent Women In Business for A Fireside Chat About Her New Memoir\nOctober 29, 2023 (Atlanta, GA) \u2013 On Wednesday October 25th, Southern Crescent Women In Business held an Intimate Fireside Chat with Celebrity Stylist and Mompreneur Tameka Raymond, ex-wife of Singer Usher, at Eagles Landing Country Club."
+            },
+            {
+              "id": "ragtruth_source_13870:468:750",
+              "text": "Tameka Raymond is most known for her extensive career as a celebrity fashion stylist, lending her creative talents to legendary soul singers like Patti Labelle, Chaka Khan and Aretha Franklin to chart-toppers such as Jay-Z, Toni Braxton, Usher, Chris Brown, Mary J. Blige, and more."
+            },
+            {
+              "id": "ragtruth_source_13870:954:1158",
+              "text": "Fireside Chat Host, Ariel Shaw, MBA covered a wide array of topics with Tameka, who graciously and readily answered questions that allowed the other women in the room to emotionally engage and also share."
+            },
+            {
+              "id": "ragtruth_source_13870:751:953",
+              "text": "The event allowed attendees to get up-close and personal with Tameka Raymond, beyond her messy and public divorce, to learn more about her role as a formidable businesswoman, mother, and philanthropist."
+            },
+            {
+              "id": "ragtruth_source_13870:1751:1901",
+              "text": "Sponsors for the event included Southern Crescent Women in Business Inc, The Empire Contracting Company, DLS Installation LLC, and Seven Twelve Vodka."
+            },
+            {
+              "id": "ragtruth_source_13870:1902:2141",
+              "text": "ABOUT SOUTHERN CRESCENT WOMEN IN BUSINESS\nSouthern Crescent Women in Business (SCWIB) is a conglomerate of women owned businesses and women in business that have come together to change the economic landscape in the Southern Crescent area."
+            },
+            {
+              "id": "ragtruth_source_13870:2199:2347",
+              "text": "Their vision is to develop key partnerships, deepen business relationships and to provide resources to assist in the growth of women owned business."
+            },
+            {
+              "id": "ragtruth_source_13870:1159:1366",
+              "text": "Tameka shared with Ariel and the audience how she balanced being a mother and an entrepreneur, the mission of The Kile\u2019s World Foundation, and her recently released memoir \u2018Here I Stand\u2026In A Beautiful State."
+            }
+          ]
+        },
+        "input_sha256": "022d8bc65f991733079b277b922a6b2bf064e13294b3698f3cac8cfbbaaf126b",
+        "selected_span_count": 8,
+        "selected_spans": [
+          {
+            "characters": 467,
+            "id": "ragtruth_source_13870:0:467",
+            "text_sha256": "774efa1dc42d4a284c5b8a43c1ce84c516e9bd00ce29753ce31637116bf322c0"
+          },
+          {
+            "characters": 282,
+            "id": "ragtruth_source_13870:468:750",
+            "text_sha256": "e6a04bbc99a8d8c667123393dee9a802ea2c99a96bb63e7d87457850e3328ff7"
+          },
+          {
+            "characters": 204,
+            "id": "ragtruth_source_13870:954:1158",
+            "text_sha256": "45db8398ce643bad0f8053dc3c39cb2ddc6a33fdad30c0a9593da0af9c0ea973"
+          },
+          {
+            "characters": 202,
+            "id": "ragtruth_source_13870:751:953",
+            "text_sha256": "20c90018448b35340f9588161e72c2d492556519187fb077d99a0d70425c0366"
+          },
+          {
+            "characters": 150,
+            "id": "ragtruth_source_13870:1751:1901",
+            "text_sha256": "184a500334878e0c03ede7962c35b2d48bcff1819054c2fcefaba9367d522326"
+          },
+          {
+            "characters": 239,
+            "id": "ragtruth_source_13870:1902:2141",
+            "text_sha256": "ec622c04c1b1bb88e55902abc88a67efdb118f7742f03c40121fa38fe305eb88"
+          },
+          {
+            "characters": 148,
+            "id": "ragtruth_source_13870:2199:2347",
+            "text_sha256": "9b297f64b8352bbe12c2c2e2c394fcf4dafe572bc04e7d09915d9cf10cc86093"
+          },
+          {
+            "characters": 207,
+            "id": "ragtruth_source_13870:1159:1366",
+            "text_sha256": "1af84892c0def949bab27cb7cfb9a712b5c6ee25511ada1109ad99f358d6b83a"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "source_context_count": 1
+      },
+      "prediction": {
+        "confidence": 0.9859229046851397,
+        "confidence_semantics": "minicheck_binary_support_probability",
+        "evidence_spans": [],
+        "explanation": null,
+        "input_tokens": 478,
+        "label": "not_supported",
+        "latency_ms": 429.937,
+        "matched_facts": [],
+        "probabilities": {
+          "not_supported": 0.9859229046851397,
+          "supported": 0.014077095314860344
+        },
+        "threshold": 0.5,
+        "used_chunks": [
+          {
+            "characters": 1710,
+            "support_probability": 0.010435174219310284,
+            "text_sha256": "52c3f60028ab9c6cef181f4f1f76d6d980d591a1b8e800c3f563670e00ed53a3"
+          },
+          {
+            "characters": 207,
+            "support_probability": 0.014077095314860344,
+            "text_sha256": "1af84892c0def949bab27cb7cfb9a712b5c6ee25511ada1109ad99f358d6b83a"
+          }
+        ]
+      }
+    },
+    {
+      "binary_gold": "not_supported",
+      "case_id": "ragtruth_6550_s006",
+      "document_sha256": "69d6365f6d2ee5c71a5e9454c3ff577dcb1ad0e0e70e6da238dffd43bcc02b6e",
+      "five_way_gold": "partially_supported",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "exact_shared_input": {
+          "claim": "Customers particularly rave about the mimosas, which are made with freshly squeezed orange juice and served with a generous pour.",
+          "query": "Instruction:\nWrite an objective overview about the following local business based only on the provided structured data in the JSON format. You should include details and cover the information mentioned in the customers' review. The overview should be 100 - 200 words. Don't make up information. Structured data:\n{'name': 'The Worker Bee Cafe', 'address': '973 Linden Ave', 'city': 'Carpinteria', 'state': 'CA', 'categories': 'Breakfast & Brunch, Diners, Restaurants, American (Traditional)', 'hours': {'Monday': '0:0-0:0', 'Tuesday': '8:0-14:0', 'Wednesday': '8:0-14:0', 'Thursday': '8:0-14:0', 'Friday': '8:0-14:0', 'Saturday': '8:0-14:0', 'Sunday': '8:0-14:0'}, 'attributes': {'BusinessParking': {'garage': False, 'street': True, 'validated': False, 'lot': False, 'valet': False}, 'RestaurantsReservations': False, 'OutdoorSeating': True, 'WiFi': 'no', 'RestaurantsTakeOut': True, 'RestaurantsGoodForGroups': True, 'Music': None, 'Ambience': {'touristy': False, 'hipster': False, 'romantic': False, 'divey': False, 'intimate': False, 'trendy': False, 'upscale': False, 'classy': False, 'casual': True}}, 'business_stars': 4.0, 'review_info': [{'review_stars': 5.0, 'review_date': '2022-01-16 16:42:35', 'review_text': \"Always the best place for breakfast in Carpenteria. Mimosas are the best. Service is stellar. You can't go wrong if you randomly choose something off the daily specials menu. I love this place!\"}, {'review_stars': 5.0, 'review_date': '2022-01-16 16:35:55', 'review_text': \"This is my favorite restaurant. It's a must have whenever my family and I are in Carpinteria. The entire staff is incredibly nice and there isn't a bad thing on the menu. The welcoming nature and delicious food make this an easy five star rating. The owner, Rick, is the nicest guy on earth. I recommend chatting with him if you get the chance!\"}, {'review_stars': 5.0, 'review_date': '2022-01-07 20:38:55', 'review_text': \"Absolutely, positively my most favorite hole in the wall breakfast/brunch/lunch spot around! Always love seeing Rick, the owner and his team of fabulous bees! The specials are always spectacular and unique. High quality, fresh food. Don't forget the generous mimosa! See you soon, Rick! We  you!\"}]}\nOverview:",
+          "selected_evidence": [
+            {
+              "id": "ragtruth_source_13761:0:945",
+              "text": "{\"address\": \"973 Linden Ave\", \"attributes\": {\"Ambience\": {\"casual\": true, \"classy\": false, \"divey\": false, \"hipster\": false, \"intimate\": false, \"romantic\": false, \"touristy\": false, \"trendy\": false, \"upscale\": false}, \"BusinessParking\": {\"garage\": false, \"lot\": false, \"street\": true, \"valet\": false, \"validated\": false}, \"Music\": null, \"OutdoorSeating\": true, \"RestaurantsGoodForGroups\": true, \"RestaurantsReservations\": false, \"RestaurantsTakeOut\": true, \"WiFi\": \"no\"}, \"business_stars\": 4.0, \"categories\": \"Breakfast & Brunch, Diners, Restaurants, American (Traditional)\", \"city\": \"Carpinteria\", \"hours\": {\"Friday\": \"8:0-14:0\", \"Monday\": \"0:0-0:0\", \"Saturday\": \"8:0-14:0\", \"Sunday\": \"8:0-14:0\", \"Thursday\": \"8:0-14:0\", \"Tuesday\": \"8:0-14:0\", \"Wednesday\": \"8:0-14:0\"}, \"name\": \"The Worker Bee Cafe\", \"review_info\": [{\"review_date\": \"2022-01-16 16:42:35\", \"review_stars\": 5.0, \"review_text\": \"Always the best place for breakfast in Carpenteria."
+            },
+            {
+              "id": "ragtruth_source_13761:1591:1886",
+              "text": "Absolutely, positively my most favorite hole in the wall breakfast/brunch/lunch spot around! Always love seeing Rick, the owner and his team of fabulous bees! The specials are always spectacular and unique. High quality, fresh food. Don't forget the generous mimosa! See you soon, Rick! We  you!"
+            },
+            {
+              "id": "ragtruth_source_13761:1167:1511",
+              "text": "This is my favorite restaurant. It's a must have whenever my family and I are in Carpinteria. The entire staff is incredibly nice and there isn't a bad thing on the menu. The welcoming nature and delicious food make this an easy five star rating. The owner, Rick, is the nicest guy on earth. I recommend chatting with him if you get the chance!"
+            },
+            {
+              "id": "ragtruth_source_13761:1511:1683",
+              "text": "\"}, {\"review_date\": \"2022-01-07 20:38:55\", \"review_stars\": 5.0, \"review_text\": \"Absolutely, positively my most favorite hole in the wall breakfast/brunch/lunch spot around!"
+            },
+            {
+              "id": "ragtruth_source_13761:894:1087",
+              "text": "Always the best place for breakfast in Carpenteria. Mimosas are the best. Service is stellar. You can't go wrong if you randomly choose something off the daily specials menu. I love this place!"
+            },
+            {
+              "id": "ragtruth_source_13761:1591:1683",
+              "text": "Absolutely, positively my most favorite hole in the wall breakfast/brunch/lunch spot around!"
+            },
+            {
+              "id": "ragtruth_source_13761:1338:1413",
+              "text": "The welcoming nature and delicious food make this an easy five star rating."
+            },
+            {
+              "id": "ragtruth_source_13761:1087:1198",
+              "text": "\"}, {\"review_date\": \"2022-01-16 16:35:55\", \"review_stars\": 5.0, \"review_text\": \"This is my favorite restaurant."
+            }
+          ]
+        },
+        "input_sha256": "cf812a43735330222fc3080524290ff5ced3719e47b13bb227b6b950079a0e2e",
+        "selected_span_count": 8,
+        "selected_spans": [
+          {
+            "characters": 945,
+            "id": "ragtruth_source_13761:0:945",
+            "text_sha256": "797172c61ea9c77b7ead4bff13b242209796e60147011c1ff4e9f47b9b3785b1"
+          },
+          {
+            "characters": 295,
+            "id": "ragtruth_source_13761:1591:1886",
+            "text_sha256": "59283cb5e68ba83517f05dec121e5662f81b8132d1c99d25649cf60a533a7dae"
+          },
+          {
+            "characters": 344,
+            "id": "ragtruth_source_13761:1167:1511",
+            "text_sha256": "cecf600c92e16be9dbe296f21f51cf747cd3099fe6f49c197896abfa34dd8fd9"
+          },
+          {
+            "characters": 172,
+            "id": "ragtruth_source_13761:1511:1683",
+            "text_sha256": "0e85c4ddaa08773b760f39f77547feb0585c1c44ed0d284497aed30fc848550a"
+          },
+          {
+            "characters": 193,
+            "id": "ragtruth_source_13761:894:1087",
+            "text_sha256": "f7e9d31efd50c952f60f485bbfecf6560fd34202441f8c7b4227256077ddf522"
+          },
+          {
+            "characters": 92,
+            "id": "ragtruth_source_13761:1591:1683",
+            "text_sha256": "de629cbd7dfe42d25c77c5df87c548240f69359b015d6b1efa70f029a54c8d3e"
+          },
+          {
+            "characters": 75,
+            "id": "ragtruth_source_13761:1338:1413",
+            "text_sha256": "8c63a8470b8bbc8c2424d2a3e96ba5b87a665b32187abf51f244b18b27834bf7"
+          },
+          {
+            "characters": 111,
+            "id": "ragtruth_source_13761:1087:1198",
+            "text_sha256": "594dd602580952d53cc7b4550463d28f53dc9afd374df1475cd56deb163f355b"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "source_context_count": 1
+      },
+      "prediction": {
+        "confidence": 0.9862707667052746,
+        "confidence_semantics": "minicheck_binary_support_probability",
+        "evidence_spans": [],
+        "explanation": null,
+        "input_tokens": 724,
+        "label": "not_supported",
+        "latency_ms": 452.353,
+        "matched_facts": [],
+        "probabilities": {
+          "not_supported": 0.9862707667052746,
+          "supported": 0.013729233294725418
+        },
+        "threshold": 0.5,
+        "used_chunks": [
+          {
+            "characters": 1180,
+            "support_probability": 0.006208040285855532,
+            "text_sha256": "70219aef9d39eec1a85d95c165e27e1414faa6dfa423a002af67b4ed14f8bf3c"
+          },
+          {
+            "characters": 1067,
+            "support_probability": 0.013729233294725418,
+            "text_sha256": "6e2c147848673f6e26b2cf7275ba3db897fcd917d505fd53f8dceba6478836cf"
+          }
+        ]
+      }
+    },
+    {
+      "binary_gold": "not_supported",
+      "case_id": "ragtruth_6550_s008",
+      "document_sha256": "69d6365f6d2ee5c71a5e9454c3ff577dcb1ad0e0e70e6da238dffd43bcc02b6e",
+      "five_way_gold": "contradicted",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "exact_shared_input": {
+          "claim": "The ambiance is casual and intimate, with outdoor seating available for those who want to enjoy the beautiful Santa Barbara County weather.",
+          "query": "Instruction:\nWrite an objective overview about the following local business based only on the provided structured data in the JSON format. You should include details and cover the information mentioned in the customers' review. The overview should be 100 - 200 words. Don't make up information. Structured data:\n{'name': 'The Worker Bee Cafe', 'address': '973 Linden Ave', 'city': 'Carpinteria', 'state': 'CA', 'categories': 'Breakfast & Brunch, Diners, Restaurants, American (Traditional)', 'hours': {'Monday': '0:0-0:0', 'Tuesday': '8:0-14:0', 'Wednesday': '8:0-14:0', 'Thursday': '8:0-14:0', 'Friday': '8:0-14:0', 'Saturday': '8:0-14:0', 'Sunday': '8:0-14:0'}, 'attributes': {'BusinessParking': {'garage': False, 'street': True, 'validated': False, 'lot': False, 'valet': False}, 'RestaurantsReservations': False, 'OutdoorSeating': True, 'WiFi': 'no', 'RestaurantsTakeOut': True, 'RestaurantsGoodForGroups': True, 'Music': None, 'Ambience': {'touristy': False, 'hipster': False, 'romantic': False, 'divey': False, 'intimate': False, 'trendy': False, 'upscale': False, 'classy': False, 'casual': True}}, 'business_stars': 4.0, 'review_info': [{'review_stars': 5.0, 'review_date': '2022-01-16 16:42:35', 'review_text': \"Always the best place for breakfast in Carpenteria. Mimosas are the best. Service is stellar. You can't go wrong if you randomly choose something off the daily specials menu. I love this place!\"}, {'review_stars': 5.0, 'review_date': '2022-01-16 16:35:55', 'review_text': \"This is my favorite restaurant. It's a must have whenever my family and I are in Carpinteria. The entire staff is incredibly nice and there isn't a bad thing on the menu. The welcoming nature and delicious food make this an easy five star rating. The owner, Rick, is the nicest guy on earth. I recommend chatting with him if you get the chance!\"}, {'review_stars': 5.0, 'review_date': '2022-01-07 20:38:55', 'review_text': \"Absolutely, positively my most favorite hole in the wall breakfast/brunch/lunch spot around! Always love seeing Rick, the owner and his team of fabulous bees! The specials are always spectacular and unique. High quality, fresh food. Don't forget the generous mimosa! See you soon, Rick! We  you!\"}]}\nOverview:",
+          "selected_evidence": [
+            {
+              "id": "ragtruth_source_13761:0:945",
+              "text": "{\"address\": \"973 Linden Ave\", \"attributes\": {\"Ambience\": {\"casual\": true, \"classy\": false, \"divey\": false, \"hipster\": false, \"intimate\": false, \"romantic\": false, \"touristy\": false, \"trendy\": false, \"upscale\": false}, \"BusinessParking\": {\"garage\": false, \"lot\": false, \"street\": true, \"valet\": false, \"validated\": false}, \"Music\": null, \"OutdoorSeating\": true, \"RestaurantsGoodForGroups\": true, \"RestaurantsReservations\": false, \"RestaurantsTakeOut\": true, \"WiFi\": \"no\"}, \"business_stars\": 4.0, \"categories\": \"Breakfast & Brunch, Diners, Restaurants, American (Traditional)\", \"city\": \"Carpinteria\", \"hours\": {\"Friday\": \"8:0-14:0\", \"Monday\": \"0:0-0:0\", \"Saturday\": \"8:0-14:0\", \"Sunday\": \"8:0-14:0\", \"Thursday\": \"8:0-14:0\", \"Tuesday\": \"8:0-14:0\", \"Wednesday\": \"8:0-14:0\"}, \"name\": \"The Worker Bee Cafe\", \"review_info\": [{\"review_date\": \"2022-01-16 16:42:35\", \"review_stars\": 5.0, \"review_text\": \"Always the best place for breakfast in Carpenteria."
+            },
+            {
+              "id": "ragtruth_source_13761:1591:1886",
+              "text": "Absolutely, positively my most favorite hole in the wall breakfast/brunch/lunch spot around! Always love seeing Rick, the owner and his team of fabulous bees! The specials are always spectacular and unique. High quality, fresh food. Don't forget the generous mimosa! See you soon, Rick! We  you!"
+            },
+            {
+              "id": "ragtruth_source_13761:1167:1511",
+              "text": "This is my favorite restaurant. It's a must have whenever my family and I are in Carpinteria. The entire staff is incredibly nice and there isn't a bad thing on the menu. The welcoming nature and delicious food make this an easy five star rating. The owner, Rick, is the nicest guy on earth. I recommend chatting with him if you get the chance!"
+            },
+            {
+              "id": "ragtruth_source_13761:1511:1683",
+              "text": "\"}, {\"review_date\": \"2022-01-07 20:38:55\", \"review_stars\": 5.0, \"review_text\": \"Absolutely, positively my most favorite hole in the wall breakfast/brunch/lunch spot around!"
+            },
+            {
+              "id": "ragtruth_source_13761:894:1087",
+              "text": "Always the best place for breakfast in Carpenteria. Mimosas are the best. Service is stellar. You can't go wrong if you randomly choose something off the daily specials menu. I love this place!"
+            },
+            {
+              "id": "ragtruth_source_13761:1591:1683",
+              "text": "Absolutely, positively my most favorite hole in the wall breakfast/brunch/lunch spot around!"
+            },
+            {
+              "id": "ragtruth_source_13761:1338:1413",
+              "text": "The welcoming nature and delicious food make this an easy five star rating."
+            },
+            {
+              "id": "ragtruth_source_13761:1087:1198",
+              "text": "\"}, {\"review_date\": \"2022-01-16 16:35:55\", \"review_stars\": 5.0, \"review_text\": \"This is my favorite restaurant."
+            }
+          ]
+        },
+        "input_sha256": "7c59aee178b5a7b19cb6a5ca9f5319fac7a733a1bd852943a1196eb338923815",
+        "selected_span_count": 8,
+        "selected_spans": [
+          {
+            "characters": 945,
+            "id": "ragtruth_source_13761:0:945",
+            "text_sha256": "797172c61ea9c77b7ead4bff13b242209796e60147011c1ff4e9f47b9b3785b1"
+          },
+          {
+            "characters": 295,
+            "id": "ragtruth_source_13761:1591:1886",
+            "text_sha256": "59283cb5e68ba83517f05dec121e5662f81b8132d1c99d25649cf60a533a7dae"
+          },
+          {
+            "characters": 344,
+            "id": "ragtruth_source_13761:1167:1511",
+            "text_sha256": "cecf600c92e16be9dbe296f21f51cf747cd3099fe6f49c197896abfa34dd8fd9"
+          },
+          {
+            "characters": 172,
+            "id": "ragtruth_source_13761:1511:1683",
+            "text_sha256": "0e85c4ddaa08773b760f39f77547feb0585c1c44ed0d284497aed30fc848550a"
+          },
+          {
+            "characters": 193,
+            "id": "ragtruth_source_13761:894:1087",
+            "text_sha256": "f7e9d31efd50c952f60f485bbfecf6560fd34202441f8c7b4227256077ddf522"
+          },
+          {
+            "characters": 92,
+            "id": "ragtruth_source_13761:1591:1683",
+            "text_sha256": "de629cbd7dfe42d25c77c5df87c548240f69359b015d6b1efa70f029a54c8d3e"
+          },
+          {
+            "characters": 75,
+            "id": "ragtruth_source_13761:1338:1413",
+            "text_sha256": "8c63a8470b8bbc8c2424d2a3e96ba5b87a665b32187abf51f244b18b27834bf7"
+          },
+          {
+            "characters": 111,
+            "id": "ragtruth_source_13761:1087:1198",
+            "text_sha256": "594dd602580952d53cc7b4550463d28f53dc9afd374df1475cd56deb163f355b"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "source_context_count": 1
+      },
+      "prediction": {
+        "confidence": 0.9823529254645109,
+        "confidence_semantics": "minicheck_binary_support_probability",
+        "evidence_spans": [],
+        "explanation": null,
+        "input_tokens": 724,
+        "label": "not_supported",
+        "latency_ms": 444.724,
+        "matched_facts": [],
+        "probabilities": {
+          "not_supported": 0.9823529254645109,
+          "supported": 0.017647074535489082
+        },
+        "threshold": 0.5,
+        "used_chunks": [
+          {
+            "characters": 1180,
+            "support_probability": 0.017647074535489082,
+            "text_sha256": "70219aef9d39eec1a85d95c165e27e1414faa6dfa423a002af67b4ed14f8bf3c"
+          },
+          {
+            "characters": 1067,
+            "support_probability": 0.01264155562967062,
+            "text_sha256": "6e2c147848673f6e26b2cf7275ba3db897fcd917d505fd53f8dceba6478836cf"
+          }
+        ]
+      }
+    },
+    {
+      "binary_gold": "not_supported",
+      "case_id": "ragtruth_7052_s009",
+      "document_sha256": "6e297f492175ef372b4e7c7017115131605e0a55b29e33b255779d9df56d2e1e",
+      "five_way_gold": "contradicted",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "exact_shared_input": {
+          "claim": "On the other hand, one customer praised the restaurant's Pad Thai, noting that the chicken and shrimp were cooked well but the dish was a little bland.",
+          "query": "Instruction:\nWrite an objective overview about the following local business based only on the provided structured data in the JSON format. You should include details and cover the information mentioned in the customers' review. The overview should be 100 - 200 words. Don't make up information. Structured data:\n{'name': 'Pattaya Thai Restaurant', 'address': '5918 Hollister Ave', 'city': 'Goleta', 'state': 'CA', 'categories': 'Restaurants, Thai', 'hours': {'Tuesday': '17:0-21:0', 'Wednesday': '17:0-21:0', 'Thursday': '17:0-21:0', 'Friday': '17:0-21:0', 'Saturday': '17:0-21:0', 'Sunday': '17:0-21:0'}, 'attributes': {'BusinessParking': {'garage': False, 'street': False, 'validated': False, 'lot': True, 'valet': False}, 'RestaurantsReservations': True, 'OutdoorSeating': None, 'WiFi': 'no', 'RestaurantsTakeOut': True, 'RestaurantsGoodForGroups': True, 'Music': None, 'Ambience': {'romantic': False, 'intimate': False, 'touristy': False, 'hipster': False, 'divey': False, 'classy': False, 'trendy': False, 'upscale': False, 'casual': True}}, 'business_stars': 3.5, 'review_info': [{'review_stars': 3.0, 'review_date': '2022-01-18 10:53:32', 'review_text': \"Went in for lunch and felt like I'd gone back in time. Service was lousy. The place was dark. An upgrade is sorely needed. Few customers. And you couldn't smell anything cooking despite the noise from the kitchen. Waited for server so I left!\"}, {'review_stars': 1.0, 'review_date': '2021-10-29 04:42:47', 'review_text': 'Food poisoning. Ordered the spicy fried rice and it tasted bad, spicy in areas badly seasoned and food poisoning to follow. HORRIBLE.'}, {'review_stars': 4.0, 'review_date': '2021-10-01 03:55:33', 'review_text': 'As you can tell, I am a big fan of Pad Thai lol. This time is a Pad Thai from Pattaya Thai, and despite the chicken and shrimp being cooked very well and not overcooked, I unfortunately found this Pad Thai to be a bit bland. Now I have high standards for Pad Thai, but I know Pattaya is able to deliver better results. The flavors were all there, but with Pad Thai it is easy for there to be not enough flavor, which makes the dish taste terrible. This was alright.\\n\\nAveraged from my last review, this is 4 stars.'}]}\nOverview:",
+          "selected_evidence": [
+            {
+              "id": "ragtruth_source_14043:0:889",
+              "text": "{\"address\": \"5918 Hollister Ave\", \"attributes\": {\"Ambience\": {\"casual\": true, \"classy\": false, \"divey\": false, \"hipster\": false, \"intimate\": false, \"romantic\": false, \"touristy\": false, \"trendy\": false, \"upscale\": false}, \"BusinessParking\": {\"garage\": false, \"lot\": true, \"street\": false, \"valet\": false, \"validated\": false}, \"Music\": null, \"OutdoorSeating\": null, \"RestaurantsGoodForGroups\": true, \"RestaurantsReservations\": true, \"RestaurantsTakeOut\": true, \"WiFi\": \"no\"}, \"business_stars\": 3.5, \"categories\": \"Restaurants, Thai\", \"city\": \"Goleta\", \"hours\": {\"Friday\": \"17:0-21:0\", \"Saturday\": \"17:0-21:0\", \"Sunday\": \"17:0-21:0\", \"Thursday\": \"17:0-21:0\", \"Tuesday\": \"17:0-21:0\", \"Wednesday\": \"17:0-21:0\"}, \"name\": \"Pattaya Thai Restaurant\", \"review_info\": [{\"review_date\": \"2022-01-18 10:53:32\", \"review_stars\": 3.0, \"review_text\": \"Went in for lunch and felt like I'd gone back in time."
+            },
+            {
+              "id": "ragtruth_source_14043:1370:1883",
+              "text": "As you can tell, I am a big fan of Pad Thai lol. This time is a Pad Thai from Pattaya Thai, and despite the chicken and shrimp being cooked very well and not overcooked, I unfortunately found this Pad Thai to be a bit bland. Now I have high standards for Pad Thai, but I know Pattaya is able to deliver better results. The flavors were all there, but with Pad Thai it is easy for there to be not enough flavor, which makes the dish taste terrible. This was alright.\n\nAveraged from my last review, this is 4 stars."
+            },
+            {
+              "id": "ragtruth_source_14043:1419:1594",
+              "text": "This time is a Pad Thai from Pattaya Thai, and despite the chicken and shrimp being cooked very well and not overcooked, I unfortunately found this Pad Thai to be a bit bland."
+            },
+            {
+              "id": "ragtruth_source_14043:1689:1817",
+              "text": "The flavors were all there, but with Pad Thai it is easy for there to be not enough flavor, which makes the dish taste terrible."
+            },
+            {
+              "id": "ragtruth_source_14043:835:1077",
+              "text": "Went in for lunch and felt like I'd gone back in time. Service was lousy. The place was dark. An upgrade is sorely needed. Few customers. And you couldn't smell anything cooking despite the noise from the kitchen. Waited for server so I left!"
+            },
+            {
+              "id": "ragtruth_source_14043:1290:1418",
+              "text": "\"}, {\"review_date\": \"2021-10-01 03:55:33\", \"review_stars\": 4.0, \"review_text\": \"As you can tell, I am a big fan of Pad Thai lol."
+            },
+            {
+              "id": "ragtruth_source_14043:1077:1172",
+              "text": "\"}, {\"review_date\": \"2021-10-29 04:42:47\", \"review_stars\": 1.0, \"review_text\": \"Food poisoning."
+            },
+            {
+              "id": "ragtruth_source_14043:1157:1290",
+              "text": "Food poisoning. Ordered the spicy fried rice and it tasted bad, spicy in areas badly seasoned and food poisoning to follow. HORRIBLE."
+            }
+          ]
+        },
+        "input_sha256": "bd975a1a648ce79dd6b78d86532e0ec1f2e267af785a9f3ea80a9aaebfe393f2",
+        "selected_span_count": 8,
+        "selected_spans": [
+          {
+            "characters": 889,
+            "id": "ragtruth_source_14043:0:889",
+            "text_sha256": "3caab2a8706d46adb86d33bb943847c6432f70f68d503628a84b4f58ca02fab0"
+          },
+          {
+            "characters": 513,
+            "id": "ragtruth_source_14043:1370:1883",
+            "text_sha256": "81a5dab4c377362467fa28ae7862a2d3d8a7d15edde77d51106958ebba4df628"
+          },
+          {
+            "characters": 175,
+            "id": "ragtruth_source_14043:1419:1594",
+            "text_sha256": "b457985bcd4ec40bf88218113c257912944dd8f449e1a3f7e6a0a876e8d4823f"
+          },
+          {
+            "characters": 128,
+            "id": "ragtruth_source_14043:1689:1817",
+            "text_sha256": "28668995db79a1be808c1db44114f6390c2ba8e5f42908ed9dd1e0f0b8c25917"
+          },
+          {
+            "characters": 242,
+            "id": "ragtruth_source_14043:835:1077",
+            "text_sha256": "9041e32dc72a4db5568b0724af219b72a13bf516dc321496db5f47e407c5db81"
+          },
+          {
+            "characters": 128,
+            "id": "ragtruth_source_14043:1290:1418",
+            "text_sha256": "cccf506155a9240bb50c6861430d8f6dbe0edb6de9e38d59b79dcb73e0a63253"
+          },
+          {
+            "characters": 95,
+            "id": "ragtruth_source_14043:1077:1172",
+            "text_sha256": "63657097c3f3e550b333d662c0045bad4e501bce3347687512f0c147d6ac6f97"
+          },
+          {
+            "characters": 133,
+            "id": "ragtruth_source_14043:1157:1290",
+            "text_sha256": "08ac9d50733f8e3b897e13195db4d247075696894c30f257f50855df8520f90f"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "source_context_count": 1
+      },
+      "prediction": {
+        "confidence": 0.7863418459892273,
+        "confidence_semantics": "minicheck_binary_support_probability",
+        "evidence_spans": [],
+        "explanation": null,
+        "input_tokens": 758,
+        "label": "supported",
+        "latency_ms": 431.541,
+        "matched_facts": [],
+        "probabilities": {
+          "not_supported": 0.2136581540107727,
+          "supported": 0.7863418459892273
+        },
+        "threshold": 0.5,
+        "used_chunks": [
+          {
+            "characters": 1116,
+            "support_probability": 0.7863418459892273,
+            "text_sha256": "e0f9a1c37d9532130b13b65577cfc72164f8bdf7cad6146603c4b3d6073d01d5"
+          },
+          {
+            "characters": 1208,
+            "support_probability": 0.7477314472198486,
+            "text_sha256": "dec468cbfb85fb10314376c7fb5137a0bffea7a1aebc74ae6b973feedde585c2"
+          }
+        ]
+      }
+    },
+    {
+      "binary_gold": "not_supported",
+      "case_id": "ragtruth_7138_s004",
+      "document_sha256": "1d872e545bc7c323314a71faa004eea5d31cae0d214858b8c910a43eaa9656fe",
+      "five_way_gold": "contradicted",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "exact_shared_input": {
+          "claim": "They are open Monday through Saturday from 7:30am to 6:00pm and offer free WiFi and outdoor seating.",
+          "query": "Instruction:\nWrite an objective overview about the following local business based only on the provided structured data in the JSON format. You should include details and cover the information mentioned in the customers' review. The overview should be 100 - 200 words. Don't make up information. Structured data:\n{'name': 'Savoy Cafe & Deli', 'address': '24 W Figueroa St', 'city': 'Santa Barbara', 'state': 'CA', 'categories': 'Restaurants, Delis, Coffee & Tea, Breakfast & Brunch, Food, Gluten-Free, Cafes, Beer, Wine & Spirits', 'hours': {'Monday': '7:30-16:0', 'Tuesday': '7:30-16:0', 'Wednesday': '7:30-16:0', 'Thursday': '7:30-16:0', 'Friday': '7:30-16:0', 'Saturday': '7:30-16:0'}, 'attributes': {'BusinessParking': {'garage': False, 'street': True, 'validated': False, 'lot': True, 'valet': False}, 'RestaurantsReservations': False, 'OutdoorSeating': True, 'WiFi': 'free', 'RestaurantsTakeOut': True, 'RestaurantsGoodForGroups': True, 'Music': None, 'Ambience': {'touristy': False, 'hipster': False, 'romantic': False, 'divey': False, 'intimate': False, 'trendy': False, 'upscale': False, 'classy': True, 'casual': True}}, 'business_stars': 4.5, 'review_info': [{'review_stars': 5.0, 'review_date': '2022-01-12 18:13:50', 'review_text': 'So good, that we went for breakfast and then again for lunch.\\n\\nWe really loved the gluten-free bread options. I have not had a sandwich in a long time.  It was so thick with turkey!\\n\\nA very lovely restaurant with a salad bar (yes, really), open space, nice outdoor seating, and a comfortable bar area.'}, {'review_stars': 5.0, 'review_date': '2021-12-28 21:02:56', 'review_text': 'Savoy is impeccable.  Somehow every single item is delicious and fresh.  I always have a good experience.  The salad bar is for sure the best in the city.  The sandwiches, excellent.  The entrees, you guessed it, so good.  I would recommend them to anyone -- you gotta try it.  Note: closed Sundays!'}, {'review_stars': 5.0, 'review_date': '2021-12-22 20:28:32', 'review_text': \"Great food and service! I don't live in the area, but next time I'm in Santa Barbara,  I will definitely eat there.\"}]}\nOverview:",
+          "selected_evidence": [
+            {
+              "id": "ragtruth_source_14059:0:1029",
+              "text": "{\"address\": \"24 W Figueroa St\", \"attributes\": {\"Ambience\": {\"casual\": true, \"classy\": true, \"divey\": false, \"hipster\": false, \"intimate\": false, \"romantic\": false, \"touristy\": false, \"trendy\": false, \"upscale\": false}, \"BusinessParking\": {\"garage\": false, \"lot\": true, \"street\": true, \"valet\": false, \"validated\": false}, \"Music\": null, \"OutdoorSeating\": true, \"RestaurantsGoodForGroups\": true, \"RestaurantsReservations\": false, \"RestaurantsTakeOut\": true, \"WiFi\": \"free\"}, \"business_stars\": 4.5, \"categories\": \"Restaurants, Delis, Coffee & Tea, Breakfast & Brunch, Food, Gluten-Free, Cafes, Beer, Wine & Spirits\", \"city\": \"Santa Barbara\", \"hours\": {\"Friday\": \"7:30-16:0\", \"Monday\": \"7:30-16:0\", \"Saturday\": \"7:30-16:0\", \"Thursday\": \"7:30-16:0\", \"Tuesday\": \"7:30-16:0\", \"Wednesday\": \"7:30-16:0\"}, \"name\": \"Savoy Cafe & Deli\", \"review_info\": [{\"review_date\": \"2022-01-12 18:13:50\", \"review_stars\": 5.0, \"review_text\": \"So good, that we went for breakfast and then again for lunch.\\n\\nWe really loved the gluten-free bread options."
+            },
+            {
+              "id": "ragtruth_source_14059:918:1219",
+              "text": "So good, that we went for breakfast and then again for lunch.\n\nWe really loved the gluten-free bread options. I have not had a sandwich in a long time.  It was so thick with turkey!\n\nA very lovely restaurant with a salad bar (yes, really), open space, nice outdoor seating, and a comfortable bar area."
+            },
+            {
+              "id": "ragtruth_source_14059:1303:1602",
+              "text": "Savoy is impeccable.  Somehow every single item is delicious and fresh.  I always have a good experience.  The salad bar is for sure the best in the city.  The sandwiches, excellent.  The entrees, you guessed it, so good.  I would recommend them to anyone -- you gotta try it.  Note: closed Sundays!"
+            },
+            {
+              "id": "ragtruth_source_14059:497:613",
+              "text": "\"categories\": \"Restaurants, Delis, Coffee & Tea, Breakfast & Brunch, Food, Gluten-Free, Cafes, Beer, Wine & Spirits\""
+            },
+            {
+              "id": "ragtruth_source_14059:1101:1223",
+              "text": "\\n\\nA very lovely restaurant with a salad bar (yes, really), open space, nice outdoor seating, and a comfortable bar area."
+            },
+            {
+              "id": "ragtruth_source_14059:1105:1223",
+              "text": "A very lovely restaurant with a salad bar (yes, really), open space, nice outdoor seating, and a comfortable bar area."
+            },
+            {
+              "id": "ragtruth_source_14059:1602:1705",
+              "text": "\"}, {\"review_date\": \"2021-12-22 20:28:32\", \"review_stars\": 5.0, \"review_text\": \"Great food and service!"
+            },
+            {
+              "id": "ragtruth_source_14059:1223:1323",
+              "text": "\"}, {\"review_date\": \"2021-12-28 21:02:56\", \"review_stars\": 5.0, \"review_text\": \"Savoy is impeccable."
+            }
+          ]
+        },
+        "input_sha256": "70a17395e6467ff3ccd9fbdd5f74a21abe915dcffe55dcdc1c7b40710dd91eb8",
+        "selected_span_count": 8,
+        "selected_spans": [
+          {
+            "characters": 1029,
+            "id": "ragtruth_source_14059:0:1029",
+            "text_sha256": "fc9b769951241dfe7a3f979095ffb65c60b89779f8a8d496b1bb5fc32030bf71"
+          },
+          {
+            "characters": 301,
+            "id": "ragtruth_source_14059:918:1219",
+            "text_sha256": "13b9ef66395babce2286ebd996cc9de43f4a83d79bf36e1d7c42bec2f23fc462"
+          },
+          {
+            "characters": 299,
+            "id": "ragtruth_source_14059:1303:1602",
+            "text_sha256": "6d4ce64ba32a12e5a84e683037845427322dadaa3bb4c61b724a41eb84c7a491"
+          },
+          {
+            "characters": 116,
+            "id": "ragtruth_source_14059:497:613",
+            "text_sha256": "b605b0e50340b40e0b2fdf6ec32291ea6b8d75e567dbc241915769610124c93b"
+          },
+          {
+            "characters": 122,
+            "id": "ragtruth_source_14059:1101:1223",
+            "text_sha256": "bc450c83fb05c9b8f48771cd81b4f2b25b239a4a3618dcef726289db55c91cce"
+          },
+          {
+            "characters": 118,
+            "id": "ragtruth_source_14059:1105:1223",
+            "text_sha256": "e77ed8d658bc2700b16a808784de4c297dac904c824a5c4fa6b81c476f746f08"
+          },
+          {
+            "characters": 103,
+            "id": "ragtruth_source_14059:1602:1705",
+            "text_sha256": "eb72bfbcceeeda3f415b7088b8cd76ff158d331ecd1cb051699765797b3b14fd"
+          },
+          {
+            "characters": 100,
+            "id": "ragtruth_source_14059:1223:1323",
+            "text_sha256": "ce5755b364d7347b71507fe316d4449bdfd7680e19c14e912fe297d18b8fda82"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "source_context_count": 1
+      },
+      "prediction": {
+        "confidence": 0.9649670720100403,
+        "confidence_semantics": "minicheck_binary_support_probability",
+        "evidence_spans": [],
+        "explanation": null,
+        "input_tokens": 739,
+        "label": "not_supported",
+        "latency_ms": 449.754,
+        "matched_facts": [],
+        "probabilities": {
+          "not_supported": 0.9649670720100403,
+          "supported": 0.03503292798995972
+        },
+        "threshold": 0.5,
+        "used_chunks": [
+          {
+            "characters": 1142,
+            "support_probability": 0.03503292798995972,
+            "text_sha256": "a3d25902b0cd32c4957f4282b0e7f3ff2b46f594605f9b873e0952c912d0faf1"
+          },
+          {
+            "characters": 1060,
+            "support_probability": 0.0049530453979969025,
+            "text_sha256": "105672acead151bd00c103cc2fcf389693a83ec57f20d40baf571bdf87aa1a65"
+          }
+        ]
+      }
+    },
+    {
+      "binary_gold": "not_supported",
+      "case_id": "ragtruth_7262_s003",
+      "document_sha256": "ce0e5d7995d2c4f4162da8c22958cd5b65886d8fd2ef52e24a4dd535897baa4a",
+      "five_way_gold": "contradicted",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "exact_shared_input": {
+          "claim": "They do not have parking facilities available, and WiFi is not available at the restaurant.",
+          "query": "Instruction:\nWrite an objective overview about the following local business based only on the provided structured data in the JSON format. You should include details and cover the information mentioned in the customers' review. The overview should be 100 - 200 words. Don't make up information. Structured data:\n{'name': \"Little Alex's\", 'address': '1024 Coast Village Rd', 'city': 'Santa Barbara', 'state': 'CA', 'categories': 'Restaurants, Mexican', 'hours': {'Monday': '10:0-20:0', 'Tuesday': '10:0-20:0', 'Wednesday': '10:0-20:0', 'Thursday': '10:0-20:0', 'Friday': '10:0-20:0', 'Saturday': '10:0-20:0'}, 'attributes': {'BusinessParking': {'garage': False, 'street': False, 'validated': False, 'lot': True, 'valet': False}, 'RestaurantsReservations': False, 'OutdoorSeating': True, 'WiFi': 'no', 'RestaurantsTakeOut': True, 'RestaurantsGoodForGroups': True, 'Music': None, 'Ambience': {'touristy': False, 'hipster': False, 'romantic': False, 'divey': None, 'intimate': False, 'trendy': False, 'upscale': False, 'classy': False, 'casual': True}}, 'business_stars': 3.5, 'review_info': [{'review_stars': 1.0, 'review_date': '2021-11-27 07:10:59', 'review_text': 'Drove there and it was under construction. Yelp said it was open & looked through the window and paint cans and cutting supplies glore.'}, {'review_stars': 2.0, 'review_date': '2021-09-29 17:23:43', 'review_text': 'I\\'ve lived in Cito for 30+ years. When I was a kid we\\'d often come here for family dinners. We always had a great time and the food was tasty. We call their chicken soup \"sick soup\" and request it every time we have a cold or flu. It used to be delicious. (Even though they\\'ve always used frozen veggies and the chicken is terribly dry). This place has gone so far downhill in the past years. There is no flavor. It\\'s about as Americanized as it can be, maybe dumbed down for SB\\'s growing intolerance for spice. This is as close to Mexican food as the $2 tacos from Jack in the box.'}, {'review_stars': 5.0, 'review_date': '2021-09-28 01:37:48', 'review_text': 'So so so good. Traveling from Austin, TX and naturally wanted some Mexican food with my family. Service was amazing, very kind employees. I did not catch her name but the employees was helpful & always made sure our chips were refilled. It was very good! Throughout the whole meal my family and I kept commenting on how good the food was. Thank you!!!'}]}\nOverview:",
+          "selected_evidence": [
+            {
+              "id": "ragtruth_source_14081:0:880",
+              "text": "{\"address\": \"1024 Coast Village Rd\", \"attributes\": {\"Ambience\": {\"casual\": true, \"classy\": false, \"divey\": null, \"hipster\": false, \"intimate\": false, \"romantic\": false, \"touristy\": false, \"trendy\": false, \"upscale\": false}, \"BusinessParking\": {\"garage\": false, \"lot\": true, \"street\": false, \"valet\": false, \"validated\": false}, \"Music\": null, \"OutdoorSeating\": true, \"RestaurantsGoodForGroups\": true, \"RestaurantsReservations\": false, \"RestaurantsTakeOut\": true, \"WiFi\": \"no\"}, \"business_stars\": 3.5, \"categories\": \"Restaurants, Mexican\", \"city\": \"Santa Barbara\", \"hours\": {\"Friday\": \"10:0-20:0\", \"Monday\": \"10:0-20:0\", \"Saturday\": \"10:0-20:0\", \"Thursday\": \"10:0-20:0\", \"Tuesday\": \"10:0-20:0\", \"Wednesday\": \"10:0-20:0\"}, \"name\": \"Little Alex's\", \"review_info\": [{\"review_date\": \"2021-11-27 07:10:59\", \"review_stars\": 1.0, \"review_text\": \"Drove there and it was under construction."
+            },
+            {
+              "id": "ragtruth_source_14081:1053:1635",
+              "text": "I've lived in Cito for 30+ years. When I was a kid we'd often come here for family dinners. We always had a great time and the food was tasty. We call their chicken soup \"sick soup\" and request it every time we have a cold or flu. It used to be delicious. (Even though they've always used frozen veggies and the chicken is terribly dry). This place has gone so far downhill in the past years. There is no flavor. It's about as Americanized as it can be, maybe dumbed down for SB's growing intolerance for spice. This is as close to Mexican food as the $2 tacos from Jack in the box."
+            },
+            {
+              "id": "ragtruth_source_14081:1717:2068",
+              "text": "So so so good. Traveling from Austin, TX and naturally wanted some Mexican food with my family. Service was amazing, very kind employees. I did not catch her name but the employees was helpful & always made sure our chips were refilled. It was very good! Throughout the whole meal my family and I kept commenting on how good the food was. Thank you!!!"
+            },
+            {
+              "id": "ragtruth_source_14081:973:1086",
+              "text": "\"}, {\"review_date\": \"2021-09-29 17:23:43\", \"review_stars\": 2.0, \"review_text\": \"I've lived in Cito for 30+ years."
+            },
+            {
+              "id": "ragtruth_source_14081:1311:1392",
+              "text": "(Even though they've always used frozen veggies and the chicken is terribly dry)."
+            },
+            {
+              "id": "ragtruth_source_14081:1732:1812",
+              "text": "Traveling from Austin, TX and naturally wanted some Mexican food with my family."
+            },
+            {
+              "id": "ragtruth_source_14081:1637:1731",
+              "text": "\"}, {\"review_date\": \"2021-09-28 01:37:48\", \"review_stars\": 5.0, \"review_text\": \"So so so good."
+            },
+            {
+              "id": "ragtruth_source_14081:838:973",
+              "text": "Drove there and it was under construction. Yelp said it was open & looked through the window and paint cans and cutting supplies glore."
+            }
+          ]
+        },
+        "input_sha256": "675e6cef0faaeda4ca567555bd5c92add80f26519d58d93d200baab9455f3092",
+        "selected_span_count": 8,
+        "selected_spans": [
+          {
+            "characters": 880,
+            "id": "ragtruth_source_14081:0:880",
+            "text_sha256": "6663d3b23f0580a2fa57a34b0556a71fa26716b97c05056f9d8dff42020de8f2"
+          },
+          {
+            "characters": 582,
+            "id": "ragtruth_source_14081:1053:1635",
+            "text_sha256": "4ee1b0aa9a00f558479c0898af65994874d8e7d95037d795f7e10d148de44bbb"
+          },
+          {
+            "characters": 351,
+            "id": "ragtruth_source_14081:1717:2068",
+            "text_sha256": "4526837a4360e528aaf2aa6d00379a4d2e066bed47f6f8769e6801074d80036f"
+          },
+          {
+            "characters": 113,
+            "id": "ragtruth_source_14081:973:1086",
+            "text_sha256": "4390f63d23b62493c7f7087fdbd6188d42651a53ef291599fb32dd0caab1a54a"
+          },
+          {
+            "characters": 81,
+            "id": "ragtruth_source_14081:1311:1392",
+            "text_sha256": "a6b26c3c262e540412ff9aad84845534b16b121c3dec760ac1786b3a2004c854"
+          },
+          {
+            "characters": 80,
+            "id": "ragtruth_source_14081:1732:1812",
+            "text_sha256": "0705904be90173b5ea52a1c74b3e7499529010bc19f5289e330ed57143b5ee2d"
+          },
+          {
+            "characters": 94,
+            "id": "ragtruth_source_14081:1637:1731",
+            "text_sha256": "9a9f647e5a6531088e98a733ca30a2235d19cd8545b48021351139d231931136"
+          },
+          {
+            "characters": 135,
+            "id": "ragtruth_source_14081:838:973",
+            "text_sha256": "d472f96f8b01fbeafa2111663f4b6fd1a4138f3f6f2385ade6083302ee306f56"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "source_context_count": 1
+      },
+      "prediction": {
+        "confidence": 0.5331611633300781,
+        "confidence_semantics": "minicheck_binary_support_probability",
+        "evidence_spans": [],
+        "explanation": null,
+        "input_tokens": 724,
+        "label": "not_supported",
+        "latency_ms": 446.582,
+        "matched_facts": [],
+        "probabilities": {
+          "not_supported": 0.5331611633300781,
+          "supported": 0.4668388366699219
+        },
+        "threshold": 0.5,
+        "used_chunks": [
+          {
+            "characters": 1220,
+            "support_probability": 0.4668388366699219,
+            "text_sha256": "57e3f562808da2f9ab4b4dfa36aaf09878d8807f0e4333e5b644e3ba1083ad16"
+          },
+          {
+            "characters": 1117,
+            "support_probability": 0.005449220072478056,
+            "text_sha256": "3d48b18899ff36fb6f1f4a5536dfcdae315e2707f98cf0529e6915e7368d0415"
+          }
+        ]
+      }
+    },
+    {
+      "binary_gold": "supported",
+      "case_id": "ragtruth_7262_s006",
+      "document_sha256": "ce0e5d7995d2c4f4162da8c22958cd5b65886d8fd2ef52e24a4dd535897baa4a",
+      "five_way_gold": "supported",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "exact_shared_input": {
+          "claim": "However, recent reviews suggest that the quality of the food has declined over time, with some customers describing the food as bland and lacking flavor.",
+          "query": "Instruction:\nWrite an objective overview about the following local business based only on the provided structured data in the JSON format. You should include details and cover the information mentioned in the customers' review. The overview should be 100 - 200 words. Don't make up information. Structured data:\n{'name': \"Little Alex's\", 'address': '1024 Coast Village Rd', 'city': 'Santa Barbara', 'state': 'CA', 'categories': 'Restaurants, Mexican', 'hours': {'Monday': '10:0-20:0', 'Tuesday': '10:0-20:0', 'Wednesday': '10:0-20:0', 'Thursday': '10:0-20:0', 'Friday': '10:0-20:0', 'Saturday': '10:0-20:0'}, 'attributes': {'BusinessParking': {'garage': False, 'street': False, 'validated': False, 'lot': True, 'valet': False}, 'RestaurantsReservations': False, 'OutdoorSeating': True, 'WiFi': 'no', 'RestaurantsTakeOut': True, 'RestaurantsGoodForGroups': True, 'Music': None, 'Ambience': {'touristy': False, 'hipster': False, 'romantic': False, 'divey': None, 'intimate': False, 'trendy': False, 'upscale': False, 'classy': False, 'casual': True}}, 'business_stars': 3.5, 'review_info': [{'review_stars': 1.0, 'review_date': '2021-11-27 07:10:59', 'review_text': 'Drove there and it was under construction. Yelp said it was open & looked through the window and paint cans and cutting supplies glore.'}, {'review_stars': 2.0, 'review_date': '2021-09-29 17:23:43', 'review_text': 'I\\'ve lived in Cito for 30+ years. When I was a kid we\\'d often come here for family dinners. We always had a great time and the food was tasty. We call their chicken soup \"sick soup\" and request it every time we have a cold or flu. It used to be delicious. (Even though they\\'ve always used frozen veggies and the chicken is terribly dry). This place has gone so far downhill in the past years. There is no flavor. It\\'s about as Americanized as it can be, maybe dumbed down for SB\\'s growing intolerance for spice. This is as close to Mexican food as the $2 tacos from Jack in the box.'}, {'review_stars': 5.0, 'review_date': '2021-09-28 01:37:48', 'review_text': 'So so so good. Traveling from Austin, TX and naturally wanted some Mexican food with my family. Service was amazing, very kind employees. I did not catch her name but the employees was helpful & always made sure our chips were refilled. It was very good! Throughout the whole meal my family and I kept commenting on how good the food was. Thank you!!!'}]}\nOverview:",
+          "selected_evidence": [
+            {
+              "id": "ragtruth_source_14081:0:880",
+              "text": "{\"address\": \"1024 Coast Village Rd\", \"attributes\": {\"Ambience\": {\"casual\": true, \"classy\": false, \"divey\": null, \"hipster\": false, \"intimate\": false, \"romantic\": false, \"touristy\": false, \"trendy\": false, \"upscale\": false}, \"BusinessParking\": {\"garage\": false, \"lot\": true, \"street\": false, \"valet\": false, \"validated\": false}, \"Music\": null, \"OutdoorSeating\": true, \"RestaurantsGoodForGroups\": true, \"RestaurantsReservations\": false, \"RestaurantsTakeOut\": true, \"WiFi\": \"no\"}, \"business_stars\": 3.5, \"categories\": \"Restaurants, Mexican\", \"city\": \"Santa Barbara\", \"hours\": {\"Friday\": \"10:0-20:0\", \"Monday\": \"10:0-20:0\", \"Saturday\": \"10:0-20:0\", \"Thursday\": \"10:0-20:0\", \"Tuesday\": \"10:0-20:0\", \"Wednesday\": \"10:0-20:0\"}, \"name\": \"Little Alex's\", \"review_info\": [{\"review_date\": \"2021-11-27 07:10:59\", \"review_stars\": 1.0, \"review_text\": \"Drove there and it was under construction."
+            },
+            {
+              "id": "ragtruth_source_14081:1053:1635",
+              "text": "I've lived in Cito for 30+ years. When I was a kid we'd often come here for family dinners. We always had a great time and the food was tasty. We call their chicken soup \"sick soup\" and request it every time we have a cold or flu. It used to be delicious. (Even though they've always used frozen veggies and the chicken is terribly dry). This place has gone so far downhill in the past years. There is no flavor. It's about as Americanized as it can be, maybe dumbed down for SB's growing intolerance for spice. This is as close to Mexican food as the $2 tacos from Jack in the box."
+            },
+            {
+              "id": "ragtruth_source_14081:1717:2068",
+              "text": "So so so good. Traveling from Austin, TX and naturally wanted some Mexican food with my family. Service was amazing, very kind employees. I did not catch her name but the employees was helpful & always made sure our chips were refilled. It was very good! Throughout the whole meal my family and I kept commenting on how good the food was. Thank you!!!"
+            },
+            {
+              "id": "ragtruth_source_14081:973:1086",
+              "text": "\"}, {\"review_date\": \"2021-09-29 17:23:43\", \"review_stars\": 2.0, \"review_text\": \"I've lived in Cito for 30+ years."
+            },
+            {
+              "id": "ragtruth_source_14081:1311:1392",
+              "text": "(Even though they've always used frozen veggies and the chicken is terribly dry)."
+            },
+            {
+              "id": "ragtruth_source_14081:1732:1812",
+              "text": "Traveling from Austin, TX and naturally wanted some Mexican food with my family."
+            },
+            {
+              "id": "ragtruth_source_14081:1637:1731",
+              "text": "\"}, {\"review_date\": \"2021-09-28 01:37:48\", \"review_stars\": 5.0, \"review_text\": \"So so so good."
+            },
+            {
+              "id": "ragtruth_source_14081:838:973",
+              "text": "Drove there and it was under construction. Yelp said it was open & looked through the window and paint cans and cutting supplies glore."
+            }
+          ]
+        },
+        "input_sha256": "6901767ca15d5c79e4ecae466b964f91a50c721b229b12a3e9c36772002cbb11",
+        "selected_span_count": 8,
+        "selected_spans": [
+          {
+            "characters": 880,
+            "id": "ragtruth_source_14081:0:880",
+            "text_sha256": "6663d3b23f0580a2fa57a34b0556a71fa26716b97c05056f9d8dff42020de8f2"
+          },
+          {
+            "characters": 582,
+            "id": "ragtruth_source_14081:1053:1635",
+            "text_sha256": "4ee1b0aa9a00f558479c0898af65994874d8e7d95037d795f7e10d148de44bbb"
+          },
+          {
+            "characters": 351,
+            "id": "ragtruth_source_14081:1717:2068",
+            "text_sha256": "4526837a4360e528aaf2aa6d00379a4d2e066bed47f6f8769e6801074d80036f"
+          },
+          {
+            "characters": 113,
+            "id": "ragtruth_source_14081:973:1086",
+            "text_sha256": "4390f63d23b62493c7f7087fdbd6188d42651a53ef291599fb32dd0caab1a54a"
+          },
+          {
+            "characters": 81,
+            "id": "ragtruth_source_14081:1311:1392",
+            "text_sha256": "a6b26c3c262e540412ff9aad84845534b16b121c3dec760ac1786b3a2004c854"
+          },
+          {
+            "characters": 80,
+            "id": "ragtruth_source_14081:1732:1812",
+            "text_sha256": "0705904be90173b5ea52a1c74b3e7499529010bc19f5289e330ed57143b5ee2d"
+          },
+          {
+            "characters": 94,
+            "id": "ragtruth_source_14081:1637:1731",
+            "text_sha256": "9a9f647e5a6531088e98a733ca30a2235d19cd8545b48021351139d231931136"
+          },
+          {
+            "characters": 135,
+            "id": "ragtruth_source_14081:838:973",
+            "text_sha256": "d472f96f8b01fbeafa2111663f4b6fd1a4138f3f6f2385ade6083302ee306f56"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "source_context_count": 1
+      },
+      "prediction": {
+        "confidence": 0.7201417088508606,
+        "confidence_semantics": "minicheck_binary_support_probability",
+        "evidence_spans": [],
+        "explanation": null,
+        "input_tokens": 746,
+        "label": "supported",
+        "latency_ms": 453.057,
+        "matched_facts": [],
+        "probabilities": {
+          "not_supported": 0.2798582911491394,
+          "supported": 0.7201417088508606
+        },
+        "threshold": 0.5,
+        "used_chunks": [
+          {
+            "characters": 1220,
+            "support_probability": 0.014814317226409912,
+            "text_sha256": "57e3f562808da2f9ab4b4dfa36aaf09878d8807f0e4333e5b644e3ba1083ad16"
+          },
+          {
+            "characters": 1117,
+            "support_probability": 0.7201417088508606,
+            "text_sha256": "3d48b18899ff36fb6f1f4a5536dfcdae315e2707f98cf0529e6915e7368d0415"
+          }
+        ]
+      }
+    },
+    {
+      "binary_gold": "not_supported",
+      "case_id": "ragtruth_8625_s006",
+      "document_sha256": "dcc7949fc0b540449f5bcb62e04057bc7936bd6f78fc792fd4bb56bda84415ba",
+      "five_way_gold": "partially_supported",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "exact_shared_input": {
+          "claim": "While the restaurant does not offer business parking or reservations, it has Wifi available and allows takeout orders.",
+          "query": "Instruction:\nWrite an objective overview about the following local business based only on the provided structured data in the JSON format. You should include details and cover the information mentioned in the customers' review. The overview should be 100 - 200 words. Don't make up information. Structured data:\n{'name': 'Aksum Restaurant', 'address': '815 E Figueroa St', 'city': 'Santa Barbara', 'state': 'CA', 'categories': 'Ethiopian, Soul Food, Restaurants, Comfort Food', 'hours': {'Tuesday': '12:0-16:0', 'Wednesday': '12:0-16:0', 'Thursday': '12:0-16:0', 'Friday': '12:0-16:0', 'Saturday': '12:0-16:0'}, 'attributes': {'BusinessParking': None, 'RestaurantsReservations': None, 'OutdoorSeating': True, 'WiFi': None, 'RestaurantsTakeOut': True, 'RestaurantsGoodForGroups': None, 'Music': None, 'Ambience': None}, 'business_stars': 5.0, 'review_info': [{'review_stars': 5.0, 'review_date': '2021-10-09 22:42:10', 'review_text': 'We stopped by here for lunch. Aksum is a great option for Ethiopian food in Santa Barbara. The staff was super friendly and the food was delicious. We tried the vegetable combo and meat combo since it was our first time here and we wanted to try some things. It was all delicious and I would probably roll with one or two of the combos next time around as well. Injera was on point and overall we had a great lunch. Thanks Aksum!!'}, {'review_stars': 5.0, 'review_date': '2021-10-07 19:08:02', 'review_text': \"A friend an I were excited to try this place. I recently moved from San Diego to SB, and was really hoping to find some great Ethiopian food. We got the veggie combo, and it was honestly amazing. The service was outstanding!! We were there for my birthday, and they made me feel as home as I've felt in SB. Highly recommend.\"}, {'review_stars': 5.0, 'review_date': '2021-09-18 23:06:49', 'review_text': \"Went here for  lunch today. Wasn't Planning on stopping here but people's plates looked amazing. So glad we did. I have always heard Ethiopian food was amazing so I was excited to try it and so glad I did. Got the meat platter and shared with a friend and thoroughly enjoyed it. I will be back. Bummer they're only open for lunch. They share the location with the carribean restaurant too.\"}]}\nOverview:",
+          "selected_evidence": [
+            {
+              "id": "ragtruth_source_14524:0:636",
+              "text": "{\"address\": \"815 E Figueroa St\", \"attributes\": {\"Ambience\": null, \"BusinessParking\": null, \"Music\": null, \"OutdoorSeating\": true, \"RestaurantsGoodForGroups\": null, \"RestaurantsReservations\": null, \"RestaurantsTakeOut\": true, \"WiFi\": null}, \"business_stars\": 5.0, \"categories\": \"Ethiopian, Soul Food, Restaurants, Comfort Food\", \"city\": \"Santa Barbara\", \"hours\": {\"Friday\": \"12:0-16:0\", \"Saturday\": \"12:0-16:0\", \"Thursday\": \"12:0-16:0\", \"Tuesday\": \"12:0-16:0\", \"Wednesday\": \"12:0-16:0\"}, \"name\": \"Aksum Restaurant\", \"review_info\": [{\"review_date\": \"2021-10-09 22:42:10\", \"review_stars\": 5.0, \"review_text\": \"We stopped by here for lunch."
+            },
+            {
+              "id": "ragtruth_source_14524:607:1037",
+              "text": "We stopped by here for lunch. Aksum is a great option for Ethiopian food in Santa Barbara. The staff was super friendly and the food was delicious. We tried the vegetable combo and meat combo since it was our first time here and we wanted to try some things. It was all delicious and I would probably roll with one or two of the combos next time around as well. Injera was on point and overall we had a great lunch. Thanks Aksum!!"
+            },
+            {
+              "id": "ragtruth_source_14524:1117:1441",
+              "text": "A friend an I were excited to try this place. I recently moved from San Diego to SB, and was really hoping to find some great Ethiopian food. We got the veggie combo, and it was honestly amazing. The service was outstanding!! We were there for my birthday, and they made me feel as home as I've felt in SB. Highly recommend."
+            },
+            {
+              "id": "ragtruth_source_14524:1521:1910",
+              "text": "Went here for  lunch today. Wasn't Planning on stopping here but people's plates looked amazing. So glad we did. I have always heard Ethiopian food was amazing so I was excited to try it and so glad I did. Got the meat platter and shared with a friend and thoroughly enjoyed it. I will be back. Bummer they're only open for lunch. They share the location with the carribean restaurant too."
+            },
+            {
+              "id": "ragtruth_source_14524:1037:1162",
+              "text": "\"}, {\"review_date\": \"2021-10-07 19:08:02\", \"review_stars\": 5.0, \"review_text\": \"A friend an I were excited to try this place."
+            },
+            {
+              "id": "ragtruth_source_14524:1441:1548",
+              "text": "\"}, {\"review_date\": \"2021-09-18 23:06:49\", \"review_stars\": 5.0, \"review_text\": \"Went here for  lunch today."
+            },
+            {
+              "id": "ragtruth_source_14524:866:968",
+              "text": "It was all delicious and I would probably roll with one or two of the combos next time around as well."
+            },
+            {
+              "id": "ragtruth_source_14524:66:89",
+              "text": "\"BusinessParking\": null"
+            }
+          ]
+        },
+        "input_sha256": "9150cf699e59e5e8d7d62b664ebd5e5e9f93aa5806a0c612b5a0e1daf0acace5",
+        "selected_span_count": 8,
+        "selected_spans": [
+          {
+            "characters": 636,
+            "id": "ragtruth_source_14524:0:636",
+            "text_sha256": "34839e86e8d04674cb2f254595b77273dac5e56155a1ecc960c4a5d0eb95f7f5"
+          },
+          {
+            "characters": 430,
+            "id": "ragtruth_source_14524:607:1037",
+            "text_sha256": "34ea79915af0dfc9154a10d20885c656fcacf377ee087aa8f303740e8753303f"
+          },
+          {
+            "characters": 324,
+            "id": "ragtruth_source_14524:1117:1441",
+            "text_sha256": "69c67e0b26686834ca8472225e37759a5fb4046663ef603aa966222ff63e0d3b"
+          },
+          {
+            "characters": 389,
+            "id": "ragtruth_source_14524:1521:1910",
+            "text_sha256": "60d844323d005d97f804baa50241c477ba9579777412b06add4fdb15cb176c4a"
+          },
+          {
+            "characters": 125,
+            "id": "ragtruth_source_14524:1037:1162",
+            "text_sha256": "bebdb793913b869313d52518033b3106c3e0ed3604fa57165acdf6186f0293e6"
+          },
+          {
+            "characters": 107,
+            "id": "ragtruth_source_14524:1441:1548",
+            "text_sha256": "a5e3787d62687df9143c778425629c1be279516946990ebeba791697e6942686"
+          },
+          {
+            "characters": 102,
+            "id": "ragtruth_source_14524:866:968",
+            "text_sha256": "8b9373e717dd580cabb018dc8d4236f4753ec263c8fafeb13cbbf98979889805"
+          },
+          {
+            "characters": 23,
+            "id": "ragtruth_source_14524:66:89",
+            "text_sha256": "9d8be40604eb5f88394e07e4b7f42b8d39c58d105619a03edcfb8af6a71c0910"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "source_context_count": 1
+      },
+      "prediction": {
+        "confidence": 0.7003875970840454,
+        "confidence_semantics": "minicheck_binary_support_probability",
+        "evidence_spans": [],
+        "explanation": null,
+        "input_tokens": 662,
+        "label": "supported",
+        "latency_ms": 423.091,
+        "matched_facts": [],
+        "probabilities": {
+          "not_supported": 0.2996124029159546,
+          "supported": 0.7003875970840454
+        },
+        "threshold": 0.5,
+        "used_chunks": [
+          {
+            "characters": 1298,
+            "support_probability": 0.7003875970840454,
+            "text_sha256": "bd74ca5807216daa59a386246c51bfee020c9b7df6311479fd9db60d8f80f322"
+          },
+          {
+            "characters": 859,
+            "support_probability": 0.0038544991984963417,
+            "text_sha256": "2e373a490998ea5d199cc1c8cac1ccd86121401822a93bcf38e40f64eb24a9e1"
+          }
+        ]
+      }
+    },
+    {
+      "binary_gold": "not_supported",
+      "case_id": "ragtruth_8727_s005",
+      "document_sha256": "de2877c5361abd9a6ff732ab36263eab881b584b9dfe90dd6823690578c81151",
+      "five_way_gold": "contradicted",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "exact_shared_input": {
+          "claim": "Customers can enjoy a variety of beers, including craft options, and take advantage of the bar's Wi-Fi.",
+          "query": "Instruction:\nWrite an objective overview about the following local business based only on the provided structured data in the JSON format. You should include details and cover the information mentioned in the customers' review. The overview should be 100 - 200 words. Don't make up information. Structured data:\n{'name': 'Tiburon Tavern', 'address': '3116 State St', 'city': 'Santa Barbara', 'state': 'CA', 'categories': 'Karaoke, Nightlife, Dive Bars, Bars', 'hours': {'Monday': '14:0-2:0', 'Tuesday': '14:0-2:0', 'Wednesday': '14:0-2:0', 'Thursday': '14:0-2:0', 'Friday': '12:0-2:0', 'Saturday': '12:0-2:0', 'Sunday': '12:0-2:0'}, 'attributes': {'BusinessParking': {'garage': False, 'street': True, 'validated': False, 'lot': False, 'valet': False}, 'RestaurantsReservations': False, 'OutdoorSeating': False, 'WiFi': 'no', 'RestaurantsTakeOut': None, 'RestaurantsGoodForGroups': True, 'Music': True, 'Ambience': {'touristy': False, 'hipster': False, 'romantic': False, 'divey': True, 'intimate': False, 'trendy': False, 'upscale': False, 'classy': True, 'casual': True}}, 'business_stars': 4.0, 'review_info': [{'review_stars': 5.0, 'review_date': '2021-08-07 20:14:06', 'review_text': \"Divey but endearing spot. \\n\\nPrior to the other evening, I had only ever come here for their Friday night karaoke events. They have always been quite popular and there's typically a packed room. I feel that the gentleman hosting the event does a wonderful job and the music selection is superior. \\n\\nI came in this time around on a Thursday night, fiesta week, and there were surprisingly just a few other patrons. Talk about a hidden gem of a spot. Sandy, our bartender was friendly and efficient and made sure that our group was taken care of. \\n\\nThe bar was clean and organized. Even the bathroom was tidy which is a rare occurrence for dive bars. I have only ever ordered beers from here but they do have a full selection for your needs. I like how Tiburon also has a modern jukebox which you can control from an app on your phone. Being able to select songs from the comfort of your seat beats the heck out of feeding money into some dirty machine. \\n\\nA good overall spot if you're looking to separate yourself from the craze of the downtown bar scene.\"}, {'review_stars': 5.0, 'review_date': '2019-12-16 06:07:14', 'review_text': \"Amazing bar.  I'm from out of town and I heard of this place from multiple establishments.  Finally checked it out after a long days work and I have to say- it definitely delivered.  Nice spot, easy to get too,  with friendly local people that will strike up a conversation with you.  Special shoutout to the bartender Rosa who served the BEST drinks.  Ask for for a cocktail if you really want to be treated - that's her specialty!  Will definitely be coming back here when I can!\"}, {'review_stars': 5.0, 'review_date': '2019-11-24 19:45:32', 'review_text': 'Great local watering hole. Been here a couple times while passing through Santa Barbara. Enjoy the place so much I usually spend more time there than I had anticipated. Staff and patrons are friendly. Definitely a no-frills dive bar. However, they do have a pool table.'}]}\nOverview:",
+          "selected_evidence": [
+            {
+              "id": "ragtruth_source_14541:862:1915",
+              "text": "Divey but endearing spot. \n\nPrior to the other evening, I had only ever come here for their Friday night karaoke events. They have always been quite popular and there's typically a packed room. I feel that the gentleman hosting the event does a wonderful job and the music selection is superior. \n\nI came in this time around on a Thursday night, fiesta week, and there were surprisingly just a few other patrons. Talk about a hidden gem of a spot. Sandy, our bartender was friendly and efficient and made sure that our group was taken care of. \n\nThe bar was clean and organized. Even the bathroom was tidy which is a rare occurrence for dive bars. I have only ever ordered beers from here but they do have a full selection for your needs. I like how Tiburon also has a modern jukebox which you can control from an app on your phone. Being able to select songs from the comfort of your seat beats the heck out of feeding money into some dirty machine. \n\nA good overall spot if you're looking to separate yourself from the craze of the downtown bar scene."
+            },
+            {
+              "id": "ragtruth_source_14541:2564:2833",
+              "text": "Great local watering hole. Been here a couple times while passing through Santa Barbara. Enjoy the place so much I usually spend more time there than I had anticipated. Staff and patrons are friendly. Definitely a no-frills dive bar. However, they do have a pool table."
+            },
+            {
+              "id": "ragtruth_source_14541:0:887",
+              "text": "{\"address\": \"3116 State St\", \"attributes\": {\"Ambience\": {\"casual\": true, \"classy\": true, \"divey\": true, \"hipster\": false, \"intimate\": false, \"romantic\": false, \"touristy\": false, \"trendy\": false, \"upscale\": false}, \"BusinessParking\": {\"garage\": false, \"lot\": false, \"street\": true, \"valet\": false, \"validated\": false}, \"Music\": true, \"OutdoorSeating\": false, \"RestaurantsGoodForGroups\": true, \"RestaurantsReservations\": false, \"RestaurantsTakeOut\": null, \"WiFi\": \"no\"}, \"business_stars\": 4.0, \"categories\": \"Karaoke, Nightlife, Dive Bars, Bars\", \"city\": \"Santa Barbara\", \"hours\": {\"Friday\": \"12:0-2:0\", \"Monday\": \"14:0-2:0\", \"Saturday\": \"12:0-2:0\", \"Sunday\": \"12:0-2:0\", \"Thursday\": \"14:0-2:0\", \"Tuesday\": \"14:0-2:0\", \"Wednesday\": \"14:0-2:0\"}, \"name\": \"Tiburon Tavern\", \"review_info\": [{\"review_date\": \"2021-08-07 20:14:06\", \"review_stars\": 5.0, \"review_text\": \"Divey but endearing spot."
+            },
+            {
+              "id": "ragtruth_source_14541:2003:2484",
+              "text": "Amazing bar.  I'm from out of town and I heard of this place from multiple establishments.  Finally checked it out after a long days work and I have to say- it definitely delivered.  Nice spot, easy to get too,  with friendly local people that will strike up a conversation with you.  Special shoutout to the bartender Rosa who served the BEST drinks.  Ask for for a cocktail if you really want to be treated - that's her specialty!  Will definitely be coming back here when I can!"
+            },
+            {
+              "id": "ragtruth_source_14541:1160:1278",
+              "text": "\\n\\nI came in this time around on a Thursday night, fiesta week, and there were surprisingly just a few other patrons."
+            },
+            {
+              "id": "ragtruth_source_14541:1164:1278",
+              "text": "I came in this time around on a Thursday night, fiesta week, and there were surprisingly just a few other patrons."
+            },
+            {
+              "id": "ragtruth_source_14541:2484:2590",
+              "text": "\"}, {\"review_date\": \"2019-11-24 19:45:32\", \"review_stars\": 5.0, \"review_text\": \"Great local watering hole."
+            },
+            {
+              "id": "ragtruth_source_14541:1058:1159",
+              "text": "I feel that the gentleman hosting the event does a wonderful job and the music selection is superior."
+            }
+          ]
+        },
+        "input_sha256": "c9fae913516a910a203a8f314e7be846718cfc09db4860ca20e98f92f4319fd9",
+        "selected_span_count": 8,
+        "selected_spans": [
+          {
+            "characters": 1053,
+            "id": "ragtruth_source_14541:862:1915",
+            "text_sha256": "7e2d5b505f8e5af965d2d63a4a5b8955f2dc2cd803738c675869eef839e1c106"
+          },
+          {
+            "characters": 269,
+            "id": "ragtruth_source_14541:2564:2833",
+            "text_sha256": "80ce5f0872a0ab1938bac59bb1dc8e771a6a80ec60d50e30f34c1fc92a3a5bb6"
+          },
+          {
+            "characters": 887,
+            "id": "ragtruth_source_14541:0:887",
+            "text_sha256": "ba74d8a9096eebc3f8c5cee52dc3bd9187633fb81c4ae3a5421616d108ee7ae8"
+          },
+          {
+            "characters": 481,
+            "id": "ragtruth_source_14541:2003:2484",
+            "text_sha256": "631b3deb4432710d37114cf61b9473d4308f869d4d0f365065d519a60f21b63c"
+          },
+          {
+            "characters": 118,
+            "id": "ragtruth_source_14541:1160:1278",
+            "text_sha256": "f21155b16c8cb0078559765666236ace2ba0ba0a999ce8f09213f6c124d81fb8"
+          },
+          {
+            "characters": 114,
+            "id": "ragtruth_source_14541:1164:1278",
+            "text_sha256": "53712dcc77a7febd4c8876c158d2573a35690105493b05f7f4bf1daa96196fab"
+          },
+          {
+            "characters": 106,
+            "id": "ragtruth_source_14541:2484:2590",
+            "text_sha256": "17772596962e6dcf9f0e36b941afae0480bd8c94ddff37d6ce6d290b37aa64c1"
+          },
+          {
+            "characters": 101,
+            "id": "ragtruth_source_14541:1058:1159",
+            "text_sha256": "dd4e45a1e308f77c5e7d5804432b1714289623c63f3b328b2674ff2a777fee20"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "source_context_count": 1
+      },
+      "prediction": {
+        "confidence": 0.9823403898626566,
+        "confidence_semantics": "minicheck_binary_support_probability",
+        "evidence_spans": [],
+        "explanation": null,
+        "input_tokens": 916,
+        "label": "not_supported",
+        "latency_ms": 650.33,
+        "matched_facts": [],
+        "probabilities": {
+          "not_supported": 0.9823403898626566,
+          "supported": 0.017659610137343407
+        },
+        "threshold": 0.5,
+        "used_chunks": [
+          {
+            "characters": 1325,
+            "support_probability": 0.017659610137343407,
+            "text_sha256": "ccafe89581bd99d1ffaeed6005ab509a4df3bd2310fce5ebb3dd486f859a57e3"
+          },
+          {
+            "characters": 1170,
+            "support_probability": 0.013812734745442867,
+            "text_sha256": "93c3991a444e31cd976673edd91145a6649c130c881dc72a013b50a7b84a5f95"
+          },
+          {
+            "characters": 645,
+            "support_probability": 0.003507384331896901,
+            "text_sha256": "5bf200807a28109a23ea0320dd01d33fc48a23539bf51ba23e4360ef31ef7777"
+          }
+        ]
+      }
+    }
+  ],
+  "schema_version": "1.0",
+  "split": {
+    "dataset": "RAGTruth",
+    "independent_source_labels": false,
+    "label_counts": {
+      "contradicted": 5,
+      "partially_supported": 5,
+      "supported": 5
+    },
+    "label_scope": "sentence_level_projected_from_upstream_answer_spans",
+    "limitations": [
+      "RAGTruth labels answers and answer-side hallucination spans, not ContextTrace atomic claims.",
+      "Sentence labels are deterministic projections from upstream answer spans, not independently annotated claim labels.",
+      "The adapter does not score source-span localization.",
+      "RAGTruth does not provide an unverifiable class and has little unsupported coverage in this split."
+    ],
+    "path": "benchmarks/jev_v2_verification/ragtruth_sentence_development.json",
+    "provenance": "deterministic_sentence_projection_of_upstream_human_answer_spans",
+    "schema_version": "jev-v2-case-pack-1.0",
+    "selection": {
+      "method": "stable_hash_stratified_by_expected_verdict",
+      "per_label_cap": 5,
+      "seed": 20260920
+    },
+    "sha256": "1699fba4416d76336c9d2fab116d59aa4c59939d7fb8e776f004cd869ffa0850",
+    "source_case_pack": "benchmarks/contexttrace_bench/out/arr_ragtruth_dev/inputs/ragtruth_dev_case_pack.json",
+    "source_case_pack_sha256": "3224c78c7b1c19e3a158763acb69762019dd357533c7bc6e9408367b763cf88c",
+    "split": "development"
+  },
+  "stable_defaults_changed": false,
+  "task": {
+    "five_way_comparison_allowed": false,
+    "negative_label": "not_supported",
+    "negative_source_labels": [
+      "partially_supported",
+      "unsupported",
+      "contradicted",
+      "unverifiable"
+    ],
+    "positive_label": "supported",
+    "reason": "MiniCheck is a binary sentence-level grounding checker.",
+    "threshold": 0.5,
+    "type": "binary_grounding"
+  }
+}

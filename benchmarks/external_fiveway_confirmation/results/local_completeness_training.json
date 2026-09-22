@@ -1,0 +1,10 @@
+{
+  "five_fold_out_of_fold": {
+    "average_precision": 0.4664,
+    "roc_auc": 0.5395
+  },
+  "model_id": "14f7cef990cdd46a9813ae1b05248b6148d5df6fe353ddb55044aea33c853c06",
+  "runtime_network_required": false,
+  "schema_version": "local-completeness-training-report-1.0",
+  "stable_defaults_changed": false
+}

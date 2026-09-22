@@ -1,0 +1,151 @@
+{
+  "artifacts": {
+    "CASCADE_RESULTS.md": {
+      "bytes": 4809,
+      "sha256": "28a2be05d2b80f37114a22c0292a7358ab62ec5e39a28c1c05d361b41f5b1500"
+    },
+    "EXTENSION_RESULTS.md": {
+      "bytes": 4559,
+      "sha256": "4751f07fa82f6e32cef3b825febc17c752805e1fc5279a7d26a578d75d04377e"
+    },
+    "MINICHECK_STATUS.md": {
+      "bytes": 4069,
+      "sha256": "cc9fbefc05f255bada3ccb3492c0e16ddeb89e49a90f80ab21e88c1482bccd4e"
+    },
+    "README.md": {
+      "bytes": 10299,
+      "sha256": "82411367c69aa223b310160b900b910b0d3ed74f364615cf8f92d01436051d7b"
+    },
+    "RESULTS.md": {
+      "bytes": 10235,
+      "sha256": "6e82ceb8928a24c7ce5679b4c19010c4dbac20c92a2b8c3c4b7d09626c3531c2"
+    },
+    "adapter.py": {
+      "bytes": 10673,
+      "sha256": "732a07bcd9fb676cbd243eed0cc59a0044de1f5600c6a7e01ca13ec5a0036a30"
+    },
+    "cascade.py": {
+      "bytes": 17124,
+      "sha256": "bddf9e2c12ed5f56bce0284b239644345e1032ca85b91ed1513a91f1f1e2dac4"
+    },
+    "evidence_ablation.py": {
+      "bytes": 10607,
+      "sha256": "eabcc6d32a4cd65577512b8c77eddf2965b8b0d7065d5da46c626fe6f49c310e"
+    },
+    "extension_analysis.py": {
+      "bytes": 8124,
+      "sha256": "ed33c03383109e7e408931caffdac4ceac81064b61c61082d7992a69fc684603"
+    },
+    "minicheck_baseline.py": {
+      "bytes": 22493,
+      "sha256": "687997bdf8407f907bce7a2a604a142ea646f293e4539871532d1af42237673a"
+    },
+    "ragtruth_development.json": {
+      "bytes": 86213,
+      "sha256": "546bbb90f6db951f63928ec673978f874848ca9c6994c5364b4ac994b5786256"
+    },
+    "ragtruth_heldout.json": {
+      "bytes": 83613,
+      "sha256": "107ca09820728e3379092538af2b23d3aeeb5561b674eff8a44cf6b0214c2ed0"
+    },
+    "ragtruth_sentence_development.json": {
+      "bytes": 80768,
+      "sha256": "1699fba4416d76336c9d2fab116d59aa4c59939d7fb8e776f004cd869ffa0850"
+    },
+    "ragtruth_sentence_extension_development.json": {
+      "bytes": 202165,
+      "sha256": "b283471bc55066729c199f8f7385ce7a41278d3f0e702f4550bf2d6c4ecfdb0b"
+    },
+    "ragtruth_sentence_extension_heldout.json": {
+      "bytes": 413149,
+      "sha256": "f88a724112a5cb5a55bf50b8e4ffff1cea8d08bcc5268ae70426063f11154111"
+    },
+    "ragtruth_sentence_heldout.json": {
+      "bytes": 136957,
+      "sha256": "c2b374164d40a4f9e995c39c2b90889c35a3c5dbfaadded7b7b8b7e1d40458e8"
+    },
+    "requirements-minicheck.txt": {
+      "bytes": 213,
+      "sha256": "836d830695160ce0635032f63e010f635be0ba1c290788d8cefb0e9b444de96d"
+    },
+    "results/cascade_development.json": {
+      "bytes": 86689,
+      "sha256": "8777c51fa2ab213062182a6156b8a8ac2a0a6d95a4549b821ff53207927998b6"
+    },
+    "results/cascade_development_evaluation.json": {
+      "bytes": 16070,
+      "sha256": "10731e1e90b73951b1d8811e99db692f78a2621a1778f89b26f15cdcc2ac5982"
+    },
+    "results/cascade_heldout_evaluation.json": {
+      "bytes": 27904,
+      "sha256": "46793aa5dac4c5cda01ef1f3fb4db2eba5d9350d8601d39721f8fdca52fa7d18"
+    },
+    "results/cascade_policy.json": {
+      "bytes": 1176,
+      "sha256": "8f31434724c0ff9251a6886151cb84c7d662c7839ebb36f16b9bc2891bc31057"
+    },
+    "results/ragtruth_development_local.json": {
+      "bytes": 407014,
+      "sha256": "d351e88980750e07ebbffbc409de0e3e6de6e8dc27d410f34db14fd99da7b818"
+    },
+    "results/ragtruth_sentence_development_evidence_ablation.json": {
+      "bytes": 713159,
+      "sha256": "f96995c08611c8349d44b6415abe3eac98e570ac20f980bc15a2621e89b3f812"
+    },
+    "results/ragtruth_sentence_development_jev.json": {
+      "bytes": 310591,
+      "sha256": "bb413623298033b8e667afedae146ed2ffe961660fabc513d3939d2981a80a63"
+    },
+    "results/ragtruth_sentence_development_local.json": {
+      "bytes": 211581,
+      "sha256": "56054d97a3180f467afb1bf0dee43a13bcf16053977d2d8d66de13dd12549432"
+    },
+    "results/ragtruth_sentence_development_minicheck_roberta.json": {
+      "bytes": 133601,
+      "sha256": "efd8f98df88028d2d4535b775f2d4c7803ab1c481558905be1ae56c4bd072df8"
+    },
+    "results/ragtruth_sentence_development_threshold.json": {
+      "bytes": 1185,
+      "sha256": "57915fe544741e7a370a81cb2cbf9b50a53a8f779c6ef044174d209cfaa4c6ce"
+    },
+    "results/ragtruth_sentence_extension_analysis.json": {
+      "bytes": 4885,
+      "sha256": "fb27adba1c11c7fdb39cb532e6a6fdb02d45fa32c862dba0eb543ae36772a847"
+    },
+    "results/ragtruth_sentence_extension_development_jev.json": {
+      "bytes": 790518,
+      "sha256": "686ff61b75e6a8f163452110a29bbaaa29286e9e8a1ee485caa62faf0b9add62"
+    },
+    "results/ragtruth_sentence_extension_development_minicheck_roberta.json": {
+      "bytes": 334141,
+      "sha256": "33b65e595c6b0b75dd63d9246abaec53389f23033ebf872eb0e82b4c0b319725"
+    },
+    "results/ragtruth_sentence_extension_heldout_jev.json": {
+      "bytes": 1451041,
+      "sha256": "f15cd0af55cc075890e18c6c33f8b5fd0d2a7ccb6932edc1387e83cd09607b69"
+    },
+    "results/ragtruth_sentence_extension_heldout_minicheck_roberta.json": {
+      "bytes": 666928,
+      "sha256": "7205f12adc158bc8d4c62ca0468230089a2ec3d8700a2b62706c98c4eb2af52d"
+    },
+    "results/ragtruth_sentence_heldout_evidence_ablation.json": {
+      "bytes": 843299,
+      "sha256": "b9b30f0da814d69d01d5037d2ae58303ffa07a525e61d1150f77d87f3e951b61"
+    },
+    "results/ragtruth_sentence_heldout_jev.json": {
+      "bytes": 350793,
+      "sha256": "d68cd333135fec91089c060b8221155a7b6f686ea97a7f65e8522b8204bdf0f9"
+    },
+    "results/ragtruth_sentence_heldout_minicheck_roberta.json": {
+      "bytes": 166953,
+      "sha256": "f6ee7724eaecd4b98327f9db4f8d06dad8ff0d4942c763b4bc9c6952d505f146"
+    },
+    "run.py": {
+      "bytes": 21223,
+      "sha256": "cb04821f39092a61c170e5afe696940e5fc35d44efa05a82ff791292ffb01a1a"
+    }
+  },
+  "note": "Recorded after execution. The cascade policy was selected programmatically from the development result only; its held-out evaluation is a retrospective frozen-policy replay because the underlying held-out predictions had already been inspected.",
+  "recorded_at": "2026-09-21",
+  "schema_version": "1.0"
+}

@@ -1,0 +1,58 @@
+{
+  "candidates": [
+    {
+      "automatic_accuracy": 0.8571,
+      "coverage": 0.9333,
+      "threshold": 0.5
+    },
+    {
+      "automatic_accuracy": 0.8333,
+      "coverage": 0.8,
+      "threshold": 0.55
+    },
+    {
+      "automatic_accuracy": 0.8333,
+      "coverage": 0.8,
+      "threshold": 0.6
+    },
+    {
+      "automatic_accuracy": 0.8182,
+      "coverage": 0.7333,
+      "threshold": 0.65
+    },
+    {
+      "automatic_accuracy": 0.7778,
+      "coverage": 0.6,
+      "threshold": 0.7
+    },
+    {
+      "automatic_accuracy": 0.75,
+      "coverage": 0.5333,
+      "threshold": 0.75
+    },
+    {
+      "automatic_accuracy": 0.75,
+      "coverage": 0.5333,
+      "threshold": 0.8
+    },
+    {
+      "automatic_accuracy": 0.8,
+      "coverage": 0.3333,
+      "threshold": 0.85
+    },
+    {
+      "automatic_accuracy": 0.75,
+      "coverage": 0.2667,
+      "threshold": 0.9
+    },
+    {
+      "automatic_accuracy": 0.75,
+      "coverage": 0.2667,
+      "threshold": 0.95
+    }
+  ],
+  "chosen_threshold": 0.5,
+  "minimum_coverage": 0.6,
+  "objective": "maximize automatic accuracy subject to minimum coverage, then coverage, then threshold",
+  "selection_split": "development"
+}

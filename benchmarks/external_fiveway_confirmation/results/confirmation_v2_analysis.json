@@ -1,0 +1,206 @@
+{
+  "base_jev": {
+    "accuracy": 0.4571,
+    "cases": 35,
+    "confusion": {
+      "contradicted": {
+        "contradicted": 5,
+        "partially_supported": 2
+      },
+      "partially_supported": {
+        "partially_supported": 5,
+        "unsupported": 2
+      },
+      "supported": {
+        "partially_supported": 5,
+        "supported": 1,
+        "unsupported": 1
+      },
+      "unsupported": {
+        "partially_supported": 2,
+        "unsupported": 5
+      },
+      "unverifiable": {
+        "contradicted": 2,
+        "partially_supported": 1,
+        "supported": 2,
+        "unsupported": 2
+      }
+    },
+    "false_support_count": 2,
+    "false_support_rate": 0.0714,
+    "macro_f1": 0.3914,
+    "per_label_recall": {
+      "contradicted": 0.7143,
+      "partially_supported": 0.7143,
+      "supported": 0.1429,
+      "unsupported": 0.7143,
+      "unverifiable": 0.0
+    },
+    "unsupported_incorrectly_supported": 0
+  },
+  "cases": 35,
+  "delta": {
+    "accuracy_percentage_points": 11.43,
+    "false_support_percentage_points": -3.57,
+    "macro_f1_percentage_points": 15.76,
+    "unverifiable_recall_percentage_points": 57.14
+  },
+  "freeze_manifest_sha256": "5cecde4352707e4ac1252f5d570d736fec70fbc5c2da431d95e6ee871f4f4985",
+  "frozen_learned_gate": {
+    "accuracy": 0.5714,
+    "cases": 35,
+    "confusion": {
+      "contradicted": {
+        "contradicted": 5,
+        "partially_supported": 1,
+        "unverifiable": 1
+      },
+      "partially_supported": {
+        "partially_supported": 5,
+        "unsupported": 2
+      },
+      "supported": {
+        "partially_supported": 5,
+        "supported": 1,
+        "unsupported": 1
+      },
+      "unsupported": {
+        "partially_supported": 1,
+        "unsupported": 5,
+        "unverifiable": 1
+      },
+      "unverifiable": {
+        "contradicted": 2,
+        "supported": 1,
+        "unverifiable": 4
+      }
+    },
+    "false_support_count": 1,
+    "false_support_rate": 0.0357,
+    "macro_f1": 0.549,
+    "per_label_recall": {
+      "contradicted": 0.7143,
+      "partially_supported": 0.7143,
+      "supported": 0.1429,
+      "unsupported": 0.7143,
+      "unverifiable": 0.5714
+    },
+    "unsupported_incorrectly_supported": 0
+  },
+  "intervals_95_wilson": {
+    "base_accuracy": [
+      0.3047,
+      0.6181
+    ],
+    "base_false_support": [
+      0.0198,
+      0.2265
+    ],
+    "gate_accuracy": [
+      0.4086,
+      0.7202
+    ],
+    "gate_false_support": [
+      0.0063,
+      0.1771
+    ],
+    "gate_unverifiable_recall": [
+      0.2505,
+      0.8418
+    ]
+  },
+  "limitations": [
+    "This balanced confirmation contains only seven cases per verdict.",
+    "The paired improvement is not significant at 0.05 in this small sample.",
+    "Public-test pretraining contamination cannot be ruled out."
+  ],
+  "operations": {
+    "additional_gate_remote_requests": 0,
+    "input_tokens": 42172,
+    "latency_ms": {
+      "mean": 243.5,
+      "p50": 222.7,
+      "p95": 355.0
+    },
+    "output_tokens": 5911,
+    "resolved_models": [
+      "jev-1.13.0"
+    ],
+    "total_tokens": 48083
+  },
+  "overrides": [
+    {
+      "ambiguity_probability": 0.9633605,
+      "base_correct": false,
+      "base_verdict": "unsupported",
+      "case_id": "ambient_6351",
+      "dataset": "AmbiEnt",
+      "expected_verdict": "unverifiable",
+      "gate_correct": true,
+      "gate_verdict": "unverifiable"
+    },
+    {
+      "ambiguity_probability": 0.93772278,
+      "base_correct": false,
+      "base_verdict": "partially_supported",
+      "case_id": "ambient_63784",
+      "dataset": "AmbiEnt",
+      "expected_verdict": "unverifiable",
+      "gate_correct": true,
+      "gate_verdict": "unverifiable"
+    },
+    {
+      "ambiguity_probability": 0.96566436,
+      "base_correct": false,
+      "base_verdict": "unsupported",
+      "case_id": "ambient_67466",
+      "dataset": "AmbiEnt",
+      "expected_verdict": "unverifiable",
+      "gate_correct": true,
+      "gate_verdict": "unverifiable"
+    },
+    {
+      "ambiguity_probability": 0.91419043,
+      "base_correct": false,
+      "base_verdict": "supported",
+      "case_id": "ambient_69709",
+      "dataset": "AmbiEnt",
+      "expected_verdict": "unverifiable",
+      "gate_correct": true,
+      "gate_verdict": "unverifiable"
+    },
+    {
+      "ambiguity_probability": 0.87436859,
+      "base_correct": false,
+      "base_verdict": "partially_supported",
+      "case_id": "vitaminc_5eb29882c9e77c0008d921dd_3",
+      "dataset": "VitaminC",
+      "expected_verdict": "contradicted",
+      "gate_correct": false,
+      "gate_verdict": "unverifiable"
+    },
+    {
+      "ambiguity_probability": 0.69336362,
+      "base_correct": false,
+      "base_verdict": "partially_supported",
+      "case_id": "wice_test02715",
+      "dataset": "WiCE",
+      "expected_verdict": "unsupported",
+      "gate_correct": false,
+      "gate_verdict": "unverifiable"
+    }
+  ],
+  "paired_comparison": {
+    "base_only_correct": 0,
+    "both_correct": 16,
+    "both_wrong": 15,
+    "discordant_cases": 4,
+    "exact_two_sided_mcnemar_p": 0.125,
+    "gate_only_correct": 4
+  },
+  "policy_id": "bfd4d056c919748265d41fddef44c5dc8ac54c4affa89e848409781350bc2163",
+  "remote_provider_default_enabled": false,
+  "schema_version": "external-fiveway-confirmation-v2-analysis-1.0",
+  "stable_defaults_changed": false
+}

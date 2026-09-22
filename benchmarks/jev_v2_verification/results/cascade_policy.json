@@ -1,0 +1,28 @@
+{
+  "decision_order": [
+    "Run the stable semantic verifier locally.",
+    "Accept a local supported verdict only at or above local_supported_confidence.",
+    "Otherwise call Jev on the already-selected claim-evidence input.",
+    "If Jev predicts supported below jev_supported_probability, use the local verdict.",
+    "Require review for every final supported verdict and every low-confidence Jev verdict."
+  ],
+  "development_constraints": {
+    "binary_accuracy_at_least_always_jev": true,
+    "five_way_accuracy_at_least_always_jev": true,
+    "maximum_false_support_rate": 0.05
+  },
+  "development_source_sha256": "686ff61b75e6a8f163452110a29bbaaa29286e9e8a1ee485caa62faf0b9add62",
+  "experiment": "contexttrace_local_first_jev_cascade",
+  "heldout_used_for_selection": false,
+  "policy": {
+    "always_review_supported": true,
+    "jev_supported_probability": 0.75,
+    "local_supported_confidence": 0.9,
+    "review_confidence": 0.8
+  },
+  "policy_id": "e6e5126dc1810c275be902496783b620f32df280ad4180214b62b8c842ef9025",
+  "remote_provider_default_enabled": false,
+  "schema_version": "1.0",
+  "selection_split": "development",
+  "stable_defaults_changed": false
+}

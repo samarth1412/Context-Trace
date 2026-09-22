@@ -1,0 +1,3082 @@
+{
+  "baseline_always_jev": {
+    "metrics": {
+      "automatic_accuracy": 0.75,
+      "automatic_coverage": 0.3077,
+      "automatic_false_support_case_ids": [],
+      "automatic_false_support_count": 0,
+      "binary_accuracy": 0.8462,
+      "cases": 39,
+      "false_support_case_ids": [
+        "ragtruth_121_s003",
+        "ragtruth_12435_s003",
+        "ragtruth_1513_s008"
+      ],
+      "false_support_count": 3,
+      "false_support_rate": 0.1154,
+      "five_way_accuracy": 0.6667,
+      "observed_label_macro_f1": 0.7205,
+      "review_count": 27,
+      "supported_recall": 0.7692
+    },
+    "operations": {
+      "remote_call_rate": 1.0,
+      "remote_call_reduction": 0.0,
+      "remote_calls": 39,
+      "remote_calls_saved": 0,
+      "sequential_latency_ms": {
+        "mean": 239.189,
+        "p50": 217.417,
+        "p95": 346.013
+      },
+      "tokens": {
+        "always_jev_total": 75564,
+        "input": 73083,
+        "output": 2481,
+        "saved": 0,
+        "total": 75564
+      }
+    },
+    "paired_vs_always_jev": {
+      "binary": {
+        "baseline_only_correct": 0,
+        "candidate_only_correct": 0,
+        "discordant_pairs": 0,
+        "exact_two_sided_p": 1.0
+      },
+      "five_way": {
+        "baseline_only_correct": 0,
+        "candidate_only_correct": 0,
+        "discordant_pairs": 0,
+        "exact_two_sided_p": 1.0
+      }
+    },
+    "policy": {
+      "always_review_supported": true,
+      "jev_supported_probability": 0.0,
+      "local_supported_confidence": 1.01,
+      "review_confidence": 0.8
+    },
+    "rows": [
+      {
+        "case_id": "ragtruth_11447_s004",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [],
+          "review_required": false,
+          "support_gate_applied": false,
+          "verdict": "contradicted"
+        },
+        "expected_verdict": "contradicted"
+      },
+      {
+        "case_id": "ragtruth_11520_s003",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "supported_verdict"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "supported"
+        },
+        "expected_verdict": "supported"
+      },
+      {
+        "case_id": "ragtruth_11524_s001",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "jev_confidence_below_threshold",
+            "unverifiable_verdict"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "unverifiable"
+        },
+        "expected_verdict": "supported"
+      },
+      {
+        "case_id": "ragtruth_11524_s004",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [],
+          "review_required": false,
+          "support_gate_applied": false,
+          "verdict": "contradicted"
+        },
+        "expected_verdict": "contradicted"
+      },
+      {
+        "case_id": "ragtruth_11524_s011",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "supported_verdict",
+            "jev_confidence_below_threshold"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "supported"
+        },
+        "expected_verdict": "supported"
+      },
+      {
+        "case_id": "ragtruth_121_s001",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "supported_verdict"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "supported"
+        },
+        "expected_verdict": "supported"
+      },
+      {
+        "case_id": "ragtruth_121_s003",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "supported_verdict"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "supported"
+        },
+        "expected_verdict": "contradicted"
+      },
+      {
+        "case_id": "ragtruth_12435_s003",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "supported_verdict",
+            "jev_confidence_below_threshold"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "supported"
+        },
+        "expected_verdict": "contradicted"
+      },
+      {
+        "case_id": "ragtruth_12435_s008",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "supported_verdict"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "supported"
+        },
+        "expected_verdict": "supported"
+      },
+      {
+        "case_id": "ragtruth_12435_s010",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "supported_verdict"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "supported"
+        },
+        "expected_verdict": "supported"
+      },
+      {
+        "case_id": "ragtruth_12469_s002",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "supported_verdict",
+            "jev_confidence_below_threshold"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "supported"
+        },
+        "expected_verdict": "supported"
+      },
+      {
+        "case_id": "ragtruth_12469_s006",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "supported_verdict",
+            "jev_confidence_below_threshold"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "supported"
+        },
+        "expected_verdict": "supported"
+      },
+      {
+        "case_id": "ragtruth_13363_s011",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "jev_confidence_below_threshold"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "unsupported"
+        },
+        "expected_verdict": "partially_supported"
+      },
+      {
+        "case_id": "ragtruth_13363_s012",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "jev_confidence_below_threshold"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "partially_supported"
+        },
+        "expected_verdict": "partially_supported"
+      },
+      {
+        "case_id": "ragtruth_13445_s005",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "supported_verdict"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "supported"
+        },
+        "expected_verdict": "supported"
+      },
+      {
+        "case_id": "ragtruth_14511_s003",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "jev_confidence_below_threshold"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "partially_supported"
+        },
+        "expected_verdict": "partially_supported"
+      },
+      {
+        "case_id": "ragtruth_1513_s008",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "supported_verdict",
+            "jev_confidence_below_threshold"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "supported"
+        },
+        "expected_verdict": "partially_supported"
+      },
+      {
+        "case_id": "ragtruth_15712_s005",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "jev_confidence_below_threshold"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "unsupported"
+        },
+        "expected_verdict": "contradicted"
+      },
+      {
+        "case_id": "ragtruth_15755_s005",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "jev_confidence_below_threshold"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "partially_supported"
+        },
+        "expected_verdict": "partially_supported"
+      },
+      {
+        "case_id": "ragtruth_16895_s002",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [],
+          "review_required": false,
+          "support_gate_applied": false,
+          "verdict": "partially_supported"
+        },
+        "expected_verdict": "partially_supported"
+      },
+      {
+        "case_id": "ragtruth_1698_s001",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "jev_confidence_below_threshold"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "partially_supported"
+        },
+        "expected_verdict": "contradicted"
+      },
+      {
+        "case_id": "ragtruth_2876_s005",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [],
+          "review_required": false,
+          "support_gate_applied": false,
+          "verdict": "partially_supported"
+        },
+        "expected_verdict": "contradicted"
+      },
+      {
+        "case_id": "ragtruth_3639_s005",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "jev_confidence_below_threshold"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "unsupported"
+        },
+        "expected_verdict": "contradicted"
+      },
+      {
+        "case_id": "ragtruth_3814_s004",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "jev_confidence_below_threshold"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "partially_supported"
+        },
+        "expected_verdict": "partially_supported"
+      },
+      {
+        "case_id": "ragtruth_6550_s005",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [],
+          "review_required": false,
+          "support_gate_applied": false,
+          "verdict": "partially_supported"
+        },
+        "expected_verdict": "partially_supported"
+      },
+      {
+        "case_id": "ragtruth_6686_s003",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "jev_confidence_below_threshold"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "unsupported"
+        },
+        "expected_verdict": "partially_supported"
+      },
+      {
+        "case_id": "ragtruth_6927_s004",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [],
+          "review_required": false,
+          "support_gate_applied": false,
+          "verdict": "contradicted"
+        },
+        "expected_verdict": "contradicted"
+      },
+      {
+        "case_id": "ragtruth_7052_s003",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [],
+          "review_required": false,
+          "support_gate_applied": false,
+          "verdict": "partially_supported"
+        },
+        "expected_verdict": "partially_supported"
+      },
+      {
+        "case_id": "ragtruth_7236_s001",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "jev_confidence_below_threshold"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "partially_supported"
+        },
+        "expected_verdict": "partially_supported"
+      },
+      {
+        "case_id": "ragtruth_7236_s006",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "supported_verdict"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "supported"
+        },
+        "expected_verdict": "supported"
+      },
+      {
+        "case_id": "ragtruth_7265_s006",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "jev_confidence_below_threshold"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "unsupported"
+        },
+        "expected_verdict": "partially_supported"
+      },
+      {
+        "case_id": "ragtruth_7301_s005",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "jev_confidence_below_threshold"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "contradicted"
+        },
+        "expected_verdict": "contradicted"
+      },
+      {
+        "case_id": "ragtruth_8561_s001",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [],
+          "review_required": false,
+          "support_gate_applied": false,
+          "verdict": "partially_supported"
+        },
+        "expected_verdict": "partially_supported"
+      },
+      {
+        "case_id": "ragtruth_8664_s007",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "supported_verdict"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "supported"
+        },
+        "expected_verdict": "supported"
+      },
+      {
+        "case_id": "ragtruth_8727_s007",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [],
+          "review_required": false,
+          "support_gate_applied": false,
+          "verdict": "contradicted"
+        },
+        "expected_verdict": "contradicted"
+      },
+      {
+        "case_id": "ragtruth_8939_s005",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [],
+          "review_required": false,
+          "support_gate_applied": false,
+          "verdict": "contradicted"
+        },
+        "expected_verdict": "contradicted"
+      },
+      {
+        "case_id": "ragtruth_9212_s004",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [],
+          "review_required": false,
+          "support_gate_applied": false,
+          "verdict": "partially_supported"
+        },
+        "expected_verdict": "supported"
+      },
+      {
+        "case_id": "ragtruth_924_s007",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [],
+          "review_required": false,
+          "support_gate_applied": false,
+          "verdict": "partially_supported"
+        },
+        "expected_verdict": "supported"
+      },
+      {
+        "case_id": "ragtruth_9553_s003",
+        "decision": {
+          "decision_source": "jev",
+          "remote_called": true,
+          "review_reasons": [
+            "jev_confidence_below_threshold"
+          ],
+          "review_required": true,
+          "support_gate_applied": false,
+          "verdict": "contradicted"
+        },
+        "expected_verdict": "contradicted"
+      }
+    ]
+  },
+  "candidate_count": 54,
+  "candidates": [
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8205,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_1513_s008",
+          "ragtruth_7236_s001"
+        ],
+        "false_support_count": 4,
+        "false_support_rate": 0.1538,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.6936,
+        "review_count": 27,
+        "supported_recall": 0.7692
+      },
+      "operations": {
+        "remote_call_rate": 0.8974,
+        "remote_call_reduction": 0.1026,
+        "remote_calls": 35,
+        "remote_calls_saved": 4,
+        "sequential_latency_ms": {
+          "mean": 214.524,
+          "p50": 215.392,
+          "p95": 308.268
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 66808,
+          "output": 2230,
+          "saved": 6526,
+          "total": 69038
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.0,
+        "local_supported_confidence": 0.8,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.7949,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_1513_s008",
+          "ragtruth_7236_s001"
+        ],
+        "false_support_count": 4,
+        "false_support_rate": 0.1538,
+        "five_way_accuracy": 0.6154,
+        "observed_label_macro_f1": 0.6692,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.8974,
+        "remote_call_reduction": 0.1026,
+        "remote_calls": 35,
+        "remote_calls_saved": 4,
+        "sequential_latency_ms": {
+          "mean": 214.524,
+          "p50": 215.392,
+          "p95": 308.268
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 66808,
+          "output": 2230,
+          "saved": 6526,
+          "total": 69038
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_supported_confidence": 0.8,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.7949,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_1513_s008",
+          "ragtruth_7236_s001"
+        ],
+        "false_support_count": 4,
+        "false_support_rate": 0.1538,
+        "five_way_accuracy": 0.6154,
+        "observed_label_macro_f1": 0.6692,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.8974,
+        "remote_call_reduction": 0.1026,
+        "remote_calls": 35,
+        "remote_calls_saved": 4,
+        "sequential_latency_ms": {
+          "mean": 214.524,
+          "p50": 215.392,
+          "p95": 308.268
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 66808,
+          "output": 2230,
+          "saved": 6526,
+          "total": 69038
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_supported_confidence": 0.8,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.7949,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_1513_s008",
+          "ragtruth_7236_s001"
+        ],
+        "false_support_count": 4,
+        "false_support_rate": 0.1538,
+        "five_way_accuracy": 0.6154,
+        "observed_label_macro_f1": 0.6692,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.8974,
+        "remote_call_reduction": 0.1026,
+        "remote_calls": 35,
+        "remote_calls_saved": 4,
+        "sequential_latency_ms": {
+          "mean": 214.524,
+          "p50": 215.392,
+          "p95": 308.268
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 66808,
+          "output": 2230,
+          "saved": 6526,
+          "total": 69038
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.65,
+        "local_supported_confidence": 0.8,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8205,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_7236_s001"
+        ],
+        "false_support_count": 3,
+        "false_support_rate": 0.1154,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.6956,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.8974,
+        "remote_call_reduction": 0.1026,
+        "remote_calls": 35,
+        "remote_calls_saved": 4,
+        "sequential_latency_ms": {
+          "mean": 214.524,
+          "p50": 215.392,
+          "p95": 308.268
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 66808,
+          "output": 2230,
+          "saved": 6526,
+          "total": 69038
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_supported_confidence": 0.8,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_7236_s001"
+        ],
+        "false_support_count": 2,
+        "false_support_rate": 0.0769,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.6976,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.8974,
+        "remote_call_reduction": 0.1026,
+        "remote_calls": 35,
+        "remote_calls_saved": 4,
+        "sequential_latency_ms": {
+          "mean": 214.524,
+          "p50": 215.392,
+          "p95": 308.268
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 66808,
+          "output": 2230,
+          "saved": 6526,
+          "total": 69038
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_supported_confidence": 0.8,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8205,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_7236_s001"
+        ],
+        "false_support_count": 2,
+        "false_support_rate": 0.0769,
+        "five_way_accuracy": 0.6154,
+        "observed_label_macro_f1": 0.6795,
+        "review_count": 27,
+        "supported_recall": 0.6154
+      },
+      "operations": {
+        "remote_call_rate": 0.8974,
+        "remote_call_reduction": 0.1026,
+        "remote_calls": 35,
+        "remote_calls_saved": 4,
+        "sequential_latency_ms": {
+          "mean": 214.524,
+          "p50": 215.392,
+          "p95": 308.268
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 66808,
+          "output": 2230,
+          "saved": 6526,
+          "total": 69038
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_supported_confidence": 0.8,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8205,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_7236_s001"
+        ],
+        "false_support_count": 2,
+        "false_support_rate": 0.0769,
+        "five_way_accuracy": 0.6154,
+        "observed_label_macro_f1": 0.6795,
+        "review_count": 27,
+        "supported_recall": 0.6154
+      },
+      "operations": {
+        "remote_call_rate": 0.8974,
+        "remote_call_reduction": 0.1026,
+        "remote_calls": 35,
+        "remote_calls_saved": 4,
+        "sequential_latency_ms": {
+          "mean": 214.524,
+          "p50": 215.392,
+          "p95": 308.268
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 66808,
+          "output": 2230,
+          "saved": 6526,
+          "total": 69038
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_supported_confidence": 0.8,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8205,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_7236_s001"
+        ],
+        "false_support_count": 2,
+        "false_support_rate": 0.0769,
+        "five_way_accuracy": 0.6154,
+        "observed_label_macro_f1": 0.6795,
+        "review_count": 27,
+        "supported_recall": 0.6154
+      },
+      "operations": {
+        "remote_call_rate": 0.8974,
+        "remote_call_reduction": 0.1026,
+        "remote_calls": 35,
+        "remote_calls_saved": 4,
+        "sequential_latency_ms": {
+          "mean": 214.524,
+          "p50": 215.392,
+          "p95": 308.268
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 66808,
+          "output": 2230,
+          "saved": 6526,
+          "total": 69038
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_supported_confidence": 0.8,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_1513_s008"
+        ],
+        "false_support_count": 3,
+        "false_support_rate": 0.1154,
+        "five_way_accuracy": 0.6667,
+        "observed_label_macro_f1": 0.7205,
+        "review_count": 27,
+        "supported_recall": 0.7692
+      },
+      "operations": {
+        "remote_call_rate": 0.9231,
+        "remote_call_reduction": 0.0769,
+        "remote_calls": 36,
+        "remote_calls_saved": 3,
+        "sequential_latency_ms": {
+          "mean": 223.978,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 69238,
+          "output": 2295,
+          "saved": 4031,
+          "total": 71533
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.0,
+        "local_supported_confidence": 0.85,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8205,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_1513_s008"
+        ],
+        "false_support_count": 3,
+        "false_support_rate": 0.1154,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.6956,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9231,
+        "remote_call_reduction": 0.0769,
+        "remote_calls": 36,
+        "remote_calls_saved": 3,
+        "sequential_latency_ms": {
+          "mean": 223.978,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 69238,
+          "output": 2295,
+          "saved": 4031,
+          "total": 71533
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_supported_confidence": 0.85,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8205,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_1513_s008"
+        ],
+        "false_support_count": 3,
+        "false_support_rate": 0.1154,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.6956,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9231,
+        "remote_call_reduction": 0.0769,
+        "remote_calls": 36,
+        "remote_calls_saved": 3,
+        "sequential_latency_ms": {
+          "mean": 223.978,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 69238,
+          "output": 2295,
+          "saved": 4031,
+          "total": 71533
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_supported_confidence": 0.85,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8205,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_1513_s008"
+        ],
+        "false_support_count": 3,
+        "false_support_rate": 0.1154,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.6956,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9231,
+        "remote_call_reduction": 0.0769,
+        "remote_calls": 36,
+        "remote_calls_saved": 3,
+        "sequential_latency_ms": {
+          "mean": 223.978,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 69238,
+          "output": 2295,
+          "saved": 4031,
+          "total": 71533
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.65,
+        "local_supported_confidence": 0.85,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003"
+        ],
+        "false_support_count": 2,
+        "false_support_rate": 0.0769,
+        "five_way_accuracy": 0.6667,
+        "observed_label_macro_f1": 0.7214,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9231,
+        "remote_call_reduction": 0.0769,
+        "remote_calls": 36,
+        "remote_calls_saved": 3,
+        "sequential_latency_ms": {
+          "mean": 223.978,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 69238,
+          "output": 2295,
+          "saved": 4031,
+          "total": 71533
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_supported_confidence": 0.85,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8718,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003"
+        ],
+        "false_support_count": 1,
+        "false_support_rate": 0.0385,
+        "five_way_accuracy": 0.6667,
+        "observed_label_macro_f1": 0.7241,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9231,
+        "remote_call_reduction": 0.0769,
+        "remote_calls": 36,
+        "remote_calls_saved": 3,
+        "sequential_latency_ms": {
+          "mean": 223.978,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 69238,
+          "output": 2295,
+          "saved": 4031,
+          "total": 71533
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_supported_confidence": 0.85,
+        "review_confidence": 0.8
+      },
+      "qualifies": true
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003"
+        ],
+        "false_support_count": 1,
+        "false_support_rate": 0.0385,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.7056,
+        "review_count": 27,
+        "supported_recall": 0.6154
+      },
+      "operations": {
+        "remote_call_rate": 0.9231,
+        "remote_call_reduction": 0.0769,
+        "remote_calls": 36,
+        "remote_calls_saved": 3,
+        "sequential_latency_ms": {
+          "mean": 223.978,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 69238,
+          "output": 2295,
+          "saved": 4031,
+          "total": 71533
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_supported_confidence": 0.85,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003"
+        ],
+        "false_support_count": 1,
+        "false_support_rate": 0.0385,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.7056,
+        "review_count": 27,
+        "supported_recall": 0.6154
+      },
+      "operations": {
+        "remote_call_rate": 0.9231,
+        "remote_call_reduction": 0.0769,
+        "remote_calls": 36,
+        "remote_calls_saved": 3,
+        "sequential_latency_ms": {
+          "mean": 223.978,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 69238,
+          "output": 2295,
+          "saved": 4031,
+          "total": 71533
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_supported_confidence": 0.85,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003"
+        ],
+        "false_support_count": 1,
+        "false_support_rate": 0.0385,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.7056,
+        "review_count": 27,
+        "supported_recall": 0.6154
+      },
+      "operations": {
+        "remote_call_rate": 0.9231,
+        "remote_call_reduction": 0.0769,
+        "remote_calls": 36,
+        "remote_calls_saved": 3,
+        "sequential_latency_ms": {
+          "mean": 223.978,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 69238,
+          "output": 2295,
+          "saved": 4031,
+          "total": 71533
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_supported_confidence": 0.85,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_1513_s008"
+        ],
+        "false_support_count": 3,
+        "false_support_rate": 0.1154,
+        "five_way_accuracy": 0.6667,
+        "observed_label_macro_f1": 0.7205,
+        "review_count": 27,
+        "supported_recall": 0.7692
+      },
+      "operations": {
+        "remote_call_rate": 0.9231,
+        "remote_call_reduction": 0.0769,
+        "remote_calls": 36,
+        "remote_calls_saved": 3,
+        "sequential_latency_ms": {
+          "mean": 223.978,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 69238,
+          "output": 2295,
+          "saved": 4031,
+          "total": 71533
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.0,
+        "local_supported_confidence": 0.9,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8205,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_1513_s008"
+        ],
+        "false_support_count": 3,
+        "false_support_rate": 0.1154,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.6956,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9231,
+        "remote_call_reduction": 0.0769,
+        "remote_calls": 36,
+        "remote_calls_saved": 3,
+        "sequential_latency_ms": {
+          "mean": 223.978,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 69238,
+          "output": 2295,
+          "saved": 4031,
+          "total": 71533
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_supported_confidence": 0.9,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8205,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_1513_s008"
+        ],
+        "false_support_count": 3,
+        "false_support_rate": 0.1154,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.6956,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9231,
+        "remote_call_reduction": 0.0769,
+        "remote_calls": 36,
+        "remote_calls_saved": 3,
+        "sequential_latency_ms": {
+          "mean": 223.978,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 69238,
+          "output": 2295,
+          "saved": 4031,
+          "total": 71533
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_supported_confidence": 0.9,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8205,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_1513_s008"
+        ],
+        "false_support_count": 3,
+        "false_support_rate": 0.1154,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.6956,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9231,
+        "remote_call_reduction": 0.0769,
+        "remote_calls": 36,
+        "remote_calls_saved": 3,
+        "sequential_latency_ms": {
+          "mean": 223.978,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 69238,
+          "output": 2295,
+          "saved": 4031,
+          "total": 71533
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.65,
+        "local_supported_confidence": 0.9,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003"
+        ],
+        "false_support_count": 2,
+        "false_support_rate": 0.0769,
+        "five_way_accuracy": 0.6667,
+        "observed_label_macro_f1": 0.7214,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9231,
+        "remote_call_reduction": 0.0769,
+        "remote_calls": 36,
+        "remote_calls_saved": 3,
+        "sequential_latency_ms": {
+          "mean": 223.978,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 69238,
+          "output": 2295,
+          "saved": 4031,
+          "total": 71533
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_supported_confidence": 0.9,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8718,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003"
+        ],
+        "false_support_count": 1,
+        "false_support_rate": 0.0385,
+        "five_way_accuracy": 0.6667,
+        "observed_label_macro_f1": 0.7241,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9231,
+        "remote_call_reduction": 0.0769,
+        "remote_calls": 36,
+        "remote_calls_saved": 3,
+        "sequential_latency_ms": {
+          "mean": 223.978,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 69238,
+          "output": 2295,
+          "saved": 4031,
+          "total": 71533
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_supported_confidence": 0.9,
+        "review_confidence": 0.8
+      },
+      "qualifies": true
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003"
+        ],
+        "false_support_count": 1,
+        "false_support_rate": 0.0385,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.7056,
+        "review_count": 27,
+        "supported_recall": 0.6154
+      },
+      "operations": {
+        "remote_call_rate": 0.9231,
+        "remote_call_reduction": 0.0769,
+        "remote_calls": 36,
+        "remote_calls_saved": 3,
+        "sequential_latency_ms": {
+          "mean": 223.978,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 69238,
+          "output": 2295,
+          "saved": 4031,
+          "total": 71533
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_supported_confidence": 0.9,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003"
+        ],
+        "false_support_count": 1,
+        "false_support_rate": 0.0385,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.7056,
+        "review_count": 27,
+        "supported_recall": 0.6154
+      },
+      "operations": {
+        "remote_call_rate": 0.9231,
+        "remote_call_reduction": 0.0769,
+        "remote_calls": 36,
+        "remote_calls_saved": 3,
+        "sequential_latency_ms": {
+          "mean": 223.978,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 69238,
+          "output": 2295,
+          "saved": 4031,
+          "total": 71533
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_supported_confidence": 0.9,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003"
+        ],
+        "false_support_count": 1,
+        "false_support_rate": 0.0385,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.7056,
+        "review_count": 27,
+        "supported_recall": 0.6154
+      },
+      "operations": {
+        "remote_call_rate": 0.9231,
+        "remote_call_reduction": 0.0769,
+        "remote_calls": 36,
+        "remote_calls_saved": 3,
+        "sequential_latency_ms": {
+          "mean": 223.978,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 69238,
+          "output": 2295,
+          "saved": 4031,
+          "total": 71533
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_supported_confidence": 0.9,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_1513_s008"
+        ],
+        "false_support_count": 3,
+        "false_support_rate": 0.1154,
+        "five_way_accuracy": 0.6667,
+        "observed_label_macro_f1": 0.7205,
+        "review_count": 27,
+        "supported_recall": 0.7692
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.0,
+        "local_supported_confidence": 0.95,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8205,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_1513_s008"
+        ],
+        "false_support_count": 3,
+        "false_support_rate": 0.1154,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.6956,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_supported_confidence": 0.95,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8205,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_1513_s008"
+        ],
+        "false_support_count": 3,
+        "false_support_rate": 0.1154,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.6956,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_supported_confidence": 0.95,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8205,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_1513_s008"
+        ],
+        "false_support_count": 3,
+        "false_support_rate": 0.1154,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.6956,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.65,
+        "local_supported_confidence": 0.95,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003"
+        ],
+        "false_support_count": 2,
+        "false_support_rate": 0.0769,
+        "five_way_accuracy": 0.6667,
+        "observed_label_macro_f1": 0.7214,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_supported_confidence": 0.95,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8718,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003"
+        ],
+        "false_support_count": 1,
+        "false_support_rate": 0.0385,
+        "five_way_accuracy": 0.6667,
+        "observed_label_macro_f1": 0.7241,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_supported_confidence": 0.95,
+        "review_confidence": 0.8
+      },
+      "qualifies": true
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003"
+        ],
+        "false_support_count": 1,
+        "false_support_rate": 0.0385,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.7056,
+        "review_count": 27,
+        "supported_recall": 0.6154
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_supported_confidence": 0.95,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003"
+        ],
+        "false_support_count": 1,
+        "false_support_rate": 0.0385,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.7056,
+        "review_count": 27,
+        "supported_recall": 0.6154
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_supported_confidence": 0.95,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003"
+        ],
+        "false_support_count": 1,
+        "false_support_rate": 0.0385,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.7056,
+        "review_count": 27,
+        "supported_recall": 0.6154
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_supported_confidence": 0.95,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_1513_s008"
+        ],
+        "false_support_count": 3,
+        "false_support_rate": 0.1154,
+        "five_way_accuracy": 0.6667,
+        "observed_label_macro_f1": 0.7205,
+        "review_count": 27,
+        "supported_recall": 0.7692
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.0,
+        "local_supported_confidence": 0.99,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8205,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_1513_s008"
+        ],
+        "false_support_count": 3,
+        "false_support_rate": 0.1154,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.6956,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_supported_confidence": 0.99,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8205,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_1513_s008"
+        ],
+        "false_support_count": 3,
+        "false_support_rate": 0.1154,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.6956,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_supported_confidence": 0.99,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8205,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_1513_s008"
+        ],
+        "false_support_count": 3,
+        "false_support_rate": 0.1154,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.6956,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.65,
+        "local_supported_confidence": 0.99,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003"
+        ],
+        "false_support_count": 2,
+        "false_support_rate": 0.0769,
+        "five_way_accuracy": 0.6667,
+        "observed_label_macro_f1": 0.7214,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_supported_confidence": 0.99,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8718,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003"
+        ],
+        "false_support_count": 1,
+        "false_support_rate": 0.0385,
+        "five_way_accuracy": 0.6667,
+        "observed_label_macro_f1": 0.7241,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_supported_confidence": 0.99,
+        "review_confidence": 0.8
+      },
+      "qualifies": true
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003"
+        ],
+        "false_support_count": 1,
+        "false_support_rate": 0.0385,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.7056,
+        "review_count": 27,
+        "supported_recall": 0.6154
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_supported_confidence": 0.99,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003"
+        ],
+        "false_support_count": 1,
+        "false_support_rate": 0.0385,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.7056,
+        "review_count": 27,
+        "supported_recall": 0.6154
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_supported_confidence": 0.99,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003"
+        ],
+        "false_support_count": 1,
+        "false_support_rate": 0.0385,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.7056,
+        "review_count": 27,
+        "supported_recall": 0.6154
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_supported_confidence": 0.99,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_1513_s008"
+        ],
+        "false_support_count": 3,
+        "false_support_rate": 0.1154,
+        "five_way_accuracy": 0.6667,
+        "observed_label_macro_f1": 0.7205,
+        "review_count": 27,
+        "supported_recall": 0.7692
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.0,
+        "local_supported_confidence": 1.0,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8205,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_1513_s008"
+        ],
+        "false_support_count": 3,
+        "false_support_rate": 0.1154,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.6956,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_supported_confidence": 1.0,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8205,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_1513_s008"
+        ],
+        "false_support_count": 3,
+        "false_support_rate": 0.1154,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.6956,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_supported_confidence": 1.0,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8205,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003",
+          "ragtruth_1513_s008"
+        ],
+        "false_support_count": 3,
+        "false_support_rate": 0.1154,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.6956,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.65,
+        "local_supported_confidence": 1.0,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003",
+          "ragtruth_12435_s003"
+        ],
+        "false_support_count": 2,
+        "false_support_rate": 0.0769,
+        "five_way_accuracy": 0.6667,
+        "observed_label_macro_f1": 0.7214,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_supported_confidence": 1.0,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8718,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003"
+        ],
+        "false_support_count": 1,
+        "false_support_rate": 0.0385,
+        "five_way_accuracy": 0.6667,
+        "observed_label_macro_f1": 0.7241,
+        "review_count": 27,
+        "supported_recall": 0.6923
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_supported_confidence": 1.0,
+        "review_confidence": 0.8
+      },
+      "qualifies": true
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003"
+        ],
+        "false_support_count": 1,
+        "false_support_rate": 0.0385,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.7056,
+        "review_count": 27,
+        "supported_recall": 0.6154
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_supported_confidence": 1.0,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003"
+        ],
+        "false_support_count": 1,
+        "false_support_rate": 0.0385,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.7056,
+        "review_count": 27,
+        "supported_recall": 0.6154
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_supported_confidence": 1.0,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    },
+    {
+      "metrics": {
+        "automatic_accuracy": 0.75,
+        "automatic_coverage": 0.3077,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "binary_accuracy": 0.8462,
+        "cases": 39,
+        "false_support_case_ids": [
+          "ragtruth_121_s003"
+        ],
+        "false_support_count": 1,
+        "false_support_rate": 0.0385,
+        "five_way_accuracy": 0.641,
+        "observed_label_macro_f1": 0.7056,
+        "review_count": 27,
+        "supported_recall": 0.6154
+      },
+      "operations": {
+        "remote_call_rate": 0.9487,
+        "remote_call_reduction": 0.0513,
+        "remote_calls": 37,
+        "remote_calls_saved": 2,
+        "sequential_latency_ms": {
+          "mean": 228.926,
+          "p50": 215.904,
+          "p95": 346.013
+        },
+        "tokens": {
+          "always_jev_total": 75564,
+          "input": 70445,
+          "output": 2357,
+          "saved": 2762,
+          "total": 72802
+        }
+      },
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_supported_confidence": 1.0,
+        "review_confidence": 0.8
+      },
+      "qualifies": false
+    }
+  ],
+  "qualifying_candidate_count": 5,
+  "schema_version": "1.0",
+  "selected": {
+    "metrics": {
+      "automatic_accuracy": 0.75,
+      "automatic_coverage": 0.3077,
+      "automatic_false_support_case_ids": [],
+      "automatic_false_support_count": 0,
+      "binary_accuracy": 0.8718,
+      "cases": 39,
+      "false_support_case_ids": [
+        "ragtruth_121_s003"
+      ],
+      "false_support_count": 1,
+      "false_support_rate": 0.0385,
+      "five_way_accuracy": 0.6667,
+      "observed_label_macro_f1": 0.7241,
+      "review_count": 27,
+      "supported_recall": 0.6923
+    },
+    "operations": {
+      "remote_call_rate": 0.9231,
+      "remote_call_reduction": 0.0769,
+      "remote_calls": 36,
+      "remote_calls_saved": 3,
+      "sequential_latency_ms": {
+        "mean": 223.978,
+        "p50": 215.904,
+        "p95": 346.013
+      },
+      "tokens": {
+        "always_jev_total": 75564,
+        "input": 69238,
+        "output": 2295,
+        "saved": 4031,
+        "total": 71533
+      }
+    },
+    "policy": {
+      "always_review_supported": true,
+      "jev_supported_probability": 0.75,
+      "local_supported_confidence": 0.9,
+      "review_confidence": 0.8
+    },
+    "qualifies": true
+  },
+  "selected_policy_id": "e6e5126dc1810c275be902496783b620f32df280ad4180214b62b8c842ef9025",
+  "selection_split": "development",
+  "source_sha256": "686ff61b75e6a8f163452110a29bbaaa29286e9e8a1ee485caa62faf0b9add62"
+}

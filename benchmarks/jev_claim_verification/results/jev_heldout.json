@@ -1,0 +1,317 @@
+{
+  "experiment": "contexttrace_jev_claim_verification",
+  "remote_provider": "typesafe_jev",
+  "rows": [
+    {
+      "baseline": {
+        "confidence": 1.0,
+        "provider": "contexttrace_stable",
+        "verdict": "supported"
+      },
+      "case_id": "heldout_supported_leave",
+      "category": "supported",
+      "expected_verdict": "supported",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "selected_evidence": [
+          {
+            "characters": 66,
+            "selected_id": "leave_handbook:span:1",
+            "sha256": "5938d64f622ca4fa494c97d33e6d25125c5ef4e8a0cf6c83951950af8c1e1d18",
+            "source_context_id": "leave_handbook"
+          },
+          {
+            "characters": 29,
+            "selected_id": "leave_handbook:span:2",
+            "sha256": "aac93fa1f2b0587125673c41500b6005cdea71452f7f5339bca41f9349583b09",
+            "source_context_id": "leave_handbook"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "state_sha256": "cec2141b6c0d0e0b09664c2a2c1b63444f989b13eb3a18697bcfbe8b6c14b1b4"
+      },
+      "jev": {
+        "confidence": 0.99,
+        "conflicting_facts": [],
+        "latency_ms": 508.851,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.01,
+          "supported": 0.99,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "provider": "typesafe_jev",
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 580,
+          "output_tokens": 62,
+          "total_tokens": 642
+        },
+        "verdict": "supported"
+      },
+      "split": "heldout"
+    },
+    {
+      "baseline": {
+        "confidence": 0.4,
+        "provider": "contexttrace_stable",
+        "verdict": "unverifiable"
+      },
+      "case_id": "heldout_unsupported_backup_schedule",
+      "category": "unsupported_addition",
+      "expected_verdict": "unsupported",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "selected_evidence": [
+          {
+            "characters": 50,
+            "selected_id": "security_overview:span:1",
+            "sha256": "1947f208e400aee2a5e9272f0bc533274828bdd332cf6758665338620066396b",
+            "source_context_id": "security_overview"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "state_sha256": "3ca58daab32a9dd75189e33b5706472146a0ccf8200f109b2892f54e2c0b3d93"
+      },
+      "jev": {
+        "confidence": 0.99,
+        "conflicting_facts": [],
+        "latency_ms": 200.815,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.99,
+          "unverifiable": 0.01
+        },
+        "provider": "typesafe_jev",
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 539,
+          "output_tokens": 62,
+          "total_tokens": 601
+        },
+        "verdict": "unsupported"
+      },
+      "split": "heldout"
+    },
+    {
+      "baseline": {
+        "confidence": 0.834,
+        "provider": "contexttrace_stable",
+        "verdict": "supported"
+      },
+      "case_id": "heldout_contradicted_remote_days",
+      "category": "contradiction",
+      "expected_verdict": "contradicted",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "selected_evidence": [
+          {
+            "characters": 52,
+            "selected_id": "work_policy:span:1",
+            "sha256": "2ac2ae7ce9daa0eb84f9f6c42a94e3ca5f68055524fe59e5363c2ca5cd0cf798",
+            "source_context_id": "work_policy"
+          },
+          {
+            "characters": 61,
+            "selected_id": "work_policy:span:2",
+            "sha256": "1a13c9a16da2d94817bd19713b5a9639c0aa2c0ae697065072c71abdce847e71",
+            "source_context_id": "work_policy"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "state_sha256": "e2ced703246f88a6942d849f23962b74f6016b0d5bc26f8bf1b844b38cc4dfda"
+      },
+      "jev": {
+        "confidence": 1.0,
+        "conflicting_facts": [],
+        "latency_ms": 200.409,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 1.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "provider": "typesafe_jev",
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 571,
+          "output_tokens": 65,
+          "total_tokens": 636
+        },
+        "verdict": "contradicted"
+      },
+      "split": "heldout"
+    },
+    {
+      "baseline": {
+        "confidence": 0.742,
+        "provider": "contexttrace_stable",
+        "verdict": "contradicted"
+      },
+      "case_id": "heldout_partial_travel_approval",
+      "category": "partial_support",
+      "expected_verdict": "partially_supported",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "selected_evidence": [
+          {
+            "characters": 107,
+            "selected_id": "travel_policy:span:1",
+            "sha256": "4440814201fb31fa4f7270637274caaa680e1710b0b0717a95823bfa291230e6",
+            "source_context_id": "travel_policy"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "state_sha256": "ef45db48236c4763b6f3730d387087575a4b45f8500ef3984f3859e364d7dcc6"
+      },
+      "jev": {
+        "confidence": 0.99,
+        "conflicting_facts": [],
+        "latency_ms": 172.017,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.01,
+          "partially_supported": 0.99,
+          "supported": 0.0,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "provider": "typesafe_jev",
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 553,
+          "output_tokens": 65,
+          "total_tokens": 618
+        },
+        "verdict": "partially_supported"
+      },
+      "split": "heldout"
+    },
+    {
+      "baseline": {
+        "confidence": 0.541,
+        "provider": "contexttrace_stable",
+        "verdict": "partially_supported"
+      },
+      "case_id": "heldout_ambiguous_beta_access",
+      "category": "ambiguous_evidence",
+      "expected_verdict": "unverifiable",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "selected_evidence": [
+          {
+            "characters": 71,
+            "selected_id": "beta_notice:span:1",
+            "sha256": "621903821e77702c1129ebd10dc041d435ac7e85423596ae58e498a54c25e6b6",
+            "source_context_id": "beta_notice"
+          }
+        ],
+        "sent_fields": [
+          "query",
+          "claim",
+          "selected_evidence"
+        ],
+        "state_sha256": "d091efa797d84dd064f2fef4e1144ea997a8f9a88c61221d5ec9e743d67c040b"
+      },
+      "jev": {
+        "confidence": 0.74,
+        "conflicting_facts": [],
+        "latency_ms": 237.534,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.79,
+          "partially_supported": 0.1,
+          "supported": 0.0,
+          "unsupported": 0.1,
+          "unverifiable": 0.01
+        },
+        "provider": "typesafe_jev",
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 540,
+          "output_tokens": 65,
+          "total_tokens": 605
+        },
+        "verdict": "contradicted"
+      },
+      "split": "heldout"
+    }
+  ],
+  "schema_version": "1.0",
+  "stable_defaults_changed": false,
+  "summary": {
+    "baseline_accuracy": 0.2,
+    "baseline_jev_disagreements": [
+      {
+        "baseline": "unverifiable",
+        "case_id": "heldout_unsupported_backup_schedule",
+        "expected": "unsupported",
+        "jev": "unsupported"
+      },
+      {
+        "baseline": "supported",
+        "case_id": "heldout_contradicted_remote_days",
+        "expected": "contradicted",
+        "jev": "contradicted"
+      },
+      {
+        "baseline": "contradicted",
+        "case_id": "heldout_partial_travel_approval",
+        "expected": "partially_supported",
+        "jev": "partially_supported"
+      },
+      {
+        "baseline": "partially_supported",
+        "case_id": "heldout_ambiguous_beta_access",
+        "expected": "unverifiable",
+        "jev": "contradicted"
+      }
+    ],
+    "cases": 5,
+    "dangerous_false_supported_case_ids": [],
+    "jev_accuracy": 0.8,
+    "jev_run_complete": true,
+    "jev_total_input_tokens": 2783,
+    "jev_total_output_tokens": 319,
+    "mean_jev_latency_ms": 263.925,
+    "unsupported_false_supported_case_ids": []
+  }
+}

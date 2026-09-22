@@ -1,0 +1,188 @@
+{
+  "confirmatory_claim_allowed": false,
+  "development": {
+    "binary": {
+      "jev": {
+        "accuracy": 0.8462,
+        "accuracy_wilson_95": [
+          0.7027,
+          0.9275
+        ],
+        "cases": 39,
+        "false_support_count": 3,
+        "false_support_rate": 0.1154,
+        "false_support_rate_wilson_95": [
+          0.04,
+          0.2898
+        ],
+        "negative_cases": 26,
+        "supported_recall": 0.7692,
+        "supported_recall_wilson_95": [
+          0.4974,
+          0.9182
+        ]
+      },
+      "minicheck_roberta": {
+        "accuracy": 0.7179,
+        "accuracy_wilson_95": [
+          0.5622,
+          0.8346
+        ],
+        "cases": 39,
+        "false_support_count": 5,
+        "false_support_rate": 0.1923,
+        "false_support_rate_wilson_95": [
+          0.0851,
+          0.3788
+        ],
+        "negative_cases": 26,
+        "supported_recall": 0.5385,
+        "supported_recall_wilson_95": [
+          0.2914,
+          0.7679
+        ]
+      },
+      "stable_semantic": {
+        "accuracy": 0.7179,
+        "accuracy_wilson_95": [
+          0.5622,
+          0.8346
+        ],
+        "cases": 39,
+        "false_support_count": 1,
+        "false_support_rate": 0.0385,
+        "false_support_rate_wilson_95": [
+          0.0068,
+          0.1889
+        ],
+        "negative_cases": 26,
+        "supported_recall": 0.2308,
+        "supported_recall_wilson_95": [
+          0.0818,
+          0.5026
+        ]
+      }
+    },
+    "cases": 39,
+    "exact_selected_input_match": true,
+    "paired_binary_tests": {
+      "jev_vs_minicheck_roberta": {
+        "baseline_only_correct": 1,
+        "candidate_only_correct": 6,
+        "discordant_pairs": 7,
+        "exact_two_sided_p": 0.125
+      },
+      "jev_vs_stable_semantic": {
+        "baseline_only_correct": 3,
+        "candidate_only_correct": 8,
+        "discordant_pairs": 11,
+        "exact_two_sided_p": 0.2265625
+      }
+    },
+    "paired_five_way_test": {
+      "jev_vs_stable_semantic": {
+        "baseline_only_correct": 2,
+        "candidate_only_correct": 19,
+        "discordant_pairs": 21,
+        "exact_two_sided_p": 0.00022125
+      }
+    }
+  },
+  "experiment": "contexttrace_jev_v2_nonoverlapping_sentence_extension",
+  "heldout": {
+    "binary": {
+      "jev": {
+        "accuracy": 0.8889,
+        "accuracy_wilson_95": [
+          0.7958,
+          0.9426
+        ],
+        "cases": 72,
+        "false_support_count": 4,
+        "false_support_rate": 0.0833,
+        "false_support_rate_wilson_95": [
+          0.0329,
+          0.1955
+        ],
+        "negative_cases": 48,
+        "supported_recall": 0.8333,
+        "supported_recall_wilson_95": [
+          0.6415,
+          0.9332
+        ]
+      },
+      "minicheck_roberta": {
+        "accuracy": 0.7361,
+        "accuracy_wilson_95": [
+          0.6242,
+          0.8241
+        ],
+        "cases": 72,
+        "false_support_count": 14,
+        "false_support_rate": 0.2917,
+        "false_support_rate_wilson_95": [
+          0.1824,
+          0.4318
+        ],
+        "negative_cases": 48,
+        "supported_recall": 0.7917,
+        "supported_recall_wilson_95": [
+          0.5953,
+          0.9076
+        ]
+      },
+      "stable_semantic": {
+        "accuracy": 0.7639,
+        "accuracy_wilson_95": [
+          0.654,
+          0.847
+        ],
+        "cases": 72,
+        "false_support_count": 1,
+        "false_support_rate": 0.0208,
+        "false_support_rate_wilson_95": [
+          0.0037,
+          0.109
+        ],
+        "negative_cases": 48,
+        "supported_recall": 0.3333,
+        "supported_recall_wilson_95": [
+          0.1797,
+          0.5329
+        ]
+      }
+    },
+    "cases": 72,
+    "exact_selected_input_match": true,
+    "paired_binary_tests": {
+      "jev_vs_minicheck_roberta": {
+        "baseline_only_correct": 2,
+        "candidate_only_correct": 13,
+        "discordant_pairs": 15,
+        "exact_two_sided_p": 0.00738525
+      },
+      "jev_vs_stable_semantic": {
+        "baseline_only_correct": 4,
+        "candidate_only_correct": 13,
+        "discordant_pairs": 17,
+        "exact_two_sided_p": 0.04904175
+      }
+    },
+    "paired_five_way_test": {
+      "jev_vs_stable_semantic": {
+        "baseline_only_correct": 5,
+        "candidate_only_correct": 37,
+        "discordant_pairs": 42,
+        "exact_two_sided_p": 4.4e-07
+      }
+    }
+  },
+  "limitations": [
+    "Sentence verdicts are deterministic projections, not independent claim annotations.",
+    "RAGTruth provides no unverifiable class and this extension has no unsupported class.",
+    "Confidence intervals do not account for clustering by source response.",
+    "Paired p-values are exploratory and are not corrected for multiple comparisons."
+  ],
+  "schema_version": "1.0",
+  "scope": "deterministic sentence projection of upstream human answer-side spans"
+}
