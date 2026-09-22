@@ -1,0 +1,10 @@
+{
+  "audit_sha256": "13604dcadf74d2d898b2ef25c22ef8d838ffe6d138aaf7f0858e394ecc0fbdaf",
+  "dataset_sha256": "bc37f360b10524d56c2a3f956feca519f5c5c6216bbfa89b819bbfcb836c8ecb",
+  "examples": 240,
+  "schema_version": "contexttrace-requirement-development-manifest-1.0",
+  "source_archive_sha256": "e03fc77bbf8b53e2976a250e81d8a294bc3d5e5fb014521e477dee9340d6287b",
+  "source_member": "contract-nli/dev.json",
+  "source_member_sha256": "310af7d661d2ab50ee3700169cef524c75f39fb296bbf5a515c229eb0f42e68e",
+  "test_split_accessed": false
+}

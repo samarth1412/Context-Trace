@@ -90,3 +90,33 @@ under a five-percent false-positive-rate cap on the common human-labeled
 internal validation set. No prior development or held-out evaluation pack is
 used for training or selection. `TRAINING_V2_RESULTS.md` records the positive
 but below-target outcome and the decision to keep v2 experimental.
+
+Build the direct, human-labeled ContractNLI development set without accessing
+its test split:
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.build_development \
+  --source-zip /private/tmp/contexttrace_external_data/contract-nli.zip \
+  --dataset-output benchmarks/requirement_alignment/development.json \
+  --audit-output benchmarks/requirement_alignment/development_audit.json \
+  --manifest-output benchmarks/requirement_alignment/development_manifest.json \
+  --cases-per-relation 80
+```
+
+Compare the frozen v1 and v2 artifacts at their committed thresholds:
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.analyze_development \
+  --dataset benchmarks/requirement_alignment/development.json \
+  --v1-model-path .tmp-contexttrace-models/contexttrace-requirement-alignment-v1 \
+  --v1-manifest benchmarks/requirement_alignment/results/model_manifest.json \
+  --v2-model-path .tmp-contexttrace-models/contexttrace-requirement-alignment-v2 \
+  --v2-manifest benchmarks/requirement_alignment/results/model_v2_manifest.json \
+  --output benchmarks/requirement_alignment/results/development_analysis.json \
+  --batch-size 8
+```
+
+`DEVELOPMENT_SET.md` documents provenance and limitations.
+`DEVELOPMENT_RESULTS.md` records the transfer failure and the frozen v3 design.

@@ -1,0 +1,45 @@
+{
+  "candidate_counts": {
+    "Contradiction": 88,
+    "Entailment": 489,
+    "NotMentioned": 423
+  },
+  "evidence_selection_counts": {
+    "deterministic_lexical_retrieval": 80,
+    "upstream_annotated_spans": 160
+  },
+  "examples": 240,
+  "exclusions": {
+    "no_evidence_within_budget": 37
+  },
+  "hypotheses": 17,
+  "integrity": {
+    "annotated_evidence_for_labeled_relations": true,
+    "balanced_relations": true,
+    "evidence_within_word_budget": true,
+    "exact_requirement_spans": true,
+    "model_or_api_labels_used": false,
+    "targets_absent_from_model_inputs": true,
+    "test_split_accessed": false,
+    "unique_example_ids": true
+  },
+  "limitations": [
+    "The development set is legal-domain data with 17 repeated hypotheses.",
+    "NotMentioned cases require deterministic retrieval because no gold evidence span exists.",
+    "Claim and requirement text are identical because each ContractNLI hypothesis is one direct requirement.",
+    "This is development data and must not be presented as untouched confirmation evidence."
+  ],
+  "relation_counts": {
+    "Contradiction": 80,
+    "Entailment": 80,
+    "NotMentioned": 80
+  },
+  "schema_version": "contexttrace-requirement-development-audit-1.0",
+  "selected_documents": 61,
+  "source_documents": 61,
+  "target_counts": {
+    "covered": 80,
+    "missing": 160
+  },
+  "valid": true
+}
