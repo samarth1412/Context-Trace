@@ -165,3 +165,19 @@ PYTHONPATH=packages/contexttrace:. .venv/bin/python \
 
 `TRAINING_V3_RESULTS.md` records the substantial improvement, failed promotion
 gate, and decision to stop tuning the same small checkpoint.
+
+Evaluate the three fixed hierarchical evidence policies without changing v3:
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.evaluate_v4_aggregation \
+  --model-path .tmp-contexttrace-models/contexttrace-requirement-alignment-v3 \
+  --model-manifest benchmarks/requirement_alignment/results/model_v3_manifest.json \
+  --contract-development benchmarks/requirement_alignment/development.json \
+  --wice-dataset benchmarks/requirement_alignment/dataset.json \
+  --output benchmarks/requirement_alignment/results/v4_aggregation_report.json \
+  --batch-size 8
+```
+
+`V4_AGGREGATION_RESULTS.md` records the negative aggregation result and decision
+to move to one stronger local backbone.
