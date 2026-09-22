@@ -66,3 +66,27 @@ PYTHONPATH=packages/contexttrace:. .venv/bin/python \
 `TRAINING_RESULTS.md` records the fixed-variant comparison and stopping
 decision. The selected model remains experimental and is not packaged or wired
 into the stable verifier.
+
+Improve safe positive recall from the frozen, hash-verified v1 artifact with
+three training-only interventions:
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.train_v2 \
+  --dataset benchmarks/requirement_alignment/dataset.json \
+  --source-model-path .tmp-contexttrace-models/contexttrace-requirement-alignment-v1 \
+  --source-manifest benchmarks/requirement_alignment/results/model_manifest.json \
+  --output-dir .tmp-contexttrace-models/contexttrace-requirement-alignment-v2 \
+  --report-output benchmarks/requirement_alignment/results/training_v2_report.json \
+  --model-manifest-output benchmarks/requirement_alignment/results/model_v2_manifest.json \
+  --epochs 1 \
+  --batch-size 8 \
+  --learning-rate 5e-6
+```
+
+The v2 comparison uses confidence-filtered weak negatives, focal loss, and
+hard-positive margin training. Variant and threshold selection maximize recall
+under a five-percent false-positive-rate cap on the common human-labeled
+internal validation set. No prior development or held-out evaluation pack is
+used for training or selection. `TRAINING_V2_RESULTS.md` records the positive
+but below-target outcome and the decision to keep v2 experimental.
