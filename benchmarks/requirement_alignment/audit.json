@@ -1,0 +1,136 @@
+{
+  "case_split_counts": {
+    "internal_validation": 164,
+    "training": 929
+  },
+  "construction_counts": {
+    "gold_complete_group": 1065,
+    "gold_partial_group": 633,
+    "same_document_hard_negative": 1065,
+    "synthetic_drop_one": 355
+  },
+  "evaluation_exclusion_packs": [
+    {
+      "cases": 125,
+      "path": "benchmarks/external_fiveway_confirmation/development_cases.json",
+      "sha256": "b3cd60e5bea1c28f852b8ad8949aee135e8de5460b070f7811302db026b38f17"
+    },
+    {
+      "cases": 120,
+      "path": "benchmarks/external_fiveway_confirmation/completeness_development_cases.json",
+      "sha256": "92ce8df9c393b378f92cce065e1a0140b26366de4d5d8ab5981b776ad5705c2c"
+    },
+    {
+      "cases": 60,
+      "path": "benchmarks/external_fiveway_confirmation/completeness_development_extension_cases.json",
+      "sha256": "50221d95206d3f477ad462cb1d8a7e2f9696a1d7d19cbf22878eb46b47afec7c"
+    },
+    {
+      "cases": 125,
+      "path": "benchmarks/external_fiveway_confirmation/confirmation_cases.json",
+      "sha256": "b50b90f40eddbad6b8ada051d8b223c7e04d408797148f755eba66b5796c75a3"
+    },
+    {
+      "cases": 35,
+      "path": "benchmarks/external_fiveway_confirmation/confirmation_v2_cases.json",
+      "sha256": "c92cf96e54c3b5bab5f6306523a62305b9cc69f3f59655b9d8f6c654c4157ded"
+    },
+    {
+      "cases": 5,
+      "path": "benchmarks/jev_claim_verification/development_cases.json",
+      "sha256": "b09ea71e85149408297a7c96a4712f85ddf21bea9462cf05dc7ad01e339959a3"
+    },
+    {
+      "cases": 5,
+      "path": "benchmarks/jev_claim_verification/heldout_cases.json",
+      "sha256": "121f4f8b8481b215119ff151478cf137cec15129fa3df2857915ebc434f74180"
+    },
+    {
+      "cases": 15,
+      "path": "benchmarks/jev_v2_verification/ragtruth_development.json",
+      "sha256": "546bbb90f6db951f63928ec673978f874848ca9c6994c5364b4ac994b5786256"
+    },
+    {
+      "cases": 16,
+      "path": "benchmarks/jev_v2_verification/ragtruth_heldout.json",
+      "sha256": "107ca09820728e3379092538af2b23d3aeeb5561b674eff8a44cf6b0214c2ed0"
+    },
+    {
+      "cases": 15,
+      "path": "benchmarks/jev_v2_verification/ragtruth_sentence_development.json",
+      "sha256": "1699fba4416d76336c9d2fab116d59aa4c59939d7fb8e776f004cd869ffa0850"
+    },
+    {
+      "cases": 15,
+      "path": "benchmarks/jev_v2_verification/ragtruth_sentence_heldout.json",
+      "sha256": "c2b374164d40a4f9e995c39c2b90889c35a3c5dbfaadded7b7b8b7e1d40458e8"
+    },
+    {
+      "cases": 39,
+      "path": "benchmarks/jev_v2_verification/ragtruth_sentence_extension_development.json",
+      "sha256": "b283471bc55066729c199f8f7385ce7a41278d3f0e702f4550bf2d6c4ecfdb0b"
+    },
+    {
+      "cases": 72,
+      "path": "benchmarks/jev_v2_verification/ragtruth_sentence_extension_heldout.json",
+      "sha256": "f88a724112a5cb5a55bf50b8e4ffff1cea8d08bcc5268ae70426063f11154111"
+    },
+    {
+      "cases": 15,
+      "path": "benchmarks/local_verification_quality/development_cases.json",
+      "sha256": "6cde04b206e16c64a0283c0c214d5353d2ef49fc4cda0718e34886317b1415e7"
+    },
+    {
+      "cases": 15,
+      "path": "benchmarks/local_verification_quality/heldout_cases.json",
+      "sha256": "1ca916426fe4838ecdca430be14b5f91e65e2a9e91e4b88444df0fd4ea13936e"
+    }
+  ],
+  "example_split_counts": {
+    "internal_validation": 464,
+    "training": 2654
+  },
+  "examples": 3118,
+  "exclusions": {
+    "unsupported_source_label": 167
+  },
+  "integrity": {
+    "case_split_overlap": false,
+    "development_or_heldout_examples_used": false,
+    "drop_one_removed_context_absent": true,
+    "evaluation_claim_overlap": [],
+    "exact_requirement_spans": true,
+    "normalized_claim_split_overlap": false,
+    "remote_inference_used": false,
+    "training_targets_absent_from_model_inputs": true,
+    "unique_example_ids": true
+  },
+  "limitations": [
+    "Requirement positives inherit WiCE's claim-level complete-support annotation.",
+    "Synthetic drop-one negatives can be noisy when evidence sentences are redundant.",
+    "Unannotated same-document sentences can contain unrecorded support.",
+    "Partial-support annotations identify incomplete claim coverage, not the missing requirement."
+  ],
+  "schema_version": "contexttrace-requirement-alignment-audit-1.0",
+  "source": {
+    "bytes": 12039943,
+    "path": "/private/tmp/contexttrace_external_data/wice_train.jsonl",
+    "sha256": "3ef74c7203e1d9b369cb2c145e764d8ab4743f008f9765fa47f9bdd6ffa2d2e1"
+  },
+  "source_cases": 1093,
+  "source_label_counts": {
+    "partially_supported": 633,
+    "supported": 460
+  },
+  "target_counts": {
+    "claim_group_completeness.complete": 460,
+    "claim_group_completeness.incomplete": 1448,
+    "requirement_alignment.covered": 605,
+    "requirement_alignment.missing": 605
+  },
+  "task_counts": {
+    "claim_group_completeness": 1908,
+    "requirement_alignment": 1210
+  },
+  "valid": true
+}
