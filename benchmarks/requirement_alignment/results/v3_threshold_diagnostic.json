@@ -1,0 +1,74 @@
+{
+  "best_eligible": {
+    "contract_development": {
+      "accuracy": 0.8208,
+      "average_precision": 0.7994,
+      "cases": 240,
+      "confusion": {
+        "negative": {
+          "negative": 159,
+          "positive": 1
+        },
+        "positive": {
+          "negative": 42,
+          "positive": 38
+        }
+      },
+      "false_positive_rate": 0.0063,
+      "macro_f1": 0.7598,
+      "negative_recall": 0.9938,
+      "positive_recall": 0.475,
+      "roc_auc": 0.82,
+      "threshold": 0.9
+    },
+    "eligible": true,
+    "threshold": 0.9,
+    "wice_internal": {
+      "accuracy": 0.6524,
+      "average_precision": 0.7085,
+      "cases": 164,
+      "confusion": {
+        "negative": {
+          "negative": 91,
+          "positive": 4
+        },
+        "positive": {
+          "negative": 53,
+          "positive": 16
+        }
+      },
+      "false_positive_rate": 0.0421,
+      "macro_f1": 0.5605,
+      "negative_recall": 0.9579,
+      "positive_recall": 0.2319,
+      "roc_auc": 0.7799,
+      "threshold": 0.9
+    }
+  },
+  "contract_false_support_at_best": [
+    {
+      "covered_probability": 0.931376,
+      "evidence_span_indexes": [
+        4,
+        11,
+        31
+      ],
+      "hypothesis_description": "No reverse engineering",
+      "hypothesis_id": "nda-11",
+      "id": "contractnli_dev_605_nda-11",
+      "relation": "NotMentioned"
+    }
+  ],
+  "contract_recall_target_met": false,
+  "contract_test_split_accessed": false,
+  "eligible_thresholds": 14,
+  "model_artifact_verified": true,
+  "model_id": "98b6c1642c615b21d67527ca0b79ffa7a0385e003793c5db89de3d0d52846718",
+  "range": {
+    "maximum": 0.95,
+    "minimum": 0.8,
+    "step": 0.001
+  },
+  "schema_version": "contexttrace-requirement-v3-threshold-diagnostic-1.0",
+  "warning": "Post-hoc development diagnostic; cannot satisfy or change the promotion gate."
+}
