@@ -1,0 +1,35 @@
+{
+  "contract_candidate_counts": {
+    "Contradiction": 801,
+    "Entailment": 3403,
+    "NotMentioned": 2820
+  },
+  "contract_documents": 423,
+  "contract_exclusions": {
+    "no_evidence_within_budget": 167
+  },
+  "examples": 4754,
+  "integrity": {
+    "contract_development_or_test_used": false,
+    "contract_training_split_only": true,
+    "model_or_api_labels_used": false,
+    "targets_absent_from_model_inputs": true,
+    "unique_example_ids": true
+  },
+  "limitations": [
+    "WiCE incomplete examples map to neutral and do not add contradiction supervision.",
+    "ContractNLI contains 17 recurring legal hypotheses.",
+    "NotMentioned examples use deterministic lexical evidence selection."
+  ],
+  "relation_counts": {
+    "contradiction": 700,
+    "entailment": 1607,
+    "neutral": 2447
+  },
+  "schema_version": "contexttrace-requirement-v3-training-audit-1.0",
+  "source_counts": {
+    "ContractNLI": 2100,
+    "WiCE": 2654
+  },
+  "valid": true
+}

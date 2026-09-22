@@ -120,3 +120,48 @@ PYTHONPATH=packages/contexttrace:. .venv/bin/python \
 
 `DEVELOPMENT_SET.md` documents provenance and limitations.
 `DEVELOPMENT_RESULTS.md` records the transfer failure and the frozen v3 design.
+
+Build the mixed three-way v3 training artifact:
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.build_v3_training \
+  --contract-source-zip /private/tmp/contexttrace_external_data/contract-nli.zip \
+  --wice-dataset benchmarks/requirement_alignment/dataset.json \
+  --dataset-output benchmarks/requirement_alignment/v3_training.json \
+  --audit-output benchmarks/requirement_alignment/v3_training_audit.json \
+  --manifest-output benchmarks/requirement_alignment/v3_training_manifest.json \
+  --cases-per-relation 700
+```
+
+Run the fixed two-epoch, dual-gate v3 experiment:
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.train_v3 \
+  --training-dataset benchmarks/requirement_alignment/v3_training.json \
+  --contract-development benchmarks/requirement_alignment/development.json \
+  --wice-dataset benchmarks/requirement_alignment/dataset.json \
+  --base-model-path .tmp-contexttrace-models/cross-encoder--nli-deberta-v3-small--fa280487 \
+  --output-dir .tmp-contexttrace-models/contexttrace-requirement-alignment-v3 \
+  --report-output benchmarks/requirement_alignment/results/training_v3_report.json \
+  --model-manifest-output benchmarks/requirement_alignment/results/model_v3_manifest.json \
+  --epochs 2 \
+  --batch-size 8 \
+  --learning-rate 1e-5
+```
+
+Reproduce the post-hoc fine-threshold diagnostic:
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.diagnose_v3_threshold \
+  --model-path .tmp-contexttrace-models/contexttrace-requirement-alignment-v3 \
+  --model-manifest benchmarks/requirement_alignment/results/model_v3_manifest.json \
+  --contract-development benchmarks/requirement_alignment/development.json \
+  --wice-dataset benchmarks/requirement_alignment/dataset.json \
+  --output benchmarks/requirement_alignment/results/v3_threshold_diagnostic.json
+```
+
+`TRAINING_V3_RESULTS.md` records the substantial improvement, failed promotion
+gate, and decision to stop tuning the same small checkpoint.

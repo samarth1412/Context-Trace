@@ -85,6 +85,7 @@ def build_development_set(
                 hypothesis=hypothesis,
                 relation=relation,
                 annotated_indexes=annotation.get("spans") or [],
+                source_split="dev",
             )
             if not evidence:
                 exclusions["no_evidence_within_budget"] += 1
@@ -99,6 +100,7 @@ def build_development_set(
                     evidence=evidence,
                     evidence_indexes=evidence_indexes,
                     evidence_selection=selection,
+                    source_split="dev",
                 )
             )
 
@@ -254,6 +256,7 @@ def _selected_evidence(
     hypothesis: str,
     relation: str,
     annotated_indexes: list[Any],
+    source_split: str = "dev",
 ) -> tuple[list[dict[str, str]], list[int], str]:
     text = str(document.get("text") or "")
     spans = document.get("spans") or []
@@ -266,7 +269,13 @@ def _selected_evidence(
                 if isinstance(index, int) and 0 <= index < len(spans)
             }
         )
-        evidence = _span_evidence(text, spans, indexes, document_id=document_id)
+        evidence = _span_evidence(
+            text,
+            spans,
+            indexes,
+            document_id=document_id,
+            source_split=source_split,
+        )
         if sum(len(item["text"].split()) for item in evidence) > MAX_EVIDENCE_WORDS:
             return [], [], "upstream_annotated_spans"
         return evidence, indexes, "upstream_annotated_spans"
@@ -274,7 +283,13 @@ def _selected_evidence(
     hypothesis_tokens = _content_tokens(hypothesis)
     ranked = []
     for index in range(len(spans)):
-        evidence = _span_evidence(text, spans, [index], document_id=document_id)
+        evidence = _span_evidence(
+            text,
+            spans,
+            [index],
+            document_id=document_id,
+            source_split=source_split,
+        )
         if not evidence:
             continue
         span_text = evidence[0]["text"]
@@ -300,7 +315,13 @@ def _selected_evidence(
             word_count += words
     chosen.sort()
     return (
-        _span_evidence(text, spans, chosen, document_id=document_id),
+        _span_evidence(
+            text,
+            spans,
+            chosen,
+            document_id=document_id,
+            source_split=source_split,
+        ),
         chosen,
         "deterministic_lexical_retrieval",
     )
@@ -312,6 +333,7 @@ def _span_evidence(
     indexes: list[int],
     *,
     document_id: str,
+    source_split: str = "dev",
 ) -> list[dict[str, str]]:
     output = []
     for index in indexes:
@@ -323,7 +345,8 @@ def _span_evidence(
         if value:
             output.append(
                 {
-                    "id": "contractnli_dev_%s_s%04d" % (document_id, index),
+                    "id": "contractnli_%s_%s_s%04d"
+                    % (source_split, document_id, index),
                     "text": value,
                 }
             )
@@ -340,10 +363,12 @@ def _example(
     evidence: list[dict[str, str]],
     evidence_indexes: list[int],
     evidence_selection: str,
+    source_split: str = "dev",
 ) -> dict[str, Any]:
     document_id = str(document.get("id") or "")
     return {
-        "id": "contractnli_dev_%s_%s" % (document_id, hypothesis_id),
+        "id": "contractnli_%s_%s_%s"
+        % (source_split, document_id, hypothesis_id),
         "split": "development",
         "task": "requirement_alignment",
         "input": {
@@ -359,7 +384,7 @@ def _example(
         "target": {"label": RELATION_TARGET[relation]},
         "source": {
             "dataset": "ContractNLI",
-            "source_split": "dev",
+            "source_split": source_split,
             "document_id": document_id,
             "hypothesis_id": hypothesis_id,
             "hypothesis_description": description,

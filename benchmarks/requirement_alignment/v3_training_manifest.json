@@ -1,0 +1,9 @@
+{
+  "audit_sha256": "06e789173ac6f6aa263d0b4d3b26a33a0e9326c289da7838b84ac31483c9375a",
+  "contract_development_or_test_used": false,
+  "contract_source_member_sha256": "dbceb356cd6203b35b27be94a5fa85e499a81c34c42c89ad53060b39f0257ba5",
+  "dataset_sha256": "4cca0874ee689a08a4fe26cd76720974b123c71a643470dcb878237f07ad404b",
+  "examples": 4754,
+  "schema_version": "contexttrace-requirement-v3-training-manifest-1.0",
+  "wice_source_dataset_sha256": "7d02d8792eda61b319638acdb05ad7c989df464e0a48027f6415ad1874db7038"
+}

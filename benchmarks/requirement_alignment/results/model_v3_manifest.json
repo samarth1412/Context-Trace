@@ -1,0 +1,36 @@
+{
+  "files": [
+    {
+      "bytes": 1094,
+      "path": "config.json",
+      "sha256": "f3a29e60c6a266f0d8745e329d5877782a3460fcf3d7fdabb7b62901b2ea2a5b"
+    },
+    {
+      "bytes": 567601628,
+      "path": "model.safetensors",
+      "sha256": "729647724aedb58e700daac18889f779c4839107d37a3586e9813d7f769bd3c2"
+    },
+    {
+      "bytes": 8340137,
+      "path": "tokenizer.json",
+      "sha256": "5496b1075a43e39404f7a7525b83d5ae56b1990ce5254e797e659149e1004e09"
+    },
+    {
+      "bytes": 503,
+      "path": "tokenizer_config.json",
+      "sha256": "5c19d606a9a444336416d4a6701513438e5b8f1bab823ddc1e2f0af48f438df9"
+    }
+  ],
+  "model_id": "98b6c1642c615b21d67527ca0b79ffa7a0385e003793c5db89de3d0d52846718",
+  "promotion_gates_met": false,
+  "relation_labels": {
+    "0": "contradiction",
+    "1": "entailment",
+    "2": "neutral"
+  },
+  "runtime_network_required": false,
+  "schema_version": "contexttrace-requirement-alignment-model-manifest-v3-1.0",
+  "selected_epoch": 2,
+  "selected_threshold": 0.9,
+  "stable_defaults_changed": false
+}
