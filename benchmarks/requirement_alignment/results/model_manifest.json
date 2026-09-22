@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "bytes": 1046,
+      "path": "config.json",
+      "sha256": "236824a9f198ab79333f0a2c1f2e7b8cbec330a5fe692db3bbc41701b75eb537"
+    },
+    {
+      "bytes": 567598552,
+      "path": "model.safetensors",
+      "sha256": "39dad86e4c5966be09fc78ef7544750a60e494375ac89977010b5708fd59094c"
+    },
+    {
+      "bytes": 8340137,
+      "path": "tokenizer.json",
+      "sha256": "5496b1075a43e39404f7a7525b83d5ae56b1990ce5254e797e659149e1004e09"
+    },
+    {
+      "bytes": 503,
+      "path": "tokenizer_config.json",
+      "sha256": "5c19d606a9a444336416d4a6701513438e5b8f1bab823ddc1e2f0af48f438df9"
+    }
+  ],
+  "model_id": "5eceacb75b2c16b2dad6a68a94a71113d7dd9c3545422ff0edd75252fe8b9bc1",
+  "runtime_network_required": false,
+  "schema_version": "contexttrace-requirement-alignment-model-manifest-1.0",
+  "selected_threshold": 0.9,
+  "selected_variant": "multitask",
+  "stable_defaults_changed": false
+}

@@ -47,3 +47,22 @@ The dataset is a training artifact, not a reported model result. The existing
 60-case extension has already informed research decisions and cannot serve as a
 new untouched confirmation set. A new disjoint validation pack must be frozen
 before promoting a trained model.
+
+Train the three fixed local cross-encoder variants:
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.train \
+  --dataset benchmarks/requirement_alignment/dataset.json \
+  --base-model-path .tmp-contexttrace-models/cross-encoder--nli-deberta-v3-small--fa280487 \
+  --output-dir .tmp-contexttrace-models/contexttrace-requirement-alignment-v1 \
+  --report-output benchmarks/requirement_alignment/results/training_report.json \
+  --model-manifest-output benchmarks/requirement_alignment/results/model_manifest.json \
+  --epochs 2 \
+  --batch-size 8 \
+  --learning-rate 1e-5
+```
+
+`TRAINING_RESULTS.md` records the fixed-variant comparison and stopping
+decision. The selected model remains experimental and is not packaged or wired
+into the stable verifier.
