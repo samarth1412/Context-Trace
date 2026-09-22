@@ -1,0 +1,27 @@
+{
+  "artifacts": [
+    {
+      "bytes": 4565187,
+      "path": "benchmarks/requirement_alignment/dataset.json",
+      "sha256": "7d02d8792eda61b319638acdb05ad7c989df464e0a48027f6415ad1874db7038"
+    },
+    {
+      "bytes": 4862,
+      "path": "benchmarks/requirement_alignment/audit.json",
+      "sha256": "705676494490dda8a348bc5361f69e119dfc20f06ee2e08d5379113a34e49351"
+    },
+    {
+      "bytes": 23011,
+      "path": "benchmarks/requirement_alignment/build.py",
+      "sha256": "bb8362b0a4a0174b8bf5117e61f594c8312c0ccce796d8eef90aa7d659742e89"
+    }
+  ],
+  "development_or_heldout_examples_used": false,
+  "remote_inference_used": false,
+  "schema_version": "contexttrace-requirement-alignment-manifest-1.0",
+  "source": {
+    "sha256": "3ef74c7203e1d9b369cb2c145e764d8ab4743f008f9765fa47f9bdd6ffa2d2e1",
+    "url": "https://raw.githubusercontent.com/ryokamoi/wice/ddeb6c183665e2a20c5f03c5aa07f03888b9870f/data/entailment_retrieval/claim/train.jsonl"
+  },
+  "stable_defaults_changed": false
+}
