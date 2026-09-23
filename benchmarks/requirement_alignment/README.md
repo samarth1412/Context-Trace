@@ -389,3 +389,28 @@ PYTHONPATH=packages/contexttrace:. .venv/bin/python \
 `V8_GUARD_RESULTS.md` reports the development selection and the explicitly
 post-hoc regression check on the consumed V7 evaluation. The guard passes its
 quality gates but misses its remote-call target, so it is not promoted.
+
+## V9: frozen Climate-FEVER holdout
+
+V9 freezes 240 real-world Climate-FEVER cases before any model scoring: 60 each
+for support, refutation, insufficient evidence, and disputed evidence. The
+official source file is verified by SHA-256. Because its official page does not
+state an explicit redistribution license, source text and the generated
+evaluation pack stay outside Git.
+
+```bash
+curl -L --fail --show-error --create-dirs \
+  --output /private/tmp/contexttrace_external_data/climate_fever/climate-fever-dataset-r1.jsonl \
+  'https://www.sustainablefinance.uzh.ch/dam/jcr%3Adf02e448-baa1-4db8-921a-58507be4838e/climate-fever-dataset-r1.jsonl'
+
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.build_v9_climate_fever \
+  --source /private/tmp/contexttrace_external_data/climate_fever/climate-fever-dataset-r1.jsonl \
+  --evaluation-output /private/tmp/contexttrace_external_data/climate_fever/v9_climate_fever_evaluation.json \
+  --selection-output benchmarks/requirement_alignment/v9_climate_fever_selection.json \
+  --audit-output benchmarks/requirement_alignment/v9_climate_fever_audit.json \
+  --manifest-output benchmarks/requirement_alignment/v9_climate_fever_manifest.json
+```
+
+`V9_HOLDOUT_PROTOCOL.md` defines the frozen label mapping, binary release gates,
+disputed-evidence challenge, leakage controls, and redistribution boundary.

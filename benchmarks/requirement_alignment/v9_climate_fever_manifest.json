@@ -1,0 +1,14 @@
+{
+  "audit_sha256": "298c0a029f71dd99c4bfc2262d79f9c0cd0460d02f010eca26ed9e72e996c0d7",
+  "evaluation_sha256": "d582c53e6a87d800e3bf293c3d597e7e11ee0fb5dff0a79f31be5e2395e26858",
+  "evaluation_used_for_policy_selection": false,
+  "experiment": "contexttrace_v9_climate_fever_holdout",
+  "frozen_policy": "benchmarks/requirement_alignment/results/v8_scifact_guard_policy.json",
+  "model_outputs_accessed": false,
+  "remote_provider_default_enabled": false,
+  "schema_version": "contexttrace-climate-fever-v9-manifest-1.0",
+  "selection_sha256": "01d69835b061ed647719acb4e91752f5d4d74d5707f22f8859a38d7eba2cfa80",
+  "source_sha256": "8a4b9032d861be482ffb49dddfd283ffa6089e654f1e968040011882c5eb6e0b",
+  "stable_defaults_changed": false,
+  "status": "frozen_before_model_scoring"
+}
