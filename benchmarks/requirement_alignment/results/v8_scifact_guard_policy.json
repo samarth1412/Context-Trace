@@ -1,0 +1,35 @@
+{
+  "decision_order": [
+    "Run v3 and v5 locally on the same selected evidence.",
+    "Accept supported only when both entailment probabilities meet local_supported_threshold and neither contradiction probability exceeds local_contradiction_veto_threshold.",
+    "Accept missing only when both entailment probabilities are at or below local_missing_threshold.",
+    "Under local_only, abstain on every remaining case without network access.",
+    "When remote use is explicitly enabled, route remaining cases to one Jev Choice judgment.",
+    "Accept routed support only when Jev selects supported and its supported probability meets jev_supported_probability.",
+    "Require review for every supported decision and every low-confidence Jev decision."
+  ],
+  "evaluation_split_accessed": false,
+  "experiment": "contexttrace_v8_contradiction_guard",
+  "policy": {
+    "always_review_supported": true,
+    "jev_supported_probability": 0.5,
+    "local_contradiction_veto_threshold": 0.04,
+    "local_missing_threshold": 0.7,
+    "local_supported_threshold": 0.875,
+    "review_confidence": 0.8
+  },
+  "policy_id": "81aa19260e97f04e15c2c3b75c1da86b6f093dead216a33cb521f221720d37cb",
+  "release_gates": {
+    "accuracy_at_least_v3_threshold_0_90": true,
+    "false_positive_rate_maximum": 0.05,
+    "local_automatic_false_positive_rate_maximum": 0.05,
+    "positive_recall_at_least_v3_threshold_0_90": true,
+    "positive_recall_minimum": 0.5,
+    "remote_call_rate_maximum": 0.3,
+    "zero_contradiction_false_support": true
+  },
+  "remote_provider_default_enabled": false,
+  "schema_version": "contexttrace-scifact-v8-guard-policy-1.0",
+  "selection_split": "scifact_development",
+  "stable_defaults_changed": false
+}

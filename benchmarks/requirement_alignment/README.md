@@ -352,3 +352,40 @@ PYTHONPATH=packages/contexttrace:. .venv/bin/python \
 
 `V7_SCIFACT_RESULTS.md` records the positive cross-domain improvement, failed
 promotion gate, privacy audit, and next research decision.
+
+## V8: contradiction-aware guard
+
+V8 calibrates a deterministic contradiction veto only on the frozen SciFact
+development split. Jev is run on every development case so routing thresholds
+can be compared against the same semantic judgments. The SciFact evaluation
+split is excluded from selection.
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.v8_guard score-local \
+  --dataset benchmarks/requirement_alignment/v7_scifact_development.json \
+  --v3-model-path .tmp-contexttrace-models/contexttrace-requirement-alignment-v3 \
+  --v3-manifest benchmarks/requirement_alignment/results/model_v3_manifest.json \
+  --v5-model-path .tmp-contexttrace-models/contexttrace-requirement-alignment-v5 \
+  --v5-manifest benchmarks/requirement_alignment/results/model_v5_manifest.json \
+  --output benchmarks/requirement_alignment/results/v8_scifact_development_local_scores.json
+
+CONTEXTTRACE_LOCAL_ONLY=false PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.v8_guard run-jev \
+  --dataset benchmarks/requirement_alignment/v7_scifact_development.json \
+  --local-scores benchmarks/requirement_alignment/results/v8_scifact_development_local_scores.json \
+  --output benchmarks/requirement_alignment/results/v8_scifact_development_jev.json \
+  --model jev-latest --env-file .env --allow-remote
+
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.v8_guard calibrate \
+  --dataset benchmarks/requirement_alignment/v7_scifact_development.json \
+  --local-scores benchmarks/requirement_alignment/results/v8_scifact_development_local_scores.json \
+  --jev-result benchmarks/requirement_alignment/results/v8_scifact_development_jev.json \
+  --policy-output benchmarks/requirement_alignment/results/v8_scifact_guard_policy.json \
+  --analysis-output benchmarks/requirement_alignment/results/v8_scifact_guard_calibration.json
+```
+
+`V8_GUARD_RESULTS.md` reports the development selection and the explicitly
+post-hoc regression check on the consumed V7 evaluation. The guard passes its
+quality gates but misses its remote-call target, so it is not promoted.

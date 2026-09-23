@@ -1,0 +1,269 @@
+{
+  "baselines": {
+    "v3_threshold_0_90": {
+      "accuracy": 0.6556,
+      "cases": 180,
+      "confusion": {
+        "negative": {
+          "negative": 108,
+          "positive": 12
+        },
+        "positive": {
+          "negative": 50,
+          "positive": 10
+        }
+      },
+      "false_positive_rate": 0.1,
+      "macro_f1": 0.5104,
+      "negative_recall": 0.9,
+      "positive_recall": 0.1667,
+      "threshold": 0.9
+    },
+    "v5_threshold_0_90": {
+      "accuracy": 0.7389,
+      "cases": 180,
+      "confusion": {
+        "negative": {
+          "negative": 114,
+          "positive": 6
+        },
+        "positive": {
+          "negative": 41,
+          "positive": 19
+        }
+      },
+      "false_positive_rate": 0.05,
+      "macro_f1": 0.6381,
+      "negative_recall": 0.95,
+      "positive_recall": 0.3167,
+      "threshold": 0.9
+    }
+  },
+  "comparison_to_v7": {
+    "eliminated_false_support_case_ids": [
+      "scifact_dev_1359_contradiction",
+      "scifact_dev_238_notmentioned",
+      "scifact_dev_354_notmentioned",
+      "scifact_dev_903_contradiction"
+    ],
+    "introduced_false_support_case_ids": [],
+    "v7_false_support_case_ids": [
+      "scifact_dev_1359_contradiction",
+      "scifact_dev_238_notmentioned",
+      "scifact_dev_354_notmentioned",
+      "scifact_dev_411_notmentioned",
+      "scifact_dev_903_contradiction"
+    ],
+    "v8_false_support_case_ids": [
+      "scifact_dev_411_notmentioned"
+    ]
+  },
+  "dataset_sha256": "764025d89a133cce54b037adeb03c89eb99ee363ee419a28e8c1f43fa210a934",
+  "diagnostic_gates": {
+    "accuracy_at_least_v3": true,
+    "all_release_gates_met": false,
+    "false_positive_rate_at_most_0_05": true,
+    "local_false_positive_rate_at_most_0_05": true,
+    "local_zero_contradiction_false_support": true,
+    "positive_recall_at_least_0_50": false,
+    "positive_recall_at_least_v3": true,
+    "quality_gates_met": false,
+    "remote_call_rate_at_most_0_30": false,
+    "zero_contradiction_false_support": true
+  },
+  "eligible_as_fresh_release_evidence": false,
+  "evaluation_previously_consumed_by_v7": true,
+  "evaluation_used_for_selection": false,
+  "experiment": "contexttrace_v8_contradiction_guard",
+  "jev_result_sha256": "f7bc4dc545d520ff1402598c487868dc17b19ad48f2213bba88254e98ef7d880",
+  "local_only": {
+    "metrics": {
+      "abstentions": 95,
+      "automatic_accuracy": 0.8588,
+      "automatic_cases": 85,
+      "automatic_coverage": 0.4722,
+      "automatic_false_positive_rate": 0.0145,
+      "automatic_false_support_case_ids": [
+        "scifact_dev_411_notmentioned"
+      ],
+      "automatic_false_support_count": 1,
+      "cases": 180,
+      "contradiction_false_support_case_ids": [],
+      "contradiction_false_support_count": 0
+    },
+    "network_calls": 0,
+    "privacy_behavior": "uncertain cases abstain without remote inference"
+  },
+  "local_only_network_calls": 0,
+  "local_scores_sha256": "fe3434a5834e0559d34c999db801956410e762d459224c1d4cd419cbef3078f2",
+  "optional_jev": {
+    "metrics": {
+      "accuracy": 0.7778,
+      "cases": 180,
+      "confusion": {
+        "negative": {
+          "negative": 119,
+          "positive": 1
+        },
+        "positive": {
+          "negative": 39,
+          "positive": 21
+        }
+      },
+      "false_positive_rate": 0.0083,
+      "false_support_case_ids": [
+        "scifact_dev_411_notmentioned"
+      ],
+      "macro_f1": 0.6842,
+      "negative_recall": 0.9917,
+      "positive_recall": 0.35,
+      "relation_breakdown": {
+        "Contradiction": {
+          "accuracy": 1.0,
+          "cases": 60,
+          "predicted_supported": 0
+        },
+        "Entailment": {
+          "accuracy": 0.35,
+          "cases": 60,
+          "predicted_supported": 21
+        },
+        "NotMentioned": {
+          "accuracy": 0.9833,
+          "cases": 60,
+          "predicted_supported": 1
+        }
+      }
+    },
+    "operations": {
+      "automatic_accuracy": 0.839,
+      "automatic_coverage": 0.6556,
+      "automatic_false_support_case_ids": [],
+      "automatic_false_support_count": 0,
+      "jev_latency_ms": {
+        "mean": 303.807,
+        "p95": 588.627,
+        "total": 28861.619
+      },
+      "remote_call_rate": 0.5278,
+      "remote_calls": 95,
+      "routed_case_ids": [
+        "scifact_dev_1014_notmentioned",
+        "scifact_dev_1021_contradiction",
+        "scifact_dev_1024_entailment",
+        "scifact_dev_1029_contradiction",
+        "scifact_dev_1062_entailment",
+        "scifact_dev_1088_contradiction",
+        "scifact_dev_1107_entailment",
+        "scifact_dev_1132_entailment",
+        "scifact_dev_1137_contradiction",
+        "scifact_dev_113_entailment",
+        "scifact_dev_1144_contradiction",
+        "scifact_dev_1146_entailment",
+        "scifact_dev_1150_entailment",
+        "scifact_dev_115_contradiction",
+        "scifact_dev_1163_entailment",
+        "scifact_dev_1196_notmentioned",
+        "scifact_dev_1197_notmentioned",
+        "scifact_dev_1202_entailment",
+        "scifact_dev_1221_contradiction",
+        "scifact_dev_1232_contradiction",
+        "scifact_dev_124_entailment",
+        "scifact_dev_127_notmentioned",
+        "scifact_dev_1290_entailment",
+        "scifact_dev_1298_entailment",
+        "scifact_dev_1303_contradiction",
+        "scifact_dev_130_entailment",
+        "scifact_dev_1319_entailment",
+        "scifact_dev_1335_entailment",
+        "scifact_dev_1336_contradiction",
+        "scifact_dev_1337_entailment",
+        "scifact_dev_1339_contradiction",
+        "scifact_dev_1344_notmentioned",
+        "scifact_dev_1359_contradiction",
+        "scifact_dev_1379_entailment",
+        "scifact_dev_1382_contradiction",
+        "scifact_dev_141_entailment",
+        "scifact_dev_142_contradiction",
+        "scifact_dev_143_entailment",
+        "scifact_dev_146_entailment",
+        "scifact_dev_148_entailment",
+        "scifact_dev_171_contradiction",
+        "scifact_dev_183_contradiction",
+        "scifact_dev_212_contradiction",
+        "scifact_dev_217_entailment",
+        "scifact_dev_233_contradiction",
+        "scifact_dev_237_notmentioned",
+        "scifact_dev_238_notmentioned",
+        "scifact_dev_239_entailment",
+        "scifact_dev_249_contradiction",
+        "scifact_dev_274_contradiction",
+        "scifact_dev_354_notmentioned",
+        "scifact_dev_385_entailment",
+        "scifact_dev_415_entailment",
+        "scifact_dev_452_contradiction",
+        "scifact_dev_475_entailment",
+        "scifact_dev_478_notmentioned",
+        "scifact_dev_491_notmentioned",
+        "scifact_dev_49_entailment",
+        "scifact_dev_507_notmentioned",
+        "scifact_dev_527_notmentioned",
+        "scifact_dev_532_contradiction",
+        "scifact_dev_536_entailment",
+        "scifact_dev_544_notmentioned",
+        "scifact_dev_54_contradiction",
+        "scifact_dev_56_entailment",
+        "scifact_dev_57_contradiction",
+        "scifact_dev_5_entailment",
+        "scifact_dev_613_entailment",
+        "scifact_dev_619_contradiction",
+        "scifact_dev_636_entailment",
+        "scifact_dev_641_entailment",
+        "scifact_dev_684_notmentioned",
+        "scifact_dev_692_contradiction",
+        "scifact_dev_693_entailment",
+        "scifact_dev_728_contradiction",
+        "scifact_dev_729_entailment",
+        "scifact_dev_756_entailment",
+        "scifact_dev_759_contradiction",
+        "scifact_dev_800_notmentioned",
+        "scifact_dev_805_entailment",
+        "scifact_dev_823_entailment",
+        "scifact_dev_839_entailment",
+        "scifact_dev_845_entailment",
+        "scifact_dev_879_contradiction",
+        "scifact_dev_882_contradiction",
+        "scifact_dev_903_contradiction",
+        "scifact_dev_911_entailment",
+        "scifact_dev_913_notmentioned",
+        "scifact_dev_921_entailment",
+        "scifact_dev_922_contradiction",
+        "scifact_dev_94_notmentioned",
+        "scifact_dev_982_entailment",
+        "scifact_dev_985_entailment",
+        "scifact_dev_993_contradiction",
+        "scifact_dev_99_notmentioned"
+      ],
+      "tokens": {
+        "input": 59337,
+        "output": 6070,
+        "total": 65407
+      }
+    }
+  },
+  "policy": {
+    "always_review_supported": true,
+    "jev_supported_probability": 0.5,
+    "local_contradiction_veto_threshold": 0.04,
+    "local_missing_threshold": 0.7,
+    "local_supported_threshold": 0.875,
+    "review_confidence": 0.8
+  },
+  "policy_id": "81aa19260e97f04e15c2c3b75c1da86b6f093dead216a33cb521f221720d37cb",
+  "policy_selection_split": "scifact_development",
+  "policy_sha256": "f2ba0c44c8c16dbd1f9ab4c25d6cf49cd1a362ccdf5cf527c7b63631f4e2c573",
+  "remote_provider_default_enabled": false,
+  "schema_version": "contexttrace-scifact-v8-posthoc-evaluation-1.0",
+  "split": "scifact_evaluation",
+  "stable_defaults_changed": false
+}
