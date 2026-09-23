@@ -1,0 +1,14 @@
+{
+  "audit_sha256": "4d8cb01bbc879ed2322fa2738473ecfef37b854c5a2bc1fef9e8746a3a4bba24",
+  "development_sha256": "6db2f9e38bcd26a7bdff3d5822bf8889d20d3e4a4bd597097ab72caa404002e9",
+  "evaluation_sha256": "96435370b2beafc6b5c14b124090cd2836f27fb5ed708553788ec4be949f77d9",
+  "evaluation_used_for_selection": false,
+  "experiment": "contexttrace_v7_scifact_transfer",
+  "frozen_v6_policy": "benchmarks/requirement_alignment/results/v6_cascade_policy.json",
+  "policy_selection_uses_scifact": false,
+  "remote_provider_default_enabled": false,
+  "schema_version": "contexttrace-scifact-v7-manifest-1.0",
+  "source_archive_sha256": "11c621288d41ac144d29b13b0f8503b3820b7d6e8b1f6ff24dff335c196d76be",
+  "stable_defaults_changed": false,
+  "status": "frozen_before_model_scoring"
+}

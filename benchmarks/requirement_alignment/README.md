@@ -296,3 +296,59 @@ PYTHONPATH=packages/contexttrace:. .venv/bin/python \
 
 `V6_CASCADE_RESULTS.md` records the safe abstention result, optional Jev cost,
 failed non-regression gate, and decision not to change stable behavior.
+
+## V7: cross-domain SciFact transfer
+
+V7 transfers the frozen V6 policy to the official SciFact scientific
+claim-verification dataset without using SciFact for training, prompt selection,
+threshold selection, or routing-policy selection. Download the official archive,
+then freeze the development and evaluation packs before model scoring:
+
+```bash
+curl -L --fail --show-error \
+  --output /private/tmp/contexttrace_external_data/scifact/data.tar.gz \
+  https://scifact.s3-us-west-2.amazonaws.com/release/latest/data.tar.gz
+tar -xzf /private/tmp/contexttrace_external_data/scifact/data.tar.gz \
+  -C /private/tmp/contexttrace_external_data/scifact
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.build_v7_scifact \
+  --source-dir /private/tmp/contexttrace_external_data/scifact/data \
+  --source-archive /private/tmp/contexttrace_external_data/scifact/data.tar.gz \
+  --development-output benchmarks/requirement_alignment/v7_scifact_development.json \
+  --evaluation-output benchmarks/requirement_alignment/v7_scifact_evaluation.json \
+  --audit-output benchmarks/requirement_alignment/v7_scifact_audit.json \
+  --manifest-output benchmarks/requirement_alignment/v7_scifact_manifest.json
+```
+
+Score the frozen evaluation with the local artifacts, then run the optional Jev
+route only with explicit remote opt-in:
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.v7_scifact score-local \
+  --dataset benchmarks/requirement_alignment/v7_scifact_evaluation.json \
+  --v3-model-path .tmp-contexttrace-models/contexttrace-requirement-alignment-v3 \
+  --v3-manifest benchmarks/requirement_alignment/results/model_v3_manifest.json \
+  --v5-model-path .tmp-contexttrace-models/contexttrace-requirement-alignment-v5 \
+  --v5-manifest benchmarks/requirement_alignment/results/model_v5_manifest.json \
+  --output benchmarks/requirement_alignment/results/v7_scifact_evaluation_local_scores.json
+
+CONTEXTTRACE_LOCAL_ONLY=false PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.v7_scifact run-jev \
+  --dataset benchmarks/requirement_alignment/v7_scifact_evaluation.json \
+  --local-scores benchmarks/requirement_alignment/results/v7_scifact_evaluation_local_scores.json \
+  --policy benchmarks/requirement_alignment/results/v6_cascade_policy.json \
+  --output benchmarks/requirement_alignment/results/v7_scifact_evaluation_jev.json \
+  --model jev-latest --env-file .env --allow-remote
+
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.v7_scifact evaluate \
+  --dataset benchmarks/requirement_alignment/v7_scifact_evaluation.json \
+  --local-scores benchmarks/requirement_alignment/results/v7_scifact_evaluation_local_scores.json \
+  --jev-result benchmarks/requirement_alignment/results/v7_scifact_evaluation_jev.json \
+  --policy benchmarks/requirement_alignment/results/v6_cascade_policy.json \
+  --output benchmarks/requirement_alignment/results/v7_scifact_evaluation.json
+```
+
+`V7_SCIFACT_RESULTS.md` records the positive cross-domain improvement, failed
+promotion gate, privacy audit, and next research decision.

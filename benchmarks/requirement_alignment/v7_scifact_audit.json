@@ -1,0 +1,72 @@
+{
+  "checks": {
+    "case_ids_disjoint": true,
+    "claim_ids_disjoint": true,
+    "development_uses_upstream_train_only": true,
+    "evaluation_uses_upstream_dev_only": true,
+    "labels_absent_from_inputs": true,
+    "synthetic_labels_used": false
+  },
+  "development": {
+    "cases": 270,
+    "evidence_sentences": 469,
+    "relations": {
+      "Contradiction": 90,
+      "Entailment": 90,
+      "NotMentioned": 90
+    },
+    "unique_claims": 270,
+    "unique_documents": 220
+  },
+  "evaluation": {
+    "cases": 180,
+    "evidence_sentences": 313,
+    "relations": {
+      "Contradiction": 60,
+      "Entailment": 60,
+      "NotMentioned": 60
+    },
+    "unique_claims": 180,
+    "unique_documents": 160
+  },
+  "experiment": "contexttrace_v7_scifact_transfer",
+  "limitations": [
+    "SciFact's public dev split is used as evaluation because public test labels are unavailable.",
+    "The task covers support, contradiction, and no-evidence cases; it does not provide partial-support or ambiguity labels.",
+    "Gold rationale sentences isolate verification quality from retrieval quality.",
+    "No-evidence cases use deterministic high-overlap sentence selection from cited abstracts with no annotated evidence."
+  ],
+  "schema_version": "contexttrace-scifact-v7-audit-1.0",
+  "selection": {
+    "algorithm": "sha256_order_v1",
+    "development_per_relation": 90,
+    "evaluation_per_relation": 60,
+    "label_balancing_only": true,
+    "model_outputs_used": false,
+    "seed_material": "contexttrace-scifact-v7|source_split|relation|claim_id"
+  },
+  "source": {
+    "archive_sha256": "11c621288d41ac144d29b13b0f8503b3820b7d6e8b1f6ff24dff335c196d76be",
+    "dataset": "SciFact",
+    "download_url": "https://scifact.s3-us-west-2.amazonaws.com/release/latest/data.tar.gz",
+    "files": {
+      "corpus": {
+        "path": "corpus.jsonl",
+        "sha256": "b8d6c89624cb2ed74dee8938effc4f5d8bd2086887880af8110d64be4ceade62"
+      },
+      "dev": {
+        "path": "claims_dev.jsonl",
+        "sha256": "86f0435d08fdb65d1aa41d1472684f57e6e71930626497bdf4d7a9ec1a632217"
+      },
+      "train": {
+        "path": "claims_train.jsonl",
+        "sha256": "f4c8fa82d8bd0653a9cc8d61a6ea48c25eacea64e90af5dbf390ebb1b74372f0"
+      }
+    },
+    "licenses": {
+      "abstracts": "ODC-By 1.0",
+      "claims_and_annotations": "CC BY 4.0"
+    },
+    "upstream_repository": "https://github.com/allenai/scifact"
+  }
+}
