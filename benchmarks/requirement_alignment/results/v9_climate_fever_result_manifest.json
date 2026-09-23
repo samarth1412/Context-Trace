@@ -1,0 +1,40 @@
+{
+  "aggregate_result": {
+    "committed": true,
+    "file": "results/v9_climate_fever_holdout.json",
+    "sha256": "c6ee67ec4f4f268695cabe6ec635add8ddc3a51e71cc4b7c69a37a203b46537f"
+  },
+  "dataset_sha256": "d582c53e6a87d800e3bf293c3d597e7e11ee0fb5dff0a79f31be5e2395e26858",
+  "evaluation_used_for_policy_selection": false,
+  "experiment": "contexttrace_v9_climate_fever_confirmation",
+  "external_artifacts": {
+    "auxiliary_scores": {
+      "committed": false,
+      "file": "v9_auxiliary_scores.json",
+      "sha256": "6695bc49fa9626034bde0772f05402da39f8c56b825118e8f087ce331c7c93f9"
+    },
+    "jev": {
+      "committed": false,
+      "file": "v9_jev.json",
+      "sha256": "a9b5073e66559a7ee17276e94e1932982cf49d6adb59cdf3cb8f21956b02c88c"
+    },
+    "local_scores": {
+      "committed": false,
+      "file": "v9_local_scores.json",
+      "sha256": "947a1ecc8725e710d939611732d1c1cb7b118a54f2bfb863c6f5d434f24dc0b6"
+    },
+    "routes": {
+      "committed": false,
+      "file": "v9_routes.json",
+      "sha256": "ec9c7ee2bbfac77bb9d7f520144b615c2a891e0879cd1c730fed64291f815b91"
+    }
+  },
+  "holdout_consumed": true,
+  "policy_id": "718b3e848ea6998387400b88f6851bb751e4dba638010a4b19724c8fe0f475c6",
+  "release_gates_met": false,
+  "remote_provider_default_enabled": false,
+  "schema_version": "contexttrace-v9-climate-fever-result-manifest-1.0",
+  "source_text_committed": false,
+  "stable_defaults_changed": false,
+  "status": "evaluated_once_release_gates_failed"
+}

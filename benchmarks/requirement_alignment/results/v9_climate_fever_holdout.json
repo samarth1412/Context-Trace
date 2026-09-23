@@ -1,0 +1,212 @@
+{
+  "all_cases_operations": {
+    "cases": 240,
+    "latency_ms": {
+      "mean": 240.762,
+      "p95": 351.795,
+      "total": 4092.95
+    },
+    "remote_call_rate": 0.0708,
+    "remote_calls": 17,
+    "resolved_models": {
+      "jev-1.13.0": 17
+    },
+    "tokens": {
+      "input": 13798,
+      "output": 1078,
+      "total": 14876
+    }
+  },
+  "dataset_sha256": "d582c53e6a87d800e3bf293c3d597e7e11ee0fb5dff0a79f31be5e2395e26858",
+  "diagnostics": {
+    "jev_by_relation": {
+      "Contradiction": {
+        "accepted_supported": 0,
+        "calls": 1,
+        "confidence_below_review_threshold": 1,
+        "verdict_counts": {
+          "contradicted": 1
+        }
+      },
+      "Disputed": {
+        "accepted_supported": 2,
+        "calls": 5,
+        "confidence_below_review_threshold": 5,
+        "verdict_counts": {
+          "contradicted": 2,
+          "supported": 2,
+          "unsupported": 1
+        }
+      },
+      "Entailment": {
+        "accepted_supported": 5,
+        "calls": 10,
+        "confidence_below_review_threshold": 7,
+        "verdict_counts": {
+          "partially_supported": 5,
+          "supported": 5
+        }
+      },
+      "NotMentioned": {
+        "accepted_supported": 0,
+        "calls": 1,
+        "confidence_below_review_threshold": 1,
+        "verdict_counts": {
+          "supported": 1
+        }
+      }
+    },
+    "routing_by_relation": {
+      "Contradiction": {
+        "cases": 60,
+        "v8_base_routes": {
+          "missing": 51,
+          "route": 9
+        },
+        "v9_routes": {
+          "missing": 59,
+          "route": 1
+        }
+      },
+      "Disputed": {
+        "cases": 60,
+        "v8_base_routes": {
+          "missing": 51,
+          "route": 9
+        },
+        "v9_routes": {
+          "missing": 55,
+          "route": 5
+        }
+      },
+      "Entailment": {
+        "cases": 60,
+        "v8_base_routes": {
+          "missing": 39,
+          "route": 21
+        },
+        "v9_routes": {
+          "missing": 49,
+          "route": 10,
+          "supported": 1
+        }
+      },
+      "NotMentioned": {
+        "cases": 60,
+        "v8_base_routes": {
+          "missing": 56,
+          "route": 4
+        },
+        "v9_routes": {
+          "missing": 59,
+          "route": 1
+        }
+      }
+    },
+    "used_for_policy_selection": false
+  },
+  "disputed_challenge": {
+    "automatic_supported_case_ids": [],
+    "automatic_supported_count": 0,
+    "cases": 60,
+    "gates": {
+      "all_met": false,
+      "review_or_abstain_coverage": false,
+      "zero_automatic_supported": true
+    },
+    "remote_call_rate": 0.0833,
+    "remote_calls": 5,
+    "review_or_abstain_coverage": 0.0833,
+    "review_required": 5,
+    "verdict_counts": {
+      "missing": 58,
+      "supported": 2
+    }
+  },
+  "eligible_as_fresh_release_evidence": true,
+  "evaluation_used_for_selection": false,
+  "experiment": "contexttrace_v9_climate_fever_confirmation",
+  "jev_result_sha256": "a9b5073e66559a7ee17276e94e1932982cf49d6adb59cdf3cb8f21956b02c88c",
+  "local_only_network_calls": 0,
+  "policy_id": "718b3e848ea6998387400b88f6851bb751e4dba638010a4b19724c8fe0f475c6",
+  "primary_binary": {
+    "gates": {
+      "all_met": false,
+      "false_positive_rate": true,
+      "local_false_positive_rate": true,
+      "positive_recall": false,
+      "remote_call_rate": true,
+      "zero_contradiction_false_support": true
+    },
+    "local_only": {
+      "abstentions": 12,
+      "automatic_cases": 168,
+      "automatic_coverage": 0.9333,
+      "metrics": {
+        "accuracy": 0.7083,
+        "cases": 168,
+        "confusion": {
+          "missing": {
+            "missing": 118,
+            "supported": 0
+          },
+          "supported": {
+            "missing": 49,
+            "supported": 1
+          }
+        },
+        "false_positive_rate": 0.0,
+        "macro_f1": 0.4336,
+        "positive_recall": 0.02
+      },
+      "network_calls": 0
+    },
+    "metrics": {
+      "accuracy": 0.7,
+      "cases": 180,
+      "confusion": {
+        "missing": {
+          "missing": 120,
+          "supported": 0
+        },
+        "supported": {
+          "missing": 54,
+          "supported": 6
+        }
+      },
+      "contradiction_false_support_case_ids": [],
+      "contradiction_false_support_count": 0,
+      "false_positive_rate": 0.0,
+      "false_support_case_ids": [],
+      "macro_f1": 0.4991,
+      "positive_recall": 0.1,
+      "relation_breakdown": {
+        "Contradiction": {
+          "accuracy": 1.0,
+          "cases": 60,
+          "predicted_supported": 0
+        },
+        "Entailment": {
+          "accuracy": 0.1,
+          "cases": 60,
+          "predicted_supported": 6
+        },
+        "NotMentioned": {
+          "accuracy": 1.0,
+          "cases": 60,
+          "predicted_supported": 0
+        }
+      }
+    },
+    "operations": {
+      "remote_call_rate": 0.0667,
+      "remote_calls": 12
+    }
+  },
+  "release_gates_met": false,
+  "remote_provider_default_enabled": false,
+  "routes_sha256": "ec9c7ee2bbfac77bb9d7f520144b615c2a891e0879cd1c730fed64291f815b91",
+  "schema_version": "contexttrace-v9-climate-fever-evaluation-1.0",
+  "split": "climate_fever_evaluation",
+  "stable_defaults_changed": false
+}

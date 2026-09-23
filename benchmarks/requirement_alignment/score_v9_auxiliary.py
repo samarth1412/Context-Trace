@@ -33,6 +33,7 @@ class V9AuxiliaryScoringError(RuntimeError):
 def score_auxiliary(
     dataset_path: str | Path,
     *,
+    expected_split: str = SPLIT,
     v3_model_path: str | Path,
     v3_manifest_path: str | Path,
     v5_model_path: str | Path,
@@ -48,8 +49,10 @@ def score_auxiliary(
     source = Path(dataset_path)
     payload = json.loads(source.read_text(encoding="utf-8"))
     examples = list(payload.get("examples") or [])
-    if payload.get("split") != SPLIT or not examples:
-        raise V9AuxiliaryScoringError("Expected a non-empty SciFact development set.")
+    if payload.get("split") != expected_split or not examples:
+        raise V9AuxiliaryScoringError(
+            "Expected a non-empty dataset matching the requested split."
+        )
     if any(
         any(key in row["input"] for key in ("label", "target", "relation"))
         for row in examples
@@ -103,7 +106,7 @@ def score_auxiliary(
     return {
         "schema_version": "contexttrace-v9-auxiliary-scores-1.0",
         "experiment": "contexttrace_v9_local_meta_router",
-        "split": SPLIT,
+        "split": expected_split,
         "dataset_sha256": _sha256_file(source),
         "cases": len(rows),
         "evaluation_split_accessed": False,
@@ -300,6 +303,7 @@ def _sha256_json(value: object) -> str:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dataset", required=True)
+    parser.add_argument("--split", default=SPLIT)
     parser.add_argument("--v3-model-path", required=True)
     parser.add_argument("--v3-manifest", required=True)
     parser.add_argument("--v5-model-path", required=True)
@@ -310,6 +314,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     result = score_auxiliary(
         args.dataset,
+        expected_split=args.split,
         v3_model_path=args.v3_model_path,
         v3_manifest_path=args.v3_manifest,
         v5_model_path=args.v5_model_path,

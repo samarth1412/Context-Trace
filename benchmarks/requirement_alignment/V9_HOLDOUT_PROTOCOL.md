@@ -2,7 +2,8 @@
 
 ## Status
 
-The V9 holdout was frozen before any local or remote model scoring. It contains
+The V9 holdout was frozen before any local or remote model scoring and has now
+been evaluated once by the frozen V9 candidate. It contains
 240 real-world climate claims sampled deterministically from the official
 Climate-FEVER release: 60 `SUPPORTS`, 60 `REFUTES`, 60 `NOT_ENOUGH_INFO`, and 60
 `DISPUTED` claims. Every case retains all five upstream retrieved and
@@ -13,6 +14,9 @@ The frozen evaluation SHA-256 is
 No threshold, prompt, route, or model was selected using this holdout. The V9
 candidate was subsequently frozen from SciFact development with policy ID
 `718b3e848ea6998387400b88f6851bb751e4dba638010a4b19724c8fe0f475c6`.
+The candidate failed support-recall and disputed-review gates; the complete
+aggregate result is recorded in `V9_HOLDOUT_RESULTS.md`. This holdout is now
+consumed and cannot be used to tune a replacement candidate.
 
 ## Why Climate-FEVER
 
@@ -90,3 +94,7 @@ PYTHONPATH=packages/contexttrace:. .venv/bin/python \
   --audit-output benchmarks/requirement_alignment/v9_climate_fever_audit.json \
   --manifest-output benchmarks/requirement_alignment/v9_climate_fever_manifest.json
 ```
+
+The scored dataset, local probabilities, routing rows, and Jev rows remain in
+external storage because they contain or directly join to source text. The
+repository commits only aggregate results and cryptographic receipts.

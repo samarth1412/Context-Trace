@@ -441,7 +441,44 @@ PYTHONPATH=packages/contexttrace:. .venv/bin/python \
   --selection-output benchmarks/requirement_alignment/v9_climate_fever_selection.json \
   --audit-output benchmarks/requirement_alignment/v9_climate_fever_audit.json \
   --manifest-output benchmarks/requirement_alignment/v9_climate_fever_manifest.json
+
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.v9_holdout score-local \
+  --dataset /private/tmp/contexttrace_external_data/climate_fever/v9_climate_fever_evaluation.json \
+  --v3-model-path .tmp-contexttrace-models/contexttrace-requirement-alignment-v3 \
+  --v3-manifest benchmarks/requirement_alignment/results/model_v3_manifest.json \
+  --v5-model-path .tmp-contexttrace-models/contexttrace-requirement-alignment-v5 \
+  --v5-manifest benchmarks/requirement_alignment/results/model_v5_manifest.json \
+  --pinned-nli-path .tmp-contexttrace-models/cross-encoder--nli-deberta-v3-small--fa280487 \
+  --local-output /private/tmp/contexttrace_external_data/climate_fever/v9_local_scores.json \
+  --auxiliary-output /private/tmp/contexttrace_external_data/climate_fever/v9_auxiliary_scores.json
+
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.v9_holdout route \
+  --dataset /private/tmp/contexttrace_external_data/climate_fever/v9_climate_fever_evaluation.json \
+  --local-scores /private/tmp/contexttrace_external_data/climate_fever/v9_local_scores.json \
+  --auxiliary-scores /private/tmp/contexttrace_external_data/climate_fever/v9_auxiliary_scores.json \
+  --v8-policy benchmarks/requirement_alignment/results/v8_scifact_guard_policy.json \
+  --v9-policy benchmarks/requirement_alignment/results/v9_scifact_router_policy.json \
+  --output /private/tmp/contexttrace_external_data/climate_fever/v9_routes.json
+
+CONTEXTTRACE_LOCAL_ONLY=false PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.v9_holdout run-jev \
+  --dataset /private/tmp/contexttrace_external_data/climate_fever/v9_climate_fever_evaluation.json \
+  --routes /private/tmp/contexttrace_external_data/climate_fever/v9_routes.json \
+  --output /private/tmp/contexttrace_external_data/climate_fever/v9_jev.json \
+  --model jev-latest --env-file .env --allow-remote
+
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.v9_holdout evaluate \
+  --dataset /private/tmp/contexttrace_external_data/climate_fever/v9_climate_fever_evaluation.json \
+  --routes /private/tmp/contexttrace_external_data/climate_fever/v9_routes.json \
+  --jev-result /private/tmp/contexttrace_external_data/climate_fever/v9_jev.json \
+  --output benchmarks/requirement_alignment/results/v9_climate_fever_holdout.json
 ```
 
 `V9_HOLDOUT_PROTOCOL.md` defines the frozen label mapping, binary release gates,
 disputed-evidence challenge, leakage controls, and redistribution boundary.
+`V9_HOLDOUT_RESULTS.md` records the one-time negative confirmation result. The
+candidate preserved false-support safety but failed support-recall and
+disputed-review gates, so it is not eligible for release.
