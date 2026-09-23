@@ -1,0 +1,40 @@
+{
+  "bytes": 746064118,
+  "files": [
+    {
+      "bytes": 1095,
+      "path": "config.json",
+      "sha256": "66aba8079597b140c4d5e8911ef9a6853eb72d9a9b17ae87f78a95c9c4e95805"
+    },
+    {
+      "bytes": 737722356,
+      "path": "model.safetensors",
+      "sha256": "756b68df71b5c338e92b9608fa028fde364f959fd083f5841d57e008c66cd96f"
+    },
+    {
+      "bytes": 8340137,
+      "path": "tokenizer.json",
+      "sha256": "5496b1075a43e39404f7a7525b83d5ae56b1990ce5254e797e659149e1004e09"
+    },
+    {
+      "bytes": 530,
+      "path": "tokenizer_config.json",
+      "sha256": "102b490a695c615cb6540a8301823fd13257edb144d0b36d88f766f77349f512"
+    }
+  ],
+  "model_id": "7e655679c82637cb2f125c72e7812ab0ca47240295af247538940488a6c0a38f",
+  "promotion_gates_met": false,
+  "relation_ids": {
+    "contradiction": 2,
+    "entailment": 0,
+    "neutral": 1
+  },
+  "runtime_network_required": false,
+  "schema_version": "contexttrace-requirement-alignment-model-manifest-v5-1.0",
+  "selected_epoch": 2,
+  "selected_threshold": 0.9,
+  "source_license": "mit",
+  "source_repository": "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli",
+  "source_revision": "6f5cf0a2b59cabb106aca4c287eed12e357e90eb",
+  "stable_defaults_changed": false
+}
