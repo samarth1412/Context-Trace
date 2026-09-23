@@ -390,6 +390,37 @@ PYTHONPATH=packages/contexttrace:. .venv/bin/python \
 post-hoc regression check on the consumed V7 evaluation. The guard passes its
 quality gates but misses its remote-call target, so it is not promoted.
 
+## V9: local meta-router candidate
+
+Before touching the frozen holdout, V9 uses only SciFact development to add the
+already pinned local NLI model and a document-grouped out-of-fold router. Score
+the auxiliary group and sentence inputs entirely offline:
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.score_v9_auxiliary \
+  --dataset benchmarks/requirement_alignment/v7_scifact_development.json \
+  --v3-model-path .tmp-contexttrace-models/contexttrace-requirement-alignment-v3 \
+  --v3-manifest benchmarks/requirement_alignment/results/model_v3_manifest.json \
+  --v5-model-path .tmp-contexttrace-models/contexttrace-requirement-alignment-v5 \
+  --v5-manifest benchmarks/requirement_alignment/results/model_v5_manifest.json \
+  --pinned-nli-path .tmp-contexttrace-models/cross-encoder--nli-deberta-v3-small--fa280487 \
+  --output benchmarks/requirement_alignment/results/v9_scifact_development_auxiliary_scores.json
+
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.v9_router \
+  --dataset benchmarks/requirement_alignment/v7_scifact_development.json \
+  --local-scores benchmarks/requirement_alignment/results/v8_scifact_development_local_scores.json \
+  --auxiliary-scores benchmarks/requirement_alignment/results/v9_scifact_development_auxiliary_scores.json \
+  --jev-result benchmarks/requirement_alignment/results/v8_scifact_development_jev.json \
+  --v8-policy benchmarks/requirement_alignment/results/v8_scifact_guard_policy.json \
+  --policy-output benchmarks/requirement_alignment/results/v9_scifact_router_policy.json \
+  --analysis-output benchmarks/requirement_alignment/results/v9_scifact_router_calibration.json
+```
+
+`V9_ROUTER_RESULTS.md` records the positive development result and the decision
+to freeze this candidate before Climate-FEVER scoring.
+
 ## V9: frozen Climate-FEVER holdout
 
 V9 freezes 240 real-world Climate-FEVER cases before any model scoring: 60 each

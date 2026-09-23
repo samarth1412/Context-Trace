@@ -10,7 +10,9 @@ human-annotated evidence sentences.
 
 The frozen evaluation SHA-256 is
 `d582c53e6a87d800e3bf293c3d597e7e11ee0fb5dff0a79f31be5e2395e26858`.
-No V8 threshold, prompt, route, or model was selected using this holdout.
+No threshold, prompt, route, or model was selected using this holdout. The V9
+candidate was subsequently frozen from SciFact development with policy ID
+`718b3e848ea6998387400b88f6851bb751e4dba638010a4b19724c8fe0f475c6`.
 
 ## Why Climate-FEVER
 
@@ -40,8 +42,8 @@ played no part in selection.
 
 ## Evaluation contract
 
-The 180 non-disputed cases form the primary binary verification evaluation. V8
-must meet every existing release gate:
+The 180 non-disputed cases form the primary binary verification evaluation. The
+frozen V9 router candidate must meet every existing release gate:
 
 - support recall of at least 50%;
 - overall and local-only false-positive rates of at most 5%;
@@ -60,9 +62,9 @@ be relaxed from the observed results.
 - Local scoring uses only the claim and the same five rendered evidence texts.
 - Any Jev request may contain only the claim and those selected evidence items.
 - `local_only` continues to block all network calls.
-- The V8 policy remains frozen and stable defaults remain unchanged.
-- Results from this holdout may evaluate V8 once; they cannot be used to retune
-  V8 and still be described as held out.
+- The V9 router policy remains frozen and stable defaults remain unchanged.
+- Results from this holdout may evaluate the frozen candidate once; they cannot
+  be used to retune it and still be described as held out.
 
 ## Redistribution
 
