@@ -1,0 +1,3511 @@
+{
+  "cases": 90,
+  "contractnli_test_accessed": false,
+  "dataset_sha256": "dd2b6fcc25ed1d7515198c447c3790b864ee25f2641bc7099992c42fd0d88c9a",
+  "experiment": "contexttrace_v6_uncertainty_cascade",
+  "models": {
+    "v3": {
+      "artifact_verified": true,
+      "latency": {
+        "examples": 90,
+        "examples_per_second": 31.5157,
+        "seconds": 2.8557
+      },
+      "local_files_only": true,
+      "manifest_sha256": "b06dc719819032b915b31f370133cc98f610c1a3524a9da589b7591050d52c18",
+      "model_id": "98b6c1642c615b21d67527ca0b79ffa7a0385e003793c5db89de3d0d52846718",
+      "relation_ids": {
+        "contradiction": 0,
+        "entailment": 1,
+        "neutral": 2
+      }
+    },
+    "v5": {
+      "artifact_verified": true,
+      "latency": {
+        "examples": 90,
+        "examples_per_second": 15.929,
+        "seconds": 5.6501
+      },
+      "local_files_only": true,
+      "manifest_sha256": "4bb9bd5a7221702528bf89007da07dd924f0497b2f3719cd167a83f7ae68f4e0",
+      "model_id": "7e655679c82637cb2f125c72e7812ab0ca47240295af247538940488a6c0a38f",
+      "relation_ids": {
+        "contradiction": 2,
+        "entailment": 0,
+        "neutral": 1
+      }
+    }
+  },
+  "remote_inference_used": false,
+  "rows": [
+    {
+      "case_id": "contractnli_train_103_nda-19",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 136,
+            "id": "contractnli_train_103_s0020",
+            "sha256": "965aad8102aed834ae7cd62af54b48ab905da9b1df33e1407da9cd2c61c59b35"
+          }
+        ],
+        "state_sha256": "a3d158d98079385975ac4c80c6333fa6672ae944ace1df2e7255c44e430a37ca"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.7835619449615479,
+          "probabilities": {
+            "contradiction": 0.20402805507183075,
+            "entailment": 0.7835619449615479,
+            "neutral": 0.01241002231836319
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.8146219849586487,
+          "probabilities": {
+            "contradiction": 0.16986611485481262,
+            "entailment": 0.8146219849586487,
+            "neutral": 0.015511972829699516
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_108_nda-10",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 220,
+            "id": "contractnli_train_108_s0018",
+            "sha256": "74d879fb4a6aee93792d364c47568a8334f31525b1d90d9453d1b76aa90438bc"
+          }
+        ],
+        "state_sha256": "d715d3900d8b3d92b6dff1eea5ac2db111416c73d37178ad094e48ab5f52a0af"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.31679567694664,
+          "probabilities": {
+            "contradiction": 0.6810824275016785,
+            "entailment": 0.31679567694664,
+            "neutral": 0.00212197401560843
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.9346362352371216,
+          "probabilities": {
+            "contradiction": 0.05267339572310448,
+            "entailment": 0.9346362352371216,
+            "neutral": 0.012690277770161629
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_121_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 373,
+            "id": "contractnli_train_121_s0002",
+            "sha256": "c5101e17232a567e422cad7f1a5f96cff73ba7f31d0d0d93fcdbd0029bbf149f"
+          }
+        ],
+        "state_sha256": "d6ecba25ec36d15895f52910af38c94d330cdf7afd82018c2e05c74733e29042"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.005179648753255606,
+          "probabilities": {
+            "contradiction": 0.9945148229598999,
+            "entailment": 0.005179648753255606,
+            "neutral": 0.0003055358538404107
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.015325184911489487,
+          "probabilities": {
+            "contradiction": 0.98438960313797,
+            "entailment": 0.015325184911489487,
+            "neutral": 0.0002851994358934462
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_124_nda-8",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 236,
+            "id": "contractnli_train_124_s0007",
+            "sha256": "38e3d58a5d48115cece27064b290e88bb1e66f504e787f9343285418ea4e7467"
+          },
+          {
+            "characters": 80,
+            "id": "contractnli_train_124_s0011",
+            "sha256": "86bb0a608c7bdf939b894877f494a1af21f9587d9dde341edc4ecf95accaf1d7"
+          },
+          {
+            "characters": 325,
+            "id": "contractnli_train_124_s0022",
+            "sha256": "5b975583c131b3fccd1592beb38ea4087039aeb9a8570daf20a7fe5486584fd3"
+          }
+        ],
+        "state_sha256": "c83e5f4aced1b768b49804b3178e7964af0720f8e6f332bf91eafc60c6c80632"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.36184605956077576,
+          "probabilities": {
+            "contradiction": 0.05272024869918823,
+            "entailment": 0.36184605956077576,
+            "neutral": 0.5854337215423584
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.05352238938212395,
+          "probabilities": {
+            "contradiction": 0.026128273457288742,
+            "entailment": 0.05352238938212395,
+            "neutral": 0.9203492403030396
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_128_nda-17",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 229,
+            "id": "contractnli_train_128_s0079",
+            "sha256": "641703fddb2cafb1c7f536eb085e1367d927e35c95956f2a9f722bac04d5a8d8"
+          }
+        ],
+        "state_sha256": "fcc05c5700a60cc897fd3d85ac77bd3992eb75b5f5c26970636c89aacec0be02"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.24985499680042267,
+          "probabilities": {
+            "contradiction": 0.7491320371627808,
+            "entailment": 0.24985499680042267,
+            "neutral": 0.001012987457215786
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.6277564167976379,
+          "probabilities": {
+            "contradiction": 0.3706919550895691,
+            "entailment": 0.6277564167976379,
+            "neutral": 0.001551607041619718
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_147_nda-16",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 135,
+            "id": "contractnli_train_147_s0074",
+            "sha256": "044e2e2fc27353668853c7b106bf5ea9b955123348704499f9a91f934d57f87a"
+          },
+          {
+            "characters": 88,
+            "id": "contractnli_train_147_s0075",
+            "sha256": "9a601bb3ddad6f7339aeeed6588ccdfd921bcfc45220e43943ba72f632c8461b"
+          },
+          {
+            "characters": 9,
+            "id": "contractnli_train_147_s0076",
+            "sha256": "f8065cb626e1044b41bb8ee234db4806b8bab1aa17429b3939c19ffe2af4ddf2"
+          },
+          {
+            "characters": 116,
+            "id": "contractnli_train_147_s0077",
+            "sha256": "aa22e1dccf7987cfdacf2259ad617b17bfb28efdabecc5a0c490e8b2d5266f2c"
+          }
+        ],
+        "state_sha256": "844701a3f29bbac2ae849808f5be230821d1a08be9c8219131647b03fa6e77a5"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.08721084892749786,
+          "probabilities": {
+            "contradiction": 0.9105964303016663,
+            "entailment": 0.08721084892749786,
+            "neutral": 0.0021927065681666136
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.7414548397064209,
+          "probabilities": {
+            "contradiction": 0.1574573814868927,
+            "entailment": 0.7414548397064209,
+            "neutral": 0.10108771175146103
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_149_nda-20",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 288,
+            "id": "contractnli_train_149_s0027",
+            "sha256": "5dacf28dc043b6852b12457b95c49409ff0c6be9854a8526b8bcd3ea6fa7a68c"
+          }
+        ],
+        "state_sha256": "b631e02e164a09a6f9358db6297a018fca51cc7a2f2b008f74a1283c92333468"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.02235986478626728,
+          "probabilities": {
+            "contradiction": 0.9774002432823181,
+            "entailment": 0.02235986478626728,
+            "neutral": 0.00023996266827452928
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.3802124857902527,
+          "probabilities": {
+            "contradiction": 0.619065523147583,
+            "entailment": 0.3802124857902527,
+            "neutral": 0.0007219677790999413
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_151_nda-8",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 443,
+            "id": "contractnli_train_151_s0026",
+            "sha256": "1e4700d7431ec246e57f1be3e2e38ab0bdb3ea33be8731784afc882197a8e85a"
+          }
+        ],
+        "state_sha256": "b4229fdb1a9adb0fdbf0d72665a65d100ee521bee574f8bbc3f4894ad1f29348"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.9779232740402222,
+          "probabilities": {
+            "contradiction": 0.01044616848230362,
+            "entailment": 0.9779232740402222,
+            "neutral": 0.011630620807409286
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.9897614121437073,
+          "probabilities": {
+            "contradiction": 0.000893087824806571,
+            "entailment": 0.9897614121437073,
+            "neutral": 0.00934557057917118
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_154_nda-20",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 135,
+            "id": "contractnli_train_154_s0008",
+            "sha256": "062e485a6e2d76383a4d3f21eead2f3e9c7764522b22774c70f11ec0116a2cea"
+          },
+          {
+            "characters": 241,
+            "id": "contractnli_train_154_s0013",
+            "sha256": "3fa601fff9e42e750ebef75f7720e736aab59846038c101bc982b5235e96c936"
+          },
+          {
+            "characters": 103,
+            "id": "contractnli_train_154_s0016",
+            "sha256": "f11787010e108c520e281974190fb473e8330ada6f1580db73622726e2df3587"
+          }
+        ],
+        "state_sha256": "4b7dd0e226d0f769b22b6a5d227ec01078f44ab2bc61aabdc9db1db0afe53309"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.4275117516517639,
+          "probabilities": {
+            "contradiction": 0.5233328342437744,
+            "entailment": 0.4275117516517639,
+            "neutral": 0.04915544390678406
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.6840234398841858,
+          "probabilities": {
+            "contradiction": 0.12121792882680893,
+            "entailment": 0.6840234398841858,
+            "neutral": 0.1947585940361023
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_155_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 320,
+            "id": "contractnli_train_155_s0006",
+            "sha256": "d8145f39fa1ee9764ad024663958b2352559a8a4adaf276b02e5694658b07ce7"
+          }
+        ],
+        "state_sha256": "b9e57423d4baba51883ed7c615605ee28279746dfa18a1066c8b5b2fd4c9ca4a"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.005587970372289419,
+          "probabilities": {
+            "contradiction": 0.9941051006317139,
+            "entailment": 0.005587970372289419,
+            "neutral": 0.0003068993682973087
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.008521274663507938,
+          "probabilities": {
+            "contradiction": 0.9913429021835327,
+            "entailment": 0.008521274663507938,
+            "neutral": 0.00013583144755102694
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_164_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 315,
+            "id": "contractnli_train_164_s0012",
+            "sha256": "4a068ba48938c7bfd105e25e4533b3ed63129661f57652b1bbed7669cd263f3d"
+          },
+          {
+            "characters": 282,
+            "id": "contractnli_train_164_s0015",
+            "sha256": "c8897360c8a6965214d4705319971718fbbf70b1f7ee96efe2f608b7460de2ce"
+          },
+          {
+            "characters": 83,
+            "id": "contractnli_train_164_s0016",
+            "sha256": "e451d4dca6cdc16969c34fa08b248c0af318ba987dfeca86676e55934fc243f4"
+          },
+          {
+            "characters": 106,
+            "id": "contractnli_train_164_s0017",
+            "sha256": "a15c11482abc090f490e7c03e48aa23e991a5715bef921c88405687af77e9747"
+          }
+        ],
+        "state_sha256": "4d6a2c34143a90473f572a1a5383c7bcd6fdbb10fbfd8e68b9aab834ff1a2640"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.010493508540093899,
+          "probabilities": {
+            "contradiction": 0.9887104630470276,
+            "entailment": 0.010493508540093899,
+            "neutral": 0.0007959955837577581
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.0067670876160264015,
+          "probabilities": {
+            "contradiction": 0.9921973347663879,
+            "entailment": 0.0067670876160264015,
+            "neutral": 0.0010356083512306213
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_167_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 415,
+            "id": "contractnli_train_167_s0014",
+            "sha256": "91c0175360b1ec96a1007084be6379e0483e41c453dc43c59ce397ede4f3fd05"
+          }
+        ],
+        "state_sha256": "b46a34e864eea33db57d6b468bd9edae40016c57c51790faf323174d913c2d13"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.004025876987725496,
+          "probabilities": {
+            "contradiction": 0.9958517551422119,
+            "entailment": 0.004025876987725496,
+            "neutral": 0.0001224360166816041
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.00792981218546629,
+          "probabilities": {
+            "contradiction": 0.9919642210006714,
+            "entailment": 0.00792981218546629,
+            "neutral": 0.00010598102380754426
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_170_nda-7",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 309,
+            "id": "contractnli_train_170_s0038",
+            "sha256": "bcbb1b52073c2e9782a0e49f1cab9f51ee3987e86b046f497b7715e8896d5fc9"
+          },
+          {
+            "characters": 267,
+            "id": "contractnli_train_170_s0055",
+            "sha256": "3b4615bedd07c724f9e0c5d35be8fe95466c68a7109c6fe90acc5d76f6e61c98"
+          },
+          {
+            "characters": 217,
+            "id": "contractnli_train_170_s0091",
+            "sha256": "123adfe90aa972a8cb1706a5fa6ca45210fe0e122dbd4fce9e10158afcd805fe"
+          }
+        ],
+        "state_sha256": "f868f82dc519646edf4a7f0cf908e8b67b7dd6715f4cc7bc02d5bc60f817fd19"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.5241711735725403,
+          "probabilities": {
+            "contradiction": 0.40306663513183594,
+            "entailment": 0.5241711735725403,
+            "neutral": 0.07276216149330139
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.37001246213912964,
+          "probabilities": {
+            "contradiction": 0.026522278785705566,
+            "entailment": 0.37001246213912964,
+            "neutral": 0.6034652590751648
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_172_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 642,
+            "id": "contractnli_train_172_s0005",
+            "sha256": "f5c14a5347a026794d3cd69e634ccb8303e74ae97193f1a567731cb881b5876c"
+          }
+        ],
+        "state_sha256": "0ef61e6931e0a742e2ef6da6cf19778d660f6b1eed7fbb806acdcfed904bfbb0"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.01343206875026226,
+          "probabilities": {
+            "contradiction": 0.9861750602722168,
+            "entailment": 0.01343206875026226,
+            "neutral": 0.0003928817168343812
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.07683267444372177,
+          "probabilities": {
+            "contradiction": 0.9214178919792175,
+            "entailment": 0.07683267444372177,
+            "neutral": 0.0017494261264801025
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_194_nda-12",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 89,
+            "id": "contractnli_train_194_s0030",
+            "sha256": "5b48a0b26a1e6b66df0453fc7d9f434469aa7b6bc42745c207451d8036056486"
+          },
+          {
+            "characters": 51,
+            "id": "contractnli_train_194_s0034",
+            "sha256": "d6f76d71209512a38170da0d6d024ebaf6f65be8cfaa75d31d1cb347742c653e"
+          }
+        ],
+        "state_sha256": "a7474e25382a829d518f74b209e6f8ca74f41a409afaaf4bbb341ab93fed025d"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.9934455156326294,
+          "probabilities": {
+            "contradiction": 0.0020663579925894737,
+            "entailment": 0.9934455156326294,
+            "neutral": 0.004488222301006317
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.8985729217529297,
+          "probabilities": {
+            "contradiction": 0.005864224396646023,
+            "entailment": 0.8985729217529297,
+            "neutral": 0.09556284546852112
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_196_nda-11",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 201,
+            "id": "contractnli_train_196_s0039",
+            "sha256": "d25a7673b016c36572e48d3e4ae078eb511adb43d1bf7d5a989124263bb0f8b0"
+          },
+          {
+            "characters": 374,
+            "id": "contractnli_train_196_s0046",
+            "sha256": "676e98d5a6fc490e8c4e24d553c59422451d9f216b7ce5961c3e551d7ede2cb2"
+          },
+          {
+            "characters": 148,
+            "id": "contractnli_train_196_s0073",
+            "sha256": "a0a09716d2ad1dbfec45f52dbe76fd7a4b018dcaa761f89e069045bf94499dd3"
+          }
+        ],
+        "state_sha256": "172135979b96baf6fd17f1d233b107cf29beb83771496c6b159660b2dfb0bbfa"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.22966696321964264,
+          "probabilities": {
+            "contradiction": 0.008054506033658981,
+            "entailment": 0.22966696321964264,
+            "neutral": 0.7622784972190857
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.1110791563987732,
+          "probabilities": {
+            "contradiction": 0.009898398071527481,
+            "entailment": 0.1110791563987732,
+            "neutral": 0.8790223598480225
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_197_nda-10",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 911,
+            "id": "contractnli_train_197_s0036",
+            "sha256": "b5516ba512a42f9696e20e5dca025244517aa74675da6c896935d9404bc98f74"
+          },
+          {
+            "characters": 136,
+            "id": "contractnli_train_197_s0068",
+            "sha256": "5abc60859255ee1f05b0dec6977f2917d930d6550c67258293cf930ea05e30be"
+          },
+          {
+            "characters": 126,
+            "id": "contractnli_train_197_s0085",
+            "sha256": "34ebc27c03362fa76f7ff2bd9c368374d75a4de808ec2af8cbc9065ec620551b"
+          }
+        ],
+        "state_sha256": "2bf765f3697e77d2da43393179d2332ba6852af1c47d53cd3697692a0ded0c21"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.08961141109466553,
+          "probabilities": {
+            "contradiction": 0.012833713553845882,
+            "entailment": 0.08961141109466553,
+            "neutral": 0.897554874420166
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.44077250361442566,
+          "probabilities": {
+            "contradiction": 0.007881438359618187,
+            "entailment": 0.44077250361442566,
+            "neutral": 0.5513461232185364
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_204_nda-20",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 243,
+            "id": "contractnli_train_204_s0023",
+            "sha256": "a2352ad553494036e5c9f87e38597efacebc88b885b84a2873575dd366c35e78"
+          }
+        ],
+        "state_sha256": "f7bd8f831b9b39722449c16a6c9586ccb04cc71c1a751762cc26cd945e479b50"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.0080037796869874,
+          "probabilities": {
+            "contradiction": 0.9917542934417725,
+            "entailment": 0.0080037796869874,
+            "neutral": 0.00024188286624848843
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.02531021647155285,
+          "probabilities": {
+            "contradiction": 0.9743791222572327,
+            "entailment": 0.02531021647155285,
+            "neutral": 0.0003106858057435602
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_220_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 475,
+            "id": "contractnli_train_220_s0021",
+            "sha256": "1c9f970802570833735ed177c8ca50e40e35ba0176139402f49d6f19c4efc4d4"
+          }
+        ],
+        "state_sha256": "9e4791be55e3f61a21d31cbf5ec6889d308cd7fefea8c1aa5e06890d79266003"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.008189971558749676,
+          "probabilities": {
+            "contradiction": 0.9916456341743469,
+            "entailment": 0.008189971558749676,
+            "neutral": 0.00016437709564343095
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.04525065794587135,
+          "probabilities": {
+            "contradiction": 0.9546309113502502,
+            "entailment": 0.04525065794587135,
+            "neutral": 0.00011842620006063953
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_221_nda-4",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 237,
+            "id": "contractnli_train_221_s0014",
+            "sha256": "75704fd0a31c9e3bc82e48b92ab418a738fb84464346a6a62994f74db48515b7"
+          }
+        ],
+        "state_sha256": "1258b5707dc4514cd261582801323fe69603fdbc1b8e0fc5ad5e4d02b3304faa"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.8938748836517334,
+          "probabilities": {
+            "contradiction": 0.10325402766466141,
+            "entailment": 0.8938748836517334,
+            "neutral": 0.002871098928153515
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.9111895561218262,
+          "probabilities": {
+            "contradiction": 0.08476269990205765,
+            "entailment": 0.9111895561218262,
+            "neutral": 0.00404770765453577
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_229_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 279,
+            "id": "contractnli_train_229_s0005",
+            "sha256": "ab0cde726e59e90406d89ec8afee681c190a940f6405c5193a9a07edc81e08e4"
+          }
+        ],
+        "state_sha256": "48bd88d9c54f6c4f46394649feff337c388f7bd8685e5a40d6764fa81182af37"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.006613547448068857,
+          "probabilities": {
+            "contradiction": 0.9931326508522034,
+            "entailment": 0.006613547448068857,
+            "neutral": 0.0002537814143579453
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.01327288243919611,
+          "probabilities": {
+            "contradiction": 0.9865216016769409,
+            "entailment": 0.01327288243919611,
+            "neutral": 0.00020559108816087246
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_234_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 440,
+            "id": "contractnli_train_234_s0004",
+            "sha256": "df1c5701d8380dc8be16636b4950a68a98d7a5e804f3402e455b89be8a64db13"
+          },
+          {
+            "characters": 144,
+            "id": "contractnli_train_234_s0007",
+            "sha256": "d89ad4127dfa5b8f26d4f32c46de5ec885508d965db761bbcc8b04967181d77c"
+          },
+          {
+            "characters": 442,
+            "id": "contractnli_train_234_s0016",
+            "sha256": "62cf25f6ebab935ee29c2db0a6d8e8ff799226871b4136518ac61f3ace791901"
+          }
+        ],
+        "state_sha256": "8a5bf996f459fb3051621c90135c00dd39949ec3cdd5b7b83a2353d7fbcf9958"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.05534772574901581,
+          "probabilities": {
+            "contradiction": 0.02835037373006344,
+            "entailment": 0.05534772574901581,
+            "neutral": 0.9163018465042114
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.030115347355604172,
+          "probabilities": {
+            "contradiction": 0.019589658826589584,
+            "entailment": 0.030115347355604172,
+            "neutral": 0.9502950310707092
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_236_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 396,
+            "id": "contractnli_train_236_s0014",
+            "sha256": "800c6566df25f22311009b3481d3f3e504443246c6b6f4dc4ea44f3268950fee"
+          }
+        ],
+        "state_sha256": "be4cfcae27029d34572c406f3d87a5b58ebcde9d60fe927764589e571f9c5adc"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.005616931244730949,
+          "probabilities": {
+            "contradiction": 0.9941229224205017,
+            "entailment": 0.005616931244730949,
+            "neutral": 0.0002600904554128647
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.007161513436585665,
+          "probabilities": {
+            "contradiction": 0.9926803112030029,
+            "entailment": 0.007161513436585665,
+            "neutral": 0.0001582111872266978
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_242_nda-13",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 285,
+            "id": "contractnli_train_242_s0030",
+            "sha256": "98f5cac5203fc37bdc6ade70e532c99f25f3f60b8e36f070e3d1d79bcbffd8ab"
+          },
+          {
+            "characters": 193,
+            "id": "contractnli_train_242_s0040",
+            "sha256": "b29b028701bc18a9454ca9272a564ded3ab956adccaf4befa80683e5c12fe4bc"
+          },
+          {
+            "characters": 354,
+            "id": "contractnli_train_242_s0043",
+            "sha256": "0d4a5226bdffb8147710bc39ccc5dac2a87b3779f2bcafae6c58a2aa2dcfffd3"
+          }
+        ],
+        "state_sha256": "ad66e45ddddc7cb377f2d435f0117dedcfadcde65cfc0beedcce7d141347dc96"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.2792871296405792,
+          "probabilities": {
+            "contradiction": 0.08704490959644318,
+            "entailment": 0.2792871296405792,
+            "neutral": 0.6336678862571716
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.22015036642551422,
+          "probabilities": {
+            "contradiction": 0.02871628664433956,
+            "entailment": 0.22015036642551422,
+            "neutral": 0.7511333227157593
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_242_nda-15",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 211,
+            "id": "contractnli_train_242_s0056",
+            "sha256": "cfaf30eef69de19724e12fd2aacf422b4cc20beb1a06c0fbdde4f8708a932703"
+          }
+        ],
+        "state_sha256": "0c93ec4a7f1f24fb31a1f3ec093b7b0e4ff146dff8d9d39d6b666bd05dad5bfe"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.982280969619751,
+          "probabilities": {
+            "contradiction": 0.0031722495332360268,
+            "entailment": 0.982280969619751,
+            "neutral": 0.014546738006174564
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.9477272629737854,
+          "probabilities": {
+            "contradiction": 0.0034785824827849865,
+            "entailment": 0.9477272629737854,
+            "neutral": 0.048794157803058624
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_243_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 313,
+            "id": "contractnli_train_243_s0016",
+            "sha256": "e29012214f321b2aab0252a441067a096137c740d75aeef24bfc517e6ee2fde0"
+          },
+          {
+            "characters": 218,
+            "id": "contractnli_train_243_s0018",
+            "sha256": "f79c63a7e98c317ea8dfa737ddbb2774b07cdad56501666c216af5ce698dec78"
+          },
+          {
+            "characters": 281,
+            "id": "contractnli_train_243_s0019",
+            "sha256": "307e92ed0998b0c5f9e576a7f7dd8e1c6112a98dabe4f982e8019c5dac33cf4c"
+          },
+          {
+            "characters": 83,
+            "id": "contractnli_train_243_s0020",
+            "sha256": "e451d4dca6cdc16969c34fa08b248c0af318ba987dfeca86676e55934fc243f4"
+          },
+          {
+            "characters": 106,
+            "id": "contractnli_train_243_s0021",
+            "sha256": "a15c11482abc090f490e7c03e48aa23e991a5715bef921c88405687af77e9747"
+          }
+        ],
+        "state_sha256": "1e9e9fae996bc8ad48a3d69b7c19d042668799dc253cd5167b08453faf8f875b"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.01009531132876873,
+          "probabilities": {
+            "contradiction": 0.9888096451759338,
+            "entailment": 0.01009531132876873,
+            "neutral": 0.001095077721402049
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.0071623860858380795,
+          "probabilities": {
+            "contradiction": 0.9911646246910095,
+            "entailment": 0.0071623860858380795,
+            "neutral": 0.001673003425821662
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_246_nda-15",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 70,
+            "id": "contractnli_train_246_s0027",
+            "sha256": "963838a13fde932396c04e6fffa55fcb717ad0b35e82bec0207e8627eed77da0"
+          },
+          {
+            "characters": 226,
+            "id": "contractnli_train_246_s0031",
+            "sha256": "c3227d4f276dd9a754da45cafbdb71777dae8861de04445f108894b7c16b8464"
+          },
+          {
+            "characters": 196,
+            "id": "contractnli_train_246_s0038",
+            "sha256": "6ed21607c4c59475a592a4c25c552f8acd13567142bf9f3d4d7e6d1fb90995b7"
+          }
+        ],
+        "state_sha256": "c25eb1097d3f5b1b9248acd272038d3b240cac3fdd3cd8672f3dc31e4d30ceb5"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.09055278450250626,
+          "probabilities": {
+            "contradiction": 0.018673134967684746,
+            "entailment": 0.09055278450250626,
+            "neutral": 0.8907740712165833
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.056451376527547836,
+          "probabilities": {
+            "contradiction": 0.008617887273430824,
+            "entailment": 0.056451376527547836,
+            "neutral": 0.9349308609962463
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_246_nda-18",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 242,
+            "id": "contractnli_train_246_s0035",
+            "sha256": "0f604ce937bf0c141898fdea6889626ee4f33c65f74c073a5a89fc8df21dfa64"
+          }
+        ],
+        "state_sha256": "e6c619f4df4f348afc01324f3be2f6eed681801abd2b1b16545ae6c54d9043ef"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.9592270255088806,
+          "probabilities": {
+            "contradiction": 0.03767618536949158,
+            "entailment": 0.9592270255088806,
+            "neutral": 0.003096753265708685
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.9672562479972839,
+          "probabilities": {
+            "contradiction": 0.025830017402768135,
+            "entailment": 0.9672562479972839,
+            "neutral": 0.006913689896464348
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_247_nda-5",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 456,
+            "id": "contractnli_train_247_s0065",
+            "sha256": "0ef93a5f9c16651c831ab87cdd4174366808d6db25f51e5e936519519e27f3af"
+          }
+        ],
+        "state_sha256": "d35628648013aec88270bf72425ddef36ef5917b50afc8762c9b5a9b361fbfcd"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.07330615073442459,
+          "probabilities": {
+            "contradiction": 0.9260897636413574,
+            "entailment": 0.07330615073442459,
+            "neutral": 0.0006041109445504844
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.8755728602409363,
+          "probabilities": {
+            "contradiction": 0.12198060005903244,
+            "entailment": 0.8755728602409363,
+            "neutral": 0.002446454484015703
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_249_nda-7",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 643,
+            "id": "contractnli_train_249_s0030",
+            "sha256": "73fec4ca9c0a42b7a7156142ff735efea3214b7d24085c8ea256760b419944ff"
+          },
+          {
+            "characters": 53,
+            "id": "contractnli_train_249_s0033",
+            "sha256": "aa412e3079ea7c4df3891081d5e1be3ab51a979e2790b47019f260fb66620031"
+          },
+          {
+            "characters": 178,
+            "id": "contractnli_train_249_s0036",
+            "sha256": "7126cb70c745bc85524cd2bf774bb29364f588c78ca7792b95e9eae5461d81b8"
+          }
+        ],
+        "state_sha256": "ac84bd68f71ae8f500e37ea1322853506099996bb1edf9b5da0e95d8c5ca3cbc"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.21224725246429443,
+          "probabilities": {
+            "contradiction": 0.41989681124687195,
+            "entailment": 0.21224725246429443,
+            "neutral": 0.3678559362888336
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.3526726961135864,
+          "probabilities": {
+            "contradiction": 0.1274535208940506,
+            "entailment": 0.3526726961135864,
+            "neutral": 0.519873857498169
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_258_nda-20",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 482,
+            "id": "contractnli_train_258_s0039",
+            "sha256": "99093044bebbd60b971c2847db83ff57b5e08ff4ad424ad6970611bf0e004048"
+          }
+        ],
+        "state_sha256": "7e674b4df2a50512ed59cf36eba62b75cdf6517c59b31b62fc20eeb0b5f18a8c"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.010327099822461605,
+          "probabilities": {
+            "contradiction": 0.9894921779632568,
+            "entailment": 0.010327099822461605,
+            "neutral": 0.00018065287440549582
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.013739396817982197,
+          "probabilities": {
+            "contradiction": 0.9861456155776978,
+            "entailment": 0.013739396817982197,
+            "neutral": 0.00011497093510115519
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_263_nda-20",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 437,
+            "id": "contractnli_train_263_s0027",
+            "sha256": "14cebd2efb290187f90281d3c7b513bc6fd806ff72c18817bf874ee94008e08f"
+          }
+        ],
+        "state_sha256": "c96c1dc4380358dc003dc23674089bd85e508827947af67993fc243fab38e069"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.013940904289484024,
+          "probabilities": {
+            "contradiction": 0.9858101010322571,
+            "entailment": 0.013940904289484024,
+            "neutral": 0.00024897800176404417
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.025642307475209236,
+          "probabilities": {
+            "contradiction": 0.9742320775985718,
+            "entailment": 0.025642307475209236,
+            "neutral": 0.00012563330528791994
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_268_nda-17",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 260,
+            "id": "contractnli_train_268_s0032",
+            "sha256": "e85c3272cafd2aca97817d273321547d4bc1fcbf1a29da608e5bc8ec5fe5d4ff"
+          },
+          {
+            "characters": 158,
+            "id": "contractnli_train_268_s0036",
+            "sha256": "699b4262610fb520550878b6b63b6a45b785863d0af819a7591b30f8db2e2213"
+          }
+        ],
+        "state_sha256": "dcde5636daa448fc86f6e1f2e9878bcd026193f89ac62087c63f886345c1faf4"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.17856131494045258,
+          "probabilities": {
+            "contradiction": 0.8199530243873596,
+            "entailment": 0.17856131494045258,
+            "neutral": 0.0014856657944619656
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.41364583373069763,
+          "probabilities": {
+            "contradiction": 0.5824172496795654,
+            "entailment": 0.41364583373069763,
+            "neutral": 0.003936953842639923
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_276_nda-12",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 43,
+            "id": "contractnli_train_276_s0019",
+            "sha256": "e15f6bcc393f58ac54e8557d2d6d6cacc6421e7dd56eedc08affa315afdbbd9e"
+          },
+          {
+            "characters": 88,
+            "id": "contractnli_train_276_s0020",
+            "sha256": "e7d41bd2902fcc38d71b507df80f3bbba49e8f723186de6bcf106d0ea2c1e3b6"
+          },
+          {
+            "characters": 124,
+            "id": "contractnli_train_276_s0021",
+            "sha256": "d04b09bb9e1845d48d759bb7f690c91306d7fcfe1944e09befcc587be9018e88"
+          },
+          {
+            "characters": 87,
+            "id": "contractnli_train_276_s0022",
+            "sha256": "112a9386142a99eaf33f4b39f7e3625938ee47c81f6163c4366ff3560f2f465e"
+          },
+          {
+            "characters": 138,
+            "id": "contractnli_train_276_s0023",
+            "sha256": "7f934787c45996a37843bf4685bbc1d9d0b64884e10f1169f604e6a34de24b9c"
+          },
+          {
+            "characters": 83,
+            "id": "contractnli_train_276_s0024",
+            "sha256": "fad711836b82e5838c62f740065336073f0d768ddc8338f2ce1402b8249f583f"
+          }
+        ],
+        "state_sha256": "ba6860643cb97f7e845959374a7be2ad6b27a334a0a0f48c15636372618e5b5d"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.9448230862617493,
+          "probabilities": {
+            "contradiction": 0.041823435574769974,
+            "entailment": 0.9448230862617493,
+            "neutral": 0.013353461399674416
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.3954322040081024,
+          "probabilities": {
+            "contradiction": 0.019522400572896004,
+            "entailment": 0.3954322040081024,
+            "neutral": 0.5850453972816467
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_286_nda-4",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 114,
+            "id": "contractnli_train_286_s0027",
+            "sha256": "c548de75f78a7d0d557df289b76ad2deee62c08c2949c747d7130ea467e09975"
+          }
+        ],
+        "state_sha256": "68c0c2f38f63f84b0dd92114a8209eea4b0563e38c3b9a4346b6724616577d76"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.9799617528915405,
+          "probabilities": {
+            "contradiction": 0.0165005661547184,
+            "entailment": 0.9799617528915405,
+            "neutral": 0.003537731943652034
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.969277560710907,
+          "probabilities": {
+            "contradiction": 0.0009135095751844347,
+            "entailment": 0.969277560710907,
+            "neutral": 0.029808854684233665
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_287_nda-11",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 26,
+            "id": "contractnli_train_287_s0022",
+            "sha256": "a3f5fcaf19fbef2680d7108f3aba7ddc7b9d402bd8cf80601d0b8adf7c767afe"
+          },
+          {
+            "characters": 254,
+            "id": "contractnli_train_287_s0026",
+            "sha256": "d6043d455a5484ec6120bac4d63d3929a24ddfc0331fb8d19c9488e06b8bd7b0"
+          }
+        ],
+        "state_sha256": "d98a5dc239999f80b1b3b94596e24a7a107a3db5102b12c611bbdf6c677a984b"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.9830071926116943,
+          "probabilities": {
+            "contradiction": 0.014191797934472561,
+            "entailment": 0.9830071926116943,
+            "neutral": 0.0028010169044137
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.9951841235160828,
+          "probabilities": {
+            "contradiction": 0.0012028614291921258,
+            "entailment": 0.9951841235160828,
+            "neutral": 0.003612985135987401
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_291_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 247,
+            "id": "contractnli_train_291_s0013",
+            "sha256": "3446a43abf1be3d8a94d08c6dcde50c151a1bee9d7ea3f9a92c0d7538fc87c7f"
+          }
+        ],
+        "state_sha256": "1bfdedde8bf6bf51ca6c1d4479bce9e17ef6372d7cdcb19ffc9d47381ad2d934"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.005533623043447733,
+          "probabilities": {
+            "contradiction": 0.9943258166313171,
+            "entailment": 0.005533623043447733,
+            "neutral": 0.00014059491513762623
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.0070585147477686405,
+          "probabilities": {
+            "contradiction": 0.9928508996963501,
+            "entailment": 0.0070585147477686405,
+            "neutral": 9.061034506885335e-05
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_295_nda-12",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 79,
+            "id": "contractnli_train_295_s0004",
+            "sha256": "5a7a599f8eeddbcfd7e3b5085f3fe10bda384cd9ba7005486fd6401abe762090"
+          },
+          {
+            "characters": 27,
+            "id": "contractnli_train_295_s0009",
+            "sha256": "18e93a077e3afb5a268084273667df00005ea3ba0bbe30e174987bb5547ce055"
+          },
+          {
+            "characters": 14,
+            "id": "contractnli_train_295_s0016",
+            "sha256": "4e2a274e61f0487a9a5ed5f0be33abf87c67016ec41f63d07da4579da85f2503"
+          }
+        ],
+        "state_sha256": "cedbc6ce6e4d14e053a5b908a962955cbc08213b0052c70f93f2a0eb464bae08"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.8231572508811951,
+          "probabilities": {
+            "contradiction": 0.08614204078912735,
+            "entailment": 0.8231572508811951,
+            "neutral": 0.09070070087909698
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.455397367477417,
+          "probabilities": {
+            "contradiction": 0.25304827094078064,
+            "entailment": 0.455397367477417,
+            "neutral": 0.29155436158180237
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_302_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 53,
+            "id": "contractnli_train_302_s0018",
+            "sha256": "e03f94ce3fb453b3322eaa0cefa3a4c49b440540b515688f63d4b53fa3418557"
+          },
+          {
+            "characters": 57,
+            "id": "contractnli_train_302_s0020",
+            "sha256": "552a67de88fa9b00ce32f3d3c6dd58313b11daae9b403e0603d50e1229d4a6f6"
+          },
+          {
+            "characters": 50,
+            "id": "contractnli_train_302_s0021",
+            "sha256": "1b340d83ecc9dcfd90074a4c0bee1b7e61c4e2e92e819d1488fc75f89b768386"
+          },
+          {
+            "characters": 76,
+            "id": "contractnli_train_302_s0023",
+            "sha256": "a224150e907609dd9656fd1426f271f20c9689943d7503cc35e4f58b7429f877"
+          },
+          {
+            "characters": 61,
+            "id": "contractnli_train_302_s0025",
+            "sha256": "da9268c5bcd4661b6b4264fcf2fbb40db55c9f27e281d887e6de54081ea2467d"
+          }
+        ],
+        "state_sha256": "e7ae753619ad7fb056eda21c879cb4b4bb33424d0c0a9c7d449d7536704321c5"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.010219963267445564,
+          "probabilities": {
+            "contradiction": 0.9892472624778748,
+            "entailment": 0.010219963267445564,
+            "neutral": 0.0005328169791027904
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.022024037316441536,
+          "probabilities": {
+            "contradiction": 0.9648342728614807,
+            "entailment": 0.022024037316441536,
+            "neutral": 0.01314163114875555
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_305_nda-19",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 57,
+            "id": "contractnli_train_305_s0031",
+            "sha256": "8b7ce63c616c59623d28a7b46866bc39c9ba9cb1e00ff416344c321026bed7d7"
+          },
+          {
+            "characters": 254,
+            "id": "contractnli_train_305_s0074",
+            "sha256": "6fcb52b8f68050d6ce4c1fbe91a2dec0203424fa1b85f3728b697ef1bedaf325"
+          },
+          {
+            "characters": 547,
+            "id": "contractnli_train_305_s0082",
+            "sha256": "b9d8f7abb93a8788e073a0bc7ec26b2ccaf9fade9473fc8aded88173cca7be57"
+          }
+        ],
+        "state_sha256": "4a627d39608a3bb6c02abbe010138f8a2bd9bfd1d777333d5fcad150a5de2aab"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.25153571367263794,
+          "probabilities": {
+            "contradiction": 0.056365739554166794,
+            "entailment": 0.25153571367263794,
+            "neutral": 0.6920985579490662
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.7546961903572083,
+          "probabilities": {
+            "contradiction": 0.015669113025069237,
+            "entailment": 0.7546961903572083,
+            "neutral": 0.22963471710681915
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_309_nda-12",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 193,
+            "id": "contractnli_train_309_s0014",
+            "sha256": "c555419d5ad2939c537749fe5092bc339dacef3fb4581110220a5d4a460c1694"
+          },
+          {
+            "characters": 420,
+            "id": "contractnli_train_309_s0040",
+            "sha256": "1be0891f2f7614ad9f310a0ad27455c2e0d6f0e6cbf8882865dc78311a507e59"
+          },
+          {
+            "characters": 308,
+            "id": "contractnli_train_309_s0043",
+            "sha256": "3bc4399cb0af784f212c0ab49131754dda1ae711635f747eb9c57b499203dad9"
+          }
+        ],
+        "state_sha256": "36d8f7182bfb2a2cb3be4992baee318f59167d399203f5f4c02aa57853f13cb4"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.13755670189857483,
+          "probabilities": {
+            "contradiction": 0.022336063906550407,
+            "entailment": 0.13755670189857483,
+            "neutral": 0.8401072025299072
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.06843023002147675,
+          "probabilities": {
+            "contradiction": 0.05451228842139244,
+            "entailment": 0.06843023002147675,
+            "neutral": 0.8770575523376465
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_311_nda-1",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 177,
+            "id": "contractnli_train_311_s0067",
+            "sha256": "522e88523bf0ad5b523abb2a3ef5b79c7486aca941c6a60a6a786535b1eac760"
+          },
+          {
+            "characters": 218,
+            "id": "contractnli_train_311_s0068",
+            "sha256": "7a9327f2a53eee0e27600bff05bb5bd3ed0c47bdddc26207a1b8dcd8f16c9d74"
+          },
+          {
+            "characters": 161,
+            "id": "contractnli_train_311_s0093",
+            "sha256": "7a74c6bc52741ca572da1ddf3716faac642d663470079c8ced698a81c58427de"
+          }
+        ],
+        "state_sha256": "31e91c553a1d1fa267e43e399f0dcef60177d3ea75049ff306bf797d41092fe1"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.15308567881584167,
+          "probabilities": {
+            "contradiction": 0.025615403428673744,
+            "entailment": 0.15308567881584167,
+            "neutral": 0.8212989568710327
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.10991671681404114,
+          "probabilities": {
+            "contradiction": 0.12399666011333466,
+            "entailment": 0.10991671681404114,
+            "neutral": 0.7660866379737854
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_316_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 1378,
+            "id": "contractnli_train_316_s0014",
+            "sha256": "15033e228d7edd97ba016b3dc5477e31867d3699228e164c55ef7747da7c1287"
+          }
+        ],
+        "state_sha256": "9e448b94b69b90938c1d9d3a1c37b45efac9e8c580e3ddd5767de7a6810700f9"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.006822632625699043,
+          "probabilities": {
+            "contradiction": 0.9928359389305115,
+            "entailment": 0.006822632625699043,
+            "neutral": 0.0003415108658373356
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.009279756806790829,
+          "probabilities": {
+            "contradiction": 0.9905097484588623,
+            "entailment": 0.009279756806790829,
+            "neutral": 0.0002105198218487203
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_317_nda-17",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 138,
+            "id": "contractnli_train_317_s0026",
+            "sha256": "475378faafae0008d44a01473dd8fdb9f829803429d411ba00135edfea240e6b"
+          },
+          {
+            "characters": 281,
+            "id": "contractnli_train_317_s0040",
+            "sha256": "3049176d1d91e95278d04b6944275ca84813fd4a2c53770ea7a73c7f4dec33d3"
+          },
+          {
+            "characters": 238,
+            "id": "contractnli_train_317_s0052",
+            "sha256": "c963e7edb94eeda29dd057fc00f9d36ec3ff70cc784062b27a17b65e1892d9bc"
+          }
+        ],
+        "state_sha256": "bebd06170da1a241b806e758e54be7172fa6110f9dc5a20e280ecdf68a326af6"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.11267676949501038,
+          "probabilities": {
+            "contradiction": 0.05096816644072533,
+            "entailment": 0.11267676949501038,
+            "neutral": 0.8363550901412964
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.32820776104927063,
+          "probabilities": {
+            "contradiction": 0.034291356801986694,
+            "entailment": 0.32820776104927063,
+            "neutral": 0.6375008225440979
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_335_nda-4",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 638,
+            "id": "contractnli_train_335_s0011",
+            "sha256": "4b30894a1443910ffcf042d2e7b63cbc4d696de8a8d4c89bd9d277ceb29a186d"
+          },
+          {
+            "characters": 308,
+            "id": "contractnli_train_335_s0013",
+            "sha256": "c4b42769f0037199d4c4e7d9bc17d4b172e13974fc4f882e9bf1946c726a67b5"
+          },
+          {
+            "characters": 187,
+            "id": "contractnli_train_335_s0017",
+            "sha256": "644dba9050603060a7a26783aa97bc5fbeb0588ca53f91cee895c19135994ed7"
+          }
+        ],
+        "state_sha256": "b91af36d00dff67d2ca5c6ff9658adad2157eb76fee032a239cfe6bb457ae0c9"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.06971923261880875,
+          "probabilities": {
+            "contradiction": 0.006222566124051809,
+            "entailment": 0.06971923261880875,
+            "neutral": 0.9240582585334778
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.027620933949947357,
+          "probabilities": {
+            "contradiction": 0.004987811669707298,
+            "entailment": 0.027620933949947357,
+            "neutral": 0.967391312122345
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_338_nda-18",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 271,
+            "id": "contractnli_train_338_s0014",
+            "sha256": "ceb8a501808640e5e0566c3bceaceb29df9d4821550862623323adaae3ed7467"
+          },
+          {
+            "characters": 462,
+            "id": "contractnli_train_338_s0020",
+            "sha256": "48ad8600f2299231169276ae72afe0630ac7e26ebfdfef4d341f19c4e1be78db"
+          },
+          {
+            "characters": 358,
+            "id": "contractnli_train_338_s0041",
+            "sha256": "bf907448f71492eb4ddbbf1252823c6f676f81d99da348a17bbd1744ff69f97a"
+          }
+        ],
+        "state_sha256": "7a6e230dc8f7db1cdc39c7559a1ab9d19f23a02722c207497b2476d3be6016f3"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.4594421088695526,
+          "probabilities": {
+            "contradiction": 0.09071636945009232,
+            "entailment": 0.4594421088695526,
+            "neutral": 0.4498414993286133
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.03814578056335449,
+          "probabilities": {
+            "contradiction": 0.00529064703732729,
+            "entailment": 0.03814578056335449,
+            "neutral": 0.9565636515617371
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_342_nda-3",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 430,
+            "id": "contractnli_train_342_s0011",
+            "sha256": "07c8b1b124452c1879313efc18e005671ab7b38e857a8cfd2d1e97b4687b3364"
+          },
+          {
+            "characters": 235,
+            "id": "contractnli_train_342_s0017",
+            "sha256": "fc029a36399b81f4d067f4c97f2b3d766330619de1bf56081a20dc262366869e"
+          },
+          {
+            "characters": 268,
+            "id": "contractnli_train_342_s0029",
+            "sha256": "5cf2a238ed3a9f539c9e85d302c2702fdab5fec4d7c51dec570ba5233b10ad98"
+          }
+        ],
+        "state_sha256": "2f1b36ee91a62d6e500f07936aa484663923228a19a8c83b43957669aea1ed2d"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.1117626205086708,
+          "probabilities": {
+            "contradiction": 0.01697218231856823,
+            "entailment": 0.1117626205086708,
+            "neutral": 0.8712652325630188
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.24097292125225067,
+          "probabilities": {
+            "contradiction": 0.0306876078248024,
+            "entailment": 0.24097292125225067,
+            "neutral": 0.728339433670044
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_343_nda-3",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 775,
+            "id": "contractnli_train_343_s0042",
+            "sha256": "ccd306565047f063010b83b840bcdca33b21915d90cb5a2bc6185a9116f9b2d5"
+          },
+          {
+            "characters": 293,
+            "id": "contractnli_train_343_s0047",
+            "sha256": "18e5c359a15a85a8bee2c485182676e1d0faf9fe62164f0ce647dae4def73568"
+          }
+        ],
+        "state_sha256": "25c6f2e01b16144169d7c018c365cd3373a52a7bdb13960949151e9f55a7eb0d"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.9570983648300171,
+          "probabilities": {
+            "contradiction": 0.02679518237709999,
+            "entailment": 0.9570983648300171,
+            "neutral": 0.016106411814689636
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.4826916754245758,
+          "probabilities": {
+            "contradiction": 0.13316571712493896,
+            "entailment": 0.4826916754245758,
+            "neutral": 0.3841426372528076
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_355_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 71,
+            "id": "contractnli_train_355_s0007",
+            "sha256": "793f883e6b52957e604f809de7886c5ef5917636648f70313a315d3b364d0086"
+          },
+          {
+            "characters": 1261,
+            "id": "contractnli_train_355_s0008",
+            "sha256": "558b697044e825901b524a9772511514f8a4fe0837d7a7d9a66fc497246c2844"
+          }
+        ],
+        "state_sha256": "004c00858d1b9c16b7fce1023e6ff2d1c2a67a595565ed600291ba3309f160c4"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.0054532913491129875,
+          "probabilities": {
+            "contradiction": 0.9942189455032349,
+            "entailment": 0.0054532913491129875,
+            "neutral": 0.00032776306034065783
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.006018318235874176,
+          "probabilities": {
+            "contradiction": 0.9938079714775085,
+            "entailment": 0.006018318235874176,
+            "neutral": 0.0001736419799271971
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_365_nda-7",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 392,
+            "id": "contractnli_train_365_s0009",
+            "sha256": "30e46c9ee9130e059cfb16b8d783d415a0e67bffbb6f721a352f02ae20404ddf"
+          },
+          {
+            "characters": 248,
+            "id": "contractnli_train_365_s0024",
+            "sha256": "56606457556af590af52d4d30b662eab3d7a586c70ebeefce43fa38c2a619ca0"
+          }
+        ],
+        "state_sha256": "412524879a1a075dd67003efeb3305268e70d22f4d5808b1008740c1a50ff55c"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.19930414855480194,
+          "probabilities": {
+            "contradiction": 0.2580219805240631,
+            "entailment": 0.19930414855480194,
+            "neutral": 0.5426738858222961
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.5571877956390381,
+          "probabilities": {
+            "contradiction": 0.4089300036430359,
+            "entailment": 0.5571877956390381,
+            "neutral": 0.03388214856386185
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_366_nda-20",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 219,
+            "id": "contractnli_train_366_s0017",
+            "sha256": "935667b0d8feeeade907982ecf8589611c306dfa7e3a7fc1b1c48b507230b41b"
+          }
+        ],
+        "state_sha256": "0de44a0e96d5105b4c3f91d47077c937f9ef885c35979cb9a3d13a87926dc855"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.010131902992725372,
+          "probabilities": {
+            "contradiction": 0.9896754622459412,
+            "entailment": 0.010131902992725372,
+            "neutral": 0.0001926057448145002
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.013353143818676472,
+          "probabilities": {
+            "contradiction": 0.9865376949310303,
+            "entailment": 0.013353143818676472,
+            "neutral": 0.00010918028419837356
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_372_nda-13",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 401,
+            "id": "contractnli_train_372_s0008",
+            "sha256": "537eef4cdc7988b3340f1865fddd2cda884b5bf2792698b07c2b4e98620ef23c"
+          },
+          {
+            "characters": 107,
+            "id": "contractnli_train_372_s0012",
+            "sha256": "f4742d9e69d924d7db4517d8562e0fed1b4ca9c939ce8eac54648e6429ba82c9"
+          }
+        ],
+        "state_sha256": "50fd34011f1c9efe5b71243fc9474104bf1a79bfb9191fb6b40c8ffab93c99a2"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.9812012910842896,
+          "probabilities": {
+            "contradiction": 0.013430597260594368,
+            "entailment": 0.9812012910842896,
+            "neutral": 0.005368059501051903
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.908663809299469,
+          "probabilities": {
+            "contradiction": 0.07522346079349518,
+            "entailment": 0.908663809299469,
+            "neutral": 0.01611281745135784
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_380_nda-8",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 192,
+            "id": "contractnli_train_380_s0045",
+            "sha256": "cdede88ec802bb9963abecc179b68f885c798bdf8a322bb3bc19a6170897c6bf"
+          },
+          {
+            "characters": 218,
+            "id": "contractnli_train_380_s0051",
+            "sha256": "6ea7f2a03a6ecbc3663e05e9d9d9a5bcc1aba284d177411891c285e466d4922e"
+          },
+          {
+            "characters": 165,
+            "id": "contractnli_train_380_s0061",
+            "sha256": "b10082f60571810b1bc458d7ad8b00053329ea95d080bb2645ad547f4fb63a7e"
+          }
+        ],
+        "state_sha256": "7b3277a7c3df549e3f9629879a5395ef34b8fe971497c8ddba8449215df94e01"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.32812243700027466,
+          "probabilities": {
+            "contradiction": 0.027339158579707146,
+            "entailment": 0.32812243700027466,
+            "neutral": 0.644538402557373
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.035969458520412445,
+          "probabilities": {
+            "contradiction": 0.03306817263364792,
+            "entailment": 0.035969458520412445,
+            "neutral": 0.9309623837471008
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_391_nda-5",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 127,
+            "id": "contractnli_train_391_s0083",
+            "sha256": "50c28e77bba535e6b15eef910222055a9db4f756012b354520350f4f0e6b3caa"
+          },
+          {
+            "characters": 181,
+            "id": "contractnli_train_391_s0084",
+            "sha256": "3ec0ea2dcc5e55a6423e623e266f8cd9e4aba5aeaf15612370ca8351cc6459d8"
+          },
+          {
+            "characters": 517,
+            "id": "contractnli_train_391_s0086",
+            "sha256": "8007d431412e81382a6863cd9af611ad61730152b6e5769a6a897eeec08c1d38"
+          }
+        ],
+        "state_sha256": "8e749355347d54afc8be6d538e3105eacd55da66935e12038bf5dc14666594be"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.3031163811683655,
+          "probabilities": {
+            "contradiction": 0.32538798451423645,
+            "entailment": 0.3031163811683655,
+            "neutral": 0.37149563431739807
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.26646870374679565,
+          "probabilities": {
+            "contradiction": 0.4618738293647766,
+            "entailment": 0.26646870374679565,
+            "neutral": 0.27165740728378296
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_393_nda-10",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 180,
+            "id": "contractnli_train_393_s0035",
+            "sha256": "ddc9f767dafb5fa0918566947dc13458cff11e5d4227ac62484f723e462c5774"
+          }
+        ],
+        "state_sha256": "2ac0ab1a00c7168d7685bdd7b1b9ab9b2b39f1543de9efe1d6a782c4b44ea05c"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.9744575619697571,
+          "probabilities": {
+            "contradiction": 0.022309426218271255,
+            "entailment": 0.9744575619697571,
+            "neutral": 0.003233043709769845
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.9835943579673767,
+          "probabilities": {
+            "contradiction": 0.01366617251187563,
+            "entailment": 0.9835943579673767,
+            "neutral": 0.002739541931077838
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_396_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 282,
+            "id": "contractnli_train_396_s0014",
+            "sha256": "26c2040821aa002f7c3279d4eff2d5d238dd1a05ec1b62eb412c49f98c6d285b"
+          }
+        ],
+        "state_sha256": "d0b94f2e12aaf8dfeac6b54c739bae9b0a743ba2e66004c402941bfef0d13af4"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.012938187457621098,
+          "probabilities": {
+            "contradiction": 0.9863951206207275,
+            "entailment": 0.012938187457621098,
+            "neutral": 0.000666750711388886
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.03278060629963875,
+          "probabilities": {
+            "contradiction": 0.966995894908905,
+            "entailment": 0.03278060629963875,
+            "neutral": 0.0002235753636341542
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_399_nda-18",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 409,
+            "id": "contractnli_train_399_s0041",
+            "sha256": "d865be772ef6ac522512552d8e3e724da9f9a0794a2cf24b8290783b4d31cbf9"
+          },
+          {
+            "characters": 72,
+            "id": "contractnli_train_399_s0062",
+            "sha256": "07c16fd73554067834933e111feb64ef32b22d15ffaa3a0ec5e2b02cf64fd6f9"
+          },
+          {
+            "characters": 47,
+            "id": "contractnli_train_399_s0063",
+            "sha256": "b03c75d65c6e932e9f24732ce7105ba858ace2e1ad463f90b5068401b9946499"
+          },
+          {
+            "characters": 434,
+            "id": "contractnli_train_399_s0064",
+            "sha256": "2cff7607d95dd914f3a0851903082ff2bdb735ff7f387366ffe4f27983d33736"
+          }
+        ],
+        "state_sha256": "7897c0beab0377485885e2dee28bff1d0cce406ea133dd567510f8305b259e34"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.8263443112373352,
+          "probabilities": {
+            "contradiction": 0.027945661917328835,
+            "entailment": 0.8263443112373352,
+            "neutral": 0.14570993185043335
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.40199390053749084,
+          "probabilities": {
+            "contradiction": 0.006453235633671284,
+            "entailment": 0.40199390053749084,
+            "neutral": 0.5915528535842896
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_399_nda-20",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 285,
+            "id": "contractnli_train_399_s0036",
+            "sha256": "12b414edbba51eccada3556255e8fa70dd8a48172dee3727825d56078105e6e2"
+          }
+        ],
+        "state_sha256": "8e4427bbe86be82545bc596087500fbf5f5bc9825c6a5e214dbd87b09b5fbb76"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.008757908828556538,
+          "probabilities": {
+            "contradiction": 0.9910624027252197,
+            "entailment": 0.008757908828556538,
+            "neutral": 0.00017971628403756768
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.010270058177411556,
+          "probabilities": {
+            "contradiction": 0.9895960688591003,
+            "entailment": 0.010270058177411556,
+            "neutral": 0.00013381676399149
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_410_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 660,
+            "id": "contractnli_train_410_s0009",
+            "sha256": "99d25b9184a79ec06da1c3d78108661df97e4ad07429cd6a5fd033b133bb89ee"
+          }
+        ],
+        "state_sha256": "54ce180750354e25e30279a6c25fae3312547f0d85bbabdbef6e29d164157679"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.004573073238134384,
+          "probabilities": {
+            "contradiction": 0.9950594902038574,
+            "entailment": 0.004573073238134384,
+            "neutral": 0.0003675000334624201
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.008074373006820679,
+          "probabilities": {
+            "contradiction": 0.9917991161346436,
+            "entailment": 0.008074373006820679,
+            "neutral": 0.00012651401630137116
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_415_nda-15",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 596,
+            "id": "contractnli_train_415_s0014",
+            "sha256": "b5205ca41f3202eeb123d64b42be4e081a4262056b53370e292559cabf56c226"
+          },
+          {
+            "characters": 449,
+            "id": "contractnli_train_415_s0031",
+            "sha256": "1f1c944ea0399d68bba144bb200d99de929ed7c383026f03934f62f29fc9377a"
+          },
+          {
+            "characters": 103,
+            "id": "contractnli_train_415_s0038",
+            "sha256": "452634832bc4365a28483721e460ee1bac940f3d02fe84f5252a34d8024cfbd7"
+          }
+        ],
+        "state_sha256": "a31fde218affb6c7c1fc5abffed4dc965189037881f5773237f6c871277f1758"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.05477563291788101,
+          "probabilities": {
+            "contradiction": 0.0337059386074543,
+            "entailment": 0.05477563291788101,
+            "neutral": 0.911518394947052
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.014515777118504047,
+          "probabilities": {
+            "contradiction": 0.03580903261899948,
+            "entailment": 0.014515777118504047,
+            "neutral": 0.9496751427650452
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_420_nda-16",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 172,
+            "id": "contractnli_train_420_s0010",
+            "sha256": "b712bf089adac96890a1b50f3ba7a05b98a49a7c10a0b7415643ba126e0c5267"
+          },
+          {
+            "characters": 264,
+            "id": "contractnli_train_420_s0024",
+            "sha256": "a15be87ce7e61519b899256bceb8c857c5c9fb9837b7a3dfc2e26550ed3f753d"
+          },
+          {
+            "characters": 303,
+            "id": "contractnli_train_420_s0041",
+            "sha256": "aae2d4b1039c2ad17e5f6e3a84544bd822d9f2808832f72c6475757998a7e4e5"
+          }
+        ],
+        "state_sha256": "1a9dd7202d328e09cb9d87c396dff0a868886cdc9678a93e88ed80b9005b4cf1"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.04057278856635094,
+          "probabilities": {
+            "contradiction": 0.01623476855456829,
+            "entailment": 0.04057278856635094,
+            "neutral": 0.9431924223899841
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.03449612855911255,
+          "probabilities": {
+            "contradiction": 0.03025834821164608,
+            "entailment": 0.03449612855911255,
+            "neutral": 0.9352455139160156
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_436_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 400,
+            "id": "contractnli_train_436_s0015",
+            "sha256": "e6d63039d034e2690251d0f7810f69f04ef8699938fcaa61b8fa0905969459ab"
+          }
+        ],
+        "state_sha256": "4636ba7411b54083713ac29caa4c75bc7d456ea0c09baac9ad658ba2409a8d8c"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.00668118754401803,
+          "probabilities": {
+            "contradiction": 0.9930898547172546,
+            "entailment": 0.00668118754401803,
+            "neutral": 0.00022895268921274692
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.027196740731596947,
+          "probabilities": {
+            "contradiction": 0.9726817607879639,
+            "entailment": 0.027196740731596947,
+            "neutral": 0.00012142865307396278
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_441_nda-19",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 277,
+            "id": "contractnli_train_441_s0010",
+            "sha256": "a36ab7930d0ea0cf925efe6f52d6275d61f8c4f68dbf5654c70235bcc5caddd3"
+          },
+          {
+            "characters": 175,
+            "id": "contractnli_train_441_s0026",
+            "sha256": "81c31dd4ee224d266679567d0589ac800ed737b841147ac0c5ee54a9a2efcf67"
+          },
+          {
+            "characters": 190,
+            "id": "contractnli_train_441_s0043",
+            "sha256": "ba98bf2c001660fb100b6477c2e12b55a0742389e7334fff90a62e45450e831b"
+          }
+        ],
+        "state_sha256": "b8ddc91176de198b7a1ac48fc0fcb781fa8348cdea1ded939f7f5e5ec57c2199"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.04807007685303688,
+          "probabilities": {
+            "contradiction": 0.037410248070955276,
+            "entailment": 0.04807007685303688,
+            "neutral": 0.9145196676254272
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.002348027192056179,
+          "probabilities": {
+            "contradiction": 0.008267913945019245,
+            "entailment": 0.002348027192056179,
+            "neutral": 0.989384114742279
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_447_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 425,
+            "id": "contractnli_train_447_s0004",
+            "sha256": "ddbdc6d7cc36b4864e7a1bd68079d98b852b73319a9046e5ff984e76bbe5b23f"
+          }
+        ],
+        "state_sha256": "decb1961ea5dd784a4ac0006b6a9e9f9864c68f80b8f627710c3f21ad040b853"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.007072530221194029,
+          "probabilities": {
+            "contradiction": 0.9927027225494385,
+            "entailment": 0.007072530221194029,
+            "neutral": 0.00022467688540928066
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.036005862057209015,
+          "probabilities": {
+            "contradiction": 0.9636041522026062,
+            "entailment": 0.036005862057209015,
+            "neutral": 0.00039000832475721836
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_448_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 329,
+            "id": "contractnli_train_448_s0003",
+            "sha256": "a7466539228503551a90620b4ccc6353d8d9eb98b1fdf00a8520ee0bb7088f21"
+          }
+        ],
+        "state_sha256": "f0db51b5fe25fed4f94928f8a0b2379536ac95b3af86370463d543b2435bd15a"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.005979530513286591,
+          "probabilities": {
+            "contradiction": 0.9938014149665833,
+            "entailment": 0.005979530513286591,
+            "neutral": 0.00021900284627918154
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.04177726060152054,
+          "probabilities": {
+            "contradiction": 0.9578983783721924,
+            "entailment": 0.04177726060152054,
+            "neutral": 0.00032441504299640656
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_450_nda-11",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 292,
+            "id": "contractnli_train_450_s0037",
+            "sha256": "168238c630f2305ae81b8e192a1e5a188ea5dbb98cc815514a24ab5339307ffe"
+          }
+        ],
+        "state_sha256": "1de258e4d1c41688f73fc4c09925edac4a93c04fb96323f0287a5d68c59c335c"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.9857422113418579,
+          "probabilities": {
+            "contradiction": 0.009907646104693413,
+            "entailment": 0.9857422113418579,
+            "neutral": 0.004350155126303434
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.9970661997795105,
+          "probabilities": {
+            "contradiction": 0.001298460061661899,
+            "entailment": 0.9970661997795105,
+            "neutral": 0.0016353488899767399
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_458_nda-16",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 631,
+            "id": "contractnli_train_458_s0005",
+            "sha256": "bcf2f5afe8758595d337396b0cec9afd2320ea820bb83664c628bbfd7077f579"
+          }
+        ],
+        "state_sha256": "7cd58de777a1acfdc059553536d07c7d9ed9c563f7a10a2ef97641f9e89a08c8"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.36828818917274475,
+          "probabilities": {
+            "contradiction": 0.629234790802002,
+            "entailment": 0.36828818917274475,
+            "neutral": 0.002477051457390189
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.9745391607284546,
+          "probabilities": {
+            "contradiction": 0.0247137863188982,
+            "entailment": 0.9745391607284546,
+            "neutral": 0.0007469485281035304
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_463_nda-15",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 105,
+            "id": "contractnli_train_463_s0061",
+            "sha256": "2ad568da1f1faaa8172e9f5ed45be35bfdcf3e2630d5ccd5aa91b00a972b7684"
+          },
+          {
+            "characters": 161,
+            "id": "contractnli_train_463_s0062",
+            "sha256": "985733ed753eaddc09e0c6a9bd4709953490ac50fc6dbd089808f88ab71b9726"
+          }
+        ],
+        "state_sha256": "e980b909c4874a9e10ee9c0326bd81c0de7efe6024dc05542a9e0a8c826ab2b4"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.9793564081192017,
+          "probabilities": {
+            "contradiction": 0.012389489449560642,
+            "entailment": 0.9793564081192017,
+            "neutral": 0.00825409684330225
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.9702070355415344,
+          "probabilities": {
+            "contradiction": 0.0019341359147801995,
+            "entailment": 0.9702070355415344,
+            "neutral": 0.02785877138376236
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_463_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 197,
+            "id": "contractnli_train_463_s0038",
+            "sha256": "577ed88c91cd8a04c3b2055e139cbdc936755f597e6fe77678442add39a89052"
+          }
+        ],
+        "state_sha256": "cbd537ef45273d3486e9065f304b10387907a6ed79fc88c490af6bfbfb56a725"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.005365349352359772,
+          "probabilities": {
+            "contradiction": 0.9945047497749329,
+            "entailment": 0.005365349352359772,
+            "neutral": 0.0001297692215302959
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.007109997794032097,
+          "probabilities": {
+            "contradiction": 0.992789089679718,
+            "entailment": 0.007109997794032097,
+            "neutral": 0.0001009545085253194
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_467_nda-4",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 418,
+            "id": "contractnli_train_467_s0016",
+            "sha256": "8651d9e7de1494dd83c72242862eb4b24bf504c1ed6f0de07a5d26e20334a1e4"
+          },
+          {
+            "characters": 510,
+            "id": "contractnli_train_467_s0018",
+            "sha256": "e48afd5c288a8ec2a9f2216aa0015188f1db48a3471e9b97969e5fd106f10672"
+          },
+          {
+            "characters": 219,
+            "id": "contractnli_train_467_s0031",
+            "sha256": "c7f7cac9c389eb5535173a031397f2bab234bd27b0d4b1b8109f4399ced1047c"
+          }
+        ],
+        "state_sha256": "893909ad900227cb8088982705af983b250d7d6459e8a291672c3db275b9dad8"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.41258907318115234,
+          "probabilities": {
+            "contradiction": 0.06305252015590668,
+            "entailment": 0.41258907318115234,
+            "neutral": 0.5243584513664246
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.7833756804466248,
+          "probabilities": {
+            "contradiction": 0.008095973171293736,
+            "entailment": 0.7833756804466248,
+            "neutral": 0.2085283100605011
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_467_nda-5",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 418,
+            "id": "contractnli_train_467_s0016",
+            "sha256": "8651d9e7de1494dd83c72242862eb4b24bf504c1ed6f0de07a5d26e20334a1e4"
+          }
+        ],
+        "state_sha256": "2ce9f5da5a093eb6303f3abdf46329d0d2c42d0036c904bad1b62b585b80f543"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.27946391701698303,
+          "probabilities": {
+            "contradiction": 0.7189327478408813,
+            "entailment": 0.27946391701698303,
+            "neutral": 0.0016033145366236567
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.7440973520278931,
+          "probabilities": {
+            "contradiction": 0.25369393825531006,
+            "entailment": 0.7440973520278931,
+            "neutral": 0.0022088228724896908
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_469_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 241,
+            "id": "contractnli_train_469_s0011",
+            "sha256": "e30f655eaffea902de53700ecb91e5f0dff67d05537cba3de353e68777d8d83f"
+          },
+          {
+            "characters": 390,
+            "id": "contractnli_train_469_s0013",
+            "sha256": "c96a7aca469326e5b4410cc31ebc4ba0c2c106dd1c98f612baac0aa2cc66de7b"
+          }
+        ],
+        "state_sha256": "32b7cfe102239c825f0903259fa51ee211722191171499efc25b4da3bc9d2f18"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.005609241314232349,
+          "probabilities": {
+            "contradiction": 0.9934169054031372,
+            "entailment": 0.005609241314232349,
+            "neutral": 0.000973834132310003
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.007148439064621925,
+          "probabilities": {
+            "contradiction": 0.9921918511390686,
+            "entailment": 0.007148439064621925,
+            "neutral": 0.000659708515740931
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_474_nda-3",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 375,
+            "id": "contractnli_train_474_s0012",
+            "sha256": "31ab6fbd4000f6bd024106180a1af6a4ae67ec4c1556e8fa6726893b017e9f1d"
+          },
+          {
+            "characters": 65,
+            "id": "contractnli_train_474_s0013",
+            "sha256": "5968829af496ef8fbb05b347a088df5eec8da638e0e22b30060a9d63e391f2a5"
+          },
+          {
+            "characters": 419,
+            "id": "contractnli_train_474_s0016",
+            "sha256": "5015a9a2fc642a5af7e9434b018f7691db1f403d184b538c37306631de246e77"
+          }
+        ],
+        "state_sha256": "2a20e6c14a21350a69e1ca7f9f58dbaa540b947cf11c383f9693d008f87033d2"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.5477128624916077,
+          "probabilities": {
+            "contradiction": 0.14761608839035034,
+            "entailment": 0.5477128624916077,
+            "neutral": 0.30467110872268677
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.028701389208436012,
+          "probabilities": {
+            "contradiction": 0.11464136093854904,
+            "entailment": 0.028701389208436012,
+            "neutral": 0.8566572666168213
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_475_nda-18",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 323,
+            "id": "contractnli_train_475_s0014",
+            "sha256": "8750578c46d2631d5ce6496a6cf86fe1c8602230b52798aee9f30e104c51209e"
+          },
+          {
+            "characters": 370,
+            "id": "contractnli_train_475_s0029",
+            "sha256": "9b2642472831f083c7da1393f7d18d4c3f86fd58bf2dbfc55f3bfe91c20b4220"
+          },
+          {
+            "characters": 369,
+            "id": "contractnli_train_475_s0032",
+            "sha256": "7271763b7156fe6c9e39a80c75e42bbe5e46f7af6e62ef10c8fc71f4f146fe83"
+          }
+        ],
+        "state_sha256": "254078c2a8d25a2ddd18b300dd63026397011e116a1120f700affe078f628214"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.10206648707389832,
+          "probabilities": {
+            "contradiction": 0.04478845000267029,
+            "entailment": 0.10206648707389832,
+            "neutral": 0.8531450033187866
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.04260079190135002,
+          "probabilities": {
+            "contradiction": 0.019798297435045242,
+            "entailment": 0.04260079190135002,
+            "neutral": 0.9376009702682495
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_492_nda-13",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 81,
+            "id": "contractnli_train_492_s0011",
+            "sha256": "2f91ff9713bcf983820082d9b3b0670d5e976f929d9fd595d18ef9b3482fb00f"
+          },
+          {
+            "characters": 288,
+            "id": "contractnli_train_492_s0014",
+            "sha256": "6156da125e073553679a25981267c45e696261222f2f06c46d739dc621f12591"
+          }
+        ],
+        "state_sha256": "ef7984ddd48ae2ce2989fce78fdaddbfa512dc4b6adf716f0e5fc32e7249f8dd"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.9615566730499268,
+          "probabilities": {
+            "contradiction": 0.03494860976934433,
+            "entailment": 0.9615566730499268,
+            "neutral": 0.0034947539679706097
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.7767266035079956,
+          "probabilities": {
+            "contradiction": 0.21425600349903107,
+            "entailment": 0.7767266035079956,
+            "neutral": 0.00901736319065094
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_519_nda-20",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 407,
+            "id": "contractnli_train_519_s0032",
+            "sha256": "ac0e14d11d5f7dbe1d016fe301ae65dc340d44581a2a52627ac60daad3dcd769"
+          }
+        ],
+        "state_sha256": "26cd4d1bff50061ee6f0b35d11c15f803581e1c31dbe37c8fcafc1835176429c"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.08971437066793442,
+          "probabilities": {
+            "contradiction": 0.909294068813324,
+            "entailment": 0.08971437066793442,
+            "neutral": 0.0009915130212903023
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.4802945554256439,
+          "probabilities": {
+            "contradiction": 0.5171179175376892,
+            "entailment": 0.4802945554256439,
+            "neutral": 0.002587591065093875
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_545_nda-17",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 606,
+            "id": "contractnli_train_545_s0012",
+            "sha256": "9d8475861d64b7779e71464b4b6476467206481fba464fc81486cc504d8a7117"
+          },
+          {
+            "characters": 333,
+            "id": "contractnli_train_545_s0066",
+            "sha256": "e3f59d46e6dae3e1796429306a42851c1e6597cf49d218b2259da54444674d3e"
+          },
+          {
+            "characters": 143,
+            "id": "contractnli_train_545_s0067",
+            "sha256": "1d2b06e3478a3449f9bd49cb3dcc24e357fb032f2cd36dc5d3a543927dc1c041"
+          }
+        ],
+        "state_sha256": "0592abf6fca8c5f7d029b624a9944645b061088db5c97e89e95c866cfd872d77"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.2621327340602875,
+          "probabilities": {
+            "contradiction": 0.43676936626434326,
+            "entailment": 0.2621327340602875,
+            "neutral": 0.30109789967536926
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.07879633456468582,
+          "probabilities": {
+            "contradiction": 0.306386798620224,
+            "entailment": 0.07879633456468582,
+            "neutral": 0.6148168444633484
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_553_nda-7",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 218,
+            "id": "contractnli_train_553_s0039",
+            "sha256": "f1ca06ca0a94de11ab66aa4244d6b2b14b30d204da6ea386c0db948a81ef02b7"
+          },
+          {
+            "characters": 643,
+            "id": "contractnli_train_553_s0040",
+            "sha256": "001ab6de8f2373fa043a7a3a223ccc638468001175758d7be0ae2f1e515cb3f5"
+          },
+          {
+            "characters": 193,
+            "id": "contractnli_train_553_s0054",
+            "sha256": "a3cda02ad47c8a81d6901f79745a771d35182f5416f3c123ec8cffc460b35098"
+          }
+        ],
+        "state_sha256": "3444e576ceb1880063f172c11a6a8cb62828838c1128133db5582d660b9dd05e"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.12879255414009094,
+          "probabilities": {
+            "contradiction": 0.03912424296140671,
+            "entailment": 0.12879255414009094,
+            "neutral": 0.8320832252502441
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.022548522800207138,
+          "probabilities": {
+            "contradiction": 0.032721977680921555,
+            "entailment": 0.022548522800207138,
+            "neutral": 0.9447294473648071
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_569_nda-1",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 252,
+            "id": "contractnli_train_569_s0015",
+            "sha256": "b3d0abcd26ce901c5d1229d19feee1fe289d1d0d81a80f2e63b91411ad31648e"
+          },
+          {
+            "characters": 354,
+            "id": "contractnli_train_569_s0051",
+            "sha256": "50599d549dd4fbbdeced4842b03455e0aee3deffb848a4ade49519eda3fd75b5"
+          },
+          {
+            "characters": 183,
+            "id": "contractnli_train_569_s0057",
+            "sha256": "522ff5d96ea8c09daa028eb27cf03a054aa0417ba56dff6028e6a3cc1240dd76"
+          }
+        ],
+        "state_sha256": "37195081cb5ac5f63ccacc3e4eaa1cada988e0561954dd064fa1d23fad664fd1"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.15772220492362976,
+          "probabilities": {
+            "contradiction": 0.18660962581634521,
+            "entailment": 0.15772220492362976,
+            "neutral": 0.6556681394577026
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.018871117383241653,
+          "probabilities": {
+            "contradiction": 0.059524599462747574,
+            "entailment": 0.018871117383241653,
+            "neutral": 0.9216042757034302
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_573_nda-1",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 464,
+            "id": "contractnli_train_573_s0011",
+            "sha256": "b2cfb593b9aef04899e61a1c555ee3636ee04805e9df8b300388f7d70daa8ef6"
+          }
+        ],
+        "state_sha256": "7f3c77bdc3b4f9979c4282291020c158a77a3a4eb94675b66901f93841633309"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.012036324478685856,
+          "probabilities": {
+            "contradiction": 0.9875576496124268,
+            "entailment": 0.012036324478685856,
+            "neutral": 0.00040602515218779445
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.04419649764895439,
+          "probabilities": {
+            "contradiction": 0.9542402625083923,
+            "entailment": 0.04419649764895439,
+            "neutral": 0.0015632420545443892
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_580_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 42,
+            "id": "contractnli_train_580_s0018",
+            "sha256": "0adebc34e0149c81b3a4dedb5684aebf44fb3cdc245262461014aae86f0b0cb4"
+          },
+          {
+            "characters": 944,
+            "id": "contractnli_train_580_s0020",
+            "sha256": "e038a1d9e77eccc2d6b1987f2706c881dc4f6f2ba1095f54091b39430ec2d89a"
+          },
+          {
+            "characters": 433,
+            "id": "contractnli_train_580_s0023",
+            "sha256": "b90e4ba3490615a2fa31774d1d63a5f93e0e268d5d69ff2eec5453630d6c4ed9"
+          }
+        ],
+        "state_sha256": "4ba78014af1bd1db35ddadf51b39ec3a4dba7c4ba192bccd37bdead73ab953b9"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.020521041005849838,
+          "probabilities": {
+            "contradiction": 0.9754682183265686,
+            "entailment": 0.020521041005849838,
+            "neutral": 0.004010749980807304
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.06343280524015427,
+          "probabilities": {
+            "contradiction": 0.9325562119483948,
+            "entailment": 0.06343280524015427,
+            "neutral": 0.004011000040918589
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_609_nda-1",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 208,
+            "id": "contractnli_train_609_s0005",
+            "sha256": "38deccd141c09e9c16c1799a90f5193eb8c58be279ab61a2c5176ca9d5df920f"
+          }
+        ],
+        "state_sha256": "ea10d6291c2aeae11e728b5789967e9062d5ec0c9c9eebe441f4a046bed1cd10"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.202776238322258,
+          "probabilities": {
+            "contradiction": 0.7938259243965149,
+            "entailment": 0.202776238322258,
+            "neutral": 0.0033978803548961878
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.14139822125434875,
+          "probabilities": {
+            "contradiction": 0.8570379614830017,
+            "entailment": 0.14139822125434875,
+            "neutral": 0.0015637722099199891
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_609_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 160,
+            "id": "contractnli_train_609_s0003",
+            "sha256": "7181ceff5dd3a4f5b57dd35addfe81f762793b71b83fd50240507c5e49a8b513"
+          },
+          {
+            "characters": 208,
+            "id": "contractnli_train_609_s0005",
+            "sha256": "38deccd141c09e9c16c1799a90f5193eb8c58be279ab61a2c5176ca9d5df920f"
+          },
+          {
+            "characters": 203,
+            "id": "contractnli_train_609_s0011",
+            "sha256": "8231ea70f0edb8c6db70192ba43784608c745c3ab1f5da90574c1cdc637c7c12"
+          }
+        ],
+        "state_sha256": "f88adc28374d8cf2db5ac714d6aa9d1e367d9d4e3edbcf45a98ec24df67c2a27"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.08677009493112564,
+          "probabilities": {
+            "contradiction": 0.7727077007293701,
+            "entailment": 0.08677009493112564,
+            "neutral": 0.14052221179008484
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.16158844530582428,
+          "probabilities": {
+            "contradiction": 0.10695889592170715,
+            "entailment": 0.16158844530582428,
+            "neutral": 0.7314527034759521
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_613_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 379,
+            "id": "contractnli_train_613_s0003",
+            "sha256": "66f2ba57cea3f4e07d0c6ede3027bd668180c185bb045ac4e388acf7eeff8692"
+          }
+        ],
+        "state_sha256": "d508465a0f9d683d5bde7ffabf61b142bace1fe62eaed75ae5c794599daa2294"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.007273668423295021,
+          "probabilities": {
+            "contradiction": 0.992495059967041,
+            "entailment": 0.007273668423295021,
+            "neutral": 0.00023125900770537555
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.015715260058641434,
+          "probabilities": {
+            "contradiction": 0.9841559529304504,
+            "entailment": 0.015715260058641434,
+            "neutral": 0.00012879808491561562
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_614_nda-11",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 127,
+            "id": "contractnli_train_614_s0021",
+            "sha256": "3f8848da04812d87d92cef7df454701fd60248221bba49df48bfb577095b95a8"
+          },
+          {
+            "characters": 400,
+            "id": "contractnli_train_614_s0043",
+            "sha256": "887072fa35eff0aecf9ed2afd0029f0632124855d52a6fdde85d598fb9f80a13"
+          },
+          {
+            "characters": 478,
+            "id": "contractnli_train_614_s0044",
+            "sha256": "faf1c558b443aa7493aaf361e81e5f35f2b48f82ec48fabd6bc51d0e3eb3d88c"
+          }
+        ],
+        "state_sha256": "5fcb135a7be00d91a14ac223aae191a4646ba443794e48edcf8e72595abaee41"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.8874858021736145,
+          "probabilities": {
+            "contradiction": 0.02056526020169258,
+            "entailment": 0.8874858021736145,
+            "neutral": 0.09194892644882202
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.20410269498825073,
+          "probabilities": {
+            "contradiction": 0.0166581179946661,
+            "entailment": 0.20410269498825073,
+            "neutral": 0.7792391777038574
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_617_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 475,
+            "id": "contractnli_train_617_s0003",
+            "sha256": "ee5c6dcd847d7430dd5b3623567fb47fc558bedf61020035a5295a29ae57582c"
+          }
+        ],
+        "state_sha256": "d5612a0d5a2c3c7e8ef2f620bd9bdfe99fc2f0d4bcd85b85f0fde03585816a1a"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.00858792569488287,
+          "probabilities": {
+            "contradiction": 0.9911710619926453,
+            "entailment": 0.00858792569488287,
+            "neutral": 0.00024108286015689373
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.01705937646329403,
+          "probabilities": {
+            "contradiction": 0.9827049374580383,
+            "entailment": 0.01705937646329403,
+            "neutral": 0.000235710758715868
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_618_nda-2",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 692,
+            "id": "contractnli_train_618_s0006",
+            "sha256": "68f4638947b289d0b4cfacdacb08632445b1338b321a0eacf34cc56db782d7c4"
+          }
+        ],
+        "state_sha256": "d60192f3d94eefc3b2cb5c3ff84bbb68d013d2713db50e62afa15e4ef8b79cbd"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.013261917978525162,
+          "probabilities": {
+            "contradiction": 0.9852973818778992,
+            "entailment": 0.013261917978525162,
+            "neutral": 0.0014407268026843667
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.04193451255559921,
+          "probabilities": {
+            "contradiction": 0.9436240196228027,
+            "entailment": 0.04193451255559921,
+            "neutral": 0.014441474340856075
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_623_nda-20",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 288,
+            "id": "contractnli_train_623_s0015",
+            "sha256": "eb247dda0b8043ae40290134776486932d03c32974b99318c36134c105352e6a"
+          },
+          {
+            "characters": 166,
+            "id": "contractnli_train_623_s0036",
+            "sha256": "010c4b129009077766d8bc7adf2c05dd1a09d7dbc08d8a449a35b241c2eedb0a"
+          },
+          {
+            "characters": 444,
+            "id": "contractnli_train_623_s0039",
+            "sha256": "30fca69ce7105fce329cb26425b1454be34f8fe30c54b538a8563fe28da988f8"
+          }
+        ],
+        "state_sha256": "30844d891bf6935fbeb16d3b275fec4e1f2010d17c31575c047ec65cab219456"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.06310217827558517,
+          "probabilities": {
+            "contradiction": 0.03797335922718048,
+            "entailment": 0.06310217827558517,
+            "neutral": 0.8989244103431702
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.035329531878232956,
+          "probabilities": {
+            "contradiction": 0.1728818565607071,
+            "entailment": 0.035329531878232956,
+            "neutral": 0.791788637638092
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_89_nda-19",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 196,
+            "id": "contractnli_train_89_s0030",
+            "sha256": "93390e68c5c9aa0f632762094f32a5d37cbb9abf9bbd48480285327029baca64"
+          },
+          {
+            "characters": 124,
+            "id": "contractnli_train_89_s0109",
+            "sha256": "b17caf73a13b850f60d0578b0b2c144bba76b3da79ec30b2a8c2bc0f2d597ead"
+          },
+          {
+            "characters": 80,
+            "id": "contractnli_train_89_s0110",
+            "sha256": "c9256b1ed52bdfc55fa9019f6eaf7e10445fe1dca64f6129f08ad461a7c14bb8"
+          }
+        ],
+        "state_sha256": "c382796622a7abfc67dc360c53cb592159b560769d48cc00a68460a1aa32ca29"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.10143975168466568,
+          "probabilities": {
+            "contradiction": 0.008766609244048595,
+            "entailment": 0.10143975168466568,
+            "neutral": 0.8897936344146729
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.5267684459686279,
+          "probabilities": {
+            "contradiction": 0.01608201675117016,
+            "entailment": 0.5267684459686279,
+            "neutral": 0.4571495056152344
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    },
+    {
+      "case_id": "contractnli_train_95_nda-20",
+      "input_audit": {
+        "evaluation_label_sent": false,
+        "evidence": [
+          {
+            "characters": 672,
+            "id": "contractnli_train_95_s0062",
+            "sha256": "545280b6f463420a2835f37b7778363fcda95916bb16dd40aaf92fc458847976"
+          },
+          {
+            "characters": 202,
+            "id": "contractnli_train_95_s0063",
+            "sha256": "7cc827028f1e510896c3e4093d7cc5502e1712a98822e952e73dd95f2f134ad2"
+          }
+        ],
+        "state_sha256": "5dd57db3c155922bfd5058603aefe3a7647cb5d645b2439a7db3947e1d25df80"
+      },
+      "predictions": {
+        "v3": {
+          "entailment_probability": 0.041804321110248566,
+          "probabilities": {
+            "contradiction": 0.9510190486907959,
+            "entailment": 0.041804321110248566,
+            "neutral": 0.007176648359745741
+          }
+        },
+        "v5": {
+          "entailment_probability": 0.018872221931815147,
+          "probabilities": {
+            "contradiction": 0.9775092601776123,
+            "entailment": 0.018872221931815147,
+            "neutral": 0.0036185437347739935
+          }
+        }
+      },
+      "split": "cascade_calibration"
+    }
+  ],
+  "schema_version": "contexttrace-requirement-v6-local-scores-1.0",
+  "split": "cascade_calibration",
+  "stable_defaults_changed": false
+}

@@ -1,0 +1,3439 @@
+{
+  "all_cases_requested": 90,
+  "complete": true,
+  "completed": 90,
+  "contractnli_test_accessed": false,
+  "dataset_sha256": "dd2b6fcc25ed1d7515198c447c3790b864ee25f2641bc7099992c42fd0d88c9a",
+  "experiment": "contexttrace_v6_uncertainty_cascade",
+  "local_scores_sha256": "71f27188b740d31b27e0a7e2fd31aebefe415befa8f863f4f9f952ae5459afa4",
+  "policy_id": null,
+  "remote_provider_default_enabled": false,
+  "requested_model": "jev-latest",
+  "routed_case_ids": [
+    "contractnli_train_103_nda-19",
+    "contractnli_train_108_nda-10",
+    "contractnli_train_121_nda-2",
+    "contractnli_train_124_nda-8",
+    "contractnli_train_128_nda-17",
+    "contractnli_train_147_nda-16",
+    "contractnli_train_149_nda-20",
+    "contractnli_train_151_nda-8",
+    "contractnli_train_154_nda-20",
+    "contractnli_train_155_nda-2",
+    "contractnli_train_164_nda-2",
+    "contractnli_train_167_nda-2",
+    "contractnli_train_170_nda-7",
+    "contractnli_train_172_nda-2",
+    "contractnli_train_194_nda-12",
+    "contractnli_train_196_nda-11",
+    "contractnli_train_197_nda-10",
+    "contractnli_train_204_nda-20",
+    "contractnli_train_220_nda-2",
+    "contractnli_train_221_nda-4",
+    "contractnli_train_229_nda-2",
+    "contractnli_train_234_nda-2",
+    "contractnli_train_236_nda-2",
+    "contractnli_train_242_nda-13",
+    "contractnli_train_242_nda-15",
+    "contractnli_train_243_nda-2",
+    "contractnli_train_246_nda-15",
+    "contractnli_train_246_nda-18",
+    "contractnli_train_247_nda-5",
+    "contractnli_train_249_nda-7",
+    "contractnli_train_258_nda-20",
+    "contractnli_train_263_nda-20",
+    "contractnli_train_268_nda-17",
+    "contractnli_train_276_nda-12",
+    "contractnli_train_286_nda-4",
+    "contractnli_train_287_nda-11",
+    "contractnli_train_291_nda-2",
+    "contractnli_train_295_nda-12",
+    "contractnli_train_302_nda-2",
+    "contractnli_train_305_nda-19",
+    "contractnli_train_309_nda-12",
+    "contractnli_train_311_nda-1",
+    "contractnli_train_316_nda-2",
+    "contractnli_train_317_nda-17",
+    "contractnli_train_335_nda-4",
+    "contractnli_train_338_nda-18",
+    "contractnli_train_342_nda-3",
+    "contractnli_train_343_nda-3",
+    "contractnli_train_355_nda-2",
+    "contractnli_train_365_nda-7",
+    "contractnli_train_366_nda-20",
+    "contractnli_train_372_nda-13",
+    "contractnli_train_380_nda-8",
+    "contractnli_train_391_nda-5",
+    "contractnli_train_393_nda-10",
+    "contractnli_train_396_nda-2",
+    "contractnli_train_399_nda-18",
+    "contractnli_train_399_nda-20",
+    "contractnli_train_410_nda-2",
+    "contractnli_train_415_nda-15",
+    "contractnli_train_420_nda-16",
+    "contractnli_train_436_nda-2",
+    "contractnli_train_441_nda-19",
+    "contractnli_train_447_nda-2",
+    "contractnli_train_448_nda-2",
+    "contractnli_train_450_nda-11",
+    "contractnli_train_458_nda-16",
+    "contractnli_train_463_nda-15",
+    "contractnli_train_463_nda-2",
+    "contractnli_train_467_nda-4",
+    "contractnli_train_467_nda-5",
+    "contractnli_train_469_nda-2",
+    "contractnli_train_474_nda-3",
+    "contractnli_train_475_nda-18",
+    "contractnli_train_492_nda-13",
+    "contractnli_train_519_nda-20",
+    "contractnli_train_545_nda-17",
+    "contractnli_train_553_nda-7",
+    "contractnli_train_569_nda-1",
+    "contractnli_train_573_nda-1",
+    "contractnli_train_580_nda-2",
+    "contractnli_train_609_nda-1",
+    "contractnli_train_609_nda-2",
+    "contractnli_train_613_nda-2",
+    "contractnli_train_614_nda-11",
+    "contractnli_train_617_nda-2",
+    "contractnli_train_618_nda-2",
+    "contractnli_train_623_nda-20",
+    "contractnli_train_89_nda-19",
+    "contractnli_train_95_nda-20"
+  ],
+  "rows": [
+    {
+      "case_id": "contractnli_train_103_nda-19",
+      "prediction": {
+        "confidence": 0.27,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "7b6511cf71296e737362d895faaacfb284275bc0fc6169808669a62c1ad2512c"
+        },
+        "latency_ms": 377.181,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.01,
+          "partially_supported": 0.39999999999999997,
+          "supported": 0.24,
+          "unsupported": 0.15,
+          "unverifiable": 0.2
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 556,
+          "output_tokens": 65,
+          "total_tokens": 621
+        },
+        "verdict": "partially_supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_108_nda-10",
+      "prediction": {
+        "confidence": 0.72,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "deb23e16c563c13dfb58c81cdf03c1028ca2d1b0a375c0e5cead0441adc6a51c"
+        },
+        "latency_ms": 187.13,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.01,
+          "partially_supported": 0.19,
+          "supported": 0.0,
+          "unsupported": 0.77,
+          "unverifiable": 0.03
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 564,
+          "output_tokens": 62,
+          "total_tokens": 626
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_121_nda-2",
+      "prediction": {
+        "confidence": 0.98,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "06d07bc3a1d634f6df633cd32c6883d19b3520681a6dcec51341139396f3a131"
+        },
+        "latency_ms": 527.554,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.99,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.01,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 585,
+          "output_tokens": 65,
+          "total_tokens": 650
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_124_nda-8",
+      "prediction": {
+        "confidence": 0.98,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "bf07488fa463f2ed84eedb7a680c51c7a07562660fb2f9fcaf471886be0291cf"
+        },
+        "latency_ms": 304.659,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.98,
+          "unverifiable": 0.02
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 716,
+          "output_tokens": 62,
+          "total_tokens": 778
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_128_nda-17",
+      "prediction": {
+        "confidence": 0.82,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "928f5390197ba9fd0c3004e91c8a1a03da1fd07da2fb0f532f4a254713c282d8"
+        },
+        "latency_ms": 686.11,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.01,
+          "partially_supported": 0.13,
+          "supported": 0.86,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 569,
+          "output_tokens": 62,
+          "total_tokens": 631
+        },
+        "verdict": "supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_147_nda-16",
+      "prediction": {
+        "confidence": 0.76,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 4,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "20232cfab78d8535eb7ba7a3359b468f844f0f52a5635822d4257d5a92a931bf"
+        },
+        "latency_ms": 180.876,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.02,
+          "partially_supported": 0.81,
+          "supported": 0.14,
+          "unsupported": 0.02,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 696,
+          "output_tokens": 65,
+          "total_tokens": 761
+        },
+        "verdict": "partially_supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_149_nda-20",
+      "prediction": {
+        "confidence": 0.87,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "1fd6e0339e8750058a3ff97bbca75a41ce89555b394d9b150ccf861d27592859"
+        },
+        "latency_ms": 414.101,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.1,
+          "supported": 0.9,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 588,
+          "output_tokens": 62,
+          "total_tokens": 650
+        },
+        "verdict": "supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_151_nda-8",
+      "prediction": {
+        "confidence": 0.99,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "3dac3aa079419c2af91d42a7bbb3c6704cd76d3b960db5dc44156afd2e8e71d5"
+        },
+        "latency_ms": 453.886,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.01,
+          "supported": 0.99,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 621,
+          "output_tokens": 62,
+          "total_tokens": 683
+        },
+        "verdict": "supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_154_nda-20",
+      "prediction": {
+        "confidence": 0.81,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "de1179f3e6b502582e72f872ee4b1d74228cb31a68c8eae119f43d0819a1277d"
+        },
+        "latency_ms": 301.995,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.01,
+          "supported": 0.0,
+          "unsupported": 0.85,
+          "unverifiable": 0.14
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 686,
+          "output_tokens": 62,
+          "total_tokens": 748
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_155_nda-2",
+      "prediction": {
+        "confidence": 1.0,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "a3b8e0e8454838cc99d080152d4f78985b12a560c7afc9f08842d4cd0d7c4484"
+        },
+        "latency_ms": 274.244,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 1.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 582,
+          "output_tokens": 65,
+          "total_tokens": 647
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_164_nda-2",
+      "prediction": {
+        "confidence": 1.0,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 4,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "7721bb1557b1535d2d57e6cfea888574b4ccd3f7a9ce1d00e3fb84f80efb7f48"
+        },
+        "latency_ms": 203.358,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 1.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 759,
+          "output_tokens": 65,
+          "total_tokens": 824
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_167_nda-2",
+      "prediction": {
+        "confidence": 0.99,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "427869834249175469618f86ec4d44729725038f028dc202022f2d2941b2d22f"
+        },
+        "latency_ms": 339.411,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 1.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 586,
+          "output_tokens": 65,
+          "total_tokens": 651
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_170_nda-7",
+      "prediction": {
+        "confidence": 0.39,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "7cb744bddf340818f66db58289664d5071f570c038fc16270d49526673c7a19d"
+        },
+        "latency_ms": 246.389,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.01,
+          "partially_supported": 0.52,
+          "supported": 0.47,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 748,
+          "output_tokens": 65,
+          "total_tokens": 813
+        },
+        "verdict": "partially_supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_172_nda-2",
+      "prediction": {
+        "confidence": 1.0,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "64a02fb1d050090e4301dd6c7683a9f4c7ac61db3a8ce82a192f4489e61fff99"
+        },
+        "latency_ms": 2785.148,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 1.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 642,
+          "output_tokens": 65,
+          "total_tokens": 707
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_194_nda-12",
+      "prediction": {
+        "confidence": 0.55,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 2,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "4a6fb8a21772b80b0d3e0466e2cdddb1537a232ec7e25e29a84ca79ec1d1aca5"
+        },
+        "latency_ms": 549.712,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.3,
+          "supported": 0.65,
+          "unsupported": 0.04,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 578,
+          "output_tokens": 62,
+          "total_tokens": 640
+        },
+        "verdict": "supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_196_nda-11",
+      "prediction": {
+        "confidence": 0.98,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "8c3fb0105c73e04947b9974005cb8daafe399288f75315b79d2e9baad5c57dc0"
+        },
+        "latency_ms": 917.563,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.99,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 729,
+          "output_tokens": 62,
+          "total_tokens": 791
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_197_nda-10",
+      "prediction": {
+        "confidence": 0.89,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "9c5cdf7cde0938e05fd9fa088bd82405bf6841c4c9f9e6cafa73e129611d407b"
+        },
+        "latency_ms": 216.779,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.04,
+          "partially_supported": 0.01,
+          "supported": 0.0,
+          "unsupported": 0.92,
+          "unverifiable": 0.03
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 800,
+          "output_tokens": 62,
+          "total_tokens": 862
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_204_nda-20",
+      "prediction": {
+        "confidence": 0.4,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "7c8112140680db8da17953ff6e2e4050cefa468c9a920856ee2d201b01991362"
+        },
+        "latency_ms": 287.115,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.52,
+          "partially_supported": 0.05,
+          "supported": 0.01,
+          "unsupported": 0.34,
+          "unverifiable": 0.07
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 576,
+          "output_tokens": 65,
+          "total_tokens": 641
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_220_nda-2",
+      "prediction": {
+        "confidence": 0.99,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "9d9de75ff1b65ee2e6322f98c05c5603fcd4250bbf9f594c71c92fe692232af0"
+        },
+        "latency_ms": 246.009,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 1.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 613,
+          "output_tokens": 65,
+          "total_tokens": 678
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_221_nda-4",
+      "prediction": {
+        "confidence": 0.46,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "f411c90ac5bc01cdae7a6ab0a5246c0cb718427d2b5ba5c62bf3e2fddb370c27"
+        },
+        "latency_ms": 671.178,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.03,
+          "partially_supported": 0.57,
+          "supported": 0.38,
+          "unsupported": 0.01,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 570,
+          "output_tokens": 65,
+          "total_tokens": 635
+        },
+        "verdict": "partially_supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_229_nda-2",
+      "prediction": {
+        "confidence": 0.99,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "96f4fab2ddb60e1bb23069688cb46961e6b95831cd057a0be2e32433736de542"
+        },
+        "latency_ms": 240.565,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.99,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.01,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 571,
+          "output_tokens": 65,
+          "total_tokens": 636
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_234_nda-2",
+      "prediction": {
+        "confidence": 0.77,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "73f2f8a0c8b85da1d6f899c6860d03503b2aa7781b00c4f00433eb4b00dcf6df"
+        },
+        "latency_ms": 327.762,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.82,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.17,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 775,
+          "output_tokens": 65,
+          "total_tokens": 840
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_236_nda-2",
+      "prediction": {
+        "confidence": 1.0,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "86b254827fb105118920fde478ce2168158dafb3355b0c5e6863afeb5670ce71"
+        },
+        "latency_ms": 756.158,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 1.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 601,
+          "output_tokens": 65,
+          "total_tokens": 666
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_242_nda-13",
+      "prediction": {
+        "confidence": 0.64,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "2781976738f9b9ce8db5122d731808c530f0f9e7359c6f31e8b4e5d0a699cc98"
+        },
+        "latency_ms": 616.901,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.2,
+          "supported": 0.01,
+          "unsupported": 0.71,
+          "unverifiable": 0.08
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 742,
+          "output_tokens": 62,
+          "total_tokens": 804
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_242_nda-15",
+      "prediction": {
+        "confidence": 0.89,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "d4870ac8ba4ad1e121a10447f0e03545211377ff324f5c8168ba7153c1484ba1"
+        },
+        "latency_ms": 219.919,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.04,
+          "partially_supported": 0.02,
+          "supported": 0.0,
+          "unsupported": 0.91,
+          "unverifiable": 0.03
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 569,
+          "output_tokens": 62,
+          "total_tokens": 631
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_243_nda-2",
+      "prediction": {
+        "confidence": 1.0,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 5,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "199862e00475a08c82382d0c8da1774848dace94c22e19b9900424001e9528a7"
+        },
+        "latency_ms": 895.94,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 1.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 829,
+          "output_tokens": 65,
+          "total_tokens": 894
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_246_nda-15",
+      "prediction": {
+        "confidence": 0.68,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "1ff6e74b8d9673f4e59084c31abc99e2e06d3df57e198ba16cb7e7d78a448fb2"
+        },
+        "latency_ms": 311.056,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.21,
+          "partially_supported": 0.01,
+          "supported": 0.0,
+          "unsupported": 0.74,
+          "unverifiable": 0.04
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 688,
+          "output_tokens": 62,
+          "total_tokens": 750
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_246_nda-18",
+      "prediction": {
+        "confidence": 0.35,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "97e1371fd89691f0a5de2479ff88a66fcd45ef1768b79ff7e84eec5c67c7932a"
+        },
+        "latency_ms": 400.343,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.08,
+          "partially_supported": 0.48,
+          "supported": 0.41,
+          "unsupported": 0.02,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 583,
+          "output_tokens": 65,
+          "total_tokens": 648
+        },
+        "verdict": "partially_supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_247_nda-5",
+      "prediction": {
+        "confidence": 0.46,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "164b806c38890b90e45cf37528e0c6d9a0cce39e189e51328e954d0bbdcd8f56"
+        },
+        "latency_ms": 304.436,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.03,
+          "partially_supported": 0.37,
+          "supported": 0.5599999999999999,
+          "unsupported": 0.02,
+          "unverifiable": 0.02
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 604,
+          "output_tokens": 62,
+          "total_tokens": 666
+        },
+        "verdict": "supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_249_nda-7",
+      "prediction": {
+        "confidence": 0.5,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "3c5b2092f4b113970c4a22edbd77401ea9eafacee27c6653146587884ed6d48a"
+        },
+        "latency_ms": 508.352,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.04,
+          "partially_supported": 0.59,
+          "supported": 0.33,
+          "unsupported": 0.03,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 767,
+          "output_tokens": 65,
+          "total_tokens": 832
+        },
+        "verdict": "partially_supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_258_nda-20",
+      "prediction": {
+        "confidence": 0.39,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "d8017d87bb5c7378ab15a7810248da4c15231fc687ccb05bd02a90d234ef665f"
+        },
+        "latency_ms": 407.236,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.36,
+          "partially_supported": 0.03,
+          "supported": 0.0,
+          "unsupported": 0.51,
+          "unverifiable": 0.1
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 624,
+          "output_tokens": 62,
+          "total_tokens": 686
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_263_nda-20",
+      "prediction": {
+        "confidence": 0.68,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "7d22b57d8f737c2f1fd49e78d07c85ebd0abf58a6d7cfdfb6703afc49db3df8c"
+        },
+        "latency_ms": 217.655,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.75,
+          "partially_supported": 0.05,
+          "supported": 0.01,
+          "unsupported": 0.18,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 614,
+          "output_tokens": 65,
+          "total_tokens": 679
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_268_nda-17",
+      "prediction": {
+        "confidence": 0.89,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 2,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "07b300112939b5a574efc83974916d732c9c7db8e8b28f30883587a0e0149ddb"
+        },
+        "latency_ms": 246.064,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.08,
+          "supported": 0.92,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 640,
+          "output_tokens": 62,
+          "total_tokens": 702
+        },
+        "verdict": "supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_276_nda-12",
+      "prediction": {
+        "confidence": 0.46,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 6,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "84f41dcc41b8c801ae289b6250507eae45d5a00666a47b53bfc1ed18d12a6bd0"
+        },
+        "latency_ms": 207.423,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.57,
+          "supported": 0.34,
+          "unsupported": 0.08,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 784,
+          "output_tokens": 65,
+          "total_tokens": 849
+        },
+        "verdict": "partially_supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_286_nda-4",
+      "prediction": {
+        "confidence": 0.75,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "d1e2e389b6741a050140f36a087d4b249051b092acc0ae5693263dde88fd2e66"
+        },
+        "latency_ms": 309.698,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.02,
+          "partially_supported": 0.18,
+          "supported": 0.8,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 549,
+          "output_tokens": 62,
+          "total_tokens": 611
+        },
+        "verdict": "supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_287_nda-11",
+      "prediction": {
+        "confidence": 0.76,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 2,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "22ca2f4e51e1524606000b9866a17961630c72dce0550126465de807976d841f"
+        },
+        "latency_ms": 230.4,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.01,
+          "partially_supported": 0.8,
+          "supported": 0.16,
+          "unsupported": 0.03,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 618,
+          "output_tokens": 65,
+          "total_tokens": 683
+        },
+        "verdict": "partially_supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_291_nda-2",
+      "prediction": {
+        "confidence": 1.0,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "8a5034e0705f26941bf0a4776f98b878e87c55171273efc64976e9e6b5e1ae0f"
+        },
+        "latency_ms": 289.009,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 1.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 562,
+          "output_tokens": 65,
+          "total_tokens": 627
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_295_nda-12",
+      "prediction": {
+        "confidence": 0.88,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "52b4b9e2833821ebc1db291bf12b73b0565a43d76ffbbbca5c3aa34067f063f4"
+        },
+        "latency_ms": 521.607,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.9,
+          "unverifiable": 0.1
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 606,
+          "output_tokens": 62,
+          "total_tokens": 668
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_302_nda-2",
+      "prediction": {
+        "confidence": 0.97,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 5,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "d7e73eff7ed8d2b5534aeb1797b4f3bb97efa087f269f7438b2d92476027fe28"
+        },
+        "latency_ms": 416.39,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.97,
+          "partially_supported": 0.01,
+          "supported": 0.0,
+          "unsupported": 0.02,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 695,
+          "output_tokens": 65,
+          "total_tokens": 760
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_305_nda-19",
+      "prediction": {
+        "confidence": 0.87,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "e604de637573f322766183b4313a67eaba620b5a84d3fe718230d1c51e6d3f79"
+        },
+        "latency_ms": 217.717,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.01,
+          "supported": 0.0,
+          "unsupported": 0.9,
+          "unverifiable": 0.09
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 738,
+          "output_tokens": 62,
+          "total_tokens": 800
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_309_nda-12",
+      "prediction": {
+        "confidence": 0.96,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "d4ad03db4e93d81235b35ea7aacdc10e92ad325804285a82b6f8c106e437b889"
+        },
+        "latency_ms": 223.272,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.97,
+          "unverifiable": 0.03
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 758,
+          "output_tokens": 62,
+          "total_tokens": 820
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_311_nda-1",
+      "prediction": {
+        "confidence": 0.77,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "3e071b279849ee07612708ca60e66eef07c61350f08ed2526aeb23dcf9b45092"
+        },
+        "latency_ms": 237.035,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.8200000000000001,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.18,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 674,
+          "output_tokens": 65,
+          "total_tokens": 739
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_316_nda-2",
+      "prediction": {
+        "confidence": 0.99,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "cd5afb47450e4999d529c7c749cf1b0008ec35470981641b69fe31969dcc4561"
+        },
+        "latency_ms": 655.781,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 1.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 752,
+          "output_tokens": 65,
+          "total_tokens": 817
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_317_nda-17",
+      "prediction": {
+        "confidence": 0.46,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "ccaf07f6b362124c857b4623e951b245c98ba44c4b5bebfe3e0ce937c99c3fc1"
+        },
+        "latency_ms": 497.61,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.4,
+          "supported": 0.57,
+          "unsupported": 0.02,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 714,
+          "output_tokens": 62,
+          "total_tokens": 776
+        },
+        "verdict": "supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_335_nda-4",
+      "prediction": {
+        "confidence": 0.89,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "d1803a84d468efa031ade7f7653cc03111e59b79d8576fbee1f65bfad91f59d9"
+        },
+        "latency_ms": 409.398,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.01,
+          "partially_supported": 0.07,
+          "supported": 0.0,
+          "unsupported": 0.92,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 788,
+          "output_tokens": 62,
+          "total_tokens": 850
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_338_nda-18",
+      "prediction": {
+        "confidence": 0.98,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "ae886afba9084cc6885d5c6db94988794c009ad45e9bd2a0c04f46825ca69c53"
+        },
+        "latency_ms": 472.329,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.99,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 786,
+          "output_tokens": 62,
+          "total_tokens": 848
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_342_nda-3",
+      "prediction": {
+        "confidence": 0.29,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "33a93731763ad9282c8abd16e44be75b95983d1ba30790eff931480162266096"
+        },
+        "latency_ms": 341.204,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.22,
+          "supported": 0.06,
+          "unsupported": 0.44,
+          "unverifiable": 0.28
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 748,
+          "output_tokens": 62,
+          "total_tokens": 810
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_343_nda-3",
+      "prediction": {
+        "confidence": 0.99,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 2,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "8a78a5ab2ac8867bfe0792cada5312dc2350090e3fd62f985170ba31dd8ce062"
+        },
+        "latency_ms": 232.23,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.0,
+          "supported": 1.0,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 754,
+          "output_tokens": 62,
+          "total_tokens": 816
+        },
+        "verdict": "supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_355_nda-2",
+      "prediction": {
+        "confidence": 1.0,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 2,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "1cfb30c5411b3c08d16ad539186d3ad4ee21f554ce360f7c3de14475184cd62c"
+        },
+        "latency_ms": 197.852,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 1.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 798,
+          "output_tokens": 65,
+          "total_tokens": 863
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_365_nda-7",
+      "prediction": {
+        "confidence": 0.46,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 2,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "416e7851bb13cf65ff0de4edc8dfb4e9faabb93b5a60ecd934e6805a2e9be819"
+        },
+        "latency_ms": 258.672,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.1,
+          "partially_supported": 0.5599999999999999,
+          "supported": 0.28,
+          "unsupported": 0.05,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 704,
+          "output_tokens": 65,
+          "total_tokens": 769
+        },
+        "verdict": "partially_supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_366_nda-20",
+      "prediction": {
+        "confidence": 0.8,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "df8591c4ccbd7e0c550bab95cb1396e775bd0b1a5dbb16b3a4b5f44858779255"
+        },
+        "latency_ms": 731.999,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.83,
+          "partially_supported": 0.01,
+          "supported": 0.0,
+          "unsupported": 0.14,
+          "unverifiable": 0.02
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 566,
+          "output_tokens": 65,
+          "total_tokens": 631
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_372_nda-13",
+      "prediction": {
+        "confidence": 0.15,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 2,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "45ffa8738488aab5481d49adf4c975425e8dd9ea69c116402c6c03e7653f74a3"
+        },
+        "latency_ms": 511.187,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.18,
+          "partially_supported": 0.26,
+          "supported": 0.31,
+          "unsupported": 0.23,
+          "unverifiable": 0.02
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 649,
+          "output_tokens": 62,
+          "total_tokens": 711
+        },
+        "verdict": "supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_380_nda-8",
+      "prediction": {
+        "confidence": 0.99,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "bfc7e4266bb7aff62efe638cc61a71609b4b1faa3e428db1d17824e96e28c870"
+        },
+        "latency_ms": 324.775,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 1.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 722,
+          "output_tokens": 62,
+          "total_tokens": 784
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_391_nda-5",
+      "prediction": {
+        "confidence": 0.37,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "294518f3ed0f36ec1de55adc158fc431c641b060abbc5929c8675e3d494dccdb"
+        },
+        "latency_ms": 531.905,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.51,
+          "partially_supported": 0.05,
+          "supported": 0.0,
+          "unsupported": 0.34,
+          "unverifiable": 0.1
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 735,
+          "output_tokens": 65,
+          "total_tokens": 800
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_393_nda-10",
+      "prediction": {
+        "confidence": 0.41,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "183c12d11e678c3f956cb9ae163a16cfc3e76d6a6591b7a49d6463eb206846b0"
+        },
+        "latency_ms": 277.583,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.09,
+          "partially_supported": 0.52,
+          "supported": 0.37,
+          "unsupported": 0.02,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 560,
+          "output_tokens": 65,
+          "total_tokens": 625
+        },
+        "verdict": "partially_supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_396_nda-2",
+      "prediction": {
+        "confidence": 0.95,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "0e9c3bc3baceb01f5d47e0d6eeade4534fbbacb7552c0bb6c70fd3898ac6d1b7"
+        },
+        "latency_ms": 661.194,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.96,
+          "partially_supported": 0.01,
+          "supported": 0.0,
+          "unsupported": 0.02,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 576,
+          "output_tokens": 65,
+          "total_tokens": 641
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_399_nda-18",
+      "prediction": {
+        "confidence": 0.51,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 4,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "5ff4d8102e42ec0d839392f425d0d3e6e33247703f867cadba9ac82118bbb000"
+        },
+        "latency_ms": 233.255,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.06,
+          "partially_supported": 0.61,
+          "supported": 0.25,
+          "unsupported": 0.07,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 806,
+          "output_tokens": 65,
+          "total_tokens": 871
+        },
+        "verdict": "partially_supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_399_nda-20",
+      "prediction": {
+        "confidence": 0.96,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "5871f62b0688ce387c1af98d514de078835d9dfb5cd66221404b95f354c3e8b3"
+        },
+        "latency_ms": 719.28,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.98,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.02,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 584,
+          "output_tokens": 65,
+          "total_tokens": 649
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_410_nda-2",
+      "prediction": {
+        "confidence": 0.92,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "7435f2b110c842f517160736c4c0f55400a3a2ed0f72987f9de89598a6a5f368"
+        },
+        "latency_ms": 197.517,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.93,
+          "partially_supported": 0.01,
+          "supported": 0.0,
+          "unsupported": 0.04,
+          "unverifiable": 0.02
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 652,
+          "output_tokens": 65,
+          "total_tokens": 717
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_415_nda-15",
+      "prediction": {
+        "confidence": 0.81,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "bdc58dc977e1f619bfab0d2a6b2225a2f1b0dcada68819332c1791be89fefde5"
+        },
+        "latency_ms": 308.516,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.85,
+          "partially_supported": 0.01,
+          "supported": 0.0,
+          "unsupported": 0.13,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 790,
+          "output_tokens": 65,
+          "total_tokens": 855
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_420_nda-16",
+      "prediction": {
+        "confidence": 0.95,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "3e2bbcb58987c999fa68247b985c22d472ec084376fe8e34e2ccaf3bf408b2e9"
+        },
+        "latency_ms": 196.733,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.01,
+          "partially_supported": 0.03,
+          "supported": 0.0,
+          "unsupported": 0.95,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 725,
+          "output_tokens": 62,
+          "total_tokens": 787
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_436_nda-2",
+      "prediction": {
+        "confidence": 0.99,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "cc36c600bcd2cd3f5438de07d3db0e697c9ed1ab9da49a6b20ed89a91187b2f6"
+        },
+        "latency_ms": 199.826,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.99,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.01,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 594,
+          "output_tokens": 65,
+          "total_tokens": 659
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_441_nda-19",
+      "prediction": {
+        "confidence": 0.37,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "6ebcf877cd48939d318458f75601cf78fee747934be08a24951148025ea86509"
+        },
+        "latency_ms": 207.975,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.5,
+          "supported": 0.16,
+          "unsupported": 0.25,
+          "unverifiable": 0.09
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 699,
+          "output_tokens": 65,
+          "total_tokens": 764
+        },
+        "verdict": "partially_supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_447_nda-2",
+      "prediction": {
+        "confidence": 0.95,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "a9f4777b36c5996b2532b0b196bdf9a123fc07b467c7b3fc6b08ce247f1b11d4"
+        },
+        "latency_ms": 717.422,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.96,
+          "partially_supported": 0.01,
+          "supported": 0.0,
+          "unsupported": 0.03,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 602,
+          "output_tokens": 65,
+          "total_tokens": 667
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_448_nda-2",
+      "prediction": {
+        "confidence": 1.0,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "3d92ce4d362b009562340cbd3659778a1955a885168ed6d6dc1a1378febd403d"
+        },
+        "latency_ms": 318.943,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 1.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 574,
+          "output_tokens": 65,
+          "total_tokens": 639
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_450_nda-11",
+      "prediction": {
+        "confidence": 0.5,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "6078e520361cfbab59092189893bbbc1053e78c9a77ebc2db987fe41bb0c3b15"
+        },
+        "latency_ms": 287.869,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.07,
+          "partially_supported": 0.32,
+          "supported": 0.61,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 587,
+          "output_tokens": 62,
+          "total_tokens": 649
+        },
+        "verdict": "supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_458_nda-16",
+      "prediction": {
+        "confidence": 0.89,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "1681743c53d8af858a71c5c3f69b907bfac0f0a7a2e6461fc656d309e62a3d7f"
+        },
+        "latency_ms": 966.287,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.03,
+          "partially_supported": 0.91,
+          "supported": 0.03,
+          "unsupported": 0.03,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 640,
+          "output_tokens": 65,
+          "total_tokens": 705
+        },
+        "verdict": "partially_supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_463_nda-15",
+      "prediction": {
+        "confidence": 0.21,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 2,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "6a693133b6a97d39555eff9d411a380009447e6427747452c29a194e31f8a8a2"
+        },
+        "latency_ms": 464.44,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.22,
+          "partially_supported": 0.31,
+          "supported": 0.07,
+          "unsupported": 0.37,
+          "unverifiable": 0.03
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 605,
+          "output_tokens": 62,
+          "total_tokens": 667
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_463_nda-2",
+      "prediction": {
+        "confidence": 0.99,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "ff72d2dc1adda44e7a233a85ee9b49496b901b417a8f5b5f2dd45ea50ebc2e2d"
+        },
+        "latency_ms": 510.814,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.99,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.01,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 556,
+          "output_tokens": 65,
+          "total_tokens": 621
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_467_nda-4",
+      "prediction": {
+        "confidence": 0.74,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "d28ce35c85915f11e62a6f238bf45e36c6f18c49b4ab754c235daa84c07e036d"
+        },
+        "latency_ms": 1119.772,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.19,
+          "supported": 0.01,
+          "unsupported": 0.79,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 812,
+          "output_tokens": 62,
+          "total_tokens": 874
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_467_nda-5",
+      "prediction": {
+        "confidence": 0.9,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "e28fb6ab11fb119fad30a0831f52bfa6f7443cc51710a007f1c921d954c51256"
+        },
+        "latency_ms": 310.445,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.08,
+          "supported": 0.92,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 611,
+          "output_tokens": 62,
+          "total_tokens": 673
+        },
+        "verdict": "supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_469_nda-2",
+      "prediction": {
+        "confidence": 1.0,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 2,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "629ff5b711de264b3f8fb2fdfd1d8d4b668fb20eec87e4176a8108907abdadef"
+        },
+        "latency_ms": 222.401,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 1.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 665,
+          "output_tokens": 65,
+          "total_tokens": 730
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_474_nda-3",
+      "prediction": {
+        "confidence": 0.65,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "f43457642d0b5344b5049809a9d4d51e3433bbe45c85d95a055ed6de70e1c6d5"
+        },
+        "latency_ms": 588.159,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.01,
+          "partially_supported": 0.1,
+          "supported": 0.01,
+          "unsupported": 0.71,
+          "unverifiable": 0.17
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 746,
+          "output_tokens": 62,
+          "total_tokens": 808
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_475_nda-18",
+      "prediction": {
+        "confidence": 0.99,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "df624ccffb19584b268e1a08e1ed1097872b455e730d2abe69ca2e94dfbf0928"
+        },
+        "latency_ms": 347.328,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.99,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 794,
+          "output_tokens": 62,
+          "total_tokens": 856
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_492_nda-13",
+      "prediction": {
+        "confidence": 0.53,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 2,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "67a930bc5c8cd3f85a14eddfba77a0a5dc674471ac341934a17d5d69fa1932b9"
+        },
+        "latency_ms": 672.294,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.01,
+          "partially_supported": 0.29,
+          "supported": 0.63,
+          "unsupported": 0.06,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 624,
+          "output_tokens": 62,
+          "total_tokens": 686
+        },
+        "verdict": "supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_519_nda-20",
+      "prediction": {
+        "confidence": 0.42,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "d18d454147a1a8172fa30345d2924d3c1c39e179e27aa1e195a3a25361c01177"
+        },
+        "latency_ms": 215.686,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.02,
+          "partially_supported": 0.42,
+          "supported": 0.53,
+          "unsupported": 0.02,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 615,
+          "output_tokens": 62,
+          "total_tokens": 677
+        },
+        "verdict": "supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_545_nda-17",
+      "prediction": {
+        "confidence": 0.56,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "0143ae1e494dc48fd8bda44c6a47c84534641097c70aa1ad55c3faee23ea4f1a"
+        },
+        "latency_ms": 181.11,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.19,
+          "partially_supported": 0.07,
+          "supported": 0.0,
+          "unsupported": 0.65,
+          "unverifiable": 0.09
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 793,
+          "output_tokens": 62,
+          "total_tokens": 855
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_553_nda-7",
+      "prediction": {
+        "confidence": 0.66,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "2fa4ec352475c35840b12054345b2a8971a62b51d077b84146c9d7dafec28142"
+        },
+        "latency_ms": 490.267,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.73,
+          "partially_supported": 0.01,
+          "supported": 0.0,
+          "unsupported": 0.25,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 794,
+          "output_tokens": 65,
+          "total_tokens": 859
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_569_nda-1",
+      "prediction": {
+        "confidence": 0.95,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "abf0506bbc11a368cc9bd5c929298487378ede9fc184c9f3428d0c4b98ba3510"
+        },
+        "latency_ms": 291.867,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.96,
+          "unverifiable": 0.04
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 726,
+          "output_tokens": 62,
+          "total_tokens": 788
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_573_nda-1",
+      "prediction": {
+        "confidence": 0.39,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "51c46b9435071d273c43c09c922b4ce74faf20d48b0b16b4b8317d1f255d35c8"
+        },
+        "latency_ms": 385.268,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.08,
+          "partially_supported": 0.51,
+          "supported": 0.3,
+          "unsupported": 0.1,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 630,
+          "output_tokens": 65,
+          "total_tokens": 695
+        },
+        "verdict": "partially_supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_580_nda-2",
+      "prediction": {
+        "confidence": 1.0,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "77764ce6b47d294bb50dc1c7126850e88b501e07ae032085ce5aa014f58af17b"
+        },
+        "latency_ms": 363.991,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 1.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 864,
+          "output_tokens": 65,
+          "total_tokens": 929
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_609_nda-1",
+      "prediction": {
+        "confidence": 0.48,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "461575485421ca2fe4f6660b155414fc9df49305e3292f09f46320c982b0add4"
+        },
+        "latency_ms": 655.393,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.05,
+          "partially_supported": 0.58,
+          "supported": 0.3,
+          "unsupported": 0.06,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 561,
+          "output_tokens": 65,
+          "total_tokens": 626
+        },
+        "verdict": "partially_supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_609_nda-2",
+      "prediction": {
+        "confidence": 0.39,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "68be872e0767223f82210d4d55207dc350446c0d7a534c16331d7d514b9da512"
+        },
+        "latency_ms": 258.263,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.51,
+          "partially_supported": 0.04,
+          "supported": 0.0,
+          "unsupported": 0.42,
+          "unverifiable": 0.03
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 680,
+          "output_tokens": 65,
+          "total_tokens": 745
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_613_nda-2",
+      "prediction": {
+        "confidence": 0.94,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "8a88c397da1594bea793542207491ab946ab2403b6bf64bd362934bc6fffbfb5"
+        },
+        "latency_ms": 451.496,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.96,
+          "partially_supported": 0.01,
+          "supported": 0.0,
+          "unsupported": 0.02,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 591,
+          "output_tokens": 65,
+          "total_tokens": 656
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_614_nda-11",
+      "prediction": {
+        "confidence": 0.97,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "0d1de4a0fc583d674bad015663286c2ecc35bdbc2c75a34d28fc5ccc079c7c96"
+        },
+        "latency_ms": 259.938,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.02,
+          "supported": 0.0,
+          "unsupported": 0.98,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 773,
+          "output_tokens": 62,
+          "total_tokens": 835
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_617_nda-2",
+      "prediction": {
+        "confidence": 1.0,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "40f36205fea54e2563a78aa2f84e7077e65aa8d246c5f0b77697f427de16b292"
+        },
+        "latency_ms": 214.328,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 1.0,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 618,
+          "output_tokens": 65,
+          "total_tokens": 683
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_618_nda-2",
+      "prediction": {
+        "confidence": 0.53,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 1,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "0852a6072ec6eeaf4613099ff0f63ab17524f4af3e6fe195fd67947b2f2e7e28"
+        },
+        "latency_ms": 242.265,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.63,
+          "partially_supported": 0.0,
+          "supported": 0.0,
+          "unsupported": 0.25,
+          "unverifiable": 0.12
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 656,
+          "output_tokens": 65,
+          "total_tokens": 721
+        },
+        "verdict": "contradicted"
+      }
+    },
+    {
+      "case_id": "contractnli_train_623_nda-20",
+      "prediction": {
+        "confidence": 0.53,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "d5f3b80dd9d3d0bc8d93e9c08cced7bbc2293cad350973bf93bf429aac5dfc2f"
+        },
+        "latency_ms": 356.112,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.03,
+          "partially_supported": 0.21,
+          "supported": 0.01,
+          "unsupported": 0.62,
+          "unverifiable": 0.13
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 756,
+          "output_tokens": 62,
+          "total_tokens": 818
+        },
+        "verdict": "unsupported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_89_nda-19",
+      "prediction": {
+        "confidence": 1.0,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 3,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "cb06d8e13902fcb19637ca26d8a3f88f76f66fda13b9ae98f1b84b111eb079b8"
+        },
+        "latency_ms": 276.252,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.0,
+          "partially_supported": 0.0,
+          "supported": 1.0,
+          "unsupported": 0.0,
+          "unverifiable": 0.0
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 655,
+          "output_tokens": 62,
+          "total_tokens": 717
+        },
+        "verdict": "supported"
+      }
+    },
+    {
+      "case_id": "contractnli_train_95_nda-20",
+      "prediction": {
+        "confidence": 0.3,
+        "conflicting_facts": [],
+        "input_audit": {
+          "context_metadata_sent": false,
+          "evaluation_label_sent": false,
+          "query_sent": false,
+          "selected_evidence_count": 2,
+          "sent_fields": [
+            "claim",
+            "selected_evidence"
+          ],
+          "state_sha256": "89d22304c8d96607454037168df1980dee7b3c5d9dc639ee6380248ae75249ef"
+        },
+        "latency_ms": 431.695,
+        "matched_facts": [],
+        "missing_facts": [],
+        "probabilities": {
+          "contradicted": 0.44,
+          "partially_supported": 0.25,
+          "supported": 0.11,
+          "unsupported": 0.19,
+          "unverifiable": 0.01
+        },
+        "reason": null,
+        "requested_model": "jev-latest",
+        "resolved_model": "jev-1.13.0",
+        "usage": {
+          "input_tokens": 720,
+          "output_tokens": 65,
+          "total_tokens": 785
+        },
+        "verdict": "contradicted"
+      }
+    }
+  ],
+  "schema_version": "contexttrace-requirement-v6-jev-result-1.0",
+  "split": "cascade_calibration",
+  "stable_defaults_changed": false
+}

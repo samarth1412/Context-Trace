@@ -1,0 +1,33 @@
+{
+  "contractnli_test_accessed": false,
+  "decision_order": [
+    "Run v3 and v5 locally on the same selected evidence.",
+    "Accept supported only when both entailment probabilities meet local_supported_threshold.",
+    "Accept missing only when both entailment probabilities are at or below local_missing_threshold.",
+    "Under local_only, abstain on every remaining case without network access.",
+    "When remote use is explicitly enabled, route remaining cases to one Jev Choice judgment.",
+    "Accept routed support only when Jev selects supported and its supported probability meets jev_supported_probability.",
+    "Require review for every supported decision and every low-confidence Jev decision."
+  ],
+  "evaluation_used_for_selection": false,
+  "experiment": "contexttrace_v6_uncertainty_cascade",
+  "policy": {
+    "always_review_supported": true,
+    "jev_supported_probability": 0.5,
+    "local_missing_threshold": 0.5,
+    "local_supported_threshold": 0.8,
+    "review_confidence": 0.8
+  },
+  "policy_id": "c144dd8acef3eebcc3842339b9d88edcb774ec04a147f32f40502995e3023e49",
+  "promotion_gates": {
+    "accuracy_at_least_v3_threshold_0_90": true,
+    "false_positive_rate_maximum": 0.05,
+    "local_automatic_false_positive_rate_maximum": 0.05,
+    "positive_recall_at_least_v3_threshold_0_90": true,
+    "positive_recall_minimum": 0.5
+  },
+  "remote_provider_default_enabled": false,
+  "schema_version": "contexttrace-requirement-v6-cascade-policy-1.0",
+  "selection_split": "cascade_calibration",
+  "stable_defaults_changed": false
+}

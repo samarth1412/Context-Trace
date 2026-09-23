@@ -1,0 +1,2675 @@
+{
+  "baselines": {
+    "v3_threshold_0_90": {
+      "accuracy": 0.8111,
+      "cases": 90,
+      "confusion": {
+        "negative": {
+          "negative": 60,
+          "positive": 0
+        },
+        "positive": {
+          "negative": 17,
+          "positive": 13
+        }
+      },
+      "false_positive_rate": 0.0,
+      "macro_f1": 0.7403,
+      "negative_recall": 1.0,
+      "positive_recall": 0.4333,
+      "threshold": 0.9
+    },
+    "v5_threshold_0_90": {
+      "accuracy": 0.8,
+      "cases": 90,
+      "confusion": {
+        "negative": {
+          "negative": 60,
+          "positive": 0
+        },
+        "positive": {
+          "negative": 18,
+          "positive": 12
+        }
+      },
+      "false_positive_rate": 0.0,
+      "macro_f1": 0.7205,
+      "negative_recall": 1.0,
+      "positive_recall": 0.4,
+      "threshold": 0.9
+    }
+  },
+  "candidate_count": 140,
+  "candidates": [
+    {
+      "local_automatic_coverage": 0.5444,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8778,
+      "optional_false_positive_rate": 0.0167,
+      "optional_macro_f1": 0.8495,
+      "optional_positive_recall": 0.6667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4556,
+      "remote_calls": 41
+    },
+    {
+      "local_automatic_coverage": 0.5444,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8667,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8295,
+      "optional_positive_recall": 0.6,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4556,
+      "remote_calls": 41
+    },
+    {
+      "local_automatic_coverage": 0.5444,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4556,
+      "remote_calls": 41
+    },
+    {
+      "local_automatic_coverage": 0.5444,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4556,
+      "remote_calls": 41
+    },
+    {
+      "local_automatic_coverage": 0.5444,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4556,
+      "remote_calls": 41
+    },
+    {
+      "local_automatic_coverage": 0.5444,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4556,
+      "remote_calls": 41
+    },
+    {
+      "local_automatic_coverage": 0.5444,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8444,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7956,
+      "optional_positive_recall": 0.5333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4556,
+      "remote_calls": 41
+    },
+    {
+      "local_automatic_coverage": 0.5444,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8778,
+      "optional_false_positive_rate": 0.0167,
+      "optional_macro_f1": 0.8495,
+      "optional_positive_recall": 0.6667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4556,
+      "remote_calls": 41
+    },
+    {
+      "local_automatic_coverage": 0.5444,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8667,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8295,
+      "optional_positive_recall": 0.6,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4556,
+      "remote_calls": 41
+    },
+    {
+      "local_automatic_coverage": 0.5444,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4556,
+      "remote_calls": 41
+    },
+    {
+      "local_automatic_coverage": 0.5444,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4556,
+      "remote_calls": 41
+    },
+    {
+      "local_automatic_coverage": 0.5444,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4556,
+      "remote_calls": 41
+    },
+    {
+      "local_automatic_coverage": 0.5444,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4556,
+      "remote_calls": 41
+    },
+    {
+      "local_automatic_coverage": 0.5444,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8444,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7956,
+      "optional_positive_recall": 0.5333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4556,
+      "remote_calls": 41
+    },
+    {
+      "local_automatic_coverage": 0.5222,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8667,
+      "optional_false_positive_rate": 0.0167,
+      "optional_macro_f1": 0.8338,
+      "optional_positive_recall": 0.6333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4778,
+      "remote_calls": 43
+    },
+    {
+      "local_automatic_coverage": 0.5222,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4778,
+      "remote_calls": 43
+    },
+    {
+      "local_automatic_coverage": 0.5222,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4778,
+      "remote_calls": 43
+    },
+    {
+      "local_automatic_coverage": 0.5222,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4778,
+      "remote_calls": 43
+    },
+    {
+      "local_automatic_coverage": 0.5222,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4778,
+      "remote_calls": 43
+    },
+    {
+      "local_automatic_coverage": 0.5222,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4778,
+      "remote_calls": 43
+    },
+    {
+      "local_automatic_coverage": 0.5222,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8222,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7594,
+      "optional_positive_recall": 0.4667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.4778,
+      "remote_calls": 43
+    },
+    {
+      "local_automatic_coverage": 0.5,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8444,
+      "optional_false_positive_rate": 0.0167,
+      "optional_macro_f1": 0.8011,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.5,
+      "remote_calls": 45
+    },
+    {
+      "local_automatic_coverage": 0.5,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.5,
+      "remote_calls": 45
+    },
+    {
+      "local_automatic_coverage": 0.5,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8111,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7403,
+      "optional_positive_recall": 0.4333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.5,
+      "remote_calls": 45
+    },
+    {
+      "local_automatic_coverage": 0.5,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8111,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7403,
+      "optional_positive_recall": 0.4333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.5,
+      "remote_calls": 45
+    },
+    {
+      "local_automatic_coverage": 0.5,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8111,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7403,
+      "optional_positive_recall": 0.4333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.5,
+      "remote_calls": 45
+    },
+    {
+      "local_automatic_coverage": 0.5,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8111,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7403,
+      "optional_positive_recall": 0.4333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.5,
+      "remote_calls": 45
+    },
+    {
+      "local_automatic_coverage": 0.5,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7205,
+      "optional_positive_recall": 0.4,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_missing_threshold": 0.1,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.5,
+      "remote_calls": 45
+    },
+    {
+      "local_automatic_coverage": 0.6111,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8778,
+      "optional_false_positive_rate": 0.0167,
+      "optional_macro_f1": 0.8495,
+      "optional_positive_recall": 0.6667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3889,
+      "remote_calls": 35
+    },
+    {
+      "local_automatic_coverage": 0.6111,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8667,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8295,
+      "optional_positive_recall": 0.6,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3889,
+      "remote_calls": 35
+    },
+    {
+      "local_automatic_coverage": 0.6111,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3889,
+      "remote_calls": 35
+    },
+    {
+      "local_automatic_coverage": 0.6111,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3889,
+      "remote_calls": 35
+    },
+    {
+      "local_automatic_coverage": 0.6111,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3889,
+      "remote_calls": 35
+    },
+    {
+      "local_automatic_coverage": 0.6111,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3889,
+      "remote_calls": 35
+    },
+    {
+      "local_automatic_coverage": 0.6111,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8444,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7956,
+      "optional_positive_recall": 0.5333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3889,
+      "remote_calls": 35
+    },
+    {
+      "local_automatic_coverage": 0.6111,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8778,
+      "optional_false_positive_rate": 0.0167,
+      "optional_macro_f1": 0.8495,
+      "optional_positive_recall": 0.6667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3889,
+      "remote_calls": 35
+    },
+    {
+      "local_automatic_coverage": 0.6111,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8667,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8295,
+      "optional_positive_recall": 0.6,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3889,
+      "remote_calls": 35
+    },
+    {
+      "local_automatic_coverage": 0.6111,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3889,
+      "remote_calls": 35
+    },
+    {
+      "local_automatic_coverage": 0.6111,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3889,
+      "remote_calls": 35
+    },
+    {
+      "local_automatic_coverage": 0.6111,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3889,
+      "remote_calls": 35
+    },
+    {
+      "local_automatic_coverage": 0.6111,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3889,
+      "remote_calls": 35
+    },
+    {
+      "local_automatic_coverage": 0.6111,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8444,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7956,
+      "optional_positive_recall": 0.5333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3889,
+      "remote_calls": 35
+    },
+    {
+      "local_automatic_coverage": 0.5889,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8667,
+      "optional_false_positive_rate": 0.0167,
+      "optional_macro_f1": 0.8338,
+      "optional_positive_recall": 0.6333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4111,
+      "remote_calls": 37
+    },
+    {
+      "local_automatic_coverage": 0.5889,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4111,
+      "remote_calls": 37
+    },
+    {
+      "local_automatic_coverage": 0.5889,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4111,
+      "remote_calls": 37
+    },
+    {
+      "local_automatic_coverage": 0.5889,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4111,
+      "remote_calls": 37
+    },
+    {
+      "local_automatic_coverage": 0.5889,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4111,
+      "remote_calls": 37
+    },
+    {
+      "local_automatic_coverage": 0.5889,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4111,
+      "remote_calls": 37
+    },
+    {
+      "local_automatic_coverage": 0.5889,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8222,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7594,
+      "optional_positive_recall": 0.4667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.4111,
+      "remote_calls": 37
+    },
+    {
+      "local_automatic_coverage": 0.5667,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8444,
+      "optional_false_positive_rate": 0.0167,
+      "optional_macro_f1": 0.8011,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4333,
+      "remote_calls": 39
+    },
+    {
+      "local_automatic_coverage": 0.5667,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.4333,
+      "remote_calls": 39
+    },
+    {
+      "local_automatic_coverage": 0.5667,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8111,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7403,
+      "optional_positive_recall": 0.4333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.4333,
+      "remote_calls": 39
+    },
+    {
+      "local_automatic_coverage": 0.5667,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8111,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7403,
+      "optional_positive_recall": 0.4333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.4333,
+      "remote_calls": 39
+    },
+    {
+      "local_automatic_coverage": 0.5667,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8111,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7403,
+      "optional_positive_recall": 0.4333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.4333,
+      "remote_calls": 39
+    },
+    {
+      "local_automatic_coverage": 0.5667,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8111,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7403,
+      "optional_positive_recall": 0.4333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.4333,
+      "remote_calls": 39
+    },
+    {
+      "local_automatic_coverage": 0.5667,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7205,
+      "optional_positive_recall": 0.4,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_missing_threshold": 0.2,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.4333,
+      "remote_calls": 39
+    },
+    {
+      "local_automatic_coverage": 0.6667,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8778,
+      "optional_false_positive_rate": 0.0167,
+      "optional_macro_f1": 0.8495,
+      "optional_positive_recall": 0.6667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3333,
+      "remote_calls": 30
+    },
+    {
+      "local_automatic_coverage": 0.6667,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8667,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8295,
+      "optional_positive_recall": 0.6,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3333,
+      "remote_calls": 30
+    },
+    {
+      "local_automatic_coverage": 0.6667,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3333,
+      "remote_calls": 30
+    },
+    {
+      "local_automatic_coverage": 0.6667,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3333,
+      "remote_calls": 30
+    },
+    {
+      "local_automatic_coverage": 0.6667,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3333,
+      "remote_calls": 30
+    },
+    {
+      "local_automatic_coverage": 0.6667,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3333,
+      "remote_calls": 30
+    },
+    {
+      "local_automatic_coverage": 0.6667,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8444,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7956,
+      "optional_positive_recall": 0.5333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3333,
+      "remote_calls": 30
+    },
+    {
+      "local_automatic_coverage": 0.6667,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8778,
+      "optional_false_positive_rate": 0.0167,
+      "optional_macro_f1": 0.8495,
+      "optional_positive_recall": 0.6667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3333,
+      "remote_calls": 30
+    },
+    {
+      "local_automatic_coverage": 0.6667,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8667,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8295,
+      "optional_positive_recall": 0.6,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3333,
+      "remote_calls": 30
+    },
+    {
+      "local_automatic_coverage": 0.6667,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3333,
+      "remote_calls": 30
+    },
+    {
+      "local_automatic_coverage": 0.6667,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3333,
+      "remote_calls": 30
+    },
+    {
+      "local_automatic_coverage": 0.6667,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3333,
+      "remote_calls": 30
+    },
+    {
+      "local_automatic_coverage": 0.6667,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3333,
+      "remote_calls": 30
+    },
+    {
+      "local_automatic_coverage": 0.6667,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8444,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7956,
+      "optional_positive_recall": 0.5333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3333,
+      "remote_calls": 30
+    },
+    {
+      "local_automatic_coverage": 0.6444,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8667,
+      "optional_false_positive_rate": 0.0167,
+      "optional_macro_f1": 0.8338,
+      "optional_positive_recall": 0.6333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3556,
+      "remote_calls": 32
+    },
+    {
+      "local_automatic_coverage": 0.6444,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3556,
+      "remote_calls": 32
+    },
+    {
+      "local_automatic_coverage": 0.6444,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3556,
+      "remote_calls": 32
+    },
+    {
+      "local_automatic_coverage": 0.6444,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3556,
+      "remote_calls": 32
+    },
+    {
+      "local_automatic_coverage": 0.6444,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3556,
+      "remote_calls": 32
+    },
+    {
+      "local_automatic_coverage": 0.6444,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3556,
+      "remote_calls": 32
+    },
+    {
+      "local_automatic_coverage": 0.6444,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8222,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7594,
+      "optional_positive_recall": 0.4667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.3556,
+      "remote_calls": 32
+    },
+    {
+      "local_automatic_coverage": 0.6222,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8444,
+      "optional_false_positive_rate": 0.0167,
+      "optional_macro_f1": 0.8011,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3778,
+      "remote_calls": 34
+    },
+    {
+      "local_automatic_coverage": 0.6222,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3778,
+      "remote_calls": 34
+    },
+    {
+      "local_automatic_coverage": 0.6222,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8111,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7403,
+      "optional_positive_recall": 0.4333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.3778,
+      "remote_calls": 34
+    },
+    {
+      "local_automatic_coverage": 0.6222,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8111,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7403,
+      "optional_positive_recall": 0.4333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.3778,
+      "remote_calls": 34
+    },
+    {
+      "local_automatic_coverage": 0.6222,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8111,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7403,
+      "optional_positive_recall": 0.4333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.3778,
+      "remote_calls": 34
+    },
+    {
+      "local_automatic_coverage": 0.6222,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8111,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7403,
+      "optional_positive_recall": 0.4333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.3778,
+      "remote_calls": 34
+    },
+    {
+      "local_automatic_coverage": 0.6222,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7205,
+      "optional_positive_recall": 0.4,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_missing_threshold": 0.3,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.3778,
+      "remote_calls": 34
+    },
+    {
+      "local_automatic_coverage": 0.7333,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8778,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8458,
+      "optional_positive_recall": 0.6333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2667,
+      "remote_calls": 24
+    },
+    {
+      "local_automatic_coverage": 0.7333,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2667,
+      "remote_calls": 24
+    },
+    {
+      "local_automatic_coverage": 0.7333,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8444,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7956,
+      "optional_positive_recall": 0.5333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2667,
+      "remote_calls": 24
+    },
+    {
+      "local_automatic_coverage": 0.7333,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8444,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7956,
+      "optional_positive_recall": 0.5333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2667,
+      "remote_calls": 24
+    },
+    {
+      "local_automatic_coverage": 0.7333,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8444,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7956,
+      "optional_positive_recall": 0.5333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2667,
+      "remote_calls": 24
+    },
+    {
+      "local_automatic_coverage": 0.7333,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8444,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7956,
+      "optional_positive_recall": 0.5333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2667,
+      "remote_calls": 24
+    },
+    {
+      "local_automatic_coverage": 0.7333,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2667,
+      "remote_calls": 24
+    },
+    {
+      "local_automatic_coverage": 0.7333,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8778,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8458,
+      "optional_positive_recall": 0.6333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2667,
+      "remote_calls": 24
+    },
+    {
+      "local_automatic_coverage": 0.7333,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2667,
+      "remote_calls": 24
+    },
+    {
+      "local_automatic_coverage": 0.7333,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8444,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7956,
+      "optional_positive_recall": 0.5333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2667,
+      "remote_calls": 24
+    },
+    {
+      "local_automatic_coverage": 0.7333,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8444,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7956,
+      "optional_positive_recall": 0.5333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2667,
+      "remote_calls": 24
+    },
+    {
+      "local_automatic_coverage": 0.7333,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8444,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7956,
+      "optional_positive_recall": 0.5333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2667,
+      "remote_calls": 24
+    },
+    {
+      "local_automatic_coverage": 0.7333,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8444,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7956,
+      "optional_positive_recall": 0.5333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2667,
+      "remote_calls": 24
+    },
+    {
+      "local_automatic_coverage": 0.7333,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2667,
+      "remote_calls": 24
+    },
+    {
+      "local_automatic_coverage": 0.7111,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8667,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8295,
+      "optional_positive_recall": 0.6,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2889,
+      "remote_calls": 26
+    },
+    {
+      "local_automatic_coverage": 0.7111,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8444,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7956,
+      "optional_positive_recall": 0.5333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2889,
+      "remote_calls": 26
+    },
+    {
+      "local_automatic_coverage": 0.7111,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8222,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7594,
+      "optional_positive_recall": 0.4667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.2889,
+      "remote_calls": 26
+    },
+    {
+      "local_automatic_coverage": 0.7111,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8222,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7594,
+      "optional_positive_recall": 0.4667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.2889,
+      "remote_calls": 26
+    },
+    {
+      "local_automatic_coverage": 0.7111,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8222,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7594,
+      "optional_positive_recall": 0.4667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.2889,
+      "remote_calls": 26
+    },
+    {
+      "local_automatic_coverage": 0.7111,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8222,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7594,
+      "optional_positive_recall": 0.4667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.2889,
+      "remote_calls": 26
+    },
+    {
+      "local_automatic_coverage": 0.7111,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8111,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7403,
+      "optional_positive_recall": 0.4333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.2889,
+      "remote_calls": 26
+    },
+    {
+      "local_automatic_coverage": 0.6889,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8444,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7956,
+      "optional_positive_recall": 0.5333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.3111,
+      "remote_calls": 28
+    },
+    {
+      "local_automatic_coverage": 0.6889,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8222,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7594,
+      "optional_positive_recall": 0.4667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.3111,
+      "remote_calls": 28
+    },
+    {
+      "local_automatic_coverage": 0.6889,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7205,
+      "optional_positive_recall": 0.4,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.3111,
+      "remote_calls": 28
+    },
+    {
+      "local_automatic_coverage": 0.6889,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7205,
+      "optional_positive_recall": 0.4,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.3111,
+      "remote_calls": 28
+    },
+    {
+      "local_automatic_coverage": 0.6889,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7205,
+      "optional_positive_recall": 0.4,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.3111,
+      "remote_calls": 28
+    },
+    {
+      "local_automatic_coverage": 0.6889,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7205,
+      "optional_positive_recall": 0.4,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.3111,
+      "remote_calls": 28
+    },
+    {
+      "local_automatic_coverage": 0.6889,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.7889,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.6999,
+      "optional_positive_recall": 0.3667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_missing_threshold": 0.4,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.3111,
+      "remote_calls": 28
+    },
+    {
+      "local_automatic_coverage": 0.7778,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2222,
+      "remote_calls": 20
+    },
+    {
+      "local_automatic_coverage": 0.7778,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8444,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7956,
+      "optional_positive_recall": 0.5333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2222,
+      "remote_calls": 20
+    },
+    {
+      "local_automatic_coverage": 0.7778,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2222,
+      "remote_calls": 20
+    },
+    {
+      "local_automatic_coverage": 0.7778,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2222,
+      "remote_calls": 20
+    },
+    {
+      "local_automatic_coverage": 0.7778,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2222,
+      "remote_calls": 20
+    },
+    {
+      "local_automatic_coverage": 0.7778,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2222,
+      "remote_calls": 20
+    },
+    {
+      "local_automatic_coverage": 0.7778,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8222,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7594,
+      "optional_positive_recall": 0.4667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.8,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.2222,
+      "remote_calls": 20
+    },
+    {
+      "local_automatic_coverage": 0.7778,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8556,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.8128,
+      "optional_positive_recall": 0.5667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2222,
+      "remote_calls": 20
+    },
+    {
+      "local_automatic_coverage": 0.7778,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8444,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7956,
+      "optional_positive_recall": 0.5333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2222,
+      "remote_calls": 20
+    },
+    {
+      "local_automatic_coverage": 0.7778,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2222,
+      "remote_calls": 20
+    },
+    {
+      "local_automatic_coverage": 0.7778,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2222,
+      "remote_calls": 20
+    },
+    {
+      "local_automatic_coverage": 0.7778,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2222,
+      "remote_calls": 20
+    },
+    {
+      "local_automatic_coverage": 0.7778,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2222,
+      "remote_calls": 20
+    },
+    {
+      "local_automatic_coverage": 0.7778,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8222,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7594,
+      "optional_positive_recall": 0.4667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.85,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.2222,
+      "remote_calls": 20
+    },
+    {
+      "local_automatic_coverage": 0.7556,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8444,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7956,
+      "optional_positive_recall": 0.5333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2444,
+      "remote_calls": 22
+    },
+    {
+      "local_automatic_coverage": 0.7556,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8333,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7778,
+      "optional_positive_recall": 0.5,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": true,
+      "remote_call_rate": 0.2444,
+      "remote_calls": 22
+    },
+    {
+      "local_automatic_coverage": 0.7556,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8111,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7403,
+      "optional_positive_recall": 0.4333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.2444,
+      "remote_calls": 22
+    },
+    {
+      "local_automatic_coverage": 0.7556,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8111,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7403,
+      "optional_positive_recall": 0.4333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.2444,
+      "remote_calls": 22
+    },
+    {
+      "local_automatic_coverage": 0.7556,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8111,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7403,
+      "optional_positive_recall": 0.4333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.2444,
+      "remote_calls": 22
+    },
+    {
+      "local_automatic_coverage": 0.7556,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8111,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7403,
+      "optional_positive_recall": 0.4333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.2444,
+      "remote_calls": 22
+    },
+    {
+      "local_automatic_coverage": 0.7556,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7205,
+      "optional_positive_recall": 0.4,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.9,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.2444,
+      "remote_calls": 22
+    },
+    {
+      "local_automatic_coverage": 0.7333,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8222,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7594,
+      "optional_positive_recall": 0.4667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.5,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.2667,
+      "remote_calls": 24
+    },
+    {
+      "local_automatic_coverage": 0.7333,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.8111,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.7403,
+      "optional_positive_recall": 0.4333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.6,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.2667,
+      "remote_calls": 24
+    },
+    {
+      "local_automatic_coverage": 0.7333,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.7889,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.6999,
+      "optional_positive_recall": 0.3667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.7,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.2667,
+      "remote_calls": 24
+    },
+    {
+      "local_automatic_coverage": 0.7333,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.7889,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.6999,
+      "optional_positive_recall": 0.3667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.75,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.2667,
+      "remote_calls": 24
+    },
+    {
+      "local_automatic_coverage": 0.7333,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.7889,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.6999,
+      "optional_positive_recall": 0.3667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.8,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.2667,
+      "remote_calls": 24
+    },
+    {
+      "local_automatic_coverage": 0.7333,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.7889,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.6999,
+      "optional_positive_recall": 0.3667,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.85,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.2667,
+      "remote_calls": 24
+    },
+    {
+      "local_automatic_coverage": 0.7333,
+      "local_automatic_false_positive_rate": 0.0,
+      "optional_accuracy": 0.7778,
+      "optional_false_positive_rate": 0.0,
+      "optional_macro_f1": 0.6786,
+      "optional_positive_recall": 0.3333,
+      "policy": {
+        "always_review_supported": true,
+        "jev_supported_probability": 0.9,
+        "local_missing_threshold": 0.5,
+        "local_supported_threshold": 0.95,
+        "review_confidence": 0.8
+      },
+      "promotion_gates_met": false,
+      "remote_call_rate": 0.2667,
+      "remote_calls": 24
+    }
+  ],
+  "dataset_sha256": "6af791c26659f7ee6744628c34520f2d8a942d7c241fb5037ead41a52725e3b3",
+  "evaluation_used_for_selection": false,
+  "jev_result_sha256": "4d968776408842884985a2526200bd3bb8bd05485193f09431782fd5fa4a7e67",
+  "local_scores_sha256": "24354521c1cb58fb8b75d03332a3dae1f612eaa0a8175ffded55f3156b04a9d5",
+  "policy_id": "c144dd8acef3eebcc3842339b9d88edcb774ec04a147f32f40502995e3023e49",
+  "qualifying_candidate_count": 97,
+  "schema_version": "contexttrace-requirement-v6-cascade-calibration-1.0",
+  "selected": {
+    "local_only": {
+      "metrics": {
+        "abstentions": 20,
+        "automatic_accuracy": 0.9143,
+        "automatic_cases": 70,
+        "automatic_coverage": 0.7778,
+        "automatic_false_positive_rate": 0.0,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "cases": 90
+      },
+      "network_calls": 0,
+      "privacy_behavior": "uncertain cases abstain without remote inference"
+    },
+    "optional_jev": {
+      "metrics": {
+        "accuracy": 0.8556,
+        "cases": 90,
+        "confusion": {
+          "negative": {
+            "negative": 60,
+            "positive": 0
+          },
+          "positive": {
+            "negative": 13,
+            "positive": 17
+          }
+        },
+        "false_positive_rate": 0.0,
+        "false_support_case_ids": [],
+        "macro_f1": 0.8128,
+        "negative_recall": 1.0,
+        "positive_recall": 0.5667,
+        "relation_breakdown": {
+          "Contradiction": {
+            "accuracy": 1.0,
+            "cases": 30,
+            "predicted_supported": 0
+          },
+          "Entailment": {
+            "accuracy": 0.5667,
+            "cases": 30,
+            "predicted_supported": 17
+          },
+          "NotMentioned": {
+            "accuracy": 1.0,
+            "cases": 30,
+            "predicted_supported": 0
+          }
+        }
+      },
+      "operations": {
+        "automatic_accuracy": 0.8906,
+        "automatic_coverage": 0.7111,
+        "automatic_false_support_case_ids": [],
+        "automatic_false_support_count": 0,
+        "jev_latency_ms": {
+          "mean": 407.408,
+          "p95": 973.961,
+          "total": 8148.168
+        },
+        "remote_call_rate": 0.2222,
+        "remote_calls": 20,
+        "routed_case_ids": [
+          "contractnli_train_103_nda-19",
+          "contractnli_train_108_nda-10",
+          "contractnli_train_128_nda-17",
+          "contractnli_train_147_nda-16",
+          "contractnli_train_154_nda-20",
+          "contractnli_train_170_nda-7",
+          "contractnli_train_247_nda-5",
+          "contractnli_train_276_nda-12",
+          "contractnli_train_295_nda-12",
+          "contractnli_train_305_nda-19",
+          "contractnli_train_343_nda-3",
+          "contractnli_train_365_nda-7",
+          "contractnli_train_399_nda-18",
+          "contractnli_train_458_nda-16",
+          "contractnli_train_467_nda-4",
+          "contractnli_train_467_nda-5",
+          "contractnli_train_474_nda-3",
+          "contractnli_train_492_nda-13",
+          "contractnli_train_614_nda-11",
+          "contractnli_train_89_nda-19"
+        ],
+        "tokens": {
+          "input": 13676,
+          "output": 1261,
+          "total": 14937
+        }
+      }
+    },
+    "policy": {
+      "always_review_supported": true,
+      "jev_supported_probability": 0.5,
+      "local_missing_threshold": 0.5,
+      "local_supported_threshold": 0.8,
+      "review_confidence": 0.8
+    },
+    "promotion_gates_met": true
+  },
+  "selection_split": "cascade_calibration"
+}

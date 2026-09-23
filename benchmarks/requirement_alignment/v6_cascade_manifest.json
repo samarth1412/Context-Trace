@@ -1,0 +1,13 @@
+{
+  "audit_sha256": "3e9d54e6c8adc1f30183cf19f2d144ba12c675f810e20ed5010676fb0fffe76f",
+  "calibration_dataset_sha256": "dd2b6fcc25ed1d7515198c447c3790b864ee25f2641bc7099992c42fd0d88c9a",
+  "calibration_examples": 90,
+  "contractnli_development_or_test_used": false,
+  "evaluation_dataset_sha256": "7000374568f1a5e6e9d498d2fbef7138710931b61e9d912029cb0b702d69bb75",
+  "evaluation_examples": 90,
+  "schema_version": "contexttrace-requirement-v6-cascade-manifest-1.0",
+  "source_archive_sha256": "e03fc77bbf8b53e2976a250e81d8a294bc3d5e5fb014521e477dee9340d6287b",
+  "source_member": "contract-nli/train.json",
+  "source_member_sha256": "dbceb356cd6203b35b27be94a5fa85e499a81c34c42c89ad53060b39f0257ba5",
+  "v3_training_dataset_sha256": "4cca0874ee689a08a4fe26cd76720974b123c71a643470dcb878237f07ad404b"
+}

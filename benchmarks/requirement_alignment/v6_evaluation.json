@@ -1,0 +1,4083 @@
+{
+  "construction": {
+    "cases_per_relation": 30,
+    "claim_evidence_pairs_seen_in_training": false,
+    "contractnli_dev_or_test_used": false,
+    "excluded_v3_v5_training_example_ids": true,
+    "model_or_api_labels_used": false,
+    "partition": "cascade_evaluation",
+    "seed": 20261002,
+    "source_document_overlap_with_training_possible": true
+  },
+  "dataset": "ContractNLI unseen-pair v6 cascade cases",
+  "examples": [
+    {
+      "id": "contractnli_train_100_nda-20",
+      "input": {
+        "claim": "Receiving Party may retain some Confidential Information even after the return or destruction of Confidential Information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_100_s0020",
+            "text": "Buyer agrees that all copies of materials and data provided to Buyer (and any information derivative of such information) shall also be \u201cConfidential Information\u201d; and all Confidential Information shall be returned to Broker in the event that Buyer decides not to pursue the Transaction."
+          },
+          {
+            "id": "contractnli_train_100_s0026",
+            "text": "Without limiting the other restrictions in this agreement, Buyer agrees to use Confidential Information solely to internally evaluate the Business for the possible Transaction and not for any other purposes whatsoever."
+          },
+          {
+            "id": "contractnli_train_100_s0035",
+            "text": "Buyer agrees to defend, indemnify, protect and hold harmless Broker, and release Broker, in connection with all information provided to Buyer, including all Confidential Information, and in connection with any breach by Buyer of any of its obligations under this agreement."
+          }
+        ],
+        "requirement": {
+          "end_char": 122,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party may retain some Confidential Information even after the return or destruction of Confidential Information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "100",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          20,
+          26,
+          35
+        ],
+        "hypothesis_description": "Permissible post-agreement possession",
+        "hypothesis_id": "nda-20",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_110_nda-4",
+      "input": {
+        "claim": "Receiving Party shall not use any Confidential Information for any purpose other than the purposes stated in Agreement.",
+        "evidence": [
+          {
+            "id": "contractnli_train_110_s0004",
+            "text": "1. The term \u201cConfidential Information\u201d shall include all Hydranautics\u2019 trade secrets and information that concerns the confidential business or affairs of Hydranautics and Nitto including without limitation, financial information and reports, business plans, design and construction plans, manufacturing processes, customer lists, employee data, forecasts, strategies, and all other proprietary business information."
+          },
+          {
+            "id": "contractnli_train_110_s0006",
+            "text": "3. Visitor agrees to hold the Confidential Information in the strictest confidence, and will exercise at least the same care with respect thereto as it exercises with respect to its\u2019 own confidential or proprietary information and will not without Hydranautics\u2019 consent use, divulge, copy, release, sell, loan or otherwise reveal such Confidential Information to others."
+          },
+          {
+            "id": "contractnli_train_110_s0008",
+            "text": "Visitor will not photograph, videotape, or otherwise make any record of or preserve any Confidential Information to which he/she may be given access during the facility tour(s)."
+          }
+        ],
+        "requirement": {
+          "end_char": 119,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party shall not use any Confidential Information for any purpose other than the purposes stated in Agreement."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "110",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          4,
+          6,
+          8
+        ],
+        "hypothesis_description": "Limited use",
+        "hypothesis_id": "nda-4",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_111_nda-8",
+      "input": {
+        "claim": "Receiving Party shall notify Disclosing Party in case Receiving Party is required by law, regulation or judicial process to disclose any Confidential Information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_111_s0009",
+            "text": "\u2610 - Unilateral \u2013 This Agreement shall be Unilateral, whereas, 1st Party shall have sole ownership of the Confidential Information with 2nd Party being prohibited from disclosing confidential and proprietary information that is to be released by the 1st Party."
+          },
+          {
+            "id": "contractnli_train_111_s0018",
+            "text": "Confidential Information also includes any and all, work products, studies and other material prepared by or in the possession or control of the other Party, which contain, include, refer to or otherwise reflect or are generated from any Confidential Information."
+          },
+          {
+            "id": "contractnli_train_111_s0026",
+            "text": "If any such Confidential Information shall reach a third (3rd) party, or become public, all liability will be on the Party that is responsible."
+          }
+        ],
+        "requirement": {
+          "end_char": 162,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party shall notify Disclosing Party in case Receiving Party is required by law, regulation or judicial process to disclose any Confidential Information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "111",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          9,
+          18,
+          26
+        ],
+        "hypothesis_description": "Notice on compelled disclosure",
+        "hypothesis_id": "nda-8",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_122_nda-20",
+      "input": {
+        "claim": "Receiving Party may retain some Confidential Information even after the return or destruction of Confidential Information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_122_s0011",
+            "text": "The Recipient shall keep the Confidential Information confidential and shall not use or exploit the Confidential Information in any way except for the purpose of [STATE PURPOSE] (the \u201cPurpose\u201d) and shall not disclose the Confidential Information to any third party (except as expressly permitted by this agreement)."
+          },
+          {
+            "id": "contractnli_train_122_s0013",
+            "text": "The Recipient may disclose Confidential Information to the extent required by law or by a court or other authority of competent jurisdiction provided that, to the extent it is legally permitted to do so, it gives the Discloser as much notice of this disclosure as possible."
+          },
+          {
+            "id": "contractnli_train_122_s0015",
+            "text": "At the request of the Discloser, the Recipient shall destroy or return to the disclosing party all documents and materials containing Confidential Information."
+          }
+        ],
+        "requirement": {
+          "end_char": 122,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party may retain some Confidential Information even after the return or destruction of Confidential Information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "122",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          11,
+          13,
+          15
+        ],
+        "hypothesis_description": "Permissible post-agreement possession",
+        "hypothesis_id": "nda-20",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_124_nda-5",
+      "input": {
+        "claim": "Receiving Party may share some Confidential Information with some of Receiving Party's employees.",
+        "evidence": [
+          {
+            "id": "contractnli_train_124_s0018",
+            "text": "4. ROCHESTER authorizes COMPANY to disclose the Confidential Information to those of its employees and consultants who require the Confidential Information for the evaluation hereunder, and to potential licensees, provided each such employee, consultant and potential licensee has first entered into a written agreement in which it agrees to be bound by similar obligations of nonuse and nondisclosure as those imposed on COMPANY hereunder."
+          }
+        ],
+        "requirement": {
+          "end_char": 97,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party may share some Confidential Information with some of Receiving Party's employees."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "124",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          18
+        ],
+        "hypothesis_description": "Sharing with employees",
+        "hypothesis_id": "nda-5",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_130_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_130_s0008",
+            "text": "\"Confidential Information\" includes, without limitation, information relating to released or unreleased Disclosing Party software products, the marketing or promotion of any Disclosing Party product, Disclosing Party's business policies or practices, and information received from others that Disclosing Party is obligated to treat as confidential."
+          },
+          {
+            "id": "contractnli_train_130_s0015",
+            "text": "(c) \"Confidential Materials\" shall mean all tangible materials containing Confidential Information, including without limitation written or printed documents and computer disks or tapes, whether machine or user readable."
+          },
+          {
+            "id": "contractnli_train_130_s0038",
+            "text": "The terms \"residuals\" means information in non-tangible form, which may be retained by persons who have access to the Confidential Information, including ideas, concepts, know-how or techniques contained therein."
+          },
+          {
+            "id": "contractnli_train_130_s0039",
+            "text": "Neither party shall have any obligation to limit or restrict the assignment of such persons or to pay royalties for any work resulting from the use of residuals."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "130",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          8,
+          15,
+          38,
+          39
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_131_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_131_s0014",
+            "text": "a. \u201cConfidential Information\u201d shall mean all confidential, proprietary and trade secret information and materials, whether in written, oral, visually, electronic or another format (including, for example, demonstrations, models or proto-types, software, computer tapes, audio or video tapes or recordings, other media), and whether intentionally disclosed or observed inadvertently, includ-ing, but not limited to, the following: [insert specific description if possible]; research, product plans or other information regarding the Discloser\u2019s prod-ucts or services and markets therefor, customer lists and customers, software, developments, inventions, processes, formulas, technology, designs, drawings, engineering, hardware configuration information, marketing, finances or other business information; information of a confidential, sensitive, non-public, or personal nature, including information belonging to a third party or for which the Company owes a duty of confidentiality; any other Company proprietary or confidential information, including but not limited to any materials or any oral and written communications between the parties marked \u201cconfidential,\u201d \u201cproprietary\u201d or similarly marked; or any materials which a reasonable person would recognize from the surrounding facts and circumstances to be proprietary or confidential."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "131",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          14
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_136_nda-17",
+      "input": {
+        "claim": "Receiving Party may create a copy of some Confidential Information in some circumstances.",
+        "evidence": [
+          {
+            "id": "contractnli_train_136_s0046",
+            "text": "The Recipient shall keep the Disclosing Party's Confidential Information confidential and, except with the prior written consent of the Disclosing Party, shall:"
+          },
+          {
+            "id": "contractnli_train_136_s0049",
+            "text": "(c) not copy, reduce to writing or otherwise record the Confidential Information except as strictly necessary for the Purpose (and any such copies, reductions to writing and records shall be the property of the Disclosing Party);"
+          }
+        ],
+        "requirement": {
+          "end_char": 89,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party may create a copy of some Confidential Information in some circumstances."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "136",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          46,
+          49
+        ],
+        "hypothesis_description": "Permissible copy",
+        "hypothesis_id": "nda-17",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_151_nda-15",
+      "input": {
+        "claim": "Agreement shall not grant Receiving Party any right to Confidential Information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_151_s0020",
+            "text": "The Receiving Party agrees that the Confidential Information of the Disclosing Party is and will remain the property and asset of the Disclosing Party."
+          },
+          {
+            "id": "contractnli_train_151_s0055",
+            "text": "Except as otherwise provided herein, nothing in this Agreement shall be deemed to constitute an implied license in favor of either party to any proprietary rights of the other party, including, without limitation, any patents, copyrights, trademarks or trade secret information."
+          },
+          {
+            "id": "contractnli_train_151_s0056",
+            "text": "Each party agrees not to use any trade name, service mark, or trademark of the other party or refer to the other party in any promotional activity or material without first obtaining the prior written consent of such party."
+          }
+        ],
+        "requirement": {
+          "end_char": 80,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Agreement shall not grant Receiving Party any right to Confidential Information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "151",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          20,
+          55,
+          56
+        ],
+        "hypothesis_description": "No licensing",
+        "hypothesis_id": "nda-15",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_166_nda-10",
+      "input": {
+        "claim": "Receiving Party shall not disclose the fact that Agreement was agreed or negotiated.",
+        "evidence": [
+          {
+            "id": "contractnli_train_166_s0038",
+            "text": "14. Each party agrees to keep the existence and terms of this Agreement, and that the parties are having discussions related to the Opportunity, strictly confidential, and will not disclose the existence or terms of this Agreement, or that such discussions are taking place, to any third party without the prior written consent of the other party."
+          }
+        ],
+        "requirement": {
+          "end_char": 84,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party shall not disclose the fact that Agreement was agreed or negotiated."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "166",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          38
+        ],
+        "hypothesis_description": "Confidentiality of Agreement",
+        "hypothesis_id": "nda-10",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_168_nda-12",
+      "input": {
+        "claim": "Receiving Party may independently develop information similar to Confidential Information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_168_s0023",
+            "text": "5. Obligations of parties under this Agreement shall not apply to information which:"
+          },
+          {
+            "id": "contractnli_train_168_s0027",
+            "text": "d. is developed independently by the Recipient without use of the Owner\u2019s Proprietary Information; or"
+          }
+        ],
+        "requirement": {
+          "end_char": 90,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party may independently develop information similar to Confidential Information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "168",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          23,
+          27
+        ],
+        "hypothesis_description": "Permissible development of similar information",
+        "hypothesis_id": "nda-12",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_170_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_170_s0019",
+            "text": "3. \u2018Confidential Information\u2019 means any information or sensitive data , which shall include but is not limited to, design, fabrication & assembly drawings, know-how, processes, product specifications, raw materials, trade secrets, market opportunities, or business or financial affairs of the Parties or their customers, product samples, inventions, concepts and any other technical and/or commercial information, disclosed directly or indirectly and in any form"
+          },
+          {
+            "id": "contractnli_train_170_s0020",
+            "text": "whatsoever (including, but not limited to, disclosure made in writing, oral or in the form of samples, models, computer programs, drawings or other instruments) furnished by the Disclosing Party to the Receiving Party under this Agreement."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "170",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          19,
+          20
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_173_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_173_s0013",
+            "text": "1. Confidential Information means any tangible or intangible information or materials possessed by a Party in whatever form or format relating to the Disclosing Party or its actual or proposed information systems, other business, financial or accounting systems, business procedures or methods, business plans, financial products, marketing plans, results of operations, customers, markets, prospective customers, contracts (actual and proposed) with third parties or personnel directly or indirectly disclosed by the Disclosing Party to the Receiving Party during or in the course of discussions or correspondence arising out of or related to the Transaction whether received before or after the Effective Date."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "173",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          13
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_195_nda-5",
+      "input": {
+        "claim": "Receiving Party may share some Confidential Information with some of Receiving Party's employees.",
+        "evidence": [
+          {
+            "id": "contractnli_train_195_s0016",
+            "text": "(ii) the party required to make the disclosure to the third party shall not disclose or release more Confidential Information than is required by law; and"
+          },
+          {
+            "id": "contractnli_train_195_s0017",
+            "text": "(iii) the party required to make disclosure to the third party cooperates with the other party hereto in any attempts it may make to obtain a protective order or other appropriate assurance that confidential treatment will be afforded to the Confidential Information."
+          },
+          {
+            "id": "contractnli_train_195_s0019",
+            "text": "Upon receiving a written request from the disclosing party, the receiving party shall cease to use the Confidential Information disclosed to it and shall promptly thereafter return to the disclosing party all written or otherwise documented Confidential Information disclosed to it pursuant to this Agreement, except that one copy of all such Confidential Information may be kept for archival purposes and for the purpose of defending against any lawsuits brought by the disclosing party against the Recipient."
+          }
+        ],
+        "requirement": {
+          "end_char": 97,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party may share some Confidential Information with some of Receiving Party's employees."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "195",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          16,
+          17,
+          19
+        ],
+        "hypothesis_description": "Sharing with employees",
+        "hypothesis_id": "nda-5",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_199_nda-12",
+      "input": {
+        "claim": "Receiving Party may independently develop information similar to Confidential Information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_199_s0022",
+            "text": "3. This Agreement will impose no obligation upon the Receiving Party with respect to any portion of the received Confidential Information which:"
+          },
+          {
+            "id": "contractnli_train_199_s0023",
+            "text": "(a) is already known to the Receiving Party at the time of receiving such Confidential Information or is independently developed by the Receiving Party without reference to or use of the Disclosing Party\u2019s Confidential Information;"
+          }
+        ],
+        "requirement": {
+          "end_char": 90,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party may independently develop information similar to Confidential Information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "199",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          22,
+          23
+        ],
+        "hypothesis_description": "Permissible development of similar information",
+        "hypothesis_id": "nda-12",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_204_nda-1",
+      "input": {
+        "claim": "All Confidential Information shall be expressly identified by the Disclosing Party.",
+        "evidence": [
+          {
+            "id": "contractnli_train_204_s0008",
+            "text": "\"Confidential Information\" means any information, technical data, or know-how, including, but not limited to, that which relates to research, product plans, products, services, customers, markets, software, developments, inventions, processes, designs, drawings, engineering, hardware configuration information, marketing or finances, which Confidential Information is designated in writing to be confidential or proprietary, or if given orally, is confirmed promptly in writing as having been disclosed as confidential or proprietary."
+          }
+        ],
+        "requirement": {
+          "end_char": 83,
+          "id": "r00",
+          "start_char": 0,
+          "text": "All Confidential Information shall be expressly identified by the Disclosing Party."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "204",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          8
+        ],
+        "hypothesis_description": "Explicit identification",
+        "hypothesis_id": "nda-1",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_207_nda-13",
+      "input": {
+        "claim": "Receiving Party may acquire information similar to Confidential Information from a third party.",
+        "evidence": [
+          {
+            "id": "contractnli_train_207_s0019",
+            "text": "2. As used herein, the term \"Confidential Information\" shall be deemed to include any technical, marketing, business and trade secret information disclosed by the Disclosor, but excludes such information which:"
+          },
+          {
+            "id": "contractnli_train_207_s0026",
+            "text": "(d) is independently developed by the Recipient provided that such development can be demonstrated by the Recipient's written records."
+          }
+        ],
+        "requirement": {
+          "end_char": 95,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party may acquire information similar to Confidential Information from a third party."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "207",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          19,
+          26
+        ],
+        "hypothesis_description": "Permissible acquirement of similar information",
+        "hypothesis_id": "nda-13",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_215_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_215_s0005",
+            "text": "1. \u201cConfidential Information\u201d means all trade secrets and information disclosed by GK to SUPPLIER, including, but not limited to, type design data, drawings, photographs, specifications, models, prototypes, designs, materials, construction or assembly, computer hardware and software (whether in machine-readable or human-readable form), technical, commercial and operational information concerning products, information concerning manufacturing methods and techniques, quality control and test methods, marketing data including target customers, customer lists and market plans, cost and pricing data and product applications."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "215",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          5
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_219_nda-4",
+      "input": {
+        "claim": "Receiving Party shall not use any Confidential Information for any purpose other than the purposes stated in Agreement.",
+        "evidence": [
+          {
+            "id": "contractnli_train_219_s0005",
+            "text": "Such Confidential Information will be disclosed for the Purpose and for no other purpose in accordance with the following understandings:"
+          },
+          {
+            "id": "contractnli_train_219_s0007",
+            "text": "Each party shall maintain in confidence Confidential Information obtained from the other and use such Confidential Information only for the Purpose."
+          },
+          {
+            "id": "contractnli_train_219_s0021",
+            "text": "In addition to the foregoing obligations, the parties to this Agreement agree to consult with and obtain written permission from the other party prior to publishing or disseminating any advertising, promotion or other printed material, participating in seminar/symposia presentations or other activity which would disclose that they have participated in a review or evaluation of the Confidential Information, have a pending or actual business relationship and/or any details of that relationship."
+          }
+        ],
+        "requirement": {
+          "end_char": 119,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party shall not use any Confidential Information for any purpose other than the purposes stated in Agreement."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "219",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          5,
+          7,
+          21
+        ],
+        "hypothesis_description": "Limited use",
+        "hypothesis_id": "nda-4",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_222_nda-3",
+      "input": {
+        "claim": "Confidential Information may include verbally conveyed information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_222_s0010",
+            "text": "is information which is confidential to FP and includes but is not limited to:"
+          },
+          {
+            "id": "contractnli_train_222_s0036",
+            "text": "If the confidential information so disclosed is used by the SP for any purpose other than that for which its use is authorised in terms of this agreement or is disclosed or disseminated by the SP to another person or entity which is not a party to this agreement, this may cause FP to suffer damages and material financial loss."
+          },
+          {
+            "id": "contractnli_train_222_s0049",
+            "text": "and, in such event, the SP hereby indemnifies FP against any loss, harm or damage which FP may suffer as a result of the unauthorised disclosure 'of confidential information by a representative or affiliate."
+          }
+        ],
+        "requirement": {
+          "end_char": 67,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information may include verbally conveyed information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "222",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          10,
+          36,
+          49
+        ],
+        "hypothesis_description": "Inclusion of verbally conveyed information",
+        "hypothesis_id": "nda-3",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_223_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_223_s0005",
+            "text": "1. For purposes of this Agreement, company confidential and/or proprietary information, hereinafter called Proprietary Information, shall be construed to mean any information, whether disclosed in writing, orally or otherwise, that the disclosing party considers to be material to its business operations (and for CAE, as applicable, the business operations of its direct and indirect subsidiaries and affiliated companies/entities (the \u201cCAE Group\u201d), including, without limitation, any commercial, financial, technical, and/or marketing information, business and/or strategic plans, wage and salary information, trade secrets, data, concepts, computer programs, software, designs, product specifications, drawings, processes, know-how, inventions and ideas, and any information relating to its customers, suppliers, employees or contractors."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "223",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          5
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_230_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_230_s0005",
+            "text": "WHEREAS, OWNER has developed through substantial effort, research, time, and expense certain inventions, design concepts, methodologies, technical know-how, copyrightable material and trade secrets directed and related"
+          },
+          {
+            "id": "contractnli_train_230_s0006",
+            "text": "to______________________________________________________ (\u201cINFORMATION\u201d);"
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "230",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          5,
+          6
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_232_nda-7",
+      "input": {
+        "claim": "Receiving Party may share some Confidential Information with some third-parties (including consultants, agents and professional advisors).",
+        "evidence": [
+          {
+            "id": "contractnli_train_232_s0019",
+            "text": "(a) Disclosure and Use. Unless otherwise agreed by the Disclosing Party in writing, any Confidential Information received by the Receiving Party shall be retained in confidence, disclosed only to its officers, directors, employees, advisors and agents, and to its Affiliates (collectively, \u201cRepresentatives\u201d) solely on a need to know basis, and used only in connection with the Activity and not for any other purpose; provided, that such Representatives shall have agreed to be bound by obligations of confidentiality consistent with those contained in this Agreement; provided, further, that Receiving Party agrees to be responsible for any breach of this Agreement by any of its Representatives."
+          }
+        ],
+        "requirement": {
+          "end_char": 138,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party may share some Confidential Information with some third-parties (including consultants, agents and professional advisors)."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "232",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          19
+        ],
+        "hypothesis_description": "Sharing with third-parties",
+        "hypothesis_id": "nda-7",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_234_nda-16",
+      "input": {
+        "claim": "Receiving Party shall destroy or return some Confidential Information upon the termination of Agreement.",
+        "evidence": [
+          {
+            "id": "contractnli_train_234_s0008",
+            "text": "All Information provided to review the business will be returned to the Franchisee without retaining companies, summaries, analyses or extracts there of in the event the review is terminated."
+          }
+        ],
+        "requirement": {
+          "end_char": 104,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party shall destroy or return some Confidential Information upon the termination of Agreement."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "234",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          8
+        ],
+        "hypothesis_description": "Return of confidential information",
+        "hypothesis_id": "nda-16",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_234_nda-19",
+      "input": {
+        "claim": "Some obligations of Agreement may survive termination of Agreement.",
+        "evidence": [
+          {
+            "id": "contractnli_train_234_s0000",
+            "text": "Non-Disclosure and Confidentiality Agreement"
+          },
+          {
+            "id": "contractnli_train_234_s0001",
+            "text": "Our Agreement with the Seller requires that we obtain a non-disclosure and confidentiality agreement and evidence of financial ability before disclosing the name and location of his business."
+          },
+          {
+            "id": "contractnli_train_234_s0013",
+            "text": "That, prior to finalizing an agreement to purchase a business, it is my responsibility to make an independent verification of all information."
+          }
+        ],
+        "requirement": {
+          "end_char": 67,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Some obligations of Agreement may survive termination of Agreement."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "234",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          0,
+          1,
+          13
+        ],
+        "hypothesis_description": "Survival of obligations",
+        "hypothesis_id": "nda-19",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_235_nda-11",
+      "input": {
+        "claim": "Receiving Party shall not reverse engineer any objects which embody Disclosing Party's Confidential Information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_235_s0013",
+            "text": "The Applicant shall not use for its own purposes, reverse engineer, disassemble, decompile or copy any software or other objects which embody the Confidential Information, nor transmit, directly or indirectly, any Confidential Information."
+          }
+        ],
+        "requirement": {
+          "end_char": 112,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party shall not reverse engineer any objects which embody Disclosing Party's Confidential Information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "235",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          13
+        ],
+        "hypothesis_description": "No reverse engineering",
+        "hypothesis_id": "nda-11",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_236_nda-5",
+      "input": {
+        "claim": "Receiving Party may share some Confidential Information with some of Receiving Party's employees.",
+        "evidence": [
+          {
+            "id": "contractnli_train_236_s0021",
+            "text": "If necessary to effectuate the furthering of a potential research relationship, Recipient may disclose Confidential Information received under this Agreement to employees and/or consultants with a need to know, provided that any consultants are bound to protect such Confidential Information from unauthorized use and disclosure under the terms of a written agreement."
+          }
+        ],
+        "requirement": {
+          "end_char": 97,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party may share some Confidential Information with some of Receiving Party's employees."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "236",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          21
+        ],
+        "hypothesis_description": "Sharing with employees",
+        "hypothesis_id": "nda-5",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_240_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_240_s0008",
+            "text": "1. All information, materials and assets in the Motorola Mobility facility I am visiting, including without limitation any products, prototypes, strategies, business plans or other information I observe, am told about, or otherwise come in contact with, belongs to Motorola (\u201cConfidential Motorola Information\u201d)"
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "240",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          8
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_247_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_247_s0025",
+            "text": "(a) The term \u201cConfidential Information\u201d shall include, without limitation, all information and materials, furnished by either Party to the other in connection with Auditee products and services including information transmitted in writing, orally, visually, (e.g. video terminal display) or on magnetic media, and including all proprietary information, customer & prospect lists, trade secrets, trade names or proposed trade names, methods and procedures of operation, business or marketing plans, licensed document know-how, ideas, concepts, designs, drawings, flow charts, diagrams, quality manuals, checklists, guidelines, processes, formulae, source code materials, specifications, programs, software packages, codes and other intellectual property relating to Auditee products and services."
+          },
+          {
+            "id": "contractnli_train_247_s0026",
+            "text": "Results of any information security audits, tests, analysis, extracts or usages carried out by the Auditor in connection with the Auditee\u2019s products and/or services, IT infrastructure, etc. shall also be considered Confidential Information."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "247",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          25,
+          26
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_251_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_251_s0012",
+            "text": "All information, concerning the business of the other Party, hereafter in the possession of either of the Parties, or their respective directors, officers, employees, agents or representatives, including, without limitation, lawyers, accountants, consultants and financial advisors (collectively, \"Representatives\") and except as noted hereinafter is considered to be \"Confidential Information\"."
+          },
+          {
+            "id": "contractnli_train_251_s0026",
+            "text": "3. Information or concepts which are discussed by either Party as an extrapolation of the Confidential Information disclosed are the property of the topic's disclosing Party."
+          },
+          {
+            "id": "contractnli_train_251_s0027",
+            "text": "For greater clarity, the discussion or invention of an extension to Confidential Information does not give the uttering Party intellectual property rights to that aspect of the topic unless the related Confidential Information is theirs."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "251",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          12,
+          26,
+          27
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_251_nda-8",
+      "input": {
+        "claim": "Receiving Party shall notify Disclosing Party in case Receiving Party is required by law, regulation or judicial process to disclose any Confidential Information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_251_s0016",
+            "text": "The following information is excluded from being considered Confidential Information:"
+          },
+          {
+            "id": "contractnli_train_251_s0020",
+            "text": "(iv) Information which is required to be disclosed to any third party by reason of an applicable law, or by the decision of any court or tribunal having competent jurisdiction, and provided that written and reasonable prior notice has been given to the disclosing Party."
+          }
+        ],
+        "requirement": {
+          "end_char": 162,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party shall notify Disclosing Party in case Receiving Party is required by law, regulation or judicial process to disclose any Confidential Information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "251",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          16,
+          20
+        ],
+        "hypothesis_description": "Notice on compelled disclosure",
+        "hypothesis_id": "nda-8",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_253_nda-12",
+      "input": {
+        "claim": "Receiving Party may independently develop information similar to Confidential Information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_253_s0001",
+            "text": "WHEREAS, Electrical Industry Certifications Association (EICA) wishes to protect its Con\ufb01dential Information, as de\ufb01ned below, against any unauthorized use and any unauthorized or uncontrolled disclosure."
+          },
+          {
+            "id": "contractnli_train_253_s0017",
+            "text": "E. In the event that Signee or its representatives receives a request to disclose all or any part of the Con\ufb01dential Information under the terms of a valid and effective subpoena or order issued by a court of competent jurisdiction or by a governmental body, the receiving party agrees to:"
+          },
+          {
+            "id": "contractnli_train_253_s0021",
+            "text": "Signee shall not appropriate the Con\ufb01dential Information to Signee\u2019s own use or to the use of any third party and shall only use the Con\ufb01dential Information for the exclusive bene\ufb01t of EICA except to the extent otherwise authorized in writing by EICA."
+          }
+        ],
+        "requirement": {
+          "end_char": 90,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party may independently develop information similar to Confidential Information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "253",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          1,
+          17,
+          21
+        ],
+        "hypothesis_description": "Permissible development of similar information",
+        "hypothesis_id": "nda-12",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_262_nda-15",
+      "input": {
+        "claim": "Agreement shall not grant Receiving Party any right to Confidential Information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_262_s0013",
+            "text": "Receiving Party shall not use any Confidential Information for their own benefit or permit the use of Confidential Information by others for their benefit or to the detriment of the Society or its good name."
+          },
+          {
+            "id": "contractnli_train_262_s0014",
+            "text": "Upon termination of membership, Receiving Party will immediately return to the Society all records, notes and other written, printed or tangible material in its possession, including CDs and DVDs pertaining to Confidential Information."
+          },
+          {
+            "id": "contractnli_train_262_s0017",
+            "text": "The nondisclosure provision of this Agreement shall survive the termination of this Agreement and Receiving Party\u2019s duty to hold Confidential Information in confidence shall remain in effect indefinitely."
+          }
+        ],
+        "requirement": {
+          "end_char": 80,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Agreement shall not grant Receiving Party any right to Confidential Information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "262",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          13,
+          14,
+          17
+        ],
+        "hypothesis_description": "No licensing",
+        "hypothesis_id": "nda-15",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_262_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_262_s0007",
+            "text": "For purposes of this Agreement, \u201cConfidential Information\u201d shall include all information contained in the membership database, such as members\u2019 names, addresses, birthdates, occupations, spouses\u2019 names, email addresses, telephone numbers, etc."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "262",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          7
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_272_nda-10",
+      "input": {
+        "claim": "Receiving Party shall not disclose the fact that Agreement was agreed or negotiated.",
+        "evidence": [
+          {
+            "id": "contractnli_train_272_s0001",
+            "text": "THIS NONDISCLOSURE AGREEMENT is by and between the National Institute of Standards and Technology (\u201cNIST\u201d), which is the party receiving proprietary information, and [Name of Disclosing Party], which is the party disclosing proprietary information (\u201cDiscloser\u201d), in order to protect the confidential information which is disclosed by Discloser to NIST."
+          },
+          {
+            "id": "contractnli_train_272_s0016",
+            "text": "7. This Agreement may be terminated immediately by either party upon delivery of written notice of termination to the other party."
+          },
+          {
+            "id": "contractnli_train_272_s0033",
+            "text": "Neither party has an obligation under this Agreement to purchase, sell or license any service or item from the other party."
+          }
+        ],
+        "requirement": {
+          "end_char": 84,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party shall not disclose the fact that Agreement was agreed or negotiated."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "272",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          1,
+          16,
+          33
+        ],
+        "hypothesis_description": "Confidentiality of Agreement",
+        "hypothesis_id": "nda-10",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_275_nda-17",
+      "input": {
+        "claim": "Receiving Party may create a copy of some Confidential Information in some circumstances.",
+        "evidence": [
+          {
+            "id": "contractnli_train_275_s0006",
+            "text": "The party receiving the Confidential Information of the Disclosing Party is hereafter referred to as the \"Receiving Party.\""
+          },
+          {
+            "id": "contractnli_train_275_s0015",
+            "text": "d. If the information is independently developed by the Receiving Party prior to disclosure by the Disclosing Party and without the use and benefit of any of the Disclosing Party's Confidential Information; or"
+          },
+          {
+            "id": "contractnli_train_275_s0016",
+            "text": "e. If the Receiving Party or any of its Representatives is legally compelled by applicable law, by any court, governmental agency or regulatory authority or by subpoena or discovery request in pending litigation but only if, to the extent lawful, the Receiving Party or its Representatives give prompt written notice of that fact to the Disclosing Party prior to disclosure so that the Disclosing Party may request a protective order or other remedy to prevent or limit such disclosure and in the absence of such protective order or other remedy, the Receiving Party or its Representatives may disclose only such portion of the Confidential Information which it is legally obligated to disclose."
+          }
+        ],
+        "requirement": {
+          "end_char": 89,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party may create a copy of some Confidential Information in some circumstances."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "275",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          6,
+          15,
+          16
+        ],
+        "hypothesis_description": "Permissible copy",
+        "hypothesis_id": "nda-17",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_275_nda-19",
+      "input": {
+        "claim": "Some obligations of Agreement may survive termination of Agreement.",
+        "evidence": [
+          {
+            "id": "contractnli_train_275_s0023",
+            "text": "e. The obligation not to disclose Confidential Information shall remain in effect until 2 years from the date hereof or until the Confidential Information ceases to be a trade secret, except to the extent that such Confidential Information is excluded from the obligations of confidentiality under this Agreement pursuant to Paragraph 2 above."
+          }
+        ],
+        "requirement": {
+          "end_char": 67,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Some obligations of Agreement may survive termination of Agreement."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "275",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          23
+        ],
+        "hypothesis_description": "Survival of obligations",
+        "hypothesis_id": "nda-19",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_275_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_275_s0009",
+            "text": "The term \"Confidential Information\" as used in this Agreement shall mean any data or information that is competitively sensitive material and not generally known to the public, including, but not limited to, information relating to any of the following: business plans, design, improvements, marketing strategies, present or future business activities, product development and plans, data, databases, documentation, flow charts, formulas, reports, specifications, finance, operations, procedures, processes, supplier lists, supplier profiles, supplier relationships, systems, computer software, inventions, know-how, object code, proprietary concepts, source code, technical information, trade secrets, customer lists, customer profiles, customer relationships, performance results, pricing, sales estimates, which the Disclosing Party considers confidential."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "275",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          9
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_283_nda-3",
+      "input": {
+        "claim": "Confidential Information may include verbally conveyed information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_283_s0014",
+            "text": "\u201cConfidential Information\u201d includes, without limitation, information relating to released or unreleased NUSD mailing lists or contact lists and the marketing or promotion of any NUSD event, information of a confidential nature of, about, or concerning the students or personnel of NUSD, business of NUSD or its manner of operation, which may include Proprietary Information, such as student records, tax records and other financial information concerning NUSD and NUSD's employees, officers, directors, shareholders, students, lists or other written records used in NUSD's operations, investment information, compensation paid to employees and other terms of employment, personnel records, and information received by NUSD from third parties subject to NUSD's duty to maintain the confidentiality of such information and to use it only for certain limited purposes."
+          },
+          {
+            "id": "contractnli_train_283_s0015",
+            "text": "(a) \u201cConfidential Information\u201d shall include all personally identifiable student information protected under the Family Rights and Privacy Act (FERPA), California Education Code 49073.1, and NUSD Board Policy 5125."
+          },
+          {
+            "id": "contractnli_train_283_s0016",
+            "text": "(b) \u201cConfidential Information\u201d shall not include:"
+          }
+        ],
+        "requirement": {
+          "end_char": 67,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information may include verbally conveyed information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "283",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          14,
+          15,
+          16
+        ],
+        "hypothesis_description": "Inclusion of verbally conveyed information",
+        "hypothesis_id": "nda-3",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_284_nda-13",
+      "input": {
+        "claim": "Receiving Party may acquire information similar to Confidential Information from a third party.",
+        "evidence": [
+          {
+            "id": "contractnli_train_284_s0005",
+            "text": "2. Confidential Information does not include information which a party can demonstrate and document that:"
+          },
+          {
+            "id": "contractnli_train_284_s0009",
+            "text": "(d) came into his or her possession through a third party who was not obligated to keep the information confidential."
+          }
+        ],
+        "requirement": {
+          "end_char": 95,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party may acquire information similar to Confidential Information from a third party."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "284",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          5,
+          9
+        ],
+        "hypothesis_description": "Permissible acquirement of similar information",
+        "hypothesis_id": "nda-13",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_284_nda-16",
+      "input": {
+        "claim": "Receiving Party shall destroy or return some Confidential Information upon the termination of Agreement.",
+        "evidence": [
+          {
+            "id": "contractnli_train_284_s0005",
+            "text": "2. Confidential Information does not include information which a party can demonstrate and document that:"
+          },
+          {
+            "id": "contractnli_train_284_s0013",
+            "text": "(c) return any Confidential Information in any written, electronic, or physical form whatsoever in his or her possession, or to delete forever any Confidential Information that he or she may have stored on a computer or other device, at the request of the other party, except that each party may keep one copy in its confidential legal files for the purpose of assuring compliance with this agreement."
+          },
+          {
+            "id": "contractnli_train_284_s0016",
+            "text": "6. This agreement shall terminate upon the mutual agreement of the parties, or at such time that the parties and their assigns no longer have any legal or equitable claim to any Confidential Information."
+          }
+        ],
+        "requirement": {
+          "end_char": 104,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party shall destroy or return some Confidential Information upon the termination of Agreement."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "284",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          5,
+          13,
+          16
+        ],
+        "hypothesis_description": "Return of confidential information",
+        "hypothesis_id": "nda-16",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_288_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_288_s0012",
+            "text": "\u201cConfidential Information\u201d means collectively and individually all or any information of whatsoever nature, disclosed in any form, whether oral, visual, written or in electronic form (including, without limitation, any documentation, reports, calculations, processes, methodologies, manuals and membership data) relating to [Company name] and FORS operators, audit processes and commercial data together with all records or copies or extracts thereof in whatever media held."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "288",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          12
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_295_nda-10",
+      "input": {
+        "claim": "Receiving Party shall not disclose the fact that Agreement was agreed or negotiated.",
+        "evidence": [
+          {
+            "id": "contractnli_train_295_s0005",
+            "text": "2) I will not disclose, publish, reproduce or transmit any examination material or content by any means for any reason."
+          },
+          {
+            "id": "contractnli_train_295_s0006",
+            "text": "3) I will not participate in any systematic attempt to recreate the material by memory following the examination."
+          },
+          {
+            "id": "contractnli_train_295_s0008",
+            "text": "These provisions are consistent with and do not supersede, conflict with, or otherwise alter the employee obligations, rights, or liabilities created by existing statute or Executive order relating to"
+          }
+        ],
+        "requirement": {
+          "end_char": 84,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party shall not disclose the fact that Agreement was agreed or negotiated."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "295",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          5,
+          6,
+          8
+        ],
+        "hypothesis_description": "Confidentiality of Agreement",
+        "hypothesis_id": "nda-10",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_298_nda-11",
+      "input": {
+        "claim": "Receiving Party shall not reverse engineer any objects which embody Disclosing Party's Confidential Information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_298_s0037",
+            "text": "2.2 shall be held strictly confidential, using commercially reasonable methods, and shall not be divulged directly or indirectly or otherwise made available in whole or in part to any third party without the prior written consent of the Disclosing Party provided that the Receiving Party may without such approval disclose such Confidential Information;"
+          },
+          {
+            "id": "contractnli_train_298_s0040",
+            "text": "(b) to any governmental or regulatory authority having a right to require the same or to any recognised Stock Exchange, in compliance with the rules and regulations thereof or to the extent required by law (provided that the Receiving Party shall prior to such disclosure inform the Disclosing Party in writing of such requirement (including a confirmation that the Disclosing Party\u2019s legal advisers\u2019 opinion is that such disclosure is required) and shall disclose only such Confidential Information as is necessary to comply therewith); or"
+          },
+          {
+            "id": "contractnli_train_298_s0051",
+            "text": "4 All Confidential Information shall remain the property of the Disclosing Party and the disclosure of Confidential Information hereunder does not amount to the grant of a licence or similar right, any patent, copyright or design licence in favour of the Receiving Party."
+          }
+        ],
+        "requirement": {
+          "end_char": 112,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party shall not reverse engineer any objects which embody Disclosing Party's Confidential Information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "298",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          37,
+          40,
+          51
+        ],
+        "hypothesis_description": "No reverse engineering",
+        "hypothesis_id": "nda-11",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_300_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_300_s0006",
+            "text": "\"Confidential Information\" means any information, technical data, or know-how, including, but not limited to, that which relates to research, product plans, products, services, customers, markets, software, developments, inventions, processes, designs, drawings, engineering, hardware configuration information, marketing or finances, which Confidential Information is designated in writing to be confidential or proprietary, or if given orally, is confirmed promptly in writing as having been disclosed as confidential or proprietary."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "300",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          6
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_304_nda-1",
+      "input": {
+        "claim": "All Confidential Information shall be expressly identified by the Disclosing Party.",
+        "evidence": [
+          {
+            "id": "contractnli_train_304_s0042",
+            "text": "\"Confidential Information\" is non-public information, know-how and trade secrets in any form that:"
+          },
+          {
+            "id": "contractnli_train_304_s0044",
+            "text": "Are designated in writing as \u201cconfidential\u201d at the time of their disclosure and include:"
+          }
+        ],
+        "requirement": {
+          "end_char": 83,
+          "id": "r00",
+          "start_char": 0,
+          "text": "All Confidential Information shall be expressly identified by the Disclosing Party."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "304",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          42,
+          44
+        ],
+        "hypothesis_description": "Explicit identification",
+        "hypothesis_id": "nda-1",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_304_nda-3",
+      "input": {
+        "claim": "Confidential Information may include verbally conveyed information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_304_s0042",
+            "text": "\"Confidential Information\" is non-public information, know-how and trade secrets in any form that:"
+          }
+        ],
+        "requirement": {
+          "end_char": 67,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information may include verbally conveyed information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "304",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          42
+        ],
+        "hypothesis_description": "Inclusion of verbally conveyed information",
+        "hypothesis_id": "nda-3",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_309_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_309_s0016",
+            "text": "(d) \u201cInformation\u201d means:"
+          },
+          {
+            "id": "contractnli_train_309_s0017",
+            "text": "(i) Disclosing Party\u2019s non-public information and material of whatever nature relating to the Disclosing Party\u2019s activities, undertakings, technology, know-how, intellectual property, assets, positions, strategy and products (including without limitation information relating to management, financial, marketing, commercial, technical and other arrangements of the Disclosing Party and the affairs of its clients, current, former or prospective customers and suppliers) and/or the Materials which is obtained by the Recipient or any Designated Person as a result or in consequence of access to or inspection of the Materials by the Recipient or any Designated Person or which is provided to the Recipient or any Designated Person either in writing or in pictorial or machine-readable form or orally from or pursuant to discussions with the management, employees or officers of the Disclosing Party, or any agent, contractor or adviser to the Disclosing Party;"
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "309",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          16,
+          17
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_317_nda-20",
+      "input": {
+        "claim": "Receiving Party may retain some Confidential Information even after the return or destruction of Confidential Information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_317_s0065",
+            "text": "Notwithstanding the foregoing, the Receiving Party shall be permitted to retain one copy of the Retained Information and such Retained Information shall be treated by the Receiving Party in accordance with this Agreement."
+          }
+        ],
+        "requirement": {
+          "end_char": 122,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party may retain some Confidential Information even after the return or destruction of Confidential Information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "317",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          65
+        ],
+        "hypothesis_description": "Permissible post-agreement possession",
+        "hypothesis_id": "nda-20",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_330_nda-7",
+      "input": {
+        "claim": "Receiving Party may share some Confidential Information with some third-parties (including consultants, agents and professional advisors).",
+        "evidence": [
+          {
+            "id": "contractnli_train_330_s0007",
+            "text": "As used in this Agreement, \"Confidential Information\" refers to any information which entails personal details of fellow members, supporters, associates such as names, addresses, telephone numbers and other contact details as well as operational manuals, methods, computer software, works of art, drafts and designs, financial data, places of meetings, secrets and other proprietary information related to the past, current, future and proposed activities of the Society, and any other information which is privileged, proprietary and confidential."
+          },
+          {
+            "id": "contractnli_train_330_s0010",
+            "text": "Recipient agrees that Recipient shall treat all Confidential Information of the Society with at least the same degree of care as Recipient accords its own confidential information."
+          },
+          {
+            "id": "contractnli_train_330_s0021",
+            "text": "This Agreement constitutes the entire agreement with respect to the Confidential Information disclosed herein and supersedes all prior or contemporaneous oral or written agreements concerning such Confidential Information."
+          }
+        ],
+        "requirement": {
+          "end_char": 138,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party may share some Confidential Information with some third-parties (including consultants, agents and professional advisors)."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "330",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          7,
+          10,
+          21
+        ],
+        "hypothesis_description": "Sharing with third-parties",
+        "hypothesis_id": "nda-7",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_337_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_337_s0010",
+            "text": "\u201cConfidential Information\u201d shall mean all information, regardless of the form in which it is communicated or maintained (whether oral, written, electronic or visual) and whether prepared by Company or otherwise, which is disclosed to Counterparty, regardless of whether such information is disclosed intentionally or inadvertently, before or after the execution of this Agreement, in connection with the Transaction and including all records, reports, analyses, notes, memoranda, documentation, knowledge, data, specifications, diagrams, statistics, systems or software, manuals, business plans, operational information or practices, processes (whether or not patented, patentable or reduced to practice), customer lists, concepts, ideas, policies, contractual arrangements with, and information about, the Company\u2019s suppliers, distributors and customers, the existence of the discussions between the Parties concerning the Transaction, or other information that are based on, contain or reflect any such Confidential Information."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "337",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          10
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_340_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_340_s0004",
+            "text": "WHEREAS, in the course of fulfilling the Purpose, the Parties may disclose to each other confidential and proprietary information, including but not limited to certain oral, written, electronic mail (e-mail), or computer information, documents, materials, models, analyses, and business plans concerning the types of information set forth in Anaheim\u2019s RFP such as Anaheim\u2019s residual operating, environmental, marine, and decommissioning liabilities, Anaheim\u2019s decommissioning trust fund balance, and the nature of SONGS governance rights pursuant to operating, settlement, and decommissioning agreements and balance sheet and financial track record information as well as other information and materials; the Parties shall treat such confidential and proprietary information as confidential (\u201cConfidential Information\u201d) pursuant to the terms of this Agreement; and"
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "340",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          4
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_342_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_342_s0011",
+            "text": "1. The Parties may find it beneficial to disclose to each other certain information which may include, but is not limited to, trade secrets, discoveries, ideas, concepts, know-how, techniques, designs, specifications, drawings, maps, blueprints, diagrams, flow and other technical, financial or business information, as well as third party information furnished under an obligation of confidentiality (\u201cConfidential Information\u201d)."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "342",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          11
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_343_nda-8",
+      "input": {
+        "claim": "Receiving Party shall notify Disclosing Party in case Receiving Party is required by law, regulation or judicial process to disclose any Confidential Information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_343_s0053",
+            "text": "2.3 Notwithstanding clause 2.1 above, the Receiving Party may disclose Confidential Information:"
+          },
+          {
+            "id": "contractnli_train_343_s0057",
+            "text": "b) to the extent required by law or the rules of any applicable regulatory authority, subject to clause 2.4 below."
+          },
+          {
+            "id": "contractnli_train_343_s0059",
+            "text": "In the event that the Receiving Party is required to disclose any Confidential Information in accordance with clause 2.3"
+          },
+          {
+            "id": "contractnli_train_343_s0060",
+            "text": "(b) above, it shall promptly notify the Disclosing Party and co-operate with the Disclosing Party regarding the form, nature, content and purpose of such disclosure or any action which the Disclosing Party may reasonably take to challenge the validity of such requirement."
+          }
+        ],
+        "requirement": {
+          "end_char": 162,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party shall notify Disclosing Party in case Receiving Party is required by law, regulation or judicial process to disclose any Confidential Information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "343",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          53,
+          57,
+          59,
+          60
+        ],
+        "hypothesis_description": "Notice on compelled disclosure",
+        "hypothesis_id": "nda-8",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_363_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_363_s0009",
+            "text": "1.1. As used in this Agreement, the term \u201cConfidential Information\u201d means any information or data, of any kind or nature whatsoever, relating to or otherwise pertaining to a disclosing Party (the \u201cDiscloser\u201d) and/or any of the Discloser\u2019s subsidiaries, affiliates, agents, assigns or representatives, the Discloser\u2019s activities, employees, customers, subscribers, business, affairs, operations systems, software and any other information disclosed and/or otherwise made available to the other Party (the \u201cRecipient\u201d), in any form whatsoever, including any and all analyses, compilations, studies, reports or other documents prepared by the Discloser, or by its directors, officers, employees, advisers, affiliates, agents or representatives, all information relating to or otherwise pertaining to any trade secret, invention, idea, know-how, technical, financial and business information, business plans or processes, information provided by third parties to the Discloser under an obligation of confidentiality, and all information which the Recipient has been exposed to in connection with the Subject Matter."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "363",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          9
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_363_nda-4",
+      "input": {
+        "claim": "Receiving Party shall not use any Confidential Information for any purpose other than the purposes stated in Agreement.",
+        "evidence": [
+          {
+            "id": "contractnli_train_363_s0023",
+            "text": "2.3. The Recipient will not use any Confidential Information for any purpose other than the Subject Matter and will not use any Confidential Information for obtaining any intellectual property rights for the Recipient or to divert or attempt to divert any business, supplier or customer of the Discloser."
+          }
+        ],
+        "requirement": {
+          "end_char": 119,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party shall not use any Confidential Information for any purpose other than the purposes stated in Agreement."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "363",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          23
+        ],
+        "hypothesis_description": "Limited use",
+        "hypothesis_id": "nda-4",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_367_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_367_s0014",
+            "text": "As used in this Agreement, \"Confidential Information\u201d means any information, including without limitation, business information, technical, and marketing information, pricing, rates and discounts, provided such information is identified as confidential at the time of disclosure or is disclosed in a manner that it may be reasonably inferred to be confidential and/or proprietary to the Disclosing Party."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "367",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          14
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_369_nda-20",
+      "input": {
+        "claim": "Receiving Party may retain some Confidential Information even after the return or destruction of Confidential Information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_369_s0056",
+            "text": "Receiving Party shall immediately return and redeliver to Disclosing Party all tangible material embodying any Confidential Information provided hereunder and all notes, summaries, memoranda, drawings, manuals, records, excerpts or derivative information deriving therefrom, and all other documents or materials (\u201cNotes\u201d) (and all copies of any of the foregoing, including \u201ccopies\u201d that have been converted to computerized media in the form of image, data, word processing, or other types of files either manually or by image capture) based on or including any Confidential Information, in whatever form of storage or retrieval, upon the earlier of"
+          },
+          {
+            "id": "contractnli_train_369_s0057",
+            "text": "(i) the completion or termination of the dealings between the parties contemplated hereunder;"
+          },
+          {
+            "id": "contractnli_train_369_s0058",
+            "text": "(ii) the termination of this Agreement; or"
+          },
+          {
+            "id": "contractnli_train_369_s0059",
+            "text": "(iii) at such time as the Disclosing Party may so request; provided however that the Receiving Party may retain such of its documents as is necessary to enable it to comply with its reasonable document retention policies."
+          }
+        ],
+        "requirement": {
+          "end_char": 122,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party may retain some Confidential Information even after the return or destruction of Confidential Information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "369",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          56,
+          57,
+          58,
+          59
+        ],
+        "hypothesis_description": "Permissible post-agreement possession",
+        "hypothesis_id": "nda-20",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_376_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_376_s0000",
+            "text": "NON-DISCLOSURE AGREEMENT"
+          },
+          {
+            "id": "contractnli_train_376_s0010",
+            "text": "1. \u201cProprietary Information,\u201d as used herein, shall mean any and all samples, formula, methods, know-how, technology, software, material, engineering data, specifications, sketches, drawings, schematics, designs, manufacturing processes, test results, compilations, and any other material, information, ideas, concepts or knowledge which a party (the \u201cDisclosing Party\u201d) furnishes to another party (the \u201cReceiving Party\u201d):"
+          },
+          {
+            "id": "contractnli_train_376_s0013",
+            "text": "Examples of such Proprietary Information include, but are not limited to, pricing, computer programs, computer code, modules, scripts, algorithms, features, and modes of operation, inventions (whether or not patentable), techniques, processes, methodologies, know-how, schematics, testing procedures, design and function specifications, documentation, and the features, mode of operation and other details of Disclosing Party\u2019s products and services, as well as the names and expertise of Disclosing Party\u2019s employees, product development plans and forecasts."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "376",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          0,
+          10,
+          13
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_378_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_378_s0003",
+            "text": "Recipient agrees that all information disclosed by the Company to Recipient, including without limitation information acquired by Recipient from Company employees or inspection of the Company\u2019s property, relating to (without limitation) the Company\u2019s products, designs, business plans, business opportunities, finances, research, development, know-how or personnel, and confidential information disclosed to the Company by third parties, shall be considered Confidential Information."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "378",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          3
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_386_nda-12",
+      "input": {
+        "claim": "Receiving Party may independently develop information similar to Confidential Information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_386_s0015",
+            "text": "4. EMPLOYEE further agrees not to divulge to any third party, either during his or her employment or thereafter, any confidential information conceived by him or her, disclosed by FRANKLIN, or obtained by him or her while in the employment of FRANKLIN relating in any way to any of FRANKLIN'S processes, businesses, customers, trade secrets, apparatus, products, software, packages, programs or trends in research, or to any of the inventions, discoveries, writings, programs, and improvements covered hereby, and agrees to maintain this information in confidence until such time that such information has become widely known to the public or described in an issued patent or in a printed publication of wide circulation."
+          },
+          {
+            "id": "contractnli_train_386_s0016",
+            "text": "Upon termination of the employment, EMPLOYEE agrees to turn over to FRANKLIN all notes, memoranda, notebooks, drawings, records, customer lists, telephone files (including Rolodex and business card files) and correspondence in connection with anything done by him or her relating to his or her employment, for the reason that all confidential information contained therein is at all times the sole property of FRANKLIN."
+          },
+          {
+            "id": "contractnli_train_386_s0025",
+            "text": "----------"
+          }
+        ],
+        "requirement": {
+          "end_char": 90,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party may independently develop information similar to Confidential Information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "386",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          15,
+          16,
+          25
+        ],
+        "hypothesis_description": "Permissible development of similar information",
+        "hypothesis_id": "nda-12",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_390_nda-8",
+      "input": {
+        "claim": "Receiving Party shall notify Disclosing Party in case Receiving Party is required by law, regulation or judicial process to disclose any Confidential Information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_390_s0008",
+            "text": "\"CONFIDENTIAL INFORMATION\" means any and all information and material disclosed by SABI to Victorinox (before or after the signing of this Agreement, and whether orally or in writing, graphic, electronic or any other form) that is marked or described as, identified orally or in writing as, or provided under circumstances indicating it is, confidential, proprietary or not otherwise available to the general public at the time of such disclosure."
+          },
+          {
+            "id": "contractnli_train_390_s0010",
+            "text": "Victorinox shall hold all Confidential Information in strict confidence and shall not disclose any Confidential Information to any third party."
+          },
+          {
+            "id": "contractnli_train_390_s0016",
+            "text": "or becomes publicly known through no act or omission of the Victorinox, or to the extent that disclosure of such Confidential Information is required by law."
+          }
+        ],
+        "requirement": {
+          "end_char": 162,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party shall notify Disclosing Party in case Receiving Party is required by law, regulation or judicial process to disclose any Confidential Information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "390",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          8,
+          10,
+          16
+        ],
+        "hypothesis_description": "Notice on compelled disclosure",
+        "hypothesis_id": "nda-8",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_393_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_393_s0006",
+            "text": "\"Information\" is defined as communications or data including, but not limited to, business information, marketing plans, technical or financial information, customer lists or proposals, sketches, models, samples, computer programs and documentation, drawings, specifications, whether conveyed in oral, written, graphic, or electromagnetic form or otherwise."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "393",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          6
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_396_nda-18",
+      "input": {
+        "claim": "Receiving Party shall not solicit some of Disclosing Party's representatives.",
+        "evidence": [
+          {
+            "id": "contractnli_train_396_s0021",
+            "text": "(a) Recipient will use reasonable efforts (which shall be not less than the same degree of care as Recipient uses with respect to its own Proprietary Information) to prevent the disclosure of the same to third persons, and"
+          },
+          {
+            "id": "contractnli_train_396_s0029",
+            "text": "4. Nothing in this Agreement shall be construed to prohibit or restrict Recipient's use or disclosure of information received from a third party who Recipient reasonably believes did not receive such information (directly or indirectly) from Discloser."
+          },
+          {
+            "id": "contractnli_train_396_s0030",
+            "text": "5. This Agreement shall be governed by and interpreted in accordance with the laws of New York, not including any conflicts of law rules which may direct the application of the laws of any other jurisdiction."
+          }
+        ],
+        "requirement": {
+          "end_char": 77,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party shall not solicit some of Disclosing Party's representatives."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "396",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          21,
+          29,
+          30
+        ],
+        "hypothesis_description": "No solicitation",
+        "hypothesis_id": "nda-18",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_414_nda-18",
+      "input": {
+        "claim": "Receiving Party shall not solicit some of Disclosing Party's representatives.",
+        "evidence": [
+          {
+            "id": "contractnli_train_414_s0029",
+            "text": "6. Without your prior written consent, we will not for a period of one year from the date hereof directly or indirectly solicit for employment any person who is now employed by you or any of your subsidiaries who is identified by us as a result of our invastigation of the Business."
+          }
+        ],
+        "requirement": {
+          "end_char": 77,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party shall not solicit some of Disclosing Party's representatives."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "414",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          29
+        ],
+        "hypothesis_description": "No solicitation",
+        "hypothesis_id": "nda-18",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_416_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_416_s0007",
+            "text": "(a) All of the confidential information (hereinafter \"Confidential Information\"), including, without limitation, all information relating to business plans, financial or technical matters, trade secrets, designs, know-how, inventions, operations and any other information received or acquired by one party (\"Receiving Party\") from the other (\"Disclosing Party\") in the course of exploring the possible business relationship shall be in written form and marked \"Confidential,\" with the name of the Disclosing Party and the date of disclosure."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "416",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          7
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_424_nda-11",
+      "input": {
+        "claim": "Receiving Party shall not reverse engineer any objects which embody Disclosing Party's Confidential Information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_424_s0005",
+            "text": "1. INFE will disclose to RECIPIENT such portions of its Proprietary Information solely to enable RECIPIENT to determine the desirability of selling its assets to INFE; and RECIPIENT shall not disseminate any portions of the Proprietary Information to any third party individual or entity."
+          },
+          {
+            "id": "contractnli_train_424_s0008",
+            "text": "relating to trade secrets, appropriate licenses with certain third parties, data, designs, samples, drawings, relationships, documentation, machinery, prototypes, processes, methods, concepts, facilities, research, development, patent applications, and other Proprietary Information relating to the development, testing, manufacture, or application of any such devices or systems (including but not limited to system concepts, architectures, source documents and programming documents); and"
+          },
+          {
+            "id": "contractnli_train_424_s0012",
+            "text": "5. The undertakings and obligations of RECIPIENT under this Agreement shall not apply to any information which:"
+          }
+        ],
+        "requirement": {
+          "end_char": 112,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party shall not reverse engineer any objects which embody Disclosing Party's Confidential Information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "424",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          5,
+          8,
+          12
+        ],
+        "hypothesis_description": "No reverse engineering",
+        "hypothesis_id": "nda-11",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_439_nda-1",
+      "input": {
+        "claim": "All Confidential Information shall be expressly identified by the Disclosing Party.",
+        "evidence": [
+          {
+            "id": "contractnli_train_439_s0040",
+            "text": "The Product and related information is proprietary and confidential information to MS and its suppliers."
+          },
+          {
+            "id": "contractnli_train_439_s0041",
+            "text": "Recipient agrees not to disclose or provide the Product, documentation, or any related information (including the Product features or the results of use or testing) to any third party or use the Product for any purpose other than as provided in this Agreement."
+          },
+          {
+            "id": "contractnli_train_439_s0042",
+            "text": "However, Recipient may disclose confidential information in accordance with judicial or other governmental order, provided Recipient shall give MS reasonable written notice prior to such disclosure and shall comply with any applicable protective order or equivalent."
+          }
+        ],
+        "requirement": {
+          "end_char": 83,
+          "id": "r00",
+          "start_char": 0,
+          "text": "All Confidential Information shall be expressly identified by the Disclosing Party."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "439",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          40,
+          41,
+          42
+        ],
+        "hypothesis_description": "Explicit identification",
+        "hypothesis_id": "nda-1",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_443_nda-13",
+      "input": {
+        "claim": "Receiving Party may acquire information similar to Confidential Information from a third party.",
+        "evidence": [
+          {
+            "id": "contractnli_train_443_s0006",
+            "text": "In view of TSR's desire that such documentation and information be maintained in confidence, it is hereby agreed that for a period of five (5) years commencing on the date of this Agreement, CGS shall not disclose or otherwise make available to a third party any proprietary information and documentation received from TSR that is identified as confidential (\"Confidential Information\")."
+          },
+          {
+            "id": "contractnli_train_443_s0007",
+            "text": "All Confidential Information transmitted hereunder shall be and remain the property of TSR, and all such Information and any copies thereof shall be promptly returned to TSR upon request or destroyed at TSR's option."
+          },
+          {
+            "id": "contractnli_train_443_s0008",
+            "text": "Confidential Information shall mean any non-public, confidential proprietary information, services to be rendered or transactions contemplated hereby, including without limitation, pricing and material terms and conditions of services offered, intellectual property, enabling software, programming, except that Confidential Information does not include any information that:"
+          }
+        ],
+        "requirement": {
+          "end_char": 95,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party may acquire information similar to Confidential Information from a third party."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "443",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          6,
+          7,
+          8
+        ],
+        "hypothesis_description": "Permissible acquirement of similar information",
+        "hypothesis_id": "nda-13",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_449_nda-4",
+      "input": {
+        "claim": "Receiving Party shall not use any Confidential Information for any purpose other than the purposes stated in Agreement.",
+        "evidence": [
+          {
+            "id": "contractnli_train_449_s0003",
+            "text": "Both parties agree to assume that any information which is divulged to the other is proprietary information and each agrees not to divulge or disseminate any such proprietary information to third parties without the written consent of the other."
+          },
+          {
+            "id": "contractnli_train_449_s0004",
+            "text": "Neither party may use information divulged to the other in any independent trade or business enterprise or financing transaction."
+          },
+          {
+            "id": "contractnli_train_449_s0006",
+            "text": "Each party agrees to negotiate directly and solely with and through the other to any new potential financing, joint ventures, mergers, acquisition or other opportunities, which one makes known to the other, and each shall specify the particular capital sources and/or project."
+          }
+        ],
+        "requirement": {
+          "end_char": 119,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party shall not use any Confidential Information for any purpose other than the purposes stated in Agreement."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "449",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          3,
+          4,
+          6
+        ],
+        "hypothesis_description": "Limited use",
+        "hypothesis_id": "nda-4",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_459_nda-5",
+      "input": {
+        "claim": "Receiving Party may share some Confidential Information with some of Receiving Party's employees.",
+        "evidence": [
+          {
+            "id": "contractnli_train_459_s0009",
+            "text": "(a) all proprietary and confidential information of the Company, and"
+          },
+          {
+            "id": "contractnli_train_459_s0017",
+            "text": "(ii) information received from a third party outside the Company that was disclosed without a breach of any confidentiality obligation; or"
+          },
+          {
+            "id": "contractnli_train_459_s0048",
+            "text": "I understand the Company does not desire to acquire from me any trade secrets, know-how or confidential business information that I may have acquired from others."
+          }
+        ],
+        "requirement": {
+          "end_char": 97,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party may share some Confidential Information with some of Receiving Party's employees."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "459",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          9,
+          17,
+          48
+        ],
+        "hypothesis_description": "Sharing with employees",
+        "hypothesis_id": "nda-5",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_462_nda-19",
+      "input": {
+        "claim": "Some obligations of Agreement may survive termination of Agreement.",
+        "evidence": [
+          {
+            "id": "contractnli_train_462_s0007",
+            "text": "The Recipient will inform each of its employees, agents and affiliates (collectively, \"Representatives\") who will receive Confidential Information of the obligations under this Agreement and agrees to take all commercially reasonable measures to restrain its Representatives from taking any action that would constitute a breach of the terms of this Agreement."
+          },
+          {
+            "id": "contractnli_train_462_s0010",
+            "text": "(i) was generally known to the public prior to the disclosure under this Agreement;"
+          },
+          {
+            "id": "contractnli_train_462_s0023",
+            "text": "10. The undersigned represent and warrant that they are authorized to enter this Agreement and to be bound by the terms of this Agreement."
+          }
+        ],
+        "requirement": {
+          "end_char": 67,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Some obligations of Agreement may survive termination of Agreement."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "462",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          7,
+          10,
+          23
+        ],
+        "hypothesis_description": "Survival of obligations",
+        "hypothesis_id": "nda-19",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_462_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_462_s0002",
+            "text": "Whereas, each of the Parties has information which it considers proprietary and confidential, including, but not limited to, information relating to its existing and planned lines of business, financial forecasts, markets, customers, suppliers, contracts, backlog, hardware and software systems, trade secrets and stock ownership and all materials prepared on the basis of any of the foregoing (collectively, \"Confidential Information\")."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "462",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          2
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_464_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_464_s0009",
+            "text": "1. \"Confidential Information\" means information in whatever form disclosed by or on behalf of one Party (the \"Disclosing Party\") to the other Party (the \"Receiving Party\") before, on or after the Effective Date hereof which relates to a Disclosing Party's business or the Transaction including without limitation: business, financial, human resources, and technical materials, information and data, or information which although not directly related to the Transaction, is nevertheless disclosed as a result of or in connection with the Parties' discussions of the Transaction together with analyses or other documents prepared by the Receiving Party or any of the Receiving Party's affiliates, employees, representatives and/or consultants that contain or otherwise reflect such Confidential Information."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "464",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          9
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_464_nda-7",
+      "input": {
+        "claim": "Receiving Party may share some Confidential Information with some third-parties (including consultants, agents and professional advisors).",
+        "evidence": [
+          {
+            "id": "contractnli_train_464_s0011",
+            "text": "The Receiving Party may disclose the Disclosing Party's Confidential Information to its affiliates, its employees, its representatives and its consultants, in each case if such affiliates, employees, representatives and consultants have a need to know, and providing such affiliates, employees, representatives and consultants"
+          }
+        ],
+        "requirement": {
+          "end_char": 138,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party may share some Confidential Information with some third-parties (including consultants, agents and professional advisors)."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "464",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          11
+        ],
+        "hypothesis_description": "Sharing with third-parties",
+        "hypothesis_id": "nda-7",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_467_nda-17",
+      "input": {
+        "claim": "Receiving Party may create a copy of some Confidential Information in some circumstances.",
+        "evidence": [
+          {
+            "id": "contractnli_train_467_s0016",
+            "text": "i. For a period of 5 years from the date of this Agreement, the receiving party shall not publish, disseminate nor disclose any Proprietary/Confidential Information received from any of the other parties to any third party accept to those of its own employment having valid need to know the information in the course of employment and such disclosure shall be on terms not less restrictive than those herein contained."
+          },
+          {
+            "id": "contractnli_train_467_s0018",
+            "text": "iii. The receiving party shall in accordance with the request of the other parties, either return all copies, recording and tangible manifestations of Proprietary/Confidential Information or destroy the same following a determination by any of the parties not to enter into any arrangement or venture with each other of the kind contemplated herein or upon termination of any related memorandum of understanding or agreement entered into between the parties or upon the written request of the disclosing party."
+          },
+          {
+            "id": "contractnli_train_467_s0021",
+            "text": "i. Can be proved by documentary evidence to be such Proprietary/Confidential Information that was already in the possession of the receiving party and at its free disposal before the disclosure hereunder to it;"
+          }
+        ],
+        "requirement": {
+          "end_char": 89,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party may create a copy of some Confidential Information in some circumstances."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "467",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          16,
+          18,
+          21
+        ],
+        "hypothesis_description": "Permissible copy",
+        "hypothesis_id": "nda-17",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_474_nda-18",
+      "input": {
+        "claim": "Receiving Party shall not solicit some of Disclosing Party's representatives.",
+        "evidence": [
+          {
+            "id": "contractnli_train_474_s0039",
+            "text": "In consideration of the furnishing of Evaluation Material hereunder, each party agrees that, for a period of two years from the date hereof, neither such party nor any of its controlled affiliates will solicit to employ any of the current officers or employees of the other party with whom such party has contact or who is specifically identified to such party during the period of such party's investigation of the other party with respect to a possible transaction, so long as they are employed by the other party, without obtaining the prior written consent of the other party; provided, however, that solicitation for purposes of this paragraph shall not include solicitation of employees or officers"
+          }
+        ],
+        "requirement": {
+          "end_char": 77,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party shall not solicit some of Disclosing Party's representatives."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "474",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          39
+        ],
+        "hypothesis_description": "No solicitation",
+        "hypothesis_id": "nda-18",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_481_nda-17",
+      "input": {
+        "claim": "Receiving Party may create a copy of some Confidential Information in some circumstances.",
+        "evidence": [
+          {
+            "id": "contractnli_train_481_s0010",
+            "text": "d) This Agreement and each additional agreement concluded or written or verbal disclosure made between the Parties, shall be kept confidential and is not to be reproduced, communicated or distributed in any manner whatsoever except on a \"need to know\" basis to persons directly involved with the closing of any transaction contemplated between the Parties, or legal counsel of a Party."
+          }
+        ],
+        "requirement": {
+          "end_char": 89,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party may create a copy of some Confidential Information in some circumstances."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "481",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          10
+        ],
+        "hypothesis_description": "Permissible copy",
+        "hypothesis_id": "nda-17",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_516_nda-16",
+      "input": {
+        "claim": "Receiving Party shall destroy or return some Confidential Information upon the termination of Agreement.",
+        "evidence": [
+          {
+            "id": "contractnli_train_516_s0030",
+            "text": "If either Party decides that it does not wish to proceed with a Possible Transaction, it will promptly inform the other Party of that decision."
+          },
+          {
+            "id": "contractnli_train_516_s0031",
+            "text": "In that case, or at any time upon the request of a Provider for any reason, a Recipient will, promptly after receipt of such notice or request, destroy all Evaluation Material in any way relating to the Provider or its products, services, employees or other assets or liabilities, and no copy or extract thereof (including electronic copies) shall be retained."
+          }
+        ],
+        "requirement": {
+          "end_char": 104,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party shall destroy or return some Confidential Information upon the termination of Agreement."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "516",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          30,
+          31
+        ],
+        "hypothesis_description": "Return of confidential information",
+        "hypothesis_id": "nda-16",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_527_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_527_s0009",
+            "text": "In connection with the consideration of a possible transaction between Transcend Services, Inc. (the \u201cCompany\u201d) and Nuance Communications, Inc. (\u201cNuance\u201d) (a \u201cPossible Transaction\u201d) each of the parties (each a \u201cDisclosing Party\u201d as applicable) is prepared to make available to the other (each a \u201cRecipient\u201d as applicable) and its Representatives (as hereinafter defined) certain information concerning its business, financial condition, operations, assets and liabilities."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "527",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          9
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_531_nda-15",
+      "input": {
+        "claim": "Agreement shall not grant Receiving Party any right to Confidential Information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_531_s0017",
+            "text": "The term \u201cEvaluation Material\u201d does not include information which"
+          },
+          {
+            "id": "contractnli_train_531_s0021",
+            "text": "(iv) becomes available to the Receiving Party on a non-confidential basis from a source other than the Disclosing Party or its Representatives, provided that such source was not known to be bound by a confidentiality agreement with, or other contractual, legal or fiduciary obligation of confidentiality to, the Company or any other party with respect to such information."
+          },
+          {
+            "id": "contractnli_train_531_s0025",
+            "text": "In any event, the Receiving Party agrees to undertake reasonable precautions to safeguard and protect the confidentiality of the Evaluation Material and the Discussion Information, the Receiving Party hereby accepts responsibility for any breach of this letter agreement by any of its Representatives (it being understood that such responsibility shall be in addition to and not by way of limitation of any right or remedy that the Company may have against such Representatives), and the Receiving Party agrees at its sole expense to take all reasonable measures to restrain its Representatives from prohibited or unauthorized disclosure or uses of the Evaluation Material and the Discussion Information."
+          }
+        ],
+        "requirement": {
+          "end_char": 80,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Agreement shall not grant Receiving Party any right to Confidential Information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "531",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          17,
+          21,
+          25
+        ],
+        "hypothesis_description": "No licensing",
+        "hypothesis_id": "nda-15",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_534_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_534_s0077",
+            "text": "(b) The term \u201cEvaluation Material\u201d means any and all information (whether written, oral or electronic), data, documents, agreements, files and other materials, whether disclosed orally or stored in written, electronic or other form or media, which is obtained from or disclosed by the Company, or its Representatives or Affiliates before or after the date hereof regarding the Company, including, without limitation, information concerning the Company\u2019s business, financial condition, operations, prospects, assets and liabilities, and all notes, reports, forecasts, analyses, compilations, studies, interpretations or other documents prepared by you or on your behalf, (collectively, \u201cNotes\u201d) which contains or is based upon, in whole or in part, the Evaluation Material."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "534",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          77
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_548_nda-19",
+      "input": {
+        "claim": "Some obligations of Agreement may survive termination of Agreement.",
+        "evidence": [
+          {
+            "id": "contractnli_train_548_s0129",
+            "text": "Except as set forth below, the covenants in Sections 4, 5, 6 and 23 shall survive the termination of Employee\u2019s employment with a Financial Institution regardless of the reason for termination."
+          },
+          {
+            "id": "contractnli_train_548_s0130",
+            "text": "If the Merger is not consummated and the Merger Agreement is terminated, Sections 4, 5, 6 and 23 shall survive with respect to First Financial and the Bank, but shall not survive with respect to HopFed or Heritage."
+          }
+        ],
+        "requirement": {
+          "end_char": 67,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Some obligations of Agreement may survive termination of Agreement."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "548",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          129,
+          130
+        ],
+        "hypothesis_description": "Survival of obligations",
+        "hypothesis_id": "nda-19",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_572_nda-11",
+      "input": {
+        "claim": "Receiving Party shall not reverse engineer any objects which embody Disclosing Party's Confidential Information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_572_s0039",
+            "text": "If Confidential Information consists of computer software disclosed in object code form or any hardware device, the receiving party and its Associates shall not, and shall not permit its"
+          },
+          {
+            "id": "contractnli_train_572_s0040",
+            "text": "Associates or any other party, to reverse engineer, decompile, reverse compile, or disassemble such object code, or take any other steps to derive a source code equivalent thereof."
+          }
+        ],
+        "requirement": {
+          "end_char": 112,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party shall not reverse engineer any objects which embody Disclosing Party's Confidential Information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "572",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          39,
+          40
+        ],
+        "hypothesis_description": "No reverse engineering",
+        "hypothesis_id": "nda-11",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_577_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_577_s0011",
+            "text": "As a condition to the Company\u2019s furnishing to you and your representatives financial and other information which has not theretofore been made available to the public, you and your representatives agree to treat all such non-public information furnished to you and your representatives in writing or orally by the Company or its representatives on and after the date of this agreement (herein collectively referred to as the \u201cConfidential Evaluation Material\u201d), as follows:"
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "577",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          11
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_588_nda-1",
+      "input": {
+        "claim": "All Confidential Information shall be expressly identified by the Disclosing Party.",
+        "evidence": [
+          {
+            "id": "contractnli_train_588_s0025",
+            "text": "If, in the absence of any protective order or other remedy or the receipt of a waiver by the Other Party, the Disclosure Party or any of its Representatives determines in good faith, after consultation with the Disclosure Party\u2019s outside counsel or such Representative\u2019s counsel, as applicable, that it is legally compelled to disclose Evaluation Material (or any of the Other Confidential Information), the Disclosure Party or its Representative may, without liability hereunder, disclose only that portion of the Evaluation Material or Other Confidential Information that it determines in good faith, after consultation with such counsel, it is legally required to be disclosed, provided that the Disclosure Party exercise commercially reasonable efforts to preserve the confidentiality of the Evaluation Material and the Other Confidential Information, including, without limitation, by cooperating with the Other Party to obtain an appropriate protective order or other reliable assurance that confidential treatment will be accorded the Evaluation Material and the Other Confidential Information."
+          },
+          {
+            "id": "contractnli_train_588_s0027",
+            "text": "In that case, or any time upon the request of a party for any reason, Vector will promptly, at Vector\u2019s option"
+          }
+        ],
+        "requirement": {
+          "end_char": 83,
+          "id": "r00",
+          "start_char": 0,
+          "text": "All Confidential Information shall be expressly identified by the Disclosing Party."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "588",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          25,
+          27
+        ],
+        "hypothesis_description": "Explicit identification",
+        "hypothesis_id": "nda-1",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_603_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_603_s0015",
+            "text": "Confidential Information shall also include proprietary information concerning the respective businesses, operations and assets of the parties, including, without limitation, trade secrets, techniques, models, data, documentation, code, research, development, processes, procedures, business strategy, marketing timetables, pricing policies, financial information and other information of a similar nature, whether or not reduced to writing or other tangible form."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "603",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          15
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_616_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_616_s0007",
+            "text": "Notwithstanding the foregoing, Confidential Information shall not include information or material that"
+          },
+          {
+            "id": "contractnli_train_616_s0015",
+            "text": "(i) any information about a potential transaction between Recipient and the Company (the \u201cTransaction\u201d) or the fact that Recipient has received, or may receive, Confidential Information and is considering the Transaction and all discussions between the Company and Recipient related thereto, including the existence of this Agreement, except that (subject to Section 2.2 below)"
+          },
+          {
+            "id": "contractnli_train_616_s0024",
+            "text": "If, in the absence of a protective order or other remedy or the receipt of a waiver by the Company, Recipient is nonetheless, legally compelled to disclose Confidential Information, Recipient may, without liability hereunder, disclose to such tribunal only that portion of the Confidential Information which outside counsel advises, in writing, Recipient is legally required to be disclosed, provided that Recipient shall use its best efforts to preserve the confidentiality of the Confidential Information, including, without limitation, by cooperating with the Company to obtain an appropriate protective order or other reliable assurance that confidential treatment will be afforded the Confidential Information by such tribunal."
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "616",
+        "evidence_selection": "deterministic_lexical_retrieval",
+        "evidence_span_indexes": [
+          7,
+          15,
+          24
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "NotMentioned",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_619_nda-10",
+      "input": {
+        "claim": "Receiving Party shall not disclose the fact that Agreement was agreed or negotiated.",
+        "evidence": [
+          {
+            "id": "contractnli_train_619_s0014",
+            "text": "Confidential Information will be deemed to include, without limitation:"
+          },
+          {
+            "id": "contractnli_train_619_s0017",
+            "text": "(c) the existence and terms of this Agreement, and the fact that information of the type referred to in Section 2(a) above has been made available to the Receiving Party; and"
+          },
+          {
+            "id": "contractnli_train_619_s0018",
+            "text": "(d) the fact that discussions or negotiations are or may be taking place with respect to a possible transaction involving the Parties, and the proposed terms of any such transaction."
+          },
+          {
+            "id": "contractnli_train_619_s0058",
+            "text": "Receiving Party will make no public announcement or other public statement concerning the existence of this Agreement or the Parties\u2019 respective performances hereunder without the prior written consent of Disclosing Party, which may be withheld in Disclosing Party\u2019s sole and absolute discretion, except as necessary to comply with applicable law or regulations."
+          }
+        ],
+        "requirement": {
+          "end_char": 84,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Receiving Party shall not disclose the fact that Agreement was agreed or negotiated."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "619",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          14,
+          17,
+          18,
+          58
+        ],
+        "hypothesis_description": "Confidentiality of Agreement",
+        "hypothesis_id": "nda-10",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Entailment",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "covered"
+      },
+      "task": "requirement_alignment"
+    },
+    {
+      "id": "contractnli_train_624_nda-2",
+      "input": {
+        "claim": "Confidential Information shall only include technical information.",
+        "evidence": [
+          {
+            "id": "contractnli_train_624_s0091",
+            "text": "For purposes of this Agreement, the Provider\u2019s \u201cConfidential Information\u201d will be deemed to include only the following:"
+          },
+          {
+            "id": "contractnli_train_624_s0092",
+            "text": "(a) any information (including any technology, know-how, patent application, test result, research study, business plan, budget, forecast or projection) relating directly or indirectly to the business of the Provider, any predecessor entity or any subsidiary or other affiliate of the Provider (whether prepared by the Provider or by any other Person and whether or not in written form) that is or that has, within the last thirty (30) days, been made available to the Recipient or any Representative of the Recipient by or on behalf of the Provider or any Representative of the Provider;"
+          }
+        ],
+        "requirement": {
+          "end_char": 66,
+          "id": "r00",
+          "start_char": 0,
+          "text": "Confidential Information shall only include technical information."
+        }
+      },
+      "source": {
+        "dataset": "ContractNLI",
+        "document_id": "624",
+        "evidence_selection": "upstream_annotated_spans",
+        "evidence_span_indexes": [
+          91,
+          92
+        ],
+        "hypothesis_description": "None-inclusion of non-technical information",
+        "hypothesis_id": "nda-2",
+        "label_provenance": {
+          "kind": "upstream_human_nli_label",
+          "strength": "direct_requirement_label"
+        },
+        "relation": "Contradiction",
+        "source_split": "train",
+        "v6_partition": "cascade_evaluation"
+      },
+      "split": "cascade_evaluation",
+      "target": {
+        "label": "missing"
+      },
+      "task": "requirement_alignment"
+    }
+  ],
+  "schema_version": "contexttrace-requirement-v6-cascade-cases-1.0",
+  "source": {
+    "archive_sha256": "e03fc77bbf8b53e2976a250e81d8a294bc3d5e5fb014521e477dee9340d6287b",
+    "dataset": "ContractNLI",
+    "member": "contract-nli/train.json",
+    "member_sha256": "dbceb356cd6203b35b27be94a5fa85e499a81c34c42c89ad53060b39f0257ba5",
+    "split": "train"
+  }
+}
