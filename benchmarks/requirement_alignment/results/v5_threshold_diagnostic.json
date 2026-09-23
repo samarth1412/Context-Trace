@@ -1,0 +1,112 @@
+{
+  "best_eligible": {
+    "contract_development": {
+      "accuracy": 0.8,
+      "average_precision": 0.8442,
+      "cases": 240,
+      "confusion": {
+        "negative": {
+          "negative": 157,
+          "positive": 3
+        },
+        "positive": {
+          "negative": 45,
+          "positive": 35
+        }
+      },
+      "false_positive_rate": 0.0187,
+      "macro_f1": 0.7303,
+      "negative_recall": 0.9812,
+      "positive_recall": 0.4375,
+      "roc_auc": 0.888,
+      "threshold": 0.873
+    },
+    "safety_eligible": true,
+    "threshold": 0.873,
+    "wice_internal": {
+      "accuracy": 0.6646,
+      "average_precision": 0.7526,
+      "cases": 164,
+      "confusion": {
+        "negative": {
+          "negative": 92,
+          "positive": 3
+        },
+        "positive": {
+          "negative": 52,
+          "positive": 17
+        }
+      },
+      "false_positive_rate": 0.0316,
+      "macro_f1": 0.5759,
+      "negative_recall": 0.9684,
+      "positive_recall": 0.2464,
+      "roc_auc": 0.8285,
+      "threshold": 0.873
+    }
+  },
+  "contract_false_support_at_best": [
+    {
+      "covered_probability": 0.948076,
+      "evidence_span_indexes": [
+        7,
+        10,
+        14
+      ],
+      "hypothesis_id": "nda-4",
+      "id": "contractnli_dev_16_nda-4",
+      "relation": "NotMentioned"
+    },
+    {
+      "covered_probability": 0.949178,
+      "evidence_span_indexes": [
+        22,
+        34,
+        40
+      ],
+      "hypothesis_id": "nda-15",
+      "id": "contractnli_dev_381_nda-15",
+      "relation": "NotMentioned"
+    },
+    {
+      "covered_probability": 0.982027,
+      "evidence_span_indexes": [
+        10,
+        30,
+        32
+      ],
+      "hypothesis_id": "nda-16",
+      "id": "contractnli_dev_63_nda-16",
+      "relation": "NotMentioned"
+    }
+  ],
+  "contract_recall_target_met": false,
+  "contract_test_split_accessed": false,
+  "cpu_inference": {
+    "contract_development": {
+      "examples": 240,
+      "examples_per_second": 16.138,
+      "seconds": 14.8717
+    },
+    "wice_internal": {
+      "examples": 164,
+      "examples_per_second": 15.6979,
+      "seconds": 10.4473
+    }
+  },
+  "eligible_thresholds": 15,
+  "model_artifact_verified": true,
+  "model_id": "7e655679c82637cb2f125c72e7812ab0ca47240295af247538940488a6c0a38f",
+  "range": {
+    "maximum": 0.95,
+    "minimum": 0.8,
+    "step": 0.001
+  },
+  "relation_ids": {
+    "contradiction": 2,
+    "entailment": 0,
+    "neutral": 1
+  },
+  "schema_version": "contexttrace-requirement-v5-threshold-diagnostic-1.0",
+  "warning": "Post-hoc development diagnostic; cannot satisfy or change the promotion gate."
+}

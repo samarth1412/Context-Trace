@@ -181,3 +181,42 @@ PYTHONPATH=packages/contexttrace:. .venv/bin/python \
 
 `V4_AGGREGATION_RESULTS.md` records the negative aggregation result and decision
 to move to one stronger local backbone.
+
+Run the fixed v5 stronger-backbone experiment with the exact v3 data and gates:
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.train_v5 \
+  --training-dataset benchmarks/requirement_alignment/v3_training.json \
+  --contract-development benchmarks/requirement_alignment/development.json \
+  --wice-dataset benchmarks/requirement_alignment/dataset.json \
+  --base-model-path .tmp-contexttrace-models/moritzlaurer--deberta-v3-base-mnli-fever-anli--6f5cf0a2 \
+  --output-dir .tmp-contexttrace-models/contexttrace-requirement-alignment-v5 \
+  --report-output benchmarks/requirement_alignment/results/training_v5_report.json \
+  --model-manifest-output benchmarks/requirement_alignment/results/model_v5_manifest.json \
+  --epochs 2 \
+  --batch-size 8 \
+  --learning-rate 1e-5
+```
+
+The source model is locked to full Hugging Face revision
+`6f5cf0a2b59cabb106aca4c287eed12e357e90eb`. The script verifies each local
+source file before loading it and resolves relation IDs from the checkpoint's
+semantic label mapping. It does not access ContractNLI test or change the
+stable verifier.
+
+Reproduce the post-hoc fine-threshold diagnostic:
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.diagnose_v5_threshold \
+  --model-path .tmp-contexttrace-models/contexttrace-requirement-alignment-v5 \
+  --model-manifest benchmarks/requirement_alignment/results/model_v5_manifest.json \
+  --contract-development benchmarks/requirement_alignment/development.json \
+  --wice-dataset benchmarks/requirement_alignment/dataset.json \
+  --output benchmarks/requirement_alignment/results/v5_threshold_diagnostic.json \
+  --batch-size 8
+```
+
+`TRAINING_V5_RESULTS.md` records the ranking improvement, failed joint gate,
+fine-threshold diagnostic, and decision not to promote the larger model.
