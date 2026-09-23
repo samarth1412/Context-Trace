@@ -220,3 +220,79 @@ PYTHONPATH=packages/contexttrace:. .venv/bin/python \
 
 `TRAINING_V5_RESULTS.md` records the ranking improvement, failed joint gate,
 fine-threshold diagnostic, and decision not to promote the larger model.
+
+Build the two disjoint v6 cascade partitions from ContractNLI train pairs that
+were not used to train v3 or v5:
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.build_v6_cascade_cases \
+  --contract-source-zip /private/tmp/contexttrace_external_data/contract-nli.zip \
+  --v3-training-dataset benchmarks/requirement_alignment/v3_training.json \
+  --calibration-output benchmarks/requirement_alignment/v6_calibration.json \
+  --evaluation-output benchmarks/requirement_alignment/v6_evaluation.json \
+  --audit-output benchmarks/requirement_alignment/v6_cascade_audit.json \
+  --manifest-output benchmarks/requirement_alignment/v6_cascade_manifest.json \
+  --cases-per-relation-per-split 30
+```
+
+Score a partition locally with the hash-verified v3 and v5 artifacts:
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.score_v6_cascade \
+  --dataset benchmarks/requirement_alignment/v6_calibration.json \
+  --split cascade_calibration \
+  --v3-model-path .tmp-contexttrace-models/contexttrace-requirement-alignment-v3 \
+  --v3-manifest benchmarks/requirement_alignment/results/model_v3_manifest.json \
+  --v5-model-path .tmp-contexttrace-models/contexttrace-requirement-alignment-v5 \
+  --v5-manifest benchmarks/requirement_alignment/results/model_v5_manifest.json \
+  --output benchmarks/requirement_alignment/results/v6_calibration_local_scores.json
+```
+
+The Jev phase is explicitly remote and remains blocked by `local_only`. For
+calibration, call Jev once on all cases, then freeze the policy:
+
+```bash
+CONTEXTTRACE_LOCAL_ONLY=false PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.v6_cascade run-jev \
+  --dataset benchmarks/requirement_alignment/v6_calibration.json \
+  --local-scores benchmarks/requirement_alignment/results/v6_calibration_local_scores.json \
+  --split cascade_calibration \
+  --output benchmarks/requirement_alignment/results/v6_calibration_jev.json \
+  --all-cases --model jev-latest --allow-remote --env-file .env
+
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.v6_cascade calibrate \
+  --dataset benchmarks/requirement_alignment/v6_calibration.json \
+  --local-scores benchmarks/requirement_alignment/results/v6_calibration_local_scores.json \
+  --jev-result benchmarks/requirement_alignment/results/v6_calibration_jev.json \
+  --policy-output benchmarks/requirement_alignment/results/v6_cascade_policy.json \
+  --analysis-output benchmarks/requirement_alignment/results/v6_cascade_calibration.json
+```
+
+Score `v6_evaluation.json` with `score_v6_cascade`, changing the split to
+`cascade_evaluation`. Then run only the cases selected by the frozen policy and
+evaluate:
+
+```bash
+CONTEXTTRACE_LOCAL_ONLY=false PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.v6_cascade run-jev \
+  --dataset benchmarks/requirement_alignment/v6_evaluation.json \
+  --local-scores benchmarks/requirement_alignment/results/v6_evaluation_local_scores.json \
+  --split cascade_evaluation \
+  --output benchmarks/requirement_alignment/results/v6_evaluation_jev.json \
+  --policy benchmarks/requirement_alignment/results/v6_cascade_policy.json \
+  --model jev-latest --allow-remote --env-file .env
+
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.v6_cascade evaluate \
+  --dataset benchmarks/requirement_alignment/v6_evaluation.json \
+  --local-scores benchmarks/requirement_alignment/results/v6_evaluation_local_scores.json \
+  --jev-result benchmarks/requirement_alignment/results/v6_evaluation_jev.json \
+  --policy benchmarks/requirement_alignment/results/v6_cascade_policy.json \
+  --output benchmarks/requirement_alignment/results/v6_cascade_evaluation.json
+```
+
+`V6_CASCADE_RESULTS.md` records the safe abstention result, optional Jev cost,
+failed non-regression gate, and decision not to change stable behavior.

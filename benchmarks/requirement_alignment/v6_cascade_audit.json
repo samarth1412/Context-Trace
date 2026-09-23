@@ -1,0 +1,50 @@
+{
+  "eligible_unseen_counts": {
+    "Contradiction": 101,
+    "Entailment": 2703,
+    "NotMentioned": 2120
+  },
+  "examples": 180,
+  "examples_per_split": {
+    "cascade_calibration": 90,
+    "cascade_evaluation": 90
+  },
+  "exclusions": {
+    "no_evidence_within_budget": 167,
+    "used_by_v3_v5_training": 2100
+  },
+  "integrity": {
+    "calibration_evaluation_ids_disjoint": true,
+    "contractnli_development_or_test_used": false,
+    "model_or_api_labels_used": false,
+    "targets_absent_from_model_inputs": true,
+    "v3_v5_training_example_ids_excluded": true
+  },
+  "limitations": [
+    "Cases are unused ContractNLI train claim-evidence pairs, not an official held-out split.",
+    "Source documents can overlap documents seen during v3/v5 training.",
+    "The 17 legal hypotheses recur across training, calibration, and evaluation.",
+    "NotMentioned evidence uses deterministic lexical selection."
+  ],
+  "relation_counts": {
+    "cascade_calibration": {
+      "Contradiction": 30,
+      "Entailment": 30,
+      "NotMentioned": 30
+    },
+    "cascade_evaluation": {
+      "Contradiction": 30,
+      "Entailment": 30,
+      "NotMentioned": 30
+    }
+  },
+  "schema_version": "contexttrace-requirement-v6-cascade-audit-1.0",
+  "selected_documents": 148,
+  "selected_documents_overlapping_training": 148,
+  "source_candidate_counts": {
+    "Contradiction": 841,
+    "Entailment": 3530,
+    "NotMentioned": 2820
+  },
+  "valid": true
+}

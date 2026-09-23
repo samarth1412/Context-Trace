@@ -1,0 +1,2138 @@
+{
+  "absolute_gates_met": true,
+  "baseline_non_regression_met": false,
+  "baselines": {
+    "v3_threshold_0_90": {
+      "accuracy": 0.8444,
+      "cases": 90,
+      "confusion": {
+        "negative": {
+          "negative": 60,
+          "positive": 0
+        },
+        "positive": {
+          "negative": 14,
+          "positive": 16
+        }
+      },
+      "false_positive_rate": 0.0,
+      "macro_f1": 0.7956,
+      "negative_recall": 1.0,
+      "positive_recall": 0.5333,
+      "threshold": 0.9
+    },
+    "v5_threshold_0_90": {
+      "accuracy": 0.8,
+      "cases": 90,
+      "confusion": {
+        "negative": {
+          "negative": 59,
+          "positive": 1
+        },
+        "positive": {
+          "negative": 17,
+          "positive": 13
+        }
+      },
+      "false_positive_rate": 0.0167,
+      "macro_f1": 0.7293,
+      "negative_recall": 0.9833,
+      "positive_recall": 0.4333,
+      "threshold": 0.9
+    }
+  },
+  "contractnli_test_accessed": false,
+  "evaluation_gates_met": false,
+  "evaluation_used_for_selection": false,
+  "experiment": "contexttrace_v6_uncertainty_cascade",
+  "local_only": {
+    "metrics": {
+      "abstentions": 13,
+      "automatic_accuracy": 0.8961,
+      "automatic_cases": 77,
+      "automatic_coverage": 0.8556,
+      "automatic_false_positive_rate": 0.0,
+      "automatic_false_support_case_ids": [],
+      "automatic_false_support_count": 0,
+      "cases": 90
+    },
+    "network_calls": 0,
+    "privacy_behavior": "uncertain cases abstain without remote inference"
+  },
+  "optional_jev": {
+    "metrics": {
+      "accuracy": 0.8333,
+      "cases": 90,
+      "confusion": {
+        "negative": {
+          "negative": 60,
+          "positive": 0
+        },
+        "positive": {
+          "negative": 15,
+          "positive": 15
+        }
+      },
+      "false_positive_rate": 0.0,
+      "false_support_case_ids": [],
+      "macro_f1": 0.7778,
+      "negative_recall": 1.0,
+      "positive_recall": 0.5,
+      "relation_breakdown": {
+        "Contradiction": {
+          "accuracy": 1.0,
+          "cases": 30,
+          "predicted_supported": 0
+        },
+        "Entailment": {
+          "accuracy": 0.5,
+          "cases": 30,
+          "predicted_supported": 15
+        },
+        "NotMentioned": {
+          "accuracy": 1.0,
+          "cases": 30,
+          "predicted_supported": 0
+        }
+      }
+    },
+    "operations": {
+      "automatic_accuracy": 0.8507,
+      "automatic_coverage": 0.7444,
+      "automatic_false_support_case_ids": [],
+      "automatic_false_support_count": 0,
+      "jev_latency_ms": {
+        "mean": 277.923,
+        "p95": 388.445,
+        "total": 3612.995
+      },
+      "remote_call_rate": 0.1444,
+      "remote_calls": 13,
+      "routed_case_ids": [
+        "contractnli_train_151_nda-15",
+        "contractnli_train_207_nda-13",
+        "contractnli_train_222_nda-3",
+        "contractnli_train_234_nda-19",
+        "contractnli_train_262_nda-15",
+        "contractnli_train_275_nda-17",
+        "contractnli_train_275_nda-19",
+        "contractnli_train_304_nda-3",
+        "contractnli_train_459_nda-5",
+        "contractnli_train_464_nda-7",
+        "contractnli_train_516_nda-16",
+        "contractnli_train_548_nda-19",
+        "contractnli_train_619_nda-10"
+      ],
+      "tokens": {
+        "input": 8591,
+        "output": 827,
+        "total": 9418
+      }
+    }
+  },
+  "policy": {
+    "always_review_supported": true,
+    "jev_supported_probability": 0.5,
+    "local_missing_threshold": 0.5,
+    "local_supported_threshold": 0.8,
+    "review_confidence": 0.8
+  },
+  "policy_id": "c144dd8acef3eebcc3842339b9d88edcb774ec04a147f32f40502995e3023e49",
+  "policy_selection_split": "cascade_calibration",
+  "remote_provider_default_enabled": false,
+  "rows": [
+    {
+      "case_id": "contractnli_train_100_nda-20",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_110_nda-4",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_111_nda-8",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_122_nda-20",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_124_nda-5",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_130_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_131_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_136_nda-17",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_151_nda-15",
+      "local_only": {
+        "decision_source": "local_uncertainty",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "local_uncertainty"
+        ],
+        "review_required": true,
+        "verdict": "abstain"
+      },
+      "optional_jev": {
+        "decision_source": "jev",
+        "jev_support_gate_applied": false,
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "verdict": "missing"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_166_nda-10",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_168_nda-12",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_170_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_173_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_195_nda-5",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_199_nda-12",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_204_nda-1",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_207_nda-13",
+      "local_only": {
+        "decision_source": "local_uncertainty",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "local_uncertainty"
+        ],
+        "review_required": true,
+        "verdict": "abstain"
+      },
+      "optional_jev": {
+        "decision_source": "jev",
+        "jev_support_gate_applied": false,
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_215_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_219_nda-4",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_222_nda-3",
+      "local_only": {
+        "decision_source": "local_uncertainty",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "local_uncertainty"
+        ],
+        "review_required": true,
+        "verdict": "abstain"
+      },
+      "optional_jev": {
+        "decision_source": "jev",
+        "jev_support_gate_applied": false,
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_223_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_230_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_232_nda-7",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_234_nda-16",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_234_nda-19",
+      "local_only": {
+        "decision_source": "local_uncertainty",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "local_uncertainty"
+        ],
+        "review_required": true,
+        "verdict": "abstain"
+      },
+      "optional_jev": {
+        "decision_source": "jev",
+        "jev_support_gate_applied": false,
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_235_nda-11",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_236_nda-5",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_240_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_247_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_251_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_251_nda-8",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_253_nda-12",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_262_nda-15",
+      "local_only": {
+        "decision_source": "local_uncertainty",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "local_uncertainty"
+        ],
+        "review_required": true,
+        "verdict": "abstain"
+      },
+      "optional_jev": {
+        "decision_source": "jev",
+        "jev_support_gate_applied": false,
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_262_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_272_nda-10",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_275_nda-17",
+      "local_only": {
+        "decision_source": "local_uncertainty",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "local_uncertainty"
+        ],
+        "review_required": true,
+        "verdict": "abstain"
+      },
+      "optional_jev": {
+        "decision_source": "jev",
+        "jev_support_gate_applied": false,
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_275_nda-19",
+      "local_only": {
+        "decision_source": "local_uncertainty",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "local_uncertainty"
+        ],
+        "review_required": true,
+        "verdict": "abstain"
+      },
+      "optional_jev": {
+        "decision_source": "jev",
+        "jev_support_gate_applied": false,
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "verdict": "missing"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_275_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_283_nda-3",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_284_nda-13",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_284_nda-16",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_288_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_295_nda-10",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_298_nda-11",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_300_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_304_nda-1",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_304_nda-3",
+      "local_only": {
+        "decision_source": "local_uncertainty",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "local_uncertainty"
+        ],
+        "review_required": true,
+        "verdict": "abstain"
+      },
+      "optional_jev": {
+        "decision_source": "jev",
+        "jev_support_gate_applied": false,
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "verdict": "missing"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_309_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_317_nda-20",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_330_nda-7",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_337_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_340_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_342_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_343_nda-8",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_363_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_363_nda-4",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_367_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_369_nda-20",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_376_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_378_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_386_nda-12",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_390_nda-8",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_393_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_396_nda-18",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_414_nda-18",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_416_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_424_nda-11",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_439_nda-1",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_443_nda-13",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_449_nda-4",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_459_nda-5",
+      "local_only": {
+        "decision_source": "local_uncertainty",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "local_uncertainty"
+        ],
+        "review_required": true,
+        "verdict": "abstain"
+      },
+      "optional_jev": {
+        "decision_source": "jev",
+        "jev_support_gate_applied": false,
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_462_nda-19",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_462_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_464_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_464_nda-7",
+      "local_only": {
+        "decision_source": "local_uncertainty",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "local_uncertainty"
+        ],
+        "review_required": true,
+        "verdict": "abstain"
+      },
+      "optional_jev": {
+        "decision_source": "jev",
+        "jev_support_gate_applied": false,
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "verdict": "missing"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_467_nda-17",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_474_nda-18",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_481_nda-17",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_516_nda-16",
+      "local_only": {
+        "decision_source": "local_uncertainty",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "local_uncertainty"
+        ],
+        "review_required": true,
+        "verdict": "abstain"
+      },
+      "optional_jev": {
+        "decision_source": "jev",
+        "jev_support_gate_applied": false,
+        "remote_called": true,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_527_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_531_nda-15",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_534_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_548_nda-19",
+      "local_only": {
+        "decision_source": "local_uncertainty",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "local_uncertainty"
+        ],
+        "review_required": true,
+        "verdict": "abstain"
+      },
+      "optional_jev": {
+        "decision_source": "jev",
+        "jev_support_gate_applied": false,
+        "remote_called": true,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_572_nda-11",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "supported_verdict"
+        ],
+        "review_required": true,
+        "verdict": "supported"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_577_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_588_nda-1",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_603_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_616_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "NotMentioned",
+      "target": "missing"
+    },
+    {
+      "case_id": "contractnli_train_619_nda-10",
+      "local_only": {
+        "decision_source": "local_uncertainty",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [
+          "local_uncertainty"
+        ],
+        "review_required": true,
+        "verdict": "abstain"
+      },
+      "optional_jev": {
+        "decision_source": "jev",
+        "jev_support_gate_applied": false,
+        "remote_called": true,
+        "review_reasons": [
+          "jev_confidence_below_threshold"
+        ],
+        "review_required": true,
+        "verdict": "missing"
+      },
+      "relation": "Entailment",
+      "target": "covered"
+    },
+    {
+      "case_id": "contractnli_train_624_nda-2",
+      "local_only": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "optional_jev": {
+        "decision_source": "local_agreement",
+        "jev_support_gate_applied": false,
+        "remote_called": false,
+        "review_reasons": [],
+        "review_required": false,
+        "verdict": "missing"
+      },
+      "relation": "Contradiction",
+      "target": "missing"
+    }
+  ],
+  "schema_version": "contexttrace-requirement-v6-cascade-evaluation-1.0",
+  "split": "cascade_evaluation",
+  "stable_defaults_changed": false
+}
