@@ -1,0 +1,100 @@
+{
+  "checks": {
+    "all_consumed_v9_claim_ids_excluded": true,
+    "balanced_development_labels": true,
+    "balanced_training_labels": true,
+    "development_uses_one_claim_per_evidence_component": true,
+    "labels_absent_from_inputs": true,
+    "model_outputs_used_for_selection": false,
+    "source_hash_verified": true,
+    "synthetic_claims_used": false,
+    "synthetic_evidence_used": false,
+    "training_development_claim_ids_disjoint": true,
+    "training_development_exact_evidence_disjoint": true
+  },
+  "counts": {
+    "consumed_v9_holdout": {
+      "cases": 240,
+      "evidence_sentences": 1200,
+      "labels": {
+        "DISPUTED": 60,
+        "NOT_ENOUGH_INFO": 60,
+        "REFUTES": 60,
+        "SUPPORTS": 60
+      }
+    },
+    "development": {
+      "cases": 60,
+      "evidence_sentences": 300,
+      "labels": {
+        "DISPUTED": 15,
+        "NOT_ENOUGH_INFO": 15,
+        "REFUTES": 15,
+        "SUPPORTS": 15
+      }
+    },
+    "development_components": 60,
+    "evidence_components": 385,
+    "largest_evidence_component_claims": 839,
+    "remaining_after_claim_exclusion": {
+      "cases": 1295,
+      "evidence_sentences": 6475,
+      "labels": {
+        "DISPUTED": 94,
+        "NOT_ENOUGH_INFO": 414,
+        "REFUTES": 193,
+        "SUPPORTS": 594
+      }
+    },
+    "source": {
+      "cases": 1535,
+      "evidence_sentences": 7675,
+      "labels": {
+        "DISPUTED": 154,
+        "NOT_ENOUGH_INFO": 474,
+        "REFUTES": 253,
+        "SUPPORTS": 654
+      }
+    },
+    "training": {
+      "cases": 300,
+      "evidence_sentences": 1500,
+      "labels": {
+        "DISPUTED": 75,
+        "NOT_ENOUGH_INFO": 75,
+        "REFUTES": 75,
+        "SUPPORTS": 75
+      }
+    }
+  },
+  "experiment": "contexttrace_v10_climate_development",
+  "holdout_boundary": {
+    "exact_evidence_overlap_with_consumed_v9": {
+      "development": 19,
+      "permitted_because_v9_will_not_be_reused": true,
+      "training": 172
+    },
+    "future_confirmation_must_use_a_different_dataset": true,
+    "v9_claim_ids_excluded": 240,
+    "v9_is_consumed_and_will_not_be_reused_for_selection_or_confirmation": true
+  },
+  "limitations": [
+    "Climate-FEVER has one public collection rather than official train and development splits.",
+    "Exact evidence is disjoint between V10 training and development, but broad topics and articles may overlap.",
+    "Some selected evidence may overlap the consumed V9 holdout; V9 is never reused for tuning or confirmation.",
+    "The future confirmation set must come from a different dataset and remain untouched until policy freeze.",
+    "The official page does not state a redistribution license, so generated text-bearing datasets stay external."
+  ],
+  "redistribution": {
+    "committed_selection_contains_only_ids_and_aggregates": true,
+    "source_text_committed": false
+  },
+  "schema_version": "contexttrace-climate-fever-v10-audit-1.0",
+  "source": {
+    "dataset": "Climate-FEVER",
+    "license": "not stated on official dataset page",
+    "redistribution_policy": "source text remains external",
+    "source_file": "climate-fever-dataset-r1.jsonl",
+    "source_sha256": "8a4b9032d861be482ffb49dddfd283ffa6089e654f1e968040011882c5eb6e0b"
+  }
+}

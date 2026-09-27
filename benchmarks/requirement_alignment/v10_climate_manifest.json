@@ -1,0 +1,15 @@
+{
+  "audit_sha256": "303fd42b92e01a017b3f5f17c69cc6b2d3be3a7594ae5873b6f48db252c835d5",
+  "consumed_v9_selection_sha256": "01d69835b061ed647719acb4e91752f5d4d74d5707f22f8859a38d7eba2cfa80",
+  "development_sha256": "071d3345073701437bb625bb6e18e920a3d04dcb5621d67458502a4a4c9f8f2d",
+  "experiment": "contexttrace_v10_climate_development",
+  "model_outputs_accessed": false,
+  "remote_provider_default_enabled": false,
+  "schema_version": "contexttrace-climate-fever-v10-manifest-1.0",
+  "selection_sha256": "fb21739357ff50995bacc4c3dd32c6e6fbc7b71745f3dd4382677a2165f3bae7",
+  "source_sha256": "8a4b9032d861be482ffb49dddfd283ffa6089e654f1e968040011882c5eb6e0b",
+  "stable_defaults_changed": false,
+  "status": "development_data_frozen_before_model_training",
+  "training_sha256": "acc6bb3a29ef5bcf5d0031e65aa16b1919fd3cef37e0fb7001e3cb57a12ccbea",
+  "v9_holdout_reused": false
+}

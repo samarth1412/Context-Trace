@@ -482,3 +482,25 @@ disputed-evidence challenge, leakage controls, and redistribution boundary.
 `V9_HOLDOUT_RESULTS.md` records the one-time negative confirmation result. The
 candidate preserved false-support safety but failed support-recall and
 disputed-review gates, so it is not eligible for release.
+
+## V10: leakage-controlled climate development data
+
+V10 excludes every consumed V9 claim and freezes balanced four-way training
+and development partitions. Exact evidence-connected components cannot cross
+the two partitions. Text-bearing files remain in external storage.
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.build_v10_climate_development \
+  --source /private/tmp/contexttrace_external_data/climate_fever/climate-fever-dataset-r1.jsonl \
+  --consumed-v9-selection benchmarks/requirement_alignment/v9_climate_fever_selection.json \
+  --training-output /private/tmp/contexttrace_external_data/climate_fever/v10_climate_training.json \
+  --development-output /private/tmp/contexttrace_external_data/climate_fever/v10_climate_development.json \
+  --selection-output benchmarks/requirement_alignment/v10_climate_selection.json \
+  --audit-output benchmarks/requirement_alignment/v10_climate_audit.json \
+  --manifest-output benchmarks/requirement_alignment/v10_climate_manifest.json \
+  --training-per-label 75 --development-per-label 15
+```
+
+`V10_DEVELOPMENT_SET.md` documents the split boundary, redistribution policy,
+and intended four-way local-model experiment.
