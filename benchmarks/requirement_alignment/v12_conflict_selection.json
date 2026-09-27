@@ -1,0 +1,10 @@
+{
+  "algorithm": "all_claims_outside_v9_and_fixed_v10_development_evidence_components",
+  "consumed_v9_claim_ids_sha256": "190107eb777e0cd270ac738d7a969f5f5f6a5527e5635c3c776b96d306a86cdc",
+  "experiment": "contexttrace_v12_conflict_ranking",
+  "fixed_v10_development_claim_ids_sha256": "97aa5752c9193e87d9facb8d75a0817f57ad12360dfd2e954524e2c6046998a6",
+  "model_outputs_used": false,
+  "schema_version": "contexttrace-climate-fever-v12-selection-1.0",
+  "selected_claim_ids_sha256": "58a4db4f40c9b384dfff20b24f3004a69e49f8fde96713820bf8e85ec20d7e0f",
+  "source_text_included": false
+}

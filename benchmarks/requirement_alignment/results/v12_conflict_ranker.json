@@ -1,0 +1,1425 @@
+{
+  "decision": "retain_v11_as_best_local_research_candidate",
+  "experiment": "contexttrace_v12_conflict_ranking",
+  "features": {
+    "count": 143,
+    "evaluation_labels_in_model_inputs": false,
+    "names": [
+      "entailment.raw.0",
+      "entailment.raw.1",
+      "entailment.raw.2",
+      "entailment.raw.3",
+      "entailment.raw.4",
+      "entailment.sorted.0",
+      "entailment.sorted.1",
+      "entailment.sorted.2",
+      "entailment.sorted.3",
+      "entailment.sorted.4",
+      "entailment.max",
+      "entailment.min",
+      "entailment.mean",
+      "entailment.std",
+      "entailment.median",
+      "entailment.range",
+      "entailment.fraction_ge_0.1",
+      "entailment.fraction_ge_0.2",
+      "entailment.fraction_ge_0.3",
+      "entailment.fraction_ge_0.4",
+      "entailment.fraction_ge_0.5",
+      "entailment.fraction_ge_0.6",
+      "entailment.fraction_ge_0.7",
+      "entailment.fraction_ge_0.8",
+      "entailment.fraction_ge_0.9",
+      "contradiction.raw.0",
+      "contradiction.raw.1",
+      "contradiction.raw.2",
+      "contradiction.raw.3",
+      "contradiction.raw.4",
+      "contradiction.sorted.0",
+      "contradiction.sorted.1",
+      "contradiction.sorted.2",
+      "contradiction.sorted.3",
+      "contradiction.sorted.4",
+      "contradiction.max",
+      "contradiction.min",
+      "contradiction.mean",
+      "contradiction.std",
+      "contradiction.median",
+      "contradiction.range",
+      "contradiction.fraction_ge_0.1",
+      "contradiction.fraction_ge_0.2",
+      "contradiction.fraction_ge_0.3",
+      "contradiction.fraction_ge_0.4",
+      "contradiction.fraction_ge_0.5",
+      "contradiction.fraction_ge_0.6",
+      "contradiction.fraction_ge_0.7",
+      "contradiction.fraction_ge_0.8",
+      "contradiction.fraction_ge_0.9",
+      "neutral.raw.0",
+      "neutral.raw.1",
+      "neutral.raw.2",
+      "neutral.raw.3",
+      "neutral.raw.4",
+      "neutral.sorted.0",
+      "neutral.sorted.1",
+      "neutral.sorted.2",
+      "neutral.sorted.3",
+      "neutral.sorted.4",
+      "neutral.max",
+      "neutral.min",
+      "neutral.mean",
+      "neutral.std",
+      "neutral.median",
+      "neutral.range",
+      "neutral.fraction_ge_0.1",
+      "neutral.fraction_ge_0.2",
+      "neutral.fraction_ge_0.3",
+      "neutral.fraction_ge_0.4",
+      "neutral.fraction_ge_0.5",
+      "neutral.fraction_ge_0.6",
+      "neutral.fraction_ge_0.7",
+      "neutral.fraction_ge_0.8",
+      "neutral.fraction_ge_0.9",
+      "interaction.cross_product.0",
+      "interaction.cross_product.1",
+      "interaction.cross_product.2",
+      "interaction.cross_product.3",
+      "interaction.cross_product.4",
+      "interaction.cross_product.5",
+      "interaction.cross_product.6",
+      "interaction.cross_product.7",
+      "interaction.cross_product.8",
+      "interaction.cross_product.9",
+      "interaction.cross_product.mean",
+      "interaction.cross_product.std",
+      "interaction.same_span_product.0",
+      "interaction.same_span_product.1",
+      "interaction.same_span_product.2",
+      "interaction.same_span_product.3",
+      "interaction.same_span_product.4",
+      "interaction.cross_minus_same",
+      "interaction.argmax_spans_differ",
+      "interaction.minimum_maxima",
+      "interaction.product_maxima",
+      "interaction.absolute_maxima_difference",
+      "lexical.claim_coverage",
+      "lexical.jaccard",
+      "lexical.best_span_coverage",
+      "lexical.best_span_jaccard",
+      "lexical.bigram_coverage",
+      "lexical.claim_negation",
+      "lexical.evidence_negation",
+      "lexical.negation_mismatch",
+      "lexical.number_coverage",
+      "lexical.missing_number",
+      "lexical.log_claim_tokens",
+      "lexical.log_evidence_tokens",
+      "lexical.span_claim_coverage.sorted.0",
+      "lexical.span_claim_coverage.sorted.1",
+      "lexical.span_claim_coverage.sorted.2",
+      "lexical.span_claim_coverage.sorted.3",
+      "lexical.span_claim_coverage.sorted.4",
+      "lexical.span_claim_coverage.mean",
+      "lexical.span_claim_coverage.std",
+      "lexical.span_claim_jaccard.sorted.0",
+      "lexical.span_claim_jaccard.sorted.1",
+      "lexical.span_claim_jaccard.sorted.2",
+      "lexical.span_claim_jaccard.sorted.3",
+      "lexical.span_claim_jaccard.sorted.4",
+      "lexical.span_claim_jaccard.mean",
+      "lexical.span_claim_jaccard.std",
+      "lexical.evidence_pair_jaccard.sorted.0",
+      "lexical.evidence_pair_jaccard.sorted.1",
+      "lexical.evidence_pair_jaccard.sorted.2",
+      "lexical.evidence_pair_jaccard.sorted.3",
+      "lexical.evidence_pair_jaccard.sorted.4",
+      "lexical.evidence_pair_jaccard.sorted.5",
+      "lexical.evidence_pair_jaccard.sorted.6",
+      "lexical.evidence_pair_jaccard.sorted.7",
+      "lexical.evidence_pair_jaccard.sorted.8",
+      "lexical.evidence_pair_jaccard.sorted.9",
+      "lexical.evidence_pair_jaccard.mean",
+      "lexical.evidence_pair_jaccard.std",
+      "lexical.evidence_negation.0",
+      "lexical.evidence_negation.1",
+      "lexical.evidence_negation.2",
+      "lexical.evidence_negation.3",
+      "lexical.evidence_negation.4",
+      "lexical.top_relation_span_jaccard",
+      "lexical.top_entailment_claim_coverage",
+      "lexical.top_contradiction_claim_coverage"
+    ],
+    "sources": [
+      "selected V11 per-evidence relation probabilities",
+      "cross-span entailment and contradiction interactions",
+      "deterministic lexical overlap, negation, and evidence-pair similarity"
+    ]
+  },
+  "inputs": {
+    "development_cases": 60,
+    "development_disputed_cases": 15,
+    "development_score_rows_sha256": "ea6611caeed872f590ae60c39c3f5f5c529a418ac95c8e7ad3d14585e271b6a0",
+    "development_sha256": "071d3345073701437bb625bb6e18e920a3d04dcb5621d67458502a4a4c9f8f2d",
+    "training_cases": 1210,
+    "training_disputed_cases": 78,
+    "training_score_rows_sha256": "cbd4898f59be01e99d63836caa9360a5e4928f12b36bbe54f29b62bb2a0388e7",
+    "training_sha256": "07bb8ce7df8d5776fc595cc12a6b264d98d5b91df6f1ea6c80e272d16da7e1f9"
+  },
+  "local_only_network_calls": 0,
+  "pairwise_cross_encoder_diagnostic": {
+    "epochs": [
+      {
+        "average_precision": 0.3483,
+        "disputed_recall_at_18": 0.4,
+        "epoch": 0,
+        "roc_auc": 0.5985
+      },
+      {
+        "average_precision": 0.3349,
+        "disputed_recall_at_18": 0.3333,
+        "epoch": 1,
+        "roc_auc": 0.5911
+      },
+      {
+        "average_precision": 0.3237,
+        "disputed_recall_at_18": 0.2667,
+        "epoch": 2,
+        "roc_auc": 0.5437
+      },
+      {
+        "average_precision": 0.3613,
+        "disputed_recall_at_18": 0.3333,
+        "epoch": 3,
+        "roc_auc": 0.64
+      }
+    ],
+    "hard_negative_rule": "highest V11 cross-span entailment-contradiction product among unanimous non-conflict pairs",
+    "model_artifact_retained": false,
+    "promote": false,
+    "training_hard_negative_pairs": 705,
+    "training_positive_pairs": 141
+  },
+  "promotion": {
+    "all_gates_met": false,
+    "disputed_review_coverage_minimum": 0.9,
+    "promote": false,
+    "reason": "Neither learned conflict ranker improves disputed coverage over the V11 explicit cross-span policy."
+  },
+  "remote_inference_used": false,
+  "remote_provider_default_enabled": false,
+  "schema_version": "contexttrace-v12-conflict-ranker-1.0",
+  "search": {
+    "candidate_count": 146,
+    "candidates": [
+      {
+        "average_precision": 0.4159,
+        "candidate": "logistic_c_0.001",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.7081
+      },
+      {
+        "average_precision": 0.3941,
+        "candidate": "logistic_c_0.003",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.6844
+      },
+      {
+        "average_precision": 0.3404,
+        "candidate": "logistic_c_0.01",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6504
+      },
+      {
+        "average_precision": 0.2943,
+        "candidate": "logistic_c_0.03",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.5941
+      },
+      {
+        "average_precision": 0.2572,
+        "candidate": "logistic_c_0.1",
+        "disputed_hits_at_18": 3,
+        "disputed_recall_at_18": 0.2,
+        "review_budget": 18,
+        "roc_auc": 0.52
+      },
+      {
+        "average_precision": 0.2384,
+        "candidate": "logistic_c_0.3",
+        "disputed_hits_at_18": 4,
+        "disputed_recall_at_18": 0.2667,
+        "review_budget": 18,
+        "roc_auc": 0.4711
+      },
+      {
+        "average_precision": 0.2241,
+        "candidate": "logistic_c_1.0",
+        "disputed_hits_at_18": 4,
+        "disputed_recall_at_18": 0.2667,
+        "review_budget": 18,
+        "roc_auc": 0.4311
+      },
+      {
+        "average_precision": 0.2219,
+        "candidate": "logistic_c_3.0",
+        "disputed_hits_at_18": 4,
+        "disputed_recall_at_18": 0.2667,
+        "review_budget": 18,
+        "roc_auc": 0.4237
+      },
+      {
+        "average_precision": 0.2216,
+        "candidate": "logistic_c_10.0",
+        "disputed_hits_at_18": 4,
+        "disputed_recall_at_18": 0.2667,
+        "review_budget": 18,
+        "roc_auc": 0.4237
+      },
+      {
+        "average_precision": 0.2256,
+        "candidate": "logistic_c_30.0",
+        "disputed_hits_at_18": 4,
+        "disputed_recall_at_18": 0.2667,
+        "review_budget": 18,
+        "roc_auc": 0.4326
+      },
+      {
+        "average_precision": 0.4103,
+        "candidate": "extra_depth_2_leaf_1_features_0.5",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.7111
+      },
+      {
+        "average_precision": 0.4303,
+        "candidate": "extra_depth_2_leaf_1_features_1.0",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.723
+      },
+      {
+        "average_precision": 0.4103,
+        "candidate": "extra_depth_2_leaf_2_features_0.5",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.7111
+      },
+      {
+        "average_precision": 0.4303,
+        "candidate": "extra_depth_2_leaf_2_features_1.0",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.723
+      },
+      {
+        "average_precision": 0.4103,
+        "candidate": "extra_depth_2_leaf_4_features_0.5",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.7111
+      },
+      {
+        "average_precision": 0.4303,
+        "candidate": "extra_depth_2_leaf_4_features_1.0",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.723
+      },
+      {
+        "average_precision": 0.4103,
+        "candidate": "extra_depth_2_leaf_8_features_0.5",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.7111
+      },
+      {
+        "average_precision": 0.4303,
+        "candidate": "extra_depth_2_leaf_8_features_1.0",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.723
+      },
+      {
+        "average_precision": 0.4089,
+        "candidate": "extra_depth_2_leaf_16_features_0.5",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.7096
+      },
+      {
+        "average_precision": 0.4303,
+        "candidate": "extra_depth_2_leaf_16_features_1.0",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.723
+      },
+      {
+        "average_precision": 0.399,
+        "candidate": "extra_depth_3_leaf_1_features_0.5",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.6593
+      },
+      {
+        "average_precision": 0.3956,
+        "candidate": "extra_depth_3_leaf_1_features_1.0",
+        "disputed_hits_at_18": 9,
+        "disputed_recall_at_18": 0.6,
+        "review_budget": 18,
+        "roc_auc": 0.6711
+      },
+      {
+        "average_precision": 0.399,
+        "candidate": "extra_depth_3_leaf_2_features_0.5",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.6593
+      },
+      {
+        "average_precision": 0.3956,
+        "candidate": "extra_depth_3_leaf_2_features_1.0",
+        "disputed_hits_at_18": 9,
+        "disputed_recall_at_18": 0.6,
+        "review_budget": 18,
+        "roc_auc": 0.6711
+      },
+      {
+        "average_precision": 0.3984,
+        "candidate": "extra_depth_3_leaf_4_features_0.5",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.6578
+      },
+      {
+        "average_precision": 0.3956,
+        "candidate": "extra_depth_3_leaf_4_features_1.0",
+        "disputed_hits_at_18": 9,
+        "disputed_recall_at_18": 0.6,
+        "review_budget": 18,
+        "roc_auc": 0.6711
+      },
+      {
+        "average_precision": 0.3975,
+        "candidate": "extra_depth_3_leaf_8_features_0.5",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.6622
+      },
+      {
+        "average_precision": 0.3947,
+        "candidate": "extra_depth_3_leaf_8_features_1.0",
+        "disputed_hits_at_18": 9,
+        "disputed_recall_at_18": 0.6,
+        "review_budget": 18,
+        "roc_auc": 0.6681
+      },
+      {
+        "average_precision": 0.3966,
+        "candidate": "extra_depth_3_leaf_16_features_0.5",
+        "disputed_hits_at_18": 9,
+        "disputed_recall_at_18": 0.6,
+        "review_budget": 18,
+        "roc_auc": 0.6667
+      },
+      {
+        "average_precision": 0.3977,
+        "candidate": "extra_depth_3_leaf_16_features_1.0",
+        "disputed_hits_at_18": 9,
+        "disputed_recall_at_18": 0.6,
+        "review_budget": 18,
+        "roc_auc": 0.6726
+      },
+      {
+        "average_precision": 0.37,
+        "candidate": "extra_depth_4_leaf_1_features_0.5",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6296
+      },
+      {
+        "average_precision": 0.3527,
+        "candidate": "extra_depth_4_leaf_1_features_1.0",
+        "disputed_hits_at_18": 5,
+        "disputed_recall_at_18": 0.3333,
+        "review_budget": 18,
+        "roc_auc": 0.6193
+      },
+      {
+        "average_precision": 0.3722,
+        "candidate": "extra_depth_4_leaf_2_features_0.5",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6311
+      },
+      {
+        "average_precision": 0.3647,
+        "candidate": "extra_depth_4_leaf_2_features_1.0",
+        "disputed_hits_at_18": 6,
+        "disputed_recall_at_18": 0.4,
+        "review_budget": 18,
+        "roc_auc": 0.6237
+      },
+      {
+        "average_precision": 0.3712,
+        "candidate": "extra_depth_4_leaf_4_features_0.5",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6326
+      },
+      {
+        "average_precision": 0.3637,
+        "candidate": "extra_depth_4_leaf_4_features_1.0",
+        "disputed_hits_at_18": 6,
+        "disputed_recall_at_18": 0.4,
+        "review_budget": 18,
+        "roc_auc": 0.6326
+      },
+      {
+        "average_precision": 0.3737,
+        "candidate": "extra_depth_4_leaf_8_features_0.5",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.64
+      },
+      {
+        "average_precision": 0.3747,
+        "candidate": "extra_depth_4_leaf_8_features_1.0",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6444
+      },
+      {
+        "average_precision": 0.3677,
+        "candidate": "extra_depth_4_leaf_16_features_0.5",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.64
+      },
+      {
+        "average_precision": 0.3877,
+        "candidate": "extra_depth_4_leaf_16_features_1.0",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.6519
+      },
+      {
+        "average_precision": 0.3019,
+        "candidate": "extra_depth_6_leaf_1_features_0.5",
+        "disputed_hits_at_18": 4,
+        "disputed_recall_at_18": 0.2667,
+        "review_budget": 18,
+        "roc_auc": 0.5422
+      },
+      {
+        "average_precision": 0.2766,
+        "candidate": "extra_depth_6_leaf_1_features_1.0",
+        "disputed_hits_at_18": 4,
+        "disputed_recall_at_18": 0.2667,
+        "review_budget": 18,
+        "roc_auc": 0.5304
+      },
+      {
+        "average_precision": 0.3083,
+        "candidate": "extra_depth_6_leaf_2_features_0.5",
+        "disputed_hits_at_18": 4,
+        "disputed_recall_at_18": 0.2667,
+        "review_budget": 18,
+        "roc_auc": 0.5467
+      },
+      {
+        "average_precision": 0.2825,
+        "candidate": "extra_depth_6_leaf_2_features_1.0",
+        "disputed_hits_at_18": 3,
+        "disputed_recall_at_18": 0.2,
+        "review_budget": 18,
+        "roc_auc": 0.5259
+      },
+      {
+        "average_precision": 0.3162,
+        "candidate": "extra_depth_6_leaf_4_features_0.5",
+        "disputed_hits_at_18": 5,
+        "disputed_recall_at_18": 0.3333,
+        "review_budget": 18,
+        "roc_auc": 0.5615
+      },
+      {
+        "average_precision": 0.2727,
+        "candidate": "extra_depth_6_leaf_4_features_1.0",
+        "disputed_hits_at_18": 3,
+        "disputed_recall_at_18": 0.2,
+        "review_budget": 18,
+        "roc_auc": 0.523
+      },
+      {
+        "average_precision": 0.3019,
+        "candidate": "extra_depth_6_leaf_8_features_0.5",
+        "disputed_hits_at_18": 5,
+        "disputed_recall_at_18": 0.3333,
+        "review_budget": 18,
+        "roc_auc": 0.5541
+      },
+      {
+        "average_precision": 0.2886,
+        "candidate": "extra_depth_6_leaf_8_features_1.0",
+        "disputed_hits_at_18": 5,
+        "disputed_recall_at_18": 0.3333,
+        "review_budget": 18,
+        "roc_auc": 0.5422
+      },
+      {
+        "average_precision": 0.3259,
+        "candidate": "extra_depth_6_leaf_16_features_0.5",
+        "disputed_hits_at_18": 5,
+        "disputed_recall_at_18": 0.3333,
+        "review_budget": 18,
+        "roc_auc": 0.5822
+      },
+      {
+        "average_precision": 0.3352,
+        "candidate": "extra_depth_6_leaf_16_features_1.0",
+        "disputed_hits_at_18": 5,
+        "disputed_recall_at_18": 0.3333,
+        "review_budget": 18,
+        "roc_auc": 0.5881
+      },
+      {
+        "average_precision": 0.2875,
+        "candidate": "extra_depth_8_leaf_1_features_0.5",
+        "disputed_hits_at_18": 4,
+        "disputed_recall_at_18": 0.2667,
+        "review_budget": 18,
+        "roc_auc": 0.5126
+      },
+      {
+        "average_precision": 0.2715,
+        "candidate": "extra_depth_8_leaf_1_features_1.0",
+        "disputed_hits_at_18": 4,
+        "disputed_recall_at_18": 0.2667,
+        "review_budget": 18,
+        "roc_auc": 0.5289
+      },
+      {
+        "average_precision": 0.2865,
+        "candidate": "extra_depth_8_leaf_2_features_0.5",
+        "disputed_hits_at_18": 4,
+        "disputed_recall_at_18": 0.2667,
+        "review_budget": 18,
+        "roc_auc": 0.5096
+      },
+      {
+        "average_precision": 0.2881,
+        "candidate": "extra_depth_8_leaf_2_features_1.0",
+        "disputed_hits_at_18": 4,
+        "disputed_recall_at_18": 0.2667,
+        "review_budget": 18,
+        "roc_auc": 0.5289
+      },
+      {
+        "average_precision": 0.2803,
+        "candidate": "extra_depth_8_leaf_4_features_0.5",
+        "disputed_hits_at_18": 4,
+        "disputed_recall_at_18": 0.2667,
+        "review_budget": 18,
+        "roc_auc": 0.5244
+      },
+      {
+        "average_precision": 0.2878,
+        "candidate": "extra_depth_8_leaf_4_features_1.0",
+        "disputed_hits_at_18": 4,
+        "disputed_recall_at_18": 0.2667,
+        "review_budget": 18,
+        "roc_auc": 0.5289
+      },
+      {
+        "average_precision": 0.2816,
+        "candidate": "extra_depth_8_leaf_8_features_0.5",
+        "disputed_hits_at_18": 4,
+        "disputed_recall_at_18": 0.2667,
+        "review_budget": 18,
+        "roc_auc": 0.5378
+      },
+      {
+        "average_precision": 0.2748,
+        "candidate": "extra_depth_8_leaf_8_features_1.0",
+        "disputed_hits_at_18": 4,
+        "disputed_recall_at_18": 0.2667,
+        "review_budget": 18,
+        "roc_auc": 0.5244
+      },
+      {
+        "average_precision": 0.3141,
+        "candidate": "extra_depth_8_leaf_16_features_0.5",
+        "disputed_hits_at_18": 5,
+        "disputed_recall_at_18": 0.3333,
+        "review_budget": 18,
+        "roc_auc": 0.5793
+      },
+      {
+        "average_precision": 0.3247,
+        "candidate": "extra_depth_8_leaf_16_features_1.0",
+        "disputed_hits_at_18": 6,
+        "disputed_recall_at_18": 0.4,
+        "review_budget": 18,
+        "roc_auc": 0.5852
+      },
+      {
+        "average_precision": 0.2605,
+        "candidate": "extra_depth_None_leaf_1_features_0.5",
+        "disputed_hits_at_18": 5,
+        "disputed_recall_at_18": 0.3333,
+        "review_budget": 18,
+        "roc_auc": 0.5193
+      },
+      {
+        "average_precision": 0.2464,
+        "candidate": "extra_depth_None_leaf_1_features_1.0",
+        "disputed_hits_at_18": 4,
+        "disputed_recall_at_18": 0.2667,
+        "review_budget": 18,
+        "roc_auc": 0.5052
+      },
+      {
+        "average_precision": 0.29,
+        "candidate": "extra_depth_None_leaf_2_features_0.5",
+        "disputed_hits_at_18": 6,
+        "disputed_recall_at_18": 0.4,
+        "review_budget": 18,
+        "roc_auc": 0.5585
+      },
+      {
+        "average_precision": 0.2853,
+        "candidate": "extra_depth_None_leaf_2_features_1.0",
+        "disputed_hits_at_18": 6,
+        "disputed_recall_at_18": 0.4,
+        "review_budget": 18,
+        "roc_auc": 0.5467
+      },
+      {
+        "average_precision": 0.3165,
+        "candidate": "extra_depth_None_leaf_4_features_0.5",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.5896
+      },
+      {
+        "average_precision": 0.3101,
+        "candidate": "extra_depth_None_leaf_4_features_1.0",
+        "disputed_hits_at_18": 6,
+        "disputed_recall_at_18": 0.4,
+        "review_budget": 18,
+        "roc_auc": 0.5941
+      },
+      {
+        "average_precision": 0.3288,
+        "candidate": "extra_depth_None_leaf_8_features_0.5",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.597
+      },
+      {
+        "average_precision": 0.3443,
+        "candidate": "extra_depth_None_leaf_8_features_1.0",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6044
+      },
+      {
+        "average_precision": 0.3536,
+        "candidate": "extra_depth_None_leaf_16_features_0.5",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6237
+      },
+      {
+        "average_precision": 0.3685,
+        "candidate": "extra_depth_None_leaf_16_features_1.0",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6311
+      },
+      {
+        "average_precision": 0.4177,
+        "candidate": "forest_depth_2_leaf_1",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.7141
+      },
+      {
+        "average_precision": 0.4177,
+        "candidate": "forest_depth_2_leaf_2",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.7141
+      },
+      {
+        "average_precision": 0.4195,
+        "candidate": "forest_depth_2_leaf_4",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.7156
+      },
+      {
+        "average_precision": 0.4195,
+        "candidate": "forest_depth_2_leaf_8",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.7156
+      },
+      {
+        "average_precision": 0.4153,
+        "candidate": "forest_depth_2_leaf_16",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.7111
+      },
+      {
+        "average_precision": 0.4357,
+        "candidate": "forest_depth_3_leaf_1",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.6696
+      },
+      {
+        "average_precision": 0.4345,
+        "candidate": "forest_depth_3_leaf_2",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.6667
+      },
+      {
+        "average_precision": 0.4374,
+        "candidate": "forest_depth_3_leaf_4",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.6696
+      },
+      {
+        "average_precision": 0.4365,
+        "candidate": "forest_depth_3_leaf_8",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.6726
+      },
+      {
+        "average_precision": 0.3676,
+        "candidate": "forest_depth_3_leaf_16",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.6474
+      },
+      {
+        "average_precision": 0.4449,
+        "candidate": "forest_depth_4_leaf_1",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6356
+      },
+      {
+        "average_precision": 0.4457,
+        "candidate": "forest_depth_4_leaf_2",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.637
+      },
+      {
+        "average_precision": 0.4481,
+        "candidate": "forest_depth_4_leaf_4",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6444
+      },
+      {
+        "average_precision": 0.4559,
+        "candidate": "forest_depth_4_leaf_8",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6504
+      },
+      {
+        "average_precision": 0.3821,
+        "candidate": "forest_depth_4_leaf_16",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6222
+      },
+      {
+        "average_precision": 0.3974,
+        "candidate": "forest_depth_6_leaf_1",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6133
+      },
+      {
+        "average_precision": 0.411,
+        "candidate": "forest_depth_6_leaf_2",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6104
+      },
+      {
+        "average_precision": 0.4216,
+        "candidate": "forest_depth_6_leaf_4",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6
+      },
+      {
+        "average_precision": 0.4414,
+        "candidate": "forest_depth_6_leaf_8",
+        "disputed_hits_at_18": 6,
+        "disputed_recall_at_18": 0.4,
+        "review_budget": 18,
+        "roc_auc": 0.6133
+      },
+      {
+        "average_precision": 0.3672,
+        "candidate": "forest_depth_6_leaf_16",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6207
+      },
+      {
+        "average_precision": 0.3378,
+        "candidate": "forest_depth_None_leaf_1",
+        "disputed_hits_at_18": 6,
+        "disputed_recall_at_18": 0.4,
+        "review_budget": 18,
+        "roc_auc": 0.5733
+      },
+      {
+        "average_precision": 0.3561,
+        "candidate": "forest_depth_None_leaf_2",
+        "disputed_hits_at_18": 6,
+        "disputed_recall_at_18": 0.4,
+        "review_budget": 18,
+        "roc_auc": 0.5778
+      },
+      {
+        "average_precision": 0.3862,
+        "candidate": "forest_depth_None_leaf_4",
+        "disputed_hits_at_18": 6,
+        "disputed_recall_at_18": 0.4,
+        "review_budget": 18,
+        "roc_auc": 0.5822
+      },
+      {
+        "average_precision": 0.4204,
+        "candidate": "forest_depth_None_leaf_8",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6074
+      },
+      {
+        "average_precision": 0.3794,
+        "candidate": "forest_depth_None_leaf_16",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.64
+      },
+      {
+        "average_precision": 0.3596,
+        "candidate": "hist_leaves_3_minimum_5",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6356
+      },
+      {
+        "average_precision": 0.3866,
+        "candidate": "hist_leaves_3_minimum_10",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.6474
+      },
+      {
+        "average_precision": 0.3996,
+        "candidate": "hist_leaves_3_minimum_20",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6385
+      },
+      {
+        "average_precision": 0.376,
+        "candidate": "hist_leaves_3_minimum_40",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6148
+      },
+      {
+        "average_precision": 0.3899,
+        "candidate": "hist_leaves_7_minimum_5",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.5911
+      },
+      {
+        "average_precision": 0.3865,
+        "candidate": "hist_leaves_7_minimum_10",
+        "disputed_hits_at_18": 6,
+        "disputed_recall_at_18": 0.4,
+        "review_budget": 18,
+        "roc_auc": 0.5763
+      },
+      {
+        "average_precision": 0.3584,
+        "candidate": "hist_leaves_7_minimum_20",
+        "disputed_hits_at_18": 6,
+        "disputed_recall_at_18": 0.4,
+        "review_budget": 18,
+        "roc_auc": 0.563
+      },
+      {
+        "average_precision": 0.3766,
+        "candidate": "hist_leaves_7_minimum_40",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.5644
+      },
+      {
+        "average_precision": 0.3744,
+        "candidate": "hist_leaves_15_minimum_5",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.603
+      },
+      {
+        "average_precision": 0.3963,
+        "candidate": "hist_leaves_15_minimum_10",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6133
+      },
+      {
+        "average_precision": 0.3954,
+        "candidate": "hist_leaves_15_minimum_20",
+        "disputed_hits_at_18": 6,
+        "disputed_recall_at_18": 0.4,
+        "review_budget": 18,
+        "roc_auc": 0.6193
+      },
+      {
+        "average_precision": 0.363,
+        "candidate": "hist_leaves_15_minimum_40",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.5719
+      },
+      {
+        "average_precision": 0.3949,
+        "candidate": "hist_leaves_31_minimum_5",
+        "disputed_hits_at_18": 6,
+        "disputed_recall_at_18": 0.4,
+        "review_budget": 18,
+        "roc_auc": 0.5807
+      },
+      {
+        "average_precision": 0.3692,
+        "candidate": "hist_leaves_31_minimum_10",
+        "disputed_hits_at_18": 6,
+        "disputed_recall_at_18": 0.4,
+        "review_budget": 18,
+        "roc_auc": 0.5941
+      },
+      {
+        "average_precision": 0.4049,
+        "candidate": "hist_leaves_31_minimum_20",
+        "disputed_hits_at_18": 6,
+        "disputed_recall_at_18": 0.4,
+        "review_budget": 18,
+        "roc_auc": 0.6148
+      },
+      {
+        "average_precision": 0.3668,
+        "candidate": "hist_leaves_31_minimum_40",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6281
+      },
+      {
+        "average_precision": 0.3454,
+        "candidate": "svc_c_0.01_gamma_scale",
+        "disputed_hits_at_18": 6,
+        "disputed_recall_at_18": 0.4,
+        "review_budget": 18,
+        "roc_auc": 0.643
+      },
+      {
+        "average_precision": 0.3703,
+        "candidate": "svc_c_0.01_gamma_0.001",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6622
+      },
+      {
+        "average_precision": 0.3726,
+        "candidate": "svc_c_0.01_gamma_0.003",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6652
+      },
+      {
+        "average_precision": 0.3388,
+        "candidate": "svc_c_0.01_gamma_0.01",
+        "disputed_hits_at_18": 6,
+        "disputed_recall_at_18": 0.4,
+        "review_budget": 18,
+        "roc_auc": 0.6415
+      },
+      {
+        "average_precision": 0.3657,
+        "candidate": "svc_c_0.01_gamma_0.03",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6578
+      },
+      {
+        "average_precision": 0.3494,
+        "candidate": "svc_c_0.03_gamma_scale",
+        "disputed_hits_at_18": 6,
+        "disputed_recall_at_18": 0.4,
+        "review_budget": 18,
+        "roc_auc": 0.6504
+      },
+      {
+        "average_precision": 0.3652,
+        "candidate": "svc_c_0.03_gamma_0.001",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6622
+      },
+      {
+        "average_precision": 0.3825,
+        "candidate": "svc_c_0.03_gamma_0.003",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.68
+      },
+      {
+        "average_precision": 0.3421,
+        "candidate": "svc_c_0.03_gamma_0.01",
+        "disputed_hits_at_18": 6,
+        "disputed_recall_at_18": 0.4,
+        "review_budget": 18,
+        "roc_auc": 0.6459
+      },
+      {
+        "average_precision": 0.3657,
+        "candidate": "svc_c_0.03_gamma_0.03",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6578
+      },
+      {
+        "average_precision": 0.3658,
+        "candidate": "svc_c_0.1_gamma_scale",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6711
+      },
+      {
+        "average_precision": 0.4169,
+        "candidate": "svc_c_0.1_gamma_0.001",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.7052
+      },
+      {
+        "average_precision": 0.3853,
+        "candidate": "svc_c_0.1_gamma_0.003",
+        "disputed_hits_at_18": 6,
+        "disputed_recall_at_18": 0.4,
+        "review_budget": 18,
+        "roc_auc": 0.6844
+      },
+      {
+        "average_precision": 0.353,
+        "candidate": "svc_c_0.1_gamma_0.01",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6548
+      },
+      {
+        "average_precision": 0.3636,
+        "candidate": "svc_c_0.1_gamma_0.03",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.6637
+      },
+      {
+        "average_precision": 0.3234,
+        "candidate": "svc_c_0.3_gamma_scale",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6178
+      },
+      {
+        "average_precision": 0.409,
+        "candidate": "svc_c_0.3_gamma_0.001",
+        "disputed_hits_at_18": 8,
+        "disputed_recall_at_18": 0.5333,
+        "review_budget": 18,
+        "roc_auc": 0.7007
+      },
+      {
+        "average_precision": 0.3808,
+        "candidate": "svc_c_0.3_gamma_0.003",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6652
+      },
+      {
+        "average_precision": 0.3146,
+        "candidate": "svc_c_0.3_gamma_0.01",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6133
+      },
+      {
+        "average_precision": 0.2897,
+        "candidate": "svc_c_0.3_gamma_0.03",
+        "disputed_hits_at_18": 4,
+        "disputed_recall_at_18": 0.2667,
+        "review_budget": 18,
+        "roc_auc": 0.5956
+      },
+      {
+        "average_precision": 0.2688,
+        "candidate": "svc_c_1.0_gamma_scale",
+        "disputed_hits_at_18": 5,
+        "disputed_recall_at_18": 0.3333,
+        "review_budget": 18,
+        "roc_auc": 0.5215
+      },
+      {
+        "average_precision": 0.3945,
+        "candidate": "svc_c_1.0_gamma_0.001",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6637
+      },
+      {
+        "average_precision": 0.2989,
+        "candidate": "svc_c_1.0_gamma_0.003",
+        "disputed_hits_at_18": 6,
+        "disputed_recall_at_18": 0.4,
+        "review_budget": 18,
+        "roc_auc": 0.5793
+      },
+      {
+        "average_precision": 0.2662,
+        "candidate": "svc_c_1.0_gamma_0.01",
+        "disputed_hits_at_18": 5,
+        "disputed_recall_at_18": 0.3333,
+        "review_budget": 18,
+        "roc_auc": 0.5274
+      },
+      {
+        "average_precision": 0.3042,
+        "candidate": "svc_c_1.0_gamma_0.03",
+        "disputed_hits_at_18": 5,
+        "disputed_recall_at_18": 0.3333,
+        "review_budget": 18,
+        "roc_auc": 0.6148
+      },
+      {
+        "average_precision": 0.2337,
+        "candidate": "svc_c_3.0_gamma_scale",
+        "disputed_hits_at_18": 3,
+        "disputed_recall_at_18": 0.2,
+        "review_budget": 18,
+        "roc_auc": 0.4726
+      },
+      {
+        "average_precision": 0.3014,
+        "candidate": "svc_c_3.0_gamma_0.001",
+        "disputed_hits_at_18": 6,
+        "disputed_recall_at_18": 0.4,
+        "review_budget": 18,
+        "roc_auc": 0.5822
+      },
+      {
+        "average_precision": 0.2627,
+        "candidate": "svc_c_3.0_gamma_0.003",
+        "disputed_hits_at_18": 5,
+        "disputed_recall_at_18": 0.3333,
+        "review_budget": 18,
+        "roc_auc": 0.5022
+      },
+      {
+        "average_precision": 0.2418,
+        "candidate": "svc_c_3.0_gamma_0.01",
+        "disputed_hits_at_18": 4,
+        "disputed_recall_at_18": 0.2667,
+        "review_budget": 18,
+        "roc_auc": 0.4948
+      },
+      {
+        "average_precision": 0.3246,
+        "candidate": "svc_c_3.0_gamma_0.03",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.6385
+      },
+      {
+        "average_precision": 0.2332,
+        "candidate": "svc_c_10.0_gamma_scale",
+        "disputed_hits_at_18": 1,
+        "disputed_recall_at_18": 0.0667,
+        "review_budget": 18,
+        "roc_auc": 0.4711
+      },
+      {
+        "average_precision": 0.2504,
+        "candidate": "svc_c_10.0_gamma_0.001",
+        "disputed_hits_at_18": 3,
+        "disputed_recall_at_18": 0.2,
+        "review_budget": 18,
+        "roc_auc": 0.4874
+      },
+      {
+        "average_precision": 0.2275,
+        "candidate": "svc_c_10.0_gamma_0.003",
+        "disputed_hits_at_18": 3,
+        "disputed_recall_at_18": 0.2,
+        "review_budget": 18,
+        "roc_auc": 0.4444
+      },
+      {
+        "average_precision": 0.2496,
+        "candidate": "svc_c_10.0_gamma_0.01",
+        "disputed_hits_at_18": 4,
+        "disputed_recall_at_18": 0.2667,
+        "review_budget": 18,
+        "roc_auc": 0.5111
+      },
+      {
+        "average_precision": 0.326,
+        "candidate": "svc_c_10.0_gamma_0.03",
+        "disputed_hits_at_18": 7,
+        "disputed_recall_at_18": 0.4667,
+        "review_budget": 18,
+        "roc_auc": 0.64
+      }
+    ],
+    "selection_rule": [
+      "maximize disputed recall within 18 review slots",
+      "maximize average precision",
+      "maximize ROC-AUC"
+    ],
+    "selection_split": "climate_fever_v10_development"
+  },
+  "selected": {
+    "average_precision": 0.3977,
+    "candidate": "extra_depth_3_leaf_16_features_1.0",
+    "disputed_hits_at_18": 9,
+    "disputed_recall_at_18": 0.6,
+    "policy": {
+      "all_gate_candidate_count": 0,
+      "candidate_count": 73036,
+      "contradiction_probability_maximum": 0.11943775415420532,
+      "disputed_review_coverage": 0.6,
+      "false_support_rate": 0.0444,
+      "false_supports": 2,
+      "gates": {
+        "all_met": false,
+        "disputed_review_coverage": false,
+        "false_support_rate": true,
+        "review_rate": true,
+        "support_recall": false,
+        "zero_refutation_false_supports": true
+      },
+      "refutation_false_supports": 0,
+      "review_budget": 18,
+      "review_cases": 17,
+      "review_rate": 0.2833333333333333,
+      "selected_kind": "best_safety_eligible_diagnostic",
+      "support_probability_minimum": 0.7843064665794373,
+      "support_recall": 0.4,
+      "true_supports": 6
+    },
+    "review_budget": 18,
+    "roc_auc": 0.6726
+  },
+  "stable_defaults_changed": false,
+  "status": "rejected_development_candidate",
+  "v9_holdout_reused": false
+}

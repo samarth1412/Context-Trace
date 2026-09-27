@@ -580,3 +580,49 @@ PYTHONPATH=packages/contexttrace:. HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
 the failed promotion decision. Four-way macro-F1 improved to 0.5960, but no
 safety-compatible routing policy met the support-recall and disputed-review
 gates. The model remains a research artifact outside the package.
+
+## V12: disputed-evidence conflict ranking
+
+V12 tests learned claim-level and pairwise conflict rankers over the selected
+V11 relation model. The text-bearing training data and local score files remain
+external.
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.build_v12_conflict_training \
+  --source /private/tmp/contexttrace_external_data/climate_fever/climate-fever-dataset-r1.jsonl \
+  --consumed-v9-selection benchmarks/requirement_alignment/v9_climate_fever_selection.json \
+  --v10-selection benchmarks/requirement_alignment/v10_climate_selection.json \
+  --training-output /private/tmp/contexttrace_external_data/climate_fever/v12_conflict_training.json \
+  --selection-output benchmarks/requirement_alignment/v12_conflict_selection.json \
+  --audit-output benchmarks/requirement_alignment/v12_conflict_audit.json \
+  --manifest-output benchmarks/requirement_alignment/v12_conflict_manifest.json
+
+PYTHONPATH=packages/contexttrace:. HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
+  .venv/bin/python -m benchmarks.requirement_alignment.score_v12_relations \
+  --dataset /private/tmp/contexttrace_external_data/climate_fever/v12_conflict_training.json \
+  --split climate_fever_v12_conflict_training \
+  --model-path /private/tmp/contexttrace_external_data/climate_fever/v11_relation_candidate \
+  --model-manifest benchmarks/requirement_alignment/results/v11_relation_model_manifest.json \
+  --output /private/tmp/contexttrace_external_data/climate_fever/v12_training_relation_scores.json
+
+PYTHONPATH=packages/contexttrace:. HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
+  .venv/bin/python -m benchmarks.requirement_alignment.score_v12_relations \
+  --dataset /private/tmp/contexttrace_external_data/climate_fever/v10_climate_development.json \
+  --split climate_fever_v10_development \
+  --model-path /private/tmp/contexttrace_external_data/climate_fever/v11_relation_candidate \
+  --model-manifest benchmarks/requirement_alignment/results/v11_relation_model_manifest.json \
+  --output /private/tmp/contexttrace_external_data/climate_fever/v12_development_relation_scores.json
+
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.v12_conflict_ranker \
+  --training-dataset /private/tmp/contexttrace_external_data/climate_fever/v12_conflict_training.json \
+  --training-scores /private/tmp/contexttrace_external_data/climate_fever/v12_training_relation_scores.json \
+  --development-dataset /private/tmp/contexttrace_external_data/climate_fever/v10_climate_development.json \
+  --development-scores /private/tmp/contexttrace_external_data/climate_fever/v12_development_relation_scores.json \
+  --output benchmarks/requirement_alignment/results/v12_conflict_ranker.json
+```
+
+`V12_CONFLICT_RANKER.md` records the negative result. The selected ranker
+matched V11 disputed coverage rather than improving it, and the pairwise hard-
+negative model performed worse. V12 is not eligible for release.

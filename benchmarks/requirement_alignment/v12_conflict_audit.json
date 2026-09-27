@@ -1,0 +1,32 @@
+{
+  "checks": {
+    "all_v10_development_components_excluded": true,
+    "all_v9_claim_ids_excluded": true,
+    "exact_evidence_disjoint_from_v10_development": true,
+    "labels_absent_from_inputs": true,
+    "model_outputs_used_for_selection": false,
+    "source_hash_verified": true
+  },
+  "counts": {
+    "claim_labels": {
+      "DISPUTED": 78,
+      "NOT_ENOUGH_INFO": 396,
+      "REFUTES": 172,
+      "SUPPORTS": 564
+    },
+    "claims": 1210,
+    "evidence_components": 325,
+    "evidence_spans": 6050
+  },
+  "experiment": "contexttrace_v12_conflict_ranking",
+  "limitations": [
+    "Training and development share the Climate-FEVER domain despite exact-evidence exclusion.",
+    "Training claims can share evidence inside the training partition.",
+    "The fixed V10 development set is for selection and cannot serve as release confirmation."
+  ],
+  "redistribution": {
+    "committed_receipts_contain_only_hashes_and_aggregates": true,
+    "source_text_committed": false
+  },
+  "schema_version": "contexttrace-climate-fever-v12-audit-1.0"
+}
