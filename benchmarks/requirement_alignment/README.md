@@ -504,3 +504,46 @@ PYTHONPATH=packages/contexttrace:. .venv/bin/python \
 
 `V10_DEVELOPMENT_SET.md` documents the split boundary, redistribution policy,
 and intended four-way local-model experiment.
+
+Score each generated V10 partition with the frozen local models, then run the
+four-way feature screen:
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.score_v10_features \
+  --dataset /private/tmp/contexttrace_external_data/climate_fever/v10_climate_training.json \
+  --split climate_fever_v10_training \
+  --v3-model-path .tmp-contexttrace-models/contexttrace-requirement-alignment-v3 \
+  --v3-manifest benchmarks/requirement_alignment/results/model_v3_manifest.json \
+  --v5-model-path .tmp-contexttrace-models/contexttrace-requirement-alignment-v5 \
+  --v5-manifest benchmarks/requirement_alignment/results/model_v5_manifest.json \
+  --pinned-nli-path .tmp-contexttrace-models/cross-encoder--nli-deberta-v3-small--fa280487 \
+  --local-output /private/tmp/contexttrace_external_data/climate_fever/v10_training_local_scores.json \
+  --auxiliary-output /private/tmp/contexttrace_external_data/climate_fever/v10_training_auxiliary_scores.json
+
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.score_v10_features \
+  --dataset /private/tmp/contexttrace_external_data/climate_fever/v10_climate_development.json \
+  --split climate_fever_v10_development \
+  --v3-model-path .tmp-contexttrace-models/contexttrace-requirement-alignment-v3 \
+  --v3-manifest benchmarks/requirement_alignment/results/model_v3_manifest.json \
+  --v5-model-path .tmp-contexttrace-models/contexttrace-requirement-alignment-v5 \
+  --v5-manifest benchmarks/requirement_alignment/results/model_v5_manifest.json \
+  --pinned-nli-path .tmp-contexttrace-models/cross-encoder--nli-deberta-v3-small--fa280487 \
+  --local-output /private/tmp/contexttrace_external_data/climate_fever/v10_development_local_scores.json \
+  --auxiliary-output /private/tmp/contexttrace_external_data/climate_fever/v10_development_auxiliary_scores.json
+
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.v10_fourway \
+  --training-dataset /private/tmp/contexttrace_external_data/climate_fever/v10_climate_training.json \
+  --training-local-scores /private/tmp/contexttrace_external_data/climate_fever/v10_training_local_scores.json \
+  --training-auxiliary-scores /private/tmp/contexttrace_external_data/climate_fever/v10_training_auxiliary_scores.json \
+  --development-dataset /private/tmp/contexttrace_external_data/climate_fever/v10_climate_development.json \
+  --development-local-scores /private/tmp/contexttrace_external_data/climate_fever/v10_development_local_scores.json \
+  --development-auxiliary-scores /private/tmp/contexttrace_external_data/climate_fever/v10_development_auxiliary_scores.json \
+  --output benchmarks/requirement_alignment/results/v10_fourway_feature_screen.json
+```
+
+`V10_VERIFIER_SCREEN.md` records the negative result and the bounded local
+architecture checks. No candidate met every promotion gate, so stable defaults
+remain unchanged and V10 is not eligible for release.

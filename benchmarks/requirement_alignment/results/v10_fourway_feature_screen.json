@@ -1,0 +1,740 @@
+{
+  "decision": {
+    "next_experiment": "improve evidence-level relation supervision and conflict aggregation before freezing a candidate on a new dataset",
+    "promote": false,
+    "reason": "No development policy met all safety, support-recall, disputed-review, and review-budget gates."
+  },
+  "experiment": "contexttrace_v10_fourway_feature_screen",
+  "features": {
+    "count": 48,
+    "evaluation_labels_in_model_inputs": false,
+    "names": [
+      "v3.group.entailment",
+      "v3.group.contradiction",
+      "v3.group.neutral",
+      "v3.span.max.entailment",
+      "v3.span.max.contradiction",
+      "v3.span.max.neutral",
+      "v3.span.min.entailment",
+      "v3.span.min.contradiction",
+      "v3.span.min.neutral",
+      "v3.span.mean.entailment",
+      "v3.span.mean.contradiction",
+      "v3.span.mean.neutral",
+      "v5.group.entailment",
+      "v5.group.contradiction",
+      "v5.group.neutral",
+      "v5.span.max.entailment",
+      "v5.span.max.contradiction",
+      "v5.span.max.neutral",
+      "v5.span.min.entailment",
+      "v5.span.min.contradiction",
+      "v5.span.min.neutral",
+      "v5.span.mean.entailment",
+      "v5.span.mean.contradiction",
+      "v5.span.mean.neutral",
+      "lexical.claim_coverage",
+      "lexical.jaccard",
+      "lexical.best_span_coverage",
+      "lexical.best_span_jaccard",
+      "lexical.bigram_coverage",
+      "lexical.claim_negation",
+      "lexical.evidence_negation",
+      "lexical.negation_mismatch",
+      "lexical.number_coverage",
+      "lexical.missing_number",
+      "lexical.log_claim_tokens",
+      "lexical.log_evidence_tokens",
+      "pinned_nli.group.entailment",
+      "pinned_nli.group.contradiction",
+      "pinned_nli.group.neutral",
+      "pinned_nli.span.max.entailment",
+      "pinned_nli.span.max.contradiction",
+      "pinned_nli.span.max.neutral",
+      "pinned_nli.span.min.entailment",
+      "pinned_nli.span.min.contradiction",
+      "pinned_nli.span.min.neutral",
+      "pinned_nli.span.mean.entailment",
+      "pinned_nli.span.mean.contradiction",
+      "pinned_nli.span.mean.neutral"
+    ],
+    "sources": [
+      "frozen v3 group and evidence-span probabilities",
+      "frozen v5 group and evidence-span probabilities",
+      "pinned local NLI group and evidence-span probabilities",
+      "deterministic lexical overlap and negation signals"
+    ]
+  },
+  "future_confirmation_required": true,
+  "inputs": {
+    "auxiliary_prediction_rows_sha256": {
+      "development": "7c568e78bbee3936d430368c56320812699206aada4d1333ab9f09e6a4e94f2d",
+      "training": "30f4e3e09469ff0cd086ec7797dfe6754850b8c785b3ece75242f03746b5881b"
+    },
+    "development_cases": 60,
+    "development_sha256": "071d3345073701437bb625bb6e18e920a3d04dcb5621d67458502a4a4c9f8f2d",
+    "development_split": "climate_fever_v10_development",
+    "local_prediction_rows_sha256": {
+      "development": "7d19fbc59b4ee58c6926cb87a3982206a8e46623d716f83147cb51254807dcbc",
+      "training": "80f21cc181895aa46986b3b96f074deb85f23569de2135519cba17e6517805f9"
+    },
+    "training_cases": 300,
+    "training_sha256": "acc6bb3a29ef5bcf5d0031e65aa16b1919fd3cef37e0fb7001e3cb57a12ccbea",
+    "training_split": "climate_fever_v10_training"
+  },
+  "local_only_network_calls": 0,
+  "promotion_gates": {
+    "all_met": false,
+    "disputed_review_coverage_minimum": 0.9,
+    "false_support_rate_maximum": 0.05,
+    "review_rate_maximum": 0.3,
+    "support_recall_minimum": 0.5,
+    "zero_refutation_false_supports": true
+  },
+  "remote_inference_used": false,
+  "remote_provider_default_enabled": false,
+  "schema_version": "contexttrace-v10-fourway-screen-1.0",
+  "search": {
+    "candidates": [
+      {
+        "development": {
+          "accuracy": 0.3333,
+          "confusion": {
+            "DISPUTED": {
+              "DISPUTED": 3,
+              "NOT_ENOUGH_INFO": 0,
+              "REFUTES": 6,
+              "SUPPORTS": 6
+            },
+            "NOT_ENOUGH_INFO": {
+              "DISPUTED": 1,
+              "NOT_ENOUGH_INFO": 4,
+              "REFUTES": 5,
+              "SUPPORTS": 5
+            },
+            "REFUTES": {
+              "DISPUTED": 0,
+              "NOT_ENOUGH_INFO": 2,
+              "REFUTES": 10,
+              "SUPPORTS": 3
+            },
+            "SUPPORTS": {
+              "DISPUTED": 1,
+              "NOT_ENOUGH_INFO": 5,
+              "REFUTES": 6,
+              "SUPPORTS": 3
+            }
+          },
+          "macro_f1": 0.3178,
+          "per_class": {
+            "DISPUTED": {
+              "f1": 0.3,
+              "precision": 0.6,
+              "recall": 0.2,
+              "support": 15
+            },
+            "NOT_ENOUGH_INFO": {
+              "f1": 0.3077,
+              "precision": 0.3636,
+              "recall": 0.2667,
+              "support": 15
+            },
+            "REFUTES": {
+              "f1": 0.4762,
+              "precision": 0.3704,
+              "recall": 0.6667,
+              "support": 15
+            },
+            "SUPPORTS": {
+              "f1": 0.1875,
+              "precision": 0.1765,
+              "recall": 0.2,
+              "support": 15
+            }
+          }
+        },
+        "regularization_c": 0.001
+      },
+      {
+        "development": {
+          "accuracy": 0.3833,
+          "confusion": {
+            "DISPUTED": {
+              "DISPUTED": 4,
+              "NOT_ENOUGH_INFO": 0,
+              "REFUTES": 5,
+              "SUPPORTS": 6
+            },
+            "NOT_ENOUGH_INFO": {
+              "DISPUTED": 1,
+              "NOT_ENOUGH_INFO": 6,
+              "REFUTES": 4,
+              "SUPPORTS": 4
+            },
+            "REFUTES": {
+              "DISPUTED": 0,
+              "NOT_ENOUGH_INFO": 2,
+              "REFUTES": 10,
+              "SUPPORTS": 3
+            },
+            "SUPPORTS": {
+              "DISPUTED": 1,
+              "NOT_ENOUGH_INFO": 5,
+              "REFUTES": 6,
+              "SUPPORTS": 3
+            }
+          },
+          "macro_f1": 0.3758,
+          "per_class": {
+            "DISPUTED": {
+              "f1": 0.381,
+              "precision": 0.6667,
+              "recall": 0.2667,
+              "support": 15
+            },
+            "NOT_ENOUGH_INFO": {
+              "f1": 0.4286,
+              "precision": 0.4615,
+              "recall": 0.4,
+              "support": 15
+            },
+            "REFUTES": {
+              "f1": 0.5,
+              "precision": 0.4,
+              "recall": 0.6667,
+              "support": 15
+            },
+            "SUPPORTS": {
+              "f1": 0.1935,
+              "precision": 0.1875,
+              "recall": 0.2,
+              "support": 15
+            }
+          }
+        },
+        "regularization_c": 0.003
+      },
+      {
+        "development": {
+          "accuracy": 0.4,
+          "confusion": {
+            "DISPUTED": {
+              "DISPUTED": 6,
+              "NOT_ENOUGH_INFO": 1,
+              "REFUTES": 4,
+              "SUPPORTS": 4
+            },
+            "NOT_ENOUGH_INFO": {
+              "DISPUTED": 1,
+              "NOT_ENOUGH_INFO": 6,
+              "REFUTES": 4,
+              "SUPPORTS": 4
+            },
+            "REFUTES": {
+              "DISPUTED": 2,
+              "NOT_ENOUGH_INFO": 2,
+              "REFUTES": 9,
+              "SUPPORTS": 2
+            },
+            "SUPPORTS": {
+              "DISPUTED": 3,
+              "NOT_ENOUGH_INFO": 5,
+              "REFUTES": 4,
+              "SUPPORTS": 3
+            }
+          },
+          "macro_f1": 0.3931,
+          "per_class": {
+            "DISPUTED": {
+              "f1": 0.4444,
+              "precision": 0.5,
+              "recall": 0.4,
+              "support": 15
+            },
+            "NOT_ENOUGH_INFO": {
+              "f1": 0.4138,
+              "precision": 0.4286,
+              "recall": 0.4,
+              "support": 15
+            },
+            "REFUTES": {
+              "f1": 0.5,
+              "precision": 0.4286,
+              "recall": 0.6,
+              "support": 15
+            },
+            "SUPPORTS": {
+              "f1": 0.2143,
+              "precision": 0.2308,
+              "recall": 0.2,
+              "support": 15
+            }
+          }
+        },
+        "regularization_c": 0.01
+      },
+      {
+        "development": {
+          "accuracy": 0.3667,
+          "confusion": {
+            "DISPUTED": {
+              "DISPUTED": 4,
+              "NOT_ENOUGH_INFO": 3,
+              "REFUTES": 4,
+              "SUPPORTS": 4
+            },
+            "NOT_ENOUGH_INFO": {
+              "DISPUTED": 2,
+              "NOT_ENOUGH_INFO": 6,
+              "REFUTES": 3,
+              "SUPPORTS": 4
+            },
+            "REFUTES": {
+              "DISPUTED": 3,
+              "NOT_ENOUGH_INFO": 4,
+              "REFUTES": 8,
+              "SUPPORTS": 0
+            },
+            "SUPPORTS": {
+              "DISPUTED": 4,
+              "NOT_ENOUGH_INFO": 5,
+              "REFUTES": 2,
+              "SUPPORTS": 4
+            }
+          },
+          "macro_f1": 0.3614,
+          "per_class": {
+            "DISPUTED": {
+              "f1": 0.2857,
+              "precision": 0.3077,
+              "recall": 0.2667,
+              "support": 15
+            },
+            "NOT_ENOUGH_INFO": {
+              "f1": 0.3636,
+              "precision": 0.3333,
+              "recall": 0.4,
+              "support": 15
+            },
+            "REFUTES": {
+              "f1": 0.5,
+              "precision": 0.4706,
+              "recall": 0.5333,
+              "support": 15
+            },
+            "SUPPORTS": {
+              "f1": 0.2963,
+              "precision": 0.3333,
+              "recall": 0.2667,
+              "support": 15
+            }
+          }
+        },
+        "regularization_c": 0.03
+      },
+      {
+        "development": {
+          "accuracy": 0.3667,
+          "confusion": {
+            "DISPUTED": {
+              "DISPUTED": 3,
+              "NOT_ENOUGH_INFO": 3,
+              "REFUTES": 4,
+              "SUPPORTS": 5
+            },
+            "NOT_ENOUGH_INFO": {
+              "DISPUTED": 2,
+              "NOT_ENOUGH_INFO": 7,
+              "REFUTES": 2,
+              "SUPPORTS": 4
+            },
+            "REFUTES": {
+              "DISPUTED": 2,
+              "NOT_ENOUGH_INFO": 5,
+              "REFUTES": 8,
+              "SUPPORTS": 0
+            },
+            "SUPPORTS": {
+              "DISPUTED": 4,
+              "NOT_ENOUGH_INFO": 4,
+              "REFUTES": 3,
+              "SUPPORTS": 4
+            }
+          },
+          "macro_f1": 0.3571,
+          "per_class": {
+            "DISPUTED": {
+              "f1": 0.2308,
+              "precision": 0.2727,
+              "recall": 0.2,
+              "support": 15
+            },
+            "NOT_ENOUGH_INFO": {
+              "f1": 0.4118,
+              "precision": 0.3684,
+              "recall": 0.4667,
+              "support": 15
+            },
+            "REFUTES": {
+              "f1": 0.5,
+              "precision": 0.4706,
+              "recall": 0.5333,
+              "support": 15
+            },
+            "SUPPORTS": {
+              "f1": 0.2857,
+              "precision": 0.3077,
+              "recall": 0.2667,
+              "support": 15
+            }
+          }
+        },
+        "regularization_c": 0.1
+      },
+      {
+        "development": {
+          "accuracy": 0.3833,
+          "confusion": {
+            "DISPUTED": {
+              "DISPUTED": 4,
+              "NOT_ENOUGH_INFO": 5,
+              "REFUTES": 2,
+              "SUPPORTS": 4
+            },
+            "NOT_ENOUGH_INFO": {
+              "DISPUTED": 2,
+              "NOT_ENOUGH_INFO": 7,
+              "REFUTES": 2,
+              "SUPPORTS": 4
+            },
+            "REFUTES": {
+              "DISPUTED": 1,
+              "NOT_ENOUGH_INFO": 5,
+              "REFUTES": 8,
+              "SUPPORTS": 1
+            },
+            "SUPPORTS": {
+              "DISPUTED": 2,
+              "NOT_ENOUGH_INFO": 4,
+              "REFUTES": 5,
+              "SUPPORTS": 4
+            }
+          },
+          "macro_f1": 0.377,
+          "per_class": {
+            "DISPUTED": {
+              "f1": 0.3333,
+              "precision": 0.4444,
+              "recall": 0.2667,
+              "support": 15
+            },
+            "NOT_ENOUGH_INFO": {
+              "f1": 0.3889,
+              "precision": 0.3333,
+              "recall": 0.4667,
+              "support": 15
+            },
+            "REFUTES": {
+              "f1": 0.5,
+              "precision": 0.4706,
+              "recall": 0.5333,
+              "support": 15
+            },
+            "SUPPORTS": {
+              "f1": 0.2857,
+              "precision": 0.3077,
+              "recall": 0.2667,
+              "support": 15
+            }
+          }
+        },
+        "regularization_c": 0.3
+      },
+      {
+        "development": {
+          "accuracy": 0.3333,
+          "confusion": {
+            "DISPUTED": {
+              "DISPUTED": 4,
+              "NOT_ENOUGH_INFO": 5,
+              "REFUTES": 2,
+              "SUPPORTS": 4
+            },
+            "NOT_ENOUGH_INFO": {
+              "DISPUTED": 2,
+              "NOT_ENOUGH_INFO": 5,
+              "REFUTES": 5,
+              "SUPPORTS": 3
+            },
+            "REFUTES": {
+              "DISPUTED": 0,
+              "NOT_ENOUGH_INFO": 4,
+              "REFUTES": 7,
+              "SUPPORTS": 4
+            },
+            "SUPPORTS": {
+              "DISPUTED": 2,
+              "NOT_ENOUGH_INFO": 4,
+              "REFUTES": 5,
+              "SUPPORTS": 4
+            }
+          },
+          "macro_f1": 0.3323,
+          "per_class": {
+            "DISPUTED": {
+              "f1": 0.3478,
+              "precision": 0.5,
+              "recall": 0.2667,
+              "support": 15
+            },
+            "NOT_ENOUGH_INFO": {
+              "f1": 0.303,
+              "precision": 0.2778,
+              "recall": 0.3333,
+              "support": 15
+            },
+            "REFUTES": {
+              "f1": 0.4118,
+              "precision": 0.3684,
+              "recall": 0.4667,
+              "support": 15
+            },
+            "SUPPORTS": {
+              "f1": 0.2667,
+              "precision": 0.2667,
+              "recall": 0.2667,
+              "support": 15
+            }
+          }
+        },
+        "regularization_c": 1.0
+      },
+      {
+        "development": {
+          "accuracy": 0.35,
+          "confusion": {
+            "DISPUTED": {
+              "DISPUTED": 4,
+              "NOT_ENOUGH_INFO": 5,
+              "REFUTES": 2,
+              "SUPPORTS": 4
+            },
+            "NOT_ENOUGH_INFO": {
+              "DISPUTED": 2,
+              "NOT_ENOUGH_INFO": 5,
+              "REFUTES": 5,
+              "SUPPORTS": 3
+            },
+            "REFUTES": {
+              "DISPUTED": 0,
+              "NOT_ENOUGH_INFO": 4,
+              "REFUTES": 7,
+              "SUPPORTS": 4
+            },
+            "SUPPORTS": {
+              "DISPUTED": 2,
+              "NOT_ENOUGH_INFO": 4,
+              "REFUTES": 4,
+              "SUPPORTS": 5
+            }
+          },
+          "macro_f1": 0.3494,
+          "per_class": {
+            "DISPUTED": {
+              "f1": 0.3478,
+              "precision": 0.5,
+              "recall": 0.2667,
+              "support": 15
+            },
+            "NOT_ENOUGH_INFO": {
+              "f1": 0.303,
+              "precision": 0.2778,
+              "recall": 0.3333,
+              "support": 15
+            },
+            "REFUTES": {
+              "f1": 0.4242,
+              "precision": 0.3889,
+              "recall": 0.4667,
+              "support": 15
+            },
+            "SUPPORTS": {
+              "f1": 0.3226,
+              "precision": 0.3125,
+              "recall": 0.3333,
+              "support": 15
+            }
+          }
+        },
+        "regularization_c": 3.0
+      },
+      {
+        "development": {
+          "accuracy": 0.35,
+          "confusion": {
+            "DISPUTED": {
+              "DISPUTED": 4,
+              "NOT_ENOUGH_INFO": 5,
+              "REFUTES": 2,
+              "SUPPORTS": 4
+            },
+            "NOT_ENOUGH_INFO": {
+              "DISPUTED": 2,
+              "NOT_ENOUGH_INFO": 5,
+              "REFUTES": 5,
+              "SUPPORTS": 3
+            },
+            "REFUTES": {
+              "DISPUTED": 0,
+              "NOT_ENOUGH_INFO": 4,
+              "REFUTES": 7,
+              "SUPPORTS": 4
+            },
+            "SUPPORTS": {
+              "DISPUTED": 2,
+              "NOT_ENOUGH_INFO": 4,
+              "REFUTES": 4,
+              "SUPPORTS": 5
+            }
+          },
+          "macro_f1": 0.3494,
+          "per_class": {
+            "DISPUTED": {
+              "f1": 0.3478,
+              "precision": 0.5,
+              "recall": 0.2667,
+              "support": 15
+            },
+            "NOT_ENOUGH_INFO": {
+              "f1": 0.303,
+              "precision": 0.2778,
+              "recall": 0.3333,
+              "support": 15
+            },
+            "REFUTES": {
+              "f1": 0.4242,
+              "precision": 0.3889,
+              "recall": 0.4667,
+              "support": 15
+            },
+            "SUPPORTS": {
+              "f1": 0.3226,
+              "precision": 0.3125,
+              "recall": 0.3333,
+              "support": 15
+            }
+          }
+        },
+        "regularization_c": 10.0
+      }
+    ],
+    "class_weight": "balanced",
+    "family": "standardized_multinomial_logistic_regression",
+    "random_seed": 20260927,
+    "regularization_c": [
+      0.001,
+      0.003,
+      0.01,
+      0.03,
+      0.1,
+      0.3,
+      1.0,
+      3.0,
+      10.0
+    ],
+    "selection_split": "climate_fever_v10_development"
+  },
+  "selected": {
+    "class_order": [
+      "DISPUTED",
+      "NOT_ENOUGH_INFO",
+      "REFUTES",
+      "SUPPORTS"
+    ],
+    "development": {
+      "accuracy": 0.4,
+      "confusion": {
+        "DISPUTED": {
+          "DISPUTED": 6,
+          "NOT_ENOUGH_INFO": 1,
+          "REFUTES": 4,
+          "SUPPORTS": 4
+        },
+        "NOT_ENOUGH_INFO": {
+          "DISPUTED": 1,
+          "NOT_ENOUGH_INFO": 6,
+          "REFUTES": 4,
+          "SUPPORTS": 4
+        },
+        "REFUTES": {
+          "DISPUTED": 2,
+          "NOT_ENOUGH_INFO": 2,
+          "REFUTES": 9,
+          "SUPPORTS": 2
+        },
+        "SUPPORTS": {
+          "DISPUTED": 3,
+          "NOT_ENOUGH_INFO": 5,
+          "REFUTES": 4,
+          "SUPPORTS": 3
+        }
+      },
+      "macro_f1": 0.3931,
+      "per_class": {
+        "DISPUTED": {
+          "f1": 0.4444,
+          "precision": 0.5,
+          "recall": 0.4,
+          "support": 15
+        },
+        "NOT_ENOUGH_INFO": {
+          "f1": 0.4138,
+          "precision": 0.4286,
+          "recall": 0.4,
+          "support": 15
+        },
+        "REFUTES": {
+          "f1": 0.5,
+          "precision": 0.4286,
+          "recall": 0.6,
+          "support": 15
+        },
+        "SUPPORTS": {
+          "f1": 0.2143,
+          "precision": 0.2308,
+          "recall": 0.2,
+          "support": 15
+        }
+      }
+    },
+    "policy_diagnostic": {
+      "all_gate_candidate_count": 0,
+      "candidate_count": 73036,
+      "selected_diagnostic": {
+        "disputed_review_coverage": 0.4667,
+        "false_support_rate": 0.0444,
+        "false_supports": 2,
+        "gates": {
+          "all_met": false,
+          "disputed_review_coverage": false,
+          "false_support_rate": true,
+          "review_rate": true,
+          "support_recall": false,
+          "zero_refutation_false_supports": true
+        },
+        "refutation_false_supports": 0,
+        "refutation_probability_maximum": 0.11668627374604072,
+        "review_cases": 18,
+        "review_rate": 0.3,
+        "support_probability_minimum": 0.0,
+        "support_recall": 0.3333,
+        "true_supports": 5
+      },
+      "selected_kind": "best_safety_eligible_diagnostic"
+    },
+    "regularization_c": 0.01
+  },
+  "stable_defaults_changed": false,
+  "status": "rejected_development_candidate",
+  "v9_holdout_reused": false
+}
