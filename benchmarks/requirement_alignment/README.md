@@ -626,3 +626,52 @@ PYTHONPATH=packages/contexttrace:. .venv/bin/python \
 `V12_CONFLICT_RANKER.md` records the negative result. The selected ranker
 matched V11 disputed coverage rather than improving it, and the pairwise hard-
 negative model performed worse. V12 is not eligible for release.
+
+## V13: independent five-way transfer
+
+V13 freezes balanced development and held-out resources from the existing
+WiCE, VitaminC, and AmbiEnt case packs, then applies V11 and its thresholds
+unchanged. The generated text-bearing datasets and raw relation scores remain
+external.
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.build_v13_independent \
+  --development-source benchmarks/external_fiveway_confirmation/development_cases.json \
+  --heldout-source benchmarks/external_fiveway_confirmation/confirmation_cases.json \
+  --development-output /private/tmp/contexttrace_external_data/v13_development.json \
+  --heldout-output /private/tmp/contexttrace_external_data/v13_heldout.json \
+  --audit-output benchmarks/requirement_alignment/v13_independent_audit.json \
+  --manifest-output benchmarks/requirement_alignment/v13_independent_manifest.json
+
+PYTHONPATH=packages/contexttrace:. HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
+  .venv/bin/python -m benchmarks.requirement_alignment.score_v13_relations \
+  --dataset /private/tmp/contexttrace_external_data/v13_development.json \
+  --split external_fiveway_v13_development \
+  --model-path /private/tmp/contexttrace_external_data/climate_fever/v11_relation_candidate \
+  --model-manifest benchmarks/requirement_alignment/results/v11_relation_model_manifest.json \
+  --output /private/tmp/contexttrace_external_data/v13_development_scores.json
+
+PYTHONPATH=packages/contexttrace:. HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
+  .venv/bin/python -m benchmarks.requirement_alignment.score_v13_relations \
+  --dataset /private/tmp/contexttrace_external_data/v13_heldout.json \
+  --split external_fiveway_v13_heldout \
+  --model-path /private/tmp/contexttrace_external_data/climate_fever/v11_relation_candidate \
+  --model-manifest benchmarks/requirement_alignment/results/v11_relation_model_manifest.json \
+  --output /private/tmp/contexttrace_external_data/v13_heldout_scores.json
+
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.analyze_v13_independent \
+  --development /private/tmp/contexttrace_external_data/v13_development.json \
+  --development-scores /private/tmp/contexttrace_external_data/v13_development_scores.json \
+  --heldout /private/tmp/contexttrace_external_data/v13_heldout.json \
+  --heldout-scores /private/tmp/contexttrace_external_data/v13_heldout_scores.json \
+  --v11-report benchmarks/requirement_alignment/results/v11_relation_conflict_training.json \
+  --v13-manifest benchmarks/requirement_alignment/v13_independent_manifest.json \
+  --output benchmarks/requirement_alignment/results/v13_independent_transfer.json
+```
+
+`V13_INDEPENDENT_TRANSFER.md` records the failed transfer. V11 incorrectly
+accepted 45 of 100 held-out non-support cases, including 11 contradictions and
+5 unsupported claims. The result consumes this held-out pack for V11 and keeps
+the candidate outside ContextTrace 1.3.

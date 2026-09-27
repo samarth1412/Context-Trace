@@ -1,0 +1,3251 @@
+{
+  "decision": "do_not_promote_v11",
+  "experiment": "contexttrace_v13_independent_contradictions",
+  "heldout_promotion_gates": {
+    "all_met": false,
+    "false_support_rate_at_most_0_05": false,
+    "partial_or_ambiguous_review_recall_at_least_0_80": false,
+    "review_rate_at_most_0_50": true,
+    "support_recall_at_least_0_50": true,
+    "zero_contradiction_false_supports": false
+  },
+  "local_only_network_calls": 0,
+  "next_experiment": "fit a development-only five-way aggregation policy, then evaluate it once on a new untouched confirmation pack",
+  "protocol": {
+    "candidate": "frozen_v11_relation_model_and_direct_thresholds",
+    "development_labels_used_for_retuning": false,
+    "evaluation_labels_sent_to_model": false,
+    "heldout_labels_used_for_selection": false,
+    "thresholds": {
+      "contradiction_minimum": 0.2677193880081177,
+      "entailment_minimum": 0.5347484350204468
+    },
+    "v11_selected_epoch": 2
+  },
+  "remote_inference_used": false,
+  "remote_provider_default_enabled": false,
+  "results": {
+    "development": {
+      "cases": 125,
+      "direct_four_state": {
+        "accuracy": 0.304,
+        "confusion": {
+          "contradicted": {
+            "contradicted": 10,
+            "review": 0,
+            "supported": 12,
+            "unresolved": 3
+          },
+          "review": {
+            "contradicted": 13,
+            "review": 4,
+            "supported": 26,
+            "unresolved": 7
+          },
+          "supported": {
+            "contradicted": 2,
+            "review": 6,
+            "supported": 10,
+            "unresolved": 7
+          },
+          "unresolved": {
+            "contradicted": 6,
+            "review": 2,
+            "supported": 3,
+            "unresolved": 14
+          }
+        },
+        "macro_f1": 0.3123,
+        "per_state": {
+          "contradicted": {
+            "f1": 0.3571,
+            "precision": 0.3226,
+            "recall": 0.4,
+            "support": 25
+          },
+          "review": {
+            "f1": 0.129,
+            "precision": 0.3333,
+            "recall": 0.08,
+            "support": 50
+          },
+          "supported": {
+            "f1": 0.2632,
+            "precision": 0.1961,
+            "recall": 0.4,
+            "support": 25
+          },
+          "unresolved": {
+            "f1": 0.5,
+            "precision": 0.4516,
+            "recall": 0.56,
+            "support": 25
+          }
+        }
+      },
+      "evidence_spans": 615,
+      "latency": {
+        "seconds": 18.5601,
+        "spans_per_second": 33.1355
+      },
+      "rows": [
+        {
+          "case_id": "ambient_0_c",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.0718555599451065,
+            "entailment": 0.8258083462715149,
+            "neutral": 0.10233613103628159
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_102672",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.026124702766537666,
+            "entailment": 0.3205585777759552,
+            "neutral": 0.6533166766166687
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "ambient_126_c",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.018083961680531502,
+            "entailment": 0.9096459150314331,
+            "neutral": 0.07227016240358353
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_137_c",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.0004344231856521219,
+            "entailment": 0.947355329990387,
+            "neutral": 0.05221018195152283
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_15384",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.9158256649971008,
+            "entailment": 0.011215206235647202,
+            "neutral": 0.07295913249254227
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "ambient_15976",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.0014910236932337284,
+            "entailment": 0.9766629338264465,
+            "neutral": 0.02184605412185192
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_15_c",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.06574653834104538,
+            "entailment": 0.11914226412773132,
+            "neutral": 0.8151112198829651
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "ambient_23635",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.027629589661955833,
+            "entailment": 0.8465473651885986,
+            "neutral": 0.1258230209350586
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_39_c",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.9646757245063782,
+            "entailment": 0.007608452346175909,
+            "neutral": 0.027715852484107018
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "ambient_43525",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.034455928951501846,
+            "entailment": 0.932447075843811,
+            "neutral": 0.033097025007009506
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_44861",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.001732711447402835,
+            "entailment": 0.9901159405708313,
+            "neutral": 0.008151332847774029
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_45184",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.9283880591392517,
+            "entailment": 0.022781962528824806,
+            "neutral": 0.04882997274398804
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "ambient_47245",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.011243443004786968,
+            "entailment": 0.9511813521385193,
+            "neutral": 0.037575166672468185
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_57804",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.262580931186676,
+            "entailment": 0.6190228462219238,
+            "neutral": 0.11839620023965836
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_65671",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.9717954993247986,
+            "entailment": 0.00802881270647049,
+            "neutral": 0.020175646990537643
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "ambient_69361",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.0006887717172503471,
+            "entailment": 0.9949192404747009,
+            "neutral": 0.004392021335661411
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_71317",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.0012219927739351988,
+            "entailment": 0.982882559299469,
+            "neutral": 0.015895456075668335
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_78950",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.8562722206115723,
+            "entailment": 0.07193037867546082,
+            "neutral": 0.07179732620716095
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "ambient_80789",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.09174412488937378,
+            "entailment": 0.6444516777992249,
+            "neutral": 0.263804167509079
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_81509",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.0004372296971268952,
+            "entailment": 0.9832069873809814,
+            "neutral": 0.01635577529668808
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_83240",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.0008489598985761404,
+            "entailment": 0.9549205899238586,
+            "neutral": 0.04423045367002487
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_87805",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.8937273621559143,
+            "entailment": 0.01917692832648754,
+            "neutral": 0.08709576725959778
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "ambient_87_c",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.987453043460846,
+            "entailment": 0.00472615659236908,
+            "neutral": 0.007820747792720795
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "ambient_94921",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.8365716934204102,
+            "entailment": 0.03562562167644501,
+            "neutral": 0.12780272960662842
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "ambient_99763",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.00015578733291476965,
+            "entailment": 0.9736770987510681,
+            "neutral": 0.02616713009774685
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "vitaminc_5eafed7ec9e77c0009ce0f60_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.4202442169189453,
+            "entailment": 0.09305319935083389,
+            "neutral": 0.486702561378479
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "vitaminc_5eafed80c9e77c0009ce1277_3",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.4070020318031311,
+            "entailment": 0.11310150474309921,
+            "neutral": 0.4798964262008667
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "vitaminc_5eb29884c9e77c0008d92550_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.6334786415100098,
+            "entailment": 0.11853338032960892,
+            "neutral": 0.24798792600631714
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "vitaminc_5eb29884c9e77c0008d925d7_3",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.01314243208616972,
+            "entailment": 0.9653496146202087,
+            "neutral": 0.021508004516363144
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "vitaminc_5eb29887c9e77c0008d92d6b_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.9680984616279602,
+            "entailment": 0.007069936953485012,
+            "neutral": 0.024831615388393402
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "vitaminc_5eb29889c9e77c0008d9441c_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.7719139456748962,
+            "entailment": 0.03484730422496796,
+            "neutral": 0.1932387351989746
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "vitaminc_5ebbf32bc9e77c00092958f2_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.9270986318588257,
+            "entailment": 0.01761569455265999,
+            "neutral": 0.055285707116127014
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "vitaminc_5ec284fbc9e77c00084158cb_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.05615205317735672,
+            "entailment": 0.34883996844291687,
+            "neutral": 0.5950079560279846
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "vitaminc_5ec284fec9e77c000841756e_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.03437228128314018,
+            "entailment": 0.150979682803154,
+            "neutral": 0.8146479725837708
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "vitaminc_5ec5598fc9e77c000842cc88_3",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.0009926367783918977,
+            "entailment": 0.9848857522010803,
+            "neutral": 0.01412153895944357
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "vitaminc_5ece9461c9e77c00084663d2_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.004422372207045555,
+            "entailment": 0.8502060174942017,
+            "neutral": 0.14537152647972107
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "vitaminc_5ed7ad03c9e77c00084a742a_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.12232127040624619,
+            "entailment": 0.9241243004798889,
+            "neutral": 0.694239616394043
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "vitaminc_5ede072ec9e77c00084d2452_3",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.0018107763025909662,
+            "entailment": 0.9832171201705933,
+            "neutral": 0.01497213076800108
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "vitaminc_5ede0730c9e77c00084d35e9_3",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.1266656219959259,
+            "entailment": 0.3681582808494568,
+            "neutral": 0.5051760673522949
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "vitaminc_5ee39329c9e77c0008cc909b_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.7048619985580444,
+            "entailment": 0.08767881244421005,
+            "neutral": 0.2074591964483261
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "vitaminc_5ee3932ac9e77c0008cc9508_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.03577714413404465,
+            "entailment": 0.7998933792114258,
+            "neutral": 0.16432949900627136
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "vitaminc_5ee3932bc9e77c0008cc9f6b_3",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.0037235962226986885,
+            "entailment": 0.7480716109275818,
+            "neutral": 0.24820482730865479
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "vitaminc_5ee3932bc9e77c0008cc9f98_3",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.018048223108053207,
+            "entailment": 0.7955841422080994,
+            "neutral": 0.18636761605739594
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "vitaminc_5ee3932bc9e77c0008cca03a_3",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.006662924773991108,
+            "entailment": 0.9784632325172424,
+            "neutral": 0.014873787760734558
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "vitaminc_5ee3932bc9e77c0008cca578_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.9342368245124817,
+            "entailment": 0.015437040477991104,
+            "neutral": 0.05032609403133392
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "vitaminc_5ee3932cc9e77c0008ccb3bc_3",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.42950037121772766,
+            "entailment": 0.34532803297042847,
+            "neutral": 0.22517159581184387
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "vitaminc_5ee393b6c9e77c0008ccbb4b_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.9592720866203308,
+            "entailment": 0.010432804003357887,
+            "neutral": 0.030295107513666153
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "vitaminc_5ee393b6c9e77c0008ccbbab_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.03526473045349121,
+            "entailment": 0.883151113986969,
+            "neutral": 0.08158420026302338
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "vitaminc_5ee393b7c9e77c0008ccc6cb_3",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.05548994988203049,
+            "entailment": 0.699640154838562,
+            "neutral": 0.2448699176311493
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "vitaminc_5ee3949bc9e77c0008ccfeae_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.0015836014645174146,
+            "entailment": 0.9675328135490417,
+            "neutral": 0.0308835469186306
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev00003",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.9594334959983826,
+            "entailment": 0.9560560584068298,
+            "neutral": 0.6025658845901489
+          },
+          "prediction": "review"
+        },
+        {
+          "case_id": "wice_dev00028",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.42557480931282043,
+            "entailment": 0.9496613144874573,
+            "neutral": 0.6207878589630127
+          },
+          "prediction": "review"
+        },
+        {
+          "case_id": "wice_dev00068",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.05689754709601402,
+            "entailment": 0.3123939633369446,
+            "neutral": 0.8997310400009155
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev00116",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.33474820852279663,
+            "entailment": 0.9165916442871094,
+            "neutral": 0.8435465097427368
+          },
+          "prediction": "review"
+        },
+        {
+          "case_id": "wice_dev00131",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.6332427859306335,
+            "entailment": 0.17331857979297638,
+            "neutral": 0.8417364954948425
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "wice_dev00137",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.4840025305747986,
+            "entailment": 0.6120949387550354,
+            "neutral": 0.8847298622131348
+          },
+          "prediction": "review"
+        },
+        {
+          "case_id": "wice_dev00217",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.07613177597522736,
+            "entailment": 0.9710143804550171,
+            "neutral": 0.6247220039367676
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev00292",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.09423887729644775,
+            "entailment": 0.7606541514396667,
+            "neutral": 0.7722689509391785
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev00418",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.05747411027550697,
+            "entailment": 0.7042218446731567,
+            "neutral": 0.6821853518486023
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev00617",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.2178935408592224,
+            "entailment": 0.3668627142906189,
+            "neutral": 0.6576232314109802
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev00664",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.07420287281274796,
+            "entailment": 0.30800899863243103,
+            "neutral": 0.8027960062026978
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev00733",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.17363134026527405,
+            "entailment": 0.9176973104476929,
+            "neutral": 0.7533935308456421
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev00877",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.26035556197166443,
+            "entailment": 0.49407821893692017,
+            "neutral": 0.7362556457519531
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev01108",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.003699436318129301,
+            "entailment": 0.6690380573272705,
+            "neutral": 0.6449835300445557
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev01209",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.11159217357635498,
+            "entailment": 0.40211692452430725,
+            "neutral": 0.7267157435417175
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev01323",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.13191990554332733,
+            "entailment": 0.6564959287643433,
+            "neutral": 0.7308187484741211
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev01340",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.21260292828083038,
+            "entailment": 0.9370220899581909,
+            "neutral": 0.570557177066803
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev01425",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.39361006021499634,
+            "entailment": 0.8827744126319885,
+            "neutral": 0.7152886390686035
+          },
+          "prediction": "review"
+        },
+        {
+          "case_id": "wice_dev01435",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.18063946068286896,
+            "entailment": 0.7468068599700928,
+            "neutral": 0.7457798719406128
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev01469",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.0968463122844696,
+            "entailment": 0.9364326596260071,
+            "neutral": 0.7200833559036255
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev01564",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.15183508396148682,
+            "entailment": 0.5002927184104919,
+            "neutral": 0.8358250260353088
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev01859",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.8180365562438965,
+            "entailment": 0.5278496146202087,
+            "neutral": 0.7091397643089294
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "wice_dev01908",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.6357825398445129,
+            "entailment": 0.3529113829135895,
+            "neutral": 0.7887611985206604
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "wice_dev01929",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.01814449578523636,
+            "entailment": 0.5060502886772156,
+            "neutral": 0.47580525279045105
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev02039",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.8029687404632568,
+            "entailment": 0.8626891374588013,
+            "neutral": 0.7414820790290833
+          },
+          "prediction": "review"
+        },
+        {
+          "case_id": "wice_dev02057",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.11152584105730057,
+            "entailment": 0.9156551361083984,
+            "neutral": 0.7569276094436646
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev02064",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.05692189559340477,
+            "entailment": 0.2812613844871521,
+            "neutral": 0.7988469004631042
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev02066",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.735991895198822,
+            "entailment": 0.7083870768547058,
+            "neutral": 0.7275871634483337
+          },
+          "prediction": "review"
+        },
+        {
+          "case_id": "wice_dev02112",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.22211211919784546,
+            "entailment": 0.7520008683204651,
+            "neutral": 0.5972228050231934
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev02256",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.05816415324807167,
+            "entailment": 0.9365015029907227,
+            "neutral": 0.48723268508911133
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev02375",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.15787623822689056,
+            "entailment": 0.866091251373291,
+            "neutral": 0.5284631848335266
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev02470",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.1740071028470993,
+            "entailment": 0.3764566481113434,
+            "neutral": 0.758836030960083
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev02544",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.11391936987638474,
+            "entailment": 0.3666068911552429,
+            "neutral": 0.7543787956237793
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev02563",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.09152567386627197,
+            "entailment": 0.28576916456222534,
+            "neutral": 0.849126935005188
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev02692",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.8275326490402222,
+            "entailment": 0.1935121864080429,
+            "neutral": 0.8185684680938721
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "wice_dev02780",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.09000863134860992,
+            "entailment": 0.18271610140800476,
+            "neutral": 0.8167643547058105
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev02788",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.8097208142280579,
+            "entailment": 0.17026729881763458,
+            "neutral": 0.7979075312614441
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "wice_dev02858",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.04497968778014183,
+            "entailment": 0.9038035869598389,
+            "neutral": 0.76017826795578
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev02908",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.3639473021030426,
+            "entailment": 0.3146967589855194,
+            "neutral": 0.6485965251922607
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "wice_dev03024",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.1502138376235962,
+            "entailment": 0.3248920142650604,
+            "neutral": 0.8774476051330566
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev03027",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.05930353328585625,
+            "entailment": 0.9921878576278687,
+            "neutral": 0.8667855262756348
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev03075",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.18331235647201538,
+            "entailment": 0.2545900344848633,
+            "neutral": 0.889447033405304
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev03134",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.05095544457435608,
+            "entailment": 0.9442933201789856,
+            "neutral": 0.6774336695671082
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev03186",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.5424498915672302,
+            "entailment": 0.43047085404396057,
+            "neutral": 0.6675474047660828
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "wice_dev03198",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.31469982862472534,
+            "entailment": 0.4263474643230438,
+            "neutral": 0.6811044812202454
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "wice_dev03207",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.09296342730522156,
+            "entailment": 0.9935376048088074,
+            "neutral": 0.7172294855117798
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev03245",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.08938385546207428,
+            "entailment": 0.8169309496879578,
+            "neutral": 0.8105010986328125
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev03269",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.37446844577789307,
+            "entailment": 0.34079232811927795,
+            "neutral": 0.849312961101532
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "wice_dev03281",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.10989171266555786,
+            "entailment": 0.1850976198911667,
+            "neutral": 0.8468950390815735
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev03307",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.15503950417041779,
+            "entailment": 0.1668468415737152,
+            "neutral": 0.8143907189369202
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev03312",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.1346835047006607,
+            "entailment": 0.26415660977363586,
+            "neutral": 0.7029718160629272
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev03498",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.20740020275115967,
+            "entailment": 0.9579305052757263,
+            "neutral": 0.7736555337905884
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev03528",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.16895008087158203,
+            "entailment": 0.5637420415878296,
+            "neutral": 0.812710702419281
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev03598",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.03317468985915184,
+            "entailment": 0.9441689848899841,
+            "neutral": 0.36509597301483154
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev03617",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.6922152042388916,
+            "entailment": 0.960522472858429,
+            "neutral": 0.6654595732688904
+          },
+          "prediction": "review"
+        },
+        {
+          "case_id": "wice_dev03632",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.3298777639865875,
+            "entailment": 0.6447910666465759,
+            "neutral": 0.7401180863380432
+          },
+          "prediction": "review"
+        },
+        {
+          "case_id": "wice_dev03634",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.09381233900785446,
+            "entailment": 0.43218228220939636,
+            "neutral": 0.7739406228065491
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev03646",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.09249318391084671,
+            "entailment": 0.5021228194236755,
+            "neutral": 0.8450523018836975
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev03713",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.24930863082408905,
+            "entailment": 0.610828697681427,
+            "neutral": 0.8115610480308533
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev03716",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.07012446224689484,
+            "entailment": 0.26297205686569214,
+            "neutral": 0.8896322846412659
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev03784",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.8686541318893433,
+            "entailment": 0.39723122119903564,
+            "neutral": 0.6915600299835205
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "wice_dev03793",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.20024345815181732,
+            "entailment": 0.10427197813987732,
+            "neutral": 0.9135448336601257
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev03839",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.0733184963464737,
+            "entailment": 0.46063709259033203,
+            "neutral": 0.8398294448852539
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev03904",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.7091506719589233,
+            "entailment": 0.16031570732593536,
+            "neutral": 0.8012773394584656
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "wice_dev03910",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.10038664191961288,
+            "entailment": 0.4116186499595642,
+            "neutral": 0.8892213106155396
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev03919",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.6541659235954285,
+            "entailment": 0.6253945231437683,
+            "neutral": 0.7097874283790588
+          },
+          "prediction": "review"
+        },
+        {
+          "case_id": "wice_dev03920",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.19298940896987915,
+            "entailment": 0.20335352420806885,
+            "neutral": 0.7854487299919128
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev03973",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.6197702288627625,
+            "entailment": 0.2966618537902832,
+            "neutral": 0.9127458333969116
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "wice_dev03989",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.10361266881227493,
+            "entailment": 0.7696509957313538,
+            "neutral": 0.7659193873405457
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev03990",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.3414068818092346,
+            "entailment": 0.9662142395973206,
+            "neutral": 0.8920161128044128
+          },
+          "prediction": "review"
+        },
+        {
+          "case_id": "wice_dev04214",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.7515693306922913,
+            "entailment": 0.6516817212104797,
+            "neutral": 0.8437831997871399
+          },
+          "prediction": "review"
+        },
+        {
+          "case_id": "wice_dev04292",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.043659552931785583,
+            "entailment": 0.3036554753780365,
+            "neutral": 0.8029406666755676
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev04326",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.17976844310760498,
+            "entailment": 0.40736255049705505,
+            "neutral": 0.8535955548286438
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_dev04343",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.0684971734881401,
+            "entailment": 0.9193000197410583,
+            "neutral": 0.7384656667709351
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_dev04478",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.7062436938285828,
+            "entailment": 0.3981350362300873,
+            "neutral": 0.7904005646705627
+          },
+          "prediction": "contradicted"
+        }
+      ],
+      "safety": {
+        "contradiction_false_supports": 12,
+        "contradiction_recall": 0.4,
+        "false_support_rate": 0.41,
+        "false_supports": 41,
+        "false_supports_by_gold": {
+          "contradicted": 12,
+          "partially_supported": 11,
+          "unsupported": 3,
+          "unverifiable": 15
+        },
+        "partial_or_ambiguous_review_recall": 0.08,
+        "review_rate": 0.096,
+        "support_precision": 0.1961,
+        "support_recall": 0.4,
+        "unsupported_incorrectly_supported": 3
+      },
+      "signal_means_by_gold": {
+        "contradicted": {
+          "contradiction": 0.3069,
+          "entailment": 0.4916,
+          "neutral": 0.2311
+        },
+        "partially_supported": {
+          "contradiction": 0.2738,
+          "entailment": 0.658,
+          "neutral": 0.729
+        },
+        "supported": {
+          "contradiction": 0.2638,
+          "entailment": 0.6738,
+          "neutral": 0.7466
+        },
+        "unsupported": {
+          "contradiction": 0.3053,
+          "entailment": 0.3791,
+          "neutral": 0.7859
+        },
+        "unverifiable": {
+          "contradiction": 0.3188,
+          "entailment": 0.5661,
+          "neutral": 0.115
+        }
+      }
+    },
+    "heldout": {
+      "cases": 125,
+      "direct_four_state": {
+        "accuracy": 0.32,
+        "confusion": {
+          "contradicted": {
+            "contradicted": 7,
+            "review": 0,
+            "supported": 11,
+            "unresolved": 7
+          },
+          "review": {
+            "contradicted": 12,
+            "review": 2,
+            "supported": 29,
+            "unresolved": 7
+          },
+          "supported": {
+            "contradicted": 0,
+            "review": 4,
+            "supported": 18,
+            "unresolved": 3
+          },
+          "unresolved": {
+            "contradicted": 3,
+            "review": 4,
+            "supported": 5,
+            "unresolved": 13
+          }
+        },
+        "macro_f1": 0.3116,
+        "per_state": {
+          "contradicted": {
+            "f1": 0.2979,
+            "precision": 0.3182,
+            "recall": 0.28,
+            "support": 25
+          },
+          "review": {
+            "f1": 0.0667,
+            "precision": 0.2,
+            "recall": 0.04,
+            "support": 50
+          },
+          "supported": {
+            "f1": 0.4091,
+            "precision": 0.2857,
+            "recall": 0.72,
+            "support": 25
+          },
+          "unresolved": {
+            "f1": 0.4727,
+            "precision": 0.4333,
+            "recall": 0.52,
+            "support": 25
+          }
+        }
+      },
+      "evidence_spans": 611,
+      "latency": {
+        "seconds": 18.5069,
+        "spans_per_second": 33.0147
+      },
+      "rows": [
+        {
+          "case_id": "ambient_101528",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.16209082305431366,
+            "entailment": 0.34179118275642395,
+            "neutral": 0.49611803889274597
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "ambient_116_c",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.01356305368244648,
+            "entailment": 0.9597634673118591,
+            "neutral": 0.026673471555113792
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_121_c",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.6597458720207214,
+            "entailment": 0.026836246252059937,
+            "neutral": 0.31341788172721863
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "ambient_125_c",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.0006057516438886523,
+            "entailment": 0.9878808259963989,
+            "neutral": 0.011513414792716503
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_14_c",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.0004225262382533401,
+            "entailment": 0.9945811629295349,
+            "neutral": 0.004996214993298054
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_16733",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.0029287172947078943,
+            "entailment": 0.9831281900405884,
+            "neutral": 0.013943170197308064
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_24621",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.9381734132766724,
+            "entailment": 0.012528438121080399,
+            "neutral": 0.04929817095398903
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "ambient_25982",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.0027733694296330214,
+            "entailment": 0.980387270450592,
+            "neutral": 0.01683945022523403
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_33124",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.7130633592605591,
+            "entailment": 0.044255129992961884,
+            "neutral": 0.24268154799938202
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "ambient_36637",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.03048098273575306,
+            "entailment": 0.7392937541007996,
+            "neutral": 0.2302253246307373
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_37201",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.0007272187503986061,
+            "entailment": 0.9914951324462891,
+            "neutral": 0.007777614984661341
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_39059",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.886906087398529,
+            "entailment": 0.011893222108483315,
+            "neutral": 0.10120073705911636
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "ambient_39987",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.8044458031654358,
+            "entailment": 0.02828982286155224,
+            "neutral": 0.1672644168138504
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "ambient_40028",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.0020590052008628845,
+            "entailment": 0.9852921366691589,
+            "neutral": 0.012648819014430046
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_46238",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.0005370809230953455,
+            "entailment": 0.9851322770118713,
+            "neutral": 0.014330725185573101
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_53095",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.0006663944805040956,
+            "entailment": 0.9733890295028687,
+            "neutral": 0.02594456635415554
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_5393",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.31460967659950256,
+            "entailment": 0.2712486982345581,
+            "neutral": 0.41414159536361694
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "ambient_6615",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.009707940742373466,
+            "entailment": 0.937811017036438,
+            "neutral": 0.05248110741376877
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_74_c",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.8985875844955444,
+            "entailment": 0.021214190870523453,
+            "neutral": 0.08019832521677017
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "ambient_75807",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.002533785765990615,
+            "entailment": 0.9943530559539795,
+            "neutral": 0.003113144775852561
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_7642",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.7765439748764038,
+            "entailment": 0.11422362923622131,
+            "neutral": 0.10923229902982712
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "ambient_77608",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.0014762533828616142,
+            "entailment": 0.9446153044700623,
+            "neutral": 0.053908370435237885
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_77_c",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.0019292436772957444,
+            "entailment": 0.9741986989974976,
+            "neutral": 0.023872092366218567
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_78003",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.001979472581297159,
+            "entailment": 0.9306734204292297,
+            "neutral": 0.06734710186719894
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "ambient_80_c",
+          "dataset": "AmbiEnt",
+          "expected_state": "review",
+          "expected_verdict": "unverifiable",
+          "max_probabilities": {
+            "contradiction": 0.0051862881518900394,
+            "entailment": 0.9264800548553467,
+            "neutral": 0.06833365559577942
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "vitaminc_5eb29889c9e77c0008d94019_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.9460061192512512,
+            "entailment": 0.024209989234805107,
+            "neutral": 0.02978397160768509
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "vitaminc_5ebbf32bc9e77c0009295160_3",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.010388991795480251,
+            "entailment": 0.9066246747970581,
+            "neutral": 0.08298634737730026
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "vitaminc_5ebbf32bc9e77c00092956dd_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.014402857981622219,
+            "entailment": 0.9289345741271973,
+            "neutral": 0.05666253715753555
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "vitaminc_5ebe6f2cc9e77c0008407739_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.07529699802398682,
+            "entailment": 0.7011460661888123,
+            "neutral": 0.22355692088603973
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "vitaminc_5ebe6f2fc9e77c000840810e_3",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.06237994506955147,
+            "entailment": 0.5424736738204956,
+            "neutral": 0.3951464295387268
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "vitaminc_5ebe6f2fc9e77c0008408121_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.7433094382286072,
+            "entailment": 0.1590581089258194,
+            "neutral": 0.0976325049996376
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "vitaminc_5ebe6f30c9e77c0008408abe_3",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.17878040671348572,
+            "entailment": 0.7285557389259338,
+            "neutral": 0.09266390651464462
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "vitaminc_5ebe6f31c9e77c0008408d15_3",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.08296132832765579,
+            "entailment": 0.135274276137352,
+            "neutral": 0.7817643880844116
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "vitaminc_5ebe6f31c9e77c0008408f02_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.14072424173355103,
+            "entailment": 0.08519028127193451,
+            "neutral": 0.7740854620933533
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "vitaminc_5ebe6f31c9e77c0008408f31_3",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.0036583617329597473,
+            "entailment": 0.9599137902259827,
+            "neutral": 0.03642788529396057
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "vitaminc_5ec55990c9e77c000842d624_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.9538748264312744,
+            "entailment": 0.00867527723312378,
+            "neutral": 0.03744979575276375
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "vitaminc_5ec7d50bc9e77c0008440d13_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.8288297057151794,
+            "entailment": 0.12644308805465698,
+            "neutral": 0.044727180153131485
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "vitaminc_5ec7d50fc9e77c0008443263_3",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.07981635630130768,
+            "entailment": 0.39716672897338867,
+            "neutral": 0.5230169296264648
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "vitaminc_5ec7d50fc9e77c000844336e_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.009706048294901848,
+            "entailment": 0.44658422470092773,
+            "neutral": 0.5437096953392029
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "vitaminc_5ed4de03c9e77c0008489371_3",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.10735982656478882,
+            "entailment": 0.4151085913181305,
+            "neutral": 0.4775315821170807
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "vitaminc_5ed4de0ac9e77c000848b37e_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.29042527079582214,
+            "entailment": 0.5280627012252808,
+            "neutral": 0.1815119981765747
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "vitaminc_5ed4de0ac9e77c000848b457_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.9291578531265259,
+            "entailment": 0.043836407363414764,
+            "neutral": 0.02700573205947876
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "vitaminc_5ede072fc9e77c00084d2b63_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.04611090198159218,
+            "entailment": 0.3742201030254364,
+            "neutral": 0.7339571118354797
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "vitaminc_5ede072fc9e77c00084d2f8a_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.7408285737037659,
+            "entailment": 0.047535043209791183,
+            "neutral": 0.21163645386695862
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "vitaminc_5ee393b6c9e77c0008ccc0f3_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.2007807493209839,
+            "entailment": 0.6629754900932312,
+            "neutral": 0.13624384999275208
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "vitaminc_5ee393b7c9e77c0008ccc657_3",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.02673298493027687,
+            "entailment": 0.5680789351463318,
+            "neutral": 0.40518808364868164
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "vitaminc_5ee393b7c9e77c0008ccc85f_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.033750150352716446,
+            "entailment": 0.6103651523590088,
+            "neutral": 0.35588470101356506
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "vitaminc_5ee393b8c9e77c0008ccd54f_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.12022195756435394,
+            "entailment": 0.557963490486145,
+            "neutral": 0.32181450724601746
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "vitaminc_5ee39418c9e77c0008ccf57e_3",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.13076716661453247,
+            "entailment": 0.17621108889579773,
+            "neutral": 0.6930217146873474
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "vitaminc_5ee39419c9e77c0008ccf85d_2",
+          "dataset": "VitaminC",
+          "expected_state": "contradicted",
+          "expected_verdict": "contradicted",
+          "max_probabilities": {
+            "contradiction": 0.0036416114307940006,
+            "entailment": 0.9588779807090759,
+            "neutral": 0.03748040646314621
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test00060",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.016744721680879593,
+            "entailment": 0.4796184301376343,
+            "neutral": 0.5036368370056152
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_test00128",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.7107520699501038,
+            "entailment": 0.9508680105209351,
+            "neutral": 0.7502816319465637
+          },
+          "prediction": "review"
+        },
+        {
+          "case_id": "wice_test00185",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.09979163855314255,
+            "entailment": 0.8668543100357056,
+            "neutral": 0.7380357980728149
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test00231",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.5302186012268066,
+            "entailment": 0.6092005372047424,
+            "neutral": 0.8552708029747009
+          },
+          "prediction": "review"
+        },
+        {
+          "case_id": "wice_test00301",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.6612638235092163,
+            "entailment": 0.19920134544372559,
+            "neutral": 0.848630428314209
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "wice_test00308",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.027552826330065727,
+            "entailment": 0.853498637676239,
+            "neutral": 0.8932963013648987
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test00373",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.04641846939921379,
+            "entailment": 0.7292048335075378,
+            "neutral": 0.7526656985282898
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test00615",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.07408829778432846,
+            "entailment": 0.9217782616615295,
+            "neutral": 0.8850113749504089
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test00726",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.04067990556359291,
+            "entailment": 0.967566967010498,
+            "neutral": 0.7969443798065186
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test00777",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.025785556063055992,
+            "entailment": 0.995613694190979,
+            "neutral": 0.8802310228347778
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test00937",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.007038708310574293,
+            "entailment": 0.8334241509437561,
+            "neutral": 0.3756978213787079
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test01037",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.2409374713897705,
+            "entailment": 0.18639566004276276,
+            "neutral": 0.7267770767211914
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_test01052",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.19353161752223969,
+            "entailment": 0.42702051997184753,
+            "neutral": 0.724220335483551
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_test01084",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.15625376999378204,
+            "entailment": 0.9190781116485596,
+            "neutral": 0.7600588202476501
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test01181",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.14766019582748413,
+            "entailment": 0.6274034380912781,
+            "neutral": 0.6918413043022156
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test01231",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.08021535724401474,
+            "entailment": 0.7228529453277588,
+            "neutral": 0.7973623871803284
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test01447",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.07246797531843185,
+            "entailment": 0.8963961601257324,
+            "neutral": 0.7745956778526306
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test01464",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.035975344479084015,
+            "entailment": 0.953038215637207,
+            "neutral": 0.7291480898857117
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test01572",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.06706038117408752,
+            "entailment": 0.9379759430885315,
+            "neutral": 0.9081056714057922
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test01578",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.7260461449623108,
+            "entailment": 0.45131272077560425,
+            "neutral": 0.8366722464561462
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "wice_test01678",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.2061002552509308,
+            "entailment": 0.24008165299892426,
+            "neutral": 0.8560646176338196
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_test01756",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.06919211149215698,
+            "entailment": 0.13670331239700317,
+            "neutral": 0.9048566818237305
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_test01760",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.07882154732942581,
+            "entailment": 0.9611648917198181,
+            "neutral": 0.7577785849571228
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test01785",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.1621965616941452,
+            "entailment": 0.8789687752723694,
+            "neutral": 0.7917858958244324
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test02052",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.14740437269210815,
+            "entailment": 0.22539378702640533,
+            "neutral": 0.8087177872657776
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_test02095",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.14053727686405182,
+            "entailment": 0.7453513741493225,
+            "neutral": 0.8468334078788757
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test02139",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.03565038740634918,
+            "entailment": 0.801418125629425,
+            "neutral": 0.8772704005241394
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test02196",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.8548444509506226,
+            "entailment": 0.18802012503147125,
+            "neutral": 0.6984375715255737
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "wice_test02207",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.3169808089733124,
+            "entailment": 0.6190515160560608,
+            "neutral": 0.6589241623878479
+          },
+          "prediction": "review"
+        },
+        {
+          "case_id": "wice_test02220",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.6978201866149902,
+            "entailment": 0.8670254945755005,
+            "neutral": 0.876501202583313
+          },
+          "prediction": "review"
+        },
+        {
+          "case_id": "wice_test02272",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.8202356100082397,
+            "entailment": 0.30512773990631104,
+            "neutral": 0.723824143409729
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "wice_test02292",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.0746210590004921,
+            "entailment": 0.7999916076660156,
+            "neutral": 0.6152477264404297
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test02315",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.07127963751554489,
+            "entailment": 0.3803832530975342,
+            "neutral": 0.8154070973396301
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_test02351",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.0658479779958725,
+            "entailment": 0.2550526261329651,
+            "neutral": 0.7711379528045654
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_test02384",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.13561168313026428,
+            "entailment": 0.8670504093170166,
+            "neutral": 0.7654792070388794
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test02405",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.09419524669647217,
+            "entailment": 0.8791230320930481,
+            "neutral": 0.8407489657402039
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test02459",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.24585962295532227,
+            "entailment": 0.4442000687122345,
+            "neutral": 0.8094340562820435
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_test02553",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.06854965537786484,
+            "entailment": 0.4984743297100067,
+            "neutral": 0.7579944729804993
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_test02557",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.1759212762117386,
+            "entailment": 0.8772948384284973,
+            "neutral": 0.8740453124046326
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test02571",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.15505461394786835,
+            "entailment": 0.4169083833694458,
+            "neutral": 0.7041358947753906
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_test02574",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.8352712392807007,
+            "entailment": 0.7609506845474243,
+            "neutral": 0.7176563143730164
+          },
+          "prediction": "review"
+        },
+        {
+          "case_id": "wice_test02672",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.8017662167549133,
+            "entailment": 0.899368405342102,
+            "neutral": 0.46943095326423645
+          },
+          "prediction": "review"
+        },
+        {
+          "case_id": "wice_test02823",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.13610869646072388,
+            "entailment": 0.6803951263427734,
+            "neutral": 0.7883543968200684
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test02996",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.04708794876933098,
+            "entailment": 0.3856990933418274,
+            "neutral": 0.8442497253417969
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_test03014",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.16684500873088837,
+            "entailment": 0.14442642033100128,
+            "neutral": 0.8321091532707214
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_test03052",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.0684395432472229,
+            "entailment": 0.8937469720840454,
+            "neutral": 0.6935904026031494
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test03215",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.10902491956949234,
+            "entailment": 0.8727433085441589,
+            "neutral": 0.7079543471336365
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test03288",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.0279228612780571,
+            "entailment": 0.1432059407234192,
+            "neutral": 0.8288712501525879
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_test03321",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.1881260871887207,
+            "entailment": 0.27935102581977844,
+            "neutral": 0.8364000916481018
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_test03508",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.15266196429729462,
+            "entailment": 0.5578328967094421,
+            "neutral": 0.8687978386878967
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test03549",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.13840994238853455,
+            "entailment": 0.2838759124279022,
+            "neutral": 0.7910563945770264
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_test03553",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.1010284349322319,
+            "entailment": 0.26754340529441833,
+            "neutral": 0.8496233820915222
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_test03564",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.1480170637369156,
+            "entailment": 0.3726634383201599,
+            "neutral": 0.7312910556793213
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_test03602",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.19998395442962646,
+            "entailment": 0.8496613502502441,
+            "neutral": 0.7339630722999573
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test03636",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.09659963846206665,
+            "entailment": 0.9534808397293091,
+            "neutral": 0.6900572776794434
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test03718",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.8719006180763245,
+            "entailment": 0.2661917805671692,
+            "neutral": 0.7784618139266968
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "wice_test03756",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.19807226955890656,
+            "entailment": 0.6087129712104797,
+            "neutral": 0.7791820168495178
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test03760",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.10636473447084427,
+            "entailment": 0.18073879182338715,
+            "neutral": 0.7936383485794067
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_test03777",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.07490929216146469,
+            "entailment": 0.3677724599838257,
+            "neutral": 0.9004388451576233
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_test03788",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.10508295893669128,
+            "entailment": 0.9301060438156128,
+            "neutral": 0.8437143564224243
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test03809",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.09360410273075104,
+            "entailment": 0.880254864692688,
+            "neutral": 0.6884056925773621
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test03887",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.465652197599411,
+            "entailment": 0.9781369566917419,
+            "neutral": 0.7758684754371643
+          },
+          "prediction": "review"
+        },
+        {
+          "case_id": "wice_test03922",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.6588318347930908,
+            "entailment": 0.2425535023212433,
+            "neutral": 0.8250952363014221
+          },
+          "prediction": "contradicted"
+        },
+        {
+          "case_id": "wice_test03989",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.04932814836502075,
+            "entailment": 0.8085852861404419,
+            "neutral": 0.551024317741394
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test04098",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.4364475905895233,
+            "entailment": 0.9413025975227356,
+            "neutral": 0.39202889800071716
+          },
+          "prediction": "review"
+        },
+        {
+          "case_id": "wice_test04131",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.4965156316757202,
+            "entailment": 0.6953108310699463,
+            "neutral": 0.5816718339920044
+          },
+          "prediction": "review"
+        },
+        {
+          "case_id": "wice_test04216",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.728978157043457,
+            "entailment": 0.9227055907249451,
+            "neutral": 0.7605361938476562
+          },
+          "prediction": "review"
+        },
+        {
+          "case_id": "wice_test04229",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.07762247323989868,
+            "entailment": 0.9431253671646118,
+            "neutral": 0.8658940196037292
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test04307",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.0730687826871872,
+            "entailment": 0.9289582371711731,
+            "neutral": 0.7480567097663879
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test04324",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.11683172732591629,
+            "entailment": 0.8672215342521667,
+            "neutral": 0.7724454998970032
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test04331",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.20292876660823822,
+            "entailment": 0.7692772746086121,
+            "neutral": 0.7328464388847351
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test04426",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.08729220926761627,
+            "entailment": 0.31784552335739136,
+            "neutral": 0.8218177556991577
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_test04475",
+          "dataset": "WiCE",
+          "expected_state": "supported",
+          "expected_verdict": "supported",
+          "max_probabilities": {
+            "contradiction": 0.13256685435771942,
+            "entailment": 0.9012356996536255,
+            "neutral": 0.7858279943466187
+          },
+          "prediction": "supported"
+        },
+        {
+          "case_id": "wice_test04499",
+          "dataset": "WiCE",
+          "expected_state": "unresolved",
+          "expected_verdict": "unsupported",
+          "max_probabilities": {
+            "contradiction": 0.13492044806480408,
+            "entailment": 0.3891425132751465,
+            "neutral": 0.7760374546051025
+          },
+          "prediction": "unresolved"
+        },
+        {
+          "case_id": "wice_test04504",
+          "dataset": "WiCE",
+          "expected_state": "review",
+          "expected_verdict": "partially_supported",
+          "max_probabilities": {
+            "contradiction": 0.8332897424697876,
+            "entailment": 0.37781181931495667,
+            "neutral": 0.8240557909011841
+          },
+          "prediction": "contradicted"
+        }
+      ],
+      "safety": {
+        "contradiction_false_supports": 11,
+        "contradiction_recall": 0.28,
+        "false_support_rate": 0.45,
+        "false_supports": 45,
+        "false_supports_by_gold": {
+          "contradicted": 11,
+          "partially_supported": 13,
+          "unsupported": 5,
+          "unverifiable": 16
+        },
+        "partial_or_ambiguous_review_recall": 0.04,
+        "review_rate": 0.08,
+        "support_precision": 0.2857,
+        "support_recall": 0.72,
+        "unsupported_incorrectly_supported": 5
+      },
+      "signal_means_by_gold": {
+        "contradicted": {
+          "contradiction": 0.2704,
+          "entailment": 0.4437,
+          "neutral": 0.292
+        },
+        "partially_supported": {
+          "contradiction": 0.2742,
+          "entailment": 0.6401,
+          "neutral": 0.7632
+        },
+        "supported": {
+          "contradiction": 0.1852,
+          "entailment": 0.819,
+          "neutral": 0.7903
+        },
+        "unsupported": {
+          "contradiction": 0.2501,
+          "entailment": 0.444,
+          "neutral": 0.741
+        },
+        "unverifiable": {
+          "contradiction": 0.2493,
+          "entailment": 0.6464,
+          "neutral": 0.1043
+        }
+      }
+    }
+  },
+  "schema_version": "contexttrace-v13-independent-analysis-1.0",
+  "stable_defaults_changed": false
+}

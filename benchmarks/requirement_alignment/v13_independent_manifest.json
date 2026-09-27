@@ -1,0 +1,19 @@
+{
+  "audit_sha256": "fd295b49931f7e51d3698c903410918ab4928ec2669da8f898d22a4745c4e50c",
+  "dataset_sha256": {
+    "development": "085092c67f125ecbfdd6cb5091cdbbc398dbce63d78d3f6e53ff4df268798d8e",
+    "heldout": "7bb0e46994cc82780e684b1d0df12428443f754c54a042b98537fcc4da4bfa4a"
+  },
+  "development_labels_available_for_future_policy_selection": true,
+  "experiment": "contexttrace_v13_independent_contradictions",
+  "heldout_labels_used_for_policy_selection": false,
+  "remote_provider_default_enabled": false,
+  "schema_version": "contexttrace-v13-independent-manifest-1.0",
+  "source_sha256": {
+    "development": "b3cd60e5bea1c28f852b8ad8949aee135e8de5460b070f7811302db026b38f17",
+    "heldout": "b50b90f40eddbad6b8ada051d8b223c7e04d408797148f755eba66b5796c75a3"
+  },
+  "stable_defaults_changed": false,
+  "status": "heldout_frozen_before_v13_relation_scoring",
+  "v11_model_or_thresholds_changed": false
+}

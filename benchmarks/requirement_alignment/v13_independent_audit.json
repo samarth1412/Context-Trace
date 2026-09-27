@@ -1,0 +1,52 @@
+{
+  "checks": {
+    "case_ids_disjoint": true,
+    "heldout_predictions_used_for_selection": false,
+    "labels_absent_from_model_inputs": true,
+    "normalized_claims_disjoint": true,
+    "normalized_selected_inputs_disjoint": true,
+    "selected_evidence_nonempty": true,
+    "source_hashes_verified": true
+  },
+  "counts": {
+    "development": {
+      "cases": 125,
+      "datasets": {
+        "AmbiEnt": 25,
+        "VitaminC": 25,
+        "WiCE": 75
+      },
+      "labels": {
+        "contradicted": 25,
+        "partially_supported": 25,
+        "supported": 25,
+        "unsupported": 25,
+        "unverifiable": 25
+      },
+      "selected_evidence_spans": 615
+    },
+    "heldout": {
+      "cases": 125,
+      "datasets": {
+        "AmbiEnt": 25,
+        "VitaminC": 25,
+        "WiCE": 75
+      },
+      "labels": {
+        "contradicted": 25,
+        "partially_supported": 25,
+        "supported": 25,
+        "unsupported": 25,
+        "unverifiable": 25
+      },
+      "selected_evidence_spans": 611
+    }
+  },
+  "experiment": "contexttrace_v13_independent_contradictions",
+  "limitations": [
+    "The public source labels are mapped to ContextTrace verdicts rather than newly annotated.",
+    "Public benchmark contamination in base-model pretraining cannot be ruled out.",
+    "This resource is independent of V11 training and selection, but its source packs were used by earlier non-V11 ContextTrace experiments."
+  ],
+  "schema_version": "contexttrace-v13-independent-audit-1.0"
+}
