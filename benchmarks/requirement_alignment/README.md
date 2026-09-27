@@ -675,3 +675,22 @@ PYTHONPATH=packages/contexttrace:. .venv/bin/python \
 accepted 45 of 100 held-out non-support cases, including 11 contradictions and
 5 unsupported claims. The result consumes this held-out pack for V11 and keeps
 the candidate outside ContextTrace 1.3.
+
+## V14: development-only five-way policy
+
+V14 derives local relation and lexical features from V13 development and
+compares five-way classifiers using stratified out-of-fold predictions. It
+does not load the consumed V13 held-out split.
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.v14_fiveway_policy \
+  --development /private/tmp/contexttrace_external_data/v13_development.json \
+  --scores /private/tmp/contexttrace_external_data/v13_development_scores.json \
+  --output benchmarks/requirement_alignment/results/v14_fiveway_policy.json
+```
+
+`V14_FIVEWAY_POLICY.md` records the rejected development candidate. Out-of-fold
+macro-F1 reached 0.6549, false supports fell to 2%, and contradiction recall
+reached 92%, but support recall was only 20% and the 50% release gate failed.
+No candidate is promoted or packaged.
