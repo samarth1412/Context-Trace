@@ -1,0 +1,36 @@
+{
+  "experiment": "contexttrace_v11_relation_conflict",
+  "files": [
+    {
+      "bytes": 1094,
+      "path": "config.json",
+      "sha256": "f3a29e60c6a266f0d8745e329d5877782a3460fcf3d7fdabb7b62901b2ea2a5b"
+    },
+    {
+      "bytes": 567601628,
+      "path": "model.safetensors",
+      "sha256": "366cc74287a784317862e40986167afe8c356c25d37f82d382da12aac1fbe3b5"
+    },
+    {
+      "bytes": 8340137,
+      "path": "tokenizer.json",
+      "sha256": "5496b1075a43e39404f7a7525b83d5ae56b1990ce5254e797e659149e1004e09"
+    },
+    {
+      "bytes": 503,
+      "path": "tokenizer_config.json",
+      "sha256": "5c19d606a9a444336416d4a6701513438e5b8f1bab823ddc1e2f0af48f438df9"
+    }
+  ],
+  "model_id": "dd4bfdcfae60934ed1d43cd8c1b76996b3ea728b665de98900d3f257d22dc21a",
+  "promotion_gates_met": false,
+  "relation_ids": {
+    "contradiction": 0,
+    "entailment": 1,
+    "neutral": 2
+  },
+  "runtime_network_required": false,
+  "schema_version": "contexttrace-v11-relation-model-manifest-1.0",
+  "selected_epoch": 2,
+  "stable_defaults_changed": false
+}

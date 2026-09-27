@@ -1,0 +1,39 @@
+{
+  "checks": {
+    "all_selected_annotations_unanimous": true,
+    "all_v10_development_components_excluded": true,
+    "all_v9_claim_ids_excluded": true,
+    "exact_evidence_disjoint_from_v10_development": true,
+    "labels_absent_from_inputs": true,
+    "model_outputs_used_for_selection": false,
+    "source_hash_verified": true
+  },
+  "counts": {
+    "eligible_claim_labels": {
+      "DISPUTED": 78,
+      "NOT_ENOUGH_INFO": 396,
+      "REFUTES": 172,
+      "SUPPORTS": 564
+    },
+    "eligible_claims": 1210,
+    "selected_relations": {
+      "contradiction": 388,
+      "entailment": 1345,
+      "neutral": 1306
+    },
+    "selected_spans": 3039,
+    "unique_selected_evidence_texts": 2357
+  },
+  "experiment": "contexttrace_v11_high_consensus_relations",
+  "limitations": [
+    "Training and V10 development are exact-evidence disjoint but share the Climate-FEVER source domain.",
+    "Claims inside the training partition may share evidence and are not independent evaluation units.",
+    "Zero annotation entropy indicates agreement among available votes, not guaranteed factual correctness.",
+    "The next confirmation must use a different untouched dataset."
+  ],
+  "redistribution": {
+    "committed_receipts_contain_only_hashes_and_aggregates": true,
+    "source_text_committed": false
+  },
+  "schema_version": "contexttrace-climate-fever-v11-audit-1.0"
+}

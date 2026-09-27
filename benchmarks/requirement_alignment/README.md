@@ -547,3 +547,36 @@ PYTHONPATH=packages/contexttrace:. .venv/bin/python \
 `V10_VERIFIER_SCREEN.md` records the negative result and the bounded local
 architecture checks. No candidate met every promotion gate, so stable defaults
 remain unchanged and V10 is not eligible for release.
+
+## V11: high-consensus evidence relations and explicit conflict
+
+V11 expands evidence-level supervision while keeping the V10 development set
+fixed. It selects only zero-entropy annotations outside every V9 claim and V10
+development evidence component.
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.build_v11_span_training \
+  --source /private/tmp/contexttrace_external_data/climate_fever/climate-fever-dataset-r1.jsonl \
+  --consumed-v9-selection benchmarks/requirement_alignment/v9_climate_fever_selection.json \
+  --v10-selection benchmarks/requirement_alignment/v10_climate_selection.json \
+  --training-output /private/tmp/contexttrace_external_data/climate_fever/v11_span_training.json \
+  --selection-output benchmarks/requirement_alignment/v11_span_selection.json \
+  --audit-output benchmarks/requirement_alignment/v11_span_audit.json \
+  --manifest-output benchmarks/requirement_alignment/v11_span_manifest.json
+
+PYTHONPATH=packages/contexttrace:. HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
+  .venv/bin/python -m benchmarks.requirement_alignment.train_v11_relation_conflict \
+  --training-dataset /private/tmp/contexttrace_external_data/climate_fever/v11_span_training.json \
+  --development-dataset /private/tmp/contexttrace_external_data/climate_fever/v10_climate_development.json \
+  --base-model-path .tmp-contexttrace-models/cross-encoder--nli-deberta-v3-small--fa280487 \
+  --output-dir /private/tmp/contexttrace_external_data/climate_fever/v11_relation_candidate \
+  --report-output benchmarks/requirement_alignment/results/v11_relation_conflict_training.json \
+  --manifest-output benchmarks/requirement_alignment/results/v11_relation_model_manifest.json \
+  --epochs 3 --batch-size 16 --learning-rate 1e-5
+```
+
+`V11_RELATION_CONFLICT.md` records the positive development improvement and
+the failed promotion decision. Four-way macro-F1 improved to 0.5960, but no
+safety-compatible routing policy met the support-recall and disputed-review
+gates. The model remains a research artifact outside the package.

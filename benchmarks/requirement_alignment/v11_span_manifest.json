@@ -1,0 +1,14 @@
+{
+  "audit_sha256": "e1d84c8fd42e30068f52a44fe73dce9d3061a48e8e35824441a0dd5934807cbf",
+  "experiment": "contexttrace_v11_high_consensus_relations",
+  "model_outputs_accessed": false,
+  "remote_provider_default_enabled": false,
+  "schema_version": "contexttrace-climate-fever-v11-manifest-1.0",
+  "selection_sha256": "22005c47c7c95c229591f0d0faa15ff8942096b7fb9b37c3d9eaa5a8fc7e8a39",
+  "source_sha256": "8a4b9032d861be482ffb49dddfd283ffa6089e654f1e968040011882c5eb6e0b",
+  "stable_defaults_changed": false,
+  "status": "training_data_frozen_before_v11_model_training",
+  "training_sha256": "6fa466918fd1dba5fbab68de8c5c77ab152d83e6baf60f7f7fc0a8c2abf2fe1e",
+  "v10_development_remains_fixed": true,
+  "v9_holdout_reused": false
+}

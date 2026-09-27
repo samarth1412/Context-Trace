@@ -1,0 +1,12 @@
+{
+  "algorithm": "all_claims_outside_v9_and_v10_development_components_with_zero_entropy_evidence",
+  "annotation_entropy_required": 0.0,
+  "consumed_v9_claim_ids_sha256": "190107eb777e0cd270ac738d7a969f5f5f6a5527e5635c3c776b96d306a86cdc",
+  "eligible_claim_ids_sha256": "58a4db4f40c9b384dfff20b24f3004a69e49f8fde96713820bf8e85ec20d7e0f",
+  "experiment": "contexttrace_v11_high_consensus_relations",
+  "fixed_v10_development_claim_ids_sha256": "97aa5752c9193e87d9facb8d75a0817f57ad12360dfd2e954524e2c6046998a6",
+  "model_outputs_used": false,
+  "schema_version": "contexttrace-climate-fever-v11-selection-1.0",
+  "selected_span_ids_sha256": "964270aad2c679ef8d1211e7871fd3fdf0ab9a6ffd2f28ab2965379eccb86ead",
+  "source_text_included": false
+}
