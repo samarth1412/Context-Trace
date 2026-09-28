@@ -722,3 +722,27 @@ PYTHONPATH=packages/contexttrace:. .venv/bin/python \
 reached 0.7005, support recall doubled to 40%, false supports remained at 4%,
 and four of five release gates passed. The remaining support-recall gate needs
 three additional correct cases, so no model artifact is retained.
+
+## V16: support-failure audit
+
+V16 diagnoses the V15 support boundary using only the already-consumed V13
+development artifacts. It audits all missed supports and false-support guard
+cases, then enumerates the exact threshold frontier without loading held-out
+data or training another model.
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.v16_support_failure_audit \
+  --development /private/tmp/contexttrace_external_data/v13_development.json \
+  --relation-scores /private/tmp/contexttrace_external_data/v13_development_scores.json \
+  --atomic-scores /private/tmp/contexttrace_external_data/v15_atomic_scores.json \
+  --v14-report benchmarks/requirement_alignment/results/v14_fiveway_policy.json \
+  --v15-report benchmarks/requirement_alignment/results/v15_atomic_completeness.json \
+  --output benchmarks/requirement_alignment/results/v16_support_failure_audit.json
+```
+
+`V16_SUPPORT_FAILURE_AUDIT.md` records the diagnostic result. No one-dimensional
+threshold policy passes all gates: the safest frontier remains at 40% support
+recall, while reaching 52% raises false supports to 9% and admits a
+contradiction. The next experiment targets claim decomposition and evidence
+combination while retaining the existing safety guards.

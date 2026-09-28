@@ -1,0 +1,1017 @@
+{
+  "decision": "improve_atomic_decomposition_and_cross_span_coverage_before_v17_classifier",
+  "exact_threshold_frontier": {
+    "all_gate_candidate_count": 0,
+    "best_policy_preserving_other_four_gates": {
+      "complete_support_probability_minimum": 0.81057083,
+      "contradiction_probability_maximum": 0.18085445,
+      "metrics": {
+        "accuracy": 0.712,
+        "confusion": {
+          "contradicted": {
+            "contradicted": 23,
+            "partially_supported": 1,
+            "supported": 0,
+            "unsupported": 0,
+            "unverifiable": 1
+          },
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 18,
+            "supported": 2,
+            "unsupported": 3,
+            "unverifiable": 1
+          },
+          "supported": {
+            "contradicted": 0,
+            "partially_supported": 11,
+            "supported": 10,
+            "unsupported": 4,
+            "unverifiable": 0
+          },
+          "unsupported": {
+            "contradicted": 1,
+            "partially_supported": 7,
+            "supported": 1,
+            "unsupported": 16,
+            "unverifiable": 0
+          },
+          "unverifiable": {
+            "contradicted": 3,
+            "partially_supported": 0,
+            "supported": 0,
+            "unsupported": 0,
+            "unverifiable": 22
+          }
+        },
+        "contradiction_false_supports": 0,
+        "false_support_rate": 0.03,
+        "false_supports": 3,
+        "gates": {
+          "all_met": false,
+          "false_support_rate": true,
+          "partial_or_ambiguous_review_recall": true,
+          "review_rate": true,
+          "support_recall": false,
+          "zero_contradiction_false_supports": true
+        },
+        "macro_f1": 0.7079,
+        "partial_or_ambiguous_review_recall": 0.82,
+        "per_label": {
+          "contradicted": {
+            "f1": 0.8679,
+            "precision": 0.8214,
+            "recall": 0.92,
+            "support": 25
+          },
+          "partially_supported": {
+            "f1": 0.5806,
+            "precision": 0.4865,
+            "recall": 0.72,
+            "support": 25
+          },
+          "supported": {
+            "f1": 0.5263,
+            "precision": 0.7692,
+            "recall": 0.4,
+            "support": 25
+          },
+          "unsupported": {
+            "f1": 0.6667,
+            "precision": 0.6957,
+            "recall": 0.64,
+            "support": 25
+          },
+          "unverifiable": {
+            "f1": 0.898,
+            "precision": 0.9167,
+            "recall": 0.88,
+            "support": 25
+          }
+        },
+        "review_rate": 0.488,
+        "support_recall": 0.4
+      },
+      "unverifiable_probability_maximum": 0.3760859
+    },
+    "candidate_count": 140608,
+    "lowest_false_support_policy_reaching_support_target": {
+      "complete_support_probability_minimum": 0.52203288,
+      "contradiction_probability_maximum": 0.18085445,
+      "metrics": {
+        "accuracy": 0.704,
+        "confusion": {
+          "contradicted": {
+            "contradicted": 23,
+            "partially_supported": 0,
+            "supported": 1,
+            "unsupported": 0,
+            "unverifiable": 1
+          },
+          "partially_supported": {
+            "contradicted": 1,
+            "partially_supported": 14,
+            "supported": 6,
+            "unsupported": 3,
+            "unverifiable": 1
+          },
+          "supported": {
+            "contradicted": 0,
+            "partially_supported": 8,
+            "supported": 13,
+            "unsupported": 4,
+            "unverifiable": 0
+          },
+          "unsupported": {
+            "contradicted": 1,
+            "partially_supported": 6,
+            "supported": 2,
+            "unsupported": 16,
+            "unverifiable": 0
+          },
+          "unverifiable": {
+            "contradicted": 3,
+            "partially_supported": 0,
+            "supported": 0,
+            "unsupported": 0,
+            "unverifiable": 22
+          }
+        },
+        "contradiction_false_supports": 1,
+        "false_support_rate": 0.09,
+        "false_supports": 9,
+        "gates": {
+          "all_met": false,
+          "false_support_rate": false,
+          "partial_or_ambiguous_review_recall": false,
+          "review_rate": true,
+          "support_recall": true,
+          "zero_contradiction_false_supports": false
+        },
+        "macro_f1": 0.7028,
+        "partial_or_ambiguous_review_recall": 0.74,
+        "per_label": {
+          "contradicted": {
+            "f1": 0.8679,
+            "precision": 0.8214,
+            "recall": 0.92,
+            "support": 25
+          },
+          "partially_supported": {
+            "f1": 0.5283,
+            "precision": 0.5,
+            "recall": 0.56,
+            "support": 25
+          },
+          "supported": {
+            "f1": 0.5532,
+            "precision": 0.5909,
+            "recall": 0.52,
+            "support": 25
+          },
+          "unsupported": {
+            "f1": 0.6667,
+            "precision": 0.6957,
+            "recall": 0.64,
+            "support": 25
+          },
+          "unverifiable": {
+            "f1": 0.898,
+            "precision": 0.9167,
+            "recall": 0.88,
+            "support": 25
+          }
+        },
+        "review_rate": 0.416,
+        "support_recall": 0.52
+      },
+      "unverifiable_probability_maximum": 0.3760859
+    }
+  },
+  "experiment": "contexttrace_v16_support_failure_audit",
+  "false_support_guard_cases": [
+    {
+      "case_id": "wice_dev00003",
+      "claim_sha256": "e9a8216f4570d720b9e1a3db6f95135db8e616c7be2315f809217eb8d3a8c7ca",
+      "complete_support_probability": 0.97631224,
+      "diagnostic_flags": {
+        "atomic_all_covered": true,
+        "atomic_entailment_below_0_70": false,
+        "cross_span_gain": false,
+        "full_claim_entailment_below_v11_threshold": false,
+        "selected_evidence_low_best_span_coverage": false,
+        "selected_evidence_low_claim_coverage": false,
+        "selected_evidence_missing_number": false,
+        "single_requirement_complex_claim": true,
+        "v14_non_target_route": false,
+        "v15_completeness_below_threshold": false
+      },
+      "expected_verdict": "unsupported",
+      "primary_diagnostic": "atomic_under_decomposition_candidate",
+      "signals": {
+        "atomic_mean_entailment": 0.941,
+        "atomic_minimum_entailment": 0.941,
+        "atomic_requirement_count": 1,
+        "atomic_verdict": "supported",
+        "best_span_claim_coverage": 0.5454545454545454,
+        "claim_coverage": 0.6363636363636364,
+        "full_claim_maximum_entailment": 0.9560560584068298,
+        "number_coverage": 1.0
+      },
+      "v14_prediction": "partially_supported",
+      "v14_probabilities": {
+        "contradicted": 0.00363287,
+        "partially_supported": 0.13220953,
+        "supported": 0.86039717,
+        "unsupported": 0.00281758,
+        "unverifiable": 0.00094284
+      },
+      "v15_prediction": "supported"
+    },
+    {
+      "case_id": "wice_dev00292",
+      "claim_sha256": "565973672536c64b029b765fd02e994c2de3ff70ad52cfce551a63eb364cbf04",
+      "complete_support_probability": 0.82422247,
+      "diagnostic_flags": {
+        "atomic_all_covered": true,
+        "atomic_entailment_below_0_70": false,
+        "cross_span_gain": false,
+        "full_claim_entailment_below_v11_threshold": false,
+        "selected_evidence_low_best_span_coverage": true,
+        "selected_evidence_low_claim_coverage": true,
+        "selected_evidence_missing_number": false,
+        "single_requirement_complex_claim": false,
+        "v14_non_target_route": false,
+        "v15_completeness_below_threshold": false
+      },
+      "expected_verdict": "partially_supported",
+      "primary_diagnostic": "selected_evidence_coverage_risk",
+      "signals": {
+        "atomic_mean_entailment": 0.905,
+        "atomic_minimum_entailment": 0.905,
+        "atomic_requirement_count": 1,
+        "atomic_verdict": "supported",
+        "best_span_claim_coverage": 0.391304347826087,
+        "claim_coverage": 0.5652173913043478,
+        "full_claim_maximum_entailment": 0.7606541514396667,
+        "number_coverage": 1.0
+      },
+      "v14_prediction": "partially_supported",
+      "v14_probabilities": {
+        "contradicted": 0.00110829,
+        "partially_supported": 0.95148464,
+        "supported": 0.04176623,
+        "unsupported": 0.00476624,
+        "unverifiable": 0.00087459
+      },
+      "v15_prediction": "supported"
+    },
+    {
+      "case_id": "wice_dev03024",
+      "claim_sha256": "5878e98e6694412396fa430c7e21f561e37ae564d3375ef42f80b2fcc53a5fdc",
+      "complete_support_probability": 0.89376494,
+      "diagnostic_flags": {
+        "atomic_all_covered": false,
+        "atomic_entailment_below_0_70": true,
+        "cross_span_gain": false,
+        "full_claim_entailment_below_v11_threshold": true,
+        "selected_evidence_low_best_span_coverage": false,
+        "selected_evidence_low_claim_coverage": false,
+        "selected_evidence_missing_number": false,
+        "single_requirement_complex_claim": false,
+        "v14_non_target_route": false,
+        "v15_completeness_below_threshold": false
+      },
+      "expected_verdict": "partially_supported",
+      "primary_diagnostic": "relation_scoring_false_negative_candidate",
+      "signals": {
+        "atomic_mean_entailment": 0.178,
+        "atomic_minimum_entailment": 0.178,
+        "atomic_requirement_count": 1,
+        "atomic_verdict": "unsupported",
+        "best_span_claim_coverage": 0.5,
+        "claim_coverage": 0.75,
+        "full_claim_maximum_entailment": 0.3248920142650604,
+        "number_coverage": 1.0
+      },
+      "v14_prediction": "supported",
+      "v14_probabilities": {
+        "contradicted": 0.00020562,
+        "partially_supported": 0.00110643,
+        "supported": 0.98884393,
+        "unsupported": 0.00970926,
+        "unverifiable": 0.00013476
+      },
+      "v15_prediction": "supported"
+    },
+    {
+      "case_id": "wice_dev03989",
+      "claim_sha256": "34083f98dfee0006a2a63561e000dfe9248c3ba53f9e7daf8f9eb5bf885a1be4",
+      "complete_support_probability": 0.80453075,
+      "diagnostic_flags": {
+        "atomic_all_covered": false,
+        "atomic_entailment_below_0_70": true,
+        "cross_span_gain": false,
+        "full_claim_entailment_below_v11_threshold": false,
+        "selected_evidence_low_best_span_coverage": false,
+        "selected_evidence_low_claim_coverage": false,
+        "selected_evidence_missing_number": true,
+        "single_requirement_complex_claim": false,
+        "v14_non_target_route": false,
+        "v15_completeness_below_threshold": false
+      },
+      "expected_verdict": "partially_supported",
+      "primary_diagnostic": "relation_scoring_false_negative_candidate",
+      "signals": {
+        "atomic_mean_entailment": 0.476,
+        "atomic_minimum_entailment": 0.476,
+        "atomic_requirement_count": 1,
+        "atomic_verdict": "unsupported",
+        "best_span_claim_coverage": 0.5,
+        "claim_coverage": 0.75,
+        "full_claim_maximum_entailment": 0.7696509957313538,
+        "number_coverage": 0.5
+      },
+      "v14_prediction": "partially_supported",
+      "v14_probabilities": {
+        "contradicted": 0.0014458,
+        "partially_supported": 0.68123086,
+        "supported": 0.20518651,
+        "unsupported": 0.11159633,
+        "unverifiable": 0.00054051
+      },
+      "v15_prediction": "supported"
+    }
+  ],
+  "inputs": {
+    "atomic_feature_rows_sha256": "93c22b0ac3ac49f15ab8647401e7b5cba60364466efa4b52e88ffb2178304557",
+    "development_sha256": "085092c67f125ecbfdd6cb5091cdbbc398dbce63d78d3f6e53ff4df268798d8e",
+    "relation_rows_sha256": "3ffbafcb37ad4ec009d2cccaf42e827065632360f97f4065876a15deac5b1f75",
+    "v14_rows_sha256": "6325a78b1b9376d0a2d292724abab2b15bc83ff43949ed593d151e669dc5736e",
+    "v15_rows_sha256": "70d997240343fd01d6335c4c0d619616cda2e007456d211c78c6020488063569"
+  },
+  "local_only_network_calls": 0,
+  "missed_support_diagnostics": {
+    "flag_counts": {
+      "atomic_all_covered": 4,
+      "atomic_entailment_below_0_70": 11,
+      "cross_span_gain": 1,
+      "full_claim_entailment_below_v11_threshold": 6,
+      "selected_evidence_low_best_span_coverage": 11,
+      "selected_evidence_low_claim_coverage": 5,
+      "selected_evidence_missing_number": 1,
+      "single_requirement_complex_claim": 4,
+      "v14_non_target_route": 4,
+      "v15_completeness_below_threshold": 14
+    },
+    "primary_counts": {
+      "atomic_under_decomposition_candidate": 3,
+      "completeness_ranker_false_negative": 2,
+      "relation_scoring_false_negative_candidate": 2,
+      "selected_evidence_coverage_risk": 4,
+      "v14_non_target_route": 4
+    },
+    "rows": [
+      {
+        "case_id": "wice_dev00116",
+        "claim_sha256": "3c388255eb8305317be67a19776c3468e3d6ddfabcf287193026cf86d498cb79",
+        "complete_support_probability": 0.62578523,
+        "diagnostic_flags": {
+          "atomic_all_covered": true,
+          "atomic_entailment_below_0_70": false,
+          "cross_span_gain": false,
+          "full_claim_entailment_below_v11_threshold": false,
+          "selected_evidence_low_best_span_coverage": false,
+          "selected_evidence_low_claim_coverage": false,
+          "selected_evidence_missing_number": false,
+          "single_requirement_complex_claim": false,
+          "v14_non_target_route": false,
+          "v15_completeness_below_threshold": true
+        },
+        "expected_verdict": "supported",
+        "primary_diagnostic": "completeness_ranker_false_negative",
+        "signals": {
+          "atomic_mean_entailment": 0.945,
+          "atomic_minimum_entailment": 0.945,
+          "atomic_requirement_count": 1,
+          "atomic_verdict": "supported",
+          "best_span_claim_coverage": 0.5714285714285714,
+          "claim_coverage": 0.8571428571428571,
+          "full_claim_maximum_entailment": 0.9165916442871094,
+          "number_coverage": 1.0
+        },
+        "v14_prediction": "supported",
+        "v14_probabilities": {
+          "contradicted": 4.278e-05,
+          "partially_supported": 0.00302477,
+          "supported": 0.99679274,
+          "unsupported": 0.00010138,
+          "unverifiable": 3.833e-05
+        },
+        "v15_prediction": "partially_supported"
+      },
+      {
+        "case_id": "wice_dev00137",
+        "claim_sha256": "c50ce7563fd242c1245ddbbf20df32811f2feabbba88f40ca0b41555c5cabb8a",
+        "complete_support_probability": 0.88865959,
+        "diagnostic_flags": {
+          "atomic_all_covered": true,
+          "atomic_entailment_below_0_70": false,
+          "cross_span_gain": true,
+          "full_claim_entailment_below_v11_threshold": false,
+          "selected_evidence_low_best_span_coverage": true,
+          "selected_evidence_low_claim_coverage": false,
+          "selected_evidence_missing_number": false,
+          "single_requirement_complex_claim": false,
+          "v14_non_target_route": true,
+          "v15_completeness_below_threshold": false
+        },
+        "expected_verdict": "supported",
+        "primary_diagnostic": "v14_non_target_route",
+        "signals": {
+          "atomic_mean_entailment": 0.779,
+          "atomic_minimum_entailment": 0.779,
+          "atomic_requirement_count": 1,
+          "atomic_verdict": "supported",
+          "best_span_claim_coverage": 0.3076923076923077,
+          "claim_coverage": 0.6153846153846154,
+          "full_claim_maximum_entailment": 0.6120949387550354,
+          "number_coverage": 1.0
+        },
+        "v14_prediction": "unsupported",
+        "v14_probabilities": {
+          "contradicted": 0.00062214,
+          "partially_supported": 0.03550852,
+          "supported": 0.02103849,
+          "unsupported": 0.94246866,
+          "unverifiable": 0.00036219
+        },
+        "v15_prediction": "unsupported"
+      },
+      {
+        "case_id": "wice_dev00877",
+        "claim_sha256": "51d67a2fc113c137f373650548b228897ff9e1a44f35b8ad153b43ab509843cf",
+        "complete_support_probability": 0.00688512,
+        "diagnostic_flags": {
+          "atomic_all_covered": false,
+          "atomic_entailment_below_0_70": true,
+          "cross_span_gain": false,
+          "full_claim_entailment_below_v11_threshold": true,
+          "selected_evidence_low_best_span_coverage": true,
+          "selected_evidence_low_claim_coverage": false,
+          "selected_evidence_missing_number": false,
+          "single_requirement_complex_claim": false,
+          "v14_non_target_route": false,
+          "v15_completeness_below_threshold": true
+        },
+        "expected_verdict": "supported",
+        "primary_diagnostic": "selected_evidence_coverage_risk",
+        "signals": {
+          "atomic_mean_entailment": 0.496,
+          "atomic_minimum_entailment": 0.496,
+          "atomic_requirement_count": 1,
+          "atomic_verdict": "unsupported",
+          "best_span_claim_coverage": 0.3333333333333333,
+          "claim_coverage": 0.6666666666666666,
+          "full_claim_maximum_entailment": 0.49407821893692017,
+          "number_coverage": 1.0
+        },
+        "v14_prediction": "partially_supported",
+        "v14_probabilities": {
+          "contradicted": 0.00019821,
+          "partially_supported": 0.99337027,
+          "supported": 0.00207064,
+          "unsupported": 0.00422545,
+          "unverifiable": 0.00013543
+        },
+        "v15_prediction": "partially_supported"
+      },
+      {
+        "case_id": "wice_dev01209",
+        "claim_sha256": "52f9a6abf39a1c372d6503143f95521847f06491f9b51c79a5ccb62c4041ef52",
+        "complete_support_probability": 0.11161778,
+        "diagnostic_flags": {
+          "atomic_all_covered": false,
+          "atomic_entailment_below_0_70": true,
+          "cross_span_gain": false,
+          "full_claim_entailment_below_v11_threshold": true,
+          "selected_evidence_low_best_span_coverage": true,
+          "selected_evidence_low_claim_coverage": false,
+          "selected_evidence_missing_number": false,
+          "single_requirement_complex_claim": true,
+          "v14_non_target_route": false,
+          "v15_completeness_below_threshold": true
+        },
+        "expected_verdict": "supported",
+        "primary_diagnostic": "atomic_under_decomposition_candidate",
+        "signals": {
+          "atomic_mean_entailment": 0.49,
+          "atomic_minimum_entailment": 0.49,
+          "atomic_requirement_count": 1,
+          "atomic_verdict": "unsupported",
+          "best_span_claim_coverage": 0.47368421052631576,
+          "claim_coverage": 0.6842105263157895,
+          "full_claim_maximum_entailment": 0.40211692452430725,
+          "number_coverage": 1.0
+        },
+        "v14_prediction": "partially_supported",
+        "v14_probabilities": {
+          "contradicted": 0.00215246,
+          "partially_supported": 0.96182486,
+          "supported": 0.03428784,
+          "unsupported": 0.0012821,
+          "unverifiable": 0.00045274
+        },
+        "v15_prediction": "partially_supported"
+      },
+      {
+        "case_id": "wice_dev01340",
+        "claim_sha256": "3842c29fc5d07dd576842fc0f03c310a49b7f2481c653405ccc8f5ce87b241bc",
+        "complete_support_probability": 0.1133273,
+        "diagnostic_flags": {
+          "atomic_all_covered": false,
+          "atomic_entailment_below_0_70": true,
+          "cross_span_gain": false,
+          "full_claim_entailment_below_v11_threshold": false,
+          "selected_evidence_low_best_span_coverage": true,
+          "selected_evidence_low_claim_coverage": false,
+          "selected_evidence_missing_number": false,
+          "single_requirement_complex_claim": false,
+          "v14_non_target_route": false,
+          "v15_completeness_below_threshold": true
+        },
+        "expected_verdict": "supported",
+        "primary_diagnostic": "selected_evidence_coverage_risk",
+        "signals": {
+          "atomic_mean_entailment": 0.62,
+          "atomic_minimum_entailment": 0.62,
+          "atomic_requirement_count": 1,
+          "atomic_verdict": "unsupported",
+          "best_span_claim_coverage": 0.4444444444444444,
+          "claim_coverage": 0.6666666666666666,
+          "full_claim_maximum_entailment": 0.9370220899581909,
+          "number_coverage": 1.0
+        },
+        "v14_prediction": "partially_supported",
+        "v14_probabilities": {
+          "contradicted": 0.00056662,
+          "partially_supported": 0.95147555,
+          "supported": 0.04744224,
+          "unsupported": 0.00043244,
+          "unverifiable": 8.315e-05
+        },
+        "v15_prediction": "partially_supported"
+      },
+      {
+        "case_id": "wice_dev02066",
+        "claim_sha256": "dc857c4e69fdfc5e2147b1817bdcdb07f033b6929b64858d29bed6e113565c8c",
+        "complete_support_probability": 0.5488038,
+        "diagnostic_flags": {
+          "atomic_all_covered": false,
+          "atomic_entailment_below_0_70": true,
+          "cross_span_gain": false,
+          "full_claim_entailment_below_v11_threshold": false,
+          "selected_evidence_low_best_span_coverage": false,
+          "selected_evidence_low_claim_coverage": false,
+          "selected_evidence_missing_number": false,
+          "single_requirement_complex_claim": false,
+          "v14_non_target_route": false,
+          "v15_completeness_below_threshold": true
+        },
+        "expected_verdict": "supported",
+        "primary_diagnostic": "relation_scoring_false_negative_candidate",
+        "signals": {
+          "atomic_mean_entailment": 0.328,
+          "atomic_minimum_entailment": 0.328,
+          "atomic_requirement_count": 1,
+          "atomic_verdict": "unsupported",
+          "best_span_claim_coverage": 0.631578947368421,
+          "claim_coverage": 0.8421052631578947,
+          "full_claim_maximum_entailment": 0.7083870768547058,
+          "number_coverage": 1.0
+        },
+        "v14_prediction": "supported",
+        "v14_probabilities": {
+          "contradicted": 0.00056337,
+          "partially_supported": 0.0221261,
+          "supported": 0.97582418,
+          "unsupported": 0.00079288,
+          "unverifiable": 0.00069347
+        },
+        "v15_prediction": "partially_supported"
+      },
+      {
+        "case_id": "wice_dev02780",
+        "claim_sha256": "51ba64ab2790c23c9899c17fda2cac0c0736b7341cf6bebdb5e6a2147608998c",
+        "complete_support_probability": 0.69871217,
+        "diagnostic_flags": {
+          "atomic_all_covered": false,
+          "atomic_entailment_below_0_70": true,
+          "cross_span_gain": false,
+          "full_claim_entailment_below_v11_threshold": true,
+          "selected_evidence_low_best_span_coverage": true,
+          "selected_evidence_low_claim_coverage": true,
+          "selected_evidence_missing_number": true,
+          "single_requirement_complex_claim": false,
+          "v14_non_target_route": true,
+          "v15_completeness_below_threshold": true
+        },
+        "expected_verdict": "supported",
+        "primary_diagnostic": "v14_non_target_route",
+        "signals": {
+          "atomic_mean_entailment": 0.323,
+          "atomic_minimum_entailment": 0.323,
+          "atomic_requirement_count": 1,
+          "atomic_verdict": "unsupported",
+          "best_span_claim_coverage": 0.2916666666666667,
+          "claim_coverage": 0.4166666666666667,
+          "full_claim_maximum_entailment": 0.18271610140800476,
+          "number_coverage": 0.5
+        },
+        "v14_prediction": "unsupported",
+        "v14_probabilities": {
+          "contradicted": 0.00242327,
+          "partially_supported": 0.0034149,
+          "supported": 0.00756862,
+          "unsupported": 0.98631385,
+          "unverifiable": 0.00027937
+        },
+        "v15_prediction": "unsupported"
+      },
+      {
+        "case_id": "wice_dev03245",
+        "claim_sha256": "9a39ad31802599fc4ca87363950cacea8b500cf466c2e69ee600eb26b46b6f06",
+        "complete_support_probability": 0.29584772,
+        "diagnostic_flags": {
+          "atomic_all_covered": true,
+          "atomic_entailment_below_0_70": false,
+          "cross_span_gain": false,
+          "full_claim_entailment_below_v11_threshold": false,
+          "selected_evidence_low_best_span_coverage": true,
+          "selected_evidence_low_claim_coverage": true,
+          "selected_evidence_missing_number": false,
+          "single_requirement_complex_claim": true,
+          "v14_non_target_route": false,
+          "v15_completeness_below_threshold": true
+        },
+        "expected_verdict": "supported",
+        "primary_diagnostic": "atomic_under_decomposition_candidate",
+        "signals": {
+          "atomic_mean_entailment": 0.848,
+          "atomic_minimum_entailment": 0.848,
+          "atomic_requirement_count": 1,
+          "atomic_verdict": "supported",
+          "best_span_claim_coverage": 0.4117647058823529,
+          "claim_coverage": 0.5294117647058824,
+          "full_claim_maximum_entailment": 0.8169309496879578,
+          "number_coverage": 1.0
+        },
+        "v14_prediction": "partially_supported",
+        "v14_probabilities": {
+          "contradicted": 0.00271166,
+          "partially_supported": 0.70244002,
+          "supported": 0.12458643,
+          "unsupported": 0.16825535,
+          "unverifiable": 0.00200654
+        },
+        "v15_prediction": "partially_supported"
+      },
+      {
+        "case_id": "wice_dev03598",
+        "claim_sha256": "3d49fd37b66cbb049b35bee906019ea7f2510143d6ca3756327a2e1cfa38aa80",
+        "complete_support_probability": 0.03718274,
+        "diagnostic_flags": {
+          "atomic_all_covered": true,
+          "atomic_entailment_below_0_70": false,
+          "cross_span_gain": false,
+          "full_claim_entailment_below_v11_threshold": false,
+          "selected_evidence_low_best_span_coverage": true,
+          "selected_evidence_low_claim_coverage": true,
+          "selected_evidence_missing_number": false,
+          "single_requirement_complex_claim": false,
+          "v14_non_target_route": false,
+          "v15_completeness_below_threshold": true
+        },
+        "expected_verdict": "supported",
+        "primary_diagnostic": "completeness_ranker_false_negative",
+        "signals": {
+          "atomic_mean_entailment": 0.901,
+          "atomic_minimum_entailment": 0.901,
+          "atomic_requirement_count": 1,
+          "atomic_verdict": "supported",
+          "best_span_claim_coverage": 0.17391304347826086,
+          "claim_coverage": 0.4782608695652174,
+          "full_claim_maximum_entailment": 0.9441689848899841,
+          "number_coverage": 1.0
+        },
+        "v14_prediction": "partially_supported",
+        "v14_probabilities": {
+          "contradicted": 0.02385007,
+          "partially_supported": 0.33440587,
+          "supported": 0.44728734,
+          "unsupported": 0.19093846,
+          "unverifiable": 0.00351826
+        },
+        "v15_prediction": "partially_supported"
+      },
+      {
+        "case_id": "wice_dev03784",
+        "claim_sha256": "ef772f60a5ebdae1224c33c2e997d2560f5b509ad328895418f30f43d2557800",
+        "complete_support_probability": 0.52203288,
+        "diagnostic_flags": {
+          "atomic_all_covered": false,
+          "atomic_entailment_below_0_70": true,
+          "cross_span_gain": false,
+          "full_claim_entailment_below_v11_threshold": true,
+          "selected_evidence_low_best_span_coverage": false,
+          "selected_evidence_low_claim_coverage": false,
+          "selected_evidence_missing_number": false,
+          "single_requirement_complex_claim": true,
+          "v14_non_target_route": false,
+          "v15_completeness_below_threshold": true
+        },
+        "expected_verdict": "supported",
+        "primary_diagnostic": "atomic_under_decomposition_candidate",
+        "signals": {
+          "atomic_mean_entailment": 0.418,
+          "atomic_minimum_entailment": 0.418,
+          "atomic_requirement_count": 1,
+          "atomic_verdict": "unsupported",
+          "best_span_claim_coverage": 0.5384615384615384,
+          "claim_coverage": 0.8076923076923077,
+          "full_claim_maximum_entailment": 0.39723122119903564,
+          "number_coverage": 1.0
+        },
+        "v14_prediction": "partially_supported",
+        "v14_probabilities": {
+          "contradicted": 0.00527293,
+          "partially_supported": 0.75739444,
+          "supported": 0.23405846,
+          "unsupported": 0.00228841,
+          "unverifiable": 0.00098576
+        },
+        "v15_prediction": "partially_supported"
+      },
+      {
+        "case_id": "wice_dev03910",
+        "claim_sha256": "12307023c9dfdd47a34dfe90ad0e02cc72e11299fdbd8098f1b29fa63660c914",
+        "complete_support_probability": 0.23346019,
+        "diagnostic_flags": {
+          "atomic_all_covered": false,
+          "atomic_entailment_below_0_70": true,
+          "cross_span_gain": false,
+          "full_claim_entailment_below_v11_threshold": true,
+          "selected_evidence_low_best_span_coverage": true,
+          "selected_evidence_low_claim_coverage": false,
+          "selected_evidence_missing_number": false,
+          "single_requirement_complex_claim": true,
+          "v14_non_target_route": true,
+          "v15_completeness_below_threshold": true
+        },
+        "expected_verdict": "supported",
+        "primary_diagnostic": "v14_non_target_route",
+        "signals": {
+          "atomic_mean_entailment": 0.187,
+          "atomic_minimum_entailment": 0.187,
+          "atomic_requirement_count": 1,
+          "atomic_verdict": "unsupported",
+          "best_span_claim_coverage": 0.3333333333333333,
+          "claim_coverage": 0.6666666666666666,
+          "full_claim_maximum_entailment": 0.4116186499595642,
+          "number_coverage": 1.0
+        },
+        "v14_prediction": "unsupported",
+        "v14_probabilities": {
+          "contradicted": 0.00335294,
+          "partially_supported": 0.13235109,
+          "supported": 0.35813017,
+          "unsupported": 0.50515017,
+          "unverifiable": 0.00101564
+        },
+        "v15_prediction": "unsupported"
+      },
+      {
+        "case_id": "wice_dev03919",
+        "claim_sha256": "5663f812db88c8c9c6749b33e68c324a18404f039c90aa7ea5326c4d66ec3bcd",
+        "complete_support_probability": 0.06614394,
+        "diagnostic_flags": {
+          "atomic_all_covered": false,
+          "atomic_entailment_below_0_70": true,
+          "cross_span_gain": false,
+          "full_claim_entailment_below_v11_threshold": false,
+          "selected_evidence_low_best_span_coverage": true,
+          "selected_evidence_low_claim_coverage": false,
+          "selected_evidence_missing_number": false,
+          "single_requirement_complex_claim": false,
+          "v14_non_target_route": false,
+          "v15_completeness_below_threshold": true
+        },
+        "expected_verdict": "supported",
+        "primary_diagnostic": "selected_evidence_coverage_risk",
+        "signals": {
+          "atomic_mean_entailment": 0.255,
+          "atomic_minimum_entailment": 0.255,
+          "atomic_requirement_count": 1,
+          "atomic_verdict": "unsupported",
+          "best_span_claim_coverage": 0.36363636363636365,
+          "claim_coverage": 0.7272727272727273,
+          "full_claim_maximum_entailment": 0.6253945231437683,
+          "number_coverage": 1.0
+        },
+        "v14_prediction": "partially_supported",
+        "v14_probabilities": {
+          "contradicted": 0.00141806,
+          "partially_supported": 0.86315938,
+          "supported": 0.09345118,
+          "unsupported": 0.04138635,
+          "unverifiable": 0.00058502
+        },
+        "v15_prediction": "partially_supported"
+      },
+      {
+        "case_id": "wice_dev03920",
+        "claim_sha256": "056d0119a84214b50da3c44c453d17b8293720007afa780597d8c358118a8167",
+        "complete_support_probability": 0.12578877,
+        "diagnostic_flags": {
+          "atomic_all_covered": false,
+          "atomic_entailment_below_0_70": true,
+          "cross_span_gain": false,
+          "full_claim_entailment_below_v11_threshold": true,
+          "selected_evidence_low_best_span_coverage": true,
+          "selected_evidence_low_claim_coverage": true,
+          "selected_evidence_missing_number": false,
+          "single_requirement_complex_claim": false,
+          "v14_non_target_route": true,
+          "v15_completeness_below_threshold": true
+        },
+        "expected_verdict": "supported",
+        "primary_diagnostic": "v14_non_target_route",
+        "signals": {
+          "atomic_mean_entailment": 0.10024999999999999,
+          "atomic_minimum_entailment": 0.0,
+          "atomic_requirement_count": 4,
+          "atomic_verdict": "unsupported",
+          "best_span_claim_coverage": 0.24242424242424243,
+          "claim_coverage": 0.3333333333333333,
+          "full_claim_maximum_entailment": 0.20335352420806885,
+          "number_coverage": 1.0
+        },
+        "v14_prediction": "unsupported",
+        "v14_probabilities": {
+          "contradicted": 0.00016985,
+          "partially_supported": 0.00033169,
+          "supported": 0.00155955,
+          "unsupported": 0.99773384,
+          "unverifiable": 0.00020507
+        },
+        "v15_prediction": "unsupported"
+      },
+      {
+        "case_id": "wice_dev03990",
+        "claim_sha256": "ba349ce4a6aa1ec176dda468bd994da65ff972801c7a93d07538d483209e0dc3",
+        "complete_support_probability": 0.41105713,
+        "diagnostic_flags": {
+          "atomic_all_covered": false,
+          "atomic_entailment_below_0_70": true,
+          "cross_span_gain": false,
+          "full_claim_entailment_below_v11_threshold": false,
+          "selected_evidence_low_best_span_coverage": false,
+          "selected_evidence_low_claim_coverage": false,
+          "selected_evidence_missing_number": false,
+          "single_requirement_complex_claim": false,
+          "v14_non_target_route": false,
+          "v15_completeness_below_threshold": true
+        },
+        "expected_verdict": "supported",
+        "primary_diagnostic": "relation_scoring_false_negative_candidate",
+        "signals": {
+          "atomic_mean_entailment": 0.742,
+          "atomic_minimum_entailment": 0.57,
+          "atomic_requirement_count": 2,
+          "atomic_verdict": "partially_supported",
+          "best_span_claim_coverage": 0.6666666666666666,
+          "claim_coverage": 0.8666666666666667,
+          "full_claim_maximum_entailment": 0.9662142395973206,
+          "number_coverage": 1.0
+        },
+        "v14_prediction": "supported",
+        "v14_probabilities": {
+          "contradicted": 7.183e-05,
+          "partially_supported": 0.00434861,
+          "supported": 0.99484245,
+          "unsupported": 0.00066177,
+          "unverifiable": 7.534e-05
+        },
+        "v15_prediction": "partially_supported"
+      },
+      {
+        "case_id": "wice_dev04343",
+        "claim_sha256": "5664503c2832bb95d035d544ac779b47e5c910ea71cd8e602d623e78df4e2be7",
+        "complete_support_probability": 0.01800335,
+        "diagnostic_flags": {
+          "atomic_all_covered": false,
+          "atomic_entailment_below_0_70": true,
+          "cross_span_gain": false,
+          "full_claim_entailment_below_v11_threshold": false,
+          "selected_evidence_low_best_span_coverage": true,
+          "selected_evidence_low_claim_coverage": true,
+          "selected_evidence_missing_number": false,
+          "single_requirement_complex_claim": false,
+          "v14_non_target_route": false,
+          "v15_completeness_below_threshold": true
+        },
+        "expected_verdict": "supported",
+        "primary_diagnostic": "selected_evidence_coverage_risk",
+        "signals": {
+          "atomic_mean_entailment": 0.5815,
+          "atomic_minimum_entailment": 0.187,
+          "atomic_requirement_count": 2,
+          "atomic_verdict": "partially_supported",
+          "best_span_claim_coverage": 0.45454545454545453,
+          "claim_coverage": 0.5909090909090909,
+          "full_claim_maximum_entailment": 0.9193000197410583,
+          "number_coverage": 1.0
+        },
+        "v14_prediction": "partially_supported",
+        "v14_probabilities": {
+          "contradicted": 0.00034999,
+          "partially_supported": 0.98342441,
+          "supported": 0.01540568,
+          "unsupported": 0.00074631,
+          "unverifiable": 7.362e-05
+        },
+        "v15_prediction": "partially_supported"
+      }
+    ],
+    "signal_comparison": {
+      "correctly_supported": {
+        "cases": 10,
+        "complete_support_probability_mean": 0.9134,
+        "means": {
+          "atomic_mean_entailment": 0.8892,
+          "atomic_minimum_entailment": 0.8881,
+          "atomic_requirement_count": 1.1,
+          "best_span_claim_coverage": 0.5355,
+          "claim_coverage": 0.7491,
+          "full_claim_maximum_entailment": 0.7307,
+          "number_coverage": 0.6667
+        }
+      },
+      "false_supported": {
+        "cases": 4,
+        "complete_support_probability_mean": 0.8747,
+        "means": {
+          "atomic_mean_entailment": 0.625,
+          "atomic_minimum_entailment": 0.625,
+          "atomic_requirement_count": 1.0,
+          "best_span_claim_coverage": 0.4842,
+          "claim_coverage": 0.6754,
+          "full_claim_maximum_entailment": 0.7028,
+          "number_coverage": 0.875
+        }
+      },
+      "missed_supported": {
+        "cases": 15,
+        "complete_support_probability_mean": 0.3136,
+        "means": {
+          "atomic_mean_entailment": 0.5343,
+          "atomic_minimum_entailment": 0.4898,
+          "atomic_requirement_count": 1.3333,
+          "best_span_claim_coverage": 0.4159,
+          "claim_coverage": 0.6499,
+          "full_claim_maximum_entailment": 0.6358,
+          "number_coverage": 0.9667
+        }
+      }
+    }
+  },
+  "protocol": {
+    "diagnostic_categories_are_rule_based_hypotheses": true,
+    "heldout_loaded": false,
+    "heldout_used": false,
+    "model_training_performed": false,
+    "split": "external_fiveway_v13_development",
+    "threshold_selection_performed": false
+  },
+  "recommended_next_work": [
+    "split materially coordinated supported claims into complete requirements",
+    "score requirements over evidence combinations instead of isolated spans",
+    "preserve V14 contradiction and ambiguity routing as hard guards",
+    "require at least 75 percent precision on newly promoted support cases"
+  ],
+  "remote_inference_used": false,
+  "remote_provider_default_enabled": false,
+  "schema_version": "contexttrace-v16-support-failure-audit-1.0",
+  "stable_defaults_changed": false,
+  "status": "diagnostic_complete",
+  "support_boundary": {
+    "additional_true_supports_needed": 3,
+    "correctly_supported": 10,
+    "false_support_budget": 5,
+    "false_supports": 4,
+    "minimum_precision_for_next_promotions": 0.75,
+    "missed_supported": 15,
+    "remaining_false_support_budget": 1,
+    "supported_cases": 25
+  }
+}
