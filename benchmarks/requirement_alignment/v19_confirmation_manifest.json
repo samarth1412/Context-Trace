@@ -1,0 +1,15 @@
+{
+  "audit_sha256": "93617bcf4e64b69390275d52e84b5e7dc70fd420e9a65e6b18020ab4a882a6e1",
+  "candidate_or_policy_changed_after_v18": false,
+  "confirmation_labels_used_for_selection": false,
+  "confirmation_predictions_generated": false,
+  "confirmation_predictions_inspected": false,
+  "dataset_sha256": "2fa52ad909c62cee9b610191aea89d5ab74523446a411070c0a96c387f36050c",
+  "experiment": "contexttrace_v19_untouched_confirmation",
+  "remote_provider_default_enabled": false,
+  "retraining_allowed": false,
+  "schema_version": "contexttrace-v19-confirmation-manifest-1.0",
+  "stable_defaults_changed": false,
+  "status": "frozen_before_v18_candidate_scoring",
+  "v18_artifact_sha256": "bcc5f0d2e66edbb5a400c5c54bb59a31a39ac1a6ce02ff38602b5f0af6288009"
+}

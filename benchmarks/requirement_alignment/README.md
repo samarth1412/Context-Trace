@@ -801,3 +801,27 @@ PYTHONPATH=packages/contexttrace:. LOKY_MAX_CPU_COUNT=8 .venv/bin/python \
 rebuilds byte-for-byte with its committed SHA-256 manifest. Full-development
 fit outputs are not evaluation evidence; the next valid result must come from
 one untouched confirmation run with no retraining or policy changes.
+
+## V19: independent five-way confirmation set
+
+Build and freeze 25 cases per verdict from pinned AVeriTeC development data and
+previously unselected WiCE partial-support cases. The builder excludes every
+prior repository claim plus both external V13 partitions before label-only
+stable selection.
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.build_v19_confirmation \
+  --averitec /private/tmp/contexttrace_external_data/v19_sources/averitec_dev.json \
+  --wice /private/tmp/contexttrace_external_data/v19_sources/wice_test.jsonl \
+  --repository-root . \
+  --exclude-dataset /private/tmp/contexttrace_external_data/v13_development.json \
+  --exclude-dataset /private/tmp/contexttrace_external_data/v13_heldout.json \
+  --dataset-output /private/tmp/contexttrace_external_data/v19_confirmation.json \
+  --audit-output benchmarks/requirement_alignment/v19_confirmation_audit.json \
+  --manifest-output benchmarks/requirement_alignment/v19_confirmation_manifest.json
+```
+
+`V19_CONFIRMATION_SET.md` documents source provenance, label alignment, and
+limitations. The committed manifest is frozen before V18 scoring and forbids
+retraining or selection after confirmation predictions are generated.
