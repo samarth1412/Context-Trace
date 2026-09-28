@@ -825,3 +825,45 @@ PYTHONPATH=packages/contexttrace:. .venv/bin/python \
 `V19_CONFIRMATION_SET.md` documents source provenance, label alignment, and
 limitations. The committed manifest is frozen before V18 scoring and forbids
 retraining or selection after confirmation predictions are generated.
+
+Run the frozen candidate once after building the pack:
+
+```bash
+PYTHONPATH=packages/contexttrace:. HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
+  .venv/bin/python -m benchmarks.requirement_alignment.score_v13_relations \
+  --dataset /private/tmp/contexttrace_external_data/v19_confirmation.json \
+  --split external_fiveway_v19_confirmation \
+  --model-path /private/tmp/contexttrace_external_data/climate_fever/v11_relation_candidate \
+  --model-manifest benchmarks/requirement_alignment/results/v11_relation_model_manifest.json \
+  --output /private/tmp/contexttrace_external_data/v19_relation_scores.json
+
+PYTHONPATH=packages/contexttrace:. HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
+  .venv/bin/python -m benchmarks.requirement_alignment.score_v15_atomic \
+  --dataset /private/tmp/contexttrace_external_data/v19_confirmation.json \
+  --model-path /private/tmp/contexttrace_external_data/climate_fever/v11_relation_candidate \
+  --model-manifest benchmarks/requirement_alignment/results/v11_relation_model_manifest.json \
+  --output /private/tmp/contexttrace_external_data/v19_atomic_scores.json
+
+PYTHONPATH=packages/contexttrace:. HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
+  .venv/bin/python -m benchmarks.requirement_alignment.score_v17_multispan \
+  --dataset /private/tmp/contexttrace_external_data/v19_confirmation.json \
+  --model-path /private/tmp/contexttrace_external_data/climate_fever/v11_relation_candidate \
+  --model-manifest benchmarks/requirement_alignment/results/v11_relation_model_manifest.json \
+  --output /private/tmp/contexttrace_external_data/v19_multispan_scores.json
+
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.evaluate_v19_confirmation \
+  --dataset /private/tmp/contexttrace_external_data/v19_confirmation.json \
+  --freeze-manifest benchmarks/requirement_alignment/v19_confirmation_manifest.json \
+  --candidate-artifact /private/tmp/contexttrace_external_data/v18_frozen_candidate.joblib \
+  --candidate-manifest benchmarks/requirement_alignment/results/v18_frozen_candidate_manifest.json \
+  --relation-scores /private/tmp/contexttrace_external_data/v19_relation_scores.json \
+  --atomic-scores /private/tmp/contexttrace_external_data/v19_atomic_scores.json \
+  --multispan-scores /private/tmp/contexttrace_external_data/v19_multispan_scores.json \
+  --output benchmarks/requirement_alignment/results/v19_confirmation_result.json
+```
+
+`V19_CONFIRMATION_RESULTS.md` records the negative one-shot result. Accuracy is
+23.2%, macro-F1 is 0.2003, and four of five release gates fail. The frozen
+candidate must not be packaged or released; stable verifier behavior remains
+unchanged.

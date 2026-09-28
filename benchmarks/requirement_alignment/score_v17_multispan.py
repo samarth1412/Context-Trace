@@ -29,6 +29,8 @@ from contexttrace.verify.semantic_core_v2_1.claims import unitize_atomic_claims
 
 
 DEVELOPMENT_SPLIT = "external_fiveway_v13_development"
+CONFIRMATION_SPLIT = "external_fiveway_v19_confirmation"
+ALLOWED_SPLITS = {DEVELOPMENT_SPLIT, CONFIRMATION_SPLIT}
 RELATIONS = ("entailment", "contradiction", "neutral")
 _FRAGMENT_START_RE = re.compile(
     r"^(?:and|but|that|which|who|whose|where|while|whereas|including|"
@@ -99,8 +101,9 @@ def score_multispan_requirements(
 
     dataset = json.loads(Path(dataset_path).read_text(encoding="utf-8"))
     examples = list(dataset.get("examples") or [])
-    if dataset.get("split") != DEVELOPMENT_SPLIT or not examples:
-        raise V17ScoringError("V17 accepts only nonempty V13 development data.")
+    split = str(dataset.get("split") or "")
+    if split not in ALLOWED_SPLITS or not examples:
+        raise V17ScoringError("V17 scoring accepts only frozen V13/V19 data.")
     if any(
         {"label", "target", "verdict", "dataset"} & set(row["input"])
         for row in examples
@@ -151,8 +154,12 @@ def score_multispan_requirements(
     seconds = time.perf_counter() - started
     return {
         "schema_version": "contexttrace-v17-multispan-scores-1.0",
-        "experiment": "contexttrace_v17_multispan_completeness",
-        "split": DEVELOPMENT_SPLIT,
+        "experiment": (
+            "contexttrace_v19_untouched_confirmation"
+            if split == CONFIRMATION_SPLIT
+            else "contexttrace_v17_multispan_completeness"
+        ),
+        "split": split,
         "dataset_sha256": _sha256_json(dataset),
         "cases": len(rows),
         "requirements": total_requirements,

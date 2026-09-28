@@ -72,3 +72,10 @@ AVeriTeC `Not Enough Evidence` is mapped to `unsupported` because the supplied
 evidence is insufficient for the claim; mixed or cherry-picked evidence is
 reserved for `unverifiable`. This alignment and public-data pretraining
 contamination are limitations that must accompany the final result.
+
+## Evaluation status
+
+The frozen set has now been consumed by the one-shot V19 evaluation. The
+candidate failed four of five release gates and must not be packaged or
+released. See [`V19_CONFIRMATION_RESULTS.md`](V19_CONFIRMATION_RESULTS.md) for
+the full result and next-step decision.

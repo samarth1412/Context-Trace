@@ -21,6 +21,8 @@ from contexttrace.verify.schema import TraceContext
 
 
 DEVELOPMENT_SPLIT = "external_fiveway_v13_development"
+CONFIRMATION_SPLIT = "external_fiveway_v19_confirmation"
+ALLOWED_SPLITS = {DEVELOPMENT_SPLIT, CONFIRMATION_SPLIT}
 
 
 class V15ScoringError(RuntimeError):
@@ -44,8 +46,9 @@ def score_atomic_requirements(
         pass
     dataset = json.loads(Path(dataset_path).read_text(encoding="utf-8"))
     examples = list(dataset.get("examples") or [])
-    if dataset.get("split") != DEVELOPMENT_SPLIT or not examples:
-        raise V15ScoringError("V15 accepts only nonempty V13 development data.")
+    split = str(dataset.get("split") or "")
+    if split not in ALLOWED_SPLITS or not examples:
+        raise V15ScoringError("Atomic scoring accepts only frozen V13/V19 data.")
     if any(
         {"label", "target", "verdict", "dataset"} & set(row["input"])
         for row in examples
@@ -110,8 +113,12 @@ def score_atomic_requirements(
     requirement_count = sum(len(row["requirements"]) for row in rows)
     return {
         "schema_version": "contexttrace-v15-atomic-scores-1.0",
-        "experiment": "contexttrace_v15_atomic_completeness",
-        "split": DEVELOPMENT_SPLIT,
+        "experiment": (
+            "contexttrace_v19_untouched_confirmation"
+            if split == CONFIRMATION_SPLIT
+            else "contexttrace_v15_atomic_completeness"
+        ),
+        "split": split,
         "dataset_sha256": _sha256_json(dataset),
         "cases": len(rows),
         "requirements": requirement_count,
