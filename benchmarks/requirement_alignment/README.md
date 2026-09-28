@@ -940,3 +940,30 @@ PYTHONPATH=packages/contexttrace:. HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
 
 These external artifacts contain 2,624 relation spans, 565 atomic requirements,
 and 6,208 evidence combinations across 609 multi-span requirements.
+
+## V22: domain-diverse candidate
+
+Train twelve five-way classifiers with five-fold out-of-fold prediction over
+the V21 local feature artifacts:
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.v22_domain_candidate \
+  --development /private/tmp/contexttrace_external_data/v21_development.json \
+  --relation-scores /private/tmp/contexttrace_external_data/v21_relation_scores.json \
+  --atomic-scores /private/tmp/contexttrace_external_data/v21_atomic_scores.json \
+  --multispan-scores /private/tmp/contexttrace_external_data/v21_multispan_scores.json \
+  --output benchmarks/requirement_alignment/results/v22_domain_candidate.json
+```
+
+`V22_DOMAIN_CANDIDATE.md` records the rejected result. Direct accuracy is 41.4%
+and macro-F1 is 0.4104. No policy passes all gates; the safe selection reaches
+zero false supports by reducing supported recall to zero.
+
+## V23: stronger local NLI screen
+
+`V23_STRONGER_NLI_SCREEN.md` records two controlled ablations with a pinned,
+hash-verified DeBERTa NLI checkpoint. Strong relation and atomic signals raise
+direct accuracy to 45.4% and macro-F1 to 0.4402, but the safe policy recognizes
+only 1% of supported claims. V23 is rejected, no confirmation data is spent,
+and stable defaults remain unchanged.

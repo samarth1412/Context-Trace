@@ -1,0 +1,46 @@
+{
+  "files": [
+    {
+      "bytes": 1090,
+      "path": "config.json",
+      "sha256": "a6c616d6dabeacf90fd0e776c741d3f0f30a05533ccf0bd3b5b62e94cfaa8d57"
+    },
+    {
+      "bytes": 368877646,
+      "path": "model.safetensors",
+      "sha256": "06d6fd89edd4f97816831626daafbdb0b029cf63bae8edc0bccab1d64e2e7707"
+    },
+    {
+      "bytes": 286,
+      "path": "special_tokens_map.json",
+      "sha256": "9463f61e1b109a8eb4688b829260d7c6b1e6dff04c98ff7269bb89e2b92369b9"
+    },
+    {
+      "bytes": 2464616,
+      "path": "spm.model",
+      "sha256": "c679fbf93643d19aab7ee10c0b99e460bdbc02fedf34b92b05af343b4af586fd"
+    },
+    {
+      "bytes": 8656646,
+      "path": "tokenizer.json",
+      "sha256": "05402ffae6dd382a8491b1d29bfc139bec5d332662e86a026f433ce54c25c202"
+    },
+    {
+      "bytes": 1284,
+      "path": "tokenizer_config.json",
+      "sha256": "557b3d33d3f41b81ad769244e506549e98a1857d41dd58160aacd4d98d710b5a"
+    }
+  ],
+  "license": "mit",
+  "model_id": "4c94466fb55da3fc09e5cb48b4c7da3303008ac8903b9400f55d4eabd46f24f6",
+  "relation_ids": {
+    "contradiction": 2,
+    "entailment": 0,
+    "neutral": 1
+  },
+  "repository": "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli",
+  "revision": "6f5cf0a2b59cabb106aca4c287eed12e357e90eb",
+  "runtime_network_required": false,
+  "schema_version": "contexttrace-v23-local-nli-manifest-1.0",
+  "stable_defaults_changed": false
+}
