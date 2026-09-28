@@ -1,0 +1,29 @@
+{
+  "baseline": "existing_stable_prediction_adapter_on_same_selected_inputs",
+  "classifier": {
+    "C": 0.1,
+    "max_iter": 5000,
+    "type": "standard_scaled_balanced_logistic_regression"
+  },
+  "encoder_training": false,
+  "experiment": "contexttrace_v25_joint_representation",
+  "folds": 5,
+  "future_confirmation_loaded": false,
+  "maximum_tokens": 512,
+  "model_id": "4c94466fb55da3fc09e5cb48b4c7da3303008ac8903b9400f55d4eabd46f24f6",
+  "original_dataset_sha256": "b9422ebb87ee69c13e1e52a2244210177fa7affafa73f63db3a0a68bb3b2ea70",
+  "policy_search": "unchanged_v14_threshold_grid",
+  "release_gate_eligible": false,
+  "remote_inference_used": false,
+  "representation": "last_hidden_state_cls_of_joint_selected_evidence_and_claim",
+  "restored_dataset_sha256": "1111f84c53edc6b61765f1ee6d4d56924df7c827775b43b59e22da7d117dde45",
+  "seed": 20260927,
+  "stable_defaults_changed": false,
+  "status": "frozen_before_scoring",
+  "stop_rule": "no additional candidate or threshold expansion; label alignment review required before promotion",
+  "truncation": "only_first_evidence",
+  "variants": [
+    "original_selected_spans",
+    "restored_selected_qa"
+  ]
+}
