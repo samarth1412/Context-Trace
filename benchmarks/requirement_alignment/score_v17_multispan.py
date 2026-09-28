@@ -30,7 +30,8 @@ from contexttrace.verify.semantic_core_v2_1.claims import unitize_atomic_claims
 
 DEVELOPMENT_SPLIT = "external_fiveway_v13_development"
 CONFIRMATION_SPLIT = "external_fiveway_v19_confirmation"
-ALLOWED_SPLITS = {DEVELOPMENT_SPLIT, CONFIRMATION_SPLIT}
+V21_DEVELOPMENT_SPLIT = "external_fiveway_v21_development"
+ALLOWED_SPLITS = {DEVELOPMENT_SPLIT, CONFIRMATION_SPLIT, V21_DEVELOPMENT_SPLIT}
 RELATIONS = ("entailment", "contradiction", "neutral")
 _FRAGMENT_START_RE = re.compile(
     r"^(?:and|but|that|which|who|whose|where|while|whereas|including|"
@@ -155,9 +156,13 @@ def score_multispan_requirements(
     return {
         "schema_version": "contexttrace-v17-multispan-scores-1.0",
         "experiment": (
-            "contexttrace_v19_untouched_confirmation"
-            if split == CONFIRMATION_SPLIT
-            else "contexttrace_v17_multispan_completeness"
+            "contexttrace_v21_domain_diverse_development"
+            if split == V21_DEVELOPMENT_SPLIT
+            else (
+                "contexttrace_v19_untouched_confirmation"
+                if split == CONFIRMATION_SPLIT
+                else "contexttrace_v17_multispan_completeness"
+            )
         ),
         "split": split,
         "dataset_sha256": _sha256_json(dataset),

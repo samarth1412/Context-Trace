@@ -1,0 +1,12 @@
+{
+  "audit_sha256": "1ec09b3fed4967b3aec02d3b030ca3c2419e447924267d467efa557193882f01",
+  "dataset_sha256": "b9422ebb87ee69c13e1e52a2244210177fa7affafa73f63db3a0a68bb3b2ea70",
+  "experiment": "contexttrace_v21_domain_diverse_development",
+  "future_confirmation_data_accessed": false,
+  "future_confirmation_retraining_allowed": false,
+  "labels_may_be_used_for_training": true,
+  "remote_provider_default_enabled": false,
+  "schema_version": "contexttrace-v21-development-manifest-1.0",
+  "stable_defaults_changed": false,
+  "status": "development_only_not_confirmation"
+}

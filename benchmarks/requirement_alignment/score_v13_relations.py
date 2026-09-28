@@ -23,6 +23,7 @@ SPLITS = (
     "external_fiveway_v13_development",
     "external_fiveway_v13_heldout",
     "external_fiveway_v19_confirmation",
+    "external_fiveway_v21_development",
 )
 
 
@@ -100,9 +101,13 @@ def score_relations(
     return {
         "schema_version": "contexttrace-v13-local-relation-scores-1.0",
         "experiment": (
-            "contexttrace_v19_untouched_confirmation"
-            if expected_split == "external_fiveway_v19_confirmation"
-            else "contexttrace_v13_independent_contradictions"
+            "contexttrace_v21_domain_diverse_development"
+            if expected_split == "external_fiveway_v21_development"
+            else (
+                "contexttrace_v19_untouched_confirmation"
+                if expected_split == "external_fiveway_v19_confirmation"
+                else "contexttrace_v13_independent_contradictions"
+            )
         ),
         "split": expected_split,
         "dataset_sha256": _sha256_json(dataset),

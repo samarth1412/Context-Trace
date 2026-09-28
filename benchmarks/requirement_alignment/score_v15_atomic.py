@@ -22,7 +22,8 @@ from contexttrace.verify.schema import TraceContext
 
 DEVELOPMENT_SPLIT = "external_fiveway_v13_development"
 CONFIRMATION_SPLIT = "external_fiveway_v19_confirmation"
-ALLOWED_SPLITS = {DEVELOPMENT_SPLIT, CONFIRMATION_SPLIT}
+V21_DEVELOPMENT_SPLIT = "external_fiveway_v21_development"
+ALLOWED_SPLITS = {DEVELOPMENT_SPLIT, CONFIRMATION_SPLIT, V21_DEVELOPMENT_SPLIT}
 
 
 class V15ScoringError(RuntimeError):
@@ -114,9 +115,13 @@ def score_atomic_requirements(
     return {
         "schema_version": "contexttrace-v15-atomic-scores-1.0",
         "experiment": (
-            "contexttrace_v19_untouched_confirmation"
-            if split == CONFIRMATION_SPLIT
-            else "contexttrace_v15_atomic_completeness"
+            "contexttrace_v21_domain_diverse_development"
+            if split == V21_DEVELOPMENT_SPLIT
+            else (
+                "contexttrace_v19_untouched_confirmation"
+                if split == CONFIRMATION_SPLIT
+                else "contexttrace_v15_atomic_completeness"
+            )
         ),
         "split": split,
         "dataset_sha256": _sha256_json(dataset),

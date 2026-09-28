@@ -888,3 +888,55 @@ from the V15 completeness route, the candidate misses 20 of 25 contradictions,
 and its `unverifiable` head collapses to zero predictions. No post-hoc relation
 contradiction cap passes all gates, so the next candidate requires
 domain-diverse learning rather than another threshold adjustment.
+
+## V21: domain-diverse development data
+
+Build 500 balanced development cases from pinned AVeriTeC training data and
+previously unused WiCE examples. Exclude V13 and consumed V19 inputs:
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.build_v21_development \
+  --averitec-train /private/tmp/contexttrace_external_data/v19_sources/averitec_train.json \
+  --wice /private/tmp/contexttrace_external_data/v19_sources/wice_test.jsonl \
+  --repository-root . \
+  --exclude-dataset /private/tmp/contexttrace_external_data/v13_development.json \
+  --exclude-dataset /private/tmp/contexttrace_external_data/v13_heldout.json \
+  --exclude-dataset /private/tmp/contexttrace_external_data/v19_confirmation.json \
+  --dataset-output /private/tmp/contexttrace_external_data/v21_development.json \
+  --audit-output benchmarks/requirement_alignment/v21_development_audit.json \
+  --manifest-output benchmarks/requirement_alignment/v21_development_manifest.json
+```
+
+`V21_DEVELOPMENT_SET.md` documents the data contract and limitations. The pack
+is development-only, contains no future confirmation data, and remains external
+because it includes claim and evidence text.
+
+Generate the label-blind local feature artifacts:
+
+```bash
+PYTHONPATH=packages/contexttrace:. HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
+  .venv/bin/python -m benchmarks.requirement_alignment.score_v13_relations \
+  --dataset /private/tmp/contexttrace_external_data/v21_development.json \
+  --split external_fiveway_v21_development \
+  --model-path /private/tmp/contexttrace_external_data/climate_fever/v11_relation_candidate \
+  --model-manifest benchmarks/requirement_alignment/results/v11_relation_model_manifest.json \
+  --output /private/tmp/contexttrace_external_data/v21_relation_scores.json
+
+PYTHONPATH=packages/contexttrace:. HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
+  .venv/bin/python -m benchmarks.requirement_alignment.score_v15_atomic \
+  --dataset /private/tmp/contexttrace_external_data/v21_development.json \
+  --model-path /private/tmp/contexttrace_external_data/climate_fever/v11_relation_candidate \
+  --model-manifest benchmarks/requirement_alignment/results/v11_relation_model_manifest.json \
+  --output /private/tmp/contexttrace_external_data/v21_atomic_scores.json
+
+PYTHONPATH=packages/contexttrace:. HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
+  .venv/bin/python -m benchmarks.requirement_alignment.score_v17_multispan \
+  --dataset /private/tmp/contexttrace_external_data/v21_development.json \
+  --model-path /private/tmp/contexttrace_external_data/climate_fever/v11_relation_candidate \
+  --model-manifest benchmarks/requirement_alignment/results/v11_relation_model_manifest.json \
+  --output /private/tmp/contexttrace_external_data/v21_multispan_scores.json
+```
+
+These external artifacts contain 2,624 relation spans, 565 atomic requirements,
+and 6,208 evidence combinations across 609 multi-span requirements.
