@@ -867,3 +867,24 @@ PYTHONPATH=packages/contexttrace:. .venv/bin/python \
 23.2%, macro-F1 is 0.2003, and four of five release gates fail. The frozen
 candidate must not be packaged or released; stable verifier behavior remains
 unchanged.
+
+## V20: transfer-failure audit
+
+Diagnose the consumed V19 result without training or selecting another policy:
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.v20_transfer_failure_audit \
+  --dataset /private/tmp/contexttrace_external_data/v19_confirmation.json \
+  --relation-scores /private/tmp/contexttrace_external_data/v19_relation_scores.json \
+  --atomic-scores /private/tmp/contexttrace_external_data/v19_atomic_scores.json \
+  --multispan-scores /private/tmp/contexttrace_external_data/v19_multispan_scores.json \
+  --confirmation-result benchmarks/requirement_alignment/results/v19_confirmation_result.json \
+  --output benchmarks/requirement_alignment/results/v20_transfer_failure_audit.json
+```
+
+`V20_TRANSFER_FAILURE_AUDIT.md` shows that 21 of 22 false supports originate
+from the V15 completeness route, the candidate misses 20 of 25 contradictions,
+and its `unverifiable` head collapses to zero predictions. No post-hoc relation
+contradiction cap passes all gates, so the next candidate requires
+domain-diverse learning rather than another threshold adjustment.

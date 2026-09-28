@@ -1,0 +1,971 @@
+{
+  "decision": "do_not_tune_thresholds_build_domain_diverse_local_candidate",
+  "experiment": "contexttrace_v20_transfer_failure_audit",
+  "failure_layers": {
+    "completeness_overconfidence": {
+      "false_supports": 22,
+      "false_supports_from_v15": 21,
+      "false_supports_from_v17_rescue": 1,
+      "false_supports_with_completeness_at_least_0_8": 21
+    },
+    "evidence_or_decomposition_risk": {
+      "cases_with_empty_multispan_requirement": 3,
+      "errors_with_empty_multispan_requirement": 3,
+      "mean_selected_evidence_spans": 5.472
+    },
+    "relation_transfer": {
+      "contradiction_cases": 25,
+      "contradiction_recall": 0.2,
+      "contradictions_incorrectly_supported": 7,
+      "correct_contradictions": 5,
+      "incorrectly_supported_with_visible_relation_contradiction": 4
+    },
+    "verdict_head_collapse": {
+      "maximum_v14_unverifiable_probability": 0.0897,
+      "mean_v14_unverifiable_probability": 0.0043,
+      "unverifiable_predictions": 0,
+      "unverifiable_recall": 0.0
+    }
+  },
+  "false_support_analysis": {
+    "by_expected_verdict": {
+      "contradicted": 7,
+      "partially_supported": 4,
+      "unsupported": 4,
+      "unverifiable": 7
+    },
+    "count": 22,
+    "rows": [
+      {
+        "case_id": "averitec_dev_0026",
+        "claim_sha256": "bf11f73b80e592613e3d455a794e887feff0f14f727e015c9152699f34b57f13",
+        "dataset": "AVeriTeC",
+        "expected_verdict": "unsupported",
+        "flags": {
+          "cross_span_conflict_signal": false,
+          "false_support": true,
+          "false_support_from_v17_rescue": false,
+          "incorrect": true,
+          "visible_relation_contradiction": false
+        },
+        "prediction": "supported",
+        "signals": {
+          "atomic_requirements": 1,
+          "atomic_verdict": "supported",
+          "complete_support_probability": 0.88399623,
+          "empty_multispan_requirements": 0,
+          "maximum_multispan_contradiction": 0.031,
+          "maximum_relation_contradiction": 0.0307,
+          "maximum_relation_entailment": 0.9793,
+          "maximum_relation_neutral": 0.862,
+          "minimum_single_span_entailment": 0.979,
+          "multispan_requirements": 1,
+          "selected_evidence_spans": 5,
+          "v14_supported_probability": 0.91650129,
+          "v14_unverifiable_probability": 0.0021974
+        },
+        "v14_prediction": "supported",
+        "v15_prediction": "supported"
+      },
+      {
+        "case_id": "averitec_dev_0037",
+        "claim_sha256": "de9f5ff6b07eac52fa682014cc7562ef01bb2ef43126e4110f5cd9ec2ca31185",
+        "dataset": "AVeriTeC",
+        "expected_verdict": "contradicted",
+        "flags": {
+          "cross_span_conflict_signal": true,
+          "false_support": true,
+          "false_support_from_v17_rescue": true,
+          "incorrect": true,
+          "visible_relation_contradiction": true
+        },
+        "prediction": "supported",
+        "signals": {
+          "atomic_requirements": 1,
+          "atomic_verdict": "unsupported",
+          "complete_support_probability": 0.159288,
+          "empty_multispan_requirements": 0,
+          "maximum_multispan_contradiction": 0.74,
+          "maximum_relation_contradiction": 0.6842,
+          "maximum_relation_entailment": 0.9765,
+          "maximum_relation_neutral": 0.5955,
+          "minimum_single_span_entailment": 0.976,
+          "multispan_requirements": 1,
+          "selected_evidence_spans": 4,
+          "v14_supported_probability": 0.9146901,
+          "v14_unverifiable_probability": 0.00156908
+        },
+        "v14_prediction": "supported",
+        "v15_prediction": "partially_supported"
+      },
+      {
+        "case_id": "averitec_dev_0043",
+        "claim_sha256": "b827421e0e12bd4c1074e13bc37a510cdde5a61016f35206a5a97946b5e37f64",
+        "dataset": "AVeriTeC",
+        "expected_verdict": "unverifiable",
+        "flags": {
+          "cross_span_conflict_signal": false,
+          "false_support": true,
+          "false_support_from_v17_rescue": false,
+          "incorrect": true,
+          "visible_relation_contradiction": false
+        },
+        "prediction": "supported",
+        "signals": {
+          "atomic_requirements": 1,
+          "atomic_verdict": "unsupported",
+          "complete_support_probability": 0.89833347,
+          "empty_multispan_requirements": 0,
+          "maximum_multispan_contradiction": 0.483,
+          "maximum_relation_contradiction": 0.1359,
+          "maximum_relation_entailment": 0.7774,
+          "maximum_relation_neutral": 0.7616,
+          "minimum_single_span_entailment": 0.827,
+          "multispan_requirements": 1,
+          "selected_evidence_spans": 2,
+          "v14_supported_probability": 0.92664436,
+          "v14_unverifiable_probability": 0.00243059
+        },
+        "v14_prediction": "supported",
+        "v15_prediction": "supported"
+      },
+      {
+        "case_id": "averitec_dev_0058",
+        "claim_sha256": "14964eca8a26e09a31365f4297e920908262e36b05748a2799292b30f4099721",
+        "dataset": "AVeriTeC",
+        "expected_verdict": "unverifiable",
+        "flags": {
+          "cross_span_conflict_signal": false,
+          "false_support": true,
+          "false_support_from_v17_rescue": false,
+          "incorrect": true,
+          "visible_relation_contradiction": false
+        },
+        "prediction": "supported",
+        "signals": {
+          "atomic_requirements": 1,
+          "atomic_verdict": "supported",
+          "complete_support_probability": 0.9510736,
+          "empty_multispan_requirements": 0,
+          "maximum_multispan_contradiction": 0.093,
+          "maximum_relation_contradiction": 0.3472,
+          "maximum_relation_entailment": 0.9776,
+          "maximum_relation_neutral": 0.813,
+          "minimum_single_span_entailment": 0.978,
+          "multispan_requirements": 1,
+          "selected_evidence_spans": 8,
+          "v14_supported_probability": 0.91962403,
+          "v14_unverifiable_probability": 0.00010054
+        },
+        "v14_prediction": "supported",
+        "v15_prediction": "supported"
+      },
+      {
+        "case_id": "averitec_dev_0081",
+        "claim_sha256": "5ba2508f4d49ecb3677e0567689f107d75c65503effe662f233ef4d11f0c8b61",
+        "dataset": "AVeriTeC",
+        "expected_verdict": "unverifiable",
+        "flags": {
+          "cross_span_conflict_signal": false,
+          "false_support": true,
+          "false_support_from_v17_rescue": false,
+          "incorrect": true,
+          "visible_relation_contradiction": false
+        },
+        "prediction": "supported",
+        "signals": {
+          "atomic_requirements": 1,
+          "atomic_verdict": "supported",
+          "complete_support_probability": 0.96909292,
+          "empty_multispan_requirements": 0,
+          "maximum_multispan_contradiction": 0.078,
+          "maximum_relation_contradiction": 0.078,
+          "maximum_relation_entailment": 0.991,
+          "maximum_relation_neutral": 0.668,
+          "minimum_single_span_entailment": 0.991,
+          "multispan_requirements": 1,
+          "selected_evidence_spans": 4,
+          "v14_supported_probability": 0.68287288,
+          "v14_unverifiable_probability": 0.00124332
+        },
+        "v14_prediction": "partially_supported",
+        "v15_prediction": "supported"
+      },
+      {
+        "case_id": "averitec_dev_0100",
+        "claim_sha256": "ad3836eb75700940c15146f2d0bf7a2cc043583519428a749f56e3de501f1a4f",
+        "dataset": "AVeriTeC",
+        "expected_verdict": "unverifiable",
+        "flags": {
+          "cross_span_conflict_signal": false,
+          "false_support": true,
+          "false_support_from_v17_rescue": false,
+          "incorrect": true,
+          "visible_relation_contradiction": false
+        },
+        "prediction": "supported",
+        "signals": {
+          "atomic_requirements": 1,
+          "atomic_verdict": "supported",
+          "complete_support_probability": 0.98865495,
+          "empty_multispan_requirements": 0,
+          "maximum_multispan_contradiction": 0.305,
+          "maximum_relation_contradiction": 0.1104,
+          "maximum_relation_entailment": 0.9589,
+          "maximum_relation_neutral": 0.6997,
+          "minimum_single_span_entailment": 0.649,
+          "multispan_requirements": 3,
+          "selected_evidence_spans": 8,
+          "v14_supported_probability": 0.4382404,
+          "v14_unverifiable_probability": 0.00063748
+        },
+        "v14_prediction": "partially_supported",
+        "v15_prediction": "supported"
+      },
+      {
+        "case_id": "averitec_dev_0101",
+        "claim_sha256": "a096b596ab9a1671e19e5d6995cc45429e5e8a041c9f15909099140585f3e057",
+        "dataset": "AVeriTeC",
+        "expected_verdict": "unverifiable",
+        "flags": {
+          "cross_span_conflict_signal": false,
+          "false_support": true,
+          "false_support_from_v17_rescue": false,
+          "incorrect": true,
+          "visible_relation_contradiction": false
+        },
+        "prediction": "supported",
+        "signals": {
+          "atomic_requirements": 1,
+          "atomic_verdict": "unsupported",
+          "complete_support_probability": 0.89982016,
+          "empty_multispan_requirements": 0,
+          "maximum_multispan_contradiction": 0.318,
+          "maximum_relation_contradiction": 0.3178,
+          "maximum_relation_entailment": 0.2758,
+          "maximum_relation_neutral": 0.8506,
+          "minimum_single_span_entailment": 0.276,
+          "multispan_requirements": 1,
+          "selected_evidence_spans": 4,
+          "v14_supported_probability": 0.01682457,
+          "v14_unverifiable_probability": 0.00370733
+        },
+        "v14_prediction": "partially_supported",
+        "v15_prediction": "supported"
+      },
+      {
+        "case_id": "averitec_dev_0115",
+        "claim_sha256": "ccdb77cd6bcd0749539f75d4a19699535dbdea32142fecbd070366cfb027c67a",
+        "dataset": "AVeriTeC",
+        "expected_verdict": "unverifiable",
+        "flags": {
+          "cross_span_conflict_signal": false,
+          "false_support": true,
+          "false_support_from_v17_rescue": false,
+          "incorrect": true,
+          "visible_relation_contradiction": false
+        },
+        "prediction": "supported",
+        "signals": {
+          "atomic_requirements": 1,
+          "atomic_verdict": "supported",
+          "complete_support_probability": 0.9942042,
+          "empty_multispan_requirements": 0,
+          "maximum_multispan_contradiction": 0.619,
+          "maximum_relation_contradiction": 0.2096,
+          "maximum_relation_entailment": 0.9832,
+          "maximum_relation_neutral": 0.7712,
+          "minimum_single_span_entailment": 0.985,
+          "multispan_requirements": 1,
+          "selected_evidence_spans": 6,
+          "v14_supported_probability": 0.8523649,
+          "v14_unverifiable_probability": 0.00035411
+        },
+        "v14_prediction": "partially_supported",
+        "v15_prediction": "supported"
+      },
+      {
+        "case_id": "averitec_dev_0132",
+        "claim_sha256": "452f31755fc1366500e91d46be55f935ee40764e9c00d8eeb88b018a5595e3a6",
+        "dataset": "AVeriTeC",
+        "expected_verdict": "contradicted",
+        "flags": {
+          "cross_span_conflict_signal": true,
+          "false_support": true,
+          "false_support_from_v17_rescue": false,
+          "incorrect": true,
+          "visible_relation_contradiction": true
+        },
+        "prediction": "supported",
+        "signals": {
+          "atomic_requirements": 1,
+          "atomic_verdict": "supported",
+          "complete_support_probability": 0.9361928,
+          "empty_multispan_requirements": 0,
+          "maximum_multispan_contradiction": 0.156,
+          "maximum_relation_contradiction": 0.5459,
+          "maximum_relation_entailment": 0.9543,
+          "maximum_relation_neutral": 0.7156,
+          "minimum_single_span_entailment": 0.968,
+          "multispan_requirements": 1,
+          "selected_evidence_spans": 5,
+          "v14_supported_probability": 0.62682134,
+          "v14_unverifiable_probability": 0.00090728
+        },
+        "v14_prediction": "partially_supported",
+        "v15_prediction": "supported"
+      },
+      {
+        "case_id": "averitec_dev_0141",
+        "claim_sha256": "df2811de192ec881e7cce9e8099266f4862764b36dba9e7f6422b04085c24099",
+        "dataset": "AVeriTeC",
+        "expected_verdict": "contradicted",
+        "flags": {
+          "cross_span_conflict_signal": false,
+          "false_support": true,
+          "false_support_from_v17_rescue": false,
+          "incorrect": true,
+          "visible_relation_contradiction": false
+        },
+        "prediction": "supported",
+        "signals": {
+          "atomic_requirements": 1,
+          "atomic_verdict": "supported",
+          "complete_support_probability": 0.98578249,
+          "empty_multispan_requirements": 0,
+          "maximum_multispan_contradiction": 0.04,
+          "maximum_relation_contradiction": 0.1666,
+          "maximum_relation_entailment": 0.9821,
+          "maximum_relation_neutral": 0.6502,
+          "minimum_single_span_entailment": 0.981,
+          "multispan_requirements": 1,
+          "selected_evidence_spans": 8,
+          "v14_supported_probability": 0.94748871,
+          "v14_unverifiable_probability": 0.0007285
+        },
+        "v14_prediction": "supported",
+        "v15_prediction": "supported"
+      },
+      {
+        "case_id": "averitec_dev_0185",
+        "claim_sha256": "7fcd6e3bbcfa820195b529fa040d2f0e9fd22ecb5303fbeb51f5338bd7890132",
+        "dataset": "AVeriTeC",
+        "expected_verdict": "contradicted",
+        "flags": {
+          "cross_span_conflict_signal": true,
+          "false_support": true,
+          "false_support_from_v17_rescue": false,
+          "incorrect": true,
+          "visible_relation_contradiction": true
+        },
+        "prediction": "supported",
+        "signals": {
+          "atomic_requirements": 1,
+          "atomic_verdict": "unsupported",
+          "complete_support_probability": 0.92795854,
+          "empty_multispan_requirements": 0,
+          "maximum_multispan_contradiction": 0.186,
+          "maximum_relation_contradiction": 0.6372,
+          "maximum_relation_entailment": 0.6686,
+          "maximum_relation_neutral": 0.8002,
+          "minimum_single_span_entailment": 0.202,
+          "multispan_requirements": 1,
+          "selected_evidence_spans": 8,
+          "v14_supported_probability": 0.96943372,
+          "v14_unverifiable_probability": 0.00078629
+        },
+        "v14_prediction": "supported",
+        "v15_prediction": "supported"
+      },
+      {
+        "case_id": "averitec_dev_0223",
+        "claim_sha256": "c3ec01d5e44d46f83493e7706f18fae67f26e330203bbc4de8f387f8b2754aac",
+        "dataset": "AVeriTeC",
+        "expected_verdict": "unsupported",
+        "flags": {
+          "cross_span_conflict_signal": false,
+          "false_support": true,
+          "false_support_from_v17_rescue": false,
+          "incorrect": true,
+          "visible_relation_contradiction": false
+        },
+        "prediction": "supported",
+        "signals": {
+          "atomic_requirements": 1,
+          "atomic_verdict": "supported",
+          "complete_support_probability": 0.86155697,
+          "empty_multispan_requirements": 0,
+          "maximum_multispan_contradiction": 0.481,
+          "maximum_relation_contradiction": 0.1525,
+          "maximum_relation_entailment": 0.5039,
+          "maximum_relation_neutral": 0.7466,
+          "minimum_single_span_entailment": 0.504,
+          "multispan_requirements": 1,
+          "selected_evidence_spans": 3,
+          "v14_supported_probability": 0.73133799,
+          "v14_unverifiable_probability": 0.00510539
+        },
+        "v14_prediction": "partially_supported",
+        "v15_prediction": "supported"
+      },
+      {
+        "case_id": "averitec_dev_0233",
+        "claim_sha256": "afde8845c313ef0f369538fbdc7d138d9955536b2c2e72f2569089c0fc87696a",
+        "dataset": "AVeriTeC",
+        "expected_verdict": "unsupported",
+        "flags": {
+          "cross_span_conflict_signal": false,
+          "false_support": true,
+          "false_support_from_v17_rescue": false,
+          "incorrect": true,
+          "visible_relation_contradiction": false
+        },
+        "prediction": "supported",
+        "signals": {
+          "atomic_requirements": 1,
+          "atomic_verdict": "supported",
+          "complete_support_probability": 0.99421865,
+          "empty_multispan_requirements": 0,
+          "maximum_multispan_contradiction": 0.027,
+          "maximum_relation_contradiction": 0.1677,
+          "maximum_relation_entailment": 0.9014,
+          "maximum_relation_neutral": 0.9684,
+          "minimum_single_span_entailment": 0.901,
+          "multispan_requirements": 1,
+          "selected_evidence_spans": 8,
+          "v14_supported_probability": 0.88124136,
+          "v14_unverifiable_probability": 0.00158377
+        },
+        "v14_prediction": "partially_supported",
+        "v15_prediction": "supported"
+      },
+      {
+        "case_id": "averitec_dev_0294",
+        "claim_sha256": "b580026cee0a81acb7b46f876fcb3cb65eadf13a3a312508ccc6b3f567d2687d",
+        "dataset": "AVeriTeC",
+        "expected_verdict": "contradicted",
+        "flags": {
+          "cross_span_conflict_signal": false,
+          "false_support": true,
+          "false_support_from_v17_rescue": false,
+          "incorrect": true,
+          "visible_relation_contradiction": false
+        },
+        "prediction": "supported",
+        "signals": {
+          "atomic_requirements": 1,
+          "atomic_verdict": "supported",
+          "complete_support_probability": 0.96113706,
+          "empty_multispan_requirements": 0,
+          "maximum_multispan_contradiction": 0.197,
+          "maximum_relation_contradiction": 0.072,
+          "maximum_relation_entailment": 0.4387,
+          "maximum_relation_neutral": 0.8526,
+          "minimum_single_span_entailment": 0.439,
+          "multispan_requirements": 1,
+          "selected_evidence_spans": 4,
+          "v14_supported_probability": 0.90910871,
+          "v14_unverifiable_probability": 0.00359713
+        },
+        "v14_prediction": "supported",
+        "v15_prediction": "supported"
+      },
+      {
+        "case_id": "averitec_dev_0363",
+        "claim_sha256": "0f80afb2daf2a7d7a387044b1bbe238043191399ab31c8260be04cfde137a3c5",
+        "dataset": "AVeriTeC",
+        "expected_verdict": "contradicted",
+        "flags": {
+          "cross_span_conflict_signal": false,
+          "false_support": true,
+          "false_support_from_v17_rescue": false,
+          "incorrect": true,
+          "visible_relation_contradiction": false
+        },
+        "prediction": "supported",
+        "signals": {
+          "atomic_requirements": 1,
+          "atomic_verdict": "supported",
+          "complete_support_probability": 0.99747453,
+          "empty_multispan_requirements": 0,
+          "maximum_multispan_contradiction": 0.104,
+          "maximum_relation_contradiction": 0.093,
+          "maximum_relation_entailment": 0.9343,
+          "maximum_relation_neutral": 0.7711,
+          "minimum_single_span_entailment": 0.958,
+          "multispan_requirements": 1,
+          "selected_evidence_spans": 3,
+          "v14_supported_probability": 0.90575144,
+          "v14_unverifiable_probability": 0.00361354
+        },
+        "v14_prediction": "supported",
+        "v15_prediction": "supported"
+      },
+      {
+        "case_id": "averitec_dev_0428",
+        "claim_sha256": "aaddda89f9051365470b67c2d4e593f831c7471d421a9c3a3c0e487d5ec4f2dd",
+        "dataset": "AVeriTeC",
+        "expected_verdict": "unsupported",
+        "flags": {
+          "cross_span_conflict_signal": false,
+          "false_support": true,
+          "false_support_from_v17_rescue": false,
+          "incorrect": true,
+          "visible_relation_contradiction": false
+        },
+        "prediction": "supported",
+        "signals": {
+          "atomic_requirements": 1,
+          "atomic_verdict": "supported",
+          "complete_support_probability": 0.9639631,
+          "empty_multispan_requirements": 0,
+          "maximum_multispan_contradiction": 0.027,
+          "maximum_relation_contradiction": 0.1219,
+          "maximum_relation_entailment": 0.9772,
+          "maximum_relation_neutral": 0.6505,
+          "minimum_single_span_entailment": 0.977,
+          "multispan_requirements": 1,
+          "selected_evidence_spans": 7,
+          "v14_supported_probability": 0.69342952,
+          "v14_unverifiable_probability": 0.00146828
+        },
+        "v14_prediction": "partially_supported",
+        "v15_prediction": "supported"
+      },
+      {
+        "case_id": "averitec_dev_0464",
+        "claim_sha256": "bf5dc6c3295585c5ef51e5cd3a6651d3a8b3664b24eb3923218f0cd08b78000f",
+        "dataset": "AVeriTeC",
+        "expected_verdict": "contradicted",
+        "flags": {
+          "cross_span_conflict_signal": true,
+          "false_support": true,
+          "false_support_from_v17_rescue": false,
+          "incorrect": true,
+          "visible_relation_contradiction": true
+        },
+        "prediction": "supported",
+        "signals": {
+          "atomic_requirements": 1,
+          "atomic_verdict": "supported",
+          "complete_support_probability": 0.99738001,
+          "empty_multispan_requirements": 0,
+          "maximum_multispan_contradiction": 0.403,
+          "maximum_relation_contradiction": 0.7001,
+          "maximum_relation_entailment": 0.9109,
+          "maximum_relation_neutral": 0.7752,
+          "minimum_single_span_entailment": 0.911,
+          "multispan_requirements": 1,
+          "selected_evidence_spans": 8,
+          "v14_supported_probability": 0.94710728,
+          "v14_unverifiable_probability": 0.0003177
+        },
+        "v14_prediction": "supported",
+        "v15_prediction": "supported"
+      },
+      {
+        "case_id": "averitec_dev_0496",
+        "claim_sha256": "349c4918c60f088016cd1d5b77acf9b37c9e00647ddc7e79eebd4721427c2269",
+        "dataset": "AVeriTeC",
+        "expected_verdict": "unverifiable",
+        "flags": {
+          "cross_span_conflict_signal": false,
+          "false_support": true,
+          "false_support_from_v17_rescue": false,
+          "incorrect": true,
+          "visible_relation_contradiction": false
+        },
+        "prediction": "supported",
+        "signals": {
+          "atomic_requirements": 1,
+          "atomic_verdict": "supported",
+          "complete_support_probability": 0.96682663,
+          "empty_multispan_requirements": 0,
+          "maximum_multispan_contradiction": 0.03,
+          "maximum_relation_contradiction": 0.1179,
+          "maximum_relation_entailment": 0.9072,
+          "maximum_relation_neutral": 0.7494,
+          "minimum_single_span_entailment": 0.907,
+          "multispan_requirements": 1,
+          "selected_evidence_spans": 8,
+          "v14_supported_probability": 0.68915342,
+          "v14_unverifiable_probability": 0.00104503
+        },
+        "v14_prediction": "partially_supported",
+        "v15_prediction": "supported"
+      },
+      {
+        "case_id": "wice_test00056",
+        "claim_sha256": "dffbb4086ba1531b71de447f619414f2ea3165516be24a51cff65524f69d248e",
+        "dataset": "WiCE",
+        "expected_verdict": "partially_supported",
+        "flags": {
+          "cross_span_conflict_signal": false,
+          "false_support": true,
+          "false_support_from_v17_rescue": false,
+          "incorrect": true,
+          "visible_relation_contradiction": false
+        },
+        "prediction": "supported",
+        "signals": {
+          "atomic_requirements": 1,
+          "atomic_verdict": "supported",
+          "complete_support_probability": 0.97891292,
+          "empty_multispan_requirements": 0,
+          "maximum_multispan_contradiction": 0.058,
+          "maximum_relation_contradiction": 0.1881,
+          "maximum_relation_entailment": 0.9496,
+          "maximum_relation_neutral": 0.722,
+          "minimum_single_span_entailment": 0.95,
+          "multispan_requirements": 1,
+          "selected_evidence_spans": 8,
+          "v14_supported_probability": 0.94030091,
+          "v14_unverifiable_probability": 0.00015061
+        },
+        "v14_prediction": "supported",
+        "v15_prediction": "supported"
+      },
+      {
+        "case_id": "wice_test00342",
+        "claim_sha256": "94e6f86251fffd66820c3716108b3a9798ef963a025af7a424c04e3cad33a30d",
+        "dataset": "WiCE",
+        "expected_verdict": "partially_supported",
+        "flags": {
+          "cross_span_conflict_signal": false,
+          "false_support": true,
+          "false_support_from_v17_rescue": false,
+          "incorrect": true,
+          "visible_relation_contradiction": false
+        },
+        "prediction": "supported",
+        "signals": {
+          "atomic_requirements": 1,
+          "atomic_verdict": "supported",
+          "complete_support_probability": 0.96305249,
+          "empty_multispan_requirements": 0,
+          "maximum_multispan_contradiction": 0.015,
+          "maximum_relation_contradiction": 0.0223,
+          "maximum_relation_entailment": 0.9426,
+          "maximum_relation_neutral": 0.5468,
+          "minimum_single_span_entailment": 0.943,
+          "multispan_requirements": 1,
+          "selected_evidence_spans": 8,
+          "v14_supported_probability": 0.95838322,
+          "v14_unverifiable_probability": 0.00025592
+        },
+        "v14_prediction": "supported",
+        "v15_prediction": "supported"
+      },
+      {
+        "case_id": "wice_test00732",
+        "claim_sha256": "63ae1f13f85efa6f438c505ef216a71eea4091d33d5de4c5823d48b1a074839a",
+        "dataset": "WiCE",
+        "expected_verdict": "partially_supported",
+        "flags": {
+          "cross_span_conflict_signal": false,
+          "false_support": true,
+          "false_support_from_v17_rescue": false,
+          "incorrect": true,
+          "visible_relation_contradiction": false
+        },
+        "prediction": "supported",
+        "signals": {
+          "atomic_requirements": 1,
+          "atomic_verdict": "supported",
+          "complete_support_probability": 0.96508413,
+          "empty_multispan_requirements": 0,
+          "maximum_multispan_contradiction": 0.353,
+          "maximum_relation_contradiction": 0.3597,
+          "maximum_relation_entailment": 0.9207,
+          "maximum_relation_neutral": 0.4919,
+          "minimum_single_span_entailment": 0.921,
+          "multispan_requirements": 1,
+          "selected_evidence_spans": 8,
+          "v14_supported_probability": 0.15111995,
+          "v14_unverifiable_probability": 0.00070311
+        },
+        "v14_prediction": "partially_supported",
+        "v15_prediction": "supported"
+      },
+      {
+        "case_id": "wice_test01448",
+        "claim_sha256": "468014671a0df2b9f781e102b3047662f9e7ada4052d31b518bf70a95c9fbb3b",
+        "dataset": "WiCE",
+        "expected_verdict": "partially_supported",
+        "flags": {
+          "cross_span_conflict_signal": false,
+          "false_support": true,
+          "false_support_from_v17_rescue": false,
+          "incorrect": true,
+          "visible_relation_contradiction": false
+        },
+        "prediction": "supported",
+        "signals": {
+          "atomic_requirements": 3,
+          "atomic_verdict": "supported",
+          "complete_support_probability": 0.89401908,
+          "empty_multispan_requirements": 0,
+          "maximum_multispan_contradiction": 0.115,
+          "maximum_relation_contradiction": 0.1408,
+          "maximum_relation_entailment": 0.8381,
+          "maximum_relation_neutral": 0.4954,
+          "minimum_single_span_entailment": 0.499,
+          "multispan_requirements": 3,
+          "selected_evidence_spans": 8,
+          "v14_supported_probability": 0.01928054,
+          "v14_unverifiable_probability": 0.00018366
+        },
+        "v14_prediction": "partially_supported",
+        "v15_prediction": "supported"
+      }
+    ]
+  },
+  "inputs": {
+    "atomic_rows_sha256": "1698d1ab5053b948b891e55448b51e484b3a53d96c899eaeaa858a6c7ade0bba",
+    "cases": 125,
+    "confirmation_rows_sha256": "cf833de66612e05414b6481ba11c6f12c60c5d833fd16bac94b97761cb16d84c",
+    "dataset_sha256": "2fa52ad909c62cee9b610191aea89d5ab74523446a411070c0a96c387f36050c",
+    "multispan_rows_sha256": "d0eb2c3c433dcc4ae27b7abb000e6dc8bb31fb2eba60955c901a7c35fed9cd89",
+    "relation_rows_sha256": "bae01eb84906afaeeaaae583423b699b4e1e000788e4bcada6bc96d6b20313ca"
+  },
+  "label_summaries": {
+    "contradicted": {
+      "cases": 25,
+      "correct": 5,
+      "prediction_counts": {
+        "contradicted": 5,
+        "partially_supported": 5,
+        "supported": 7,
+        "unsupported": 8
+      },
+      "recall": 0.2,
+      "signal_means": {
+        "complete_support_probability": 0.6128,
+        "maximum_relation_contradiction": 0.4072,
+        "maximum_relation_entailment": 0.5321,
+        "maximum_relation_neutral": 0.6771,
+        "minimum_single_span_entailment": 0.4636,
+        "v14_supported_probability": 0.3402,
+        "v14_unverifiable_probability": 0.0054
+      }
+    },
+    "partially_supported": {
+      "cases": 25,
+      "correct": 12,
+      "prediction_counts": {
+        "partially_supported": 12,
+        "supported": 4,
+        "unsupported": 9
+      },
+      "recall": 0.48,
+      "signal_means": {
+        "complete_support_probability": 0.4435,
+        "maximum_relation_contradiction": 0.266,
+        "maximum_relation_entailment": 0.6611,
+        "maximum_relation_neutral": 0.6902,
+        "minimum_single_span_entailment": 0.5312,
+        "v14_supported_probability": 0.3397,
+        "v14_unverifiable_probability": 0.0016
+      }
+    },
+    "supported": {
+      "cases": 25,
+      "correct": 9,
+      "prediction_counts": {
+        "contradicted": 8,
+        "partially_supported": 7,
+        "supported": 9,
+        "unsupported": 1
+      },
+      "recall": 0.36,
+      "signal_means": {
+        "complete_support_probability": 0.5589,
+        "maximum_relation_contradiction": 0.2499,
+        "maximum_relation_entailment": 0.733,
+        "maximum_relation_neutral": 0.6977,
+        "minimum_single_span_entailment": 0.6954,
+        "v14_supported_probability": 0.5211,
+        "v14_unverifiable_probability": 0.0036
+      }
+    },
+    "unsupported": {
+      "cases": 25,
+      "correct": 3,
+      "prediction_counts": {
+        "contradicted": 7,
+        "partially_supported": 11,
+        "supported": 4,
+        "unsupported": 3
+      },
+      "recall": 0.12,
+      "signal_means": {
+        "complete_support_probability": 0.533,
+        "maximum_relation_contradiction": 0.198,
+        "maximum_relation_entailment": 0.4398,
+        "maximum_relation_neutral": 0.757,
+        "minimum_single_span_entailment": 0.4131,
+        "v14_supported_probability": 0.3121,
+        "v14_unverifiable_probability": 0.0084
+      }
+    },
+    "unverifiable": {
+      "cases": 25,
+      "correct": 0,
+      "prediction_counts": {
+        "contradicted": 2,
+        "partially_supported": 7,
+        "supported": 7,
+        "unsupported": 9
+      },
+      "recall": 0.0,
+      "signal_means": {
+        "complete_support_probability": 0.5212,
+        "maximum_relation_contradiction": 0.4068,
+        "maximum_relation_entailment": 0.5831,
+        "maximum_relation_neutral": 0.707,
+        "minimum_single_span_entailment": 0.5038,
+        "v14_supported_probability": 0.3291,
+        "v14_unverifiable_probability": 0.0026
+      }
+    }
+  },
+  "local_only_network_calls": 0,
+  "posthoc_relation_contradiction_guard": {
+    "any_candidate_passes_all_gates": false,
+    "best_safe_candidate": {
+      "all_gates_met": false,
+      "contradiction_false_supports": 0,
+      "false_support_rate": 0.02,
+      "maximum_relation_contradiction": 0.0693,
+      "review_rate": 0.544,
+      "support_recall": 0.12
+    },
+    "candidate_count": 33,
+    "conclusion": "a_relation_contradiction_cap_cannot_recover_safe_support_recall",
+    "diagnostic_only_not_a_selected_policy": true
+  },
+  "prior_jev_evidence": {
+    "cascade_false_support_rate": 0.0208,
+    "cascade_five_way_accuracy": 0.7639,
+    "cascade_remote_call_rate": 0.9583,
+    "cascade_supported_recall": 0.7917,
+    "direct_accuracy": 0.75,
+    "direct_cases": 72,
+    "direct_false_support_rate": 0.0833,
+    "direct_observed_label_macro_f1": 0.7668,
+    "mean_latency_ms": 237.927,
+    "not_directly_comparable_to_v19": true,
+    "resolved_model": "jev-1.13.0",
+    "source": "ragtruth_sentence_extension_heldout_jev_and_frozen_cascade",
+    "total_tokens": 149499
+  },
+  "protocol": {
+    "confirmation_claim_made": false,
+    "diagnostic_categories_are_rule_based_hypotheses": true,
+    "model_training_performed": false,
+    "raw_claim_or_evidence_text_retained": false,
+    "split": "external_fiveway_v19_confirmation",
+    "threshold_or_policy_selected": false,
+    "v19_is_consumed_diagnostic_data": true
+  },
+  "recommended_next_work": [
+    "train relation and verdict features on domain-diverse claim-evidence data",
+    "add an explicit cross-span conflict feature and hard support guard",
+    "learn unsupported and unverifiable behavior from evidence-insufficiency and conflict examples",
+    "calibrate support probability by source domain without using dataset identity as a feature",
+    "evaluate Jev only as an optional review-path signal until a fresh safety test passes",
+    "freeze the next candidate before accessing a new confirmation source"
+  ],
+  "remote_inference_used": false,
+  "remote_provider_default_enabled": false,
+  "reproduced_metrics": {
+    "accuracy": 0.232,
+    "confusion": {
+      "contradicted": {
+        "contradicted": 5,
+        "partially_supported": 5,
+        "supported": 7,
+        "unsupported": 8,
+        "unverifiable": 0
+      },
+      "partially_supported": {
+        "contradicted": 0,
+        "partially_supported": 12,
+        "supported": 4,
+        "unsupported": 9,
+        "unverifiable": 0
+      },
+      "supported": {
+        "contradicted": 8,
+        "partially_supported": 7,
+        "supported": 9,
+        "unsupported": 1,
+        "unverifiable": 0
+      },
+      "unsupported": {
+        "contradicted": 7,
+        "partially_supported": 11,
+        "supported": 4,
+        "unsupported": 3,
+        "unverifiable": 0
+      },
+      "unverifiable": {
+        "contradicted": 2,
+        "partially_supported": 7,
+        "supported": 7,
+        "unsupported": 9,
+        "unverifiable": 0
+      }
+    },
+    "contradiction_false_supports": 7,
+    "false_support_rate": 0.22,
+    "false_supports": 22,
+    "gates": {
+      "all_met": false,
+      "false_support_rate": false,
+      "partial_or_ambiguous_review_recall": false,
+      "review_rate": true,
+      "support_recall": false,
+      "zero_contradiction_false_supports": false
+    },
+    "macro_f1": 0.2003,
+    "partial_or_ambiguous_review_recall": 0.38,
+    "per_label": {
+      "contradicted": {
+        "f1": 0.2128,
+        "precision": 0.2273,
+        "recall": 0.2,
+        "support": 25
+      },
+      "partially_supported": {
+        "f1": 0.3582,
+        "precision": 0.2857,
+        "recall": 0.48,
+        "support": 25
+      },
+      "supported": {
+        "f1": 0.3214,
+        "precision": 0.2903,
+        "recall": 0.36,
+        "support": 25
+      },
+      "unsupported": {
+        "f1": 0.1091,
+        "precision": 0.1,
+        "recall": 0.12,
+        "support": 25
+      },
+      "unverifiable": {
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "support": 25
+      }
+    },
+    "review_rate": 0.336,
+    "support_recall": 0.36
+  },
+  "schema_version": "contexttrace-v20-transfer-failure-audit-1.0",
+  "stable_defaults_changed": false,
+  "status": "diagnostic_complete"
+}
