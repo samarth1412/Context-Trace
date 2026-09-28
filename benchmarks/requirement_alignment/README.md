@@ -967,3 +967,24 @@ hash-verified DeBERTa NLI checkpoint. Strong relation and atomic signals raise
 direct accuracy to 45.4% and macro-F1 to 0.4402, but the safe policy recognizes
 only 1% of supported claims. V23 is rejected, no confirmation data is spent,
 and stable defaults remain unchanged.
+
+## V24: explicit support-risk heads
+
+Train separate out-of-fold heads for support, contradiction risk, and review
+risk, using the V23 five-way probabilities only to route non-support cases:
+
+```bash
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.v24_support_risk \
+  --development /private/tmp/contexttrace_external_data/v21_development.json \
+  --relation-scores /private/tmp/contexttrace_external_data/v23_relation_scores.json \
+  --atomic-scores /private/tmp/contexttrace_external_data/v23_atomic_scores.json \
+  --multispan-scores /private/tmp/contexttrace_external_data/v21_multispan_scores.json \
+  --routing-result benchmarks/requirement_alignment/results/v23_stronger_nli_atomic_screen.json \
+  --output benchmarks/requirement_alignment/results/v24_support_risk.json
+```
+
+`V24_SUPPORT_RISK.md` records the rejected result. The explicit heads improve
+safe supported recall from 1% to 7%, with one false support and zero
+contradiction false supports, but remain far below the 50% recall gate. This
+closes further threshold and classical-head tuning on the current features.
