@@ -746,3 +746,34 @@ threshold policy passes all gates: the safest frontier remains at 40% support
 recall, while reaching 52% raises false supports to 9% and admits a
 contradiction. The next experiment targets claim decomposition and evidence
 combination while retaining the existing safety guards.
+
+## V17: decomposition and multi-span completeness
+
+Score the three deterministic decomposition candidates and all singleton,
+pair, and triple combinations of up to four selected evidence spans. The raw
+text-free score artifact remains in external local storage.
+
+```bash
+PYTHONPATH=packages/contexttrace:. HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
+  .venv/bin/python -m benchmarks.requirement_alignment.score_v17_multispan \
+  --dataset /private/tmp/contexttrace_external_data/v13_development.json \
+  --model-path /private/tmp/contexttrace_external_data/climate_fever/v11_relation_candidate \
+  --model-manifest benchmarks/requirement_alignment/results/v11_relation_model_manifest.json \
+  --output /private/tmp/contexttrace_external_data/v17_multispan_scores.json
+
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.v17_multispan_completeness \
+  --development /private/tmp/contexttrace_external_data/v13_development.json \
+  --relation-scores /private/tmp/contexttrace_external_data/v13_development_scores.json \
+  --v14-report benchmarks/requirement_alignment/results/v14_fiveway_policy.json \
+  --v15-atomic-scores /private/tmp/contexttrace_external_data/v15_atomic_scores.json \
+  --v15-report benchmarks/requirement_alignment/results/v15_atomic_completeness.json \
+  --v17-scores /private/tmp/contexttrace_external_data/v17_multispan_scores.json \
+  --output benchmarks/requirement_alignment/results/v17_multispan_completeness.json
+```
+
+`V17_MULTISPAN_COMPLETENESS.md` records the first five-gate development
+candidate. The frozen targeted rescue reaches 52% support recall, retains a 4%
+false-support rate with zero contradiction false supports, and reduces review
+volume to 45.6%. It remains ineligible for packaging until it passes a newly
+frozen untouched confirmation set.
