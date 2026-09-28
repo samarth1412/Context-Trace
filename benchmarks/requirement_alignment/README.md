@@ -694,3 +694,31 @@ PYTHONPATH=packages/contexttrace:. .venv/bin/python \
 macro-F1 reached 0.6549, false supports fell to 2%, and contradiction recall
 reached 92%, but support recall was only 20% and the 50% release gate failed.
 No candidate is promoted or packaged.
+
+## V15: atomic completeness fusion
+
+V15 scores deterministic atomic requirements with the frozen V11 model, then
+fuses those label-blind signals with V14 out-of-fold probabilities. Both steps
+accept only V13 development artifacts.
+
+```bash
+PYTHONPATH=packages/contexttrace:. HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
+  .venv/bin/python -m benchmarks.requirement_alignment.score_v15_atomic \
+  --dataset /private/tmp/contexttrace_external_data/v13_development.json \
+  --model-path /private/tmp/contexttrace_external_data/climate_fever/v11_relation_candidate \
+  --model-manifest benchmarks/requirement_alignment/results/v11_relation_model_manifest.json \
+  --output /private/tmp/contexttrace_external_data/v15_atomic_scores.json
+
+PYTHONPATH=packages/contexttrace:. .venv/bin/python \
+  -m benchmarks.requirement_alignment.v15_atomic_completeness \
+  --development /private/tmp/contexttrace_external_data/v13_development.json \
+  --relation-scores /private/tmp/contexttrace_external_data/v13_development_scores.json \
+  --v14-report benchmarks/requirement_alignment/results/v14_fiveway_policy.json \
+  --atomic-scores /private/tmp/contexttrace_external_data/v15_atomic_scores.json \
+  --output benchmarks/requirement_alignment/results/v15_atomic_completeness.json
+```
+
+`V15_ATOMIC_COMPLETENESS.md` records a positive but ineligible result. Macro-F1
+reached 0.7005, support recall doubled to 40%, false supports remained at 4%,
+and four of five release gates passed. The remaining support-recall gate needs
+three additional correct cases, so no model artifact is retained.
