@@ -1,0 +1,79 @@
+{
+  "artifact": {
+    "bytes": 139768,
+    "format": "joblib",
+    "path": "v18_frozen_candidate.joblib",
+    "sha256": "bcc5f0d2e66edbb5a400c5c54bb59a31a39ac1a6ce02ff38602b5f0af6288009",
+    "trusted_local_artifact_only": true
+  },
+  "candidate": {
+    "v14": {
+      "estimator": "hist_leaves_3_minimum_10",
+      "feature_count": 54,
+      "feature_names_sha256": "6649ad5e2971ebcf76569928227b4e090f99b54305ef10dbdf7a724f1750b353",
+      "policy": {
+        "contradiction_probability_maximum": 0.2,
+        "partial_or_ambiguous_probability_maximum": 0.2,
+        "support_probability_minimum": 0.9
+      }
+    },
+    "v15": {
+      "estimator": "hist_minimum_5",
+      "feature_count": 93,
+      "feature_names_sha256": "69a557dcbc5fbfff04d49ffd3cb755e458f4d54cb8fed95d0ff8fd26fd7d9eb2",
+      "feature_set": "atomic_v14_relation",
+      "policy": {
+        "complete_support_probability_minimum": 0.8,
+        "contradiction_probability_maximum": 0.2,
+        "unverifiable_probability_maximum": 0.4
+      }
+    },
+    "v17": {
+      "minimum_single_span_entailment": 0.7,
+      "route_requirement": "v14_prediction_supported",
+      "threshold_source": "frozen_atomic_coverage_entailment_threshold"
+    }
+  },
+  "experiment": "contexttrace_v18_frozen_candidate",
+  "local_only_network_calls": 0,
+  "protocol": {
+    "configuration_changed_after_v17": false,
+    "confirmation_data_loaded": false,
+    "confirmation_labels_loaded": false,
+    "confirmation_predictions_inspected": false,
+    "development_fitted_once": true,
+    "evaluation_labels_in_model_features": false,
+    "future_confirmation_retraining_allowed": false
+  },
+  "remote_inference_used": false,
+  "remote_provider_default_enabled": false,
+  "runtime": {
+    "joblib": "1.5.3",
+    "numpy": "2.5.0",
+    "python": "3.14.6",
+    "scikit_learn": "1.9.0"
+  },
+  "schema_version": "contexttrace-v18-frozen-candidate-manifest-1.0",
+  "selection_reports": {
+    "v14_rows_sha256": "6325a78b1b9376d0a2d292724abab2b15bc83ff43949ed593d151e669dc5736e",
+    "v15_rows_sha256": "70d997240343fd01d6335c4c0d619616cda2e007456d211c78c6020488063569",
+    "v17_rows_sha256": "db91b7937cab0d9e9021adabd78cd36f1f481eafb867e9aceed1ce9ee4e13b49"
+  },
+  "stable_defaults_changed": false,
+  "status": "frozen_before_new_confirmation_data_access",
+  "training": {
+    "atomic_rows_sha256": "93c22b0ac3ac49f15ab8647401e7b5cba60364466efa4b52e88ffb2178304557",
+    "binary_completeness_cases": 50,
+    "cases": 125,
+    "development_sha256": "085092c67f125ecbfdd6cb5091cdbbc398dbce63d78d3f6e53ff4df268798d8e",
+    "five_way_label_counts": {
+      "contradicted": 25,
+      "partially_supported": 25,
+      "supported": 25,
+      "unsupported": 25,
+      "unverifiable": 25
+    },
+    "relation_rows_sha256": "3ffbafcb37ad4ec009d2cccaf42e827065632360f97f4065876a15deac5b1f75",
+    "split": "external_fiveway_v13_development"
+  }
+}

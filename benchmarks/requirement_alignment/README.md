@@ -777,3 +777,27 @@ candidate. The frozen targeted rescue reaches 52% support recall, retains a 4%
 false-support rate with zero contradiction false supports, and reduces review
 volume to 45.6%. It remains ineligible for packaging until it passes a newly
 frozen untouched confirmation set.
+
+## V18: frozen confirmation candidate
+
+Fit the selected V14 and V15 estimator configurations on all consumed V13
+development cases, then freeze them with the unchanged V17 rescue policy before
+accessing new confirmation data.
+
+```bash
+PYTHONPATH=packages/contexttrace:. LOKY_MAX_CPU_COUNT=8 .venv/bin/python \
+  -m benchmarks.requirement_alignment.freeze_v18_candidate \
+  --development /private/tmp/contexttrace_external_data/v13_development.json \
+  --relation-scores /private/tmp/contexttrace_external_data/v13_development_scores.json \
+  --v14-report benchmarks/requirement_alignment/results/v14_fiveway_policy.json \
+  --atomic-scores /private/tmp/contexttrace_external_data/v15_atomic_scores.json \
+  --v15-report benchmarks/requirement_alignment/results/v15_atomic_completeness.json \
+  --v17-report benchmarks/requirement_alignment/results/v17_multispan_completeness.json \
+  --artifact-output /private/tmp/contexttrace_external_data/v18_frozen_candidate.joblib \
+  --manifest-output benchmarks/requirement_alignment/results/v18_frozen_candidate_manifest.json
+```
+
+`V18_FROZEN_CANDIDATE.md` records the protocol boundary. The external artifact
+rebuilds byte-for-byte with its committed SHA-256 manifest. Full-development
+fit outputs are not evaluation evidence; the next valid result must come from
+one untouched confirmation run with no retraining or policy changes.
