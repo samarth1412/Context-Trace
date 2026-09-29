@@ -1,0 +1,83 @@
+{
+  "assessment": "Selection-biased development diagnostics; cross-fold routing sensitivity on existing OOF scores is not independent validation because training folds overlap.",
+  "class_probabilities": "unchanged uncalibrated V25 OOF probabilities",
+  "contradiction_caps": [
+    0.001,
+    0.002,
+    0.005,
+    0.01,
+    0.02,
+    0.05,
+    0.1,
+    0.2
+  ],
+  "evidence_changed": false,
+  "experiment": "contexttrace_v26_routing_diagnosis",
+  "future_confirmation_loaded": false,
+  "labels_changed": false,
+  "model_retrained": false,
+  "motivation": "User requests diagnosing and improving support and review recall; reopen only a bounded saved-score routing ablation after V25 stop rule.",
+  "new_inference_calls": 0,
+  "prior_observations": [
+    "Direct support recall 59%, routed 11%; support cutoff 0.95",
+    "Old contradiction caps start at 0.20",
+    "Three contradicted targets have support score above 0.92",
+    "Review recall 156/200 at 247/500 review decisions",
+    "Zero supported-target cases truncated"
+  ],
+  "release_gate_eligible": false,
+  "review_rule": "After support gate: None uses legacy non-support argmax; otherwise compare (partial+unverifiable)/(1-supported) with threshold, then choose argmax within review or rejection group.",
+  "review_thresholds": [
+    null,
+    0.2,
+    0.25,
+    0.3,
+    0.35,
+    0.4,
+    0.45,
+    0.5,
+    0.55,
+    0.6,
+    0.65,
+    0.7,
+    0.75,
+    0.8
+  ],
+  "risk_modes": [
+    "absolute",
+    "conditional_on_not_supported"
+  ],
+  "selection": "Require unchanged safety gates, review rate <=0.50, and both recalls >= recorded baseline; rank support recall, review recall, lower false supports, macro-F1. Also report selection requiring false supports <= baseline.",
+  "source_sha256": "3591e1a30857ba4621db07dd33f045af9d0e0e6116bb4b6625fbef8e0cc93e7d",
+  "stable_defaults_changed": false,
+  "status": "frozen_before_policy_screen",
+  "stop_rule": "Exactly two risk modes and the frozen grids, no expanded search based on outcomes. Do not promote. Diagnose remaining model/data limits.",
+  "support_review_caps": [
+    0.1,
+    0.2,
+    0.4,
+    0.6,
+    0.8,
+    1.0
+  ],
+  "support_rule": "Support probability threshold plus contradiction and partial+unverifiable caps; risk mode chooses absolute or normalized-by-non-support caps.",
+  "support_thresholds": [
+    0.2,
+    0.25,
+    0.3,
+    0.35,
+    0.4,
+    0.45,
+    0.5,
+    0.55,
+    0.6,
+    0.65,
+    0.7,
+    0.75,
+    0.8,
+    0.85,
+    0.9,
+    0.95
+  ],
+  "variant": "restored_selected_qa"
+}
