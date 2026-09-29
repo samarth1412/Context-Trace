@@ -21,6 +21,7 @@ jobs:
           python -m pip install --upgrade pip "setuptools>=83"
           python -m pip install -e "./apps/api[test]"
           python -m pip install -e "./packages/contexttrace[test,quality]"
+          python -m pip install -r benchmarks/requirements-ci.txt
       - name: Run tests with coverage gate
         env:
           PYTHONWARNINGS: error::ResourceWarning

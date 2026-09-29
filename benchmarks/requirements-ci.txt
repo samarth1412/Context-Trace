@@ -1,0 +1,6 @@
+# CPU-only dependencies for benchmark metrics, frozen router replay, and artifact checks.
+# These are CI dependencies, not ContextTrace runtime dependencies.
+# Tensor loss tests require an optional local PyTorch install and otherwise skip.
+numpy>=1.26,<3
+scikit-learn>=1.5,<2
+joblib>=1.4,<2
