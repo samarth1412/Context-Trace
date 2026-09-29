@@ -1,0 +1,1847 @@
+{
+  "approved_label_changes": 0,
+  "candidate_rescored_against_proposals": false,
+  "candidate_retrained": false,
+  "dataset_sha256": "1111f84c53edc6b61765f1ee6d4d56924df7c827775b43b59e22da7d117dde45",
+  "experiment": "contexttrace_v25_blinded_label_review",
+  "explicit_adjudication_flags": 56,
+  "freeze_sha256": "46a26a58e4a40ccee1d30029b9ff1afc0caf52535f10064d8b7ffdcce8cac3c1",
+  "human_verified": false,
+  "inherited_to_proposed": {
+    "contradicted": {
+      "contradicted": 12,
+      "partially_supported": 0,
+      "supported": 0,
+      "unsupported": 4,
+      "unverifiable": 4
+    },
+    "partially_supported": {
+      "contradicted": 1,
+      "partially_supported": 12,
+      "supported": 0,
+      "unsupported": 0,
+      "unverifiable": 2
+    },
+    "supported": {
+      "contradicted": 0,
+      "partially_supported": 8,
+      "supported": 10,
+      "unsupported": 2,
+      "unverifiable": 3
+    },
+    "unsupported": {
+      "contradicted": 2,
+      "partially_supported": 3,
+      "supported": 0,
+      "unsupported": 7,
+      "unverifiable": 3
+    },
+    "unverifiable": {
+      "contradicted": 4,
+      "partially_supported": 11,
+      "supported": 1,
+      "unsupported": 2,
+      "unverifiable": 9
+    }
+  },
+  "issue_counts": {
+    "absence_of_answer_not_zero": 1,
+    "administrative_vs_personal_attribution": 2,
+    "attribution_and_missing_details": 1,
+    "attribution_and_normative_scope": 1,
+    "attribution_conflict": 3,
+    "capability_vs_deployment": 1,
+    "category_conflict": 1,
+    "conflicting_evidence_and_causality": 1,
+    "conflicting_statistics_and_embedded_assessment": 1,
+    "derived_ratio": 1,
+    "derived_ratio_and_definition": 1,
+    "direct_support": 6,
+    "direct_support_with_estimate": 1,
+    "explicit_evidence_uncertainty": 1,
+    "explicit_refutation": 6,
+    "future_outcome_vs_present_policy": 1,
+    "incomplete_claim_or_attribution": 1,
+    "inference_from_label": 1,
+    "institution_vs_individual": 2,
+    "instruction_conflict": 1,
+    "lower_bound_not_exact_total": 1,
+    "measurement_scope_and_missing_detail": 1,
+    "measurement_scope_mismatch": 3,
+    "missing_evidence": 3,
+    "missing_evidence_and_procedural_scope": 1,
+    "missing_material_detail": 17,
+    "missing_units_and_time": 1,
+    "numeric_and_period_conflict": 1,
+    "numeric_and_population_scope": 1,
+    "numeric_conflict": 1,
+    "numeric_conflict_with_source_defect": 1,
+    "numeric_lower_bound_entails": 1,
+    "offer_vs_completed_action": 1,
+    "planned_vs_completed_and_missing_details": 1,
+    "population_scope_and_attribution": 1,
+    "projection_vs_realization": 1,
+    "qualified_or_conflicting_evidence": 2,
+    "record_scale_vs_growth": 1,
+    "record_window_ambiguity": 1,
+    "reported_statement_missing": 1,
+    "reported_statement_vs_embedded_claim": 2,
+    "responsibility_scope": 1,
+    "scope_conflict": 3,
+    "scope_overstatement": 1,
+    "stock_vs_flow": 1,
+    "target_vs_completed_setup": 1,
+    "temporal_and_category_mismatch": 1,
+    "temporal_and_measurement_scope": 1,
+    "temporal_and_scope_ambiguity": 3,
+    "time_window_and_denominator": 1,
+    "units_and_temporal_ambiguity": 1,
+    "unmatched_year": 1,
+    "unreliable_measurement": 1,
+    "unresolved_reference": 2,
+    "unresolved_reference_and_missing_details": 1,
+    "unsupported_attribution": 1,
+    "unsupported_causality": 1,
+    "unsupported_efficacy": 1,
+    "unsupported_material_additions": 1
+  },
+  "key_sha256": "e0e3176db6ce0eeda03252d601a5db053808f0ebf76317a976eea27ee5382257",
+  "limitations": "Proposals from the development assistant are not independent human annotations. Disagreement is not proof the inherited label is wrong. Validate the rubric and adjudicate before using any replacement targets.",
+  "protocol": {
+    "blinding_scope": "Mapping labels and candidate outputs hidden while drafting new rows; original source prose unchanged, including embedded assessments.",
+    "ground_truth_replacement": false,
+    "model_predictions_loaded_before_drafting": false,
+    "new_batch_ids": [
+      "review-0050",
+      "review-0051",
+      "review-0052",
+      "review-0053",
+      "review-0054",
+      "review-0055",
+      "review-0056",
+      "review-0057",
+      "review-0058",
+      "review-0059",
+      "review-0060",
+      "review-0061",
+      "review-0062",
+      "review-0063",
+      "review-0064",
+      "review-0065",
+      "review-0066",
+      "review-0067",
+      "review-0068",
+      "review-0069",
+      "review-0070",
+      "review-0071",
+      "review-0072",
+      "review-0073",
+      "review-0074",
+      "review-0075",
+      "review-0076",
+      "review-0077",
+      "review-0078",
+      "review-0079",
+      "review-0080",
+      "review-0081",
+      "review-0082",
+      "review-0083",
+      "review-0084",
+      "review-0085",
+      "review-0086",
+      "review-0087",
+      "review-0088",
+      "review-0089",
+      "review-0090",
+      "review-0091",
+      "review-0092",
+      "review-0093",
+      "review-0094",
+      "review-0095",
+      "review-0096",
+      "review-0097",
+      "review-0098",
+      "review-0099"
+    ],
+    "new_batch_key_loaded_before_drafting": false,
+    "prior_batch_comparison_already_known": true,
+    "remote_provider_calls": 0,
+    "reviewed_prefix": 100,
+    "reviewer_independent_of_development_work": false,
+    "reviewer_is_human": false,
+    "selection": "next_50_in_preexisting_hash_order",
+    "source_assessment_examples": [
+      "review-0070",
+      "review-0095"
+    ],
+    "source_prose_may_contain_fact_check_assessments": true,
+    "status": "provisional_partial_review",
+    "total_cases": 500
+  },
+  "provisionally_reviewed": 100,
+  "release_gate_eligible": false,
+  "remaining_unreviewed": 400,
+  "review_sha256": "3778e9fcfb10ddb0442d7568463d402b196082e1169178afb6a1bce53a04a796",
+  "rows": [
+    {
+      "case_id": "wice_test04469",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-06"
+      ],
+      "inherited_verdict": "partially_supported",
+      "input_sha256": "8c1ec0558718d698010ac76bad8fd1f908cf6468d4b0b71100124c4ecc0b2868",
+      "issue": "missing_material_detail",
+      "needs_adjudication": false,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "b0e2eabe15c88650ab18a6013565edda5973dcabe7dea9461ac5ca8c317c62a3",
+      "review_id": "review-0000",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "wice_test01645",
+      "evidence_ids": [
+        "evidence-02",
+        "evidence-04"
+      ],
+      "inherited_verdict": "partially_supported",
+      "input_sha256": "00570e697f548813eed653243678567d68e3b442c4ce12098acdf71308359b44",
+      "issue": "missing_material_detail",
+      "needs_adjudication": false,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "d0dbc77aad90966098b395f583b415777766e4875c19cc51acd7fa300a583937",
+      "review_id": "review-0001",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_2577",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02"
+      ],
+      "inherited_verdict": "supported",
+      "input_sha256": "09e801d3095bbb23c984c9ee4a79e6e8da0220470d911c380b242555996c1af2",
+      "issue": "missing_material_detail",
+      "needs_adjudication": false,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "56555db083aa8d80b0ffd5c922f72d6cbe420b00a4905405283a1457d5c8f567",
+      "review_id": "review-0002",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "wice_test00901",
+      "evidence_ids": [
+        "evidence-02",
+        "evidence-04",
+        "evidence-05",
+        "evidence-06"
+      ],
+      "inherited_verdict": "partially_supported",
+      "input_sha256": "d9b81259bed825b74c1ce4cb8c04445333929701ba1c21604af1d8dac99af41d",
+      "issue": "missing_material_detail",
+      "needs_adjudication": false,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "a76aa851225252eaf44ff43bac6cec1a341dc21ec4e7d0d25393742bdb22585b",
+      "review_id": "review-0003",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_2681",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02"
+      ],
+      "inherited_verdict": "supported",
+      "input_sha256": "c6d11e5d13a98565cb32c290738cbfe3ef96788de93fa2464f9485b4f4f979f5",
+      "issue": "missing_material_detail",
+      "needs_adjudication": false,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "06989beacdfaa5bca41bdc93cf46aadadd079a6eadfb0ce9b06229b3b4547dac",
+      "review_id": "review-0004",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_3013",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02",
+        "evidence-03"
+      ],
+      "inherited_verdict": "unsupported",
+      "input_sha256": "f0f01fc3bb6f275c433997676f20425d9077d98088ddf0e3dce8bf10a9b55106",
+      "issue": "missing_evidence",
+      "needs_adjudication": false,
+      "proposed_verdict": "unsupported",
+      "rationale_sha256": "b0f743f584501c5df3fcf2178b48cfd63e8b6a9de416a6d787658bbd81690e68",
+      "review_id": "review-0005",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_2106",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-03",
+        "evidence-04",
+        "evidence-06"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "09e891c2bcf3695cbee9d67d878ee6dcfb6c6ff284a7ae44e900d999b147a289",
+      "issue": "qualified_or_conflicting_evidence",
+      "needs_adjudication": true,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "9f496fa143e67019719b31dab7478a23ee7a9adaa3518cc0a604f999a22b8ce7",
+      "review_id": "review-0006",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_1993",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01"
+      ],
+      "inherited_verdict": "unsupported",
+      "input_sha256": "a033fe1d86d64a2d018157fd1cba1fe6e80be3c3af91f8e80695c9ab91e77db4",
+      "issue": "missing_material_detail",
+      "needs_adjudication": false,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "f756144251efba5869c9fcc8458738790f5ba7782b554de9f9763b4803177806",
+      "review_id": "review-0007",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_1388",
+      "evidence_ids": [
+        "evidence-00"
+      ],
+      "inherited_verdict": "contradicted",
+      "input_sha256": "8410c1873d50450ecd9578d9d7a9f80b081c62fd000d7ae83034a22f3f600fa0",
+      "issue": "explicit_refutation",
+      "needs_adjudication": false,
+      "proposed_verdict": "contradicted",
+      "rationale_sha256": "292901e46502f8ee8219119d66d752e751e9d7c18df50ecb82d2094ad006a4e0",
+      "review_id": "review-0008",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "wice_test02462",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-03",
+        "evidence-04"
+      ],
+      "inherited_verdict": "partially_supported",
+      "input_sha256": "f3ce4a5b22b245a212bb0109e86b55650a3bdf89af087d1c9560d914191922ba",
+      "issue": "attribution_and_missing_details",
+      "needs_adjudication": true,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "b950084f5d96d36392b544c8b1126bfa8541ba58c39070acdebbf51588cd4da6",
+      "review_id": "review-0009",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_2548",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "3174107e5c6abaa16155feb8a5a01072d54e05c3648321cef69f222ce229529d",
+      "issue": "qualified_or_conflicting_evidence",
+      "needs_adjudication": true,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "de308c5b346bba0a6e3868845994e5b271a7a10ad916f9f0137107fd62d95780",
+      "review_id": "review-0010",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_1352",
+      "evidence_ids": [
+        "evidence-00"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "2616e011d8fb58a7e1583121c0290d58872c1b74c6f899252fe294612c7bee69",
+      "issue": "reported_statement_vs_embedded_claim",
+      "needs_adjudication": true,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "34437411574ddd1ab0659913cc5690046a90689a23bb0a0b02f1fe08fa61a981",
+      "review_id": "review-0011",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_1534",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01"
+      ],
+      "inherited_verdict": "unsupported",
+      "input_sha256": "29820b970c4abdff4b4cceddd510b1f9c7165b8278de8724f893797652c4ba20",
+      "issue": "temporal_and_category_mismatch",
+      "needs_adjudication": true,
+      "proposed_verdict": "unverifiable",
+      "rationale_sha256": "cfe40f96f3f13621519fea107c394bab21ba3c2eca1ff3ae3ac08f08572d6af2",
+      "review_id": "review-0012",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_2593",
+      "evidence_ids": [
+        "evidence-01",
+        "evidence-02"
+      ],
+      "inherited_verdict": "contradicted",
+      "input_sha256": "be80531517d67cafb4efbe3528f78c797d650dee9f06660c17b6d4118bf53181",
+      "issue": "explicit_refutation",
+      "needs_adjudication": false,
+      "proposed_verdict": "contradicted",
+      "rationale_sha256": "5bf4411f38f88d57f11ecd17c6f446fc2f29cab00aa60024b7cc3ba815a500bf",
+      "review_id": "review-0013",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_1451",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01"
+      ],
+      "inherited_verdict": "supported",
+      "input_sha256": "25385a19afba722bafe901c5ed6604e41ef45df9b13214bd48fa75212b5a8fd2",
+      "issue": "lower_bound_not_exact_total",
+      "needs_adjudication": true,
+      "proposed_verdict": "unsupported",
+      "rationale_sha256": "661d081300d8af9868164840c0d09863e552d071ebaa236cabd56492c0d5578f",
+      "review_id": "review-0014",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_1664",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02",
+        "evidence-03"
+      ],
+      "inherited_verdict": "supported",
+      "input_sha256": "10963763ee5fef52ef7701b42cfbe849753b887d4117e0a268b9ffa8064b4ea7",
+      "issue": "direct_support_with_estimate",
+      "needs_adjudication": true,
+      "proposed_verdict": "supported",
+      "rationale_sha256": "6fe54da4ceec8ffdfb1fa6476e4acebb743070d371188362d22d290bb86def03",
+      "review_id": "review-0015",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_1813",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02",
+        "evidence-03"
+      ],
+      "inherited_verdict": "contradicted",
+      "input_sha256": "e51d4577c846c668a13b3095ae1ad8d7776066d4bf7080554080bd5238112896",
+      "issue": "measurement_scope_mismatch",
+      "needs_adjudication": true,
+      "proposed_verdict": "unverifiable",
+      "rationale_sha256": "8e8a642317397bd177d04c74417671158f6de719cee99348225e271b7c288b24",
+      "review_id": "review-0016",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_3000",
+      "evidence_ids": [
+        "evidence-00"
+      ],
+      "inherited_verdict": "contradicted",
+      "input_sha256": "01fba0a1514b1014a8537e834cc25a5da22d0987fda0507f6e0499ac8402ce80",
+      "issue": "explicit_refutation",
+      "needs_adjudication": false,
+      "proposed_verdict": "contradicted",
+      "rationale_sha256": "f08b65e98ba6f1ecddfeff27e2126d18244e9001893f3a1a681225998ad33f6e",
+      "review_id": "review-0017",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_2633",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01"
+      ],
+      "inherited_verdict": "unsupported",
+      "input_sha256": "ce1d97a79c947e40426b69d188a21c8e3977ba7d26f9d2cc5a669f1c407b5eca",
+      "issue": "projection_vs_realization",
+      "needs_adjudication": false,
+      "proposed_verdict": "unsupported",
+      "rationale_sha256": "5342b77953585e1a57791a25368d1064468f8b4e0f7df599e267e1d33043ba88",
+      "review_id": "review-0018",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_1754",
+      "evidence_ids": [
+        "evidence-01",
+        "evidence-03",
+        "evidence-05"
+      ],
+      "inherited_verdict": "contradicted",
+      "input_sha256": "667efad1ece2a7c6d65ea0c9ebe6a7499e564d142b5b3668cfe8b7091ac69234",
+      "issue": "stock_vs_flow",
+      "needs_adjudication": true,
+      "proposed_verdict": "unsupported",
+      "rationale_sha256": "2efbaa0720b00ee74ba8797db715b1f18b6b233359997458ecdc32c03f047205",
+      "review_id": "review-0019",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_1700",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02"
+      ],
+      "inherited_verdict": "supported",
+      "input_sha256": "0a6a3f6f0f3a206ff6854fd7fd0944e7d49ad0707fc8b880c1cecfb84edac649",
+      "issue": "direct_support",
+      "needs_adjudication": false,
+      "proposed_verdict": "supported",
+      "rationale_sha256": "321864feb0cd2dfb9233fcd0cb0ef2434a686a561eb416fae97616c4baadfe70",
+      "review_id": "review-0020",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "wice_test00874",
+      "evidence_ids": [
+        "evidence-03",
+        "evidence-04",
+        "evidence-05"
+      ],
+      "inherited_verdict": "partially_supported",
+      "input_sha256": "d2c658a85299b274912cde3ad81925dd8b6b4c46b1f84c6221469a03b737aceb",
+      "issue": "numeric_conflict",
+      "needs_adjudication": false,
+      "proposed_verdict": "contradicted",
+      "rationale_sha256": "1f6df9bcec8d31d0748f28b7c22191690738d519637fe1550d93fdc1bf25aa71",
+      "review_id": "review-0021",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "wice_test02217",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-06",
+        "evidence-07"
+      ],
+      "inherited_verdict": "partially_supported",
+      "input_sha256": "805866507a2bcdd15e646a4a57d2390f9f5e05a50c304263730ea9fdf65190f9",
+      "issue": "missing_material_detail",
+      "needs_adjudication": false,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "c5f2c1abb4bd23e0315f2e3bb35afeb6100a74cbb11575a5eee6aecd3054da4c",
+      "review_id": "review-0022",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_2370",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-03",
+        "evidence-04"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "c24253f92c82626b3057c9380d037741435d82e120a77a2423a6f29b5fceaa3d",
+      "issue": "numeric_and_period_conflict",
+      "needs_adjudication": true,
+      "proposed_verdict": "contradicted",
+      "rationale_sha256": "757e9de9e9d3b676b3290d040a86908fb3b3e6d3ed425e6a0a8777ec0c4e1cd9",
+      "review_id": "review-0023",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "wice_test02018",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-03",
+        "evidence-06"
+      ],
+      "inherited_verdict": "partially_supported",
+      "input_sha256": "22e5bd73a2c6bde8001ea3f6d139f55539b091a2aa5f565da2aa31bb72aa75b5",
+      "issue": "missing_material_detail",
+      "needs_adjudication": false,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "46ef0aaf7c6b7d7bafbcbcc7f310d9f6a98b447cc6e24e7f5cff95ae6ad9d0ec",
+      "review_id": "review-0024",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_2329",
+      "evidence_ids": [
+        "evidence-00"
+      ],
+      "inherited_verdict": "contradicted",
+      "input_sha256": "8dd2225a6394e957387a124c671a14553b4513aacf61b66947757e93ba273538",
+      "issue": "numeric_conflict_with_source_defect",
+      "needs_adjudication": true,
+      "proposed_verdict": "contradicted",
+      "rationale_sha256": "f8065e3a29591f4223f6549b96dbd20c039d5aa14e108794946319cd98a8a515",
+      "review_id": "review-0025",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_2464",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "bf6c2ac8f0f69ba46fc7d17b1bfa82a67c0b42ef45f1c2109c7208aa79eda840",
+      "issue": "unreliable_measurement",
+      "needs_adjudication": true,
+      "proposed_verdict": "unverifiable",
+      "rationale_sha256": "68d5ea29e8cdb2f38dd4f0a1ae2d3076514c4c8566b8868f818df8d654a09057",
+      "review_id": "review-0026",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_0108",
+      "evidence_ids": [
+        "evidence-00"
+      ],
+      "inherited_verdict": "supported",
+      "input_sha256": "d6c066ed7df516207633aaae393189e7ac1e0f7e6261b09b2293ad9067009385",
+      "issue": "direct_support",
+      "needs_adjudication": false,
+      "proposed_verdict": "supported",
+      "rationale_sha256": "90c09a50e214b7d1f1e46d82b98d941045c1e61398753f66d75096bec85d5893",
+      "review_id": "review-0027",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_2601",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "8e8aed1449e4ed7431e190c235976c08e4e7f3af305742a0ebf766d907411ac4",
+      "issue": "measurement_scope_mismatch",
+      "needs_adjudication": true,
+      "proposed_verdict": "unverifiable",
+      "rationale_sha256": "6601adb1f93fcc9e3dbba6ca9e88fd03c480b53652754722d6b4e155bdf6dfa3",
+      "review_id": "review-0028",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_0215",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01"
+      ],
+      "inherited_verdict": "supported",
+      "input_sha256": "84aa2e56999bcc82c531e2e7de3f5ea4f1710a0e832411a60707c345a910e494",
+      "issue": "missing_material_detail",
+      "needs_adjudication": true,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "aebdfc5a7fd3a3adee8f8fb46474e2150c9db93e783f6421ad92e7d10bf0f82d",
+      "review_id": "review-0029",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_2487",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01"
+      ],
+      "inherited_verdict": "unsupported",
+      "input_sha256": "664253edccb94a7ac1cee8054727025293bc8a8840b8872653824af0b77c3c6c",
+      "issue": "missing_evidence",
+      "needs_adjudication": false,
+      "proposed_verdict": "unsupported",
+      "rationale_sha256": "4100a4580ce56b012790a620a441de15af0e9b5d32c97e543c4764e31d960aaa",
+      "review_id": "review-0030",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_2038",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02",
+        "evidence-03"
+      ],
+      "inherited_verdict": "unsupported",
+      "input_sha256": "073231f5b93b3456ea1bcec3c8849a0a73c250546ff226b0469615931e96bb9e",
+      "issue": "measurement_scope_and_missing_detail",
+      "needs_adjudication": false,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "761941a32903225b681282563b272c473c0dc1d8bcfc0f9504ae8e861de26962",
+      "review_id": "review-0031",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_1369",
+      "evidence_ids": [
+        "evidence-00"
+      ],
+      "inherited_verdict": "supported",
+      "input_sha256": "282cfd0d1dd6df869db29a841c20e53fe549a810905624657f44239165d44c20",
+      "issue": "direct_support",
+      "needs_adjudication": false,
+      "proposed_verdict": "supported",
+      "rationale_sha256": "da391dd107ec47bcc770e977fe74f20efa629f57460394ea70e0b067d71862c5",
+      "review_id": "review-0032",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_1399",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "0ee5e83a59212d3742c965027ac24562b6de6d1d5ac59e4b56857b08cc710e23",
+      "issue": "institution_vs_individual",
+      "needs_adjudication": true,
+      "proposed_verdict": "unsupported",
+      "rationale_sha256": "61d6d57bd8422547ad8717dad243d933c78c5b0367eb4ddfa6385111be22f687",
+      "review_id": "review-0033",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_0753",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "6e1edb93e876edb2110b83daf168463ee667c169267caeb7641b16cf3c1908cb",
+      "issue": "incomplete_claim_or_attribution",
+      "needs_adjudication": true,
+      "proposed_verdict": "unverifiable",
+      "rationale_sha256": "bd0da1136029e9e24f6ff4438d84410a0a4b4c8b86f1a1035f2f09272c1431e8",
+      "review_id": "review-0034",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_3065",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02",
+        "evidence-03"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "70991fc3cb6d1e8f5bdfee0e00901011f5f2ddf946abface6ddf2f767627c115",
+      "issue": "institution_vs_individual",
+      "needs_adjudication": true,
+      "proposed_verdict": "unverifiable",
+      "rationale_sha256": "4047e40c208709a702650a8c50f8ff5f4546dd96288621d1abd2818ba14e0c59",
+      "review_id": "review-0035",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_0867",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02"
+      ],
+      "inherited_verdict": "contradicted",
+      "input_sha256": "6e2f798638bd67e129acd81d842a58e8ebcaa15ba2de02b6a203fbb6b5dd9222",
+      "issue": "scope_conflict",
+      "needs_adjudication": false,
+      "proposed_verdict": "contradicted",
+      "rationale_sha256": "c101908e6067a55b701b67143eda10f33361b2c24eecdba28b5d42de28956e9f",
+      "review_id": "review-0036",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_0578",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02"
+      ],
+      "inherited_verdict": "supported",
+      "input_sha256": "17b08509c7782d68fc15874e5ddb1d8ab1e0011be8779e123be8328854a1647f",
+      "issue": "direct_support",
+      "needs_adjudication": false,
+      "proposed_verdict": "supported",
+      "rationale_sha256": "c507d269a3e535592e834a633ed79f7239ccb815a20c82f3b356440ca9ef52c9",
+      "review_id": "review-0037",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_2549",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01"
+      ],
+      "inherited_verdict": "contradicted",
+      "input_sha256": "debafad85eb7cada1abe3a9613108f043c962f73837d86c49aedbbb968a7e125",
+      "issue": "attribution_conflict",
+      "needs_adjudication": false,
+      "proposed_verdict": "contradicted",
+      "rationale_sha256": "d60e488a88c31c234a09a9acf5484323734b54ab925bfe0db5ba5249d66e1a4d",
+      "review_id": "review-0038",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_2998",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "1470843288659317a0636c7fc54f1a07823063184dfcb46c55187c46dd14d34f",
+      "issue": "scope_overstatement",
+      "needs_adjudication": true,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "d462e737b450e4f48a36599f3fc72848147f87b8b29d913546a1c166ef91195e",
+      "review_id": "review-0039",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "wice_test01985",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02",
+        "evidence-03",
+        "evidence-04",
+        "evidence-05",
+        "evidence-06",
+        "evidence-07"
+      ],
+      "inherited_verdict": "partially_supported",
+      "input_sha256": "a9b8794b7b7742cd509986a8b88ddcf93b886930bbed20902de71da537d71a7c",
+      "issue": "unresolved_reference",
+      "needs_adjudication": true,
+      "proposed_verdict": "unverifiable",
+      "rationale_sha256": "a0893416bd82e2062dac6c7cce874615fca831fdf15e336609147d13980adf8a",
+      "review_id": "review-0040",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_0019",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02",
+        "evidence-03"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "58d07321fcf4dfe695aebb27ce42665338ee70cdadd8bc0917f112a5e749a5da",
+      "issue": "scope_conflict",
+      "needs_adjudication": true,
+      "proposed_verdict": "contradicted",
+      "rationale_sha256": "2f2bcb5ce7e6fe1418374905b5adcab12144a031febf06807f4beaf4d414530f",
+      "review_id": "review-0041",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_2896",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02",
+        "evidence-03"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "3bf467e09ffc64664b5aa39d7af548a99130872c3cf054e259fae4e7f51ef35f",
+      "issue": "offer_vs_completed_action",
+      "needs_adjudication": true,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "826c077d5e5029acd9135470e893b7d3ba29ff45ac96f5f85c0c5e8a532bb78f",
+      "review_id": "review-0042",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_2743",
+      "evidence_ids": [
+        "evidence-00"
+      ],
+      "inherited_verdict": "supported",
+      "input_sha256": "3211eb4d70394306301b2156baf901635b5d3228dc6eacda12129a2ba2a950a2",
+      "issue": "population_scope_and_attribution",
+      "needs_adjudication": true,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "84c306f35437f3febfa8caf7cf8fe7da425cba13077f0694a836c242c793050c",
+      "review_id": "review-0043",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_2962",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02"
+      ],
+      "inherited_verdict": "unsupported",
+      "input_sha256": "43354ce489d6d76ff1217425aed6c218b1321b0824c1c810c6094334f7b75222",
+      "issue": "unsupported_attribution",
+      "needs_adjudication": true,
+      "proposed_verdict": "unsupported",
+      "rationale_sha256": "44cda1db453c8ba201e6e494a491512588e20b8edec03f74e758f0b2e63a9acd",
+      "review_id": "review-0044",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_1955",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "f516eac688f7eebc27c758cec11ecb01924a112c50775a786d31af0b32884ab0",
+      "issue": "temporal_and_scope_ambiguity",
+      "needs_adjudication": true,
+      "proposed_verdict": "unverifiable",
+      "rationale_sha256": "4a2e6ee1981e711988439f615f1a5816e732fc15de2b068d2eb4a14a7c43336f",
+      "review_id": "review-0045",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_2628",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02"
+      ],
+      "inherited_verdict": "contradicted",
+      "input_sha256": "fb8a613c7e0408ee5e6949473a821dbabdfdaa08062d0a936552f8cbc6290b69",
+      "issue": "units_and_temporal_ambiguity",
+      "needs_adjudication": true,
+      "proposed_verdict": "unverifiable",
+      "rationale_sha256": "a85eb79c76ad6b8c64920f4f1b4b5619b5917fd3fb3b06faec6d5a9586bd9dd6",
+      "review_id": "review-0046",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_2386",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01"
+      ],
+      "inherited_verdict": "supported",
+      "input_sha256": "e2a4c68027da9eaed9e0db4e3cf2855ca6e197a87d2a8e21383ddf1ae668f7fc",
+      "issue": "missing_material_detail",
+      "needs_adjudication": false,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "ce8a7cbdfb8dad1d78258b88f6f601ccd9be69d5d9056489d6d32b90ea8ef118",
+      "review_id": "review-0047",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_1944",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02"
+      ],
+      "inherited_verdict": "supported",
+      "input_sha256": "b83b0a476b052b91a9233c2f5f01dfa59181668ca7f49fc12217d7b71b504922",
+      "issue": "derived_ratio_and_definition",
+      "needs_adjudication": true,
+      "proposed_verdict": "supported",
+      "rationale_sha256": "e10f9b0f18164e258d41ad80ea3a2e79da5a1bb6c39ec4b4e1713239fcd2c26b",
+      "review_id": "review-0048",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_1942",
+      "evidence_ids": [
+        "evidence-00"
+      ],
+      "inherited_verdict": "contradicted",
+      "input_sha256": "889c5608394fcdbe31d69e6cdb7d1699c62dfd3c749d985e4203cb3292e561c7",
+      "issue": "missing_units_and_time",
+      "needs_adjudication": true,
+      "proposed_verdict": "unverifiable",
+      "rationale_sha256": "95380a35dc90bf08d26a57db823dd4058daf6c9cd9ac8283f5b2212fbd058aac",
+      "review_id": "review-0049",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_2042",
+      "evidence_ids": [
+        "evidence-00"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "dc2ad45141f5b070b1b6b291a4052354444acd417b3d2efae8cfa26ebf6ebb93",
+      "issue": "reported_statement_vs_embedded_claim",
+      "needs_adjudication": true,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "bfce1a6a0b0b1b2a132df7df974bdc270ec10f43435bd6143d9de419bdaa7999",
+      "review_id": "review-0050",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_0190",
+      "evidence_ids": [
+        "evidence-01",
+        "evidence-04",
+        "evidence-05"
+      ],
+      "inherited_verdict": "supported",
+      "input_sha256": "b57033a80bf050174f9502a11e0d7b3dd3e982e1857948a8824214a1b9f8d3f1",
+      "issue": "temporal_and_measurement_scope",
+      "needs_adjudication": true,
+      "proposed_verdict": "unverifiable",
+      "rationale_sha256": "4334a45a93eb51d58b8bedcdff12c6e9707423987c1809db24eb76838186b09c",
+      "review_id": "review-0051",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_0049",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01"
+      ],
+      "inherited_verdict": "unsupported",
+      "input_sha256": "4edc13f4b12cb357e0bc3ddbf6d0dbe9acff16c0bf7ea46dcf8b3ffe9b342ca2",
+      "issue": "missing_evidence",
+      "needs_adjudication": false,
+      "proposed_verdict": "unsupported",
+      "rationale_sha256": "571a4bf868394640289f36c73564edd9b7d275cfc3f36637dfb2abda4cbdb041",
+      "review_id": "review-0052",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_0477",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02"
+      ],
+      "inherited_verdict": "supported",
+      "input_sha256": "7b131e83bcce9904c9abac9d1ff6211fdc733feca5ab7f5ccc94cfa26d200d54",
+      "issue": "record_scale_vs_growth",
+      "needs_adjudication": true,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "a909f1a23b26d029d29fd480dce90f85dd8e947f15790871f874c40d1b6b4809",
+      "review_id": "review-0053",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_0358",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "be5c92d9c2da6c23764904ef04285aed4e6d2b78e1b9d07d0632de6e5b9190fd",
+      "issue": "category_conflict",
+      "needs_adjudication": false,
+      "proposed_verdict": "contradicted",
+      "rationale_sha256": "7a51506c34bc7ee77fa0e550cd26149d944fac849ed33e8018cf4a9accf95044",
+      "review_id": "review-0054",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_2785",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-02"
+      ],
+      "inherited_verdict": "unsupported",
+      "input_sha256": "39fcdc33a4c8a0ba2100a57876b2cbb0caffaf0c51729e7cf92990eb758e8e90",
+      "issue": "responsibility_scope",
+      "needs_adjudication": true,
+      "proposed_verdict": "contradicted",
+      "rationale_sha256": "5028f9cd56a9edbab6af8ddc45f80441e32fb23b4a7f558f3bc86ab64367a77a",
+      "review_id": "review-0055",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_2557",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "f8407f3c2cc3ab39786527f279e15578a100e82256465a6830b584ad682d8869",
+      "issue": "target_vs_completed_setup",
+      "needs_adjudication": true,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "e90f2d2d808b1254c48aed87d45b097bf873ebcdba9ca625996554a4bce40ce9",
+      "review_id": "review-0056",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_1261",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02"
+      ],
+      "inherited_verdict": "contradicted",
+      "input_sha256": "e07d1d7c606a0c5b94ea3d601e87661d4c75194c280fb631bf7752767cf77200",
+      "issue": "explicit_refutation",
+      "needs_adjudication": false,
+      "proposed_verdict": "contradicted",
+      "rationale_sha256": "4bb37bb5742fc480ef673594d232fb4bfe1ff2980950e008b9c99956b4d55fe2",
+      "review_id": "review-0057",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_1850",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01"
+      ],
+      "inherited_verdict": "contradicted",
+      "input_sha256": "0aa87bf7980a3d1c08d4b4bf89e2c054e49074dc507783f5f463bea81669f942",
+      "issue": "explicit_refutation",
+      "needs_adjudication": false,
+      "proposed_verdict": "contradicted",
+      "rationale_sha256": "3f67e7a36a0bf0a246976db5f397233e34d00305daff1d3b1d713d79485b109d",
+      "review_id": "review-0058",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_2524",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "5639c5c0f71e1d00c7aec2d20224e8f5a07dcf8e6edbaf384b12fd5104d30561",
+      "issue": "record_window_ambiguity",
+      "needs_adjudication": true,
+      "proposed_verdict": "unverifiable",
+      "rationale_sha256": "bb6f9e1c2998714b2f14f025aa89852dc5cff6edb8c874ec301d73f57e6b2589",
+      "review_id": "review-0059",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_2764",
+      "evidence_ids": [
+        "evidence-00"
+      ],
+      "inherited_verdict": "contradicted",
+      "input_sha256": "6425fcecd081aeede9fc7ecd12d330cc66bef785399d94c681ba55fbb2674bf5",
+      "issue": "explicit_refutation",
+      "needs_adjudication": false,
+      "proposed_verdict": "contradicted",
+      "rationale_sha256": "3ed6ebef1a27926554ac625479d68e751dd7b130dbde74849017fa39ef46d4a8",
+      "review_id": "review-0060",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_0714",
+      "evidence_ids": [
+        "evidence-01",
+        "evidence-02",
+        "evidence-03"
+      ],
+      "inherited_verdict": "unsupported",
+      "input_sha256": "ac5455440320eb0161d311bf38b34b0c4db90dae3142a3a1f3a245eff51cf647",
+      "issue": "measurement_scope_mismatch",
+      "needs_adjudication": true,
+      "proposed_verdict": "unverifiable",
+      "rationale_sha256": "bfd90e318e5e3cec09d33f2d7f6f73a7d207c3da977f111c394cff29966218d3",
+      "review_id": "review-0061",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_2617",
+      "evidence_ids": [
+        "evidence-00"
+      ],
+      "inherited_verdict": "supported",
+      "input_sha256": "485c32f096678af9351b155934857a5b4de08dce221c2671f0faba3940b3b990",
+      "issue": "missing_material_detail",
+      "needs_adjudication": true,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "d2b5a8eeb60db6dc43ee8fa3935bde91fba19a98152297b7e58d7e878bd20144",
+      "review_id": "review-0062",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_0372",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "a52f501621475558115e4ba1e571ec94f929a5d36ade6e75036114ce4971af7c",
+      "issue": "scope_conflict",
+      "needs_adjudication": false,
+      "proposed_verdict": "contradicted",
+      "rationale_sha256": "c41ecc8e114684cf42983f1f87d1d75969419fd6447c35ebec6035514efbe5f9",
+      "review_id": "review-0063",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_1218",
+      "evidence_ids": [
+        "evidence-00"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "661ec6dd7a0b22df60ee40719c5bd7b154efe2fb5f05084b058e5b322a910bf1",
+      "issue": "temporal_and_scope_ambiguity",
+      "needs_adjudication": true,
+      "proposed_verdict": "unverifiable",
+      "rationale_sha256": "c333e10e7a832b2530b147a96ea1dd805c7169f42fa29011c5dd0f9afeb2660a",
+      "review_id": "review-0064",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "wice_test00345",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-02",
+        "evidence-04",
+        "evidence-07"
+      ],
+      "inherited_verdict": "partially_supported",
+      "input_sha256": "a543e1f8c4fe650e4f1f66c8a176bfb48baee6d1148657ad07f34cd100e23f31",
+      "issue": "missing_material_detail",
+      "needs_adjudication": true,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "157fe6b235a6cd290213bf8eb9320f7f0ff02c0cfe8573be4822ec522b68e21a",
+      "review_id": "review-0065",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_2284",
+      "evidence_ids": [
+        "evidence-00"
+      ],
+      "inherited_verdict": "supported",
+      "input_sha256": "21b3805ca0a888156d01881a95313472efd55cdea5a8312adf1411ae3e19ce09",
+      "issue": "direct_support",
+      "needs_adjudication": false,
+      "proposed_verdict": "supported",
+      "rationale_sha256": "e68fb53a589f7020d2dfc2bd6090c3bddbfb7f5c98fe41a7fa592360b5c82dc0",
+      "review_id": "review-0066",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_2718",
+      "evidence_ids": [
+        "evidence-00"
+      ],
+      "inherited_verdict": "supported",
+      "input_sha256": "b8c6df2de650c4cbcda651b2b2d0e43d71602c0310c787f8f6e5b3075b0950ab",
+      "issue": "numeric_lower_bound_entails",
+      "needs_adjudication": false,
+      "proposed_verdict": "supported",
+      "rationale_sha256": "dd9a9764c15c8846be8fe0f461944241de534031590c4aeb9903421033c58834",
+      "review_id": "review-0067",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "wice_test04409",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-06"
+      ],
+      "inherited_verdict": "partially_supported",
+      "input_sha256": "92e3b9204564e135504377f01ff734706d6d273cfd0861aa9c6709f57417e2ce",
+      "issue": "unresolved_reference_and_missing_details",
+      "needs_adjudication": true,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "bdbbaa300a30f0ce5c69699d8562f2e7451ffccdd949a8158746cb70a018dc2a",
+      "review_id": "review-0068",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_1174",
+      "evidence_ids": [
+        "evidence-00"
+      ],
+      "inherited_verdict": "contradicted",
+      "input_sha256": "ff3888b27bb99d33daea2cc56615ed0ff3d90dd0b9104b9118c5bb405eee31a2",
+      "issue": "attribution_conflict",
+      "needs_adjudication": true,
+      "proposed_verdict": "contradicted",
+      "rationale_sha256": "a9405d85a861c1dd862f1444126f8195220c83d8d15f31f69282a202e2f4f4c0",
+      "review_id": "review-0069",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_1214",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "383e3b927f9ed8485ecb7addc56004e3549fbf7ad832e57d7185a75dd47b5191",
+      "issue": "administrative_vs_personal_attribution",
+      "needs_adjudication": true,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "35bf09a915beb5b790e58dae0fd060c5dcac45b9829416529d3c05fd2c3c8315",
+      "review_id": "review-0070",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_2590",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-02",
+        "evidence-03"
+      ],
+      "inherited_verdict": "contradicted",
+      "input_sha256": "d113a21be974bf1d5d164e18b28110ffff4f6a2cc7821698c836498febe82e00",
+      "issue": "unsupported_causality",
+      "needs_adjudication": true,
+      "proposed_verdict": "unsupported",
+      "rationale_sha256": "a979e727026afa6fcc401220d9fe199b03c13935b091ab3f4bd41be03790877f",
+      "review_id": "review-0071",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_1331",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01"
+      ],
+      "inherited_verdict": "supported",
+      "input_sha256": "5fe5fe55c0569e390f5a2ca7d5ed6a76f261bd24b13a18097c39906c284a1832",
+      "issue": "direct_support",
+      "needs_adjudication": false,
+      "proposed_verdict": "supported",
+      "rationale_sha256": "2340ae7ce2aa6302f747766a9b8295815708eb6e184f5f0b4e4cbf4188a0b63f",
+      "review_id": "review-0072",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_1272",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01"
+      ],
+      "inherited_verdict": "contradicted",
+      "input_sha256": "20e25481939625ce58eefcc616beff1f107c6756c4bcbbf806715f661e983167",
+      "issue": "future_outcome_vs_present_policy",
+      "needs_adjudication": true,
+      "proposed_verdict": "unverifiable",
+      "rationale_sha256": "0167daf5bf7a8fa3399717d76d506095d96d96860a7ff4041d96d7a172bff797",
+      "review_id": "review-0073",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_1786",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "ce5f9c3b5eff34243ac97adee7bafa2e321230138a6311e646083f8468bec8c6",
+      "issue": "attribution_and_normative_scope",
+      "needs_adjudication": true,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "4654901a4c32febfd8b24bdeb93407e32a9a5d7aa1b4b27aac4d2bd307cc7afe",
+      "review_id": "review-0074",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_2279",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02",
+        "evidence-03"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "bed7052a15899d85b05403b65c87e188cb5855b6dd53495cea7ebb98f8b1af74",
+      "issue": "missing_material_detail",
+      "needs_adjudication": true,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "8769b3183dac27d277a1ccfb6b1a6bb73c588dffcdf1b252a0ce76a15c5b8646",
+      "review_id": "review-0075",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_2152",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "986f52933b97198cb6560e6b5f29c61c1820f03a952b4ebdb619820b09447290",
+      "issue": "missing_material_detail",
+      "needs_adjudication": false,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "d818c93b8217e4d9990f0ba10f3e1b09d82f60232cc5281fc81a43253f0d38d5",
+      "review_id": "review-0076",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "wice_test03895",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02",
+        "evidence-03",
+        "evidence-04",
+        "evidence-05",
+        "evidence-06",
+        "evidence-07"
+      ],
+      "inherited_verdict": "partially_supported",
+      "input_sha256": "e1130133943c16973bf50641cc27380d9df429d51921251e0e4bda0d472dcfe7",
+      "issue": "unresolved_reference",
+      "needs_adjudication": true,
+      "proposed_verdict": "unverifiable",
+      "rationale_sha256": "7dee709e2e298b87b3ae7cdceb33738d676a55ad8c02724df0b0c5d68f0ce0a0",
+      "review_id": "review-0077",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_2832",
+      "evidence_ids": [
+        "evidence-00"
+      ],
+      "inherited_verdict": "contradicted",
+      "input_sha256": "78ee2b168b2fad962584095a89dcf5ad0ba39dfe9c0efd794a4630b72793716d",
+      "issue": "attribution_conflict",
+      "needs_adjudication": false,
+      "proposed_verdict": "contradicted",
+      "rationale_sha256": "5ccdd56e43e7437705a2cae9eebad0ec0e5484a251d089670646742678af071e",
+      "review_id": "review-0078",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_2079",
+      "evidence_ids": [
+        "evidence-00"
+      ],
+      "inherited_verdict": "supported",
+      "input_sha256": "d400f8c3f06d115701cc84fa3fa96d479ac2547675af3baaf2dab8a878115a68",
+      "issue": "derived_ratio",
+      "needs_adjudication": false,
+      "proposed_verdict": "supported",
+      "rationale_sha256": "862ece8e26775755c949236e5914e5c27a8cb12cb037b033921cd18497d72587",
+      "review_id": "review-0079",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "wice_test02682",
+      "evidence_ids": [
+        "evidence-00"
+      ],
+      "inherited_verdict": "partially_supported",
+      "input_sha256": "4e461fc4f9df37159d48e5dccd51d7d9bcbdd54bf673d528760015d80357d5cd",
+      "issue": "missing_material_detail",
+      "needs_adjudication": false,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "4bab4cce9a60e3428e2371f5d2f1be2a97c2e810986aadc11c2c57e86df8e862",
+      "review_id": "review-0080",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "wice_test01374",
+      "evidence_ids": [
+        "evidence-00"
+      ],
+      "inherited_verdict": "partially_supported",
+      "input_sha256": "4075143d1a76374f7d9ff6d8a03a16c4551510b16eef7a493617ee9e1c817459",
+      "issue": "missing_material_detail",
+      "needs_adjudication": false,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "e5c9ac6029f43aece6e5bcc42f6156457c16dc98b68a519bf4569a47aa8a866e",
+      "review_id": "review-0081",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_3049",
+      "evidence_ids": [
+        "evidence-02",
+        "evidence-04"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "973628a7c9bfcd2676b2e0a4564cbc964c0d4a801fe0e6e754e78d9b3bbaaca6",
+      "issue": "capability_vs_deployment",
+      "needs_adjudication": false,
+      "proposed_verdict": "supported",
+      "rationale_sha256": "cc3d6ef0883bfa9e3d5d3782c3a7393ed6c413a8fdb3b8c321d7989dabfb1e9d",
+      "review_id": "review-0082",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_1941",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-02",
+        "evidence-03"
+      ],
+      "inherited_verdict": "supported",
+      "input_sha256": "18418a538feecb4738bfb2c25c060f938d9face6cbbc6ad22dbeee759441fbe5",
+      "issue": "time_window_and_denominator",
+      "needs_adjudication": true,
+      "proposed_verdict": "unverifiable",
+      "rationale_sha256": "71639780e01fa1a29c5e9c171fdc026ca35de2fe61caa38e14a301aff18ccef4",
+      "review_id": "review-0083",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_1265",
+      "evidence_ids": [
+        "evidence-00"
+      ],
+      "inherited_verdict": "supported",
+      "input_sha256": "94e488463acc25364369fa568b347f37c62186c9c338968cb7ce9dfea25877b6",
+      "issue": "unmatched_year",
+      "needs_adjudication": true,
+      "proposed_verdict": "unsupported",
+      "rationale_sha256": "1655c3a0840140562f09971db5388cb814abe6101f96b550a92ce2d6a5b8b0b2",
+      "review_id": "review-0084",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_1701",
+      "evidence_ids": [
+        "evidence-00"
+      ],
+      "inherited_verdict": "unsupported",
+      "input_sha256": "bb0424af710288039325c6867e4c5e1849fa9ab36a2885297cd7b7f1938af823",
+      "issue": "explicit_evidence_uncertainty",
+      "needs_adjudication": false,
+      "proposed_verdict": "unverifiable",
+      "rationale_sha256": "193e131397787dcc2a46db0e6c8bb7d962e525899272cb1c84a8b9accab30709",
+      "review_id": "review-0085",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_1113",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-02",
+        "evidence-04",
+        "evidence-05"
+      ],
+      "inherited_verdict": "supported",
+      "input_sha256": "7f2db4a0322905439352cbb449e5d3da4bf1dfc91c87ad432b0f5367524bae6d",
+      "issue": "administrative_vs_personal_attribution",
+      "needs_adjudication": true,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "4274e5281c62295ccecf84ed450e4fd30568990b963dffb464676594c3064784",
+      "review_id": "review-0086",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_2071",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02",
+        "evidence-03",
+        "evidence-04"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "1dcd39b0e85d4959bd625b94c6d92614641ef1ed48da643d7257a799d7e3856b",
+      "issue": "reported_statement_missing",
+      "needs_adjudication": true,
+      "proposed_verdict": "unsupported",
+      "rationale_sha256": "d891513828001a4f0cc314a913b003d092987a7b9cba79d50a2ec6b763c24a40",
+      "review_id": "review-0087",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_2033",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02",
+        "evidence-03"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "54f10f6b7d9195680c842ca9ef1bc0383a098b1761a6a83fa3feeca25e057322",
+      "issue": "conflicting_evidence_and_causality",
+      "needs_adjudication": true,
+      "proposed_verdict": "unverifiable",
+      "rationale_sha256": "8dae40d753cdf571a2b65099559207558ace7f960daceaf412cc1050f31ce9c2",
+      "review_id": "review-0088",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_1313",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01"
+      ],
+      "inherited_verdict": "unsupported",
+      "input_sha256": "03fdc770a1ae6ea38ccb86416daffdfba2ea449829bea2a734990b4985588962",
+      "issue": "unsupported_material_additions",
+      "needs_adjudication": false,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "d16601b9960493f5ed13b2a2d658ed54898620aec3ad5a671ce7a3b462093006",
+      "review_id": "review-0089",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_0112",
+      "evidence_ids": [
+        "evidence-00"
+      ],
+      "inherited_verdict": "unsupported",
+      "input_sha256": "2c78822e5455cde41b943c67f3e2eed787116a410cc18d750a7979cbe087ceb6",
+      "issue": "instruction_conflict",
+      "needs_adjudication": false,
+      "proposed_verdict": "contradicted",
+      "rationale_sha256": "9dbda2f116f819a288b3e7d13b65f33f5592a5792027e1b92f317d39f89e70c5",
+      "review_id": "review-0090",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_1685",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01"
+      ],
+      "inherited_verdict": "unsupported",
+      "input_sha256": "e75e9b1a9f5cd0a2d9608385a4e18001f998915275d3b95ab127a6def8184d61",
+      "issue": "missing_evidence_and_procedural_scope",
+      "needs_adjudication": false,
+      "proposed_verdict": "unsupported",
+      "rationale_sha256": "50ba49139436138062610ad9cb86284f1a092bcc05f5ae1dc224a00a7349caed",
+      "review_id": "review-0091",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_1693",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02"
+      ],
+      "inherited_verdict": "contradicted",
+      "input_sha256": "2d8a7ff2148dae92b07d8aeda20dba63fb8ba256d6ddba3ad3c78690acb8d806",
+      "issue": "numeric_and_population_scope",
+      "needs_adjudication": true,
+      "proposed_verdict": "contradicted",
+      "rationale_sha256": "0871d6dbdb94ca0cc655a577e0c7b3e384fe1cc1f9d11cccb8f70ff22a8c4a4f",
+      "review_id": "review-0092",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_2526",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02"
+      ],
+      "inherited_verdict": "unverifiable",
+      "input_sha256": "b4fd3b41dd73b178249edbae50531d3224eff15d0f6e9856d060e54c37cd04de",
+      "issue": "temporal_and_scope_ambiguity",
+      "needs_adjudication": true,
+      "proposed_verdict": "unverifiable",
+      "rationale_sha256": "c90f2b337190aacde28781e6438352674b428c20955485b9a87f3578273b90c4",
+      "review_id": "review-0093",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "wice_test03137",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-02",
+        "evidence-04",
+        "evidence-06"
+      ],
+      "inherited_verdict": "partially_supported",
+      "input_sha256": "cdada2d295d3a116d838dbce960ac3cb4d745d8efd6f4585bb0e1506f19c5ef1",
+      "issue": "planned_vs_completed_and_missing_details",
+      "needs_adjudication": true,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "1b94722dacd78379b9ec40bc38b4daa7100a4d663ce4a7c8d51242ee4d80d379",
+      "review_id": "review-0094",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_2624",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02",
+        "evidence-03"
+      ],
+      "inherited_verdict": "supported",
+      "input_sha256": "1ba811d5ffd7c9df15230193587a654959dbcff8ac157bed0f385f759838b203",
+      "issue": "conflicting_statistics_and_embedded_assessment",
+      "needs_adjudication": true,
+      "proposed_verdict": "unverifiable",
+      "rationale_sha256": "383a9c9e22ea0a0e795530013d8ff3daafe9cb33fa0cbf787914aca2eb058e95",
+      "review_id": "review-0095",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_0844",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02"
+      ],
+      "inherited_verdict": "contradicted",
+      "input_sha256": "8c0a1518990dd148766a0dc28d25b53439b9da3021b8ca0a7357bae8da8ecb96",
+      "issue": "unsupported_efficacy",
+      "needs_adjudication": true,
+      "proposed_verdict": "unsupported",
+      "rationale_sha256": "7773e3a1a6df281eafa12a3b4cfc13e948d50e9eb7e687ee754431adb368dacd",
+      "review_id": "review-0096",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "averitec_train_1305",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01",
+        "evidence-02"
+      ],
+      "inherited_verdict": "contradicted",
+      "input_sha256": "1ed0a5d3b119f7460e77a968fd17804bf27d5d3df720483cd1e10ccad847d115",
+      "issue": "inference_from_label",
+      "needs_adjudication": true,
+      "proposed_verdict": "unsupported",
+      "rationale_sha256": "cfe07830ef9178a02eee5dfabe4f5dc718b1ab7fc681e366ca9a57c9ac335ce5",
+      "review_id": "review-0097",
+      "reviewer_kind": "language_model",
+      "suggested_change": true
+    },
+    {
+      "case_id": "wice_test01459",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01"
+      ],
+      "inherited_verdict": "partially_supported",
+      "input_sha256": "e0bc9a1aec6472d7a97a4041e897209f32427e378843da1a2dbbae7c7d4c527b",
+      "issue": "missing_material_detail",
+      "needs_adjudication": false,
+      "proposed_verdict": "partially_supported",
+      "rationale_sha256": "7ff18ec4afc03831cebc4208e25521b65d7338a8083c6d2723444d0f4865f147",
+      "review_id": "review-0098",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    },
+    {
+      "case_id": "averitec_train_1852",
+      "evidence_ids": [
+        "evidence-00",
+        "evidence-01"
+      ],
+      "inherited_verdict": "unsupported",
+      "input_sha256": "7bf0806154e395ef7065f19d5ad9326b2b7422c3a232dff6db8240a8fef429f1",
+      "issue": "absence_of_answer_not_zero",
+      "needs_adjudication": false,
+      "proposed_verdict": "unsupported",
+      "rationale_sha256": "d5ffe2eb4c0b1ab639bd6cc89f9e346df5b59e70444e496c84e50627d28c8627",
+      "review_id": "review-0099",
+      "reviewer_kind": "language_model",
+      "suggested_change": false
+    }
+  ],
+  "stable_defaults_changed": false,
+  "status": "partial_model_assisted_review_requires_adjudication",
+  "suggested_label_changes": 50,
+  "total_cases": 500
+}

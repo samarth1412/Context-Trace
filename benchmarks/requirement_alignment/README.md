@@ -1005,3 +1005,11 @@ proposals and 23 inherited-label disagreements. Proposals were frozen before
 unblinding. No original label was changed, and no release claim is made from
 the provisional annotations. The review summarizer verifies the frozen hash,
 all input bindings, complete case coverage, and cited evidence IDs.
+
+`V25_LABEL_REVIEW_BATCH2.md` records the next 50 proposals, frozen before
+comparison, and the cumulative 100/500 review coverage. The new batch has 27
+disagreements; the cumulative report has 50. All remain provisional, with no
+candidate retraining or rescoring. Source prose in some cases contains embedded
+fact-check assessments, so this is mapping-label blinding rather than fully
+label-free evidence. The report records that limitation and the required input
+policy audit before further training or evaluation.
