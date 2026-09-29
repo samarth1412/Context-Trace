@@ -12,6 +12,13 @@ ContextTrace is a Python SDK and CLI for tracing a failed answer from the user
 query through retrieved context, answer claims, citations, verdicts, root cause,
 repair guidance, and CI regression tests.
 
+[![Watch the 32-second ContextTrace demo: inspect an answer, check its source, and prevent regressions](docs/assets/demos/contexttrace-poster.png)](https://github.com/user-attachments/assets/304681e1-2e00-45cb-afd0-0c27c6400cce)
+
+**[Watch the 32-second demo](https://github.com/user-attachments/assets/304681e1-2e00-45cb-afd0-0c27c6400cce)**
+— Wrong answer → conflicting evidence → corrected answer → regression check.
+An illustrated, fictional example using working ContextTrace capabilities.
+[Captions](media/contexttrace-demo/captions.vtt) · [Remotion source](media/contexttrace-demo)
+
 ```text
 query -> retrieved context -> answer claims -> citations -> verdicts -> root cause -> regression test
 ```

@@ -1,5 +1,20 @@
 # Reproducible demo videos
 
+## ContextTrace in 32 seconds
+
+[![Watch the ContextTrace product film](contexttrace-poster.png)](https://github.com/user-attachments/assets/304681e1-2e00-45cb-afd0-0c27c6400cce)
+
+[Watch the film](https://github.com/user-attachments/assets/304681e1-2e00-45cb-afd0-0c27c6400cce)
+· [Captions](../../../media/contexttrace-demo/captions.vtt)
+· [Editable Remotion source](../../../media/contexttrace-demo)
+
+32 seconds, 1080p, with an original ambient soundtrack. The illustrated fictional
+runbook case shows a contradicted answer, a corrected trace, and a passing
+regression check. The video is hosted as a GitHub attachment; only its poster
+and editable source are tracked in Git. This is not a recording of a shipped GUI.
+
+## Animated terminal walkthroughs
+
 These two silent animated terminal demos are generated from scripted frames and ship with WebVTT captions. Each is 1280×720, 13.6 seconds, loops continuously, and uses the same public fictional cases as the investigation runner.
 
 | Demo | Video | Captions | Story |

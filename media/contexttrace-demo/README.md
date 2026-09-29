@@ -4,6 +4,9 @@ A 32-second, 1920×1080, 30 fps Remotion film. Quiet ivory/charcoal typography,
 source-to-answer motion, and a locally synthesized original stereo soundtrack.
 All essential information is visible without audio. Created for Samarth Vinayaka.
 
+[Watch the published film](https://github.com/user-attachments/assets/304681e1-2e00-45cb-afd0-0c27c6400cce)
+· [English captions](captions.vtt)
+
 ## Preview and render
 
 Use Node.js 22 or newer:
