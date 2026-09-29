@@ -11,6 +11,7 @@ from benchmarks.requirement_alignment.v25_input_audit import (
     restore_selected_records,
 )
 from benchmarks.requirement_alignment.v25_joint_representation import encoder_pairs
+from benchmarks.requirement_alignment.v25_review import export_review, validate_review
 
 
 def test_restoration_keeps_selected_question_with_its_answer_only() -> None:
@@ -80,3 +81,40 @@ def test_audit_exposes_question_only_cases_without_relabeling() -> None:
     assert result["by_label"]["contradicted"]["question_only_cases"] == 8
     assert result["label_validity"]["automatic_relabeling_performed"] is False
     assert result["label_validity"]["release_gate_eligible"] is False
+
+
+def test_review_is_blinded_and_rejects_incomplete_or_altered_evidence() -> None:
+    data = {
+        "split": "external_fiveway_v21_development",
+        "examples": [
+            {
+                "id": "source-id",
+                "input": {
+                    "query": "",
+                    "claim": "Claim",
+                    "evidence": [{"id": "source-evidence", "text": "Evidence"}],
+                },
+                "target": {"verdict": "supported"},
+                "source": {"dataset": "secret-source"},
+            }
+        ],
+    }
+    pack, key = export_review(data)
+    changed = copy.deepcopy(data)
+    changed["examples"][0]["target"]["verdict"] = "contradicted"
+    assert pack == export_review(changed)[0]
+    assert "source-id" not in json.dumps(pack)
+    assert "secret-source" not in json.dumps(pack)
+    with pytest.raises(ValueError, match="requires"):
+        validate_review(pack, key)
+    pack["rows"][0].update(
+        verdict="unsupported",
+        rationale="The displayed evidence does not establish the claim.",
+        reviewer="test-reviewer",
+    )
+    validated = validate_review(pack, key)
+    assert validated["changed_labels"] == 1
+    assert validated["release_gate_eligible"] is False
+    pack["rows"][0]["input"]["evidence"][0]["text"] = "Altered evidence"
+    with pytest.raises(ValueError, match="differs"):
+        validate_review(pack, key)

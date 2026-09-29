@@ -1,0 +1,131 @@
+{
+  "artifacts": [
+    {
+      "archive_entries": 124,
+      "bytes": 357904,
+      "file": "contexttrace-1.2.0-py3-none-any.whl",
+      "forbidden_entries": [],
+      "sha256": "57c1e812d12cfad339976e20bf587cd1da7b450000e98d3cf59a67557b2066f0"
+    },
+    {
+      "archive_entries": 140,
+      "bytes": 305282,
+      "file": "contexttrace-1.2.0.tar.gz",
+      "forbidden_entries": [],
+      "sha256": "b4c62f4251f7deefe8e2856224daa993ac923b37d51bee74588f7b1cacdc0fe9"
+    }
+  ],
+  "candidate_diagnostic_gates": {
+    "all_met": false,
+    "false_support_rate": true,
+    "partial_or_ambiguous_review_recall": false,
+    "review_rate": true,
+    "support_recall": false,
+    "zero_contradiction_false_supports": true
+  },
+  "candidate_gate_measurements_release_eligible": false,
+  "checked_date": "2026-09-29",
+  "checks": {
+    "additional_review_validator_tests": {
+      "includes_four_previously_run_tests": true,
+      "passed": 5
+    },
+    "archive_inspection": "passed",
+    "cross_platform_and_supported_python_ci": "not_run_this_milestone",
+    "dependency_audit": {
+      "dependencies": [
+        {
+          "name": "anyio",
+          "version": "4.15.1",
+          "vulns": []
+        },
+        {
+          "name": "certifi",
+          "version": "2026.7.22",
+          "vulns": []
+        },
+        {
+          "name": "click",
+          "version": "8.5.0",
+          "vulns": []
+        },
+        {
+          "name": "contexttrace",
+          "version": "1.2.0",
+          "vulns": []
+        },
+        {
+          "name": "h11",
+          "version": "0.16.0",
+          "vulns": []
+        },
+        {
+          "name": "httpcore",
+          "version": "1.0.9",
+          "vulns": []
+        },
+        {
+          "name": "httpx",
+          "version": "0.28.1",
+          "vulns": []
+        },
+        {
+          "name": "idna",
+          "version": "3.20",
+          "vulns": []
+        },
+        {
+          "name": "pip",
+          "version": "26.2.1",
+          "vulns": []
+        },
+        {
+          "name": "typing-extensions",
+          "version": "4.16.0",
+          "vulns": []
+        }
+      ],
+      "known_vulnerabilities": 0,
+      "pip_updated_in_temporary_environment": "26.2.1"
+    },
+    "fresh_environment_install": "passed_python_3_14",
+    "frontend": "not_present_in_tracked_sdk_worktree",
+    "full_suite": {
+      "coverage_percent": 87.4,
+      "coverage_required": 80.0,
+      "passed": 860,
+      "skipped": 1
+    },
+    "installed_cli_smoke": [
+      "version",
+      "imports_from_site_packages",
+      "init",
+      "demo_refund_policy",
+      "report_last",
+      "doctor"
+    ],
+    "installed_package_pip_check": "passed",
+    "new_research_ruff": "passed",
+    "public_contract_mypy": "passed",
+    "ruff_correctness": "passed",
+    "twine_check": "passed",
+    "wheel_and_sdist_build": "passed_no_isolation_using_existing_build_tools"
+  },
+  "main_merged": false,
+  "package_version_tested": "1.2.0",
+  "published": false,
+  "remaining": [
+    "review_labels_against_selected_evidence",
+    "freeze_qualifying_development_candidate",
+    "untouched_valid_confirmation",
+    "runtime_integration_and_supported_platform_ci",
+    "version_and_release_notes",
+    "testpypi_verification",
+    "main_tag_pypi_publication_and_fresh_install"
+  ],
+  "runtime_changes_in_this_milestone": false,
+  "stable_defaults_changed": false,
+  "status": "blocked_on_evaluation_validity_and_candidate_quality",
+  "v1_3_release_candidate_built": false,
+  "working_branch": "agent/v20-transfer-audit"
+}

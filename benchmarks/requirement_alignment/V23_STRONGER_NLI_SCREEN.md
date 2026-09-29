@@ -1,5 +1,10 @@
 # V23 stronger local NLI screen
 
+**V25 qualification:** [the input audit](V25_INPUT_AND_REPRESENTATION_RESULTS.md)
+found that some selected QA evidence omits the answers needed for the inherited
+labels. Interpret this screen as pipeline diagnostics, not a clean estimate of
+verifier limitations or release quality.
+
 V23 isolates whether a stronger local NLI base repairs the V22 transfer
 failure. It uses the pinned MIT-licensed
 `MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli` checkpoint at revision

@@ -988,3 +988,14 @@ PYTHONPATH=packages/contexttrace:. .venv/bin/python \
 safe supported recall from 1% to 7%, with one false support and zero
 contradiction false supports, but remain far below the 50% recall gate. This
 closes further threshold and classical-head tuning on the current features.
+
+## V25: input audit and joint representations
+
+`V25_INPUT_AND_REPRESENTATION_RESULTS.md` supersedes the feature-exhaustion
+interpretation above. The audit found 32 question-only AVeriTeC cases and 181
+cases with orphan selected questions. A source-bound QA repair plus a fixed
+joint encoder representation reaches 0.5840 direct macro-F1 on development.
+Its safe policy still has only 11% support recall and is not release-eligible.
+Commands, baseline disagreements, truncation counts, and the blinded label
+review workflow are documented in that report. `docs/v1.3-readiness.md` tracks
+the fixed release checkpoints and completed package preflight.

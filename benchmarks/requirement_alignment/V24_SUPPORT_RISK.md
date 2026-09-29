@@ -1,5 +1,11 @@
 # V24 explicit support-risk heads
 
+**V25 qualification:** [the input audit](V25_INPUT_AND_REPRESENTATION_RESULTS.md)
+found question/answer fragmentation in these development inputs. The metrics
+below remain reproducible, but cannot isolate model limitations from input
+selection and inherited-label errors. The feature-exhaustion conclusion below
+is superseded by that audit.
+
 V24 tests the next hypothesis from V23: a five-way classifier may be the wrong
 objective for the high-cost `supported` decision. It trains three separate
 binary heads for support, contradiction risk, and review risk on the same V21

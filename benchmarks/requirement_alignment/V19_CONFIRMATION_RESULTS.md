@@ -1,5 +1,11 @@
 # V19 independent confirmation result
 
+**V25 qualification:** the adapter uses the same QA fragmentation pattern
+documented in [the V25 input audit](V25_INPUT_AND_REPRESENTATION_RESULTS.md).
+V19 has not been rescored or relabeled. Its failure remains a failed release
+gate, but should not be attributed solely to verifier quality without auditing
+the selected inputs and inherited labels.
+
 The frozen V18 candidate was evaluated once on the frozen V19 five-way set.
 No case, feature, estimator, threshold, or policy changed after the set was
 frozen. The candidate fails confirmation and is not eligible for packaging or

@@ -1,5 +1,10 @@
 # V22 domain-diverse candidate
 
+**V25 qualification:** [the input audit](V25_INPUT_AND_REPRESENTATION_RESULTS.md)
+found question/answer fragmentation and inherited-label alignment risks. These
+results remain reproducible but do not establish that the relation features
+alone caused the failure.
+
 V22 tests whether the existing local relation, atomic-completeness, and
 multi-span signals can learn the five ContextTrace verdicts on the balanced
 500-case V21 development set. It uses five-fold stratified out-of-fold
