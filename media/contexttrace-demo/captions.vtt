@@ -1,0 +1,31 @@
+WEBVTT
+
+00:00.000 --> 00:03.500
+An answer is only as good as its evidence.
+
+00:03.500 --> 00:06.500
+ContextTrace. Follow the answer. Find the evidence.
+
+00:06.500 --> 00:10.000
+An AI answer says to page the on-call engineer above a 4% error rate.
+The selected runbook says 2%.
+
+00:10.000 --> 00:14.000
+ContextTrace flags the claim as contradicted by its cited evidence.
+Illustrated workflow using a fictional example.
+
+00:14.000 --> 00:19.500
+Correct the answer to 2% and verify the corrected trace.
+The answer is now supported by the selected source.
+
+00:19.500 --> 00:25.000
+Keep the fix in CI. Replay the saved regression case.
+Two traces. Four checks. Passing locally.
+
+00:25.000 --> 00:28.500
+ContextTrace. Make every answer inspectable.
+Local-first. Open source. Built for developers.
+
+00:28.500 --> 00:32.000
+pip install contexttrace
+Created by Samarth Vinayaka. github.com/samarth1412/Context-Trace

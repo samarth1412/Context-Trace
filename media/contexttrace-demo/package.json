@@ -1,0 +1,28 @@
+{
+  "name": "contexttrace-demo-video",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A 32-second ContextTrace product film built with Remotion",
+  "scripts": {
+    "studio": "remotion studio src/index.tsx",
+    "typecheck": "tsc --noEmit",
+    "render": "remotion render src/index.tsx ContextTrace out/contexttrace-demo.mp4 --codec=h264 --crf=18 --pixel-format=yuv420p",
+    "poster": "remotion still src/index.tsx ContextTrace out/contexttrace-poster.png --frame=870",
+    "stills": "node scripts/render-stills.mjs",
+    "silent": "remotion ffmpeg -y -v error -i out/contexttrace-demo.mp4 -an -c:v copy -movflags +faststart out/contexttrace-demo-silent.mp4"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.530",
+    "@remotion/cli": "4.0.530",
+    "@remotion/fonts": "4.0.530",
+    "@remotion/renderer": "4.0.530",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "remotion": "4.0.530"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "typescript": "5.9.3"
+  }
+}

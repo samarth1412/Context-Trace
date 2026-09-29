@@ -1,0 +1,45 @@
+{
+  "schema_version": "contexttrace-growth-run-v1",
+  "summary": {
+    "case_count": 1,
+    "trace_count": 2,
+    "check_count": 4,
+    "passed": true
+  },
+  "cases": [
+    {
+      "case_id": "ci-debugging-walkthrough",
+      "checks": [
+        {
+          "state": "broken",
+          "field": "summary.contradicted",
+          "expected": 1,
+          "actual": 1,
+          "passed": true
+        },
+        {
+          "state": "broken",
+          "field": "claims.0.verdict",
+          "expected": "contradicted",
+          "actual": "contradicted",
+          "passed": true
+        },
+        {
+          "state": "fixed",
+          "field": "summary.supported",
+          "expected": 1,
+          "actual": 1,
+          "passed": true
+        },
+        {
+          "state": "fixed",
+          "field": "summary.failure_type",
+          "expected": "no_failure_detected",
+          "actual": "no_failure_detected",
+          "passed": true
+        }
+      ],
+      "passed": true
+    }
+  ]
+}
