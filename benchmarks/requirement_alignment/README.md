@@ -1013,3 +1013,14 @@ candidate retraining or rescoring. Source prose in some cases contains embedded
 fact-check assessments, so this is mapping-label blinding rather than fully
 label-free evidence. The report records that limitation and the required input
 policy audit before further training or evaluation.
+
+## V26–V27: support and review recall diagnosis
+
+`V26_V27_RECALL_DIAGNOSIS.md` separates direct classifier misses from policy
+rejections and partial-support review from ambiguous-evidence review. A frozen
+saved-score routing screen reaches 12% support recall and 79.5% review recall
+with two false supports, versus 11%/78% with one previously. A matched ablation
+appending the pretrained NLI head's logits changes no verdicts. Neither attempt
+qualifies for release; both preserve stable defaults and local-only behavior.
+The report gives commands, per-case artifacts, contamination limitations, and
+the targeted data/training repair that the findings motivate.
