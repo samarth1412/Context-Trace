@@ -999,3 +999,9 @@ Its safe policy still has only 11% support recall and is not release-eligible.
 Commands, baseline disagreements, truncation counts, and the blinded label
 review workflow are documented in that report. `docs/v1.3-readiness.md` tracks
 the fixed release checkpoints and completed package preflight.
+
+`V25_LABEL_REVIEW_BATCH1.md` records the first 50 blinded model-assisted label
+proposals and 23 inherited-label disagreements. Proposals were frozen before
+unblinding. No original label was changed, and no release claim is made from
+the provisional annotations. The review summarizer verifies the frozen hash,
+all input bindings, complete case coverage, and cited evidence IDs.

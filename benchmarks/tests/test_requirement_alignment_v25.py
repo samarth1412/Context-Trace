@@ -11,7 +11,12 @@ from benchmarks.requirement_alignment.v25_input_audit import (
     restore_selected_records,
 )
 from benchmarks.requirement_alignment.v25_joint_representation import encoder_pairs
-from benchmarks.requirement_alignment.v25_review import export_review, validate_review
+from benchmarks.requirement_alignment.v25_review import (
+    export_review,
+    summarize_partial_review,
+    validate_review,
+)
+from benchmarks.requirement_alignment.v14_fiveway_policy import _sha256_json
 
 
 def test_restoration_keeps_selected_question_with_its_answer_only() -> None:
@@ -118,3 +123,58 @@ def test_review_is_blinded_and_rejects_incomplete_or_altered_evidence() -> None:
     pack["rows"][0]["input"]["evidence"][0]["text"] = "Altered evidence"
     with pytest.raises(ValueError, match="differs"):
         validate_review(pack, key)
+
+
+def test_partial_review_requires_a_frozen_bound_proposal_and_valid_citations() -> None:
+    data = {
+        "split": "external_fiveway_v21_development",
+        "examples": [
+            {
+                "id": str(i),
+                "input": {
+                    "query": "",
+                    "claim": "Claim",
+                    "evidence": [{"id": "source", "text": "Evidence"}],
+                },
+                "target": {"verdict": "supported"},
+            }
+            for i in range(2)
+        ],
+    }
+    pack, key = export_review(data)
+    pack["rows"][0].update(
+        verdict="unsupported",
+        rationale="The evidence lacks the asserted fact.",
+        reviewer="test",
+        reviewer_kind="language_model",
+        evidence_ids=["evidence-00"],
+        issue="missing_evidence",
+        needs_adjudication=True,
+    )
+    freeze = {
+        "review_sha256": _sha256_json(pack),
+        "cases_reviewed": 1,
+        "reviewed_ids": [pack["rows"][0]["review_id"]],
+    }
+    report = summarize_partial_review(pack, key, freeze)
+    assert report["provisionally_reviewed"] == 1
+    assert report["remaining_unreviewed"] == 1
+    assert report["suggested_label_changes"] == 1
+    assert report["approved_label_changes"] == 0
+    assert report["release_gate_eligible"] is False
+
+    changed = copy.deepcopy(pack)
+    changed["rows"][0]["verdict"] = "supported"
+    with pytest.raises(ValueError, match="frozen"):
+        summarize_partial_review(changed, key, freeze)
+    changed["rows"][0]["evidence_ids"] = ["fabricated-evidence"]
+    with pytest.raises(ValueError, match="cite"):
+        summarize_partial_review(
+            changed, key, {**freeze, "review_sha256": _sha256_json(changed)}
+        )
+    changed = copy.deepcopy(pack)
+    changed["rows"][1]["input"]["claim"] = "Changed unreviewed claim"
+    with pytest.raises(ValueError, match="bound"):
+        summarize_partial_review(
+            changed, key, {**freeze, "review_sha256": _sha256_json(changed)}
+        )
