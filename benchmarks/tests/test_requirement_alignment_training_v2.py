@@ -4,7 +4,6 @@ import json
 from pathlib import Path
 
 import pytest
-import torch
 
 from benchmarks.requirement_alignment.train_v2 import AlignmentV2TrainingError
 from benchmarks.requirement_alignment.train_v2 import directory_manifest
@@ -92,6 +91,7 @@ def test_source_model_verification_rejects_changed_file(tmp_path: Path) -> None:
 
 
 def test_focal_loss_emphasizes_misclassified_examples() -> None:
+    torch = pytest.importorskip("torch")
     easy = focal_loss(torch.tensor([[-3.0, 3.0]]), torch.tensor([1]), torch=torch)
     hard = focal_loss(torch.tensor([[1.0, -1.0]]), torch.tensor([1]), torch=torch)
 
@@ -99,6 +99,7 @@ def test_focal_loss_emphasizes_misclassified_examples() -> None:
 
 
 def test_margin_loss_rewards_positive_negative_separation() -> None:
+    torch = pytest.importorskip("torch")
     labels = torch.tensor([1, 0])
     weights = torch.ones(2)
     poorly_separated = hard_positive_margin_loss(
