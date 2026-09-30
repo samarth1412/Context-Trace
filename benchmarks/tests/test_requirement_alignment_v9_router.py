@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 from pathlib import Path
 
@@ -24,6 +25,24 @@ RESULTS = V9 / "results"
 
 def _load(path: Path) -> dict[str, object]:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _assert_reproduced(actual: object, expected: object) -> None:
+    # BLAS implementations can differ in their final floating-point bits.
+    # Schema, case selections, gates, counts, and strings remain exact.
+    assert type(actual) is type(expected)
+    if isinstance(expected, float):
+        assert actual == pytest.approx(expected, rel=0, abs=1e-12)
+    elif isinstance(expected, dict):
+        assert actual.keys() == expected.keys()
+        for key, value in expected.items():
+            _assert_reproduced(actual[key], value)
+    elif isinstance(expected, list):
+        assert len(actual) == len(expected)
+        for item, value in zip(actual, expected, strict=True):
+            _assert_reproduced(item, value)
+    else:
+        assert actual == expected
 
 
 def test_feature_schema_does_not_read_gold_target_or_relation() -> None:
@@ -119,8 +138,17 @@ def test_committed_v9_router_calibration_is_reproducible() -> None:
         _load(RESULTS / "v8_scifact_guard_policy.json"),
     )
 
-    assert policy == _load(RESULTS / "v9_scifact_router_policy.json")
-    assert analysis == _load(RESULTS / "v9_scifact_router_calibration.json")
+    frozen_policy = _load(RESULTS / "v9_scifact_router_policy.json")
+    # Each manifest must still hash its own exact coefficients correctly; only
+    # cross-platform retraining comparisons permit numerical roundoff.
+    for manifest in (policy, frozen_policy):
+        encoded = json.dumps(manifest["policy"], sort_keys=True, separators=(",", ":"))
+        assert manifest["policy_id"] == hashlib.sha256(encoded.encode()).hexdigest()
+    _assert_reproduced(
+        {key: value for key, value in policy.items() if key != "policy_id"},
+        {key: value for key, value in frozen_policy.items() if key != "policy_id"},
+    )
+    _assert_reproduced(analysis, _load(RESULTS / "v9_scifact_router_calibration.json"))
     selected = analysis["selected"]
     assert selected["gates"]["all_met"] is True
     assert selected["optional_jev"]["metrics"]["positive_recall"] == 0.5444
