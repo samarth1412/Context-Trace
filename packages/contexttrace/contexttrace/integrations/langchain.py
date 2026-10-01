@@ -7,6 +7,8 @@ from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, Iterable, Optional
 
 from contexttrace.client import ContextTrace
+from contexttrace.evidence_integrity import build_evidence_lineage
+from contexttrace.integrations._lineage import clone_with_updates
 
 try:
     from langchain_core.callbacks import BaseCallbackHandler
@@ -434,6 +436,50 @@ def langchain_document_to_chunk(document: Any, index: int = 0) -> dict[str, Any]
         "metadata": metadata,
         "relevance_score": relevance_score,
     }
+
+
+def bind_langchain_evidence_lineage(
+    selected_document: Any,
+    *,
+    source_document: Any,
+    source_unit_id: str | None = None,
+    linked_parts: Iterable[dict[str, Any]] | None = None,
+    material_spans: Iterable[dict[str, Any]] | None = None,
+    transformation: str = "langchain_document_selection",
+) -> Any:
+    """Clone a selected LangChain document with its captured source lineage."""
+
+    source_chunk = langchain_document_to_chunk(source_document)
+    selected_chunk = langchain_document_to_chunk(selected_document)
+    resolved_source_id = source_unit_id or _langchain_document_id(source_document)
+    if not resolved_source_id:
+        raise ValueError(
+            "source_unit_id is required when the source document has no chunk_id, id, or doc_id."
+        )
+    lineage = build_evidence_lineage(
+        source_unit_id=str(resolved_source_id),
+        source_text=str(source_chunk["content"]),
+        linked_parts=linked_parts,
+        material_spans=material_spans,
+        transformation=transformation,
+    )
+    metadata = dict(selected_chunk["metadata"])
+    metadata.update(lineage)
+    return clone_with_updates(selected_document, metadata=metadata)
+
+
+def _langchain_document_id(document: Any) -> Any:
+    metadata = getattr(document, "metadata", None) or {}
+    if isinstance(document, dict):
+        metadata = document.get("metadata") or metadata
+    if not isinstance(metadata, dict):
+        metadata = {}
+    return (
+        metadata.get("chunk_id")
+        or metadata.get("id")
+        or metadata.get("doc_id")
+        or getattr(document, "id", None)
+    )
 
 
 def _extract_query(inputs: Any) -> Optional[str]:

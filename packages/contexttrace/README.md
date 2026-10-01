@@ -98,6 +98,29 @@ trace = capture_rag_trace(
 )
 ```
 
+At a framework selection boundary, clone and bind the selected object directly:
+
+```python
+from contexttrace import (
+    bind_langchain_evidence_lineage,
+    bind_llamaindex_evidence_lineage,
+)
+
+selected_document = bind_langchain_evidence_lineage(
+    selected_document,
+    source_document=parent_document,
+    material_spans=declared_material_spans,
+)
+selected_node = bind_llamaindex_evidence_lineage(
+    selected_node,
+    source_node=parent_node,
+    material_spans=declared_material_spans,
+)
+```
+
+Both helpers preserve the original object and existing callback paths carry the
+lineage metadata into ContextTrace.
+
 ```bash
 contexttrace inspect trace.json --fail-on evidence_integrity
 contexttrace repair trace.json --out repair.md

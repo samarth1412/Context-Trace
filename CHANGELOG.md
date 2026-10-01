@@ -14,6 +14,9 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Evidence-integrity output in `contexttrace inspect`, repeatable CI exit gates,
   evidence-backed repair-plan guidance, and fictional offline LangChain- and
   LlamaIndex-shaped examples.
+- Dependency-optional LangChain and LlamaIndex binding helpers that clone selected
+  framework objects, attach parent-source lineage, and preserve the metadata through
+  existing callback context logging.
 
 ### Changed
 

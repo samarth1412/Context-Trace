@@ -1,4 +1,12 @@
-from contexttrace import ContextTrace, ContextTraceLlamaIndexCallbackHandler
+import pytest
+
+from contexttrace import (
+    ContextTrace,
+    ContextTraceLlamaIndexCallbackHandler,
+    audit_evidence_integrity,
+    bind_llamaindex_evidence_lineage,
+    capture_rag_trace,
+)
 from contexttrace.integrations.llamaindex import llamaindex_node_to_chunk
 
 
@@ -58,6 +66,84 @@ def test_llamaindex_node_to_chunk_converts_node_with_score():
         "metadata": {"source": "refund-policy.md", "chunk_id": "chunk_12"},
         "relevance_score": 0.94,
     }
+
+
+def test_llamaindex_lineage_binding_clones_node_and_detects_material_span_loss():
+    source = MockNodeWithScore(
+        MockNode(
+            "Returns are accepted within 30 days. Only when unused.",
+            metadata={"source": "returns.md"},
+            node_id="returns_policy",
+        ),
+        0.95,
+    )
+    selected = MockNodeWithScore(
+        MockNode("Returns are accepted within 30 days.", node_id="selected_1"),
+        0.91,
+    )
+
+    bound = bind_llamaindex_evidence_lineage(
+        selected,
+        source_node=source,
+        material_spans=[
+            {"id": "unused", "role": "condition", "text": "Only when unused."}
+        ],
+        transformation="node_postprocessor",
+    )
+
+    assert bound is not selected
+    assert bound.node is not selected.node
+    assert bound.score == selected.score
+    assert "contexttrace_evidence" not in selected.node.metadata
+    trace = capture_rag_trace(
+        query="When are returns accepted?",
+        answer="Within 30 days.",
+        contexts=[llamaindex_node_to_chunk(bound)],
+    )
+    result = audit_evidence_integrity(trace)
+    assert [item["type"] for item in result["issues"]] == ["material_span_dropped"]
+    assert result["issues"][0]["source_unit_id"] == "returns_policy"
+
+    transport = FakeTransport()
+    handler = ContextTraceLlamaIndexCallbackHandler(
+        client=ContextTrace(api_key="ctx_test", project="support-rag", transport=transport)
+    )
+    handler.trace_query("When are returns accepted?")
+    handler.trace_retrieved_nodes([source])
+    handler.trace_response(MockResponse("Within 30 days.", [bound]))
+    logged = transport.calls[2][2]["chunks"][0]
+    assert logged["metadata"]["contexttrace_evidence"]["source_unit_id"] == "returns_policy"
+
+
+def test_llamaindex_lineage_binding_uses_real_node_types_when_installed():
+    schema = pytest.importorskip("llama_index.core.schema")
+    source = schema.NodeWithScore(
+        node=schema.TextNode(
+            id_="source_node",
+            text="Question: When? Answer: After approval.",
+        ),
+        score=0.95,
+    )
+    selected = schema.NodeWithScore(
+        node=schema.TextNode(id_="selected_node", text="Question: When?"),
+        score=0.82,
+    )
+
+    bound = bind_llamaindex_evidence_lineage(
+        selected,
+        source_node=source,
+        linked_parts=[
+            {"id": "question", "role": "question", "text": "Question: When?"},
+            {"id": "answer", "role": "answer", "text": "Answer: After approval."},
+        ],
+    )
+
+    assert isinstance(bound, schema.NodeWithScore)
+    assert isinstance(bound.node, schema.TextNode)
+    assert bound.node.node_id == "selected_node"
+    assert bound.score == 0.82
+    assert selected.node.metadata == {}
+    assert bound.node.metadata["contexttrace_evidence"]["source_unit_id"] == "source_node"
 
 
 def test_llamaindex_callback_logs_query_retrieved_nodes_source_nodes_and_response():
