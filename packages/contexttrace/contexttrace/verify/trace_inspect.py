@@ -4,6 +4,7 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+from contexttrace.evidence_integrity import audit_evidence_integrity
 from contexttrace.verify.claims import extract_claims
 from contexttrace.verify.schema import RAGTrace
 
@@ -28,6 +29,7 @@ def inspect_trace(trace: RAGTrace, *, trace_path: str | None = None) -> dict[str
         empty_context_ids=empty_context_ids,
         missing_citation_sources=missing_citation_sources,
     )
+    integrity = audit_evidence_integrity(trace)
     return {
         "trace_path": trace_path,
         "query": trace.query,
@@ -45,6 +47,7 @@ def inspect_trace(trace: RAGTrace, *, trace_path: str | None = None) -> dict[str
             "missing_source_ids": missing_citation_sources,
         },
         "metadata_keys": sorted(str(key) for key in trace.metadata.keys()),
+        "evidence_integrity": integrity,
         "warnings": warnings,
         "suggested_next_commands": _suggested_commands(trace_path),
     }

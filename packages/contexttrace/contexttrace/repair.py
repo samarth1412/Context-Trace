@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 from contexttrace.contracts import REPAIR_PLAN_SCHEMA_VERSION, artifact_provenance
+from contexttrace.evidence_integrity import audit_evidence_integrity
 
 from contexttrace.diagnose import DiagnoseInputError, diagnose_trace_file
 from contexttrace.verify.qa import qa_trace
@@ -14,6 +15,24 @@ from contexttrace.verify.schema import VerificationInputError, load_trace_file
 REPAIR_SCHEMA_VERSION = REPAIR_PLAN_SCHEMA_VERSION
 
 _ACTION_TEMPLATES: dict[str, list[tuple[str, str]]] = {
+    "linked_part_dropped": [
+        (
+            "Preserve the complete linked source unit through context selection.",
+            "The selected text retained one required part while dropping another part from the same captured source unit.",
+        ),
+    ],
+    "material_span_dropped": [
+        (
+            "Preserve the declared material span or reject the shortened selection.",
+            "A captured qualifier, condition, or value was present before selection and absent afterward.",
+        ),
+    ],
+    "selected_text_not_in_source": [
+        (
+            "Repair or recapture source lineage before relying on the selected context.",
+            "The selected text is not a normalized verbatim span of its claimed captured source unit.",
+        ),
+    ],
     "retrieval_miss": [
         (
             "Increase retrieval recall with measured top-k, query-rewrite, or metadata-filter changes.",
@@ -163,9 +182,16 @@ def build_repair_plan(
         raise RepairInputError(str(exc)) from exc
 
     qa = None
+    integrity = None
+    trace = None
+    try:
+        trace = load_trace_file(source_path)
+        integrity = audit_evidence_integrity(trace)
+    except VerificationInputError:
+        pass
     if corpus_path is not None:
         try:
-            trace = load_trace_file(source_path)
+            trace = trace or load_trace_file(source_path)
             qa = qa_trace(
                 trace,
                 trace_path=str(source_path),
@@ -177,14 +203,15 @@ def build_repair_plan(
                 "Corpus repair audit requires a portable RAG trace: %s" % exc
             ) from exc
 
-    root_causes = _root_causes(diagnosis, qa)
+    root_causes = _root_causes(diagnosis, qa, integrity)
     primary_root_cause = root_causes[0] if root_causes else "no_failure_detected"
     repair_required = bool(
         (diagnosis.get("summary") or {}).get("status") != "passed"
         or ((qa or {}).get("summary") or {}).get("has_audit_failures")
+        or bool((integrity or {}).get("issues"))
     )
     actions = _repair_actions(root_causes, diagnosis, qa) if repair_required else []
-    evidence = _repair_evidence(diagnosis, qa)
+    evidence = _repair_evidence(diagnosis, qa, integrity)
     commands = _verification_commands(
         source_path,
         corpus_path=Path(corpus_path) if corpus_path is not None else None,
@@ -217,7 +244,12 @@ def build_repair_plan(
             "diagnosis_status": (diagnosis.get("summary") or {}).get("status"),
             "high_risk_findings": (diagnosis.get("summary") or {}).get("high_risk_findings", 0),
             "audit_primary_label": ((qa or {}).get("summary") or {}).get("audit_primary_label"),
+            "evidence_integrity_status": (integrity or {}).get("status"),
+            "evidence_integrity_issues": ((integrity or {}).get("summary") or {}).get(
+                "issue_count", 0
+            ),
         },
+        "evidence_integrity": integrity,
         "evidence": evidence,
         "actions": actions,
         "verification": {
@@ -267,6 +299,16 @@ def render_repair_plan(plan: dict[str, Any]) -> str:
             lines.append("Claim: %s" % item["claim"])
         if item.get("reason"):
             lines.append("Reason: %s" % item["reason"])
+        if item.get("selected_context_id"):
+            lines.append("Selected context: `%s`" % item["selected_context_id"])
+        if item.get("source_unit_id"):
+            lines.append("Captured source unit: `%s`" % item["source_unit_id"])
+        if item.get("missing_item_id"):
+            lines.append("Missing captured item: `%s`" % item["missing_item_id"])
+        if item.get("missing_item_role"):
+            lines.append("Missing item role: `%s`" % item["missing_item_role"])
+        if item.get("missing_text"):
+            lines.append("Missing captured text: %s" % item["missing_text"])
         if item.get("retrieved_evidence"):
             lines.append("Retrieved evidence: %s" % item["retrieved_evidence"])
         if item.get("corpus_evidence"):
@@ -298,8 +340,14 @@ def render_repair_plan(plan: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
-def _root_causes(diagnosis: dict[str, Any], qa: dict[str, Any] | None) -> list[str]:
+def _root_causes(
+    diagnosis: dict[str, Any],
+    qa: dict[str, Any] | None,
+    integrity: dict[str, Any] | None,
+) -> list[str]:
     values: list[str] = []
+    for issue in (integrity or {}).get("issues") or []:
+        _append_root(values, issue.get("type"))
     audit = (qa or {}).get("audit") or {}
     audit_summary = audit.get("summary") or {}
     _append_root(values, audit_summary.get("primary_audit_label"))
@@ -374,8 +422,25 @@ def _repair_actions(
     return actions
 
 
-def _repair_evidence(diagnosis: dict[str, Any], qa: dict[str, Any] | None) -> list[dict[str, Any]]:
+def _repair_evidence(
+    diagnosis: dict[str, Any],
+    qa: dict[str, Any] | None,
+    integrity: dict[str, Any] | None,
+) -> list[dict[str, Any]]:
     evidence = []
+    for issue in (integrity or {}).get("issues") or []:
+        evidence.append(
+            {
+                "source": "evidence_integrity",
+                "root_cause": issue.get("type"),
+                "reason": issue.get("observed"),
+                "selected_context_id": issue.get("selected_context_id"),
+                "source_unit_id": issue.get("source_unit_id"),
+                "missing_item_id": issue.get("item_id"),
+                "missing_item_role": issue.get("item_role"),
+                "missing_text": issue.get("missing_text"),
+            }
+        )
     audit = (qa or {}).get("audit") or {}
     for claim in audit.get("claims") or []:
         root_cause = str(claim.get("audit_label") or "")
@@ -428,7 +493,13 @@ def _verification_commands(
         "stage": "Re-run diagnosis after the fix",
         "command": "contexttrace diagnose %s --mode %s --fail-on any_issue" % (trace_arg, mode),
     }
-    commands = [diagnosis_command]
+    commands = [
+        {
+            "stage": "Re-check captured evidence transformations",
+            "command": "contexttrace inspect %s --fail-on evidence_integrity" % trace_arg,
+        },
+        diagnosis_command,
+    ]
     if corpus_path is not None:
         commands.append(
             {

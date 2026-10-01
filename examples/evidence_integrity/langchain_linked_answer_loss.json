@@ -1,0 +1,24 @@
+{
+  "query": "When are Nimbus refunds issued?",
+  "answer": "Nimbus refunds are issued after approval.",
+  "contexts": [
+    {
+      "id": "langchain_selected_1",
+      "text": "Question: When are Nimbus refunds issued?",
+      "metadata": {
+        "integration": "langchain",
+        "contexttrace_evidence": {
+          "schema_version": "1.0",
+          "source_unit_id": "nimbus_refund_qa",
+          "source_text": "Question: When are Nimbus refunds issued? Answer: Nimbus refunds are issued after approval.",
+          "transformation": "sentence_selector",
+          "linked_parts": [
+            {"id": "question", "role": "question", "text": "Question: When are Nimbus refunds issued?", "required": true},
+            {"id": "answer", "role": "answer", "text": "Answer: Nimbus refunds are issued after approval.", "required": true}
+          ]
+        }
+      }
+    }
+  ],
+  "metadata": {"construction_status": "fictional_offline_example"}
+}
