@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "split": "development",
+  "cases": [
+    {
+      "id": "dev_linked_complete",
+      "framework": "generic",
+      "trace": {"query": "When?", "answer": "After approval.", "contexts": [{"id": "c1", "text": "Question: When? Answer: After approval.", "metadata": {"contexttrace_evidence": {"schema_version": "1.0", "source_unit_id": "qa1", "source_text": "Question: When? Answer: After approval.", "linked_parts": [{"id": "q", "role": "question", "text": "Question: When?", "required": true}, {"id": "a", "role": "answer", "text": "Answer: After approval.", "required": true}]}}}]},
+      "expected": {"status": "complete", "issue_types": [], "unknown_contexts": 0}
+    },
+    {
+      "id": "dev_linked_answer_dropped",
+      "framework": "generic",
+      "trace": {"query": "When?", "answer": "Unknown.", "contexts": [{"id": "c1", "text": "Question: When?", "metadata": {"contexttrace_evidence": {"source_unit_id": "qa2", "source_text": "Question: When? Answer: After approval.", "linked_parts": [{"id": "q", "role": "question", "text": "Question: When?", "required": true}, {"id": "a", "role": "answer", "text": "Answer: After approval.", "required": true}]}}}]},
+      "expected": {"status": "issues_found", "issue_types": ["linked_part_dropped"], "unknown_contexts": 0}
+    },
+    {
+      "id": "dev_material_condition_dropped",
+      "framework": "generic",
+      "trace": {"query": "Can I return it?", "answer": "Within 30 days.", "contexts": [{"id": "c1", "text": "Returns are accepted within 30 days.", "metadata": {"contexttrace_evidence": {"source_unit_id": "returns", "source_text": "Returns are accepted within 30 days. Only when unused.", "material_spans": [{"id": "unused", "role": "condition", "text": "Only when unused.", "required": true}]}}}]},
+      "expected": {"status": "issues_found", "issue_types": ["material_span_dropped"], "unknown_contexts": 0}
+    },
+    {
+      "id": "dev_selected_text_not_in_source",
+      "framework": "generic",
+      "trace": {"query": "Threshold?", "answer": "Four percent.", "contexts": [{"id": "c1", "text": "Alert above 4 percent.", "metadata": {"contexttrace_evidence": {"source_unit_id": "alerts", "source_text": "Alert above 2 percent."}}}]},
+      "expected": {"status": "issues_found", "issue_types": ["selected_text_not_in_source"], "unknown_contexts": 0}
+    },
+    {
+      "id": "dev_uncaptured_unknown",
+      "framework": "generic",
+      "trace": {"query": "Policy?", "answer": "Unknown.", "contexts": [{"id": "c1", "text": "Selected evidence."}]},
+      "expected": {"status": "not_captured", "issue_types": [], "unknown_contexts": 1}
+    },
+    {
+      "id": "dev_invalid_lineage_unknown",
+      "framework": "generic",
+      "trace": {"query": "Policy?", "answer": "Unknown.", "contexts": [{"id": "c1", "text": "Selected evidence.", "metadata": {"contexttrace_evidence": {"source_unit_id": "unit"}}}]},
+      "expected": {"status": "not_captured", "issue_types": [], "unknown_contexts": 1}
+    },
+    {
+      "id": "dev_optional_part_absent",
+      "framework": "generic",
+      "trace": {"query": "When?", "answer": "After approval.", "contexts": [{"id": "c1", "text": "Answer: After approval.", "metadata": {"contexttrace_evidence": {"source_unit_id": "qa3", "source_text": "Question: When? Answer: After approval.", "linked_parts": [{"id": "q", "role": "question", "text": "Question: When?", "required": false}, {"id": "a", "role": "answer", "text": "Answer: After approval.", "required": true}]}}}]},
+      "expected": {"status": "complete", "issue_types": [], "unknown_contexts": 0}
+    },
+    {
+      "id": "dev_mixed_observed_and_unknown",
+      "framework": "generic",
+      "trace": {"query": "Return policy?", "answer": "Thirty days.", "contexts": [{"id": "captured", "text": "Returns are accepted within 30 days.", "metadata": {"contexttrace_evidence": {"source_unit_id": "returns2", "source_text": "Returns are accepted within 30 days. Receipt required.", "material_spans": [{"id": "receipt", "role": "condition", "text": "Receipt required.", "required": true}]}}}, {"id": "unknown", "text": "Extra selected evidence."}]},
+      "expected": {"status": "issues_found", "issue_types": ["material_span_dropped"], "unknown_contexts": 1}
+    }
+  ]
+}

@@ -1,0 +1,263 @@
+{
+  "acceptance": {
+    "passed": true,
+    "requirements": {
+      "dangerous_false_green_count": 0,
+      "exact_case_accuracy": 1.0,
+      "model_calls": 0,
+      "network_calls": 0,
+      "unknown_accuracy": 1.0
+    }
+  },
+  "benchmark": "contexttrace_evidence_integrity",
+  "dataset_sha256": "5813b63cd27e423cca96626c50cac355961097115ee238e8c6c4d82fb6442f2e",
+  "evaluation_labels_sent_to_a_model": false,
+  "rows": [
+    {
+      "actual": {
+        "issue_types": [
+          "linked_part_dropped"
+        ],
+        "model_calls": 0,
+        "network_calls": 0,
+        "status": "issues_found",
+        "unknown_contexts": 0
+      },
+      "exact": true,
+      "expected": {
+        "issue_types": [
+          "linked_part_dropped"
+        ],
+        "status": "issues_found",
+        "unknown_contexts": 0
+      },
+      "framework": "langchain",
+      "id": "heldout_langchain_linked_drop"
+    },
+    {
+      "actual": {
+        "issue_types": [],
+        "model_calls": 0,
+        "network_calls": 0,
+        "status": "complete",
+        "unknown_contexts": 0
+      },
+      "exact": true,
+      "expected": {
+        "issue_types": [],
+        "status": "complete",
+        "unknown_contexts": 0
+      },
+      "framework": "langchain",
+      "id": "heldout_langchain_complete"
+    },
+    {
+      "actual": {
+        "issue_types": [
+          "material_span_dropped"
+        ],
+        "model_calls": 0,
+        "network_calls": 0,
+        "status": "issues_found",
+        "unknown_contexts": 0
+      },
+      "exact": true,
+      "expected": {
+        "issue_types": [
+          "material_span_dropped"
+        ],
+        "status": "issues_found",
+        "unknown_contexts": 0
+      },
+      "framework": "llamaindex",
+      "id": "heldout_llamaindex_material_drop"
+    },
+    {
+      "actual": {
+        "issue_types": [],
+        "model_calls": 0,
+        "network_calls": 0,
+        "status": "complete",
+        "unknown_contexts": 0
+      },
+      "exact": true,
+      "expected": {
+        "issue_types": [],
+        "status": "complete",
+        "unknown_contexts": 0
+      },
+      "framework": "llamaindex",
+      "id": "heldout_llamaindex_complete"
+    },
+    {
+      "actual": {
+        "issue_types": [],
+        "model_calls": 0,
+        "network_calls": 0,
+        "status": "complete",
+        "unknown_contexts": 0
+      },
+      "exact": true,
+      "expected": {
+        "issue_types": [],
+        "status": "complete",
+        "unknown_contexts": 0
+      },
+      "framework": "generic",
+      "id": "heldout_unicode_whitespace_normalized"
+    },
+    {
+      "actual": {
+        "issue_types": [],
+        "model_calls": 0,
+        "network_calls": 0,
+        "status": "not_captured",
+        "unknown_contexts": 1
+      },
+      "exact": true,
+      "expected": {
+        "issue_types": [],
+        "status": "not_captured",
+        "unknown_contexts": 1
+      },
+      "framework": "generic",
+      "id": "heldout_invalid_declared_span_unknown"
+    },
+    {
+      "actual": {
+        "issue_types": [
+          "selected_text_not_in_source"
+        ],
+        "model_calls": 0,
+        "network_calls": 0,
+        "status": "issues_found",
+        "unknown_contexts": 0
+      },
+      "exact": true,
+      "expected": {
+        "issue_types": [
+          "selected_text_not_in_source"
+        ],
+        "status": "issues_found",
+        "unknown_contexts": 0
+      },
+      "framework": "generic",
+      "id": "heldout_mutation_precedes_span_checks"
+    },
+    {
+      "actual": {
+        "issue_types": [
+          "material_span_dropped",
+          "material_span_dropped"
+        ],
+        "model_calls": 0,
+        "network_calls": 0,
+        "status": "issues_found",
+        "unknown_contexts": 0
+      },
+      "exact": true,
+      "expected": {
+        "issue_types": [
+          "material_span_dropped",
+          "material_span_dropped"
+        ],
+        "status": "issues_found",
+        "unknown_contexts": 0
+      },
+      "framework": "generic",
+      "id": "heldout_two_material_spans_dropped"
+    },
+    {
+      "actual": {
+        "issue_types": [],
+        "model_calls": 0,
+        "network_calls": 0,
+        "status": "partial",
+        "unknown_contexts": 1
+      },
+      "exact": true,
+      "expected": {
+        "issue_types": [],
+        "status": "partial",
+        "unknown_contexts": 1
+      },
+      "framework": "generic",
+      "id": "heldout_partial_without_observed_issue"
+    },
+    {
+      "actual": {
+        "issue_types": [],
+        "model_calls": 0,
+        "network_calls": 0,
+        "status": "complete",
+        "unknown_contexts": 0
+      },
+      "exact": true,
+      "expected": {
+        "issue_types": [],
+        "status": "complete",
+        "unknown_contexts": 0
+      },
+      "framework": "generic",
+      "id": "heldout_required_linked_part_alone_no_drop"
+    }
+  ],
+  "schema_version": "1.0",
+  "split": "heldout",
+  "summary": {
+    "cases": 10,
+    "dangerous_false_green_case_ids": [],
+    "dangerous_false_green_count": 0,
+    "dangerous_false_green_rate": 0.0,
+    "exact_case_accuracy": 1.0,
+    "exact_cases": 10,
+    "framework_slices": {
+      "generic": {
+        "accuracy": 1.0,
+        "cases": 6,
+        "exact_cases": 6
+      },
+      "langchain": {
+        "accuracy": 1.0,
+        "cases": 2,
+        "exact_cases": 2
+      },
+      "llamaindex": {
+        "accuracy": 1.0,
+        "cases": 2,
+        "exact_cases": 2
+      }
+    },
+    "model_calls": 0,
+    "network_calls": 0,
+    "per_issue": {
+      "linked_part_dropped": {
+        "f1": 1.0,
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 1
+      },
+      "material_span_dropped": {
+        "f1": 1.0,
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 3
+      },
+      "selected_text_not_in_source": {
+        "f1": 1.0,
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 1
+      }
+    },
+    "unknown_accuracy": 1.0,
+    "unknown_cases": 2,
+    "unknown_exact_cases": 2
+  }
+}

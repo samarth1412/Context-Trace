@@ -74,7 +74,7 @@ ContextTrace classifies each claim as `supported`, `partially_supported`, `unsup
 
 Important: `supported` means grounded by the selected evidence span. It does not mean independently true, current, or authoritative.
 
-### Audit evidence transformations (1.3 development)
+### Audit evidence transformations
 
 Instrument a selector or chunker with captured source lineage, then check
 whether it dropped a linked answer, declared qualifier, condition, or value:

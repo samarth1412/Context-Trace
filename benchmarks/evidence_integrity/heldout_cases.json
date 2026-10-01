@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "split": "heldout",
+  "cases": [
+    {
+      "id": "heldout_langchain_linked_drop",
+      "framework": "langchain",
+      "trace": {"query": "Who approves?", "answer": "Unknown.", "contexts": [{"id": "doc-selected", "text": "Question: Who approves?", "metadata": {"contexttrace_evidence": {"source_unit_id": "doc-parent", "source_text": "Question: Who approves? Answer: The finance lead.", "transformation": "document_compressor", "linked_parts": [{"id": "question", "role": "question", "text": "Question: Who approves?", "required": true}, {"id": "answer", "role": "answer", "text": "Answer: The finance lead.", "required": true}]}}}]},
+      "expected": {"status": "issues_found", "issue_types": ["linked_part_dropped"], "unknown_contexts": 0}
+    },
+    {
+      "id": "heldout_langchain_complete",
+      "framework": "langchain",
+      "trace": {"query": "Who approves?", "answer": "The finance lead.", "contexts": [{"id": "doc-selected", "text": "Question: Who approves? Answer: The finance lead.", "metadata": {"contexttrace_evidence": {"source_unit_id": "doc-parent", "source_text": "Question: Who approves? Answer: The finance lead.", "transformation": "document_compressor", "linked_parts": [{"id": "question", "role": "question", "text": "Question: Who approves?", "required": true}, {"id": "answer", "role": "answer", "text": "Answer: The finance lead.", "required": true}]}}}]},
+      "expected": {"status": "complete", "issue_types": [], "unknown_contexts": 0}
+    },
+    {
+      "id": "heldout_llamaindex_material_drop",
+      "framework": "llamaindex",
+      "trace": {"query": "Is beta access available?", "answer": "Yes.", "contexts": [{"id": "node-selected", "text": "Beta access is available.", "metadata": {"contexttrace_evidence": {"source_unit_id": "node-parent", "source_text": "Beta access is available. Only for paid teams.", "transformation": "node_postprocessor", "material_spans": [{"id": "paid", "role": "scope", "text": "Only for paid teams.", "required": true}]}}}]},
+      "expected": {"status": "issues_found", "issue_types": ["material_span_dropped"], "unknown_contexts": 0}
+    },
+    {
+      "id": "heldout_llamaindex_complete",
+      "framework": "llamaindex",
+      "trace": {"query": "Is beta access available?", "answer": "For paid teams.", "contexts": [{"id": "node-selected", "text": "Beta access is available. Only for paid teams.", "metadata": {"contexttrace_evidence": {"source_unit_id": "node-parent", "source_text": "Beta access is available. Only for paid teams.", "transformation": "node_postprocessor", "material_spans": [{"id": "paid", "role": "scope", "text": "Only for paid teams.", "required": true}]}}}]},
+      "expected": {"status": "complete", "issue_types": [], "unknown_contexts": 0}
+    },
+    {
+      "id": "heldout_unicode_whitespace_normalized",
+      "framework": "generic",
+      "trace": {"query": "What tier?", "answer": "Pro.", "contexts": [{"id": "c1", "text": "THE  “PRO”   TIER", "metadata": {"contexttrace_evidence": {"source_unit_id": "tiers", "source_text": "The \"Pro\" tier includes exports."}}}]},
+      "expected": {"status": "complete", "issue_types": [], "unknown_contexts": 0}
+    },
+    {
+      "id": "heldout_invalid_declared_span_unknown",
+      "framework": "generic",
+      "trace": {"query": "Limit?", "answer": "Unknown.", "contexts": [{"id": "c1", "text": "Exports are limited.", "metadata": {"contexttrace_evidence": {"source_unit_id": "exports", "source_text": "Exports are limited.", "material_spans": [{"id": "limit", "role": "value", "text": "Ten per day.", "required": true}]}}}]},
+      "expected": {"status": "not_captured", "issue_types": [], "unknown_contexts": 1}
+    },
+    {
+      "id": "heldout_mutation_precedes_span_checks",
+      "framework": "generic",
+      "trace": {"query": "How long?", "answer": "Sixty days.", "contexts": [{"id": "c1", "text": "Retention is 60 days.", "metadata": {"contexttrace_evidence": {"source_unit_id": "retention", "source_text": "Retention is 30 days. Unless legal hold applies.", "material_spans": [{"id": "hold", "role": "exception", "text": "Unless legal hold applies.", "required": true}]}}}]},
+      "expected": {"status": "issues_found", "issue_types": ["selected_text_not_in_source"], "unknown_contexts": 0}
+    },
+    {
+      "id": "heldout_two_material_spans_dropped",
+      "framework": "generic",
+      "trace": {"query": "Can guests export?", "answer": "Yes.", "contexts": [{"id": "c1", "text": "Exports are available.", "metadata": {"contexttrace_evidence": {"source_unit_id": "export-policy", "source_text": "Exports are available. Admin approval is required. Guests are excluded.", "material_spans": [{"id": "approval", "role": "condition", "text": "Admin approval is required.", "required": true}, {"id": "guests", "role": "exclusion", "text": "Guests are excluded.", "required": true}]}}}]},
+      "expected": {"status": "issues_found", "issue_types": ["material_span_dropped", "material_span_dropped"], "unknown_contexts": 0}
+    },
+    {
+      "id": "heldout_partial_without_observed_issue",
+      "framework": "generic",
+      "trace": {"query": "Policy?", "answer": "Captured partly.", "contexts": [{"id": "captured", "text": "Support is available weekdays.", "metadata": {"contexttrace_evidence": {"source_unit_id": "support", "source_text": "Support is available weekdays."}}}, {"id": "uncaptured", "text": "Weekend details."}]},
+      "expected": {"status": "partial", "issue_types": [], "unknown_contexts": 1}
+    },
+    {
+      "id": "heldout_required_linked_part_alone_no_drop",
+      "framework": "generic",
+      "trace": {"query": "When does billing start?", "answer": "At activation.", "contexts": [{"id": "c1", "text": "Billing starts at activation.", "metadata": {"contexttrace_evidence": {"source_unit_id": "billing", "source_text": "Billing starts at activation. Internal note: legacy account migration.", "linked_parts": [{"id": "billing-rule", "role": "answer", "text": "Billing starts at activation.", "required": true}]}}}]},
+      "expected": {"status": "complete", "issue_types": [], "unknown_contexts": 0}
+    }
+  ]
+}
