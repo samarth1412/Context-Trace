@@ -29,9 +29,8 @@ the failure likely happened, and how to keep it from coming back. It is not a
 hosted dashboard. Traces, reports, judge cache, and SQLite state stay local by
 default.
 
-Published release: **[ContextTrace 1.2.0](https://github.com/samarth1412/Context-Trace/releases/tag/v1.2.0)**.
-The repository is preparing the **1.3.0** candidate, tested on Python 3.10
-through 3.13.
+Latest release: **[ContextTrace 1.3.0](https://github.com/samarth1412/Context-Trace/releases/tag/v1.3.0)**,
+tested on Python 3.10 through 3.13.
 
 ## What's New In 1.3.0
 
@@ -464,7 +463,7 @@ ContextTrace is a diagnostic tool, not a correctness proof. It verifies groundin
 ## Links
 
 - PyPI: https://pypi.org/project/contexttrace/
-- Latest release: https://github.com/samarth1412/Context-Trace/releases/tag/v1.2.0
+- Latest release: https://github.com/samarth1412/Context-Trace/releases/tag/v1.3.0
 - Docs: [docs](docs)
 - Artifact schemas: [docs/artifact-schemas.md](docs/artifact-schemas.md)
 - Issues: https://github.com/samarth1412/Context-Trace/issues
