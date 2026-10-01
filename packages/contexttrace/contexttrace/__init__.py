@@ -14,9 +14,15 @@ from contexttrace.errors import (
 )
 from contexttrace.evidence_integrity import audit_evidence_integrity, build_evidence_lineage
 from contexttrace.integrations.fastapi import ContextTraceFastAPIMiddleware
-from contexttrace.integrations.langchain import ContextTraceCallbackHandler
+from contexttrace.integrations.langchain import (
+    ContextTraceCallbackHandler,
+    bind_langchain_evidence_lineage,
+)
 from contexttrace.integrations.langgraph import ContextTraceLangGraphTracer
-from contexttrace.integrations.llamaindex import ContextTraceLlamaIndexCallbackHandler
+from contexttrace.integrations.llamaindex import (
+    ContextTraceLlamaIndexCallbackHandler,
+    bind_llamaindex_evidence_lineage,
+)
 from contexttrace.integrations.opentelemetry import OpenTelemetryExporter, export_contexttrace_trace
 from contexttrace.privacy import PrivacyPolicy, TextCipher
 from contexttrace.reliability import ReliabilityScore, ReliabilityScorer
@@ -49,6 +55,8 @@ __all__ = [
     "build_repair_plan",
     "build_regression_case",
     "build_evidence_lineage",
+    "bind_langchain_evidence_lineage",
+    "bind_llamaindex_evidence_lineage",
     "diagnose_payload",
     "audit_evidence_integrity",
     "diagnose_trace_file",

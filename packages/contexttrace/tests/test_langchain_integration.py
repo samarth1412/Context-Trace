@@ -1,4 +1,12 @@
-from contexttrace import ContextTrace, ContextTraceCallbackHandler
+import pytest
+
+from contexttrace import (
+    ContextTrace,
+    ContextTraceCallbackHandler,
+    audit_evidence_integrity,
+    bind_langchain_evidence_lineage,
+    capture_rag_trace,
+)
 from contexttrace.integrations.langchain import langchain_document_to_chunk
 
 
@@ -59,6 +67,74 @@ def test_langchain_document_to_chunk_converts_mock_document():
         },
         "relevance_score": 0.93,
     }
+
+
+def test_langchain_lineage_binding_clones_document_and_detects_linked_answer_loss():
+    source = MockDocument(
+        "Question: When? Answer: After approval.",
+        metadata={"chunk_id": "refund_qa", "source": "refunds.md"},
+    )
+    selected = MockDocument("Question: When?", metadata={"rank": 1}, doc_id="selected_1")
+
+    bound = bind_langchain_evidence_lineage(
+        selected,
+        source_document=source,
+        linked_parts=[
+            {"id": "question", "role": "question", "text": "Question: When?"},
+            {"id": "answer", "role": "answer", "text": "Answer: After approval."},
+        ],
+        transformation="document_compressor",
+    )
+
+    assert bound is not selected
+    assert "contexttrace_evidence" not in selected.metadata
+    trace = capture_rag_trace(
+        query="When?",
+        answer="After approval.",
+        contexts=[langchain_document_to_chunk(bound)],
+    )
+    result = audit_evidence_integrity(trace)
+    assert [item["type"] for item in result["issues"]] == ["linked_part_dropped"]
+    assert result["issues"][0]["source_unit_id"] == "refund_qa"
+
+    transport = FakeTransport()
+    handler = ContextTraceCallbackHandler(
+        client=ContextTrace(api_key="ctx_test", project="support-rag", transport=transport)
+    )
+    handler.on_retriever_start({"name": "compressor"}, "When?")
+    handler.on_retriever_end([bound])
+    logged = transport.calls[2][2]["chunks"][0]
+    assert logged["metadata"]["contexttrace_evidence"]["source_unit_id"] == "refund_qa"
+
+
+def test_langchain_lineage_binding_uses_real_document_type_when_installed():
+    documents = pytest.importorskip("langchain_core.documents")
+    source = documents.Document(
+        id="source_doc",
+        page_content="Returns are accepted within 30 days. Only when unused.",
+    )
+    selected = documents.Document(id="selected_doc", page_content="Returns are accepted within 30 days.")
+
+    bound = bind_langchain_evidence_lineage(
+        selected,
+        source_document=source,
+        material_spans=[
+            {"id": "unused", "role": "condition", "text": "Only when unused."}
+        ],
+    )
+
+    assert isinstance(bound, documents.Document)
+    assert bound.id == "selected_doc"
+    assert selected.metadata == {}
+    assert bound.metadata["contexttrace_evidence"]["source_unit_id"] == "source_doc"
+
+
+def test_langchain_lineage_binding_requires_stable_source_id():
+    with pytest.raises(ValueError, match="source_unit_id is required"):
+        bind_langchain_evidence_lineage(
+            MockDocument("Selected."),
+            source_document=MockDocument("Source."),
+        )
 
 
 def test_callback_handler_logs_query_documents_answer_metadata_and_latency():

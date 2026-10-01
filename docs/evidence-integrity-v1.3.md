@@ -55,6 +55,44 @@ trace = capture_rag_trace(
 `linked_parts` and `material_spans` must name text that actually exists in the
 captured `source_text`. ContextTrace never constructs a missing span or explanation.
 
+## Bind real framework objects
+
+Use the framework helpers immediately after a document compressor, reranker, or
+node postprocessor. They return a cloned object with namespaced lineage metadata;
+the input object is not mutated. Existing ContextTrace callbacks preserve that
+metadata when logging the selected context.
+
+```python
+from contexttrace import bind_langchain_evidence_lineage
+
+selected_document = bind_langchain_evidence_lineage(
+    selected_document,
+    source_document=parent_document,
+    material_spans=[
+        {"id": "unused", "role": "condition", "text": "Only when unused."}
+    ],
+    transformation="document_compressor",
+)
+```
+
+```python
+from contexttrace import bind_llamaindex_evidence_lineage
+
+selected_node = bind_llamaindex_evidence_lineage(
+    selected_node,
+    source_node=parent_node,
+    material_spans=[
+        {"id": "unused", "role": "condition", "text": "Only when unused."}
+    ],
+    transformation="node_postprocessor",
+)
+```
+
+When the parent object has no stable framework or metadata ID, pass an explicit
+`source_unit_id`. Binding refuses to invent one. The helpers were exercised with
+real `Document`, `TextNode`, and `NodeWithScore` objects and remain dependency-
+optional: importing ContextTrace does not require either framework.
+
 ## Inspect, repair, and gate
 
 ```bash
@@ -83,6 +121,8 @@ trace and add the passing result to the existing suite workflow.
 - Existing verification labels and stable defaults do not change.
 - The implementation performs zero network and model calls.
 - LangChain-shaped and LlamaIndex-shaped fictional cases reproduce offline.
+- Real framework objects retain their type, IDs, scores, and original metadata.
+- Existing framework callbacks carry bound lineage into selected-context logs.
 
 ## Current boundary
 

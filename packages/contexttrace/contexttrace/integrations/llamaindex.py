@@ -6,6 +6,8 @@ from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, Iterable, Optional
 
 from contexttrace.client import ContextTrace
+from contexttrace.evidence_integrity import build_evidence_lineage
+from contexttrace.integrations._lineage import clone_with_updates
 
 try:
     from llama_index.core.callbacks.base_handler import BaseCallbackHandler
@@ -363,6 +365,54 @@ def llamaindex_node_to_chunk(node_or_node_with_score: Any, index: int = 0) -> di
         "metadata": metadata,
         "relevance_score": relevance_score,
     }
+
+
+def bind_llamaindex_evidence_lineage(
+    selected_node: Any,
+    *,
+    source_node: Any,
+    source_unit_id: str | None = None,
+    linked_parts: Iterable[dict[str, Any]] | None = None,
+    material_spans: Iterable[dict[str, Any]] | None = None,
+    transformation: str = "llamaindex_node_postprocessor",
+) -> Any:
+    """Clone a selected LlamaIndex node with its captured source lineage."""
+
+    source_chunk = llamaindex_node_to_chunk(source_node)
+    selected_chunk = llamaindex_node_to_chunk(selected_node)
+    resolved_source_id = source_unit_id or _llamaindex_node_id(source_node)
+    if not resolved_source_id:
+        raise ValueError(
+            "source_unit_id is required when the source node has no chunk_id, id, doc_id, or node_id."
+        )
+    lineage = build_evidence_lineage(
+        source_unit_id=str(resolved_source_id),
+        source_text=str(source_chunk["content"]),
+        linked_parts=linked_parts,
+        material_spans=material_spans,
+        transformation=transformation,
+    )
+    metadata = dict(selected_chunk["metadata"])
+    metadata.update(lineage)
+
+    selected_value = getattr(selected_node, "node", selected_node)
+    cloned_node = clone_with_updates(selected_value, metadata=metadata)
+    if selected_value is selected_node:
+        return cloned_node
+    return clone_with_updates(selected_node, node=cloned_node)
+
+
+def _llamaindex_node_id(node_or_node_with_score: Any) -> Any:
+    node = getattr(node_or_node_with_score, "node", node_or_node_with_score)
+    metadata = _node_metadata(node)
+    return (
+        metadata.get("chunk_id")
+        or metadata.get("id")
+        or metadata.get("doc_id")
+        or getattr(node, "node_id", None)
+        or getattr(node, "id_", None)
+        or getattr(node, "id", None)
+    )
 
 
 def _node_metadata(node: Any) -> dict[str, Any]:
