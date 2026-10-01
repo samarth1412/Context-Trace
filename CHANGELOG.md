@@ -4,7 +4,7 @@ All notable changes to ContextTrace will be documented in this file.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project uses semantic versioning after public release.
 
-## [Unreleased]
+## [1.3.0] - 2026-10-01
 
 ### Added
 
@@ -17,6 +17,9 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Dependency-optional LangChain and LlamaIndex binding helpers that clone selected
   framework objects, attach parent-source lineage, and preserve the metadata through
   existing callback context logging.
+- A hash-locked offline acceptance benchmark with disjoint development and
+  held-out cases, exact outcome scoring, per-issue and framework slices, and
+  fail-closed gates for missed issues, unknown handling, and remote calls.
 
 ### Changed
 

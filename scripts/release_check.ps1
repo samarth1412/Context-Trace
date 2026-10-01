@@ -64,6 +64,9 @@ if (-not $Wheel) {
     throw "No wheel found in $PackageDir\dist"
 }
 
+Write-Host "==> Updating smoke-test installer"
+Invoke-Checked $VenvPython @("-m", "pip", "install", "--upgrade", "pip")
+
 Write-Host "==> Installing built wheel"
 Invoke-Checked $VenvPython @("-m", "pip", "install", $Wheel.FullName)
 

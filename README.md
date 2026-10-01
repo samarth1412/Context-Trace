@@ -29,21 +29,26 @@ the failure likely happened, and how to keep it from coming back. It is not a
 hosted dashboard. Traces, reports, judge cache, and SQLite state stay local by
 default.
 
-Latest release: **[ContextTrace 1.2.0](https://github.com/samarth1412/Context-Trace/releases/tag/v1.2.0)**,
-tested on Python 3.10 through 3.13.
+Published release: **[ContextTrace 1.2.0](https://github.com/samarth1412/Context-Trace/releases/tag/v1.2.0)**.
+The repository is preparing the **1.3.0** candidate, tested on Python 3.10
+through 3.13.
 
-## What's New In 1.2.0
+## What's New In 1.3.0
 
 - Keeps `semantic_v1_calibrated` as the stable default verifier.
-- Adds the opt-in bounded v2.1 CLI and the separate experimental `hybrid_v2`
-  SDK for source-version, lifecycle, conflict, and evidence-gap diagnostics.
-- Adds developer triage output and verifier-aware regression suites.
-- Adds six reproducible investigations, LangChain and LlamaIndex gates, and two
-  captioned demos that run without a model API.
+- Adds deterministic source-to-selection lineage checks for dropped linked
+  evidence, declared material spans, and selected text detached from its source.
+- Adds cloning bindings for LangChain `Document` and LlamaIndex nodes while
+  preserving IDs, scores, metadata, and existing callback capture paths.
+- Adds local `inspect` and `repair` output plus CI gates for observed evidence
+  loss and unknown lineage.
+- Adds a hash-locked offline acceptance benchmark with separate development and
+  held-out cases. The frozen held-out gate passes 10/10 cases with zero missed
+  declared losses and zero model or network calls.
 
-See the [1.2.0 release notes](release/v1.2.0.md),
-[hybrid-v2 guide](docs/hybrid-v2.md), and
-[v2.1 development status](docs/verifier-v2.1-development.md).
+See the [1.3.0 release notes](release/v1.3.0.md), the
+[evidence-integrity contract](docs/evidence-integrity-v1.3.md), and the
+[frozen acceptance benchmark](benchmarks/evidence_integrity/README.md).
 
 ## Install
 
@@ -112,7 +117,7 @@ ContextTrace classifies each claim as `supported`, `partially_supported`, `unsup
 
 Important: `supported` means grounded by the selected evidence span. It does not mean independently true, current, or authoritative.
 
-### Audit evidence transformations (1.3 development)
+### Audit evidence transformations
 
 Instrument a selector or chunker with captured source lineage, then check
 whether it dropped a linked answer, declared qualifier, condition, or value:

@@ -32,6 +32,9 @@ fi
 
 WHEEL_PATH="$(ls "$PACKAGE_DIR"/dist/contexttrace-*.whl | head -n 1)"
 
+echo "==> Updating smoke-test installer"
+"$VENV_PY" -m pip install --upgrade pip
+
 echo "==> Installing built wheel"
 "$VENV_PY" -m pip install "$WHEEL_PATH"
 
