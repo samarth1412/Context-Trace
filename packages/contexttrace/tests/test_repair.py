@@ -1,6 +1,7 @@
 import json
 
 from contexttrace.cli import main
+from contexttrace.evidence_integrity import build_evidence_lineage
 from contexttrace.repair import build_repair_plan, render_repair_plan
 
 
@@ -158,3 +159,42 @@ def test_repair_cli_writes_markdown_and_json(tmp_path, capsys):
     assert markdown.startswith("# ContextTrace Repair Plan")
     assert "Apply and recapture the fix" in markdown
     assert payload["status"] == "repair_required"
+
+
+def test_repair_plan_prioritizes_observed_linked_evidence_loss(tmp_path):
+    trace_path = tmp_path / "linked_loss.json"
+    metadata = build_evidence_lineage(
+        source_unit_id="refund_qa",
+        source_text="Question: When? Answer: After approval.",
+        linked_parts=[
+            {"id": "q", "role": "question", "text": "Question: When?"},
+            {"id": "a", "role": "answer", "text": "Answer: After approval."},
+        ],
+    )
+    trace_path.write_text(
+        json.dumps(
+            {
+                "query": "When?",
+                "answer": "After approval.",
+                "contexts": [
+                    {"id": "selected", "text": "Question: When?", "metadata": metadata}
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    plan = build_repair_plan(trace_path, mode="lexical")
+    markdown = render_repair_plan(plan)
+
+    assert plan["primary_root_cause"] == "linked_part_dropped"
+    assert plan["summary"]["evidence_integrity_issues"] == 1
+    assert plan["evidence"][0]["missing_item_role"] == "answer"
+    assert any("complete linked source unit" in item["action"] for item in plan["actions"])
+    assert plan["verification"]["commands"][0]["command"].endswith(
+        "--fail-on evidence_integrity"
+    )
+    assert "Selected context: `selected`" in markdown
+    assert "Captured source unit: `refund_qa`" in markdown
+    assert "Missing item role: `answer`" in markdown
+    assert "Missing captured text: Answer: After approval." in markdown

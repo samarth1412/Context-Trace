@@ -405,7 +405,13 @@ def verify_v2_command(
 @cli.command("inspect")
 @click.argument("trace_json")
 @click.option("--json", "json_output", is_flag=True, help="Print trace inspection as JSON.")
-def inspect_command(trace_json: str, json_output: bool) -> int:
+@click.option(
+    "--fail-on",
+    multiple=True,
+    type=click.Choice(["warning", "evidence_integrity", "unknown_integrity"]),
+    help="Exit nonzero on trace warnings, observed evidence-integrity issues, or uncaptured lineage.",
+)
+def inspect_command(trace_json: str, json_output: bool, fail_on: tuple[str, ...]) -> int:
     """Inspect portable RAG trace shape before verification."""
 
     try:
@@ -416,7 +422,7 @@ def inspect_command(trace_json: str, json_output: bool) -> int:
     result = inspect_trace(trace, trace_path=trace_json)
     if json_output:
         click.echo(json.dumps(result, indent=2))
-        return 0
+        return _inspect_exit_code(result, fail_on)
 
     click.echo("Trace: %s" % trace_json)
     click.echo("Query: %s" % result["query"])
@@ -440,6 +446,21 @@ def inspect_command(trace_json: str, json_output: bool) -> int:
     if result["metadata_keys"]:
         click.echo("Metadata keys: %s" % ", ".join(result["metadata_keys"]))
 
+    integrity = result["evidence_integrity"]
+    integrity_summary = integrity["summary"]
+    click.echo(
+        "Evidence integrity: %s (%s issues, %s assessed, %s unknown)"
+        % (
+            integrity["status"],
+            integrity_summary["issue_count"],
+            integrity_summary["assessed_contexts"],
+            integrity_summary["unknown_contexts"],
+        )
+    )
+    for issue in integrity["issues"]:
+        detail = issue.get("item_role") or issue.get("observed")
+        click.echo("- %s [%s]: %s" % (issue["type"], issue["selected_context_id"], detail))
+
     warnings = result["warnings"]
     if warnings:
         click.echo("Warnings:")
@@ -449,7 +470,20 @@ def inspect_command(trace_json: str, json_output: bool) -> int:
     click.echo("Suggested next commands:")
     for command in result["suggested_next_commands"]:
         click.echo("- %s" % command)
-    return 0
+    return _inspect_exit_code(result, fail_on)
+
+
+def _inspect_exit_code(result: dict[str, object], fail_on: tuple[str, ...]) -> int:
+    integrity = result.get("evidence_integrity") or {}
+    summary = (integrity.get("summary") or {}) if isinstance(integrity, dict) else {}
+    issue_count = int(summary.get("issue_count") or 0) if isinstance(summary, dict) else 0
+    unknown_count = int(summary.get("unknown_contexts") or 0) if isinstance(summary, dict) else 0
+    should_fail = (
+        "warning" in fail_on and bool(result.get("warnings"))
+        or "evidence_integrity" in fail_on and issue_count > 0
+        or "unknown_integrity" in fail_on and unknown_count > 0
+    )
+    return 1 if should_fail else 0
 
 
 @cli.command("diagnose")

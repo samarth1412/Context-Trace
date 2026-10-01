@@ -6,6 +6,21 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+### Added
+
+- Deterministic evidence-lineage capture and local integrity checks for dropped
+  linked parts, dropped declared material spans, and selected text that cannot
+  be traced to its captured source unit.
+- Evidence-integrity output in `contexttrace inspect`, repeatable CI exit gates,
+  evidence-backed repair-plan guidance, and fictional offline LangChain- and
+  LlamaIndex-shaped examples.
+
+### Changed
+
+- Preserved the stable verifier and its default behavior while reporting
+  uncaptured or malformed transformation lineage as unknown rather than
+  inferring evidence loss.
+
 ## [1.2.0] - 2026-09-15
 
 ### Added

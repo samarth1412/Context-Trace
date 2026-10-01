@@ -74,6 +74,40 @@ ContextTrace classifies each claim as `supported`, `partially_supported`, `unsup
 
 Important: `supported` means grounded by the selected evidence span. It does not mean independently true, current, or authoritative.
 
+### Audit evidence transformations (1.3 development)
+
+Instrument a selector or chunker with captured source lineage, then check
+whether it dropped a linked answer, declared qualifier, condition, or value:
+
+```python
+from contexttrace import build_evidence_lineage, capture_rag_trace
+
+source = "Question: When? Answer: After approval."
+lineage = build_evidence_lineage(
+    source_unit_id="refund_qa",
+    source_text=source,
+    linked_parts=[
+        {"id": "question", "role": "question", "text": "Question: When?"},
+        {"id": "answer", "role": "answer", "text": "Answer: After approval."},
+    ],
+)
+trace = capture_rag_trace(
+    query="When?",
+    answer="After approval.",
+    contexts=[{"id": "selected", "text": "Question: When?", "metadata": lineage}],
+)
+```
+
+```bash
+contexttrace inspect trace.json --fail-on evidence_integrity
+contexttrace repair trace.json --out repair.md
+```
+
+The audit runs locally with no model or network calls. Missing lineage stays
+unknown, and the stable claim verifier remains unchanged. See the
+[evidence-integrity contract](../../docs/evidence-integrity-v1.3.md) and
+[offline examples](../../examples/evidence_integrity/README.md).
+
 ## Diagnose An Agent Trace
 
 `diagnose` also accepts agent step traces and localizes tool/final-answer

@@ -1,0 +1,23 @@
+{
+  "query": "When are Atlas returns accepted?",
+  "answer": "Atlas accepts returns within 30 days.",
+  "contexts": [
+    {
+      "id": "llamaindex_selected_1",
+      "text": "Atlas accepts returns within 30 days.",
+      "metadata": {
+        "integration": "llamaindex",
+        "contexttrace_evidence": {
+          "schema_version": "1.0",
+          "source_unit_id": "atlas_returns_policy",
+          "source_text": "Atlas accepts returns within 30 days. This applies only when the item is unused.",
+          "transformation": "source_node_truncation",
+          "material_spans": [
+            {"id": "unused_condition", "role": "condition", "text": "This applies only when the item is unused.", "required": true}
+          ]
+        }
+      }
+    }
+  ],
+  "metadata": {"construction_status": "fictional_offline_example"}
+}

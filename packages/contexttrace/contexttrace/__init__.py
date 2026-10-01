@@ -12,6 +12,7 @@ from contexttrace.errors import (
     ContextTraceHTTPError,
     ContextTraceLocalError,
 )
+from contexttrace.evidence_integrity import audit_evidence_integrity, build_evidence_lineage
 from contexttrace.integrations.fastapi import ContextTraceFastAPIMiddleware
 from contexttrace.integrations.langchain import ContextTraceCallbackHandler
 from contexttrace.integrations.langgraph import ContextTraceLangGraphTracer
@@ -47,7 +48,9 @@ __all__ = [
     "capture_response_trace",
     "build_repair_plan",
     "build_regression_case",
+    "build_evidence_lineage",
     "diagnose_payload",
+    "audit_evidence_integrity",
     "diagnose_trace_file",
     "write_diagnosis_regression_test",
     "export_contexttrace_trace",
